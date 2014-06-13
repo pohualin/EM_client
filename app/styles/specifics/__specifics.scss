@@ -1,0 +1,21 @@
+
+/* _____ SPECIFICS _____ */
+
+// import contextual entities
+@import 'sample';
+
+
+// miscellaneous rules
+
+
+// various example component implementations
+@include example();
+@include example('.example2');
+@include example('.example3', 'myHoverClass');
+@include example('.example4', $param2: 'someParam', $hover: 'myHover');
+@include example('.example5', $defaultSkin: false);
+@include example-skin-alt('.example5');
+
+.example6 {
+  @include example2();
+}
