@@ -9,14 +9,15 @@ gulp.task('styles', function () {
         .pipe($.rubySass({ style: 'expanded' }))
         .pipe($.autoprefixer('last 1 version'))
         .pipe(gulp.dest('.tmp/styles'))
-        .pipe($.size({showFiles:true}));
+        .pipe($.size({title: 'styles', showFiles:true}));
 });
 
 gulp.task('scripts', function () {
     return gulp.src('app/scripts/**/*.js')
         .pipe($.jshint())
         .pipe($.jshint.reporter('jshint-stylish'))
-        .pipe($.size({showFiles:true}));
+        .pipe($.jshint.reporter('fail'))
+        .pipe($.size({title: 'scripts', showFiles:true}));
 });
 
 gulp.task('partials', function () {
@@ -31,7 +32,7 @@ gulp.task('partials', function () {
             prefix: "partials/"
         }))
         .pipe(gulp.dest(".tmp/partials"))
-        .pipe($.size({showFiles:true}));
+        .pipe($.size({title: 'partials', showFiles:true}));
 });
 
 gulp.task('html', ['styles', 'scripts', 'partials'], function () {
@@ -58,7 +59,7 @@ gulp.task('html', ['styles', 'scripts', 'partials'], function () {
         .pipe($.useref())
         .pipe($.revReplace())
         .pipe(gulp.dest('dist'))
-        .pipe($.size({showFiles:true}));
+        .pipe($.size({title: 'html', showFiles:true}));
 });
 
 gulp.task('images', function () {
@@ -69,7 +70,7 @@ gulp.task('images', function () {
             interlaced: true
         })))
         .pipe(gulp.dest('dist/images'))
-        .pipe($.size({showFiles:true}));
+        .pipe($.size({title: 'images', showFiles:true}));
 });
 
 gulp.task('fonts', function () {
@@ -77,7 +78,7 @@ gulp.task('fonts', function () {
         .pipe($.filter('**/*.{eot,svg,ttf,woff}'))
         .pipe($.flatten())
         .pipe(gulp.dest('dist/fonts'))
-        .pipe($.size({showFiles:true}));
+        .pipe($.size({title: 'fonts', showFiles:true}));
 });
 
 gulp.task('clean', function () {
