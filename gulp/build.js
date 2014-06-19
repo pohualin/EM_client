@@ -28,7 +28,7 @@ gulp.task('partials', function () {
     }))
     .pipe($.ngHtml2js({
       moduleName: "emmiManager",
-      prefix: "/partials/"
+      prefix: "partials/"
     }))
     .pipe(gulp.dest(".tmp/partials"))
     .pipe($.size({showFiles:true}));
