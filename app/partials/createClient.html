@@ -1,0 +1,37 @@
+<h1>New Client</h1>
+<form>
+    <h2>Client Information</h2>
+    <label for="">Name</label><br>
+    <input data-ng-model="newClient.name" type="text"><br>
+    <label for="">Client Type</label><br>
+    <select data-ng-model="newClient.type">
+        <option value="">Select...</option>
+        <option value="Hospital">Hospital</option>
+        <option value="Provider">Provider</option>
+    </select><br>
+    <label for="">Region</label><br>
+    <select data-ng-model="newClient.region">
+        <option value="">Select...</option>
+        <option value="Midwest">Midwest</option>
+        <option value="West">West</option>
+    </select><br>
+    <label for="">Tier</label><br>
+    <select>
+        <option value="">Select...</option>
+    </select><br>
+    <label for="">Contract Owner</label><br>
+    <select>
+        <option value="">Select...</option>
+    </select><br>
+    <label for="">Contract Start</label><br>
+    <input type="text" data-ng-model="newClient.start" bs-datepicker><br>
+    <label for="">Contract End</label><br>
+    <input type="text" data-ng-model="newClient.end" bs-datepicker><br>
+    <label for="">Salesforce Account</label><br>
+    <input type="text"><br>
+    <h2>Team Tags</h2>
+    <div class="actions">
+        <a href="#/clients">Cancel</a>
+        <button type="button" data-ng-click="insertClient()">Save</button>
+    </div>
+</form>

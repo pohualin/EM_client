@@ -1,0 +1,20 @@
+<h1>Search</h1>
+<h2>Manage Clients, Teams, Providers and Locations:</h2>
+Search: <input data-ng-model="query" type="text"><br>
+<a data-ng-href="#/clients/new">Creat New Client</a>
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Salesforce Account</th>
+        <th>Contract Owner</th>
+        <th>Type</th>
+        <th>&nbsp;</th>
+    </tr>
+    <tr data-ng-repeat="client in clients | filter:query | orderBy:'name'">
+        <td>{{ client.name }}</td>
+        <td>{{ client.salesforce.name }}</td>
+        <td>{{ client.owner }}</td>
+        <td>{{ client.type }}</td>
+        <td><a href="#">edit</a></td>
+    </tr>
+</table>
