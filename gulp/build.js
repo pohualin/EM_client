@@ -47,6 +47,7 @@ gulp.task('html', ['styles', 'scripts', 'partials'], function () {
             addPrefix: '../'
         }))
         .pipe($.useref.assets())
+        .pipe($.rev())
         .pipe(jsFilter)
         .pipe($.ngmin())
         .pipe($.uglify())
@@ -54,11 +55,9 @@ gulp.task('html', ['styles', 'scripts', 'partials'], function () {
         .pipe(cssFilter)
         .pipe($.csso())
         .pipe(cssFilter.restore())
-        //.pipe($.rev())
-        //.pipe($.rev.manifest())
         .pipe($.useref.restore())
         .pipe($.useref())
-        //.pipe($.revReplace())
+        .pipe($.revReplace())
         .pipe(gulp.dest('dist'))
         .pipe($.size({title: 'html', showFiles:true}));
 });
