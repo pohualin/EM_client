@@ -1,12 +1,10 @@
---------------------------
-README - Emmi Manager 2.0
---------------------------
+Emmi Manager Client
+=============================
 
 The client-side setup for this project will run on AngularJS
 (https://angularjs.org/). It was scaffolded using the AngularJS
 with GulpJS Yeoman generator (https://github.com/Swiip/generator-gulp-angular).
 Front-end dependency management is handled through Bower.
-
 
 Tools
 -----------------------------------
@@ -16,7 +14,6 @@ Tools
 - Karma (http://karma-runner.github.io/)
 - Protractor (https://github.com/angular/protractor)
 - Hologram (http://trulia.github.io/hologram/)
-
 
 Setup
 -----------------------------------
@@ -29,17 +26,15 @@ package.json and bower.json files live):
 You can review https://github.com/Swiip/generator-gulp-angular for the
 different Gulp commands available.
 
-
 File Structure
 -----------------------------------
 
-app/ : Holds all app source files (Bower dependencies, images, html, javascript, stylesheets) for the client-side app
-dist/ : Holds all compiled app resources that will be deployed to production
-gulp/ : Holds the configuration files for our different Gulp tasks
-styleguide/ : The Hologram-generated styleguide site
-styleguide_assets/ : Hologram styleguide assets (HTML partials, docs-specific CSS) for the generated styleguide
-test/ : Configuration and spec tests for our unit tests and end-to-end tests
-
+- app/ : Holds all app source files (Bower dependencies, images, html, javascript, stylesheets) for the client-side app
+- dist/ : Holds all compiled app resources that will be deployed to production
+- gulp/ : Holds the configuration files for our different Gulp tasks
+- styleguide/ : The Hologram-generated styleguide site
+- styleguide_assets/ : Hologram styleguide assets (HTML partials, docs-specific CSS) for the generated styleguide
+- test/ : Configuration and spec tests for our unit tests and end-to-end tests
 
 Hologram Styleguide Generator
 -----------------------------------
