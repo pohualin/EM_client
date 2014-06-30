@@ -6,12 +6,13 @@ var emmiManagerApp = angular.module('emmiManager', [
     'ngSanitize',
     'ngResource',
     'ngRoute',
+    'pascalprecht.translate',
+    'mgcrea.ngStrap.datepicker',
     'emClientControllers',
-    'emClientServices',
-    'mgcrea.ngStrap.datepicker'
+    'emClientServices'
 ]);
 
-emmiManagerApp.config(function ($routeProvider) {
+emmiManagerApp.config(function ($routeProvider, $translateProvider) {
     $routeProvider
         .when('/', {
             templateUrl: 'partials/main.html',
@@ -28,4 +29,13 @@ emmiManagerApp.config(function ($routeProvider) {
         .otherwise({
             redirectTo: '/'
         });
+
+    // Initialize angular-translate
+    $translateProvider.useStaticFilesLoader({
+        prefix: 'i18n/',
+        suffix: '.json'
+    });
+
+    $translateProvider.preferredLanguage('en');
+
 });
