@@ -21,12 +21,16 @@ Setup
 Pull down the Git repo and run these commands from the root (where the
 package.json and bower.json files live):
 
-- run 'npm install'
-- run 'bower install'
-- install gulp via 'sudo npm install -g gulp'
+- run `npm install` (may need to run under `sudo`)
+- run `bower install` (may need to run under `sudo`)
+- install gulp via `npm install -g gulp` (may need to run under `sudo`)
+- need sass >= 3.3.8; via `gem install sass` (may need to run under `sudo`)
 
 You can review [Swiip Generator] (https://github.com/Swiip/generator-gulp-angular) for the
 different Gulp commands available.
+
+- `gulp serve`: starts the server which listens for changes (sync server) on the source files
+- `gulp serve:dist`: launch sync server using optimized files
 
 File Structure
 -----------------------------------
@@ -42,7 +46,7 @@ Hologram Style Guide Generator
 -----------------------------------
 
 Make sure you have Ruby installed.
-- run 'gem install hologram'
-- run 'hologram'
+- run `gem install hologram` (may need to run under `sudo`)
+- run `hologram`
 
-The updated or new style guide should get generated in the styleguide directory.
+The updated or new style guide should get generated in the `styleguide` directory.
