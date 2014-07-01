@@ -72,7 +72,7 @@ emmiManagerApp
             $rootScope.currentUser = null;
             $rootScope.userRoles = USER_ROLES;
             $rootScope.isAuthorized = AuthSharedService.isAuthorized;
-            AuthSharedService.valid(next.access.authorizedRoles);
+            AuthSharedService.valid((next.access) ? next.access.authorizedRoles : []);
         });
 
         // Call when the the client is confirmed
