@@ -21,8 +21,8 @@ Setup
 Pull down the Git repo and run these commands from the root (where the
 package.json and bower.json files live):
 
-- run `npm install` (may need to run under `sudo`)
-- run `bower install` (may need to run under `sudo`)
+- run `npm install`
+- run `bower install`: this fetches all of the javascript dependency libraries
 - install gulp via `npm install -g gulp` (may need to run under `sudo`)
 - need sass >= 3.3.8; via `gem install sass` (may need to run under `sudo`)
 
