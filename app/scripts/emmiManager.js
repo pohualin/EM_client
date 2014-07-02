@@ -7,6 +7,7 @@ var emmiManagerApp = angular.module('emmiManager', [
     'ngSanitize',
     'ngResource',
     'ngRoute',
+    'restangular',
     'pascalprecht.translate',
     'mgcrea.ngStrap.datepicker',
     'emAuthControllers',
@@ -23,7 +24,7 @@ emmiManagerApp.constant('USER_ROLES', {
 });
 
 emmiManagerApp
-    .config(function ($routeProvider, $httpProvider, $translateProvider, USER_ROLES) {
+    .config(function ($routeProvider, $httpProvider, $translateProvider, USER_ROLES, RestangularProvider) {
         $routeProvider
             .when('/', {
                 templateUrl: 'partials/main.html',
@@ -64,6 +65,21 @@ emmiManagerApp
         });
 
         $translateProvider.preferredLanguage('en');
+
+        // get Restangular working
+        RestangularProvider.setBaseUrl('webapi');
+        RestangularProvider.setDefaultHeaders({
+            'Content-Type': 'application/json'
+        });
+        RestangularProvider.setRestangularFields({
+            id: 'id',
+            route: 'restangularRoute',
+            selfLink: 'self.href'
+        });
+
+        // enable CORS, even though we will probably be reverse proxying
+        $httpProvider.defaults.useXDomain = true;
+        delete $httpProvider.defaults.headers.common['X-Requested-With'];
     })
     .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES) {
 
