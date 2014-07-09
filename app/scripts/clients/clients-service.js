@@ -5,7 +5,7 @@
 angular.module('emClientServices', ['restangular'])
     .service('Client', ['Restangular', function (Restangular) {
 
-        var clientService = Restangular.all('clients');
+        var clientService = Restangular.oneUrl('clients');
         var clientsDemo = [
             {
                 id: 1,
@@ -48,7 +48,7 @@ angular.module('emClientServices', ['restangular'])
         ];
         return {
             getClients: function () {
-                console.log(clientService.getList());
+                console.log(clientService.get().$object);
                 return clientsDemo;
             },
             insertClient: function (name, type, region) {
