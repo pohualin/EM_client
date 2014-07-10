@@ -1,20 +1,49 @@
 <h1>Search</h1>
 <h2>Manage Clients, Teams, Providers and Locations:</h2>
 Search: <input data-ng-model="query" type="text"><br>
-<a data-ng-href="#/clients/new">Creat New Client</a>
+<a data-ng-href="#/clients/new">Create New Client</a>
+<div>Total: {{total}}</div>
 <table border="1">
     <tr>
         <th>Name</th>
         <th>Salesforce Account</th>
         <th>Contract Owner</th>
         <th>Type</th>
-        <th>&nbsp;</th>
+        <th>Links</th>
     </tr>
     <tr data-ng-repeat="client in clients | filter:query | orderBy:'name'">
-        <td>{{ client.name }}</td>
-        <td>{{ client.salesforce.name }}</td>
-        <td>{{ client.owner }}</td>
-        <td>{{ client.type }}</td>
-        <td><a href="#">edit</a></td>
+        <td>{{client.entity.name}}</td>
+        <td>{{client.entity.salesForceAccount.name}}</td>
+        <td>{{client.entity.owner}}</td>
+        <td>{{client.entity.type}}</td>
+        <td>
+            <div data-ng-repeat="link in client.link">
+                <a data-ng-href="#/clients" data-ng-click="fetchLink(link.href)">{{link.rel}}</a>
+            </div>
+        </td>
     </tr>
 </table>
+<div>
+    Page Size:
+    <ul class="pagination page-size">
+        <li data-ng-repeat="pageSize in pageSizes">
+            <a data-ng-if="pageSize != currentPageSize" data-ng-href="#/clients"
+               data-ng-click="changePageSize(load, pageSize)">{{pageSize}}</a>
+            <span data-ng-if="pageSize === currentPageSize">[{{pageSize}}]</span>
+        </li>
+    </ul>
+</div>
+<div>
+    Pagination:
+    <ul class="pagination">
+        <li data-ng-repeat="link in links | orderBy:'order'">
+            <a data-ng-if="link.rel.substring(5) != currentPage" data-ng-href="#/clients"
+               data-ng-click="fetchPage(link.href)">{{link.rel.substring(5)}}</a>
+            <span data-ng-if="link.rel.substring(5) == currentPage">[{{link.rel.substring(5)}}]</span>
+        </li>
+    </ul>
+</div>
+<hr/>
+<div>
+    {{fetchedLink}}
+</div>

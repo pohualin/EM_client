@@ -7,7 +7,6 @@ var emmiManagerApp = angular.module('emmiManager', [
     'ngSanitize',
     'ngResource',
     'ngRoute',
-    'restangular',
     'pascalprecht.translate',
     'mgcrea.ngStrap.datepicker',
     'emAuthControllers',
@@ -24,7 +23,7 @@ emmiManagerApp.constant('USER_ROLES', {
 });
 
 emmiManagerApp
-    .config(function ($routeProvider, $httpProvider, $translateProvider, USER_ROLES, RestangularProvider) {
+    .config(function ($routeProvider, $httpProvider, $translateProvider, USER_ROLES) {
         $routeProvider
             .when('/', {
                 templateUrl: 'partials/main.html',
@@ -54,6 +53,9 @@ emmiManagerApp
                     authorizedRoles: [USER_ROLES.admin]
                 }
             })
+            .when('/403', {
+                templateUrl: 'partials/403.html'
+            })
             .otherwise({
                 redirectTo: '/'
             });
@@ -65,17 +67,6 @@ emmiManagerApp
         });
 
         $translateProvider.preferredLanguage('en');
-
-        // get Restangular working
-        RestangularProvider.setBaseUrl('webapi');
-        RestangularProvider.setDefaultHeaders({
-            'Content-Type': 'application/json'
-        });
-        RestangularProvider.setRestangularFields({
-            id: 'id',
-            route: 'restangularRoute',
-            selfLink: 'self.href'
-        });
 
         // enable CORS, even though we will probably be reverse proxying
         $httpProvider.defaults.useXDomain = true;
@@ -111,7 +102,7 @@ emmiManagerApp
         // Call when the 403 response is returned by the server
         $rootScope.$on('event:auth-notAuthorized', function(rejection) {
             //$rootScope.errorMessage = 'errors.403';
-            $location.path('/error').replace();
+            $location.path('/403').replace();
         });
 
         // Call when the user logs out

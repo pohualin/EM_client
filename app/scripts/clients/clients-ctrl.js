@@ -19,11 +19,48 @@ emClientControllers.controller('ClientCtrl', function($scope, $location, Client)
 
 });
 
-emClientControllers.controller('ClientListCtrl', function($scope, Client) {
-    //$scope.phones = Phone.query();
-    //$scope.orderProp = 'age';
+emClientControllers.controller('ClientListCtrl', function ($scope, Client, $http) {
 
-    $scope.clients = Client.getClients();
+    var fetchPage = function (href) {
+        Client.getClients(href).then(function (clientPage) {
+            console.log(clientPage);
+            $scope.clients = clientPage.client;
+            $scope.total = clientPage.totalNumber;
+            $scope.links = clientPage['navigation-link'];
+            $scope.load = clientPage['load-link'];
+            $scope.currentPage = clientPage.currentPage;
+            $scope.currentPageSize = clientPage.pageSize;
+            $scope.fetchedLink = null;
+            $scope.pageSizes = [10, 25, 50, 100];
+        });
+    };
+
+    $scope.fetchLink = function (href) {
+        $http.get(href)
+            .then(function (data) {
+                $scope.fetchedLink = JSON.stringify(data.data);
+            });
+    };
+
+    $scope.fetchPage = function (href) {
+        fetchPage(href);
+    };
+
+    $scope.changePageSize = function (loadLink, pageSize) {
+        var urlToLoad;
+        if (loadLink.templated) {
+            urlToLoad = new rfc6570.UriTemplate(loadLink.href).stringify({max: pageSize});
+        } else {
+            urlToLoad = loadLink.href;
+        }
+        if (urlToLoad) {
+            fetchPage(urlToLoad);
+        }
+    };
+
+    // fetch the first page
+    fetchPage('webapi/clients');
+
 });
 
 emClientControllers.controller('ClientDetailCtrl', function($scope, $routeParams, Client) {
