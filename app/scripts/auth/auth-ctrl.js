@@ -1,17 +1,15 @@
 'use strict';
 
-var emAuthControllers = angular.module('emAuthControllers', ['emAuthServices']);
-
-emAuthControllers.controller('LoginCtrl', function($scope, $location, AuthSharedService) {
+emmiManager.controller('LoginCtrl', function ($scope, $location, AuthSharedService, api) {
     $scope.credentials = {
         username: '',
         password: ''
     };
     $scope.login = function (credentials) {
-       AuthSharedService.login(credentials);
+        AuthSharedService.login(credentials, api);
     };
 });
 
-emAuthControllers.controller('LogoutCtrl', function($location, AuthSharedService) {
+emmiManager.controller('LogoutCtrl', function ($location, AuthSharedService) {
     AuthSharedService.logout();
 });

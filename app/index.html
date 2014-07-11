@@ -1,6 +1,6 @@
 <!doctype html>
 <html class="no-js" data-ng-app="emmiManager">
-  <head>
+<head>
     <meta charset="utf-8">
     <title>Emmi Manager</title>
     <meta name="description" content="">
@@ -14,42 +14,43 @@
     <!-- build:js scripts/modernizr.js -->
     <script src="bower_components/modernizr/modernizr.js"></script>
     <!-- endbuild -->
-  </head>
-  <body>
+</head>
+<body>
 
-    <div data-ng-view></div>
+<div data-ng-view></div>
 
-    <!-- build:js scripts/vendor.js -->
-    <!-- bower:js -->
-    <script src="bower_components/jquery/jquery.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/rfc6570/rfc6570.js"></script>
-    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
-    <script src="bower_components/angular-touch/angular-touch.js"></script>
-    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-    <script src="bower_components/angular-resource/angular-resource.js"></script>
-    <script src="bower_components/angular-route/angular-route.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="bower_components/angular-strap/dist/angular-strap.min.js"></script>
-    <script src="bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
-    <script src="bower_components/angular-translate/angular-translate.js"></script>
-    <script src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
-    <!-- endbower -->
-    <!-- endbuild -->
+<!-- build:js scripts/vendor.js -->
+<!-- bower:js -->
+<script src="bower_components/jquery/jquery.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/rfc6570/rfc6570.js"></script>
+<script src="bower_components/angular-cookies/angular-cookies.js"></script>
+<script src="bower_components/angular-touch/angular-touch.js"></script>
+<script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+<script src="bower_components/angular-resource/angular-resource.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="bower_components/angular-strap/dist/angular-strap.min.js"></script>
+<script src="bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
+<script src="bower_components/angular-translate/angular-translate.js"></script>
+<script src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
+<!-- endbower -->
+<!-- endbuild -->
 
-    <!-- build:js({app,.tmp}) scripts/main.js -->
-    <script src="scripts/vendor/http-auth-interceptor.js"></script>
-    <script src="scripts/emmiManager.js"></script>
-    <script src="scripts/main/main-ctrl.js"></script>
-    <script src="scripts/auth/auth-ctrl.js"></script>
-    <script src="scripts/auth/auth-service.js"></script>
-    <script src="scripts/auth/session-service.js"></script>
-    <script src="scripts/clients/clients-ctrl.js"></script>
-    <script src="scripts/clients/clients-service.js"></script>
-    <!-- inject:partials -->
-    <!-- endinject -->
-    <!-- endbuild -->
+<!-- build:js({app,.tmp}) scripts/main.js -->
+<script src="scripts/vendor/http-auth-interceptor.js"></script>
+<script src="scripts/emmiManager.js"></script>
+<script src="scripts/main/main-ctrl.js"></script>
+<script src="scripts/main/main-service.js"></script>
+<script src="scripts/auth/auth-ctrl.js"></script>
+<script src="scripts/auth/auth-service.js"></script>
+<script src="scripts/auth/session-service.js"></script>
+<script src="scripts/clients/clients-ctrl.js"></script>
+<script src="scripts/clients/clients-service.js"></script>
+<!-- inject:partials -->
+<!-- endinject -->
+<!-- endbuild -->
 
 
-  </body>
+</body>
 </html>

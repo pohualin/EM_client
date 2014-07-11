@@ -1,8 +1,6 @@
 'use strict';
 
-var emClientControllers = angular.module('emClientControllers', []);
-
-emClientControllers.controller('ClientCtrl', function($scope, $location, Client) {
+emmiManager.controller('ClientCtrl', function ($scope, $location, Client) {
     //$scope.phones = Phone.query();
     //$scope.orderProp = 'age';
 
@@ -19,7 +17,7 @@ emClientControllers.controller('ClientCtrl', function($scope, $location, Client)
 
 });
 
-emClientControllers.controller('ClientListCtrl', function ($scope, Client, $http) {
+emmiManager.controller('ClientListCtrl', function ($scope, Client, $http) {
 
     var fetchPage = function (href) {
         Client.getClients(href).then(function (clientPage) {
@@ -63,7 +61,7 @@ emClientControllers.controller('ClientListCtrl', function ($scope, Client, $http
 
 });
 
-emClientControllers.controller('ClientDetailCtrl', function($scope, $routeParams, Client) {
+emmiManager.controller('ClientDetailCtrl', function ($scope, $routeParams, Client) {
     // $scope.phone = Phone.get({phoneId: $routeParams.phoneId}, function(phone) {
     //   $scope.mainImageUrl = phone.images[0];
     // });

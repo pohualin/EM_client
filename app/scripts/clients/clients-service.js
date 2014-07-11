@@ -1,9 +1,6 @@
 'use strict';
 
-/* Services */
-
-angular.module('emClientServices', [])
-    .service('Client', ['$http', function ($http) {
+emmiManager.service('Client', ['$http', function ($http) {
         return {
             getClients: function (href) {
                 return $http.get(href)

@@ -1,23 +1,28 @@
 'use strict';
 
-/* Services */
-
-var emAuthServices = angular.module('emAuthServices', ['http-auth-interceptor', 'emSessionServices']);
-
-emAuthServices.factory('AuthSharedService', function ($rootScope, $http, authService, Session) {
+emmiManager.factory('AuthSharedService', function ($rootScope, $http, authService, Session) {
 
     return {
-        login: function (creds) {
+        login: function (creds, api) {
             // Make http or oAuth request here
-            if (creds.username === 'evan' && creds.password === 'emmi') {
-                Session.create('1234567890', 'evan', '1', 'ROLE_ADMIN');
-                $rootScope.currentUser = Session;
-                authService.loginConfirmed();
-            } else {
-                $rootScope.authenticationError = true;
-                $rootScope.authenticated = false;
-                Session.destroy();
-            }
+//            var data ="j_username=" + creds.username +"&j_password=" + creds.password +"&_spring_security_remember_me=" + creds.rememberMe +"&submit=Login";
+//            $http.post(api['authenticate-link'].href, data, {
+//                headers: {
+//                    "Content-Type": "application/x-www-form-urlencoded"
+//                },
+//                ignoreAuthModule: 'ignoreAuthModule'
+//            }).success(function (data, status, headers, config) {
+            $http.get(api['authenticated-link'].href).then(function (response) {
+                var user = response.data.entity;
+                user.roles = ['ROLE_ADMIN', 'ROLE_USER'];
+                Session.create(user.login, user.firstName, user.lastName, user.email, user.roles);
+                $rootScope.account = Session;
+                authService.loginConfirmed(response.data);
+            });
+//            }).error(function (data, status, headers, config) {
+//                $rootScope.authenticationError = true;
+//                Session.invalidate();
+//            });
         },
         valid: function (authorizedRoles) {
             $rootScope.currentUser = Session;

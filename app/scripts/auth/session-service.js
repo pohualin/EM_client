@@ -1,23 +1,19 @@
 'use strict';
 
-/* Services */
-
-var emSessionServices = angular.module('emSessionServices', []);
-
-emSessionServices.service('Session', function(){
-
-    this.create = function (sessionId, login, userId, userRoles) {
-        this.id = sessionId;
+emmiManager.factory('Session', [ function () {
+    this.create = function (login, firstName, lastName, email, userRoles) {
         this.login = login;
-        this.userId = userId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
         this.userRoles = userRoles;
     };
-    //this.invalidate = function () {
     this.destroy = function () {
-        this.id = null;
         this.login = null;
-        this.userId = null;
+        this.firstName = null;
+        this.lastName = null;
+        this.email = null;
         this.userRoles = null;
     };
-
-});
+    return this;
+}]);
