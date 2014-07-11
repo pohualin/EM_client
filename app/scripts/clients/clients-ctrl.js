@@ -1,6 +1,6 @@
 'use strict';
 
-emmiManager.controller('ClientCtrl', function ($scope, $location, Client) {
+emmiManager.controller('ClientCtrl', function ($scope, $location, Client, Session) {
     //$scope.phones = Phone.query();
     //$scope.orderProp = 'age';
 
@@ -8,7 +8,7 @@ emmiManager.controller('ClientCtrl', function ($scope, $location, Client) {
         var name = $scope.newClient.name;
         var type = $scope.newClient.type;
         var region = $scope.newClient.region;
-        Client.insertClient(name, type, region);
+        Client.insertClient(Session.createClient.href, name, type, region);
         $scope.newClient.name = '';
         $scope.newClient.type = '';
         $scope.newClient.region = '';
@@ -17,11 +17,10 @@ emmiManager.controller('ClientCtrl', function ($scope, $location, Client) {
 
 });
 
-emmiManager.controller('ClientListCtrl', function ($scope, Client, $http) {
+emmiManager.controller('ClientListCtrl', function ($scope, Client, $http, Session) {
 
     var fetchPage = function (href) {
         Client.getClients(href).then(function (clientPage) {
-            console.log(clientPage);
             $scope.clients = clientPage.client;
             $scope.total = clientPage.totalNumber;
             $scope.links = clientPage['navigation-link'];
@@ -56,8 +55,7 @@ emmiManager.controller('ClientListCtrl', function ($scope, Client, $http) {
         }
     };
 
-    // fetch the first page
-    fetchPage('webapi/clients');
+    fetchPage(new rfc6570.UriTemplate(Session.listClients.href).stringify({max: 50}));
 
 });
 

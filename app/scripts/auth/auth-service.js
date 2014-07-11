@@ -15,8 +15,7 @@ emmiManager.factory('AuthSharedService', function ($rootScope, $http, authServic
             $http.get(api['authenticated-link'].href).then(function (response) {
                 var user = response.data.entity;
                 user.roles = ['ROLE_ADMIN', 'ROLE_USER'];
-                Session.create(user.login, user.firstName, user.lastName, user.email, user.roles);
-                $rootScope.account = Session;
+                $rootScope.account = Session.create(user.login, user.firstName, user.lastName, user.email, user.roles, response.data.link);
                 authService.loginConfirmed(response.data);
             });
 //            }).error(function (data, status, headers, config) {
