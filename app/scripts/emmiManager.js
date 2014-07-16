@@ -77,9 +77,8 @@ emmiManager
 
         $translateProvider.preferredLanguage('en');
 
-        // enable CORS, even though we will probably be reverse proxying
-        $httpProvider.defaults.useXDomain = true;
-        delete $httpProvider.defaults.headers.common['X-Requested-With'];
+        // make sure the server knows that an AJAX call is happening
+        $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
     })
     .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES) {
 
