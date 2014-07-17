@@ -2,11 +2,11 @@
 <div data-ng-show="authenticationError" data-translate="login.messages.error.authentication">
     <strong>Authentication failed!</strong> Please check your credentials and try again.
 </div>
-<p>Any username and password will be accepted.</p>
-<form name="loginForm" ng-submit="login(credentials)" novalidate>
-    <label for="username">Username:</label><br>
-    <input type="text" id="username" ng-model="credentials.username"><br>
-    <label for="password">Password:</label><br>
-    <input type="password" id="password" ng-model="credentials.password"><br>
-    <button type="submit">Login</button>
+<form name="loginForm" data-ng-submit="login(credentials)" novalidate>
+    <table>
+        <tbody><tr><td>User:</td><td><input type="text" data-ng-model="credentials.username"></td></tr>
+        <tr><td>Password:</td><td><input type="password" data-ng-model="credentials.password"></td></tr>
+        <tr><td><input type="checkbox" data-ng-model="credentials.rememberMe"></td><td>Remember me on this computer.</td></tr>
+        <tr><td colspan="2"><button name="submit" type="submit">Login</button></td></tr>
+        </tbody></table>
 </form>

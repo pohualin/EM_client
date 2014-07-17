@@ -1,6 +1,6 @@
 'use strict';
 
-var emmiManager = angular.module('emmiManager', [
+angular.module('emmiManager', [
     'http-auth-interceptor',
     'ngCookies',
     'ngTouch',
@@ -9,20 +9,22 @@ var emmiManager = angular.module('emmiManager', [
     'ngRoute',
     'pascalprecht.translate',
     'mgcrea.ngStrap.datepicker'
-]);
+])
 
-emmiManager.constant('USER_ROLES', {
-    all: '*',
-    admin: 'ROLE_ADMIN',
-    user: 'ROLE_USER'
-});
+    .constant('USER_ROLES', {
+        all: '*',
+        admin: 'PERM_GOD',
+        user: 'PERM_USER'
+    })
 
-emmiManager
     .config(function ($routeProvider, $httpProvider, $translateProvider, USER_ROLES) {
 
         var requiredResources = {
             'api': ['Api', function (Api) {
                 return Api.load();
+            }],
+            'account': ['AuthSharedService', function (AuthSharedService) {
+                return AuthSharedService.currentUser();
             }]
         };
 
@@ -62,11 +64,25 @@ emmiManager
             })
             .when('/403', {
                 templateUrl: 'partials/403.html',
-                resolve: requiredResources
+                resolve: requiredResources,
+                access: {
+                    authorizedRoles: [USER_ROLES.all]
+                }
+            })
+            .when('/logout', {
+                templateUrl: 'partials/main.html',
+                controller: 'LogoutCtrl',
+                resolve: requiredResources,
+                access: {
+                    authorizedRoles: [USER_ROLES.all]
+                }
             })
             .otherwise({
                 redirectTo: '/',
-                resolve: requiredResources
+                resolve: requiredResources,
+                access: {
+                    authorizedRoles: [USER_ROLES.all]
+                }
             });
 
         // Initialize angular-translate
@@ -80,14 +96,13 @@ emmiManager
         // make sure the server knows that an AJAX call is happening
         $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
     })
+
     .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES) {
 
-        $rootScope.$on('$routeChangeStart', function (event, next, current) {
-            // if route requires auth and user is not logged in
-            $rootScope.currentUser = null;
+        $rootScope.$on('$routeChangeStart', function (event, next) {
             $rootScope.userRoles = USER_ROLES;
             $rootScope.isAuthorized = AuthSharedService.isAuthorized;
-            AuthSharedService.valid((next.access) ? next.access.authorizedRoles : []);
+            AuthSharedService.authorizedRoute((next.access) ? next.access.authorizedRoles : [USER_ROLES.all]);
         });
 
         // Call when the the client is confirmed
@@ -118,5 +133,4 @@ emmiManager
             $location.path('');
         });
 
-    })
-;
+    });

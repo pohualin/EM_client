@@ -1,10 +1,11 @@
 <div class="container">
     <h1>Emmi Manager 2.0</h1>
-    <p>Welcome {{ currentUser.login }}</p>
+    <p>Welcome {{ account.login }}</p>
     <div>
-        <ul>
-            <li><a data-ng-href="#/login">Login</a></li>
-            <li><a data-ng-href="#/clients">Clients</a></li>
+        <ul data-ng-switch="authenticated">
+            <li data-ng-switch-when="false"><a data-ng-href="#/login">Login</a></li>
+            <li data-ng-switch-when="true"><a data-ng-href="#/logout">Log Out</a></li>
+            <li data-ng-show="isAuthorized(userRoles.admin)"><a data-ng-href="#/clients">Clients</a></li>
         </ul>
     </div>
     <div>
@@ -13,7 +14,4 @@
             <li><a href="#" data-ng-click="changeLanguage('de')" data-translate="global.language.de">German</a></li>
         </ul>
     </div>
-    <!-- <ul>
-        <li ng-repeat="awesomeThing in awesomeThings">{{awesomeThing}}</li>
-    </ul> -->
 </div>

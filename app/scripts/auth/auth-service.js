@@ -1,67 +1,102 @@
 'use strict';
 
-emmiManager.factory('AuthSharedService', function ($rootScope, $http, authService, Session) {
+angular.module('emmiManager')
+    .factory('AuthSharedService', function ($rootScope, $http, authService, Session, Api, $q) {
 
-    return {
-        login: function (creds, api) {
-            // Make http or oAuth request here
-//            var data ="j_username=" + creds.username +"&j_password=" + creds.password +"&_spring_security_remember_me=" + creds.rememberMe +"&submit=Login";
-//            $http.post(api['authenticate-link'].href, data, {
-//                headers: {
-//                    "Content-Type": "application/x-www-form-urlencoded"
-//                },
-//                ignoreAuthModule: 'ignoreAuthModule'
-//            }).success(function (data, status, headers, config) {
-            $http.get(api['authenticated-link'].href).then(function (response) {
-                var user = response.data.entity;
-                user.roles = ['ROLE_ADMIN', 'ROLE_USER'];
-                $rootScope.account = Session.create(user.login, user.firstName, user.lastName, user.email, user.roles, response.data.link);
-                authService.loginConfirmed(response.data);
-            });
-//            }).error(function (data, status, headers, config) {
-//                $rootScope.authenticationError = true;
-//                Session.invalidate();
-//            });
-        },
-        valid: function (authorizedRoles) {
-            $rootScope.currentUser = Session;
-            if (!$rootScope.isAuthorized(authorizedRoles)) {
-                event.preventDefault();
-                // user is not allowed
-                $rootScope.$broadcast('event:auth-notAuthorized');
-            }
-            //$rootScope.authenticated = !!Session.login;
-        },
-        isAuthenticated: function () {
-          return !!Session.userId;
-        },
-        isAuthorized: function (authorizedRoles) {
-            if (!angular.isArray(authorizedRoles)) {
-                if (authorizedRoles === '*') {
-                    return true;
+        return {
+            login: function (creds, loginLink) {
+                var self = this;
+                var data = 'j_username=' + creds.username + '&j_password=' + creds.password + '&remember-me=' + creds.rememberMe + '&submit=Login';
+                $http.post(loginLink, data, {
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    ignoreAuthModule: 'ignoreAuthModule'
+                }).success(function () {
+                    self.currentUser().then(function (currentUser) {
+                        authService.loginConfirmed(currentUser);
+                    });
+                }).error(function () {
+                    $rootScope.authenticationError = true;
+                    Session.destroy();
+                });
+            },
+            currentUser: function () {
+                var deferred = $q.defer();
+                Api.load().then(function (api) {
+                    if (!Session.login) {
+                        $http.get(api['authenticated-link'].href, {
+                            ignoreAuthModule: 'ignoreAuthModule'
+                        }).success(function (user) {
+                            $rootScope.account = Session.create(user.login, user.firstName, user.lastName, user.email, user.permission, user.link);
+                            $rootScope.authenticated = true;
+                            deferred.resolve($rootScope.account);
+                        }).error(function (err) {
+                            deferred.resolve({notLoggedIn: true});
+                            $rootScope.authenticated = false;
+                        });
+                    } else {
+                        $rootScope.authenticated = !!Session.login;
+                        $rootScope.account = Session;
+                        deferred.resolve(Session);
+                    }
+                });
+                return deferred.promise;
+            },
+            authorizedRoute: function (authorizedRoles) {
+                var self = this;
+                self.currentUser().then(function (user){
+                    if (!self.isAuthorized(authorizedRoles)) {
+                        event.preventDefault();
+                        if (user === null || user.notLoggedIn){
+                            // user needs to login
+                            $rootScope.$broadcast('event:auth-loginRequired');
+                        } else {
+                            // user is not allowed
+                            $rootScope.$broadcast('event:auth-notAuthorized');
+                        }
+                    }
+                });
+            },
+            isAuthorized: function (authorizedRoles) {
+                if (!angular.isArray(authorizedRoles)) {
+                    if (authorizedRoles === '*') {
+                        return true;
+                    }
+                    authorizedRoles = [authorizedRoles];
                 }
-                authorizedRoles = [authorizedRoles];
+
+                var isAuthorized = false;
+                angular.forEach(authorizedRoles, function (authorizedRole) {
+
+                    var authorized = (!!Session.login &&
+                        Session.userRoles.indexOf(authorizedRole) !== -1);
+
+                    if (authorized || authorizedRole === '*') {
+                        isAuthorized = true;
+                    }
+                });
+
+                return isAuthorized;
+            },
+            logout: function (logoutLink) {
+                var self = this;
+                $http.get(logoutLink)
+                    .success(function () {
+                        self.localLogout();
+                    }).error(function () {
+                        self.localLogout();
+                    });
+
+            },
+            localLogout: function () {
+                $rootScope.authenticated = false;
+                $rootScope.account = null;
+                Session.destroy();
+                authService.loginCancelled();
             }
 
-            var isAuthorized = false;
-            angular.forEach(authorizedRoles, function(authorizedRole) {
-                var authorized = (!!Session.login &&
-                    Session.userRoles.indexOf(authorizedRole) !== -1);
+        };
 
-                if (authorized || authorizedRole === '*') {
-                    isAuthorized = true;
-                }
-            });
-
-            return isAuthorized;
-        },
-        logout: function () {
-            $rootScope.authenticated = false;
-            $rootScope.currentUser = null;
-            //$http.get('app/logout');
-            Session.destroy();
-            authService.loginCancelled();
-        }
-    };
-
-});
+    })
+;
