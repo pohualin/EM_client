@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('emmiManager')
-    .factory('UriTemplate', function ($http) {
+    .factory('UriTemplate', function () {
 
         /* jshint ignore:start */
         var operatorOptions = {
