@@ -14,7 +14,7 @@ Search: <input data-ng-model="query" type="text"><br>
     <tr data-ng-repeat="client in clients | filter:query | orderBy:'name'">
         <td>{{client.entity.name}}</td>
         <td>{{client.entity.salesForceAccount.name}}</td>
-        <td>{{client.entity.owner}}</td>
+        <td>{{client.entity.contractOwner.firstName}} {{client.entity.contractOwner.lastName}}</td>
         <td>{{client.entity.type}}</td>
         <td>
             <div data-ng-repeat="link in client.link">
