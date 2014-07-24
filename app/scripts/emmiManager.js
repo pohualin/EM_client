@@ -18,7 +18,7 @@ angular.module('emmiManager', [
         user: 'PERM_USER'
     })
 
-    .config(function ($routeProvider, $httpProvider, $translateProvider, USER_ROLES, HateoasInterceptorProvider) {
+    .config(function ($routeProvider, $httpProvider, $translateProvider, USER_ROLES, HateoasInterceptorProvider, $datepickerProvider) {
 
         var requiredResources = {
             'api': ['Api', function (Api) {
@@ -99,6 +99,13 @@ angular.module('emmiManager', [
 
         // enable HATEOAS link array --> object parsing on $get
         HateoasInterceptorProvider.transformAllResponses();
+
+        // ensure dates are compatible with back-end
+        angular.extend($datepickerProvider.defaults, {
+            dateFormat: 'MM/dd/yyyy',
+            modelDateFormat: 'yyyy-MM-dd',
+            dateType: 'string'
+        });
     })
 
     .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES) {

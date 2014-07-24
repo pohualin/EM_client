@@ -26,7 +26,7 @@ Search: <input data-ng-model="query" type="text"><br>
 <div data-ng-hide="clients">
     <span>There are no clients found.</span>
 </div>
-<div data-ng-show="clients">
+<div data-ng-show="links">
     Page Size:
     <ul class="pagination page-size">
         <li data-ng-repeat="pageSize in pageSizes">
@@ -36,7 +36,7 @@ Search: <input data-ng-model="query" type="text"><br>
         </li>
     </ul>
 </div>
-<div data-ng-show="clients">
+<div data-ng-show="links">
     Pagination:
     <ul class="pagination">
         <li data-ng-repeat="link in links | orderBy:'order'">

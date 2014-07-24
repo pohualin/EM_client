@@ -2,19 +2,27 @@
 
 angular.module('emmiManager')
 
-    .controller('ClientCtrl', function ($scope, $location, Client, Session) {
-        //$scope.phones = Phone.query();
-        //$scope.orderProp = 'age';
+    .controller('ClientCtrl', function ($scope, $location, Client, Session, UriTemplate, $filter) {
+
+        Client.getReferenceData(Session.link.clientsReferenceData).then(function (refData) {
+            $scope.clientTypes = refData.clientType;
+            $scope.clientRegions = refData.clientRegion;
+            $scope.clientTiers = refData.clientTier;
+            $scope.contractOwners = refData.contractOwner;
+        });
 
         $scope.insertClient = function () {
-            var name = $scope.newClient.name;
-            var type = $scope.newClient.type;
-            var region = $scope.newClient.region;
-            Client.insertClient(Session.createClient.href, name, type, region);
-            $scope.newClient.name = '';
-            $scope.newClient.type = '';
-            $scope.newClient.region = '';
-            $location.path('/clients');
+            Client.insertClient(UriTemplate.create(Session.link.clients).stringify(),
+                {
+                    'name': $scope.newClient.name,
+                    'type': $scope.newClient.type,
+                    'contractOwner': $scope.newClient.contractOwner,
+                    'contractStart': $scope.newClient.start,
+                    'contractEnd': $scope.newClient.end,
+                    'region': $scope.newClient.region
+                }).then(function (response) {
+                    $location.path('/clients');
+                });
         };
 
     })
@@ -26,7 +34,7 @@ angular.module('emmiManager')
                     $scope.clients = clientPage.content;
                     $scope.total = clientPage.page.totalElements;
                     $scope.links = [];
-                    for(var i=0, l = clientPage.linkList.length; i < l; i++){
+                    for (var i = 0, l = clientPage.linkList.length; i < l; i++) {
                         var aLink = clientPage.linkList[i];
                         if (aLink.rel.indexOf('self') === -1) {
                             $scope.links.push({
