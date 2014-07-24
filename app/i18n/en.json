@@ -56,6 +56,11 @@
             }
         }
     },
+    "client": {
+        "links": {
+            "edit": "Edit Client"
+        }
+    },
     "errors": {
         "title": "Error page!",
         "403": "You are not authorized."

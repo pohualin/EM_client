@@ -55,8 +55,16 @@ angular.module('emmiManager', [
                 resolve: requiredResources
             })
             .when('/clients/new', {
-                templateUrl: 'partials/createClient.html',
+                templateUrl: 'partials/client_edit.html',
                 controller: 'ClientCtrl',
+                access: {
+                    authorizedRoles: [USER_ROLES.admin]
+                },
+                resolve: requiredResources
+            })
+            .when('/clients/edit', {
+                templateUrl: 'partials/client_edit.html',
+                controller: 'ClientDetailCtrl',
                 access: {
                     authorizedRoles: [USER_ROLES.admin]
                 },

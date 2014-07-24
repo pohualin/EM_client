@@ -2,32 +2,32 @@
 
 angular.module('emmiManager')
 
-    .controller('ClientCtrl', function ($scope, $location, Client, Session, UriTemplate, $filter) {
+    .controller('ClientCtrl', function ($scope, $location, Client) {
 
-        Client.getReferenceData(Session.link.clientsReferenceData).then(function (refData) {
+        Client.getReferenceData().then(function (refData) {
             $scope.clientTypes = refData.clientType;
             $scope.clientRegions = refData.clientRegion;
             $scope.clientTiers = refData.clientTier;
             $scope.contractOwners = refData.contractOwner;
         });
+        $scope.client = {
+            'name': null,
+            'type': null,
+            'contractOwner': null,
+            'contractStart': null,
+            'contractEnd': null,
+            'region': null
+        };
 
-        $scope.insertClient = function () {
-            Client.insertClient(UriTemplate.create(Session.link.clients).stringify(),
-                {
-                    'name': $scope.newClient.name,
-                    'type': $scope.newClient.type,
-                    'contractOwner': $scope.newClient.contractOwner,
-                    'contractStart': $scope.newClient.start,
-                    'contractEnd': $scope.newClient.end,
-                    'region': $scope.newClient.region
-                }).then(function (response) {
-                    $location.path('/clients');
-                });
+        $scope.save = function () {
+            Client.insertClient($scope.client).then(function () {
+                $location.path('/clients');
+            });
         };
 
     })
 
-    .controller('ClientListCtrl', function ($scope, Client, $http, Session, UriTemplate) {
+    .controller('ClientListCtrl', function ($scope, Client, $http, Session, UriTemplate, $location) {
         var fetchPage = function (href) {
             Client.getClients(href).then(function (clientPage) {
                 if (clientPage) {
@@ -55,11 +55,10 @@ angular.module('emmiManager')
             });
         };
 
-        $scope.fetchLink = function (href) {
-            $http.get(href)
-                .then(function (data) {
-                    $scope.fetchedLink = JSON.stringify(data.data);
-                });
+        $scope.selectClient = function (href) {
+            Client.selectClient(href).then(function () {
+                $location.path('/clients/edit');
+            });
         };
 
         $scope.fetchPage = function (href) {
@@ -74,13 +73,26 @@ angular.module('emmiManager')
         fetchPage(UriTemplate.create(Session.link.clients).stringify());
     })
 
-    .controller('ClientDetailCtrl', function ($scope, $routeParams, Client) {
-        // $scope.phone = Phone.get({phoneId: $routeParams.phoneId}, function(phone) {
-        //   $scope.mainImageUrl = phone.images[0];
-        // });
+    .controller('ClientDetailCtrl', function ($scope, $location, Client) {
 
-        // $scope.setImage = function(imageUrl) {
-        //   $scope.mainImageUrl = imageUrl;
-        // }
+        Client.getReferenceData().then(function (refData) {
+            $scope.clientTypes = refData.clientType;
+            $scope.clientRegions = refData.clientRegion;
+            $scope.clientTiers = refData.clientTier;
+            $scope.contractOwners = refData.contractOwner;
+        });
+
+        var client = Client.getClient();
+        if (client) {
+            $scope.client = client;
+        } else {
+            $location.path('/clients');
+        }
+
+        $scope.save = function () {
+            Client.updateClient($scope.client).then(function () {
+                $location.path('/clients');
+            });
+        };
     })
 ;

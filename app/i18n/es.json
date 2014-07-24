@@ -16,7 +16,7 @@
                 "register": "You don't have an account yet? <a href=\"#/register\">Register a new account</a>"
             },
             "error": {
-                "dontmatch" : "The password and its confirmation do not match!"
+                "dontmatch": "The password and its confirmation do not match!"
             },
             "validate": {
                 "newpassword": {
@@ -54,6 +54,11 @@
             "error": {
                 "authentication": "<strong>Error de autenticación!</strong> Por favor verifique sus credenciales y vuelva a intentarlo."
             }
+        }
+    },
+    "client": {
+        "links": {
+            "edit": "Edito el Cliento"
         }
     },
     "errors": {

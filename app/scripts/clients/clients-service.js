@@ -1,6 +1,8 @@
 'use strict';
 angular.module('emmiManager')
-    .service('Client', ['$http', function ($http) {
+    .service('Client', function ($http, $q, Session, UriTemplate) {
+        var selectedClient;
+        var referenceData;
         return {
             getClients: function (href) {
                 return $http.get(href)
@@ -9,25 +11,44 @@ angular.module('emmiManager')
                     });
 
             },
-            insertClient: function (href, client) {
-                return $http.post(href, client).success(function (response, status) {
-                    return response;
-                });
+            insertClient: function (client) {
+                return $http.post(UriTemplate.create(Session.link.clients).stringify(), client)
+                    .success(function (response, status) {
+                        return response;
+                    });
+            },
+            updateClient: function (client) {
+                return $http.put(UriTemplate.create(Session.link.clients).stringify(), client)
+                    .success(function (response, status) {
+                        return response;
+                    });
             },
             deleteClient: function (id) {
 
             },
-            getClient: function (id) {
-
+            getClient: function () {
+                return selectedClient;
             },
-            getReferenceData: function (href) {
-                return $http.get(href, {
-                    cache: true
-                }).then(function (response) {
-                    return response.data;
-                });
+            selectClient: function (href) {
+                return $http.get(href)
+                    .then(function (response) {
+                        selectedClient = response.data.entity;
+                        return selectedClient;
+                    });
+            },
+            getReferenceData: function () {
+                var deferred = $q.defer();
+                if (!referenceData) {
+                    $http.get(Session.link.clientsReferenceData).then(function (response) {
+                        referenceData = response.data;
+                        deferred.resolve(referenceData);
+                    });
+                } else {
+                    deferred.resolve(referenceData);
+                }
+                return deferred.promise;
             }
         };
 
-    }])
+    })
 ;

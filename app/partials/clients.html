@@ -17,8 +17,8 @@ Search: <input data-ng-model="query" type="text"><br>
         <td>{{client.entity.contractOwner.firstName}} {{client.entity.contractOwner.lastName}}</td>
         <td>{{client.entity.type}}</td>
         <td>
-            <div data-ng-repeat="link in client.link">
-                <a data-ng-href="#/clients" data-ng-click="fetchLink(link.href)">{{link.rel}}</a>
+            <div data-ng-repeat="link in client.link| filter:{rel: 'self'}">
+                <a data-ng-href="#/clients" data-ng-click="selectClient(link.href)" data-translate="client.links.edit">Edit</a>
             </div>
         </td>
     </tr>
