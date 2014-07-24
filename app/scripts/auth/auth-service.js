@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('emmiManager')
-    .factory('AuthSharedService', function ($rootScope, $http, authService, Session, Api, $q) {
+    .factory('AuthSharedService', function ($rootScope, $http, authService, Session, API, $q) {
 
         return {
             login: function (creds, loginLink) {
@@ -23,32 +23,31 @@ angular.module('emmiManager')
             },
             currentUser: function () {
                 var deferred = $q.defer();
-                Api.load().then(function (api) {
-                    if (!Session.login) {
-                        $http.get(api.link.authenticated, {
-                            ignoreAuthModule: 'ignoreAuthModule'
-                        }).success(function (user) {
-                            $rootScope.account = Session.create(user.login, user.firstName, user.lastName, user.email, user.permission, user.link);
-                            $rootScope.authenticated = true;
-                            deferred.resolve($rootScope.account);
-                        }).error(function (err) {
-                            deferred.resolve({notLoggedIn: true});
-                            $rootScope.authenticated = false;
-                        });
-                    } else {
-                        $rootScope.authenticated = !!Session.login;
-                        $rootScope.account = Session;
-                        deferred.resolve(Session);
-                    }
-                });
+                if (!Session.login) {
+                    $http.get(API.authenticated, {
+                        ignoreAuthModule: 'ignoreAuthModule'
+                    }).success(function (user) {
+                        $rootScope.account = Session.create(user.login, user.firstName, user.lastName, user.email, user.permission, user.link);
+                        $rootScope.authenticated = true;
+                        deferred.resolve($rootScope.account);
+                    }).error(function (err) {
+                        deferred.resolve({notLoggedIn: true});
+                        $rootScope.authenticated = false;
+                    });
+                } else {
+                    $rootScope.authenticated = !!Session.login;
+                    $rootScope.account = Session;
+                    deferred.resolve(Session);
+                }
+
                 return deferred.promise;
             },
             authorizedRoute: function (authorizedRoles) {
                 var self = this;
-                self.currentUser().then(function (user){
+                self.currentUser().then(function (user) {
                     if (!self.isAuthorized(authorizedRoles)) {
                         event.preventDefault();
-                        if (user === null || user.notLoggedIn){
+                        if (user === null || user.notLoggedIn) {
                             // user needs to login
                             $rootScope.$broadcast('event:auth-loginRequired');
                         } else {

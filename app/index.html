@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" data-ng-app="emmiManager">
+<html class="no-js">
 <head>
     <meta charset="utf-8">
     <title>Emmi Manager</title>
@@ -43,7 +43,6 @@
 <script src="scripts/vendor/hateoas.js"></script>
 <script src="scripts/emmiManager.js"></script>
 <script src="scripts/main/main-ctrl.js"></script>
-<script src="scripts/main/main-service.js"></script>
 <script src="scripts/vendor/rfc6570.js"></script>
 <script src="scripts/auth/auth-ctrl.js"></script>
 <script src="scripts/auth/auth-service.js"></script>
@@ -54,6 +53,35 @@
 <!-- endinject -->
 <!-- endbuild -->
 
+<script>
+    (function () {
+        // load the initial web-api
+        var initInjector = angular.injector(['ng']);
+        var $http = initInjector.get('$http');
+        $http.get('/webapi')
+                .success(function (data) {
+                    var api = {};
+                    angular.forEach(data.link, function (item) {
+                        if (item.rel && item.href) {
+                            api[item.rel] = item.href;
+                        }
+                    });
+                    // save as a constant
+                    angular.module('emmiManager.api', [])
+                            .constant('API', api);
 
+                    // load the main application
+                    angular.element(document).ready(function () {
+                        angular.bootstrap(document, ['emmiManager']);
+                    });
+                })
+                .error(function (data, response) {
+                    window.location = '/404.html';
+                    console.log("Unknown error");
+                    console.log(data);
+                    console.log(response);
+                });
+    })();
+</script>
 </body>
 </html>

@@ -8,6 +8,7 @@ angular.module('emmiManager', [
     'ngResource',
     'ngRoute',
     'hateoas',
+    'emmiManager.api',
     'pascalprecht.translate',
     'tmh.dynamicLocale',
     'mgcrea.ngStrap.datepicker'
@@ -22,9 +23,6 @@ angular.module('emmiManager', [
     .config(function ($routeProvider, $httpProvider, $translateProvider, tmhDynamicLocaleProvider, USER_ROLES, HateoasInterceptorProvider, $datepickerProvider) {
 
         var requiredResources = {
-            'api': ['Api', function (Api) {
-                return Api.load();
-            }],
             'account': ['AuthSharedService', function (AuthSharedService) {
                 return AuthSharedService.currentUser();
             }]
