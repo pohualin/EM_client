@@ -19,7 +19,7 @@ angular.module('emmiManager', [
         user: 'PERM_USER'
     })
 
-    .config(function ($routeProvider, $httpProvider, $translateProvider, tmhDynamicLocaleProvider, USER_ROLES, $datepickerProvider) {
+    .config(function ($routeProvider, $httpProvider, $translateProvider, tmhDynamicLocaleProvider, USER_ROLES, HateoasInterceptorProvider, $datepickerProvider) {
 
         var requiredResources = {
             'api': ['Api', function (Api) {
