@@ -25,7 +25,7 @@ angular.module('emmiManager')
                 var deferred = $q.defer();
                 Api.load().then(function (api) {
                     if (!Session.login) {
-                        $http.get(api['authenticated-link'].href, {
+                        $http.get(api.link.authenticated, {
                             ignoreAuthModule: 'ignoreAuthModule'
                         }).success(function (user) {
                             $rootScope.account = Session.create(user.login, user.firstName, user.lastName, user.email, user.permission, user.link);

@@ -7,6 +7,7 @@ angular.module('emmiManager', [
     'ngSanitize',
     'ngResource',
     'ngRoute',
+    'hateoas',
     'pascalprecht.translate',
     'mgcrea.ngStrap.datepicker'
 ])
@@ -17,7 +18,7 @@ angular.module('emmiManager', [
         user: 'PERM_USER'
     })
 
-    .config(function ($routeProvider, $httpProvider, $translateProvider, USER_ROLES) {
+    .config(function ($routeProvider, $httpProvider, $translateProvider, USER_ROLES, HateoasInterceptorProvider) {
 
         var requiredResources = {
             'api': ['Api', function (Api) {
@@ -95,6 +96,9 @@ angular.module('emmiManager', [
 
         // make sure the server knows that an AJAX call is happening
         $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+        // enable HATEOAS link array --> object parsing on $get
+        HateoasInterceptorProvider.transformAllResponses();
     })
 
     .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES) {

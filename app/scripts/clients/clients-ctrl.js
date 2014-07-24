@@ -20,17 +20,30 @@ angular.module('emmiManager')
     })
 
     .controller('ClientListCtrl', function ($scope, Client, $http, Session, UriTemplate) {
-
         var fetchPage = function (href) {
             Client.getClients(href).then(function (clientPage) {
-                $scope.clients = clientPage.client;
-                $scope.total = clientPage.totalNumber;
-                $scope.links = clientPage['navigation-link'];
-                $scope.load = clientPage['load-link'];
-                $scope.currentPage = clientPage.currentPage;
-                $scope.currentPageSize = clientPage.pageSize;
-                $scope.fetchedLink = null;
-                $scope.pageSizes = [10, 25, 50, 100];
+                if (clientPage) {
+                    $scope.clients = clientPage.content;
+                    $scope.total = clientPage.page.totalElements;
+                    $scope.links = [];
+                    for(var i=0, l = clientPage.linkList.length; i < l; i++){
+                        var aLink = clientPage.linkList[i];
+                        if (aLink.rel.indexOf('self') === -1) {
+                            $scope.links.push({
+                                order: i,
+                                name: aLink.rel.substring(5),
+                                href: aLink.href
+                            });
+                        }
+                    }
+                    $scope.load = clientPage.link.self;
+                    $scope.currentPage = clientPage.page.number;
+                    $scope.currentPageSize = clientPage.page.size;
+                    $scope.fetchedLink = null;
+                    $scope.pageSizes = [10, 25, 50, 100];
+                } else {
+                    $scope.total = 0;
+                }
             });
         };
 
@@ -46,17 +59,11 @@ angular.module('emmiManager')
         };
 
         $scope.changePageSize = function (loadLink, pageSize) {
-            var urlToLoad;
-            if (loadLink.templated) {
-                urlToLoad = UriTemplate.create(loadLink.href).stringify({max: pageSize});
-            } else {
-                urlToLoad = loadLink.href;
-            }
-            if (urlToLoad) {
-                fetchPage(urlToLoad);
-            }
+            fetchPage(UriTemplate.create(loadLink).stringify({size: pageSize}));
         };
-        fetchPage(UriTemplate.create(Session.listClients.href).stringify({max: 50}));
+
+        // initial load of clients
+        fetchPage(UriTemplate.create(Session.link.clients).stringify());
     })
 
     .controller('ClientDetailCtrl', function ($scope, $routeParams, Client) {

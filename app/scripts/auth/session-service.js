@@ -2,20 +2,13 @@
 
 angular.module('emmiManager')
     .factory('Session', [ function () {
-        this.create = function (login, firstName, lastName, email, userRoles, links) {
+        this.create = function (login, firstName, lastName, email, userRoles, link) {
             this.login = login;
             this.firstName = firstName;
             this.lastName = lastName;
             this.email = email;
             this.userRoles = userRoles;
-            if (links && links.length) {
-                var arrayLength = links.length;
-                for (var i = 0; i < arrayLength; i++) {
-                    var link = links[i];
-                    this[link.rel] = link;
-                }
-            }
-            this.links = links;
+            this.link = link;
         };
         this.destroy = function () {
             this.login = null;
@@ -23,7 +16,7 @@ angular.module('emmiManager')
             this.lastName = null;
             this.email = null;
             this.userRoles = null;
-            this.links = null;
+            this.link = null;
         };
         return this;
     }])

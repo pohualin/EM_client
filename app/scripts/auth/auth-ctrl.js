@@ -8,12 +8,12 @@ angular.module('emmiManager')
             rememberMe: false
         };
         $scope.login = function (credentials) {
-            AuthSharedService.login(credentials, api['authenticate-link'].href);
+            AuthSharedService.login(credentials, api.link.authenticate);
         };
     })
 
     .controller('LogoutCtrl', function ($location, AuthSharedService, api) {
-        AuthSharedService.logout(api['logout-link'].href);
+        AuthSharedService.logout(api.link.logout);
     })
 ;
 

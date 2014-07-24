@@ -3,7 +3,7 @@
 Search: <input data-ng-model="query" type="text"><br>
 <a data-ng-href="#/clients/new">Create New Client</a>
 <div>Total: {{total}}</div>
-<table border="1">
+<table border="1" data-ng-show="clients">
     <tr>
         <th>Name</th>
         <th>Salesforce Account</th>
@@ -23,7 +23,10 @@ Search: <input data-ng-model="query" type="text"><br>
         </td>
     </tr>
 </table>
-<div>
+<div data-ng-hide="clients">
+    <span>There are no clients found.</span>
+</div>
+<div data-ng-show="clients">
     Page Size:
     <ul class="pagination page-size">
         <li data-ng-repeat="pageSize in pageSizes">
@@ -33,13 +36,13 @@ Search: <input data-ng-model="query" type="text"><br>
         </li>
     </ul>
 </div>
-<div>
+<div data-ng-show="clients">
     Pagination:
     <ul class="pagination">
         <li data-ng-repeat="link in links | orderBy:'order'">
-            <a data-ng-if="link.rel.substring(5) != currentPage" data-ng-href="#/clients"
-               data-ng-click="fetchPage(link.href)">{{link.rel.substring(5)}}</a>
-            <span data-ng-if="link.rel.substring(5) == currentPage">[{{link.rel.substring(5)}}]</span>
+            <a data-ng-if="link.name != currentPage" data-ng-href="#/clients"
+               data-ng-click="fetchPage(link.href)">{{link.name}}</a>
+            <span data-ng-if="link.name == currentPage">[{{link.name}}]</span>
         </li>
     </ul>
 </div>
