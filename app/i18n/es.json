@@ -1,14 +1,14 @@
 {
     "global": {
-        "title": "Emmi Manager 2.0",
+        "title": "Emmi Gerente 2.0",
         "menu": {
             "login": "Login",
-            "logout": "Logout",
-            "clients": "Clients"
+            "logout": "Salida",
+            "clients": "Clientela"
         },
         "language": {
-            "en": "English",
-            "es": "Spanish"
+            "en": "Inglés",
+            "es": "Español"
         },
         "messages": {
             "info": {
@@ -40,24 +40,24 @@
         }
     },
     "main": {
-        "welcome": "Welcome {{ username }}. The date is {{ today }}."
+        "welcome": "Bienvenido {{ username }}. La fecha es {{ today }}."
     },
     "login": {
-        "title": "Authentication",
+        "title": "Autenticación",
         "form": {
-            "user": "User:",
-            "password": "Password:",
-            "rememberme": "Remember me on this computer.",
+            "user": "Usuario:",
+            "password": "Contraseña:",
+            "rememberme": "Recordarme en este equipo.",
             "button": "Login"
         },
         "messages": {
             "error": {
-                "authentication": "<strong>Authentication failed!</strong> Please check your credentials and try again."
+                "authentication": "<strong>Error de autenticación!</strong> Por favor verifique sus credenciales y vuelva a intentarlo."
             }
         }
     },
     "errors": {
-        "title": "Error page!",
-        "403": "You are not authorized."
+        "title": "Página de error!",
+        "403": "Usted no está autorizado."
     }
 }

@@ -1,12 +1,25 @@
-
+<h1 data-translate="login.title">Authentication</h1>
 <div data-ng-show="authenticationError" data-translate="login.messages.error.authentication">
     <strong>Authentication failed!</strong> Please check your credentials and try again.
 </div>
 <form name="loginForm" data-ng-submit="login(credentials)" novalidate>
     <table>
-        <tbody><tr><td>User:</td><td><input type="text" data-ng-model="credentials.username"></td></tr>
-        <tr><td>Password:</td><td><input type="password" data-ng-model="credentials.password"></td></tr>
-        <tr><td><input type="checkbox" data-ng-model="credentials.rememberMe"></td><td>Remember me on this computer.</td></tr>
-        <tr><td colspan="2"><button name="submit" type="submit">Login</button></td></tr>
-        </tbody></table>
+        <tbody>
+            <tr>
+                <td data-translate="login.form.user">User:</td>
+                <td><input type="text" data-ng-model="credentials.username"></td>
+            </tr>
+            <tr>
+                <td data-translate="login.form.password">Password:</td>
+                <td><input type="password" data-ng-model="credentials.password"></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" data-ng-model="credentials.rememberMe"></td>
+                <td data-translate="login.form.rememberme">Remember me on this computer.</td>
+            </tr>
+            <tr>
+                <td colspan="2"><button name="submit" type="submit" data-translate="login.form.button">Login</button></td>
+            </tr>
+        </tbody>
+    </table>
 </form>

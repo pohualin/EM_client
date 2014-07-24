@@ -8,6 +8,7 @@ angular.module('emmiManager', [
     'ngResource',
     'ngRoute',
     'pascalprecht.translate',
+    'tmh.dynamicLocale',
     'mgcrea.ngStrap.datepicker'
 ])
 
@@ -17,7 +18,7 @@ angular.module('emmiManager', [
         user: 'PERM_USER'
     })
 
-    .config(function ($routeProvider, $httpProvider, $translateProvider, USER_ROLES) {
+    .config(function ($routeProvider, $httpProvider, $translateProvider, tmhDynamicLocaleProvider, USER_ROLES) {
 
         var requiredResources = {
             'api': ['Api', function (Api) {
@@ -92,6 +93,10 @@ angular.module('emmiManager', [
         });
 
         $translateProvider.preferredLanguage('en');
+        $translateProvider.useCookieStorage();
+
+        tmhDynamicLocaleProvider.localeLocationPattern('bower_components/angular-i18n/angular-locale_{{locale}}.js');
+        tmhDynamicLocaleProvider.useCookieStorage('NG_TRANSLATE_LANG_KEY');
 
         // make sure the server knows that an AJAX call is happening
         $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
