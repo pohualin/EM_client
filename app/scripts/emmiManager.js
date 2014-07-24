@@ -7,6 +7,7 @@ angular.module('emmiManager', [
     'ngSanitize',
     'ngResource',
     'ngRoute',
+    'hateoas',
     'pascalprecht.translate',
     'tmh.dynamicLocale',
     'mgcrea.ngStrap.datepicker'
@@ -18,7 +19,7 @@ angular.module('emmiManager', [
         user: 'PERM_USER'
     })
 
-    .config(function ($routeProvider, $httpProvider, $translateProvider, tmhDynamicLocaleProvider, USER_ROLES) {
+    .config(function ($routeProvider, $httpProvider, $translateProvider, tmhDynamicLocaleProvider, USER_ROLES, $datepickerProvider) {
 
         var requiredResources = {
             'api': ['Api', function (Api) {
@@ -100,6 +101,16 @@ angular.module('emmiManager', [
 
         // make sure the server knows that an AJAX call is happening
         $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+        // enable HATEOAS link array --> object parsing on $get
+        HateoasInterceptorProvider.transformAllResponses();
+
+        // ensure dates are compatible with back-end
+        angular.extend($datepickerProvider.defaults, {
+            dateFormat: 'MM/dd/yyyy',
+            modelDateFormat: 'yyyy-MM-dd',
+            dateType: 'string'
+        });
     })
 
     .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES) {

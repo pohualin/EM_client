@@ -9,14 +9,9 @@ angular.module('emmiManager')
                     });
 
             },
-            insertClient: function (href, name, type, region) {
-                $http.post(href, {
-                    'name': name,
-                    'type': type,
-                    'region': region
-                }).success(function (response, status, headers, config) {
-                    console.log(status);
-                    console.dir(response.entity);
+            insertClient: function (href, client) {
+                return $http.post(href, client).success(function (response, status) {
+                    return response;
                 });
             },
             deleteClient: function (id) {
@@ -24,6 +19,13 @@ angular.module('emmiManager')
             },
             getClient: function (id) {
 
+            },
+            getReferenceData: function (href) {
+                return $http.get(href, {
+                    cache: true
+                }).then(function (response) {
+                    return response.data;
+                });
             }
         };
 

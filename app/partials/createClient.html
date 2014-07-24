@@ -4,29 +4,26 @@
     <label for="">Name</label><br>
     <input data-ng-model="newClient.name" type="text"><br>
     <label for="">Client Type</label><br>
-    <select data-ng-model="newClient.type">
+    <select data-ng-model="newClient.type" data-ng-options="type for type in clientTypes">
         <option value="">Select...</option>
-        <option value="Hospital">Hospital</option>
-        <option value="Provider">Provider</option>
-    </select><br>
-    <label for="">Region</label><br>
-    <select data-ng-model="newClient.region">
+    </select>
+    <br>
+    <label for="region">Region</label><br>
+    <select id="region" data-ng-model="newClient.region" data-ng-options="region for region in clientRegions">
         <option value="">Select...</option>
-        <option value="Midwest">Midwest</option>
-        <option value="West">West</option>
     </select><br>
     <label for="">Tier</label><br>
-    <select>
+    <select data-ng-model="newClient.tier" data-ng-options="tier for tier in clientTiers">
         <option value="">Select...</option>
     </select><br>
     <label for="">Contract Owner</label><br>
-    <select>
+    <select data-ng-model="newClient.contractOwner" data-ng-options="owner as owner.lastName for owner in contractOwners track by owner">
         <option value="">Select...</option>
     </select><br>
     <label for="">Contract Start</label><br>
-    <input type="text" data-ng-model="newClient.start" bs-datepicker><br>
+    <input type="text" data-ng-model="newClient.start" data-autoclose="true" data-dateType="iso" bs-datepicker><br>
     <label for="">Contract End</label><br>
-    <input type="text" data-ng-model="newClient.end" bs-datepicker><br>
+    <input type="text" data-ng-model="newClient.end" data-autoclose="true"  data-dateType="string" bs-datepicker><br>
     <label for="">Salesforce Account</label><br>
     <input type="text"><br>
     <h2>Team Tags</h2>
