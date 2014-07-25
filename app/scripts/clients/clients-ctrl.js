@@ -16,6 +16,7 @@ angular.module('emmiManager')
         $scope.client = {
             'name': null,
             'type': null,
+            'active': true,
             'contractOwner': null,
             'contractStart': null,
             'contractEnd': null,
