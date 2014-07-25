@@ -81,8 +81,15 @@ gulp.task('fonts', function () {
         .pipe($.size({title: 'fonts', showFiles:true}));
 });
 
+gulp.task('translations', function () {
+    return gulp.src('app/i18n/**/*')
+        .pipe(gulp.dest('dist/i18n')),
+        gulp.src('app/bower_components/angular-i18n/*.js')
+        .pipe(gulp.dest('dist/bower_components/angular-i18n'));
+});
+
 gulp.task('clean', function () {
     return gulp.src(['.tmp', 'dist'], { read: false }).pipe($.clean());
 });
 
-gulp.task('build', ['html', 'partials', 'images', 'fonts']);
+gulp.task('build', ['html', 'partials', 'images', 'fonts', 'translations']);
