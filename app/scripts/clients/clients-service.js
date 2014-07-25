@@ -47,6 +47,12 @@ angular.module('emmiManager')
                     deferred.resolve(referenceData);
                 }
                 return deferred.promise;
+            },
+            getOwnersReferenceDataList: function (href) {
+                return $http.get(UriTemplate.create(href).stringify({size: 100}))
+                    .then(function (response) {
+                        return response.data;
+                    });
             }
         };
 

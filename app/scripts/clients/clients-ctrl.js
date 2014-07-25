@@ -8,7 +8,10 @@ angular.module('emmiManager')
             $scope.clientTypes = refData.clientType;
             $scope.clientRegions = refData.clientRegion;
             $scope.clientTiers = refData.clientTier;
-            $scope.contractOwners = refData.contractOwner;
+            Client.getOwnersReferenceDataList(refData.link.potentialOwners)
+                .then(function (ownerPage) {
+                    $scope.contractOwners = ownerPage.content;
+                });
         });
         $scope.client = {
             'name': null,
@@ -79,7 +82,10 @@ angular.module('emmiManager')
             $scope.clientTypes = refData.clientType;
             $scope.clientRegions = refData.clientRegion;
             $scope.clientTiers = refData.clientTier;
-            $scope.contractOwners = refData.contractOwner;
+            Client.getOwnersReferenceDataList(refData.link.potentialOwners)
+                .then(function (ownerPage) {
+                    $scope.contractOwners = ownerPage.content;
+                });
         });
 
         var client = Client.getClient();

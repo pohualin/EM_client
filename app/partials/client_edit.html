@@ -17,7 +17,7 @@
         <option value="">Select...</option>
     </select><br>
     <label for="">Contract Owner</label><br>
-    <select data-ng-model="client.contractOwner" data-ng-options="owner as owner.lastName for owner in contractOwners track by owner">
+    <select data-ng-model="client.contractOwner" data-ng-options="owner as owner.lastName for owner in contractOwners track by owner.id">
         <option value="">Select...</option>
     </select><br>
     <label for="">Contract Start</label><br>
