@@ -37,6 +37,14 @@
                     "maxlength": "Your e-mail cannot be longer than 50 characters"
                 }
             }
+        },
+        "labels": {
+            "search": "Search:",
+            "statusFilter": "Show:",
+            "total": "Total:"
+        },
+        "buttons": {
+            "search": "Search"
         }
     },
     "main": {

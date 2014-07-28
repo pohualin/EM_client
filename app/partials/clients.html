@@ -1,8 +1,20 @@
 <h1><a href="#/">Emmi Manager</a>: Search</h1>
 <h2>Manage Clients, Teams, Providers and Locations:</h2>
-Search: <input data-ng-model="query" type="text" ><br>
 <a data-ng-href="#/clients/new">Create New Client</a>
-<div>Total: {{total}}</div>
+<br/>
+<form>
+    <label for="query" data-translate="global.labels.search">Search</label>
+    <input id="query" data-ng-model="query" type="text">
+    <button data-ng-click="search()" data-translate="global.buttons.search">Go</button>
+    <br>
+</form>
+<div><span data-translate="global.labels.total">Total</span>{{total}}</div>
+<div>
+    <label for="status_filter" data-translate="global.labels.statusFilter">Show</label>
+    <select id="status_filter" data-ng-model="status" data-ng-options="status for status in statuses"
+            data-ng-change="search()">
+    </select>
+</div>
 <table border="1" data-ng-show="clients">
     <tr>
         <th>Name</th>
@@ -11,7 +23,7 @@ Search: <input data-ng-model="query" type="text" ><br>
         <th>Type</th>
         <th>Links</th>
     </tr>
-    <tr data-ng-repeat="client in clients | filter:query | orderBy:'entity.id'">
+    <tr data-ng-repeat="client in clients | orderBy:'entity.id'">
         <td>{{client.entity.name}}</td>
         <td>{{client.entity.salesForceAccount.name}}</td>
         <td>{{client.entity.contractOwner.firstName}} {{client.entity.contractOwner.lastName}}</td>
@@ -45,8 +57,4 @@ Search: <input data-ng-model="query" type="text" ><br>
             <span data-ng-if="link.name == currentPage">[{{link.name}}]</span>
         </li>
     </ul>
-</div>
-<hr/>
-<div>
-    {{fetchedLink}}
 </div>
