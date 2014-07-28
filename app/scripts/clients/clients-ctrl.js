@@ -33,6 +33,7 @@ angular.module('emmiManager')
 
     .controller('ClientListCtrl', function ($scope, Client, $http, Session, UriTemplate, $location) {
         var fetchPage = function (href) {
+            $scope.clients = null;
             Client.getClients(href).then(function (clientPage) {
                 if (clientPage) {
                     $scope.clients = clientPage.content;
@@ -51,12 +52,20 @@ angular.module('emmiManager')
                     $scope.load = clientPage.link.self;
                     $scope.currentPage = clientPage.page.number;
                     $scope.currentPageSize = clientPage.page.size;
-                    $scope.fetchedLink = null;
                     $scope.pageSizes = [10, 25, 50, 100];
+                    $scope.status = clientPage.filter.status;
                 } else {
                     $scope.total = 0;
                 }
             });
+        };
+
+        Client.getReferenceData().then(function (refData) {
+            $scope.statuses = refData.statusFilter;
+        });
+
+        $scope.search = function() {
+            fetchPage(UriTemplate.create(Session.link.clients).stringify({name: $scope.query, status: $scope.status}));
         };
 
         $scope.selectClient = function (href) {
