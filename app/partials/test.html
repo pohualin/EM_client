@@ -1,0 +1,14 @@
+<form class="album-search">
+    <typeahead class="typeahead" items="albums" term="term" search="searchAlbums(term)" select="selectAlbum(item)" expand="showAll()" paging="pagination">
+        <div class="menu" ng-cloak>
+            <!-- <h3 ng-show="hasAlbums()">Albums</h3> -->
+            <ul>
+                <li typeahead-item="album" ng-repeat="album in albums |
+        offset: pagination.currentPage*pagination.itemsPerPage |
+        limitTo: pagination.itemsPerPage" class="results">
+                    <img ng-src="{{imageSource(album)}}"><p class="name">{{album.name}}</p><p class="artist">{{album.artist}}</p>
+                </li>
+            </ul>
+        </div>
+    </typeahead>
+</form>
