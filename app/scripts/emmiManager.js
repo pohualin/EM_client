@@ -11,7 +11,8 @@ angular.module('emmiManager', [
     'emmiManager.api',
     'pascalprecht.translate',
     'tmh.dynamicLocale',
-    'mgcrea.ngStrap.datepicker'
+    'mgcrea.ngStrap.datepicker',
+    'emmi.typeahead'
 ])
 
     .constant('USER_ROLES', {
@@ -41,6 +42,14 @@ angular.module('emmiManager', [
             .when('/login', {
                 templateUrl: 'partials/login.html',
                 controller: 'LoginCtrl',
+                access: {
+                    authorizedRoles: [USER_ROLES.all]
+                },
+                resolve: requiredResources
+            })
+            .when('/test', {
+                templateUrl: 'partials/test.html',
+                controller: 'TestCtrl',
                 access: {
                     authorizedRoles: [USER_ROLES.all]
                 },
