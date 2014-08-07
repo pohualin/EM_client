@@ -12,7 +12,8 @@ angular.module('emmiManager', [
     'pascalprecht.translate',
     'tmh.dynamicLocale',
     'mgcrea.ngStrap.datepicker',
-    'emmi.typeahead'
+    'emmi.typeahead',
+    'localytics.directives'
 ])
 
     .constant('USER_ROLES', {

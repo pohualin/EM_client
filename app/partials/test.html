@@ -12,3 +12,16 @@
         </div>
     </typeahead>
 </form>
+
+<form class="chosen-example">
+    <h2>Chosen with a promised hash: {{selectedAlbum | json}}</h2>
+    <select
+        chosen
+        allow-single-deselect="true"
+        data-placeholder="Choose Your Album"
+        ng-model="selectedAlbum"
+        ng-options="value.name for value in albumPool"
+        style="width:200px;">
+        <option value=""></option>
+    </select>
+</form>
