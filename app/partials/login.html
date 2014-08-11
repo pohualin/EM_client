@@ -1,25 +1,27 @@
-<h1 data-translate="login.title">Authentication</h1>
-<div data-ng-show="authenticationError" data-translate="login.messages.error.authentication">
-    <strong>Authentication failed!</strong> Please check your credentials and try again.
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <h1 data-translate="login.title">Authentication</h1>
+            <div class="alert alert-danger" data-ng-show="authenticationError" data-translate="login.messages.error.authentication">
+                <strong>Authentication failed!</strong> Please check your credentials and try again.
+            </div>
+            <form class="form" name="loginForm" data-ng-submit="login(credentials)" novalidate>
+                <div class="form-group">
+                    <label for="username" data-translate="login.form.user">User:</label>
+                    <input id="username" type="text" class="form-control" data-ng-model="credentials.username">
+                </div>
+                <div class="form-group">
+                    <label for="password" data-translate="login.form.password">Password:</label>
+                    <input id="password" type="password" class="form-control" data-ng-model="credentials.password">
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" data-ng-model="credentials.rememberMe">
+                        <span data-translate="login.form.rememberme">Remember me on this computer.</span>
+                    </label>
+                </div>
+                <button name="submit" type="submit" class="btn btn-default" data-translate="login.form.button">Login</button>
+            </form>
+        </div>
+    </div>
 </div>
-<form name="loginForm" data-ng-submit="login(credentials)" novalidate>
-    <table>
-        <tbody>
-            <tr>
-                <td data-translate="login.form.user">User:</td>
-                <td><input type="text" data-ng-model="credentials.username"></td>
-            </tr>
-            <tr>
-                <td data-translate="login.form.password">Password:</td>
-                <td><input type="password" data-ng-model="credentials.password"></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" data-ng-model="credentials.rememberMe"></td>
-                <td data-translate="login.form.rememberme">Remember me on this computer.</td>
-            </tr>
-            <tr>
-                <td colspan="2"><button name="submit" type="submit" data-translate="login.form.button">Login</button></td>
-            </tr>
-        </tbody>
-    </table>
-</form>
