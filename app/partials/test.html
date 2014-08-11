@@ -5,6 +5,7 @@
                 <li typeahead-item="album" ng-repeat="album in albums" class="results">
                     <img ng-src="{{imageSource(album)}}"><p class="name">{{album.name}}</p><p class="artist">{{album.artist}}</p>
                 </li>
+                <li ng-show="hasMore()" class="paging">Refine search for more results.</li>
             </ul>
         </div>
     </typeahead>

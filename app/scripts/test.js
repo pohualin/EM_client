@@ -14,14 +14,19 @@ angular.module('emmiManager')
             itemsPerPage: 5,
             currentPage: 0
         };
+        $scope.searchCount = 0;
+        $scope.limit = 10;
 
         $scope.searchAlbums = function(term) {
             if(!term) {
+                $scope.searchCount = 0;
                 $scope.albums = [];
             } else {
                 $scope.albums = $scope.albumPool.filter(function(album) {
                     return album.name.toLowerCase().indexOf(term.toLowerCase()) !== -1;
-                }).slice(0, 10);
+                });
+                $scope.searchCount = $scope.albums.length;
+                $scope.albums = $scope.albums.slice(0, $scope.limit);
             }
 
             return $scope.albums;
@@ -40,6 +45,10 @@ angular.module('emmiManager')
 
         $scope.hasAlbums = function() {
             return $scope.albums.length > 0;
+        };
+
+        $scope.hasMore = function() {
+            return $scope.searchCount > $scope.limit;
         };
 
     })
