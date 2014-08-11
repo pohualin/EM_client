@@ -41,7 +41,7 @@
         "labels": {
             "search": "Search:",
             "statusFilter": "Show:",
-            "total": "Total:"
+            "total": " results"
         },
         "buttons": {
             "search": "Search"
