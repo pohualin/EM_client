@@ -68,6 +68,11 @@ angular.module('emmiManager')
             fetchPage(UriTemplate.create(Session.link.clients).stringify({name: $scope.query, status: $scope.status}));
         };
 
+        $scope.clearSearch = function() {
+            $scope.query = '';
+            $scope.search();
+        };
+
         $scope.selectClient = function (href) {
             Client.selectClient(href).then(function () {
                 $location.path('/clients/edit');
