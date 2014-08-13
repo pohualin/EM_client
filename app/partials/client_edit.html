@@ -10,7 +10,14 @@
             <div class="col-md-8">
                 <div class="form-group">
                     <label for="">Name</label>
-                    <input class="form-control" data-ng-model="client.name" type="text">
+                    <!-- <input class="form-control" data-ng-model="client.name" type="text"> -->
+                    <typeahead class="typeahead" items="clients" term="term" search="search(term)" select="select(item)" placeholder="Start typing...">
+                        <ul class="menu dropdown-menu bottom-left" ng-cloak>
+                            <li typeahead-item="album" ng-repeat="client in clients" class="results">
+                                <a role="menuitem">{{client.entity.name}}</a>
+                            </li>
+                        </ul>
+                    </typeahead>
                 </div>
             </div>
         </div>
@@ -44,8 +51,14 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="">Contract Owner</label>
-                    <select class="form-control" data-ng-model="client.contractOwner" data-ng-options="owner as owner.lastName for owner in contractOwners track by owner.id">
-                        <option value="">Select...</option>
+                    <select
+                        class="form-control"
+                        chosen
+                        allow-single-deselect="true"
+                        data-placeholder="Select..."
+                        ng-model="client.contractOwner"
+                        ng-options="owner as owner.lastName for owner in contractOwners track by owner.id">
+                        <option value=""></option>
                     </select>
                 </div>
             </div>

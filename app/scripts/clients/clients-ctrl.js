@@ -2,7 +2,35 @@
 
 angular.module('emmiManager')
 
-    .controller('ClientCtrl', function ($scope, $location, Client) {
+    .controller('ClientCtrl', function ($scope, Client, $http, Session, UriTemplate, $location) {
+
+        var fetchPage = function (href) {
+            $scope.clients = [];
+            Client.getClients(href).then(function (clientPage) {
+                if (clientPage) {
+                    $scope.clients = clientPage.content;
+                    $scope.total = clientPage.page.totalElements;
+                    $scope.links = [];
+                    for (var i = 0, l = clientPage.linkList.length; i < l; i++) {
+                        var aLink = clientPage.linkList[i];
+                        if (aLink.rel.indexOf('self') === -1) {
+                            $scope.links.push({
+                                order: i,
+                                name: aLink.rel.substring(5),
+                                href: aLink.href
+                            });
+                        }
+                    }
+                    $scope.load = clientPage.link.self;
+                    $scope.currentPage = clientPage.page.number;
+                    $scope.currentPageSize = clientPage.page.size;
+                    $scope.pageSizes = [10, 25, 50, 100];
+                    $scope.status = clientPage.filter.status;
+                } else {
+                    $scope.total = 0;
+                }
+            });
+        };
 
         Client.getReferenceData().then(function (refData) {
             $scope.clientTypes = refData.clientType;
@@ -28,6 +56,23 @@ angular.module('emmiManager')
                 $location.path('/clients');
             });
         };
+
+        $scope.search = function(term) {
+            if(!term) {
+                $scope.clients = [];
+            } else {
+                fetchPage(UriTemplate.create(Session.link.clients).stringify({name: term, status: 'ALL'}));
+            }
+            return $scope.clients;
+        };
+
+
+        $scope.select = function(album) {
+            // console.log('album selected!', album);
+            // $scope.term = album.name;
+            //return album.name;
+        };
+
 
     })
 

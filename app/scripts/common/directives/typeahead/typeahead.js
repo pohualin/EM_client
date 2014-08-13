@@ -65,7 +65,7 @@ angular.module('emmi.typeahead', [])
             link: function(scope, element, attrs, controller) {
 
                 var $input = element.find('form > input');
-                var $list = element.find('> div');
+                var $list = element.find('.menu');
 
                 $input.bind('focus', function() {
                     scope.$apply(function() { scope.focused = true; });
@@ -125,9 +125,9 @@ angular.module('emmi.typeahead', [])
                         var height = $input[0].offsetHeight;
 
                         $list.css({
-                            //top: pos.top + height,
-                            //left: pos.left,
-                            //position: 'absolute',
+                            top: pos.top + height,
+                            left: pos.left,
+                            position: 'absolute',
                             display: 'block'
                         });
                     } else {
