@@ -18,7 +18,8 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="">Client Type</label>
-                    <select class="form-control" data-ng-model="client.type" data-ng-options="type for type in clientTypes">
+                    <select class="form-control" data-ng-model="client.type"
+                            data-ng-options="type for type in clientTypes">
                         <option value="">Select...</option>
                     </select>
                 </div>
@@ -26,7 +27,8 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="region">Region</label>
-                    <select class="form-control" id="region" data-ng-model="client.region" data-ng-options="region for region in clientRegions">
+                    <select class="form-control" id="region" data-ng-model="client.region"
+                            data-ng-options="region for region in clientRegions">
                         <option value="">Select...</option>
                     </select>
                 </div>
@@ -34,7 +36,8 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="">Tier</label>
-                    <select class="form-control" data-ng-model="client.tier" data-ng-options="tier for tier in clientTiers">
+                    <select class="form-control" data-ng-model="client.tier"
+                            data-ng-options="tier for tier in clientTiers">
                         <option value="">Select...</option>
                     </select>
                 </div>
@@ -44,7 +47,8 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="">Contract Owner</label>
-                    <select class="form-control" data-ng-model="client.contractOwner" data-ng-options="owner as owner.lastName for owner in contractOwners track by owner.id">
+                    <select class="form-control" data-ng-model="client.contractOwner"
+                            data-ng-options="owner as owner.lastName for owner in contractOwners track by owner.id">
                         <option value="">Select...</option>
                     </select>
                 </div>
@@ -52,13 +56,15 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="">Contract Start</label>
-                    <input class="form-control" type="text" data-ng-model="client.contractStart" data-autoclose="true" data-dateType="iso" bs-datepicker>
+                    <input class="form-control" type="text" data-ng-model="client.contractStart" data-autoclose="true"
+                           data-dateType="iso" bs-datepicker>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="">Contract End</label>
-                    <input class="form-control" type="text" data-ng-model="client.contractEnd" data-autoclose="true" data-dateType="string" bs-datepicker>
+                    <input class="form-control" type="text" data-ng-model="client.contractEnd" data-autoclose="true"
+                           data-dateType="string" bs-datepicker>
                 </div>
             </div>
         </div>
@@ -74,19 +80,26 @@
         </div>
         <div class="row" data-ng-show="client.salesForceAccount">
             <div class="col-md-8">
-                {{client.salesForceAccount.name}} {{client.salesForceAccount.city}}<span data-ng-show="client.salesForceAccount.city && client.salesForceAccount.state">/</span>{{client.salesForceAccount.state}}
+                {{client.salesForceAccount.name}} {{client.salesForceAccount.city}}<span
+                    data-ng-show="client.salesForceAccount.city && client.salesForceAccount.state">/</span>{{client.salesForceAccount.state}}
                 <button class="btn btn-default" data-ng-click="changeSfAccount()">Change SF</button>
             </div>
         </div>
         <div class="row" data-ng-hide="client.salesForceAccount">
-            <div class="col-md-5">
+            <div class="col-md-8">
                 <div class="form-group">
                     <label for="">Salesforce Account</label>
                     <input class="form-control" type="text" data-ng-model="searchQuery" focus-on="SfSearch">
-                    <button class="btn btn-default" data-ng-click="findSalesForceAccount()" data-translate="global.buttons.search">Go</button>
+                    <button class="btn btn-default" data-ng-click="findSalesForceAccount()"
+                            data-translate="global.buttons.search">Go
+                    </button>
                 </div>
-                <br>
-                <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0" cellspacing="0" data-ng-show="sfResult.account">
+            </div>
+        </div>
+        <div class="row" data-ng-hide="client.salesForceAccount">
+            <div class="col-md-10" data-ng-show="sfResult.account">
+                <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0"
+                       cellspacing="0">
                     <tr>
                         <th>Account Name</th>
                         <th>Client Name</th>
@@ -96,8 +109,13 @@
                     <tr data-ng-repeat="account in sfResult.account | orderBy:'account.name'">
                         <td>{{account.name}}</td>
                         <td>{{account.clientName}}</td>
-                        <td>{{account.city}}<span data-ng-show="account.city && account.state">/</span>{{account.state}}</td>
-                        <td><button class="btn btn-default" data-ng-hide="account.clientName" data-ng-click="chooseAccount(account)">Choose</button></td>
+                        <td>{{account.city}}<span data-ng-show="account.city && account.state">/</span>{{account.state}}
+                        </td>
+                        <td>
+                            <button class="btn btn-default" data-ng-hide="account.clientName"
+                                    data-ng-click="chooseAccount(account)">Choose
+                            </button>
+                        </td>
                     </tr>
                     <tr data-ng-show="!sfResult.complete">
                         <td colspan="4">Refine search for more results</td>
@@ -112,8 +130,10 @@
         <h2>Team Tags</h2>
         <hr>
         <div class="actions pull-right">
-            <a class="btn btn-link" href="#/clients">Cancel</a>
-            <button class="btn btn-primary" type="button" data-ng-click="save()">Save</button>
+            <div class="form-group">
+                <a class="btn btn-link" href="#/clients">Cancel</a>
+                <button class="btn btn-primary" type="button" data-ng-click="save()">Save</button>
+            </div>
         </div>
     </form>
 </div>
