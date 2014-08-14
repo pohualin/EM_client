@@ -2,36 +2,7 @@
 
 angular.module('emmiManager')
 
-    .controller('ClientCtrl', function ($scope, Client, $http, Session, UriTemplate, $location) {
-
-        var fetchPage = function (href) {
-            $scope.clients = [];
-            Client.getClients(href).then(function (clientPage) {
-                if (clientPage) {
-                    $scope.clients = clientPage.content;
-                    $scope.total = clientPage.page.totalElements;
-                    $scope.links = [];
-                    for (var i = 0, l = clientPage.linkList.length; i < l; i++) {
-                        var aLink = clientPage.linkList[i];
-                        if (aLink.rel.indexOf('self') === -1) {
-                            $scope.links.push({
-                                order: i,
-                                name: aLink.rel.substring(5),
-                                href: aLink.href
-                            });
-                        }
-                    }
-                    $scope.load = clientPage.link.self;
-                    $scope.currentPage = clientPage.page.number;
-                    $scope.currentPageSize = clientPage.page.size;
-                    $scope.pageSizes = [10, 25, 50, 100];
-                    $scope.status = clientPage.filter.status;
-                } else {
-                    $scope.total = 0;
-                }
-            });
-        };
-
+    .controller('ViewEditCommon',function ($scope, Client, focus){
         Client.getReferenceData().then(function (refData) {
             $scope.clientTypes = refData.clientType;
             $scope.clientRegions = refData.clientRegion;
@@ -40,7 +11,35 @@ angular.module('emmiManager')
                 .then(function (ownerPage) {
                     $scope.contractOwners = ownerPage.content;
                 });
+            $scope.findSalesForceAccount = function (){
+                Client.findSalesForceAccount(refData.link.findSalesForceAccount, $scope.searchQuery).then(function (searchResults){
+                    if (searchResults.entity) {
+                        $scope.sfResult = searchResults.entity;
+                    } else {
+                        $scope.sfResult = null;
+                    }
+                    $scope.noSearch = false;
+                });
+            };
         });
+
+        $scope.chooseAccount = function(account){
+            $scope.client.salesForceAccount = account;
+        };
+
+        $scope.noSearch = true;
+
+        $scope.changeSfAccount = function(){
+            $scope.searchQuery = '"' + $scope.client.salesForceAccount.name + '"';
+            $scope.client.salesForceAccount = null;
+            focus('SfSearch');
+        };
+    })
+
+    .controller('ClientCtrl', function ($scope, $location, Client, $controller) {
+
+        $controller('ViewEditCommon',{$scope: $scope});
+
         $scope.client = {
             'name': null,
             'type': null,
@@ -48,7 +47,8 @@ angular.module('emmiManager')
             'contractOwner': null,
             'contractStart': null,
             'contractEnd': null,
-            'region': null
+            'region': null,
+            'salesForceAccount':  null
         };
 
         $scope.save = function () {
@@ -136,17 +136,9 @@ angular.module('emmiManager')
         fetchPage(UriTemplate.create(Session.link.clients).stringify());
     })
 
-    .controller('ClientDetailCtrl', function ($scope, $location, Client) {
+    .controller('ClientDetailCtrl', function ($scope, $location, Client, $controller) {
 
-        Client.getReferenceData().then(function (refData) {
-            $scope.clientTypes = refData.clientType;
-            $scope.clientRegions = refData.clientRegion;
-            $scope.clientTiers = refData.clientTier;
-            Client.getOwnersReferenceDataList(refData.link.potentialOwners)
-                .then(function (ownerPage) {
-                    $scope.contractOwners = ownerPage.content;
-                });
-        });
+        $controller('ViewEditCommon',{$scope: $scope});
 
         var client = Client.getClient();
         if (client) {

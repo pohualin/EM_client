@@ -53,6 +53,12 @@ angular.module('emmiManager')
                     .then(function (response) {
                         return response.data;
                     });
+            },
+            findSalesForceAccount: function(href, searchString){
+                return $http.get(UriTemplate.create(href).stringify({q: searchString}))
+                    .then(function (response) {
+                        return response.data;
+                    });
             }
         };
 
