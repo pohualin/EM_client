@@ -22,7 +22,7 @@ angular.module('emmi.typeahead', [])
             },
             controller: function($scope, $element, $attrs, $transclude) {
                 $scope.items = [];
-                $scope.hide = false;
+                $scope.hide = true;
 
                 this.activate = function(item) {
                     $scope.active = item;

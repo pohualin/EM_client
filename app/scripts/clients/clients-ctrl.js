@@ -6,7 +6,6 @@ angular.module('emmiManager')
 
         $scope.sfResult = {};
         $scope.sfResult.account = [];
-        $scope.noSearch = true;
 
         Client.getReferenceData().then(function (refData) {
             $scope.clientTypes = refData.clientType;
@@ -24,7 +23,6 @@ angular.module('emmiManager')
                     } else {
                         $scope.sfResult = null;
                     }
-                    $scope.noSearch = false;
                 });
             };
         });
@@ -32,17 +30,14 @@ angular.module('emmiManager')
         $scope.findAccount = debounce(function (term) {
             if (term.length < 3) {
                 $scope.sfResult.account = [];
-                $scope.noSearch = true;
             } else {
                 Client.findSalesForceAccount($scope.findSalesForceAccountLink, term).then(function (searchResults){
                     if (searchResults.entity) {
                         $scope.sfResult = searchResults.entity;
-                        $scope.noSearch = false;
                     } else {
                         // No results returned
                         $scope.sfResult = {};
                         $scope.sfResult.account = [];
-                        $scope.noSearch = true;
                     }
                 });
             }
@@ -69,7 +64,6 @@ angular.module('emmiManager')
             $scope.searchQuery = '';
             $scope.client.salesForceAccount = null;
             $scope.sfResult.account = [];
-            $scope.noSearch = true;
             focus('SfSearch');
         };
     })
