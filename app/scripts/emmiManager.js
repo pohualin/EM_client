@@ -7,11 +7,13 @@ angular.module('emmiManager', [
     'ngSanitize',
     'ngResource',
     'ngRoute',
+    'ngAnimate',
     'hateoas',
     'emmiManager.api',
     'pascalprecht.translate',
     'tmh.dynamicLocale',
-    'mgcrea.ngStrap.datepicker'
+    'mgcrea.ngStrap.datepicker',
+    'mgcrea.ngStrap.modal'
 ])
 
     .constant('USER_ROLES', {
