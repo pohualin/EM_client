@@ -10,14 +10,7 @@
             <div class="col-md-8">
                 <div class="form-group">
                     <label for="">Name</label>
-                    <!-- <input class="form-control" data-ng-model="client.name" type="text"> -->
-                    <typeahead class="typeahead" items="clients" term="term" search="search(term)" select="select(item)" placeholder="Start typing...">
-                        <ul class="menu dropdown-menu bottom-left" ng-cloak>
-                            <li typeahead-item="album" ng-repeat="client in clients" class="results">
-                                <a role="menuitem">{{client.entity.name}}</a>
-                            </li>
-                        </ul>
-                    </typeahead>
+                    <input class="form-control" data-ng-model="client.name" type="text">
                 </div>
             </div>
         </div>
@@ -94,47 +87,39 @@
             <div class="col-md-8">
                 {{client.salesForceAccount.name}} {{client.salesForceAccount.city}}<span
                     data-ng-show="client.salesForceAccount.city && client.salesForceAccount.state">/</span>{{client.salesForceAccount.state}}
-                <button class="btn btn-default" data-ng-click="changeSfAccount()">Change SF</button>
+                <button class="btn btn-link" data-ng-click="changeSfAccount()">edit</button>
             </div>
         </div>
         <div class="row" data-ng-hide="client.salesForceAccount">
             <div class="col-md-8">
                 <div class="form-group">
                     <label for="">Salesforce Account</label>
-                    <input class="form-control" type="text" data-ng-model="searchQuery" focus-on="SfSearch">
+<!--                     <input class="form-control" type="text" data-ng-model="searchQuery" focus-on="SfSearch">
                     <button class="btn btn-default" data-ng-click="findSalesForceAccount()"
                             data-translate="global.buttons.search">Go
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class="row" data-ng-hide="client.salesForceAccount">
-            <div class="col-md-10" data-ng-show="sfResult.account">
-                <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0"
-                       cellspacing="0">
-                    <tr>
-                        <th>Account Name</th>
-                        <th>Client Name</th>
-                        <th>City/State</th>
-                        <th>&nbsp;</th>
-                    </tr>
-                    <tr data-ng-repeat="account in sfResult.account | orderBy:'account.name'">
-                        <td>{{account.name}}</td>
-                        <td>{{account.clientName}}</td>
-                        <td>{{account.city}}<span data-ng-show="account.city && account.state">/</span>{{account.state}}
-                        </td>
-                        <td>
-                            <button class="btn btn-default" data-ng-hide="account.clientName"
-                                    data-ng-click="chooseAccount(account)">Choose
-                            </button>
-                        </td>
-                    </tr>
-                    <tr data-ng-show="!sfResult.complete">
-                        <td colspan="4">Refine search for more results</td>
-                    </tr>
-                </table>
-                <div data-ng-hide="sfResult.account || noSearch">
-                    <span>There are no matching accounts found.</span>
+                    </button> -->
+
+                    <typeahead items="sfResult.account" term="searchQuery" search="findAccount(term)" select="chooseAccount(item)" placeholder="Start typing..." focus="SfSearch">
+                        <div class="menu typeahead-menu dropdown-menu bottom-left container-fluid" ng-cloak>
+                            <li class="header row">
+                                <div class="col-md-4 account-name">Account Name</div>
+                                <div class="col-md-4 client-name">Client Name</div>
+                                <div class="col-md-4 city-state">City/State</div>
+                            </li>
+                            <li typeahead-item="account" ng-repeat="account in sfResult.account" class="results row" ng-class="!account.clientName ? 'selectable' : 'unselectable'">
+                                <div class="col-md-4 account-name">{{account.name}}</div>
+                                <div class="col-md-4 client-name">{{account.clientName}}&nbsp;</div>
+                                <div class="col-md-4 city-state">{{account.city}}<span data-ng-show="account.city && account.state">/</span>{{account.state}}&nbsp;</div>
+                            </li>
+                            <li ng-show="hasMore()" class="footer row">
+                                <div class="col-md-12">Refine search for more results.</div>
+                            </li>
+                            <div data-ng-hide="noSearch || !searchQuery.length">
+                                <div class="col-md-12">There are no matching accounts found.</div>
+                            </div>
+                        </div>
+                    </typeahead>
+
                 </div>
             </div>
         </div>

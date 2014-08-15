@@ -17,7 +17,8 @@ angular.module('emmi.typeahead', [])
                 select: '&',
                 items: '=',
                 term: '=',
-                placeholder: '@'
+                placeholder: '@',
+                focus: '@'
             },
             controller: function($scope, $element, $attrs, $transclude) {
                 $scope.items = [];
@@ -46,9 +47,11 @@ angular.module('emmi.typeahead', [])
                 };
 
                 this.select = function(item) {
-                    $scope.hide = true;
+                    var result = $scope.select({item:item});
                     $scope.focused = true;
-                    $scope.select({item:item});
+                    if (result) {
+                        $scope.hide = true;
+                    }
                 };
 
                 $scope.isVisible = function() {
@@ -128,7 +131,8 @@ angular.module('emmi.typeahead', [])
                             top: pos.top + height,
                             left: pos.left,
                             position: 'absolute',
-                            display: 'block'
+                            display: 'block',
+                            width: $input.outerWidth()
                         });
                     } else {
                         $list.css('display', 'none');
