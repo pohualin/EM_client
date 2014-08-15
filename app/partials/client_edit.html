@@ -49,11 +49,11 @@
                     <label for="">Contract Owner</label>
                     <select
                         class="form-control"
-                        chosen
-                        allow-single-deselect="true"
+                        data-chosen
+                        data-allow-single-deselect="true"
                         data-placeholder="Select..."
-                        ng-model="client.contractOwner"
-                        ng-options="owner as owner.lastName for owner in contractOwners track by owner.id">
+                        data-ng-model="client.contractOwner"
+                        data-ng-options="owner as owner.lastName for owner in contractOwners track by owner.id">
                         <option value=""></option>
                     </select>
                 </div>
@@ -62,14 +62,14 @@
                 <div class="form-group">
                     <label for="">Contract Start</label>
                     <input class="form-control" type="text" data-ng-model="client.contractStart" data-autoclose="true"
-                           data-dateType="iso" bs-datepicker>
+                           data-dateType="iso" data-bs-datepicker>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="">Contract End</label>
                     <input class="form-control" type="text" data-ng-model="client.contractEnd" data-autoclose="true"
-                           data-dateType="string" bs-datepicker>
+                           data-dateType="string" data-bs-datepicker>
                 </div>
             </div>
         </div>
@@ -94,31 +94,26 @@
             <div class="col-md-8">
                 <div class="form-group">
                     <label for="">Salesforce Account</label>
-<!--                     <input class="form-control" type="text" data-ng-model="searchQuery" focus-on="SfSearch">
-                    <button class="btn btn-default" data-ng-click="findSalesForceAccount()"
-                            data-translate="global.buttons.search">Go
-                    </button> -->
-
-                    <typeahead items="sfResult.account" term="searchQuery" search="findAccount(term)" select="chooseAccount(item)" placeholder="Start typing..." focus="SfSearch">
-                        <div class="menu typeahead-menu dropdown-menu bottom-left container-fluid" ng-cloak>
+                    <div data-emmi-typeahead data-items="sfResult.account" data-term="searchQuery" data-search="findAccount(term)" data-select="chooseAccount(item)" data-placeholder="Start typing..." data-focus="SfSearch">
+                        <div class="menu typeahead-menu dropdown-menu bottom-left container-fluid" data-ng-cloak>
                             <li class="header row">
                                 <div class="col-md-4 account-name">Account Name</div>
                                 <div class="col-md-4 client-name">Client Name</div>
                                 <div class="col-md-4 city-state">City/State</div>
                             </li>
-                            <li typeahead-item="account" ng-repeat="account in sfResult.account" class="results row" ng-class="!account.clientName ? 'selectable' : 'unselectable'">
+                            <li data-emmi-typeahead-item="account" data-ng-repeat="account in sfResult.account" class="results row" data-ng-class="!account.clientName ? 'selectable' : 'unselectable'">
                                 <div class="col-md-4 account-name">{{account.name}}</div>
                                 <div class="col-md-4 client-name">{{account.clientName}}&nbsp;</div>
                                 <div class="col-md-4 city-state">{{account.city}}<span data-ng-show="account.city && account.state">/</span>{{account.state}}&nbsp;</div>
                             </li>
-                            <li ng-show="hasMore()" class="footer row">
+                            <li data-ng-show="hasMore()" class="footer row">
                                 <div class="col-md-12">Refine search for more results.</div>
                             </li>
                             <div data-ng-hide="noSearch || !searchQuery.length">
                                 <div class="col-md-12">There are no matching accounts found.</div>
                             </div>
                         </div>
-                    </typeahead>
+                    </div>
 
                 </div>
             </div>

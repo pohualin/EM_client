@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('emmi.typeahead', [])
-    .directive('typeahead', function ($timeout){
+    .directive('emmiTypeahead', function ($timeout){
         // Runs during compile
         return {
             // name: '',
@@ -143,12 +143,12 @@ angular.module('emmi.typeahead', [])
         };
     })
 
-    .directive('typeaheadItem', function() {
+    .directive('emmiTypeaheadItem', function() {
         return {
-            require: '^typeahead',
+            require: '^emmiTypeahead',
             link: function(scope, element, attrs, controller) {
 
-                var item = scope.$eval(attrs.typeaheadItem);
+                var item = scope.$eval(attrs.emmiTypeaheadItem);
 
                 scope.$watch(function() { return controller.isActive(item); }, function(active) {
                     if (active) {

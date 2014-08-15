@@ -1,6 +1,6 @@
 <div>
     <form>
-        <input class="form-control" ng-model="term" ng-change="query()" type="text" autocomplete="off" placeholder="{{placeholder}}" focus-on="{{focus}}" />
+        <input type="text" autocomplete="off" class="form-control" data-ng-model="term" data-ng-change="query()" placeholder="{{placeholder}}" focus-on="{{focus}}" />
     </form>
-    <div ng-transclude></div>
+    <div data-ng-transclude></div>
 </div>
