@@ -8,72 +8,72 @@
         <h2>Client Information</h2>
         <div class="row">
             <div class="col-md-8">
-                <div class="form-group" ng-class="{ 'has-error' : clientForm.clientName.$invalid && formSubmitted }">
+                <div class="form-group" data-ng-class="{ 'has-error' : clientForm.clientName.$invalid && formSubmitted }">
                     <label for="">Name</label>
                     <input class="form-control" data-ng-model="client.name" name="clientName" type="text" required>
-                    <p ng-show="clientForm.clientName.$invalid && formSubmitted" class="help-block">Client name is required.</p>
+                    <p data-ng-show="clientForm.clientName.$invalid && formSubmitted" class="help-block">Client name is required.</p>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-3">
-                <div class="form-group" ng-class="{ 'has-error' : clientForm.clientType.$invalid && formSubmitted }">
+                <div class="form-group" data-ng-class="{ 'has-error' : clientForm.clientType.$invalid && formSubmitted }">
                     <label for="">Client Type</label>
                     <select class="form-control" data-ng-model="client.type"
                             data-ng-options="type for type in clientTypes" name="clientType" required>
                         <option value="">Select...</option>
                     </select>
-                    <p ng-show="clientForm.clientType.$invalid && formSubmitted" class="help-block">Client type is required.</p>
+                    <p data-ng-show="clientForm.clientType.$invalid && formSubmitted" class="help-block">Client type is required.</p>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="form-group" ng-class="{ 'has-error' : clientForm.clientRegion.$invalid && formSubmitted }">
+                <div class="form-group" data-ng-class="{ 'has-error' : clientForm.clientRegion.$invalid && formSubmitted }">
                     <label for="region">Region</label>
                     <select class="form-control" id="region" data-ng-model="client.region"
                             data-ng-options="region for region in clientRegions" name="clientRegion" required>
                         <option value="">Select...</option>
                     </select>
-                    <p ng-show="clientForm.clientRegion.$invalid && formSubmitted" class="help-block">Client region is required.</p>
+                    <p data-ng-show="clientForm.clientRegion.$invalid && formSubmitted" class="help-block">Client region is required.</p>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="form-group" ng-class="{ 'has-error' : clientForm.clientTier.$invalid && formSubmitted }">
+                <div class="form-group" data-ng-class="{ 'has-error' : clientForm.clientTier.$invalid && formSubmitted }">
                     <label for="">Tier</label>
                     <select class="form-control" data-ng-model="client.tier"
                             data-ng-options="tier for tier in clientTiers" name="clientTier" required>
                         <option value="">Select...</option>
                     </select>
-                    <p ng-show="clientForm.clientTier.$invalid && formSubmitted" class="help-block">Client tier is required.</p>
+                    <p data-ng-show="clientForm.clientTier.$invalid && formSubmitted" class="help-block">Client tier is required.</p>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-3">
-                <div class="form-group" ng-class="{ 'has-error' : clientForm.clientContractOwner.$invalid && formSubmitted }">
+                <div class="form-group" data-ng-class="{ 'has-error' : clientForm.clientContractOwner.$invalid && formSubmitted }">
                     <label for="">Contract Owner</label>
                     <select class="form-control" data-ng-model="client.contractOwner"
                             data-ng-options="owner as owner.lastName for owner in contractOwners track by owner.id" name="clientContractOwner" required>
                         <option value="">Select...</option>
                     </select>
-                    <p ng-show="clientForm.clientContractOwner.$invalid && formSubmitted" class="help-block">Client contract owner is required.</p>
+                    <p data-ng-show="clientForm.clientContractOwner.$invalid && formSubmitted" class="help-block">Client contract owner is required.</p>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="form-group" ng-class="{ 'has-error' : clientForm.clientContractStart.$invalid && formSubmitted }">
+                <div class="form-group" data-ng-class="{ 'has-error' : clientForm.clientContractStart.$invalid && formSubmitted }">
                     <label for="">Contract Start</label>
                     <input class="form-control" type="text" name="clientContractStart" data-ng-model="client.contractStart" data-autoclose="true"
                            data-dateType="iso" bs-datepicker required>
-                    <p ng-show="clientForm.clientContractStart.$error.required && formSubmitted && !clientForm.clientContractStart.$error.date" class="help-block">Client contract start date is required.</p>
-                    <p ng-show="clientForm.clientContractStart.$error.date && formSubmitted" class="help-block">Please enter a valid date.</p>
+                    <p data-ng-show="clientForm.clientContractStart.$error.required && formSubmitted && !clientForm.clientContractStart.$error.date" class="help-block">Client contract start date is required.</p>
+                    <p data-ng-show="clientForm.clientContractStart.$error.date && formSubmitted" class="help-block">Please enter a valid date.</p>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="form-group" ng-class="{ 'has-error' : clientForm.clientContractEnd.$invalid && formSubmitted }">
+                <div class="form-group" data-ng-class="{ 'has-error' : clientForm.clientContractEnd.$invalid && formSubmitted }">
                     <label for="">Contract End</label>
                     <input class="form-control" type="text" name="clientContractEnd" data-ng-model="client.contractEnd" data-autoclose="true"
                            data-dateType="string" bs-datepicker required>
-                    <p ng-show="clientForm.clientContractEnd.$error.required && formSubmitted && !clientForm.clientContractEnd.$error.date" class="help-block">Client contract end date is required.</p>
-                    <p ng-show="clientForm.clientContractEnd.$error.date && formSubmitted" class="help-block">Please enter a valid date.</p>
+                    <p data-ng-show="clientForm.clientContractEnd.$error.required && formSubmitted && !clientForm.clientContractEnd.$error.date" class="help-block">Client contract end date is required.</p>
+                    <p data-ng-show="clientForm.clientContractEnd.$error.date && formSubmitted" class="help-block">Please enter a valid date.</p>
                 </div>
             </div>
         </div>
