@@ -11,7 +11,8 @@ angular.module('emmiManager', [
     'emmiManager.api',
     'pascalprecht.translate',
     'tmh.dynamicLocale',
-    'mgcrea.ngStrap.datepicker'
+    'mgcrea.ngStrap.datepicker',
+    'ngTagsInput'
 ])
 
     .constant('USER_ROLES', {

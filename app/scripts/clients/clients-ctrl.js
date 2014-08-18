@@ -28,12 +28,34 @@ angular.module('emmiManager')
         };
 
         $scope.noSearch = true;
+        $scope.createMode = false;
+        $scope.tagGroups = [];
 
         $scope.changeSfAccount = function(){
             $scope.searchQuery = '"' + $scope.client.salesForceAccount.name + '"';
             $scope.client.salesForceAccount = null;
             focus('SfSearch');
         };
+
+        $scope.enterCreateMode = function(){
+            $scope.createMode = true;
+            $scope.newTagGroupTitle = '';
+            focus('createMode');
+        };
+
+        $scope.exitCreateMode = function(){
+            $scope.createMode = false;
+        };
+
+        $scope.newTagGroup = function(){
+            var tagGroup = {
+                title: $scope.newTagGroupTitle,
+                tags: []
+            };
+            $scope.tagGroups.push(tagGroup);
+            $scope.createMode = false;
+        };
+
     })
 
     .controller('ClientCtrl', function ($scope, $location, Client, $controller) {

@@ -130,9 +130,21 @@
         <h2>Team Tags</h2>
         <div class="row">
             <div class="col-md-12">
-                <button class="btn btn-default" type="button" data-ng-click="newTagGroup()">Add Groups &amp; Tags</button>
-                <div ng-show="">
-
+                <div class="btn-group" data-ng-repeat="tagGroup in tagGroups">
+                    <button type="button" class="btn btn-info">{{ tagGroup.title }}</button>
+                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <div class="dropdown-menu" role="menu" style="width:600px">
+                        <tags-input data-ng-model="tagGroup.tags" data-ng-click="$event.stopPropagation();"></tags-input>
+                    </div>
+                </div>&nbsp;
+                <button data-ng-hide="createMode" class="btn btn-default" type="button" data-ng-click="enterCreateMode()">Add Groups &amp; Tags</button>
+                <div data-ng-show="createMode">
+                    <input type="text" data-ng-model="newTagGroupTitle" focus-on="createMode">
+                    <button data-ng-click="newTagGroup()">Go</button>
+                    <button data-ng-click="exitCreateMode()">Close</button>
                 </div>
             </div>
         </div>
