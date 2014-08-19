@@ -6,6 +6,7 @@ angular.module('emmiManager')
 
         $scope.sfResult = {};
         $scope.sfResult.account = [];
+        $scope.formSubmitted = false;
 
         Client.getReferenceData().then(function (refData) {
             $scope.clientTypes = refData.clientType;
@@ -80,10 +81,13 @@ angular.module('emmiManager')
             'salesForceAccount':  null
         };
 
-        $scope.save = function () {
-            Client.insertClient($scope.client).then(function () {
-                $location.path('/clients');
-            });
+        $scope.save = function (isValid) {
+            $scope.formSubmitted = true;
+            if (isValid) {
+                Client.insertClient($scope.client).then(function () {
+                    $location.path('/clients');
+                });
+            }
         };
 
     })
