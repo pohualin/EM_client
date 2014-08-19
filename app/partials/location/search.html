@@ -45,14 +45,16 @@
                                cellspacing="0"
                                data-ng-show="locations">
                             <tr>
+                                <th>Add</th>
                                 <th>Name</th>
                                 <th>Clients</th>
                                 <th>City/State</th>
                                 <th>Phone</th>
                             </tr>
                             <tr data-ng-repeat="location in locations | orderBy:'entity.id'">
+                                <td><input type="checkbox" data-ng-model="location.useAtClient"></td>
                                 <td>{{location.entity.name}}</td>
-                                <td>location.entity.usingThisLocation - tbd</td>
+                                <td>{{location.entity.usingThisLocation}}</td>
                                 <td> {{location.entity.city}}<span
                                         data-ng-show="location.entity.city && location.entity.state">/</span>{{location.entity.state}}</td>
                                 <td>{{location.entity.phone}}</td>
@@ -66,7 +68,7 @@
                                 <ul class="pagination page-size pull-right">
                                     <li data-ng-repeat="pageSize in pageSizes">
                                         <a data-ng-if="pageSize != currentPageSize" href
-                                           data-ng-click="changePageSize(load, pageSize)">{{pageSize}}</a>
+                                           data-ng-click="changePageSize(pageSize)">{{pageSize}}</a>
                                         <span data-ng-if="pageSize === currentPageSize">[{{pageSize}}]</span>
                                     </li>
                                 </ul>

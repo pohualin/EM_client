@@ -2,18 +2,25 @@
 
 angular.module('emmiManager')
 
-    .controller('LocationCommon',function ($scope, Location){
+    .controller('LocationCommon', function ($scope, Location, Client) {
         Location.getReferenceData().then(function (refData) {
             $scope.statuses = refData.statusFilter;
         });
+        $scope.client = Client.getClient();
         $scope.noSearch = true;
+    })
+
+    .controller('LocationEditController', function ($scope, $controller) {
+
+        $controller('LocationCommon', {$scope: $scope});
+
     })
 
     .controller('LocationListController', function ($scope, Location, $http, Session, UriTemplate, $controller) {
 
-        $controller('LocationCommon',{$scope: $scope});
+        $controller('LocationCommon', {$scope: $scope});
 
-        var handleResponse = function(locationPage){
+        var handleResponse = function (locationPage) {
             if (locationPage) {
                 $scope.locations = locationPage.content;
                 $scope.total = locationPage.page.totalElements;
@@ -39,7 +46,7 @@ angular.module('emmiManager')
             $scope.noSearch = false;
         };
 
-        $scope.search = function() {
+        $scope.search = function () {
             $scope.locations = null;
             Location.find($scope.locationQuery, $scope.status).then(function (locationPage) {
                 handleResponse(locationPage);
@@ -53,9 +60,9 @@ angular.module('emmiManager')
             });
         };
 
-        $scope.changePageSize = function (loadLink, pageSize) {
+        $scope.changePageSize = function (pageSize) {
             $scope.locations = null;
-            Location.search($scope.locationQuery, $scope.status, pageSize).then(function (locationPage) {
+            Location.find($scope.locationQuery, $scope.status, pageSize).then(function (locationPage) {
                 handleResponse(locationPage);
             });
         };
