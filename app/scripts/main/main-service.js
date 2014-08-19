@@ -22,7 +22,6 @@ angular.module('emmiManager')
         };
     })
 
-<<<<<<< HEAD
     .directive('autoFocus', function($timeout) {
         return {
             restrict: 'AC',
@@ -33,8 +32,7 @@ angular.module('emmiManager')
             }
         };
     })
-;
-=======
+
     // From http://stackoverflow.com/questions/13320015/how-to-write-a-debounce-service-in-angularjs
     .factory('debounce', function ($timeout, $q) {
         return function(func, wait, immediate) {
@@ -64,4 +62,3 @@ angular.module('emmiManager')
     })
 
 ;
->>>>>>> 23b536c4089542840f699897b6072079d0bd6691
