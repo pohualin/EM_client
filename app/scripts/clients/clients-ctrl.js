@@ -2,11 +2,17 @@
 
 angular.module('emmiManager')
 
-    .controller('ViewEditCommon',function ($scope, Client, focus){
+    .controller('ViewEditCommon',function ($scope, Client, focus, debounce){
+
+        $scope.sfResult = {};
+        $scope.sfResult.account = [];
+        $scope.formSubmitted = false;
+
         Client.getReferenceData().then(function (refData) {
             $scope.clientTypes = refData.clientType;
             $scope.clientRegions = refData.clientRegion;
             $scope.clientTiers = refData.clientTier;
+            $scope.findSalesForceAccountLink = refData.link.findSalesForceAccount;
             Client.getOwnersReferenceDataList(refData.link.potentialOwners)
                 .then(function (ownerPage) {
                     $scope.contractOwners = ownerPage.content;
@@ -18,20 +24,44 @@ angular.module('emmiManager')
                     } else {
                         $scope.sfResult = null;
                     }
-                    $scope.noSearch = false;
                 });
             };
         });
 
-        $scope.chooseAccount = function(account){
-            $scope.client.salesForceAccount = account;
+        $scope.findAccount = debounce(function (term) {
+            if (term.length < 3) {
+                $scope.sfResult.account = [];
+            } else {
+                Client.findSalesForceAccount($scope.findSalesForceAccountLink, term).then(function (searchResults){
+                    if (searchResults.entity) {
+                        $scope.sfResult = searchResults.entity;
+                    } else {
+                        // No results returned
+                        $scope.sfResult = {};
+                        $scope.sfResult.account = [];
+                    }
+                });
+            }
+
+        }, 333);
+
+        $scope.chooseAccount = function (account) {
+            if (!account.clientName) {
+                $scope.searchQuery = account.name;
+                $scope.client.salesForceAccount = account;
+                return true;
+            } else {
+                return false;
+            }
         };
 
-        $scope.noSearch = true;
+        $scope.hasMore = function () {
+            return !$scope.sfResult.complete && $scope.sfResult.account.length > 0;
+        };
 
-        $scope.changeSfAccount = function(){
-            $scope.searchQuery = '"' + $scope.client.salesForceAccount.name + '"';
-            $scope.client.salesForceAccount = null;
+        $scope.changeSfAccount = function (){
+            $scope.searchQuery = $scope.client.salesForceAccount.name;
+            $scope.sfResult.account = [];
             focus('SfSearch');
         };
     })
@@ -51,10 +81,13 @@ angular.module('emmiManager')
             'salesForceAccount':  null
         };
 
-        $scope.save = function () {
-            Client.insertClient($scope.client).then(function () {
-                $location.path('/clients');
-            });
+        $scope.save = function (isValid) {
+            $scope.formSubmitted = true;
+            if (isValid) {
+                Client.insertClient($scope.client).then(function () {
+                    $location.path('/clients');
+                });
+            }
         };
 
     })
