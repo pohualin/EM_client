@@ -62,6 +62,7 @@ angular.module('emmiManager')
         $scope.changeSfAccount = function (){
             $scope.searchQuery = $scope.client.salesForceAccount.name;
             $scope.sfResult.account = [];
+            $scope.client.salesForceAccount = null;
             focus('SfSearch');
         };
     })
