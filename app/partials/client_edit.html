@@ -4,67 +4,82 @@
         <span data-ng-hide="client.id">New</span>
         <span data-ng-show="client.id">Edit</span> Client
     </h1>
-    <form class="form">
+    <form name="clientForm" class="form" novalidate>
         <h2>Client Information</h2>
         <div class="row">
             <div class="col-md-8">
-                <div class="form-group">
+                <div class="form-group" data-ng-class="{ 'has-error' : clientForm.clientName.$invalid && formSubmitted }">
                     <label for="">Name</label>
-                    <input class="form-control" data-ng-model="client.name" type="text">
+                    <input class="form-control" data-ng-model="client.name" name="clientName" type="text" required>
+                    <p data-ng-show="clientForm.clientName.$invalid && formSubmitted" class="help-block">Client name is required.</p>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-3">
-                <div class="form-group">
+                <div class="form-group" data-ng-class="{ 'has-error' : clientForm.clientType.$invalid && formSubmitted }">
                     <label for="">Client Type</label>
                     <select class="form-control" data-ng-model="client.type"
-                            data-ng-options="type for type in clientTypes">
+                            data-ng-options="type for type in clientTypes" name="clientType" required>
                         <option value="">Select...</option>
                     </select>
+                    <p data-ng-show="clientForm.clientType.$invalid && formSubmitted" class="help-block">Client type is required.</p>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="form-group">
+                <div class="form-group" data-ng-class="{ 'has-error' : clientForm.clientRegion.$invalid && formSubmitted }">
                     <label for="region">Region</label>
                     <select class="form-control" id="region" data-ng-model="client.region"
-                            data-ng-options="region for region in clientRegions">
+                            data-ng-options="region for region in clientRegions" name="clientRegion" required>
                         <option value="">Select...</option>
                     </select>
+                    <p data-ng-show="clientForm.clientRegion.$invalid && formSubmitted" class="help-block">Client region is required.</p>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="form-group">
+                <div class="form-group" data-ng-class="{ 'has-error' : clientForm.clientTier.$invalid && formSubmitted }">
                     <label for="">Tier</label>
                     <select class="form-control" data-ng-model="client.tier"
-                            data-ng-options="tier for tier in clientTiers">
+                            data-ng-options="tier for tier in clientTiers" name="clientTier" required>
                         <option value="">Select...</option>
                     </select>
+                    <p data-ng-show="clientForm.clientTier.$invalid && formSubmitted" class="help-block">Client tier is required.</p>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-3">
-                <div class="form-group">
+                <div class="form-group" data-ng-class="{ 'has-error' : clientForm.clientContractOwner.$invalid && formSubmitted }">
                     <label for="">Contract Owner</label>
-                    <select class="form-control" data-ng-model="client.contractOwner"
-                            data-ng-options="owner as owner.lastName for owner in contractOwners track by owner.id">
-                        <option value="">Select...</option>
+                    <select
+                        class="form-control"
+                        data-chosen
+                        data-allow-single-deselect="true"
+                        data-placeholder="Select..."
+                        data-ng-model="client.contractOwner"
+                        data-ng-options="owner as owner.lastName for owner in contractOwners track by owner.id"
+                        name="clientContractOwner" required>
+                        <option value=""></option>
                     </select>
+                    <p data-ng-show="clientForm.clientContractOwner.$invalid && formSubmitted" class="help-block">Client contract owner is required.</p>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="form-group">
+                <div class="form-group" data-ng-class="{ 'has-error' : clientForm.clientContractStart.$invalid && formSubmitted }">
                     <label for="">Contract Start</label>
-                    <input class="form-control" type="text" data-ng-model="client.contractStart" data-autoclose="true"
-                           data-dateType="iso" bs-datepicker>
+                    <input class="form-control" type="text" name="clientContractStart" data-ng-model="client.contractStart" data-autoclose="true"
+                           data-dateType="iso" data-bs-datepicker required>
+                    <p data-ng-show="clientForm.clientContractStart.$error.required && formSubmitted && !clientForm.clientContractStart.$error.date" class="help-block">Client contract start date is required.</p>
+                    <p data-ng-show="clientForm.clientContractStart.$error.date && formSubmitted" class="help-block">Please enter a valid date.</p>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="form-group">
+                <div class="form-group" data-ng-class="{ 'has-error' : clientForm.clientContractEnd.$invalid && formSubmitted }">
                     <label for="">Contract End</label>
-                    <input class="form-control" type="text" data-ng-model="client.contractEnd" data-autoclose="true"
-                           data-dateType="string" bs-datepicker>
+                    <input class="form-control" type="text" name="clientContractEnd" data-ng-model="client.contractEnd" data-autoclose="true"
+                           data-dateType="string" data-bs-datepicker required>
+                    <p data-ng-show="clientForm.clientContractEnd.$error.required && formSubmitted && !clientForm.clientContractEnd.$error.date" class="help-block">Client contract end date is required.</p>
+                    <p data-ng-show="clientForm.clientContractEnd.$error.date && formSubmitted" class="help-block">Please enter a valid date.</p>
                 </div>
             </div>
         </div>
@@ -82,47 +97,34 @@
             <div class="col-md-8">
                 {{client.salesForceAccount.name}} {{client.salesForceAccount.city}}<span
                     data-ng-show="client.salesForceAccount.city && client.salesForceAccount.state">/</span>{{client.salesForceAccount.state}}
-                <button class="btn btn-default" data-ng-click="changeSfAccount()">Change SF</button>
+                <button class="btn btn-link" data-ng-click="changeSfAccount()">edit</button>
             </div>
         </div>
         <div class="row" data-ng-hide="client.salesForceAccount">
             <div class="col-md-8">
                 <div class="form-group">
                     <label for="">Salesforce Account</label>
-                    <input class="form-control" type="text" data-ng-model="searchQuery" focus-on="SfSearch">
-                    <button class="btn btn-default" data-ng-click="findSalesForceAccount()"
-                            data-translate="global.buttons.search">Go
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class="row" data-ng-hide="client.salesForceAccount">
-            <div class="col-md-10" data-ng-show="sfResult.account">
-                <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0"
-                       cellspacing="0">
-                    <tr>
-                        <th>Account Name</th>
-                        <th>Client Name</th>
-                        <th>City/State</th>
-                        <th>&nbsp;</th>
-                    </tr>
-                    <tr data-ng-repeat="account in sfResult.account | orderBy:'account.name'">
-                        <td>{{account.name}}</td>
-                        <td>{{account.clientName}}</td>
-                        <td>{{account.city}}<span data-ng-show="account.city && account.state">/</span>{{account.state}}
-                        </td>
-                        <td>
-                            <button class="btn btn-default" data-ng-hide="account.clientName"
-                                    data-ng-click="chooseAccount(account)">Choose
-                            </button>
-                        </td>
-                    </tr>
-                    <tr data-ng-show="!sfResult.complete">
-                        <td colspan="4">Refine search for more results</td>
-                    </tr>
-                </table>
-                <div data-ng-hide="sfResult.account || noSearch">
-                    <span>There are no matching accounts found.</span>
+                    <div data-emmi-typeahead data-items="sfResult.account" data-term="searchQuery" data-search="findAccount(term)" data-select="chooseAccount(item)" data-placeholder="Start typing..." data-focus="SfSearch">
+                        <div class="menu typeahead-menu dropdown-menu bottom-left container-fluid">
+                            <li class="header row" data-ng-show="sfResult.account.length">
+                                <div class="col-md-4 account-name">Account Name</div>
+                                <div class="col-md-4 client-name">Client Name</div>
+                                <div class="col-md-4 city-state">City/State</div>
+                            </li>
+                            <li data-emmi-typeahead-item="account" data-ng-repeat="account in sfResult.account" class="results row" data-ng-class="!account.clientName ? 'selectable' : 'unselectable'">
+                                <div class="col-md-4 account-name">{{account.name}}</div>
+                                <div class="col-md-4 client-name">{{account.clientName}}&nbsp;</div>
+                                <div class="col-md-4 city-state">{{account.city}}<span data-ng-show="account.city && account.state">/</span>{{account.state}}&nbsp;</div>
+                            </li>
+                            <li data-ng-show="hasMore()" class="footer row">
+                                <div class="col-md-12">Refine search for more results.</div>
+                            </li>
+                            <div data-ng-hide="sfResult.account.length || searchQuery.length < 3">
+                                <div class="col-md-12">There are no matching accounts found.</div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -152,7 +154,7 @@
         <div class="actions pull-right">
             <div class="form-group">
                 <a class="btn btn-link" href="#/clients">Cancel</a>
-                <button class="btn btn-primary" type="button" data-ng-click="save()">Save</button>
+                <button class="btn btn-primary" type="button" data-ng-click="save(clientForm.$valid)">Save</button>
             </div>
         </div>
     </form>
