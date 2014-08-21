@@ -1,8 +1,8 @@
-<div class="col-md-10">
+<div class="col-md-12">
     <h2>Existing Locations <span data-ng-show="client.name">For {{client.name}}</span></h2>
     <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0"
            cellspacing="0"
-           data-ng-show="locations">
+           data-ng-show="clientLocations">
         <tr>
             <th>Name</th>
             <th>Phone</th>
@@ -10,7 +10,7 @@
             <th>State</th>
             <th>Action</th>
         </tr>
-        <tr data-ng-repeat="location in locations | orderBy:'entity.name'">
+        <tr data-ng-repeat="location in clientLocations | orderBy:'entity.name'">
             <td>{{location.entity.name}}</td>
             <td>{{location.entity.phone}}</td>
             <td>{{location.entity.city}}</td>
@@ -22,7 +22,7 @@
             </td>
         </tr>
     </table>
-    <div class="row" data-ng-show="locations">
+    <div class="row" data-ng-show="clientLocations">
         <div class="col-md-4 col-sm-4 pull-right" data-ng-show="total > pageSizes[0] || links">
             <ul class="pagination page-size pull-right">
                 <li data-ng-repeat="pageSize in pageSizes">
@@ -42,7 +42,7 @@
             </ul>
         </div>
     </div>
-    <div data-ng-hide="locations">
+    <div data-ng-hide="clientLocations">
         <span>There are no existing locations<span data-ng-show="client.name"> for {{client.name}}</span>.</span>
     </div>
     <button type="button" class="btn btn-link" data-ng-click="addLocations()">

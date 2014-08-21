@@ -38,11 +38,11 @@ angular.module('emmiManager')
             }
         };
 
-        $scope.handleResponse = function (locationPage) {
+        $scope.handleResponse = function (locationPage, locationsPropertyName) {
             if (locationPage) {
-                $scope.locations = locationPage.content;
+                this[locationsPropertyName] = locationPage.content;
 
-                angular.forEach($scope.locations, function(location) {
+                angular.forEach(this[locationsPropertyName], function(location) {
                     if ($scope.client.addedLocations[location.entity.id]){
                         $scope.addNewLocation(location.entity);
                     }
@@ -63,7 +63,7 @@ angular.module('emmiManager')
                 $scope.load = locationPage.link.self;
                 $scope.currentPage = locationPage.page.number;
                 $scope.currentPageSize = locationPage.page.size;
-                $scope.pageSizes = [10, 25, 50, 100];
+                $scope.pageSizes = [5, 10, 15, 25];
                 $scope.status = locationPage.filter.status;
             } else {
                 $scope.total = 0;
@@ -122,21 +122,21 @@ angular.module('emmiManager')
         $scope.search = function () {
             $scope.locations = null;
             Location.find($scope.locationQuery, $scope.status).then(function (locationPage) {
-                $scope.handleResponse(locationPage);
+                $scope.handleResponse(locationPage, 'locations');
             });
         };
 
         $scope.fetchPage = function (href) {
             $scope.locations = null;
             Location.fetchPageLink(href).then(function (locationPage) {
-                $scope.handleResponse(locationPage);
+                $scope.handleResponse(locationPage, 'locations');
             });
         };
 
         $scope.changePageSize = function (pageSize) {
             $scope.locations = null;
             Location.find($scope.locationQuery, $scope.status, pageSize).then(function (locationPage) {
-                $scope.handleResponse(locationPage);
+                $scope.handleResponse(locationPage, 'locations');
             });
         };
 
@@ -166,21 +166,21 @@ angular.module('emmiManager')
         };
 
         Location.findForClient(Client.getClient()).then(function (locationPage) {
-            $scope.handleResponse(locationPage);
+            $scope.handleResponse(locationPage, 'clientLocations');
         });
 
         $scope.fetchPage = function (href) {
-            $scope.locations = null;
+            $scope.clientLocations = null;
             Location.fetchPageLink(href).then(function (locationPage) {
-                $scope.handleResponse(locationPage);
+                $scope.handleResponse(locationPage, 'clientLocations');
             });
         };
 
         $scope.changePageSize = function (pageSize) {
-            $scope.locations = null;
+            $scope.clientLocations = null;
             Location.findForClient(Client.getClient(), pageSize).then(function (locationPage) {
                 $scope.client.locations = locationPage.content;
-                $scope.handleResponse(locationPage);
+                $scope.handleResponse(locationPage, 'clientLocations');
             });
         };
     })

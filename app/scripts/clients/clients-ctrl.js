@@ -123,7 +123,7 @@ angular.module('emmiManager')
                     $scope.load = clientPage.link.self;
                     $scope.currentPage = clientPage.page.number;
                     $scope.currentPageSize = clientPage.page.size;
-                    $scope.pageSizes = [10, 25, 50, 100];
+                    $scope.pageSizes = [5, 10, 15, 25];
                     $scope.status = clientPage.filter.status;
                 } else {
                     $scope.total = 0;

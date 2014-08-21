@@ -7,7 +7,7 @@
     <form name="clientForm" class="form" novalidate>
         <h2>Client Information</h2>
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="form-group" data-ng-class="{ 'has-error' : clientForm.clientName.$invalid && formSubmitted }">
                     <label for="">Name</label>
                     <input class="form-control" data-ng-model="client.name" name="clientName" type="text" required>
@@ -16,7 +16,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="form-group" data-ng-class="{ 'has-error' : clientForm.clientType.$invalid && formSubmitted }">
                     <label for="">Client Type</label>
                     <select class="form-control" data-ng-model="client.type"
@@ -26,7 +26,7 @@
                     <p data-ng-show="clientForm.clientType.$invalid && formSubmitted" class="help-block">Client type is required.</p>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="form-group" data-ng-class="{ 'has-error' : clientForm.clientRegion.$invalid && formSubmitted }">
                     <label for="region">Region</label>
                     <select class="form-control" id="region" data-ng-model="client.region"
@@ -36,7 +36,7 @@
                     <p data-ng-show="clientForm.clientRegion.$invalid && formSubmitted" class="help-block">Client region is required.</p>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="form-group" data-ng-class="{ 'has-error' : clientForm.clientTier.$invalid && formSubmitted }">
                     <label for="">Tier</label>
                     <select class="form-control" data-ng-model="client.tier"
@@ -48,7 +48,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="form-group" data-ng-class="{ 'has-error' : clientForm.clientContractOwner.$invalid && formSubmitted }">
                     <label for="">Contract Owner</label>
                     <select
@@ -64,7 +64,7 @@
                     <p data-ng-show="clientForm.clientContractOwner.$invalid && formSubmitted" class="help-block">Client contract owner is required.</p>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="form-group" data-ng-class="{ 'has-error' : clientForm.clientContractStart.$invalid && formSubmitted }">
                     <label for="">Contract Start</label>
                     <input class="form-control" type="text" name="clientContractStart" data-ng-model="client.contractStart" data-autoclose="true"
@@ -73,7 +73,7 @@
                     <p data-ng-show="clientForm.clientContractStart.$error.date && formSubmitted" class="help-block">Please enter a valid date.</p>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="form-group" data-ng-class="{ 'has-error' : clientForm.clientContractEnd.$invalid && formSubmitted }">
                     <label for="">Contract End</label>
                     <input class="form-control" type="text" name="clientContractEnd" data-ng-model="client.contractEnd" data-autoclose="true"
@@ -94,7 +94,7 @@
             </div>
         </div>
         <div class="row" data-ng-show="client.salesForceAccount">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 {{client.salesForceAccount.name}} {{client.salesForceAccount.city}}<span
                     data-ng-show="client.salesForceAccount.city && client.salesForceAccount.state">/</span>{{client.salesForceAccount.state}}
                 <button class="btn btn-link" data-ng-click="changeSfAccount()">edit</button>
@@ -106,11 +106,16 @@
         <hr>
         <div class="row" data-ng-controller="ClientLocationsController" data-ng-include="'partials/location/client_current.html'"></div>
         <hr>
-        <div class="actions pull-right">
-            <div class="form-group">
-                <a class="btn btn-link" href="#/clients">Cancel</a>
-                <button class="btn btn-primary" type="button" data-ng-click="save(clientForm.$valid)">Save</button>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="actions pull-right">
+                    <div class="form-group">
+                        <a class="btn btn-link" href="#/clients">Cancel</a>
+                        <button class="btn btn-primary" type="button" data-ng-click="save(clientForm.$valid)">Save</button>
+                    </div>
+                </div>
             </div>
         </div>
+
     </form>
 </div>
