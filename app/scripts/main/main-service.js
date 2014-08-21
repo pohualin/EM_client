@@ -20,6 +20,20 @@ angular.module('emmiManager')
         };
     })
 
+    .directive('ngEnter', function () {
+        return function (scope, element, attrs) {
+            element.bind('keydown keypress', function (event) {
+                if(event.which === 13) {
+                    scope.$apply(function (){
+                        scope.$eval(attrs.ngEnter);
+                    });
+
+                    event.preventDefault();
+                }
+            });
+        };
+    })
+
     // From http://stackoverflow.com/questions/13320015/how-to-write-a-debounce-service-in-angularjs
     .factory('debounce', function ($timeout, $q) {
         return function(func, wait, immediate) {

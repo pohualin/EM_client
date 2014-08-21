@@ -58,6 +58,7 @@ angular.module('emmiManager')
         $scope.noSearch = true;
         $scope.createMode = false;
         $scope.tagGroups = [];
+        var selectedTagGroupIndex = -1;
 
         $scope.hasMore = function () {
             return !$scope.sfResult.complete && $scope.sfResult.account.length > 0;
@@ -69,23 +70,65 @@ angular.module('emmiManager')
             focus('SfSearch');
         };
 
-        $scope.enterCreateMode = function(){
+        $scope.enterCreateMode = function (){
             $scope.createMode = true;
             $scope.newTagGroupTitle = '';
             focus('createMode');
         };
 
-        $scope.exitCreateMode = function(){
+        $scope.exitCreateMode = function (){
             $scope.createMode = false;
         };
 
-        $scope.newTagGroup = function(){
+        $scope.newTagGroup = function (){
             var tagGroup = {
                 title: $scope.newTagGroupTitle,
                 tags: []
             };
             $scope.tagGroups.push(tagGroup);
             $scope.createMode = false;
+        };
+
+        $scope.selectTagGroup = function (groupIndex) {
+            console.log(groupIndex);
+            if (selectedTagGroupIndex === groupIndex) {
+                console.log('Edit Group!');
+                $scope.tagGroups[groupIndex].editMode = true;
+                selectedTagGroupIndex = -1;
+            } else {
+                selectedTagGroupIndex = groupIndex;
+            }
+        };
+
+        $scope.removeTagGroup = function (groupIndex) {
+            $scope.tagGroups.splice(groupIndex, 1);
+        };
+
+        $scope.changeTagGroupTitle = function (groupIndex) {
+            // Title already gets changed from data binding, so really just need to hide the edit form
+            $scope.tagGroups[groupIndex].editMode = false;
+        };
+
+        $scope.tagExists = function (tag, groupIndex) {
+            for (var j = 0; j < $scope.tagGroups[groupIndex].tags.length; j++) {
+                if ($scope.tagGroups[groupIndex].tags[j].text === tag.text) {
+                    return true;
+                }
+            }
+            return false;
+        };
+
+        $scope.pasteTags = function (event, groupIndex) {
+            event.preventDefault();
+            var tags = event.originalEvent.clipboardData.getData('text/plain').split(' ');
+            for (var i = 0, numTags = tags.length; i < numTags; i++) {
+                var tag = {};
+                tag.text = tags[i];
+                if (tag.text.length > 0 && !$scope.tagExists(tag, groupIndex)) {
+                    console.log(tag);
+                    $scope.tagGroups[groupIndex].tags.push(tag);
+                }
+            }
         };
 
     })

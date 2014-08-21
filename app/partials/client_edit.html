@@ -133,19 +133,25 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="btn-group" data-ng-repeat="tagGroup in tagGroups">
-                    <button type="button" class="btn btn-info">{{ tagGroup.title }}</button>
+                    <div class="tag-group-edit" ng-show="tagGroup.editMode">
+                        <input type="text" ng-model="tagGroup.title" value="{{ tagGroup.title }}" ng-enter="changeTagGroupTitle($index)">
+                    </div>
+                    <button type="button" class="btn btn-info" ng-click="selectTagGroup($index)">{{ tagGroup.title }}</button>
+                    <button type="button" class="btn btn-info" ng-click="removeTagGroup($index)">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
                     <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
                         <span class="caret"></span>
                         <span class="sr-only">Toggle Dropdown</span>
                     </button>
                     <div class="dropdown-menu" role="menu" style="width:600px">
-                        <tags-input data-ng-model="tagGroup.tags" data-ng-click="$event.stopPropagation();"></tags-input>
+                        <tags-input data-ng-model="tagGroup.tags" data-ng-click="$event.stopPropagation();" data-ng-paste="pasteTags($event, $index)" enable-editing-last-tag="true" add-on-space="true"></tags-input>
                     </div>
-                </div>&nbsp;
+                    &nbsp;
+                </div>
                 <button data-ng-hide="createMode" class="btn btn-default" type="button" data-ng-click="enterCreateMode()">Add Groups &amp; Tags</button>
                 <div data-ng-show="createMode">
-                    <input type="text" data-ng-model="newTagGroupTitle" focus-on="createMode">
-                    <button data-ng-click="newTagGroup()">Go</button>
+                    <input type="text" data-ng-model="newTagGroupTitle" focus-on="createMode" data-ng-enter="newTagGroup()">
                     <button data-ng-click="exitCreateMode()">Close</button>
                 </div>
             </div>
