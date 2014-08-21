@@ -14,6 +14,7 @@ angular.module('emmiManager')
             insertClient: function (client) {
                 return $http.post(UriTemplate.create(Session.link.clients).stringify(), client)
                     .success(function (response, status) {
+                    	console.log(response);
                         return response;
                     });
             },

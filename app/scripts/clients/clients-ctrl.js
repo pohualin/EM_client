@@ -36,11 +36,12 @@ angular.module('emmiManager')
         };
     })
 
-    .controller('ClientCtrl', function ($scope, $location, Client, $controller) {
+    .controller('ClientCtrl', function ($scope, $location, Client, $controller, $rootScope) {
 
         $controller('ViewEditCommon',{$scope: $scope});
 
         $scope.client = {
+        	'id' : null,	
             'name': null,
             'type': null,
             'active': true,
@@ -54,6 +55,14 @@ angular.module('emmiManager')
         $scope.save = function () {
             Client.insertClient($scope.client).then(function () {
                 $location.path('/clients');
+            });
+        };
+        
+        $scope.addTeamToClient = function () {
+            Client.insertClient($scope.client).then(function (response) {
+            	console.log(response);
+            	Client.selectedClient=response.data;
+                $location.path('/teams/new');
             });
         };
 
@@ -134,6 +143,6 @@ angular.module('emmiManager')
             Client.updateClient($scope.client).then(function () {
                 $location.path('/clients');
             });
-        };
+        };        
     })
 ;

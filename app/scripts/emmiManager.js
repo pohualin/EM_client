@@ -70,6 +70,14 @@ angular.module('emmiManager', [
                 },
                 resolve: requiredResources
             })
+            .when('/teams/new', {
+                templateUrl: 'partials/team_edit.html',
+                controller: 'TeamCtrl',
+                access: {
+                    authorizedRoles: [USER_ROLES.admin]
+                },
+                resolve: requiredResources
+            })
             .when('/403', {
                 templateUrl: 'partials/403.html',
                 resolve: requiredResources,

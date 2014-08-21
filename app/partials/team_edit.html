@@ -1,0 +1,47 @@
+<div class="container">
+    <h1>
+        <a href="#/">Emmi Manager</a>:&nbsp;
+        <span data-ng-hide="team.id">New</span>
+        <span data-ng-show="team.id">Edit</span> Team
+    </h1>                     
+    <form class="form">
+        <h2>Team Information</h2>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label for="">Name</label>
+                    <input class="form-control" data-ng-model="team.name" type="text">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label for="">Description</label>
+                    <input class="form-control" data-ng-model="team.description" type="text">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label for="">Phone</label>
+                    <input class="form-control" data-ng-model="team.phone" type="text">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label for="">Fax</label>
+                    <input class="form-control" data-ng-model="team.fax" type="text">
+                </div>
+            </div>
+        </div> 
+        <div class="actions">
+            <div class="form-group">              
+                <button class="btn btn-primary" type="button" data-ng-click="save()">Save</button>
+            </div>
+        </div>               
+    </form>
+</div>         
