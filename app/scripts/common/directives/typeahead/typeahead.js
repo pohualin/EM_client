@@ -9,7 +9,7 @@ angular.module('emmi.typeahead', [])
             // terminal: true,
             // require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
             restrict: 'AE', // E = Element, A = Attribute, C = Class, M = Comment
-            templateUrl: 'scripts/common/directives/typeahead/typeahead.tpl.html',
+            templateUrl: 'partials/common/directives/typeahead/typeahead.tpl.html',
             replace: true,
             transclude: true,
             scope: {
