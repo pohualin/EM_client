@@ -4,6 +4,7 @@
 ========== INIT
 */
 @import 'vendor/_normalize';
+@import 'vendor/_angular-strap';
 
 
 /*!
@@ -25,3 +26,10 @@
 */
 // more specific declarations, may be built on a per page basis
 @import 'specifics/__specifics';
+
+.modal-dialog {
+  width: 85%;
+  .modal-content {
+    min-width: 500px;
+  }
+}

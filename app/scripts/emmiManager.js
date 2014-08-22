@@ -7,11 +7,15 @@ angular.module('emmiManager', [
     'ngSanitize',
     'ngResource',
     'ngRoute',
+    'ngAnimate',
     'hateoas',
     'emmiManager.api',
     'pascalprecht.translate',
     'tmh.dynamicLocale',
-    'mgcrea.ngStrap.datepicker'
+    'mgcrea.ngStrap.datepicker',
+    'emmi.typeahead',
+    'localytics.directives',
+    'mgcrea.ngStrap.modal'
 ])
 
     .constant('USER_ROLES', {
@@ -47,7 +51,7 @@ angular.module('emmiManager', [
                 resolve: requiredResources
             })
             .when('/clients', {
-                templateUrl: 'partials/clients.html',
+                templateUrl: 'partials/client/clients.html',
                 controller: 'ClientListCtrl',
                 access: {
                     authorizedRoles: [USER_ROLES.admin]
@@ -55,7 +59,7 @@ angular.module('emmiManager', [
                 resolve: requiredResources
             })
             .when('/clients/new', {
-                templateUrl: 'partials/client_edit.html',
+                templateUrl: 'partials/client/client_edit.html',
                 controller: 'ClientCtrl',
                 access: {
                     authorizedRoles: [USER_ROLES.admin]
@@ -63,7 +67,7 @@ angular.module('emmiManager', [
                 resolve: requiredResources
             })
             .when('/clients/edit', {
-                templateUrl: 'partials/client_edit.html',
+                templateUrl: 'partials/client/client_edit.html',
                 controller: 'ClientDetailCtrl',
                 access: {
                     authorizedRoles: [USER_ROLES.admin]

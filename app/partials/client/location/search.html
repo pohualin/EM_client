@@ -1,0 +1,115 @@
+<div class="modal" tabindex="-1" role="dialog" data-ng-controller="LocationListController">
+    <div class="modal-dialog container-fluid">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="row">
+                    <div class="col-md-9 col-sm-9">
+                        <form ng-submit="search()">
+                            <div class="form-group">
+                                <label class="sr-only" for="locationQuery">Search locations:</label>
+
+                                <div class="input-group">
+                                    <input class="form-control" id="locationQuery" data-ng-model="locationQuery"
+                                           type="text"
+                                           placeholder="Search locations..." data-auto-focus>
+
+                                    <div class="input-group-addon" data-ng-click="search()">Go</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-3 col-sm-3" data-ng-hide="noSearch">
+                        <button type="button" class="btn btn-link pull-right" data-ng-click="createNewLocation()">
+                            add new location
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body" data-ng-hide="noSearch">
+                <div data-ng-hide="noSearch">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="pull-right">
+                                {{total}}
+                                <span data-ng-show="total != 1" data-translate="global.labels.total"> results</span>
+                                <span data-ng-show="total === 1"
+                                      data-translate="global.labels.totalSingular"> result</span>
+                            </div>
+                            <form class="form-inline">
+                                <div class="form-group">
+                                    <label for="status_filter" data-translate="global.labels.statusFilter">Show:</label>
+                                    <select class="form-control" id="status_filter" data-ng-model="status"
+                                            data-ng-options="status for status in statuses"
+                                            data-ng-change="search()">
+                                        <option value="">Select...</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                    <br/>
+
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0"
+                                   cellspacing="0"
+                                   data-ng-show="locations">
+                                <tr>
+                                    <th>Add</th>
+                                    <th>Name</th>
+                                    <th>Clients</th>
+                                    <th>City/State</th>
+                                    <th>Phone</th>
+                                </tr>
+                                <tr data-ng-repeat="location in locations">
+                                    <td><input type="checkbox" data-ng-model="location.entity.newlocation"
+                                               ng-change="onCheckboxChange(location)"></td>
+                                    <td>{{location.entity.name}}</td>
+                                    <td>
+                                    <span data-ng-repeat="client in location.entity.usingThisLocation">
+                                         {{client.name}}<span data-ng-hide="$last">,</span>
+                                    </span>
+                                    </td>
+                                    <td> {{location.entity.city}}<span
+                                            data-ng-show="location.entity.city && location.entity.state">/</span>{{location.entity.state}}
+                                    </td>
+                                    <td>{{location.entity.phone}}</td>
+                                </tr>
+                            </table>
+                            <div data-ng-hide="locations">
+                                <span>There are no locations found.</span>
+                            </div>
+                            <div class="row" data-ng-show="locations">
+                                <div class="col-md-4 col-sm-4 pull-right" data-ng-show="total > pageSizes[0] || links">
+                                    <ul class="pagination page-size pull-right">
+                                        <li data-ng-repeat="pageSize in pageSizes">
+                                            <a data-ng-if="pageSize != currentPageSize" href
+                                               data-ng-click="changePageSize(pageSize)">{{pageSize}}</a>
+                                            <span data-ng-if="pageSize === currentPageSize">[{{pageSize}}]</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div data-ng-show="links" class="col-md-8 col-sm-8">
+                                    <ul class="pagination">
+                                        <li data-ng-repeat="link in links | orderBy:'order'">
+                                            <a data-ng-if="link.name != currentPage" href
+                                               data-ng-click="fetchPage(link.href)">{{link.name}}</a>
+                                            <span data-ng-if="link.name == currentPage">[{{link.name}}]</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link" data-ng-click="cancel()">cancel</button>
+                <button type="button" class="btn btn-primary" data-ng-show="locations" data-ng-click="save()">Save
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+

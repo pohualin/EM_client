@@ -1,0 +1,28 @@
+/**
+ * angular-strap
+ * @version v2.0.5 - 2014-08-07
+ * @link http://mgcrea.github.io/angular-strap
+ * @author Olivier Louvignes (olivier@mg-crea.com)
+ * @license MIT License, http://www.opensource.org/licenses/MIT
+ */
+.datepicker.dropdown-menu {
+    width: 250px;
+    height: 270px
+}
+
+.datepicker.dropdown-menu button {
+    outline: 0;
+    border: 0
+}
+
+.datepicker.dropdown-menu tbody {
+    height: 180px
+}
+
+.datepicker.dropdown-menu tbody button {
+    padding: 6px
+}
+
+.datepicker.dropdown-menu.datepicker-mode-1 tbody button,.datepicker.dropdown-menu.datepicker-mode-2 tbody button {
+    height: 65px
+}
