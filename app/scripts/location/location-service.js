@@ -57,13 +57,30 @@ angular.module('emmiManager')
                 }
                 return deferred.promise;
             },
+            findAllIdsForClient: function (client) {
+                var deferred = $q.defer();
+                if (client && client.entity && client.entity.id) {
+                    $http.get(UriTemplate.create(client.link.allLocationIds).stringify())
+                        .then(function (response) {
+                            deferred.resolve(response.data);
+                        });
+                } else {
+                    deferred.resolve([]);
+                }
+                return deferred.promise;
+            },
             updateForClient: function (clientResource) {
-                var added = [];
-                angular.forEach(clientResource.entity.addedLocations, function (location) {
+                var added = [],
+                    removed = [];
+                angular.forEach(clientResource.addedLocations, function (location) {
                     added.push(location);
                 });
+                angular.forEach(clientResource.removedLocations, function (location) {
+                    removed.push(location);
+                });
                 return $http.put(UriTemplate.create(clientResource.link.locations).stringify(), {
-                    added: added
+                    added: added,
+                    deleted: removed
                 }).then(function (response) {
                     return response.data;
                 });

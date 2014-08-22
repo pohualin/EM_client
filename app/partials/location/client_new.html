@@ -1,0 +1,30 @@
+<div class="col-md-12" data-ng-controller="ClientAddNewLocationsController">
+    <button type="button" class="btn btn-link" data-ng-click="addLocations()" data-ng-show="idsFetched">
+        add locations
+    </button>
+    <div class="row" data-ng-hide="isEmpty(client.addedLocations)">
+        <div class="col-md-8">
+            <h2>Locations To Be Added For {{client.entity.name}} On Save...</h2>
+            <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th>Action</th>
+                </tr>
+                <tr data-ng-repeat="(key,location) in client.addedLocations | orderBy:'key'">
+                    <td>{{location.name}}</td>
+                    <td>{{location.phone}}</td>
+                    <td>{{location.city}}</td>
+                    <td>{{location.state}}</td>
+                    <td>
+                        <button class="btn" type="button" data-ng-click="editLocation(location)">edit</button>
+                        <button class="btn" type="button" data-ng-click="removeNewLocation(location)">remove
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

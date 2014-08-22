@@ -62,9 +62,9 @@
                                     <th>City/State</th>
                                     <th>Phone</th>
                                 </tr>
-                                <tr data-ng-repeat="location in locations | orderBy:'entity.id'">
+                                <tr data-ng-repeat="location in locations">
                                     <td><input type="checkbox" data-ng-model="location.entity.newlocation"
-                                               ng-change="updateNewLocation(location.entity)"></td>
+                                               ng-change="onCheckboxChange(location)"></td>
                                     <td>{{location.entity.name}}</td>
                                     <td>
                                     <span data-ng-repeat="client in location.entity.usingThisLocation">
@@ -105,8 +105,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-link" data-ng-click="$hide()">cancel</button>
-                <button type="button" class="btn btn-primary" data-ng-show="locations" data-ng-click="$hide()">Save
+                <button type="button" class="btn btn-link" data-ng-click="cancel()">cancel</button>
+                <button type="button" class="btn btn-primary" data-ng-show="locations" data-ng-click="save()">Save
                 </button>
             </div>
         </div>

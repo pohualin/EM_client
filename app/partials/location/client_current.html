@@ -1,4 +1,4 @@
-<div class="col-md-12">
+<div class="col-md-12" data-ng-controller="ClientLocationsController" >
     <h2>Existing Locations <span data-ng-show="client.name">For {{client.name}}</span></h2>
     <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0"
            cellspacing="0"
@@ -10,15 +10,18 @@
             <th>State</th>
             <th>Action</th>
         </tr>
-        <tr data-ng-repeat="location in clientLocations | orderBy:'entity.name'">
+        <tr data-ng-repeat="location in clientLocations">
             <td>{{location.entity.name}}</td>
             <td>{{location.entity.phone}}</td>
             <td>{{location.entity.city}}</td>
             <td>{{location.entity.state}}</td>
-            <td>
+            <td data-ng-hide="location.entity.removedFromClient">
                 <button class="btn" type="button" data-ng-click="editLocation(location.entity)">edit</button>
                 <button class="btn" type="button" data-ng-click="removeExistingLocation(location)">remove
                 </button>
+            </td>
+            <td data-ng-show="location.entity.removedFromClient">
+                targeted for removal
             </td>
         </tr>
     </table>
@@ -45,33 +48,7 @@
     <div data-ng-hide="clientLocations">
         <span>There are no existing locations<span data-ng-show="client.name"> for {{client.name}}</span>.</span>
     </div>
-    <button type="button" class="btn btn-link" data-ng-click="addLocations()">
-        add locations
-    </button>
-    <div class="row" data-ng-show="!isEmpty(client.addedLocations)">
-        <div class="col-md-8">
-            <h2>Unsaved New Locations For {{client.name}}</h2>
-            <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0"
-                   cellspacing="0">
-                <tr>
-                    <th>Name</th>
-                    <th>Phone</th>
-                    <th>City</th>
-                    <th>State</th>
-                    <th>Action</th>
-                </tr>
-                <tr data-ng-repeat="(key,location) in client.addedLocations | orderBy:'key'">
-                    <td>{{location.name}}</td>
-                    <td>{{location.phone}}</td>
-                    <td>{{location.city}}</td>
-                    <td>{{location.state}}</td>
-                    <td>
-                        <button class="btn" type="button" data-ng-click="editLocation(location)">edit</button>
-                        <button class="btn" type="button" data-ng-click="removeNewLocation(location)">remove
-                        </button>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </div>
+    <div class="row" data-ng-include="'partials/location/client_new.html'"></div>
+    <div class="row" data-ng-include="'partials/location/client_remove.html'"></div>
 </div>
+
