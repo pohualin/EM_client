@@ -29,6 +29,9 @@
   "overrides": {
     "chosen": {
       "main": "chosen.jquery.js"
+    },
+    "ng-tags-input": {
+      "main": "ng-tags-input.js"
     }
   }
 }

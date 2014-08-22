@@ -132,6 +132,7 @@
         <h2>Team Tags</h2>
         <div class="row">
             <div class="col-md-12">
+                {{  tagGroups | json }}<br/><br/>
                 <div class="btn-group" data-ng-repeat="tagGroup in tagGroups">
                     <div class="tag-group-edit" ng-show="tagGroup.editMode">
                         <input type="text" ng-model="tagGroup.title" value="{{ tagGroup.title }}" ng-enter="changeTagGroupTitle($index)">
