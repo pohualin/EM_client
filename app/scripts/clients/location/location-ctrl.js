@@ -157,7 +157,7 @@ angular.module('emmiManager')
 /**
  *  Controls the new location search/select popup (partials/location/search.html)
  */
-    .controller('LocationListController', function ($scope, Location, $http, Session, UriTemplate, $controller, $modal, Client) {
+    .controller('LocationListController', function ($scope, Location, $http, Session, UriTemplate, $controller, $modal) {
 
         $controller('LocationCommon', {$scope: $scope});
 
@@ -271,7 +271,7 @@ angular.module('emmiManager')
             });
         };
 
-        var newLocationModal = $modal({scope: $scope, template: 'partials/location/new.html', animation: 'am-fade-and-scale', show: false});
+        var newLocationModal = $modal({scope: $scope, template: 'partials/client/location/new.html', animation: 'am-fade-and-scale', show: false});
 
         $scope.createNewLocation = function () {
             $scope.$hide();
@@ -286,7 +286,7 @@ angular.module('emmiManager')
 
         $controller('LocationCommon', {$scope: $scope});
 
-        var editLocationModal = $modal({scope: $scope, template: 'partials/location/edit.html', animation: 'am-fade-and-scale', show: false});
+        var editLocationModal = $modal({scope: $scope, template: 'partials/client/location/edit.html', animation: 'am-fade-and-scale', show: false});
         var managedLocationList = 'clientLocations';
 
         $scope.editLocation = function (location) {
@@ -325,7 +325,7 @@ angular.module('emmiManager')
 
         $controller('LocationCommon', {$scope: $scope});
 
-        var addNewLocationsModal = $modal({scope: $scope, template: 'partials/location/search.html', animation: 'am-fade-and-scale', show: false});
+        var addNewLocationsModal = $modal({scope: $scope, template: 'partials/client/location/search.html', animation: 'am-fade-and-scale', show: false});
 
         $scope.addLocations = function () {
             addNewLocationsModal.$promise.then(addNewLocationsModal.show);
