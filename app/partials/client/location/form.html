@@ -43,6 +43,17 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label class="sr-only" for="belongsTo">Belongs To:</label>
+                        <input type="checkbox" name="belongsTo" id="belongsTo" data-ng-model="location.belongsToCheckbox"
+                               data-ng-show="location.belongsToMutable">
+                        <span data-ng-show="!location.belongsToMutable && location.belongsTo">Location belongs to {{location.belongsTo.name}}</span>
+                        <span data-ng-show="location.belongsToMutable">Location belongs to {{client.entity.name}}</span>
+                    </div>
+                </div>
+            </div>
         </form>
     </div>
     <div class="modal-footer">

@@ -102,6 +102,25 @@ angular.module('emmiManager')
             }
             $scope.noSearch = false;
         };
+
+        $scope.setBelongsToPropertiesFor = function (location) {
+            if (!location.belongsTo) {
+                location.belongsToMutable = true;
+            } else {
+                if (location.belongsTo.id === Client.getClient().entity.id) {
+                    location.belongsToMutable = true;
+                    location.belongsToCheckbox = true;
+                }
+            }
+        };
+
+        $scope.getLocationFromBelongsToChangedList = function (locationResource){
+           return (locationResource && locationResource.entity) ? Client.getClient().belongsToChanged[locationResource.entity.id] : null;
+        };
+
+        $scope.addLocationToBelongsToChangedList = function (locationResource) {
+            Client.getClient().belongsToChanged[locationResource.entity.id] = locationResource.entity;
+        };
     })
 
 /**
@@ -116,8 +135,28 @@ angular.module('emmiManager')
         $scope.save = function (isValid) {
             $scope.formSubmitted = true;
             if (isValid) {
-                Location.update($scope.location).then(function (location) {
-                    angular.copy(location.data.entity, $scope.originalLocation);
+                var toBeSaved = $scope.location;
+                Location.update(toBeSaved).then(function (response) {
+                    var locationResource = response.data;
+
+                    // set the properties for managing to belongsTo relations
+                    $scope.setBelongsToPropertiesFor(locationResource.entity);
+
+                    // add location to change list if the checkbox state in the edit window is
+                    // different than what is stored on the db
+                    if (toBeSaved.belongsToCheckbox !== locationResource.entity.belongsToCheckbox) {
+                        $scope.addLocationToBelongsToChangedList(locationResource);
+                        locationResource.entity.belongsToCheckbox = toBeSaved.belongsToCheckbox;
+                    }
+
+                    var onChangeList = $scope.getLocationFromBelongsToChangedList(locationResource);
+                    // update the copy in the change list
+                    if (onChangeList){
+                        angular.extend(onChangeList, locationResource.entity);
+                    }
+
+                    // overwrite original location with saved one
+                    angular.copy(locationResource.entity, $scope.originalLocation);
                     $scope.$hide();
                 });
             }
@@ -128,16 +167,19 @@ angular.module('emmiManager')
 /**
  *  Controls the create new location popup (partials/location/new.html)
  */
-    .controller('LocationCreateController', function ($scope, $controller, Location) {
+    .controller('LocationCreateController', function ($scope, $controller, Location, Client) {
 
         $controller('LocationCommon', {$scope: $scope});
 
         $scope.location = {
-            'name': null,
-            'phone': null,
-            'city': null,
-            'state': null,
-            'usingThisLocation': []
+            name: null,
+            phone: null,
+            city: null,
+            state: null,
+            belongsToMutable: true,
+            belongsToCheckbox: false,
+            belongsTo: null,
+            usingThisLocation: []
         };
 
         $scope.title = 'New Location';
@@ -145,8 +187,15 @@ angular.module('emmiManager')
         $scope.save = function (isValid) {
             $scope.formSubmitted = true;
             if (isValid) {
-                Location.create($scope.location).then(function (location) {
-                    $scope.addLocationToAddedList(location.data);
+                var toBeSaved = $scope.location;
+                Location.create(toBeSaved).then(function (location) {
+                    var locationResource = location.data;
+                    $scope.addLocationToAddedList(locationResource);
+                    locationResource.entity.belongsToMutable = true;
+                    locationResource.entity.belongsToCheckbox = toBeSaved.belongsToCheckbox;
+                    if (toBeSaved.belongsToCheckbox) {
+                        $scope.addLocationToBelongsToChangedList(locationResource);
+                    }
                     $scope.$hide();
                 });
             }
@@ -224,7 +273,7 @@ angular.module('emmiManager')
                         $scope.removeLocationFromRemovedList(locationResource);
                         $scope.setRemovedOnLocationsWithin('clientLocations');
                     } else {
-                        if (!alreadyExists && !previouslyAdded){
+                        if (!alreadyExists && !previouslyAdded) {
                             // add it to the list, if it isn't already there
                             $scope.addLocationToAddedList(locationResource);
                         }
@@ -290,9 +339,18 @@ angular.module('emmiManager')
         var managedLocationList = 'clientLocations';
 
         $scope.editLocation = function (location) {
-            // pop edit location modal
+            // create a copy for editing
             $scope.location = angular.copy(location);
+
+            if (!Client.getClient().belongsToChanged[location.id]) {
+                // not on the change list, set the properties
+                $scope.setBelongsToPropertiesFor($scope.location);
+            }
+
+            // save the original for overlay if save is clicked
             $scope.originalLocation = location;
+
+            // show the dialog box
             editLocationModal.$promise.then(editLocationModal.show);
         };
 
@@ -337,7 +395,7 @@ angular.module('emmiManager')
             }
         }
 
-        $scope.removeNewLocation = function(location){
+        $scope.removeNewLocation = function (location) {
             // wrap as a resource to remove
             $scope.removeLocationFromAddedList({
                 entity: location
@@ -364,5 +422,16 @@ angular.module('emmiManager')
             }
         }
     })
+
+    .controller('ClientBelongsToDeltaLocationsController', function ($scope, $controller, Client) {
+        $controller('LocationCommon', {$scope: $scope});
+
+        if (Client.getClient()) {
+            if (!Client.getClient().belongsToChanged) {
+                Client.getClient().belongsToChanged = {};
+            }
+        }
+    })
+
 
 ;

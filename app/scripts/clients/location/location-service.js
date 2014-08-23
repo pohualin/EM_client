@@ -71,16 +71,26 @@ angular.module('emmiManager')
             },
             updateForClient: function (clientResource) {
                 var added = [],
-                    removed = [];
+                    removed = [],
+                    belongsTo = [];
                 angular.forEach(clientResource.addedLocations, function (location) {
                     added.push(location);
                 });
                 angular.forEach(clientResource.removedLocations, function (location) {
                     removed.push(location);
                 });
+                angular.forEach(clientResource.belongsToChanged, function (location) {
+                    if (location.belongsToCheckbox) {
+                        location.belongsTo = clientResource.entity;
+                    } else {
+                        location.belongsTo = null;
+                    }
+                    belongsTo.push(location);
+                });
                 return $http.put(UriTemplate.create(clientResource.link.locations).stringify(), {
                     added: added,
-                    deleted: removed
+                    deleted: removed,
+                    belongsToUpdated: belongsTo
                 }).then(function (response) {
                     return response.data;
                 });
