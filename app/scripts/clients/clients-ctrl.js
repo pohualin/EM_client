@@ -144,10 +144,8 @@ angular.module('emmiManager')
             $scope.search();
         };
 
-        $scope.selectClient = function (href) {
-            Client.selectClient(href).then(function () {
-                $location.path('/clients/edit');
-            });
+        $scope.selectClient = function (client) {
+            $location.path('/clients/' + client.id + '/edit');
         };
 
         $scope.fetchPage = function (href) {
@@ -162,13 +160,12 @@ angular.module('emmiManager')
         fetchPage(UriTemplate.create(Session.link.clients).stringify());
     })
 
-    .controller('ClientDetailCtrl', function ($scope, $location, Client, $controller, Location) {
+    .controller('ClientDetailCtrl', function ($scope, $location, Client, $controller, Location, clientResource) {
 
         $controller('ViewEditCommon', {$scope: $scope});
 
-        var client = Client.getClient();
-        if (client) {
-            $scope.client = client.entity;
+        if (clientResource){
+            $scope.client = clientResource.entity;
         } else {
             $location.path('/clients');
         }
