@@ -1,63 +1,81 @@
-<div class="modal-content">
-    <div class="modal-header" ng-show="title">
-        <h4 class="modal-title">{{title}}</h4>
-    </div>
-    <div class="modal-body">
-        <form name="locationForm" class="form" novalidate>
+<form name="locationForm" class="form" ng-submit="save(locationForm.$valid)" novalidate>
+    <div class="modal-content">
+        <div class="modal-header" ng-show="title">
+            <h4 class="modal-title">{{title}}</h4>
+        </div>
+        <div class="modal-body">
             <div class="row">
-                <div class="col-md-8">
-                    <div class="form-group" data-ng-class="{ 'has-error' : locationForm.locationName.$invalid && formSubmitted }">
+                <div class="col-md-12">
+                    <div class="form-group"
+                         data-ng-class="{ 'has-error' : locationForm.locationName.$invalid && formSubmitted }">
                         <label for="">Name:</label>
-                        <input class="form-control" data-ng-model="location.name" name="locationName" type="text" maxlength="255" required>
-                        <p data-ng-show="locationForm.locationName.$invalid && formSubmitted" class="help-block">Location name is required.</p>
+                        <input class="form-control" data-ng-model="location.name" name="locationName" type="text"
+                               maxlength="255" required data-auto-focus>
+
+                        <p data-ng-show="locationForm.locationName.$invalid && formSubmitted" class="help-block">
+                            Location name is required.</p>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-8">
-                    <div class="form-group" data-ng-class="{ 'has-error' : locationForm.phone.$invalid && formSubmitted }">
+                <div class="col-md-12">
+                    <div class="form-group"
+                         data-ng-class="{ 'has-error' : locationForm.phone.$invalid && formSubmitted }">
                         <label for="">Phone:</label>
-                        <input class="form-control" data-ng-model="location.phone" name="phone" type="text" maxlength="255" required>
-                        <p data-ng-show="locationForm.phone.$invalid && formSubmitted" class="help-block">Phone number is required.</p>
+                        <input class="form-control" data-ng-model="location.phone" name="phone" type="text"
+                               maxlength="255" required>
+
+                        <p data-ng-show="locationForm.phone.$invalid && formSubmitted" class="help-block">Phone number
+                            is required.</p>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-8">
-                    <div class="form-group" data-ng-class="{ 'has-error' : locationForm.city.$invalid && formSubmitted }">
+                <div class="col-md-12">
+                    <div class="form-group"
+                         data-ng-class="{ 'has-error' : locationForm.city.$invalid && formSubmitted }">
                         <label for="">City:</label>
-                        <input class="form-control" data-ng-model="location.city" name="city" type="text" maxlength="255" required>
-                        <p data-ng-show="locationForm.city.$invalid && formSubmitted" class="help-block">City is required.</p>
+                        <input class="form-control" data-ng-model="location.city" name="city" type="text"
+                               maxlength="255" required>
+
+                        <p data-ng-show="locationForm.city.$invalid && formSubmitted" class="help-block">City is
+                            required.</p>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-8">
-                    <div class="form-group" data-ng-class="{ 'has-error' : locationForm.locationName.$invalid && formSubmitted }">
+                <div class="col-md-12">
+                    <div class="form-group"
+                         data-ng-class="{ 'has-error' : locationForm.locationName.$invalid && formSubmitted }">
                         <label for="state">State:</label>
                         <select class="form-control" id="state" data-ng-model="location.state"
                                 data-ng-options="state for state in states" name="state" required>
                             <option value="">Select...</option>
                         </select>
-                        <p data-ng-show="locationForm.state.$invalid && formSubmitted" class="help-block">State is required.</p>
+
+                        <p data-ng-show="locationForm.state.$invalid && formSubmitted" class="help-block">State is
+                            required.</p>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-12">
                     <div class="form-group">
                         <label class="sr-only" for="belongsTo">Belongs To:</label>
-                        <input type="checkbox" name="belongsTo" id="belongsTo" data-ng-model="location.belongsToCheckbox"
+                        <input type="checkbox" name="belongsTo" id="belongsTo"
+                               data-ng-model="location.belongsToCheckbox"
                                data-ng-show="location.belongsToMutable">
                         <span data-ng-show="!location.belongsToMutable && location.belongsTo">Location belongs to {{location.belongsTo.name}}</span>
                         <span data-ng-show="location.belongsToMutable">Location belongs to {{client.entity.name}}</span>
                     </div>
                 </div>
             </div>
-        </form>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-ng-click="$hide()">Cancel</button>
+            <input type="submit" id="submit" class="btn btn-primary" value="Save changes"/>
+            <!--<button type="button" class="btn btn-primary" data-ng-click="save(locationForm.$valid)"></button>-->
+        </div>
     </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-ng-click="$hide()">Cancel</button>
-        <button type="button" class="btn btn-primary" data-ng-click="save(locationForm.$valid)">Save changes</button>
-    </div>
-</div>
+</form>
