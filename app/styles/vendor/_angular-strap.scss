@@ -27,16 +27,9 @@
   height: 65px
 }
 
-.modal-dialog {
+.modal-dialog-large {
   width: 85%;
   .modal-content {
     min-width: 600px;
-  }
-}
-
-.modal-dialog-small {
-  width: 40%;
-  .modal-content {
-    min-width: 350px;
   }
 }
