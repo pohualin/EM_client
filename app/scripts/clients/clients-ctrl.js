@@ -170,13 +170,16 @@ angular.module('emmiManager')
             $location.path('/clients');
         }
 
-        $scope.save = function () {
-            Client.updateClient($scope.client).then(function () {
-                // update locations for the client
-                Location.updateForClient(Client.getClient()).then(function () {
-                    $location.path('/clients');
+        $scope.save = function (isValid) {
+            $scope.formSubmitted = true;
+            if (isValid) {
+                Client.updateClient($scope.client).then(function () {
+                    // update locations for the client
+                    Location.updateForClient(Client.getClient()).then(function () {
+                        $location.path('/clients');
+                    });
                 });
-            });
+            }
         };
     })
 ;
