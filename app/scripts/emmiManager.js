@@ -32,6 +32,18 @@ angular.module('emmiManager', [
             }]
         };
 
+        var clientDetailRequiredResources = {
+            'clientResource': ['AuthSharedService','Client', '$route', '$q', function (AuthSharedService, Client, $route, $q){
+                var deferred = $q.defer();
+                AuthSharedService.currentUser().then(function (){
+                    Client.selectClient($route.current.params.clientId).then(function (clientResource){
+                          deferred.resolve(clientResource);
+                    });
+                });
+                return deferred.promise;
+            }]
+        };
+
         // Routes
         $routeProvider
             .when('/', {
@@ -66,13 +78,13 @@ angular.module('emmiManager', [
                 },
                 resolve: requiredResources
             })
-            .when('/clients/edit', {
+            .when('/clients/:clientId/edit', {
                 templateUrl: 'partials/client/client_edit.html',
                 controller: 'ClientDetailCtrl',
                 access: {
                     authorizedRoles: [USER_ROLES.admin]
                 },
-                resolve: requiredResources
+                resolve: clientDetailRequiredResources
             })
             .when('/403', {
                 templateUrl: 'partials/403.html',

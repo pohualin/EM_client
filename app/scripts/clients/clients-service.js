@@ -48,8 +48,8 @@ angular.module('emmiManager')
                 };
                 return selectedClient;
             },
-            selectClient: function (href) {
-                return $http.get(href)
+            selectClient: function (clientId) {
+                return $http.get(UriTemplate.create(Session.link.clientById).stringify({id: clientId}))
                     .then(function (response) {
                         selectedClient = response.data;
                         return selectedClient;

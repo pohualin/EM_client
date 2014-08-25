@@ -1,5 +1,5 @@
 <div class="col-md-12" data-ng-controller="ClientLocationsController" >
-    <h2>Existing Locations <span data-ng-show="client.name">For {{client.name}}</span></h2>
+    <h2>Locations</h2>
     <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0"
            cellspacing="0"
            data-ng-show="clientLocations">
@@ -11,7 +11,7 @@
             <th>Action</th>
         </tr>
         <tr data-ng-repeat="location in clientLocations">
-            <td>{{location.entity.name}}</td>
+            <td>{{location.entity.name}}<span data-ng-hide="location.entity.belongsTo.id != client.entity.id"><sup>*</sup></span></td>
             <td>{{location.entity.phone}}</td>
             <td>{{location.entity.city}}</td>
             <td>{{location.entity.state}}</td>
@@ -50,5 +50,6 @@
     </div>
     <div class="row" data-ng-include="'partials/client/location/client_new.html'"></div>
     <div class="row" data-ng-include="'partials/client/location/client_remove.html'"></div>
+    <div class="row" data-ng-include="'partials/client/location/client_belongsTo.html'"></div>
 </div>
 
