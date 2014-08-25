@@ -1,0 +1,55 @@
+<div class="col-md-12" data-ng-controller="ClientLocationsController" >
+    <h2>Locations</h2>
+    <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0"
+           cellspacing="0"
+           data-ng-show="clientLocations">
+        <tr>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Action</th>
+        </tr>
+        <tr data-ng-repeat="location in clientLocations">
+            <td>{{location.entity.name}}<span data-ng-hide="location.entity.belongsTo.id != client.entity.id"><sup>*</sup></span></td>
+            <td>{{location.entity.phone}}</td>
+            <td>{{location.entity.city}}</td>
+            <td>{{location.entity.state}}</td>
+            <td data-ng-hide="location.entity.removedFromClient">
+                <button class="btn" type="button" data-ng-click="editLocation(location.entity)">edit</button>
+                <button class="btn" type="button" data-ng-click="removeExistingLocation(location)">remove
+                </button>
+            </td>
+            <td data-ng-show="location.entity.removedFromClient">
+                targeted for removal
+            </td>
+        </tr>
+    </table>
+    <div class="row" data-ng-show="clientLocations">
+        <div class="col-md-4 col-sm-4 pull-right" data-ng-show="total > pageSizes[0] || links">
+            <ul class="pagination page-size pull-right">
+                <li data-ng-repeat="pageSize in pageSizes">
+                    <a data-ng-if="pageSize != currentPageSize" href
+                       data-ng-click="changePageSize(pageSize)">{{pageSize}}</a>
+                    <span data-ng-if="pageSize === currentPageSize">[{{pageSize}}]</span>
+                </li>
+            </ul>
+        </div>
+        <div data-ng-show="links" class="col-md-8 col-sm-8">
+            <ul class="pagination">
+                <li data-ng-repeat="link in links | orderBy:'order'">
+                    <a data-ng-if="link.name != currentPage" href
+                       data-ng-click="fetchPage(link.href)">{{link.name}}</a>
+                    <span data-ng-if="link.name == currentPage">[{{link.name}}]</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div data-ng-hide="clientLocations">
+        <span>There are no existing locations<span data-ng-show="client.name"> for {{client.name}}</span>.</span>
+    </div>
+    <div class="row" data-ng-include="'partials/client/location/client_new.html'"></div>
+    <div class="row" data-ng-include="'partials/client/location/client_remove.html'"></div>
+    <div class="row" data-ng-include="'partials/client/location/client_belongsTo.html'"></div>
+</div>
+

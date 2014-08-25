@@ -8,7 +8,11 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
     <!-- build:css({.tmp,app}) styles/main.css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.min.css">
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="bower_components/chosen/chosen.css">
+    <link rel="stylesheet" href="bower_components/angular-chosen-localytics/chosen-spinner.css">
     <!-- endbuild -->
 
     <!-- build:js scripts/modernizr.js -->
@@ -27,6 +31,7 @@
 <script src="bower_components/angular-touch/angular-touch.js"></script>
 <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
 <script src="bower_components/angular-resource/angular-resource.js"></script>
+<script src="bower_components/angular-animate/angular-animate.js"></script>
 <script src="bower_components/angular-route/angular-route.js"></script>
 <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 <script src="bower_components/angular-strap/dist/angular-strap.min.js"></script>
@@ -35,20 +40,26 @@
 <script src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
 <script src="bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.js"></script>
 <script src="bower_components/angular-dynamic-locale/src/tmhDynamicLocale.js"></script>
+<script src="bower_components/chosen/chosen.jquery.js"></script>
+<script src="bower_components/angular-chosen-localytics/chosen.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
 <!-- build:js({app,.tmp}) scripts/main.js -->
 <script src="scripts/vendor/http-auth-interceptor.js"></script>
 <script src="scripts/vendor/hateoas.js"></script>
+<script src="scripts/common/directives/typeahead/typeahead.js"></script>
 <script src="scripts/emmiManager.js"></script>
 <script src="scripts/main/main-ctrl.js"></script>
+<script src="scripts/main/main-service.js"></script>
 <script src="scripts/vendor/rfc6570.js"></script>
 <script src="scripts/auth/auth-ctrl.js"></script>
 <script src="scripts/auth/auth-service.js"></script>
 <script src="scripts/auth/session-service.js"></script>
 <script src="scripts/clients/clients-ctrl.js"></script>
 <script src="scripts/clients/clients-service.js"></script>
+<script src="scripts/clients/location/location-ctrl.js"></script>
+<script src="scripts/clients/location/location-service.js"></script>
 <!-- inject:partials -->
 <!-- endinject -->
 <!-- endbuild -->
