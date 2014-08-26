@@ -58,7 +58,7 @@ angular.module('emmiManager')
         $scope.noSearch = true;
         $scope.createMode = false;
         $scope.tagGroups = [];
-        var selectedTagGroupIndex = -1;
+        $scope.selectedTagGroupIndex = -1;
 
         $scope.hasMore = function () {
             return !$scope.sfResult.complete && $scope.sfResult.account.length > 0;
@@ -90,13 +90,12 @@ angular.module('emmiManager')
         };
 
         $scope.selectTagGroup = function (groupIndex) {
-            console.log(groupIndex);
-            if (selectedTagGroupIndex === groupIndex) {
-                console.log('Edit Group!');
+            if ($scope.selectedTagGroupIndex === groupIndex) {
                 $scope.tagGroups[groupIndex].editMode = true;
-                selectedTagGroupIndex = -1;
+                //$scope.selectedTagGroupIndex = -1;
+                focus('editMode');
             } else {
-                selectedTagGroupIndex = groupIndex;
+                $scope.selectedTagGroupIndex = groupIndex;
             }
         };
 
@@ -107,6 +106,7 @@ angular.module('emmiManager')
         $scope.changeTagGroupTitle = function (groupIndex) {
             // Title already gets changed from data binding, so really just need to hide the edit form
             $scope.tagGroups[groupIndex].editMode = false;
+            $scope.selectedTagGroupIndex = -1;
         };
 
         $scope.tagExists = function (tag, groupIndex) {
@@ -125,7 +125,6 @@ angular.module('emmiManager')
                 var tag = {};
                 tag.text = tags[i];
                 if (tag.text.length > 0 && !$scope.tagExists(tag, groupIndex)) {
-                    console.log(tag);
                     $scope.tagGroups[groupIndex].tags.push(tag);
                 }
             }
