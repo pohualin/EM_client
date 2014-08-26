@@ -1,5 +1,5 @@
 <div class="col-md-8">
-    <div class="form-group">
+    <div class="form-group" data-ng-class="{ 'has-error' : formSubmitted && !client.salesForceAccount }">
         <label for="">Salesforce Account</label>
         <div data-emmi-typeahead data-items="sfResult.account" data-term="searchQuery" data-search="findAccount(term)" data-select="chooseAccount(item)" data-placeholder="Start typing..." data-focus="SfSearch">
             <div class="menu typeahead-menu dropdown-menu bottom-left container-fluid">
@@ -21,6 +21,6 @@
                 </div>
             </div>
         </div>
-
+        <p data-ng-show="formSubmitted && !client.salesForceAccount" class="help-block">Salesforce Account is required.</p>
     </div>
 </div>
