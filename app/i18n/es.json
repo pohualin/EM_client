@@ -18,6 +18,9 @@
             "error": {
                 "dontmatch": "The password and its confirmation do not match!"
             },
+            "search":{
+                "no_results_found": "No results found."
+            },
             "validate": {
                 "newpassword": {
                     "required": "Your password is required.",
@@ -73,5 +76,8 @@
     "errors": {
         "title": "Página de error!",
         "403": "Usted no está autorizado."
-    }
+    },
+    "ALL": "All",
+    "ACTIVE_ONLY": "Active",
+    "INACTIVE_ONLY": "Inactive"
 }
