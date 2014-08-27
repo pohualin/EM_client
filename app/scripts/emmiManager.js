@@ -86,6 +86,14 @@ angular.module('emmiManager', [
                 },
                 resolve: clientDetailRequiredResources
             })
+            .when('/clients/:clientId/view', {
+                templateUrl: 'partials/client/client_view.html',
+                controller: 'ClientViewCtrl',
+                access: {
+                    authorizedRoles: [USER_ROLES.admin]
+                },
+                resolve: clientDetailRequiredResources
+            })
             .when('/403', {
                 templateUrl: 'partials/403.html',
                 resolve: requiredResources,
