@@ -27,23 +27,21 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="form-group" data-ng-class="{ 'has-error' : clientForm.clientRegion.$invalid && formSubmitted }">
+                <div class="form-group">
                     <label for="region">Region</label>
                     <select class="form-control" id="region" data-ng-model="client.region"
-                            data-ng-options="region for region in clientRegions" name="clientRegion" required>
+                            data-ng-options="region for region in clientRegions" name="clientRegion">
                         <option value="">Select...</option>
                     </select>
-                    <p data-ng-show="clientForm.clientRegion.$invalid && formSubmitted" class="help-block">Client region is required.</p>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="form-group" data-ng-class="{ 'has-error' : clientForm.clientTier.$invalid && formSubmitted }">
+                <div class="form-group">
                     <label for="">Tier</label>
                     <select class="form-control" data-ng-model="client.tier"
-                            data-ng-options="tier for tier in clientTiers" name="clientTier" required>
+                            data-ng-options="tier for tier in clientTiers" name="clientTier">
                         <option value="">Select...</option>
                     </select>
-                    <p data-ng-show="clientForm.clientTier.$invalid && formSubmitted" class="help-block">Client tier is required.</p>
                 </div>
             </div>
         </div>
@@ -110,8 +108,10 @@
             <div class="col-md-12">
                 <div class="actions pull-right">
                     <div class="form-group">
-                        <a class="btn btn-link" href="#/clients">Cancel</a>
-                        <button class="btn btn-primary" type="button" data-ng-click="save(clientForm.$valid)">Save</button>
+                        <button class="btn btn-link" href data-ng-click="cancel()">cancel</button>
+                        <button class="btn btn-primary" type="button" data-ng-click="save(clientForm.$valid)">
+                            <span data-translate="client_edit_page.save_button">Save</span>
+                        </button>
                     </div>
                 </div>
             </div>

@@ -73,5 +73,30 @@
     "errors": {
         "title": "Página de error!",
         "403": "Usted no está autorizado."
+    },
+    "client_view_page": {
+        "title": "View Client",
+        "edit_button": "Edit",
+        "information": {
+            "title": "Client Information",
+            "name": "Name:",
+            "type": "Type:",
+            "region": "Region:",
+            "tier": "Tier:",
+            "contract": {
+                "owner": "Contract Owner:",
+                "start": "Contract Start:",
+                "end": "Contract End:"
+            },
+            "salesforce": "Salesforce Account:"
+        },
+        "teams": "Team Tags",
+        "locations": {
+            "title": "Locations",
+            "none_found": "no active locations"
+        }
+    },
+    "client_edit_page": {
+        "save_button": "Continue"
     }
 }

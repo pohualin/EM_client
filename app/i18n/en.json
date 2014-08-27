@@ -16,7 +16,7 @@
                 "register": "You don't have an account yet? <a href=\"#/register\">Register a new account</a>"
             },
             "error": {
-                "dontmatch" : "The password and its confirmation do not match!"
+                "dontmatch": "The password and its confirmation do not match!"
             },
             "validate": {
                 "newpassword": {
@@ -73,5 +73,30 @@
     "errors": {
         "title": "Error page!",
         "403": "You are not authorized."
+    },
+    "client_view_page": {
+        "title": "View Client",
+        "edit_button": "Edit",
+        "information": {
+            "title": "Client Information",
+            "name": "Name:",
+            "type": "Type:",
+            "region": "Region:",
+            "tier": "Tier:",
+            "contract": {
+                "owner": "Contract Owner:",
+                "start": "Contract Start:",
+                "end": "Contract End:"
+            },
+            "salesforce": "Salesforce Account:"
+        },
+        "teams": "Team Tags",
+        "locations": {
+            "title": "Locations",
+            "none_found": "no active locations"
+        }
+    },
+    "client_edit_page": {
+        "save_button": "Continue"
     }
 }
