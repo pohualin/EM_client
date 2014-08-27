@@ -18,6 +18,9 @@
             "error": {
                 "dontmatch": "The password and its confirmation do not match!"
             },
+            "search":{
+                "no_results_found": "No results found."
+            },
             "validate": {
                 "newpassword": {
                     "required": "Your password is required.",
@@ -98,5 +101,12 @@
     },
     "client_edit_page": {
         "save_button": "Continue"
-    }
+    },
+    "ALL": "All",
+    "ACTIVE_ONLY": "Active",
+    "INACTIVE_ONLY": "Inactive",
+    "ONE": "1",
+    "TWO": "2",
+    "THREE": "3",
+    "FOUR": "4"
 }

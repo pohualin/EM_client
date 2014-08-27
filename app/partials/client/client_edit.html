@@ -10,8 +10,9 @@
             <div class="col-md-12">
                 <div class="form-group" data-ng-class="{ 'has-error' : clientForm.clientName.$invalid && formSubmitted }">
                     <label for="">Name</label>
-                    <input class="form-control" data-ng-model="client.name" name="clientName" type="text" required>
-                    <p data-ng-show="clientForm.clientName.$invalid && formSubmitted" class="help-block">Client name is required.</p>
+                    <input class="form-control" data-ng-model="client.name" name="clientName" type="text" required data-ng-pattern="/^[\-\.a-zA-Z0-9 '=_;:`@#&,!\(\)\/]*$/">
+                    <p data-ng-show="clientForm.clientName.$error.required && formSubmitted" class="help-block">Client name is required.</p>
+                    <p data-ng-show="clientForm.clientName.$error.pattern && formSubmitted" class="help-block">Please enter a valid client name.</p>
                 </div>
             </div>
         </div>
@@ -39,7 +40,7 @@
                 <div class="form-group">
                     <label for="">Tier</label>
                     <select class="form-control" data-ng-model="client.tier"
-                            data-ng-options="tier for tier in clientTiers" name="clientTier">
+                            data-ng-options="tier | translate for tier in clientTiers" name="clientTier">
                         <option value="">Select...</option>
                     </select>
                 </div>

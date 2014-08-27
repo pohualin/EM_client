@@ -151,12 +151,8 @@ angular.module('emmiManager')
         });
 
         $scope.search = function () {
+            $scope.searchPerformed = true;
             fetchPage(UriTemplate.create(Session.link.clients).stringify({name: $scope.query, status: $scope.status}));
-        };
-
-        $scope.clearSearch = function () {
-            $scope.query = '';
-            $scope.search();
         };
 
         $scope.selectClient = function (client) {
@@ -170,9 +166,6 @@ angular.module('emmiManager')
         $scope.changePageSize = function (loadLink, pageSize) {
             fetchPage(UriTemplate.create(loadLink).stringify({size: pageSize}));
         };
-
-        // initial load of clients
-        fetchPage(UriTemplate.create(Session.link.clients).stringify());
     })
 
 /**
