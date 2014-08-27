@@ -41,7 +41,7 @@
                 <div class="form-group" data-ng-class="{ 'has-error' : clientForm.clientTier.$invalid && formSubmitted }">
                     <label for="">Tier</label>
                     <select class="form-control" data-ng-model="client.tier"
-                            data-ng-options="tier for tier in clientTiers" name="clientTier" required>
+                            data-ng-options="tier | translate for tier in clientTiers" name="clientTier" required>
                         <option value="">Select...</option>
                     </select>
                     <p data-ng-show="clientForm.clientTier.$invalid && formSubmitted" class="help-block">Client tier is required.</p>
