@@ -10,8 +10,9 @@
             <div class="col-md-12">
                 <div class="form-group" data-ng-class="{ 'has-error' : clientForm.clientName.$invalid && formSubmitted }">
                     <label for="">Name</label>
-                    <input class="form-control" data-ng-model="client.name" name="clientName" type="text" required>
-                    <p data-ng-show="clientForm.clientName.$invalid && formSubmitted" class="help-block">Client name is required.</p>
+                    <input class="form-control" data-ng-model="client.name" name="clientName" type="text" required data-ng-pattern="/^[\-\.a-zA-Z0-9 '=_;:`@#&,!\(\)\/]*$/">
+                    <p data-ng-show="clientForm.clientName.$error.required && formSubmitted" class="help-block">Client name is required.</p>
+                    <p data-ng-show="clientForm.clientName.$error.pattern && formSubmitted" class="help-block">Please enter a valid client name.</p>
                 </div>
             </div>
         </div>
@@ -20,30 +21,28 @@
                 <div class="form-group" data-ng-class="{ 'has-error' : clientForm.clientType.$invalid && formSubmitted }">
                     <label for="">Client Type</label>
                     <select class="form-control" data-ng-model="client.type"
-                            data-ng-options="type for type in clientTypes" name="clientType" required>
+                            data-ng-options="type | translate for type in clientTypes" name="clientType" required>
                         <option value="">Select...</option>
                     </select>
                     <p data-ng-show="clientForm.clientType.$invalid && formSubmitted" class="help-block">Client type is required.</p>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="form-group" data-ng-class="{ 'has-error' : clientForm.clientRegion.$invalid && formSubmitted }">
+                <div class="form-group">
                     <label for="region">Region</label>
                     <select class="form-control" id="region" data-ng-model="client.region"
-                            data-ng-options="region for region in clientRegions" name="clientRegion" required>
+                            data-ng-options="region | translate for region in clientRegions" name="clientRegion">
                         <option value="">Select...</option>
                     </select>
-                    <p data-ng-show="clientForm.clientRegion.$invalid && formSubmitted" class="help-block">Client region is required.</p>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="form-group" data-ng-class="{ 'has-error' : clientForm.clientTier.$invalid && formSubmitted }">
+                <div class="form-group">
                     <label for="">Tier</label>
                     <select class="form-control" data-ng-model="client.tier"
-                            data-ng-options="tier for tier in clientTiers" name="clientTier" required>
+                            data-ng-options="tier | translate for tier in clientTiers" name="clientTier">
                         <option value="">Select...</option>
                     </select>
-                    <p data-ng-show="clientForm.clientTier.$invalid && formSubmitted" class="help-block">Client tier is required.</p>
                 </div>
             </div>
         </div>
@@ -110,8 +109,10 @@
             <div class="col-md-12">
                 <div class="actions pull-right">
                     <div class="form-group">
-                        <a class="btn btn-link" href="#/clients">Cancel</a>
-                        <button class="btn btn-primary" type="button" data-ng-click="save(clientForm.$valid)">Save</button>
+                        <button class="btn btn-link" href data-ng-click="cancel()">cancel</button>
+                        <button class="btn btn-primary" type="button" data-ng-click="save(clientForm.$valid)">
+                            <span data-translate="client_edit_page.save_button">Save</span>
+                        </button>
                     </div>
                 </div>
             </div>

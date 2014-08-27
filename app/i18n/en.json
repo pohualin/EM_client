@@ -18,6 +18,9 @@
             "error": {
                 "dontmatch" : "The password and its confirmation do not match!"
             },
+            "search":{
+                "no_results_found": "No results found."
+            },
             "validate": {
                 "newpassword": {
                     "required": "Your password is required.",
@@ -65,13 +68,50 @@
             }
         }
     },
-    "client": {
-        "links": {
-            "edit": "Edit Client"
-        }
-    },
     "errors": {
         "title": "Error page!",
         "403": "You are not authorized."
-    }
+    },
+    "client_view_page": {
+        "title": "View Client",
+        "edit_button": "Edit",
+        "information": {
+            "title": "Client Information",
+            "name": "Name:",
+            "type": "Type:",
+            "region": "Region:",
+            "tier": "Tier:",
+            "contract": {
+                "owner": "Contract Owner:",
+                "start": "Contract Start:",
+                "end": "Contract End:"
+            },
+            "salesforce": "Salesforce Account:"
+        },
+        "teams": "Team Tags",
+        "locations": {
+            "title": "Locations",
+            "none_found": "no active locations"
+        }
+    },
+    "client_edit_page": {
+        "save_button": "Continue"
+    },
+    "ALL": "All",
+    "ACTIVE_ONLY": "Active",
+    "INACTIVE_ONLY": "Inactive",
+    "ONE": "1",
+    "TWO": "2",
+    "THREE": "3",
+    "FOUR": "4",
+    "PROVIDER": "Provider",
+    "PHYSICIAN_PRACTICE": "Physician Practice",
+    "PAYER": "Payer",
+    "PHARMA": "Pharma",
+    "OTHER": "Other",
+    "ALTERNATIVE": "Alternative",
+    "SOUTHEAST": "Southeast",
+    "NORTHEAST": "Northeast",
+    "MIDWEST": "Midwest",
+    "WEST": "West"
 }

@@ -2,73 +2,84 @@
     <h1>
         <a href="#/">Emmi Manager</a>: Search
     </h1>
+
     <h2>Manage Clients, Teams, Providers and Locations:</h2>
+
     <div class="pull-right">
-        <a class="btn btn-primary" data-ng-href="#/clients/new">Create New Client</a>
+        <a class="btn btn-primary" data-ng-href="#/clients/new" data-ng-show="searchPerformed">Create New Client</a>
     </div>
-    <form class="form-inline">
+    <form class="form-inline" name="searchForm">
         <div class="form-group">
             <select class="form-control">
                 <option value="">Clients</option>
             </select>
             <label class="sr-only" for="query">Search</label>
-            <input class="form-control" id="query" data-ng-model="query" type="text" placeholder="Search...">
-            <button class="btn btn-default" data-ng-click="search()" data-translate="global.buttons.search">Go</button>
-            <button class="btn btn-link" data-ng-click="clearSearch()">clear search</button>
+            <input class="form-control" id="query" name="query" data-ng-model="query" type="text"
+                   placeholder="Search..." required>
+            <button class="btn btn-default" data-ng-click="search()" data-translate="global.buttons.search"
+                    data-ng-disabled="searchForm.query.$invalid">Go
+            </button>
         </div>
     </form>
     <hr>
-    <div class="pull-right">
-        {{total}}<span data-translate="global.labels.total"> results</span>
-    </div>
-    <form class="form-inline">
-        <div class="form-group">
-            <label for="status_filter" data-translate="global.labels.statusFilter">Show:</label>
-            <select class="form-control" id="status_filter" data-ng-model="status" data-ng-options="status for status in statuses"
-                    data-ng-change="search()">
-            </select>
+    <div class="row" data-ng-show="searchPerformed">
+        <div class="col-md-12">
+            <div class="pull-right">
+                {{total}}<span data-translate="global.labels.total"> results</span>
+            </div>
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="status_filter" data-translate="global.labels.statusFilter">Show:</label>
+                    <select class="form-control" id="status_filter" data-ng-model="status"
+                            data-ng-options="status | translate for status in statuses"
+                            data-ng-change="search()">
+                    </select>
+                </div>
+            </form>
+            <br>
+            <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0" cellspacing="0"
+                   data-ng-show="clients">
+                <tr>
+                    <th>Name</th>
+                    <th>Salesforce Account</th>
+                    <th>Contract Owner</th>
+                    <th>Type</th>
+                    <th>&nbsp;</th>
+                </tr>
+                <tr data-ng-repeat="client in clients | orderBy:'entity.id'">
+                    <td>{{client.entity.name}}</td>
+                    <td>{{client.entity.salesForceAccount.name}}</td>
+                    <td>{{client.entity.contractOwner.firstName}} {{client.entity.contractOwner.lastName}}</td>
+                    <td>{{client.entity.type}}</td>
+                    <td>
+                        <a href data-ng-click="selectClient(client.entity)"><span
+                                class="glyphicon glyphicon-edit"></span></a>
+                    </td>
+                </tr>
+            </table>
+            <div class="row" data-ng-show="clients">
+                <div class="col-md-4 col-sm-4 pull-right" data-ng-show="total > pageSizes[0]">
+                    <ul class="pagination page-size pull-right">
+                        <li data-ng-repeat="pageSize in pageSizes">
+                            <a data-ng-if="pageSize != currentPageSize" href
+                               data-ng-click="changePageSize(load, pageSize)">{{pageSize}}</a>
+                            <span data-ng-if="pageSize === currentPageSize">[{{pageSize}}]</span>
+                        </li>
+                    </ul>
+                </div>
+                <div data-ng-show="links" class="col-md-8 col-sm-8">
+                    <ul class="pagination">
+                        <li data-ng-repeat="link in links | orderBy:'order'">
+                            <a data-ng-if="link.name != currentPage" href
+                               data-ng-click="fetchPage(link.href)">{{link.name}}</a>
+                            <span data-ng-if="link.name == currentPage">[{{link.name}}]</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div data-ng-hide="clients">
+                <span data-translate="global.messages.search.no_results_found">Nada here.</span>
+            </div>
         </div>
-    </form>
-    <br>
-    <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0" cellspacing="0" data-ng-show="clients">
-        <tr>
-            <th>Name</th>
-            <th>Salesforce Account</th>
-            <th>Contract Owner</th>
-            <th>Type</th>
-            <th>&nbsp;</th>
-        </tr>
-        <tr data-ng-repeat="client in clients | orderBy:'entity.id'">
-            <td>{{client.entity.name}}</td>
-            <td>{{client.entity.salesForceAccount.name}}</td>
-            <td>{{client.entity.contractOwner.firstName}} {{client.entity.contractOwner.lastName}}</td>
-            <td>{{client.entity.type}}</td>
-            <td>
-                 <a href data-ng-click="selectClient(client.entity)"><span class="glyphicon glyphicon-edit"></span>&nbsp;<span data-translate="client.links.edit">Edit</span></a>
-            </td>
-        </tr>
-    </table>
-    <div class="row" data-ng-show="clients">
-        <div class="col-md-4 col-sm-4 pull-right" data-ng-show="total > pageSizes[0]">
-            <ul class="pagination page-size pull-right">
-                <li data-ng-repeat="pageSize in pageSizes">
-                    <a data-ng-if="pageSize != currentPageSize" href
-                       data-ng-click="changePageSize(load, pageSize)">{{pageSize}}</a>
-                    <span data-ng-if="pageSize === currentPageSize">[{{pageSize}}]</span>
-                </li>
-            </ul>
-        </div>
-        <div data-ng-show="links" class="col-md-8 col-sm-8">
-            <ul class="pagination">
-                <li data-ng-repeat="link in links | orderBy:'order'">
-                    <a data-ng-if="link.name != currentPage" href
-                       data-ng-click="fetchPage(link.href)">{{link.name}}</a>
-                    <span data-ng-if="link.name == currentPage">[{{link.name}}]</span>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div data-ng-hide="clients">
-        <span>There are no clients found.</span>
     </div>
 </div>
