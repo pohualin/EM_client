@@ -21,7 +21,7 @@
                 <div class="form-group" data-ng-class="{ 'has-error' : clientForm.clientType.$invalid && formSubmitted }">
                     <label for="">Client Type</label>
                     <select class="form-control" data-ng-model="client.type"
-                            data-ng-options="type for type in clientTypes" name="clientType" required>
+                            data-ng-options="type | translate for type in clientTypes" name="clientType" required>
                         <option value="">Select...</option>
                     </select>
                     <p data-ng-show="clientForm.clientType.$invalid && formSubmitted" class="help-block">Client type is required.</p>
@@ -31,7 +31,7 @@
                 <div class="form-group">
                     <label for="region">Region</label>
                     <select class="form-control" id="region" data-ng-model="client.region"
-                            data-ng-options="region for region in clientRegions" name="clientRegion">
+                            data-ng-options="region | translate for region in clientRegions" name="clientRegion">
                         <option value="">Select...</option>
                     </select>
                 </div>
