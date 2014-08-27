@@ -55,6 +55,33 @@ angular.module('emmiManager')
             }
         };
 
+        $scope.handleResponse = function (entityPage, scopePropertyNameForEntity) {
+            if (entityPage) {
+                this[scopePropertyNameForEntity] = entityPage.content;
+
+                $scope.total = entityPage.page.totalElements;
+                $scope.links = [];
+                for (var i = 0, l = entityPage.linkList.length; i < l; i++) {
+                    var aLink = entityPage.linkList[i];
+                    if (aLink.rel.indexOf('self') === -1) {
+                        $scope.links.push({
+                            order: i,
+                            name: aLink.rel.substring(5),
+                            href: aLink.href
+                        });
+                    }
+                }
+                $scope.load = entityPage.link.self;
+                $scope.currentPage = entityPage.page.number;
+                $scope.currentPageSize = entityPage.page.size;
+                $scope.pageSizes = [5, 10, 15, 25];
+                $scope.status = entityPage.filter.status;
+            } else {
+                $scope.total = 0;
+            }
+            $scope.noSearch = false;
+        };
+
         $scope.hasMore = function () {
             return !$scope.sfResult.complete && $scope.sfResult.account.length > 0;
         };
@@ -67,6 +94,9 @@ angular.module('emmiManager')
         };
     })
 
+/**
+ * Create new controller
+ */
     .controller('ClientCtrl', function ($scope, $location, Client, $controller, Location) {
 
         $controller('ViewEditCommon', {$scope: $scope});
@@ -80,7 +110,7 @@ angular.module('emmiManager')
                 Client.updateClient($scope.client).then(function () {
                     // update locations for the client
                     Location.updateForClient(Client.getClient()).then(function () {
-                        $location.path('/clients');
+                        $location.path('/clients/' + $scope.client.id + '/view');
                     });
                 });
             }
@@ -94,7 +124,7 @@ angular.module('emmiManager')
                     $scope.save = $scope.saveUpdate;
                     // saved client successfully, switch to saveUpdate if other updates fail
                     Location.updateForClient(Client.getClient()).then(function () {
-                        $location.path('/clients');
+                        $location.path('/clients/' + $scope.client.id + '/view');
                     });
                 });
             }
@@ -102,32 +132,17 @@ angular.module('emmiManager')
 
     })
 
-    .controller('ClientListCtrl', function ($scope, Client, $http, Session, UriTemplate, $location) {
+/**
+ *  Show list of clients
+ */
+    .controller('ClientListCtrl', function ($scope, Client, $http, Session, UriTemplate, $location, $controller) {
+
+        $controller('ViewEditCommon', {$scope: $scope});
+
         var fetchPage = function (href) {
             $scope.clients = null;
             Client.getClients(href).then(function (clientPage) {
-                if (clientPage) {
-                    $scope.clients = clientPage.content;
-                    $scope.total = clientPage.page.totalElements;
-                    $scope.links = [];
-                    for (var i = 0, l = clientPage.linkList.length; i < l; i++) {
-                        var aLink = clientPage.linkList[i];
-                        if (aLink.rel.indexOf('self') === -1) {
-                            $scope.links.push({
-                                order: i,
-                                name: aLink.rel.substring(5),
-                                href: aLink.href
-                            });
-                        }
-                    }
-                    $scope.load = clientPage.link.self;
-                    $scope.currentPage = clientPage.page.number;
-                    $scope.currentPageSize = clientPage.page.size;
-                    $scope.pageSizes = [5, 10, 15, 25];
-                    $scope.status = clientPage.filter.status;
-                } else {
-                    $scope.total = 0;
-                }
+                $scope.handleResponse(clientPage, 'clients');
             });
         };
 
@@ -141,7 +156,7 @@ angular.module('emmiManager')
         };
 
         $scope.selectClient = function (client) {
-            $location.path('/clients/' + client.id + '/edit');
+            $location.path('/clients/' + client.id + '/view');
         };
 
         $scope.fetchPage = function (href) {
@@ -153,6 +168,9 @@ angular.module('emmiManager')
         };
     })
 
+/**
+ *  Edit a single client
+ */
     .controller('ClientDetailCtrl', function ($scope, $location, Client, $controller, Location, clientResource) {
 
         $controller('ViewEditCommon', {$scope: $scope});
@@ -163,16 +181,39 @@ angular.module('emmiManager')
             $location.path('/clients');
         }
 
+        var viewUrl = '/clients/' + $scope.client.id + '/view';
+
+        $scope.cancel = function () {
+            $location.path(viewUrl);
+        };
+
         $scope.save = function (isValid) {
             $scope.formSubmitted = true;
             if (isValid) {
                 Client.updateClient($scope.client).then(function () {
                     // update locations for the client
                     Location.updateForClient(Client.getClient()).then(function () {
-                        $location.path('/clients');
+                        $location.path(viewUrl);
                     });
                 });
             }
+        };
+    })
+
+/**
+ * View a single client
+ */
+    .controller('ClientViewCtrl', function ($scope, $location, clientResource, Location) {
+        if (clientResource) {
+            $scope.client = clientResource.entity;
+        } else {
+            $location.path('/clients');
+        }
+        Location.findForClient(clientResource).then(function (locationPage) {
+            $scope.handleResponse(locationPage, 'clients');
+        });
+        $scope.edit = function () {
+            $location.path('/clients/' + $scope.client.id + '/edit');
         };
     })
 ;
