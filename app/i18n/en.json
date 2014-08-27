@@ -79,5 +79,9 @@
     },
     "ALL": "All",
     "ACTIVE_ONLY": "Active",
-    "INACTIVE_ONLY": "Inactive"
+    "INACTIVE_ONLY": "Inactive",
+    "ONE": "1",
+    "TWO": "2",
+    "THREE": "3",
+    "FOUR": "4"
 }
