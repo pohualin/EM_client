@@ -94,7 +94,7 @@ angular.module('emmiManager')
                     $scope.save = $scope.saveUpdate;
                     // saved client successfully, switch to saveUpdate if other updates fail
                     Location.updateForClient(Client.getClient()).then(function () {
-                        $location.path('/clients');
+                        $location.path('/clients/' + $scope.client.id + '/edit');
                     });
                 });
             }
