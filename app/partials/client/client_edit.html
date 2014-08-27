@@ -7,16 +7,17 @@
     <form name="clientForm" class="form" novalidate>
         <h2>Client Information</h2>
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="form-group" data-ng-class="{ 'has-error' : clientForm.clientName.$invalid && formSubmitted }">
                     <label for="">Name</label>
-                    <input class="form-control" data-ng-model="client.name" name="clientName" type="text" required>
-                    <p data-ng-show="clientForm.clientName.$invalid && formSubmitted" class="help-block">Client name is required.</p>
+                    <input class="form-control" data-ng-model="client.name" name="clientName" type="text" required data-ng-pattern="/^[\-\.a-zA-Z0-9 '=_;:`@#&,!\(\)\/]*$/">
+                    <p data-ng-show="clientForm.clientName.$error.required && formSubmitted" class="help-block">Client name is required.</p>
+                    <p data-ng-show="clientForm.clientName.$error.pattern && formSubmitted" class="help-block">Please enter a valid client name.</p>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="form-group" data-ng-class="{ 'has-error' : clientForm.clientType.$invalid && formSubmitted }">
                     <label for="">Client Type</label>
                     <select class="form-control" data-ng-model="client.type"
@@ -26,29 +27,27 @@
                     <p data-ng-show="clientForm.clientType.$invalid && formSubmitted" class="help-block">Client type is required.</p>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="form-group" data-ng-class="{ 'has-error' : clientForm.clientRegion.$invalid && formSubmitted }">
+            <div class="col-md-4">
+                <div class="form-group">
                     <label for="region">Region</label>
                     <select class="form-control" id="region" data-ng-model="client.region"
-                            data-ng-options="region for region in clientRegions" name="clientRegion" required>
+                            data-ng-options="region for region in clientRegions" name="clientRegion">
                         <option value="">Select...</option>
                     </select>
-                    <p data-ng-show="clientForm.clientRegion.$invalid && formSubmitted" class="help-block">Client region is required.</p>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="form-group" data-ng-class="{ 'has-error' : clientForm.clientTier.$invalid && formSubmitted }">
+            <div class="col-md-4">
+                <div class="form-group">
                     <label for="">Tier</label>
                     <select class="form-control" data-ng-model="client.tier"
-                            data-ng-options="tier for tier in clientTiers" name="clientTier" required>
+                            data-ng-options="tier | translate for tier in clientTiers" name="clientTier">
                         <option value="">Select...</option>
                     </select>
-                    <p data-ng-show="clientForm.clientTier.$invalid && formSubmitted" class="help-block">Client tier is required.</p>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="form-group" data-ng-class="{ 'has-error' : clientForm.clientContractOwner.$invalid && formSubmitted }">
                     <label for="">Contract Owner</label>
                     <select
@@ -64,7 +63,7 @@
                     <p data-ng-show="clientForm.clientContractOwner.$invalid && formSubmitted" class="help-block">Client contract owner is required.</p>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="form-group" data-ng-class="{ 'has-error' : clientForm.clientContractStart.$invalid && formSubmitted }">
                     <label for="">Contract Start</label>
                     <input class="form-control" type="text" name="clientContractStart" data-ng-model="client.contractStart" data-autoclose="true"
@@ -73,7 +72,7 @@
                     <p data-ng-show="clientForm.clientContractStart.$error.date && formSubmitted" class="help-block">Please enter a valid date.</p>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="form-group" data-ng-class="{ 'has-error' : clientForm.clientContractEnd.$invalid && formSubmitted }">
                     <label for="">Contract End</label>
                     <input class="form-control" type="text" name="clientContractEnd" data-ng-model="client.contractEnd" data-autoclose="true"
@@ -94,49 +93,33 @@
             </div>
         </div>
         <div class="row" data-ng-show="client.salesForceAccount">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 {{client.salesForceAccount.name}} {{client.salesForceAccount.city}}<span
                     data-ng-show="client.salesForceAccount.city && client.salesForceAccount.state">/</span>{{client.salesForceAccount.state}}
                 <button class="btn btn-link" data-ng-click="changeSfAccount()">edit</button>
             </div>
         </div>
-        <div class="row" data-ng-hide="client.salesForceAccount">
-            <div class="col-md-8">
-                <div class="form-group">
-                    <label for="">Salesforce Account</label>
-                    <div data-emmi-typeahead data-items="sfResult.account" data-term="searchQuery" data-search="findAccount(term)" data-select="chooseAccount(item)" data-placeholder="Start typing..." data-focus="SfSearch">
-                        <div class="menu typeahead-menu dropdown-menu bottom-left container-fluid">
-                            <li class="header row" data-ng-show="sfResult.account.length">
-                                <div class="col-md-4 account-name">Account Name</div>
-                                <div class="col-md-4 client-name">Client Name</div>
-                                <div class="col-md-4 city-state">City/State</div>
-                            </li>
-                            <li data-emmi-typeahead-item="account" data-ng-repeat="account in sfResult.account" class="results row" data-ng-class="!account.clientName ? 'selectable' : 'unselectable'">
-                                <div class="col-md-4 account-name">{{account.name}}</div>
-                                <div class="col-md-4 client-name">{{account.clientName}}&nbsp;</div>
-                                <div class="col-md-4 city-state">{{account.city}}<span data-ng-show="account.city && account.state">/</span>{{account.state}}&nbsp;</div>
-                            </li>
-                            <li data-ng-show="hasMore()" class="footer row">
-                                <div class="col-md-12">Refine search for more results.</div>
-                            </li>
-                            <div data-ng-hide="sfResult.account.length || searchQuery.length < 3">
-                                <div class="col-md-12">There are no matching accounts found.</div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
+        <div class="row" data-ng-hide="client.salesForceAccount" data-ng-include="'partials/salesforce/picker.html'"></div>
         <hr>
         <h2>Team Tags</h2>
         <hr>
-        <div class="actions pull-right">
-            <div class="form-group">
-                <a class="btn btn-link" href="#/clients">Cancel</a>
-                <button class="btn btn-primary" type="button" data-ng-click="save(clientForm.$valid)">Save</button>
-                <button class="btn btn-primary" type="button" data-ng-click="addTeamToClient(clientForm.$valid)">Save and add Teams </button>
+        <div class="row" data-ng-include="'partials/client/location/client_current.html'"></div>
+        <hr>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="actions pull-right">
+                    <div class="form-group">
+                        <button class="btn btn-link" href data-ng-click="cancel()">cancel</button>
+                        <button class="btn btn-primary" type="button" data-ng-click="save(clientForm.$valid)">
+                            <span data-translate="client_edit_page.save_button">Save</span>
+                        </button>
+                        <button class="btn btn-primary" type="button" data-ng-click="addTeamToClient(clientForm.$valid)">
+                            <span data-translate="client_edit_page.save_and_continue_button">Save and add Teams </span>
+                        </button>                        
+                    </div>
+                </div>
             </div>
         </div>
+
     </form>
 </div>
