@@ -68,11 +68,6 @@
             }
         }
     },
-    "client": {
-        "links": {
-            "edit": "Edito el Cliento"
-        }
-    },
     "errors": {
         "title": "Página de error!",
         "403": "Usted no está autorizado."
