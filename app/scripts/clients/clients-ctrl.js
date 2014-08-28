@@ -162,8 +162,9 @@ angular.module('emmiManager')
             $scope.loading = true;
             Client.getClients(href).then(function (clientPage) {
                 $scope.handleResponse(clientPage, 'clients');
-            },function (){
-
+            }, function () {
+                // error happened
+                $scope.loading = false;
             });
         };
 
