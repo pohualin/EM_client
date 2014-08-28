@@ -1,6 +1,6 @@
 'use strict';
 angular.module('emmiManager')
-    .service('Client', function ($http, $q, Session, UriTemplate) {
+    .service('Client', function ($http, $q, Session, UriTemplate, $location) {
         var selectedClient;
         var referenceData;
         return {
@@ -29,6 +29,15 @@ angular.module('emmiManager')
             },
             deleteClient: function (id) {
 
+            },
+            viewClient: function(clientEntity) {
+                $location.path('/clients/' + clientEntity.id + '/view');
+            },
+            viewClientList: function(){
+                $location.path('/clients');
+            },
+            editClient: function(clientEntity) {
+                $location.path('/clients/' + clientEntity.id + '/edit');
             },
             getClient: function () {
                 return selectedClient;
