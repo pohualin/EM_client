@@ -33,3 +33,21 @@
     min-width: 600px;
   }
 }
+
+.error-circle {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  background: red;
+  padding-left: 8px;
+  margin-left: 5px;
+  color: white;
+}
+
+.alert-danger > strong {
+  @extend .error-circle;
+  margin-right:5px;
+}
