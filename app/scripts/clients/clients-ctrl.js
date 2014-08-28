@@ -2,7 +2,7 @@
 
 angular.module('emmiManager')
 
-    .controller('ViewEditCommon', function ($scope, Client, focus, debounce) {
+    .controller('ViewEditCommon', function ($scope, Client, focus, debounce, $alert) {
 
         $scope.sfResult = {};
         $scope.sfResult.account = [];
@@ -92,12 +92,21 @@ angular.module('emmiManager')
             $scope.client.salesForceAccount = null;
             focus('SfSearch');
         };
+
+        $scope.errorAlert = $alert({
+            title: '!',
+            content: 'Please correct the below information.',
+            container: '#alerts-container',
+            type: 'danger',
+            show: false,
+            dismissable: false
+        });
     })
 
 /**
  * Create new controller
  */
-    .controller('ClientCtrl', function ($scope, $location, Client, $controller, Location) {
+    .controller('ClientCtrl', function ($scope, Client, $controller, Location) {
 
         $controller('ViewEditCommon', {$scope: $scope});
 
@@ -110,9 +119,11 @@ angular.module('emmiManager')
                 Client.updateClient($scope.client).then(function () {
                     // update locations for the client
                     Location.updateForClient(Client.getClient()).then(function () {
-                        $location.path('/clients/' + $scope.client.id + '/view');
+                        Client.viewClient($scope.client);
                     });
                 });
+            } else {
+                $scope.errorAlert.show();
             }
         };
 
@@ -124,9 +135,11 @@ angular.module('emmiManager')
                     $scope.save = $scope.saveUpdate;
                     // saved client successfully, switch to saveUpdate if other updates fail
                     Location.updateForClient(Client.getClient()).then(function () {
-                        $location.path('/clients/' + $scope.client.id + '/view');
+                        Client.viewClient($scope.client);
                     });
                 });
+            } else {
+                $scope.errorAlert.show();
             }
         };
 
@@ -135,7 +148,7 @@ angular.module('emmiManager')
 /**
  *  Show list of clients
  */
-    .controller('ClientListCtrl', function ($scope, Client, $http, Session, UriTemplate, $location, $controller) {
+    .controller('ClientListCtrl', function ($scope, Client, $http, Session, UriTemplate, $controller) {
 
         $controller('ViewEditCommon', {$scope: $scope});
 
@@ -156,7 +169,7 @@ angular.module('emmiManager')
         };
 
         $scope.selectClient = function (client) {
-            $location.path('/clients/' + client.id + '/view');
+            Client.viewClient(client);
         };
 
         $scope.fetchPage = function (href) {
@@ -171,20 +184,18 @@ angular.module('emmiManager')
 /**
  *  Edit a single client
  */
-    .controller('ClientDetailCtrl', function ($scope, $location, Client, $controller, Location, clientResource) {
+    .controller('ClientDetailCtrl', function ($scope, Client, $controller, Location, clientResource) {
 
         $controller('ViewEditCommon', {$scope: $scope});
 
         if (clientResource) {
             $scope.client = clientResource.entity;
         } else {
-            $location.path('/clients');
+            Client.viewClientList();
         }
 
-        var viewUrl = '/clients/' + $scope.client.id + '/view';
-
         $scope.cancel = function () {
-            $location.path(viewUrl);
+            Client.viewClient($scope.client);
         };
 
         $scope.save = function (isValid) {
@@ -193,9 +204,11 @@ angular.module('emmiManager')
                 Client.updateClient($scope.client).then(function () {
                     // update locations for the client
                     Location.updateForClient(Client.getClient()).then(function () {
-                        $location.path(viewUrl);
+                        Client.viewClient($scope.client);
                     });
                 });
+            } else {
+                $scope.errorAlert.show();
             }
         };
     })
@@ -203,17 +216,17 @@ angular.module('emmiManager')
 /**
  * View a single client
  */
-    .controller('ClientViewCtrl', function ($scope, $location, clientResource, Location) {
+    .controller('ClientViewCtrl', function ($scope, clientResource, Client, Location) {
         if (clientResource) {
             $scope.client = clientResource.entity;
         } else {
-            $location.path('/clients');
+            Client.viewClientList();
         }
         Location.findForClient(clientResource).then(function (locationPage) {
             $scope.handleResponse(locationPage, 'clients');
         });
         $scope.edit = function () {
-            $location.path('/clients/' + $scope.client.id + '/edit');
+            Client.editClient($scope.client);
         };
     })
 ;
