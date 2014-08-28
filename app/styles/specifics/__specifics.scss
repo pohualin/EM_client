@@ -1,4 +1,3 @@
-
 /* _____ SPECIFICS _____ */
 
 // import contextual entities
@@ -18,4 +17,12 @@
 
 .example6 {
   @include example2();
+}
+
+.client-search-spinner {
+  display: inline-block;
+  background-image: url(images/search_spinner.gif);
+  background-size: 16px 16px;
+  width: 16px;
+  height: 16px;
 }
