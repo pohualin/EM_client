@@ -39,6 +39,9 @@ angular.module('emmiManager')
             editClient: function(clientEntity) {
                 $location.path('/clients/' + clientEntity.id + '/edit');
             },
+            createTeam: function() {
+                $location.path('/teams/new');
+            },
             getClient: function () {
                 return selectedClient;
             },

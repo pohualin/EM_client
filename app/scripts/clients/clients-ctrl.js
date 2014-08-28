@@ -145,17 +145,7 @@ angular.module('emmiManager')
             } else {
                 $scope.errorAlert.show();
             }
-        };
-        
-        $scope.addTeamToClient = function (isValid) {
-        	$scope.formSubmitted = true;
-        	if (isValid) {
-                Client.insertClient($scope.client).then(function (response) {
-            	    Client.selectedClient=response.data;
-                    $location.path('/teams/new');
-                });
-        	}    
-        }
+        };        
     })
 
 /**
@@ -224,6 +214,17 @@ angular.module('emmiManager')
                 $scope.errorAlert.show();
             }
         };
+        
+        $scope.addTeamToClient = function (isValid) {
+        	$scope.formSubmitted = true;
+        	if (isValid) {
+                Client.updateClient($scope.client).then(function (response) {
+            	    Client.selectedClient=response.data;
+            	    Client.createTeam();
+                    $location.path('/teams/new');
+                });
+        	}    
+        }
     })
 
 /**
