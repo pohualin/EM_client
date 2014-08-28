@@ -95,7 +95,7 @@ angular.module('emmiManager')
         };
 
         $scope.errorAlert = $alert({
-            title: '!',
+            title: ' ',
             content: 'Please correct the below information.',
             container: '#alerts-container',
             type: 'danger',
