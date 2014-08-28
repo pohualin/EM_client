@@ -127,6 +127,10 @@ angular.module('emmiManager')
             }
         };
 
+        $scope.cancel = function () {
+            Client.viewClientList();
+        };
+
         $scope.save = function (isValid) {
             $scope.formSubmitted = true;
             if (isValid) {
