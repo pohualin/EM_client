@@ -5,7 +5,7 @@
         <span data-ng-show="client.id">Edit</span> Client
     </h1>
     <form name="clientForm" class="form" novalidate>
-        <div id="alerts-container" data-ng-show="clientForm.$invalid || client.salesForceAccount"></div>
+        <div id="alerts-container" data-ng-show="clientForm.$invalid || !client.salesForceAccount"></div>
         <h2>Client Information</h2>
         <div class="row">
             <div class="col-md-12">
