@@ -21,8 +21,9 @@
 
 .client-search-spinner {
   display: inline-block;
-  background-image: url(images/search_spinner.gif);
-  background-size: 16px 16px;
-  width: 16px;
-  height: 16px;
+  background: url(images/search_spinner.gif) no-repeat center center;
+  background-size: 24px 24px;
+  margin-left: 5px;
+  width: 33px;
+  height: 33px;
 }

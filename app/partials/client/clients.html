@@ -12,22 +12,20 @@
                     <option value="">Clients</option>
                 </select>
             </div>
-            <div class="col-md-6 col-sm-6">
+            <div class="col-md-6 col-sm-5">
                 <label class="sr-only" for="query">Search</label>
-                <div class="input-group" data-ng-hide="loading">
+                <div class="input-group">
                     <input class="form-control" id="query" name="query" data-ng-model="query" type="text"
                            placeholder="Search..." required data-auto-focus>
-                    <div class="input-group-addon" data-ng-hide="loading"><span class="glyphicon glyphicon-search"></span></div>
-                </div>
-                <div class="input-group" data-ng-show="loading">
-                    <input class="form-control" data-ng-disabled="true" data-ng-model="query" type="text">
-                    <div class="input-group-addon"><span class="client-search-spinner"></span></div>
+                    <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
                 </div>
             </div>
-            <div class="col-md-2 col-sm-2">
-                <button class="btn btn-default pull-left" data-ng-click="search()" data-translate="global.buttons.search"
-                        data-ng-disabled="searchForm.query.$invalid" data-ng-hide="loading">Go
+            <div class="col-md-2 col-sm-3">
+                <button class="btn btn-default pull-left" data-ng-click="search()"
+                        data-ng-disabled="searchForm.query.$invalid || loading"
+                        data-translate="global.buttons.search">
                 </button>
+                <span data-ng-class="{'client-search-spinner' : loading}"></span>
             </div>
             <div class="col-md-2 col-sm-2">
                 <div class="pull-right">
