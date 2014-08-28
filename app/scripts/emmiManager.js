@@ -7,14 +7,15 @@ angular.module('emmiManager', [
     'ngSanitize',
     'ngResource',
     'ngRoute',
+    'ngAnimate',
     'hateoas',
     'emmiManager.api',
     'pascalprecht.translate',
     'tmh.dynamicLocale',
-    'mgcrea.ngStrap.datepicker',
     'emmi.typeahead',
     'localytics.directives',
-    'ngTagsInput'
+    'ngTagsInput',
+    'mgcrea.ngStrap'
 ])
 
     .constant('USER_ROLES', {
@@ -28,6 +29,18 @@ angular.module('emmiManager', [
         var requiredResources = {
             'account': ['AuthSharedService', function (AuthSharedService) {
                 return AuthSharedService.currentUser();
+            }]
+        };
+
+        var clientDetailRequiredResources = {
+            'clientResource': ['AuthSharedService','Client', '$route', '$q', function (AuthSharedService, Client, $route, $q){
+                var deferred = $q.defer();
+                AuthSharedService.currentUser().then(function (){
+                    Client.selectClient($route.current.params.clientId).then(function (clientResource){
+                          deferred.resolve(clientResource);
+                    });
+                });
+                return deferred.promise;
             }]
         };
 
@@ -49,16 +62,8 @@ angular.module('emmiManager', [
                 },
                 resolve: requiredResources
             })
-            .when('/test', {
-                templateUrl: 'partials/test.html',
-                controller: 'TestCtrl',
-                access: {
-                    authorizedRoles: [USER_ROLES.all]
-                },
-                resolve: requiredResources
-            })
             .when('/clients', {
-                templateUrl: 'partials/clients.html',
+                templateUrl: 'partials/client/clients.html',
                 controller: 'ClientListCtrl',
                 access: {
                     authorizedRoles: [USER_ROLES.admin]
@@ -66,20 +71,28 @@ angular.module('emmiManager', [
                 resolve: requiredResources
             })
             .when('/clients/new', {
-                templateUrl: 'partials/client_edit.html',
+                templateUrl: 'partials/client/client_edit.html',
                 controller: 'ClientCtrl',
                 access: {
                     authorizedRoles: [USER_ROLES.admin]
                 },
                 resolve: requiredResources
             })
-            .when('/clients/edit', {
-                templateUrl: 'partials/client_edit.html',
+            .when('/clients/:clientId/edit', {
+                templateUrl: 'partials/client/client_edit.html',
                 controller: 'ClientDetailCtrl',
                 access: {
                     authorizedRoles: [USER_ROLES.admin]
                 },
-                resolve: requiredResources
+                resolve: clientDetailRequiredResources
+            })
+            .when('/clients/:clientId/view', {
+                templateUrl: 'partials/client/client_view.html',
+                controller: 'ClientViewCtrl',
+                access: {
+                    authorizedRoles: [USER_ROLES.admin]
+                },
+                resolve: clientDetailRequiredResources
             })
             .when('/403', {
                 templateUrl: 'partials/403.html',

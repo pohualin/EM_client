@@ -1,0 +1,23 @@
+<div class="col-md-12" data-ng-controller="ClientBelongsToDeltaLocationsController">
+    <div class="row" data-ng-hide="isEmpty(client.belongsToChanged)">
+        <div class="col-md-8">
+            <h2>Locations Changing Belongs To On Save...</h2>
+            <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th>Will belong to this client...</th>
+                </tr>
+                <tr data-ng-repeat="(key,location) in client.belongsToChanged | orderBy:'key'">
+                    <td>{{location.name}}</td>
+                    <td>{{location.phone}}</td>
+                    <td>{{location.city}}</td>
+                    <td>{{location.state}}</td>
+                    <td>{{location.belongsToCheckbox}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

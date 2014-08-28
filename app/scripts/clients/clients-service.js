@@ -1,6 +1,6 @@
 'use strict';
 angular.module('emmiManager')
-    .service('Client', function ($http, $q, Session, UriTemplate) {
+    .service('Client', function ($http, $q, Session, UriTemplate, $location) {
         var selectedClient;
         var referenceData;
         return {
@@ -13,26 +13,54 @@ angular.module('emmiManager')
             },
             insertClient: function (client) {
                 return $http.post(UriTemplate.create(Session.link.clients).stringify(), client)
-                    .success(function (response, status) {
+                    .success(function (response) {
+                        // update the selected client with the response
+                        angular.extend(selectedClient.entity, response.entity);
+                        selectedClient.link = response.link;
                         return response;
                     });
             },
             updateClient: function (client) {
                 return $http.put(UriTemplate.create(Session.link.clients).stringify(), client)
-                    .success(function (response, status) {
+                    .success(function (response) {
+                        angular.extend(client, response.entity);
                         return response;
                     });
             },
             deleteClient: function (id) {
 
             },
+            viewClient: function(clientEntity) {
+                $location.path('/clients/' + clientEntity.id + '/view');
+            },
+            viewClientList: function(){
+                $location.path('/clients');
+            },
+            editClient: function(clientEntity) {
+                $location.path('/clients/' + clientEntity.id + '/edit');
+            },
             getClient: function () {
                 return selectedClient;
             },
-            selectClient: function (href) {
-                return $http.get(href)
+            newClient: function () {
+                selectedClient = {
+                    entity: {
+                        'name': null,
+                        'type': null,
+                        'active': true,
+                        'contractOwner': null,
+                        'contractStart': null,
+                        'contractEnd': null,
+                        'region': null,
+                        'salesForceAccount': null
+                    }
+                };
+                return selectedClient;
+            },
+            selectClient: function (clientId) {
+                return $http.get(UriTemplate.create(Session.link.clientById).stringify({id: clientId}))
                     .then(function (response) {
-                        selectedClient = response.data.entity;
+                        selectedClient = response.data;
                         return selectedClient;
                     });
             },
@@ -54,7 +82,7 @@ angular.module('emmiManager')
                         return response.data;
                     });
             },
-            findSalesForceAccount: function(href, searchString){
+            findSalesForceAccount: function (href, searchString) {
                 return $http.get(UriTemplate.create(href).stringify({q: searchString}))
                     .then(function (response) {
                         return response.data;

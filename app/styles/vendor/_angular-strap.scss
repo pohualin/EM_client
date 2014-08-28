@@ -6,23 +6,48 @@
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
 .datepicker.dropdown-menu {
-    width: 250px;
-    height: 270px
+  width: 250px;
+  height: 270px
 }
 
 .datepicker.dropdown-menu button {
-    outline: 0;
-    border: 0
+  outline: 0;
+  border: 0
 }
 
 .datepicker.dropdown-menu tbody {
-    height: 180px
+  height: 180px
 }
 
 .datepicker.dropdown-menu tbody button {
-    padding: 6px
+  padding: 6px
 }
 
-.datepicker.dropdown-menu.datepicker-mode-1 tbody button,.datepicker.dropdown-menu.datepicker-mode-2 tbody button {
-    height: 65px
+.datepicker.dropdown-menu.datepicker-mode-1 tbody button, .datepicker.dropdown-menu.datepicker-mode-2 tbody button {
+  height: 65px
+}
+
+.modal-dialog-large {
+  width: 85%;
+  .modal-content {
+    min-width: 600px;
+  }
+}
+
+.error-circle {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  background: red;
+  padding-left: 8px;
+  margin-left: 5px;
+  color: white;
+}
+
+.alert-danger > strong {
+  @extend .error-circle;
+  margin-right:5px;
 }

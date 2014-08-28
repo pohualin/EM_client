@@ -10,11 +10,13 @@ angular.module('emmiManager')
         };
     })
 
-    .directive('focusOn', function () {
+    .directive('focusOn', function ($timeout) {
         return function (scope, elem, attr) {
             scope.$on('focusOn', function (e, name) {
                 if (name === attr.focusOn) {
-                    elem[0].focus();
+                    $timeout(function(){
+                        elem[0].focus();
+                    }, 0);
                 }
             });
         };
@@ -31,6 +33,17 @@ angular.module('emmiManager')
                     event.preventDefault();
                 }
             });
+        };
+    })
+
+    .directive('autoFocus', function($timeout) {
+        return {
+            restrict: 'AC',
+            link: function(_scope, _element) {
+                $timeout(function(){
+                    _element[0].focus();
+                }, 250);
+            }
         };
     })
 
