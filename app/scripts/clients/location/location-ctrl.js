@@ -30,10 +30,12 @@ angular.module('emmiManager')
         $scope.setRemovedOnLocationsWithin = function (managedLocationList) {
             // look through the clientLocations and 'remove' it if has already been targeted
             angular.forEach($scope[managedLocationList], function (locationResource) {
-                if (Client.getClient().removedLocations[locationResource.entity.id]) {
-                    locationResource.entity.removedFromClient = true;
-                } else {
-                    delete locationResource.entity.removedFromClient;
+                if (Client.getClient().removedLocations) {
+                    if (Client.getClient().removedLocations[locationResource.entity.id]) {
+                        locationResource.entity.removedFromClient = true;
+                    } else {
+                        delete locationResource.entity.removedFromClient;
+                    }
                 }
             });
         };
