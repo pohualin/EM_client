@@ -77,6 +77,7 @@ angular.module('emmiManager')
                 $scope.pageSizes = [5, 10, 15, 25];
                 $scope.status = entityPage.filter.status;
             } else {
+                this[scopePropertyNameForEntity] = null;
                 $scope.total = 0;
             }
             $scope.searchPerformed = true;
