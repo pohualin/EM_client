@@ -162,7 +162,6 @@ angular.module('emmiManager')
         $controller('ViewEditCommon', {$scope: $scope});
 
         var fetchPage = function (href) {
-            $scope.clients = null;
             $scope.loading = true;
             Client.getClients(href).then(function (clientPage) {
                 $scope.handleResponse(clientPage, 'clients');
