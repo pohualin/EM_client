@@ -42,6 +42,9 @@ angular.module('emmiManager')
             getClient: function () {
                 return selectedClient;
             },
+            setClient: function(clientResource){
+              selectedClient = clientResource;
+            },
             newClient: function () {
                 selectedClient = {
                     entity: {

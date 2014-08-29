@@ -18,6 +18,7 @@ angular.module('emmi.typeahead', [])
                 items: '=',
                 term: '=',
                 placeholder: '@',
+                id: '@',
                 focus: '@'
             },
             controller: function($scope, $element, $attrs, $transclude) {

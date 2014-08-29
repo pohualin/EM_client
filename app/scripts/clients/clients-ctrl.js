@@ -79,7 +79,8 @@ angular.module('emmiManager')
             } else {
                 $scope.total = 0;
             }
-            $scope.noSearch = false;
+            $scope.searchPerformed = true;
+            $scope.loading = false;
         };
 
         $scope.hasMore = function () {
@@ -93,14 +94,18 @@ angular.module('emmiManager')
             focus('SfSearch');
         };
 
-        $scope.errorAlert = $alert({
-            title: '!',
-            content: 'Please correct the below information.',
-            container: '#alerts-container',
-            type: 'danger',
-            show: false,
-            dismissable: false
-        });
+        $scope.showError = function(){
+            if (!$scope.errorAlert) {
+                $scope.errorAlert = $alert({
+                    title: ' ',
+                    content: 'Please correct the below information.',
+                    container: '#alerts-container',
+                    type: 'danger',
+                    show: true,
+                    dismissable: false
+                });
+            }
+        };
     })
 
 /**
@@ -123,7 +128,7 @@ angular.module('emmiManager')
                     });
                 });
             } else {
-                $scope.errorAlert.show();
+                $scope.showError();
             }
         };
 
@@ -143,7 +148,7 @@ angular.module('emmiManager')
                     });
                 });
             } else {
-                $scope.errorAlert.show();
+                $scope.showError();
             }
         };
 
@@ -158,8 +163,12 @@ angular.module('emmiManager')
 
         var fetchPage = function (href) {
             $scope.clients = null;
+            $scope.loading = true;
             Client.getClients(href).then(function (clientPage) {
                 $scope.handleResponse(clientPage, 'clients');
+            }, function () {
+                // error happened
+                $scope.loading = false;
             });
         };
 
@@ -168,7 +177,6 @@ angular.module('emmiManager')
         });
 
         $scope.search = function () {
-            $scope.searchPerformed = true;
             fetchPage(UriTemplate.create(Session.link.clients).stringify({name: $scope.query, status: $scope.status}));
         };
 
@@ -212,7 +220,7 @@ angular.module('emmiManager')
                     });
                 });
             } else {
-                $scope.errorAlert.show();
+                $scope.showError();
             }
         };
     })
@@ -220,14 +228,17 @@ angular.module('emmiManager')
 /**
  * View a single client
  */
-    .controller('ClientViewCtrl', function ($scope, clientResource, Client, Location) {
+    .controller('ClientViewCtrl', function ($scope, clientResource, Client, Location, $controller) {
+        $controller('ViewEditCommon', {$scope: $scope});
+
         if (clientResource) {
             $scope.client = clientResource.entity;
+            Client.setClient(clientResource);
         } else {
             Client.viewClientList();
         }
         Location.findForClient(clientResource).then(function (locationPage) {
-            $scope.handleResponse(locationPage, 'clients');
+            $scope.handleResponse(locationPage, 'clientLocations');
         });
         $scope.edit = function () {
             Client.editClient($scope.client);
