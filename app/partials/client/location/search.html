@@ -39,7 +39,7 @@
                                 <div class="form-group">
                                     <label for="status_filter" data-translate="global.labels.statusFilter">Show:</label>
                                     <select class="form-control" id="status_filter" data-ng-model="status"
-                                            data-ng-options="status for status in statuses"
+                                            data-ng-options="status | translate for status in statuses"
                                             data-ng-change="search()">
                                         <option value="">Select...</option>
                                     </select>
