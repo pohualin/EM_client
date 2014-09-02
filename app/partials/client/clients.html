@@ -5,20 +5,34 @@
 
     <h2>Manage Clients, Teams, Providers and Locations:</h2>
 
-    <div class="pull-right">
-        <a class="btn btn-primary" data-ng-href="#/clients/new" data-ng-show="searchPerformed">Create New Client</a>
-    </div>
-    <form class="form-inline" name="searchForm">
-        <div class="form-group">
-            <select class="form-control">
-                <option value="">Clients</option>
-            </select>
-            <label class="sr-only" for="query">Search</label>
-            <input class="form-control" id="query" name="query" data-ng-model="query" type="text"
-                   placeholder="Search..." required>
-            <button class="btn btn-default" data-ng-click="search()" data-translate="global.buttons.search"
-                    data-ng-disabled="searchForm.query.$invalid">Go
-            </button>
+    <form name="searchForm">
+        <div class="row">
+            <div class="col-md-2 col-sm-2">
+                <select class="form-control">
+                    <option value="">Clients</option>
+                </select>
+            </div>
+            <div class="col-md-6 col-sm-5">
+                <label class="sr-only" for="query">Search</label>
+                <div class="input-group">
+                    <input class="form-control" id="query" name="query" data-ng-model="query" type="text"
+                           placeholder="Search..." required data-auto-focus>
+                    <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-3">
+                <button class="btn btn-default pull-left" data-ng-click="search()"
+                        data-ng-disabled="searchForm.query.$invalid || loading"
+                        data-translate="global.buttons.search">
+                </button>
+                <span data-ng-class="{'client-search-spinner' : loading}"></span>
+            </div>
+            <div class="col-md-2 col-sm-2">
+                <div class="pull-right">
+                    <a class="btn btn-primary" data-ng-href="#/clients/new" data-ng-show="searchPerformed">Create New
+                        Client</a>
+                </div>
+            </div>
         </div>
     </form>
     <hr>
@@ -33,6 +47,7 @@
                     <select class="form-control" id="status_filter" data-ng-model="status"
                             data-ng-options="status | translate for status in statuses"
                             data-ng-change="search()">
+                        <option value="">--status--</option>
                     </select>
                 </div>
             </form>
@@ -52,8 +67,7 @@
                     <td>{{client.entity.contractOwner.firstName}} {{client.entity.contractOwner.lastName}}</td>
                     <td>{{client.entity.type}}</td>
                     <td>
-                        <a href data-ng-click="selectClient(client.entity)"><span
-                                class="glyphicon glyphicon-edit"></span></a>
+                        <a href data-ng-click="selectClient(client.entity)">view</a>
                     </td>
                 </tr>
             </table>

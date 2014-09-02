@@ -14,6 +14,7 @@ angular.module('emmiManager', [
     'tmh.dynamicLocale',
     'emmi.typeahead',
     'localytics.directives',
+    'ngTagsInput',
     'mgcrea.ngStrap'
 ])
 
