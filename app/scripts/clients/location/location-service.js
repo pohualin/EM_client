@@ -69,6 +69,11 @@ angular.module('emmiManager')
                 }
                 return deferred.promise;
             },
+            hasLocationModifications: function(clientResource){
+             return  !(angular.equals({}, clientResource.addedLocations) &&
+                 angular.equals({}, clientResource.removedLocations) &&
+                 angular.equals({}, clientResource.belongsToChanged));
+            },
             updateForClient: function (clientResource) {
                 var added = [],
                     removed = [],
