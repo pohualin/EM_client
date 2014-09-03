@@ -1,11 +1,12 @@
-<div class="popover">
-    <div class="arrow"></div>
-    <h3 class="popover-title" data-translate="client_edit_page.cancel_dialog.title"></h3>
+<form>
+    <div data-translate="client_edit_page.cancel_dialog.content"></div>
+    <div class="form-actions">
+        <button class="btn btn-danger" data-ng-click="ok()"
+                data-translate="client_edit_page.cancel_dialog.ok_button"></button>
+        <button class="btn btn-primary" type="button" data-ng-click="cancel()"
+                data-translate="client_edit_page.cancel_dialog.cancel_button"></button>
+    </div>
+</form>
 
-    <div class="popover-content" data-translate="client_edit_page.cancel_dialog.content"></div>
-    <button class="btn btn-link" data-ng-click="ok()"
-            data-translate="client_edit_page.cancel_dialog.ok_button"></button>
-    <button class="btn btn-primary" type="button" data-ng-click="cancel()"
-            data-translate="client_edit_page.cancel_dialog.cancel_button"></button>
 
-</div>
+

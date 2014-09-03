@@ -94,7 +94,7 @@ angular.module('emmiManager')
         };
 
     })
-    .directive('cancelClick', ['$popover', 'Client', 'Location', '$timeout', function ($popover, Client, Location, $timeout) {
+    .directive('cancelClick', ['$popover', 'Client', 'Location', '$timeout', '$translate', function ($popover, Client, Location, $timeout, $translate) {
         return {
             restrict: 'EA',
             scope: {
@@ -108,11 +108,14 @@ angular.module('emmiManager')
                     if (Location.hasLocationModifications(Client.getClient())) {
                         // pop a warning dialog
                         if (!scope.cancelWarning) {
-                            scope.cancelWarning = $popover(element, {
-                                scope: scope,
-                                show: true,
-                                placement: 'top',
-                                template: 'partials/client/cancel_popover.tpl.html'
+                            $translate('client_edit_page.cancel_dialog.title').then(function (title) {
+                                scope.cancelWarning = $popover(element, {
+                                    title: title,
+                                    scope: scope,
+                                    show: true,
+                                    placement: 'top',
+                                    contentTemplate: 'partials/client/cancel_popover.tpl.html'
+                                });
                             });
                         }
                     } else {
