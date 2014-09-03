@@ -5,12 +5,17 @@ angular.module('emmiManager')
 /**
  *   Controls the tag group section
  */
-    .controller('ClientTagsController', function ($scope, focus) {
+    .controller('ClientTagsController', function ($scope, focus, $filter) {
 
         $scope.noSearch = true;
         $scope.createMode = false;
         $scope.tagGroups = [];
         $scope.selectedTagGroupIndex = -1;
+
+        // We will retrieve tag libraries using a service here
+        $scope.tagLibraries = [
+            { 'title': 'one', 'tags': [ { 'text': 'one1' }, { 'text': 'one2' }, { 'text': 'one3' } ] }, { 'title': 'two', 'tags': [ { 'text': 'two1' } ] }, { 'title': 'three', 'tags': [ { 'text': 'three1' }, { 'text': 'three2' }, { 'text': 'three3' }, { 'text': 'three4' }, { 'text': 'three5' }, { 'text': 'three6' }, { 'text': 'three7' }, { 'text': 'three8' } ] }
+        ];
 
         $scope.enterCreateMode = function (){
             $scope.createMode = true;
@@ -73,6 +78,20 @@ angular.module('emmiManager')
             }
         };
 
+        $scope.addLibraries = function () {
+            var selected = $filter('filter')( this.tagLibraries , { checked : true } );
+            $scope.tagGroups = this.tagGroups.concat(angular.copy(selected));
+            angular.forEach(this.tagLibraries, function(value, key) {
+                value.checked = false;
+            });
+        };
+
+    })
+
+    .filter('taglist', function() {
+        return function(input) {
+            return input.map(function(tag){ return tag.text; }).join(', ');
+        };
     })
 
 ;

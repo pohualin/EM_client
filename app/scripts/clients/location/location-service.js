@@ -20,6 +20,18 @@ angular.module('emmiManager')
                     });
 
             },
+            newLocation: function(){
+              return {
+                  name: null,
+                  phone: null,
+                  city: null,
+                  state: null,
+                  belongsToMutable: true,
+                  belongsToCheckbox: false,
+                  belongsTo: null,
+                  usingThisLocation: []
+              };
+            },
             create: function (location) {
                 return $http.post(UriTemplate.create(Session.link.locations).stringify(), location)
                     .success(function (response) {
@@ -68,6 +80,11 @@ angular.module('emmiManager')
                     deferred.resolve([]);
                 }
                 return deferred.promise;
+            },
+            hasLocationModifications: function(clientResource){
+             return  !(angular.equals({}, clientResource.addedLocations) &&
+                 angular.equals({}, clientResource.removedLocations) &&
+                 angular.equals({}, clientResource.belongsToChanged));
             },
             updateForClient: function (clientResource) {
                 var added = [],

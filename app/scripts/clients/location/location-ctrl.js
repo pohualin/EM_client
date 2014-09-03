@@ -169,24 +169,19 @@ angular.module('emmiManager')
 /**
  *  Controls the create new location popup (partials/location/new.html)
  */
-    .controller('LocationCreateController', function ($scope, $controller, Location, Client) {
+    .controller('LocationCreateController', function ($scope, $controller, Location) {
 
         $controller('LocationCommon', {$scope: $scope});
 
-        $scope.location = {
-            name: null,
-            phone: null,
-            city: null,
-            state: null,
-            belongsToMutable: true,
-            belongsToCheckbox: false,
-            belongsTo: null,
-            usingThisLocation: []
-        };
+        $scope.location = Location.newLocation();
 
         $scope.title = 'New Location';
 
-        $scope.save = function (isValid) {
+        $scope.saveAndAddAnother = function(isValid){
+            $scope.save(isValid, true);
+        };
+
+        $scope.save = function (isValid, addAnother) {
             $scope.formSubmitted = true;
             if (isValid) {
                 var toBeSaved = $scope.location;
@@ -198,7 +193,12 @@ angular.module('emmiManager')
                     if (toBeSaved.belongsToCheckbox) {
                         $scope.addLocationToBelongsToChangedList(locationResource);
                     }
-                    $scope.$hide();
+                    if (!addAnother) {
+                        $scope.$hide();
+                    } else {
+                        $scope.formSubmitted = false;
+                        $scope.location = Location.newLocation();
+                    }
                 });
             }
         };
