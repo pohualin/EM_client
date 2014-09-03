@@ -1,0 +1,23 @@
+<form name="tagGroupLibraries">
+    <div class="form-group">
+        <div class="checkbox" data-ng-repeat="library in tagLibraries">
+            <label>
+                <input type="checkbox" value="" data-ng-model="library.checked">&nbsp;
+            </label>
+            <span class="toggle-trigger" data-ng-click="showLibrary=!showLibrary" data-ng-class="{ open: showLibrary }">
+                <span class="caret"></span>{{ library.title }}
+            </span>
+            <div class="toggle-content" data-ng-show="showLibrary">
+                <small class="text-muted">{{ library.tags | taglist }}</small>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <div class="form-actions">
+        <button type="button" class="btn btn-default btn-xs btn-close" data-ng-click="$hide()">
+            <span class="glyphicon glyphicon-remove"></span>
+        </button>
+        <button type="button" class="btn btn-primary pull-right" data-ng-click="addLibraries();$hide()">Add</button>
+        <small>You'll be able to edit tags after adding groups.</small>
+    </div>
+</form>
