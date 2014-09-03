@@ -74,8 +74,8 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-ng-click="$hide()">Cancel</button>
+            <button type="button" class="btn btn-default" data-ng-show="saveAndAddAnother" data-ng-click="saveAndAddAnother(locationForm.$valid)">Save & Add Another</button>
             <input type="submit" id="submit" class="btn btn-primary" value="Save changes"/>
-            <!--<button type="button" class="btn btn-primary" data-ng-click="save(locationForm.$valid)"></button>-->
         </div>
     </div>
 </form>
