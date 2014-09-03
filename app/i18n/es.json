@@ -95,7 +95,13 @@
         }
     },
     "client_edit_page": {
-        "save_button": "Continue"
+        "save_button": "Continue",
+        "cancel_dialog": {
+            "title": "Are you sure you want to cancel?",
+            "content": "Your changes and any newly-created locations won’t be saved.",
+            "ok_button": "Yes",
+            "cancel_button": "No"
+        }
     },
     "ALL": "All",
     "ACTIVE_ONLY": "Active",

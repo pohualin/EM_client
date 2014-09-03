@@ -10,25 +10,25 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group" data-ng-class="{ 'has-error' : clientForm.clientName.$invalid && formSubmitted }">
-                    <label for="">Name</label>
+                    <label class="control-label" for="clientName">Name</label>
                     <div class="error-circle" data-ng-show="clientForm.clientName.$error.required && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                         data-title="Client name is required.">!</div>
+                         data-title="Required"></div>
                     <div class="error-circle" data-ng-show="clientForm.clientName.$error.pattern && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                         data-title="Please enter a valid client name.">!</div>
-                    <input class="form-control" data-ng-model="client.name" name="clientName" type="text" required data-ng-pattern="/^[\-\.a-zA-Z0-9 '=_;:`@#&,!\(\)\/]*$/">
+                         data-title="Please enter a valid client name."></div>
+                    <input class="form-control" data-ng-model="client.name" id="clientName" name="clientName" type="text" required data-auto-focus data-ng-pattern="/^[\-\.a-zA-Z0-9 '=_;:`@#&,\(\)\/]*$/">
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group" data-ng-class="{ 'has-error' : clientForm.clientType.$invalid && formSubmitted }">
-                    <label for="">Client Type</label>
+                    <label class="control-label" for="clientType">Client Type</label>
                     <div class="error-circle" data-ng-show="clientForm.clientType.$invalid && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                         data-title="Client type is required.">!</div>
-                    <select class="form-control" data-ng-model="client.type"
+                         data-title="Required"></div>
+                    <select id="clientType" class="form-control" data-ng-model="client.type"
                             data-ng-options="type | translate for type in clientTypes" name="clientType" required>
                         <option value="">Select...</option>
                     </select>
@@ -36,7 +36,7 @@
             </div>
             <div class="col-md-4">
                 <div class="form-group">
-                    <label for="region">Region</label>
+                    <label class="control-label" for="region">Region</label>
                     <select class="form-control" id="region" data-ng-model="client.region"
                             data-ng-options="region | translate for region in clientRegions" name="clientRegion">
                         <option value="">Select...</option>
@@ -45,8 +45,8 @@
             </div>
             <div class="col-md-4">
                 <div class="form-group">
-                    <label for="">Tier</label>
-                    <select class="form-control" data-ng-model="client.tier"
+                    <label class="control-label" for="tier">Tier</label>
+                    <select class="form-control" data-ng-model="client.tier" id="tier"
                             data-ng-options="tier | translate for tier in clientTiers" name="clientTier">
                         <option value="">Select...</option>
                     </select>
@@ -56,10 +56,10 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group" data-ng-class="{ 'has-error' : clientForm.clientContractOwner.$invalid && formSubmitted }">
-                    <label for="">Contract Owner</label>
+                    <label class="control-label" for="contractOwner">Contract Owner</label>
                     <div class="error-circle" data-ng-show="clientForm.clientContractOwner.$invalid && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                         data-title="Client contract owner is required.">!</div>
+                         data-title="Required"></div>
                     <select
                         class="form-control"
                         data-chosen
@@ -67,6 +67,7 @@
                         data-placeholder="Select..."
                         data-ng-model="client.contractOwner"
                         data-ng-options="owner as owner.lastName for owner in contractOwners track by owner.id"
+                        id="contractOwner"
                         name="clientContractOwner" required>
                         <option value=""></option>
                     </select>
@@ -74,27 +75,21 @@
             </div>
             <div class="col-md-4">
                 <div class="form-group" data-ng-class="{ 'has-error' : clientForm.clientContractStart.$invalid && formSubmitted }">
-                    <label for="">Contract Start</label>
+                    <label class="control-label" for="contractStart">Contract Start</label>
                     <div class="error-circle" data-ng-show="clientForm.clientContractStart.$error.required && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                         data-title="Client contract start date is required.">!</div>
-                    <div class="error-circle" data-ng-show="clientForm.clientContractStart.$error.date && formSubmitted"
-                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                         data-title="Please enter a valid date.">!</div>
-                    <input class="form-control" type="text" name="clientContractStart" data-ng-model="client.contractStart" data-autoclose="true"
+                         data-title="Required"></div>
+                    <input id="contractStart" class="form-control" type="text" name="clientContractStart" data-ng-model="client.contractStart" data-autoclose="true"
                            data-dateType="iso" data-bs-datepicker required>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group" data-ng-class="{ 'has-error' : clientForm.clientContractEnd.$invalid && formSubmitted }">
-                    <label for="">Contract End</label>
+                    <label class="control-label" for="contractEnd">Contract End</label>
                     <div class="error-circle" data-ng-show="clientForm.clientContractEnd.$error.required && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                         data-title="Client contract end date is required.">!</div>
-                    <div class="error-circle" data-ng-show="clientForm.clientContractEnd.$error.date && formSubmitted"
-                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                         data-title="Please enter a valid date.">!</div>
-                    <input class="form-control" type="text" name="clientContractEnd" data-ng-model="client.contractEnd" data-autoclose="true"
+                         data-title="Required"></div>
+                    <input id="contractEnd" class="form-control" type="text" name="clientContractEnd" data-ng-model="client.contractEnd" data-autoclose="true"
                            data-dateType="string" data-bs-datepicker required>
                 </div>
             </div>
@@ -102,8 +97,8 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="checkbox">
-                    <label>
-                        <input type="checkbox" data-ng-model="client.active"/>
+                    <label for="active">
+                        <input id="active" type="checkbox" data-ng-model="client.active"/>
                         Active
                     </label>
                 </div>
@@ -126,7 +121,7 @@
             <div class="col-md-12">
                 <div class="actions pull-right">
                     <div class="form-group">
-                        <button class="btn btn-link" href data-ng-click="cancel()">cancel</button>
+                        <button class="btn btn-link" data-on-ok="cancel()" data-out="cancel()" data-cancel-click>cancel</button>
                         <button class="btn btn-primary" type="button" data-ng-click="save(clientForm.$valid)">
                             <span data-translate="client_edit_page.save_button">Save</span>
                         </button>
