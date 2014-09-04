@@ -4,7 +4,18 @@ angular.module('emmiManager')
         var selectedClient;
         var referenceData;
         return {
-            getClients: function (href) {
+            find: function (query, status, sort, pageSize) {
+                return $http.get(UriTemplate.create(Session.link.clients).stringify({
+                        name: query,
+                        status: status,
+                        sort: sort && sort.property ? sort.property + ',' + (sort.ascending ? 'asc' : 'desc') : '',
+                        size: pageSize
+                    }
+                )).then(function (response) {
+                    return response.data;
+                });
+            },
+            fetchPage: function (href) {
                 return $http.get(href)
                     .then(function (response) {
                         return response.data;
