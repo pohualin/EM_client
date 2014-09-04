@@ -2,7 +2,7 @@
 angular.module('emmiManager')
     .service('Tag', function ($http, $q, Session, UriTemplate) {
         return {
-        	 insertTags: function (clientResource) {
+        	 insertGroups: function (clientResource) {
              	if (clientResource){
              	var translatedGroups = [];
              		angular.forEach(clientResource.tagGroups, function(group){
