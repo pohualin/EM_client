@@ -5,11 +5,18 @@ angular.module('emmiManager')
 /**
  *   Controls the tag group section
  */
-    .controller('ClientTagsController', function ($scope, focus) {
+    .controller('ClientTagsController', function ($scope, focus, Tag, Client) {
 
         $scope.noSearch = true;
         $scope.createMode = false;
-        $scope.tagGroups = [];
+        $scope.client.tagGroups = [];
+
+        if(Client.getClient().entity.id){
+        	Tag.loadGroups(Client.getClient()).then(function(){
+        		$scope.client.tagGroups = Client.getClient().tagGroups;
+        	});
+        }
+        
         $scope.selectedTagGroupIndex = -1;
 
         $scope.enterCreateMode = function (){
@@ -27,14 +34,13 @@ angular.module('emmiManager')
                 title: this.newTagGroupTitle,
                 tags: []
             };
-            console.log(tagGroup);
-            $scope.tagGroups.push(tagGroup);
+            $scope.client.tagGroups.push(tagGroup);
             $scope.createMode = false;
         };
 
         $scope.selectTagGroup = function (groupIndex) {
             if ($scope.selectedTagGroupIndex === groupIndex) {
-                $scope.tagGroups[groupIndex].editMode = true;
+                $scope.client.tagGroups[groupIndex].editMode = true;
                 //$scope.selectedTagGroupIndex = -1;
                 focus('editMode');
             } else {
@@ -43,18 +49,18 @@ angular.module('emmiManager')
         };
 
         $scope.removeTagGroup = function (groupIndex) {
-            $scope.tagGroups.splice(groupIndex, 1);
+            $scope.client.tagGroups.splice(groupIndex, 1);
         };
 
         $scope.changeTagGroupTitle = function (groupIndex) {
             // Title already gets changed from data binding, so really just need to hide the edit form
-            $scope.tagGroups[groupIndex].editMode = false;
+            $scope.client.tagGroups[groupIndex].editMode = false;
             $scope.selectedTagGroupIndex = -1;
         };
 
         $scope.tagExists = function (tag, groupIndex) {
-            for (var j = 0; j < $scope.tagGroups[groupIndex].tags.length; j++) {
-                if ($scope.tagGroups[groupIndex].tags[j].text === tag.text) {
+            for (var j = 0; j < $scope.client.tagGroups[groupIndex].tag.length; j++) {
+                if ($scope.client.tagGroups[groupIndex].tag[j].name === tag.name) {
                     return true;
                 }
             }
@@ -68,11 +74,9 @@ angular.module('emmiManager')
                 var tag = {};
                 tag.text = tags[i];
                 if (tag.text.length > 0 && !$scope.tagExists(tag, groupIndex)) {
-                    $scope.tagGroups[groupIndex].tags.push(tag);
+                    $scope.client.tagGroups[groupIndex].tags.push(tag);
                 }
             }
         };
-
     })
-
 ;
