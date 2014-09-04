@@ -57,6 +57,10 @@ angular.module('emmiManager')
 
         $scope.handleResponse = function (entityPage, scopePropertyNameForEntity) {
             if (entityPage) {
+                for (var sort = 0, size = entityPage.content.length; sort < size; sort++ ){
+                    var content = entityPage.content[sort];
+                    content.sortIdx = sort;
+                }
                 this[scopePropertyNameForEntity] = entityPage.content;
 
                 $scope.total = entityPage.page.totalElements;
@@ -76,6 +80,7 @@ angular.module('emmiManager')
                 $scope.currentPageSize = entityPage.page.size;
                 $scope.pageSizes = [5, 10, 15, 25];
                 $scope.status = entityPage.filter.status;
+                angular.extend($scope.sortProperty, entityPage.sort);
             } else {
                 this[scopePropertyNameForEntity] = null;
                 $scope.total = 0;
@@ -162,9 +167,15 @@ angular.module('emmiManager')
 
         $controller('ViewEditCommon', {$scope: $scope});
 
-        var fetchPage = function (href) {
+        Client.getReferenceData().then(function (refData) {
+            $scope.statuses = refData.statusFilter;
+        });
+
+        // when the search button is used
+        $scope.search = function () {
             $scope.loading = true;
-            Client.getClients(href).then(function (clientPage) {
+            Client.find( $scope.query).then(function (clientPage) {
+                $scope.sortProperty.reset();
                 $scope.handleResponse(clientPage, 'clients');
             }, function () {
                 // error happened
@@ -172,24 +183,83 @@ angular.module('emmiManager')
             });
         };
 
-        Client.getReferenceData().then(function (refData) {
-            $scope.statuses = refData.statusFilter;
-        });
-
-        $scope.search = function () {
-            fetchPage(UriTemplate.create(Session.link.clients).stringify({name: $scope.query, status: $scope.status}));
-        };
-
+        // when the view link is used
         $scope.selectClient = function (client) {
             Client.viewClient(client);
         };
 
+        // when a pagination link is used
         $scope.fetchPage = function (href) {
-            fetchPage(href);
+            $scope.loading = true;
+            Client.fetchPage(href).then(function (clientPage) {
+                $scope.handleResponse(clientPage, 'clients');
+            }, function () {
+                // error happened
+                $scope.loading = false;
+            });
         };
 
-        $scope.changePageSize = function (loadLink, pageSize) {
-            fetchPage(UriTemplate.create(loadLink).stringify({size: pageSize}));
+        // when the status change select changes
+        $scope.statusChange = function(){
+            $scope.loading = true;
+            Client.find( $scope.query, $scope.status, $scope.sortProperty, $scope.currentPageSize).then(function (clientPage) {
+                $scope.handleResponse(clientPage, 'clients');
+            }, function () {
+                // error happened
+                $scope.loading = false;
+            });
+        };
+
+        // when a page size link is used
+        $scope.changePageSize = function (pageSize) {
+            $scope.loading = true;
+            Client.find( $scope.query, $scope.status, $scope.sortProperty, pageSize).then(function (clientPage) {
+                $scope.handleResponse(clientPage, 'clients');
+            }, function () {
+                // error happened
+                $scope.loading = false;
+            });
+        };
+
+        $scope.sortProperty = {
+            property: null,
+            ascending: null,
+            resetOnNextSet: false,
+            setProperty: function (property){
+               if (this.property === property) {
+                   if (!this.resetOnNextSet) {
+                       if (this.ascending !== null) {
+                           // this property has already been sorted on once
+                           // the next click after this one should turn off the sort
+                           this.resetOnNextSet = true;
+                       }
+                       this.ascending = !this.ascending;
+                   } else {
+                      this.reset();
+                   }
+               } else {
+                   this.property = property;
+                   this.ascending = true;
+                   this.resetOnNextSet = false;
+               }
+            },
+            reset: function(){
+                this.property = null;
+                this.ascending = null;
+                this.resetOnNextSet = false;
+            }
+        };
+
+        // when a column header is clicked
+        $scope.sort = function(property){
+            $scope.sortProperty.setProperty(property);
+            $scope.loading = true;
+            Client.find( $scope.query, $scope.status, $scope.sortProperty, $scope.currentPageSize).then(function (clientPage) {
+                $scope.handleResponse(clientPage, 'clients');
+            }, function () {
+                // error happened
+                $scope.loading = false;
+            });
         };
     })
 
