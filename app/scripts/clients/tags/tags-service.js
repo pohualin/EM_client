@@ -1,11 +1,11 @@
 'use strict';
 angular.module('emmiManager')
-    .service('Tag', function ($http, $q, Session, UriTemplate, Client) {
+    .service('Tag', function ($http, $q, Session, UriTemplate) {
         return {
         	 insertTags: function (clientResource) {
              	if (clientResource){
              	var translatedGroups = [];
-             		angular.forEach(clientResource, function(group){
+             		angular.forEach(clientResource.tagGroups, function(group){
                      	var groupToInsert = {};
              			groupToInsert.name = group.title;
              			group.group = groupToInsert;
@@ -16,23 +16,22 @@ angular.module('emmiManager')
              			translatedGroups.push(group);
              		});
                      return $http.post(UriTemplate.create(Session.link.groupsByClientID).stringify({
-                     		clientId: Client.getClient().entity.id
+                     		clientId: clientResource.id
                      	}), translatedGroups).then(function (response) {
                      		return null;
                          });
              	}
              },
-             loadGroups: function(){
-             	var client = Client.getClient();
-             	return $http.get(UriTemplate.create(Session.link.groupsByClientID).stringify({clientId:client.entity.id})).then(function(response){
-             		client.tagGroups = [];
+             loadGroups: function(clientResource){
+             	return $http.get(UriTemplate.create(Session.link.groupsByClientID).stringify({clientId:clientResource.entity.id})).then(function(response){
+             		clientResource.tagGroups = [];
              		angular.forEach(response.data.content, function(group){
              			group.entity.title = group.entity.name;
              			group.entity.tags = group.entity.tag;
              			angular.forEach(group.entity.tags, function(tag){
              				tag.text = tag.name;
              			});
-             			client.tagGroups.push(group.entity);
+             			clientResource.tagGroups.push(group.entity);
              			
              		});
              		return response.data;

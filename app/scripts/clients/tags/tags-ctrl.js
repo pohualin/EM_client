@@ -12,7 +12,7 @@ angular.module('emmiManager')
         $scope.client.tagGroups = [];
 
         if(Client.getClient().entity.id){
-        	Tag.loadGroups().then(function(){
+        	Tag.loadGroups(Client.getClient()).then(function(){
         		$scope.client.tagGroups = Client.getClient().tagGroups;
         	});
         }
