@@ -19,7 +19,8 @@ angular.module('emmi.typeahead', [])
                 term: '=',
                 placeholder: '@',
                 id: '@',
-                focus: '@'
+                focus: '@',
+                minLength: '@'
             },
             controller: function($scope, $element, $attrs, $transclude) {
                 $scope.items = [];
@@ -56,12 +57,17 @@ angular.module('emmi.typeahead', [])
                 };
 
                 $scope.isVisible = function() {
-                    return !$scope.hide && ($scope.focused || $scope.mousedOver);
+                    return !$scope.hide && !$scope.loading && ($scope.focused || $scope.mousedOver);
                 };
 
                 $scope.query = function() {
-                    $scope.hide = false;
-                    $scope.search({term:$scope.term});
+                    if ($scope.term.length >= $scope.minLength) {
+                        $scope.loading = true;
+                        $scope.hide = false;
+                        $scope.search({term:$scope.term});
+                    } else {
+                        $scope.hide = true;
+                    }
                 };
 
             },
@@ -114,6 +120,7 @@ angular.module('emmi.typeahead', [])
                 });
 
                 scope.$watch('items', function(items) {
+                    scope.loading = false;
                     controller.activate(items.length ? items[0] : null);
                 });
 
