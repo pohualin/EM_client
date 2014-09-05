@@ -23,19 +23,25 @@ angular.module('emmiManager')
              	}
              },
              loadGroups: function(clientResource){
-             	return $http.get(UriTemplate.create(Session.link.groupsByClientID).stringify({clientId:clientResource.entity.id})).then(function(response){
-             		clientResource.tagGroups = [];
-             		angular.forEach(response.data.content, function(group){
+          		clientResource.tagGroups = [];
+             	return $http.get(UriTemplate.create(Session.link.groupsByClientID).stringify({clientId:clientResource.entity.id})).then(function load(response){
+             		
+             		var page = response.data;
+             		angular.forEach(page.content, function(group){
              			group.entity.title = group.entity.name;
              			group.entity.tags = group.entity.tag;
              			angular.forEach(group.entity.tags, function(tag){
              				tag.text = tag.name;
              			});
              			clientResource.tagGroups.push(group.entity);
-             			
              		});
-             		return response.data;
-             	});
+             		
+             		if (page.link && page.link['page-next']) {
+             				$http.get(page.link['page-next']).then(function(response){
+             				load(response);
+             			});
+             		}
+              	});
              }
         };
 
