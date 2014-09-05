@@ -6,17 +6,17 @@
              data-title="Required"></div>
         <div id="salesForceAccount" data-id="salesForceAccount" data-emmi-typeahead data-items="sfResult.account" data-term="searchQuery" data-search="findAccount(term)" data-select="chooseAccount(item)" data-placeholder="Start typing..." data-focus="SfSearch">
             <div class="menu typeahead-menu dropdown-menu bottom-left container-fluid">
-                <li class="header row" data-ng-show="sfResult.account.length">
+                <li class="header" data-ng-show="sfResult.account.length">
                     <div class="col-md-4 account-name">Account Name</div>
                     <div class="col-md-4 client-name">Client Name</div>
                     <div class="col-md-4 city-state">City/State</div>
                 </li>
-                <li data-emmi-typeahead-item="account" data-ng-repeat="account in sfResult.account" class="results row" data-ng-class="!account.clientName ? 'selectable' : 'unselectable'">
+                <li data-emmi-typeahead-item="account" data-ng-repeat="account in sfResult.account" class="results" data-ng-class="!account.clientName ? 'selectable' : 'unselectable'">
                     <div class="col-md-4 account-name">{{account.name}}</div>
                     <div class="col-md-4 client-name">{{account.clientName}}&nbsp;</div>
                     <div class="col-md-4 city-state">{{account.city}}<span data-ng-show="account.city && account.state">/</span>{{account.state}}&nbsp;</div>
                 </li>
-                <li data-ng-show="hasMore()" class="footer row">
+                <li data-ng-show="hasMore()" class="footer">
                     <div class="col-md-12">Refine search for more results.</div>
                 </li>
                 <div data-ng-hide="sfResult.account.length || searchQuery.length < 3">
