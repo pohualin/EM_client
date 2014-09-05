@@ -177,6 +177,7 @@ angular.module('emmiManager')
             Client.find( $scope.query).then(function (clientPage) {
                 $scope.sortProperty.reset();
                 $scope.handleResponse(clientPage, 'clients');
+                $scope.removeStatusFilterAndTotal = $scope.total <= 0;
             }, function () {
                 // error happened
                 $scope.loading = false;
