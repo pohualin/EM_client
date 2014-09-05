@@ -4,7 +4,18 @@ angular.module('emmiManager')
         var selectedClient;
         var referenceData;
         return {
-            getClients: function (href) {
+            find: function (query, status, sort, pageSize) {
+                return $http.get(UriTemplate.create(Session.link.clients).stringify({
+                        name: query,
+                        status: status,
+                        sort: sort && sort.property ? sort.property + ',' + (sort.ascending ? 'asc' : 'desc') : '',
+                        size: pageSize
+                    }
+                )).then(function (response) {
+                    return response.data;
+                });
+            },
+            fetchPage: function (href) {
                 return $http.get(href)
                     .then(function (response) {
                         return response.data;
@@ -30,20 +41,20 @@ angular.module('emmiManager')
             deleteClient: function (id) {
 
             },
-            viewClient: function(clientEntity) {
+            viewClient: function (clientEntity) {
                 $location.path('/clients/' + clientEntity.id + '/view');
             },
-            viewClientList: function(){
+            viewClientList: function () {
                 $location.path('/clients');
             },
-            editClient: function(clientEntity) {
+            editClient: function (clientEntity) {
                 $location.path('/clients/' + clientEntity.id + '/edit');
             },
             getClient: function () {
                 return selectedClient;
             },
-            setClient: function(clientResource){
-              selectedClient = clientResource;
+            setClient: function (clientResource) {
+                selectedClient = clientResource;
             },
             newClient: function () {
                 selectedClient = {
@@ -94,4 +105,38 @@ angular.module('emmiManager')
         };
 
     })
+    .directive('cancelClick', ['$popover', 'Client', 'Location', '$timeout', '$translate', function ($popover, Client, Location, $timeout, $translate) {
+        return {
+            restrict: 'EA',
+            scope: {
+                'ok': '&onOk'
+            },
+            link: function (scope, element) {
+                scope.cancel = function(){
+                    scope.cancelWarning.hide();
+                };
+                element.on('click', function () {
+                    if (Location.hasLocationModifications(Client.getClient())) {
+                        // pop a warning dialog
+                        if (!scope.cancelWarning) {
+                            $translate('client_edit_page.cancel_dialog.title').then(function (title) {
+                                scope.cancelWarning = $popover(element, {
+                                    title: title,
+                                    scope: scope,
+                                    show: true,
+                                    placement: 'top',
+                                    contentTemplate: 'partials/client/cancel_popover.tpl.html'
+                                });
+                            });
+                        }
+                    } else {
+                        $timeout(function(){
+                            scope.ok();
+                        });
+                    }
+                });
+            }
+        };
+    }])
+
 ;

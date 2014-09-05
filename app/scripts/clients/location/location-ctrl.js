@@ -101,8 +101,10 @@ angular.module('emmiManager')
                 $scope.status = locationPage.filter.status;
             } else {
                 $scope.total = 0;
+                $scope[locationsPropertyName] = null;
             }
             $scope.noSearch = false;
+            $scope.loading = false;
         };
 
         $scope.setBelongsToPropertiesFor = function (location) {
@@ -134,7 +136,7 @@ angular.module('emmiManager')
 
         $scope.title = 'Edit Location';
 
-        $scope.save = function (isValid) {
+        $scope.saveLocation = function (isValid) {
             $scope.formSubmitted = true;
             if (isValid) {
                 var toBeSaved = $scope.location;
@@ -169,24 +171,19 @@ angular.module('emmiManager')
 /**
  *  Controls the create new location popup (partials/location/new.html)
  */
-    .controller('LocationCreateController', function ($scope, $controller, Location, Client) {
+    .controller('LocationCreateController', function ($scope, $controller, Location, $timeout) {
 
         $controller('LocationCommon', {$scope: $scope});
 
-        $scope.location = {
-            name: null,
-            phone: null,
-            city: null,
-            state: null,
-            belongsToMutable: true,
-            belongsToCheckbox: false,
-            belongsTo: null,
-            usingThisLocation: []
-        };
+        $scope.location = Location.newLocation();
 
         $scope.title = 'New Location';
 
-        $scope.save = function (isValid) {
+        $scope.saveAndAddAnother = function(isValid){
+            $scope.saveLocation(isValid, true);
+        };
+
+        $scope.saveLocation = function (isValid, addAnother) {
             $scope.formSubmitted = true;
             if (isValid) {
                 var toBeSaved = $scope.location;
@@ -198,7 +195,10 @@ angular.module('emmiManager')
                     if (toBeSaved.belongsToCheckbox) {
                         $scope.addLocationToBelongsToChangedList(locationResource);
                     }
-                    $scope.$hide();
+                    $scope.hideNewLocationModal();
+                    if (addAnother) {
+                        $scope.addLocations();
+                    }
                 });
             }
         };
@@ -299,34 +299,101 @@ angular.module('emmiManager')
         };
 
         $scope.search = function () {
-            $scope[managedLocationList] = null;
+            $scope.loading = true;
             Location.find($scope.locationQuery, $scope.status).then(function (locationPage) {
                 $scope.handleResponse(locationPage, managedLocationList);
                 $scope.setNewLocationAttribute(managedLocationList);
+                $scope.removeStatusFilterAndTotal = $scope.total <= 0;
+            }, function () {
+                // error happened
+                $scope.loading = false;
+            });
+        };
+
+        $scope.statusChange = function(){
+            $scope.loading = true;
+            Location.find($scope.locationQuery, $scope.status, $scope.sortProperty, $scope.currentPageSize).then(function (locationPage) {
+                $scope.handleResponse(locationPage, managedLocationList);
+                $scope.setNewLocationAttribute(managedLocationList);
+            }, function () {
+                // error happened
+                $scope.loading = false;
             });
         };
 
         $scope.fetchPage = function (href) {
-            $scope[managedLocationList] = null;
+            $scope.loading = true;
             Location.fetchPageLink(href).then(function (locationPage) {
                 $scope.handleResponse(locationPage, managedLocationList);
                 $scope.setNewLocationAttribute(managedLocationList);
+            }, function () {
+                // error happened
+                $scope.loading = false;
             });
         };
 
         $scope.changePageSize = function (pageSize) {
-            $scope[managedLocationList] = null;
-            Location.find($scope.locationQuery, $scope.status, pageSize).then(function (locationPage) {
+            $scope.loading = true;
+            Location.find($scope.locationQuery, $scope.status, $scope.sortProperty, pageSize).then(function (locationPage) {
                 $scope.handleResponse(locationPage, managedLocationList);
                 $scope.setNewLocationAttribute(managedLocationList);
+            }, function () {
+                // error happened
+                $scope.loading = false;
+            });
+        };
+
+        $scope.sortProperty = {
+            property: null,
+            ascending: null,
+            resetOnNextSet: false,
+            setProperty: function (property){
+                if (this.property === property) {
+                    if (!this.resetOnNextSet) {
+                        if (this.ascending !== null) {
+                            // this property has already been sorted on once
+                            // the next click after this one should turn off the sort
+                            this.resetOnNextSet = true;
+                        }
+                        this.ascending = !this.ascending;
+                    } else {
+                        this.reset();
+                    }
+                } else {
+                    this.property = property;
+                    this.ascending = true;
+                    this.resetOnNextSet = false;
+                }
+            },
+            reset: function(){
+                this.property = null;
+                this.ascending = null;
+                this.resetOnNextSet = false;
+            }
+        };
+
+        // when a column header is clicked
+        $scope.sort = function(property){
+            $scope.sortProperty.setProperty(property);
+            $scope.loading = true;
+            Location.find($scope.locationQuery, $scope.status, $scope.sortProperty, $scope.currentPageSize).then(function (locationPage) {
+                $scope.handleResponse(locationPage, managedLocationList);
+                $scope.setNewLocationAttribute(managedLocationList);
+            }, function () {
+                // error happened
+                $scope.loading = false;
             });
         };
 
         var newLocationModal = $modal({scope: $scope, template: 'partials/client/location/new.html', animation: 'am-fade-and-scale', show: false});
 
         $scope.createNewLocation = function () {
-            $scope.$hide();
+            $scope.hideAddLocationsModal();
             newLocationModal.$promise.then(newLocationModal.show);
+        };
+
+        $scope.hideNewLocationModal = function () {
+            newLocationModal.$promise.then(newLocationModal.destroy);
         };
     })
 
@@ -389,6 +456,10 @@ angular.module('emmiManager')
 
         $scope.addLocations = function () {
             addNewLocationsModal.$promise.then(addNewLocationsModal.show);
+        };
+
+        $scope.hideAddLocationsModal = function () {
+            addNewLocationsModal.hide();
         };
 
         if (Client.getClient()) {
