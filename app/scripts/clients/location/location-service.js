@@ -1,12 +1,13 @@
 'use strict';
 angular.module('emmiManager')
     .service('Location', function ($http, $q, Session, UriTemplate) {
-        var referenceData;
+        var referenceData, query;
         return {
-            find: function (query, status, pageSize) {
+            find: function (query, status, sort, pageSize) {
                 return $http.get(UriTemplate.create(Session.link.locations).stringify({
                         name: query,
                         status: status,
+                        sort: sort && sort.property ? sort.property + ',' + (sort.ascending ? 'asc' : 'desc') : '',
                         size: pageSize
                     }
                 )).then(function (response) {
@@ -20,17 +21,17 @@ angular.module('emmiManager')
                     });
 
             },
-            newLocation: function(){
-              return {
-                  name: null,
-                  phone: null,
-                  city: null,
-                  state: null,
-                  belongsToMutable: true,
-                  belongsToCheckbox: false,
-                  belongsTo: null,
-                  usingThisLocation: []
-              };
+            newLocation: function () {
+                return {
+                    name: null,
+                    phone: null,
+                    city: null,
+                    state: null,
+                    belongsToMutable: true,
+                    belongsToCheckbox: true,
+                    belongsTo: null,
+                    usingThisLocation: []
+                };
             },
             create: function (location) {
                 return $http.post(UriTemplate.create(Session.link.locations).stringify(), location)
@@ -81,10 +82,10 @@ angular.module('emmiManager')
                 }
                 return deferred.promise;
             },
-            hasLocationModifications: function(clientResource){
-             return  !(angular.equals({}, clientResource.addedLocations) &&
-                 angular.equals({}, clientResource.removedLocations) &&
-                 angular.equals({}, clientResource.belongsToChanged));
+            hasLocationModifications: function (clientResource) {
+                return  !(angular.equals({}, clientResource.addedLocations) &&
+                    angular.equals({}, clientResource.removedLocations) &&
+                    angular.equals({}, clientResource.belongsToChanged));
             },
             updateForClient: function (clientResource) {
                 var added = [],
