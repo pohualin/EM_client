@@ -5,16 +5,15 @@ angular.module('emmiManager')
 /**
  *   Controls the tag group section
  */
-    .controller('ClientTagsController', function ($scope, focus, $filter) {
+    .controller('ClientTagsController', function ($scope, focus, $filter, Tag, Client) {
 
         $scope.noSearch = true;
         $scope.createMode = false;
         $scope.client.tagGroups = [];
 
-        if(Client.getClient().entity.id){
-        	Tag.loadGroups(Client.getClient()).then(function(){
-        		$scope.client.tagGroups = Client.getClient().tagGroups;
-        	});
+        Tag.loadGroups(Client.getClient());
+        if(Client.getClient().tagGroups){
+        	$scope.client.tagGroups = Client.getClient().tagGroups;
         }
         
         $scope.selectedTagGroupIndex = -1;
