@@ -19,7 +19,7 @@
   @include example2();
 }
 
-.client-search-spinner {
+.search-spinner {
   display: inline-block;
   background: url(/images/search_spinner.gif) no-repeat center center;
   background-size: 24px 24px;
@@ -27,4 +27,7 @@
   margin-top: 4px;
   width: 28px;
   height: 24px;
+  .typeahead & {
+    margin: 6px;
+  }
 }
