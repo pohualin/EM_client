@@ -64,7 +64,7 @@ angular.module('emmiManager')
 
         $scope.tagExists = function (tag, groupIndex) {
             for (var j = 0; j < $scope.client.tagGroups[groupIndex].tags.length; j++) {
-                if ($scope.client.tagGroups[groupIndex].tags[j].name === tag.name) {
+                if ($scope.client.tagGroups[groupIndex].tags[j].text === tag.text) {
                     return true;
                 }
             }
