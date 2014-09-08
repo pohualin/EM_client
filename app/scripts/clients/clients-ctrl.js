@@ -29,20 +29,15 @@ angular.module('emmiManager')
         });
 
         $scope.findAccount = debounce(function (term) {
-            if (term.length < 3) {
-                $scope.sfResult.account = [];
-            } else {
-                Client.findSalesForceAccount($scope.findSalesForceAccountLink, term).then(function (searchResults) {
-                    if (searchResults.entity) {
-                        $scope.sfResult = searchResults.entity;
-                    } else {
-                        // No results returned
-                        $scope.sfResult = {};
-                        $scope.sfResult.account = [];
-                    }
-                });
-            }
-
+            Client.findSalesForceAccount($scope.findSalesForceAccountLink, term).then(function (searchResults) {
+                if (searchResults.entity) {
+                    $scope.sfResult = searchResults.entity;
+                } else {
+                    // No results returned
+                    $scope.sfResult = {};
+                    $scope.sfResult.account = [];
+                }
+            });
         }, 333);
 
         $scope.chooseAccount = function (account) {
