@@ -5,11 +5,17 @@ angular.module('emmiManager')
 /**
  *   Controls the tag group section
  */
-    .controller('ClientTagsController', function ($scope, focus, $filter) {
+    .controller('ClientTagsController', function ($scope, focus, $filter, Tag, Client) {
 
         $scope.noSearch = true;
         $scope.createMode = false;
-        $scope.tagGroups = [];
+        $scope.client.tagGroups = [];
+
+        Tag.loadGroups(Client.getClient());
+        if(Client.getClient().tagGroups){
+        	$scope.client.tagGroups = Client.getClient().tagGroups;
+        }
+        
         $scope.selectedTagGroupIndex = -1;
 
         // We will retrieve tag libraries using a service here
@@ -32,14 +38,13 @@ angular.module('emmiManager')
                 title: this.newTagGroupTitle,
                 tags: []
             };
-            console.log(tagGroup);
-            $scope.tagGroups.push(tagGroup);
+            $scope.client.tagGroups.push(tagGroup);
             $scope.createMode = false;
         };
 
         $scope.selectTagGroup = function (groupIndex) {
             if ($scope.selectedTagGroupIndex === groupIndex) {
-                $scope.tagGroups[groupIndex].editMode = true;
+                $scope.client.tagGroups[groupIndex].editMode = true;
                 //$scope.selectedTagGroupIndex = -1;
                 focus('editMode');
             } else {
@@ -48,18 +53,18 @@ angular.module('emmiManager')
         };
 
         $scope.removeTagGroup = function (groupIndex) {
-            $scope.tagGroups.splice(groupIndex, 1);
+            $scope.client.tagGroups.splice(groupIndex, 1);
         };
 
         $scope.changeTagGroupTitle = function (groupIndex) {
             // Title already gets changed from data binding, so really just need to hide the edit form
-            $scope.tagGroups[groupIndex].editMode = false;
+            $scope.client.tagGroups[groupIndex].editMode = false;
             $scope.selectedTagGroupIndex = -1;
         };
 
         $scope.tagExists = function (tag, groupIndex) {
-            for (var j = 0; j < $scope.tagGroups[groupIndex].tags.length; j++) {
-                if ($scope.tagGroups[groupIndex].tags[j].text === tag.text) {
+            for (var j = 0; j < $scope.client.tagGroups[groupIndex].tags.length; j++) {
+                if ($scope.client.tagGroups[groupIndex].tags[j].text === tag.text) {
                     return true;
                 }
             }
@@ -73,14 +78,14 @@ angular.module('emmiManager')
                 var tag = {};
                 tag.text = tags[i];
                 if (tag.text.length > 0 && !$scope.tagExists(tag, groupIndex)) {
-                    $scope.tagGroups[groupIndex].tags.push(tag);
+                    $scope.client.tagGroups[groupIndex].tags.push(tag);
                 }
             }
         };
 
         $scope.addLibraries = function () {
             var selected = $filter('filter')( this.tagLibraries , { checked : true } );
-            $scope.tagGroups = this.tagGroups.concat(angular.copy(selected));
+            $scope.client.tagGroups = this.client.tagGroups.concat(angular.copy(selected));
             angular.forEach(this.tagLibraries, function(value, key) {
                 value.checked = false;
             });
@@ -93,5 +98,4 @@ angular.module('emmiManager')
             return input.map(function(tag){ return tag.text; }).join(', ');
         };
     })
-
 ;
