@@ -90,7 +90,7 @@
             <div class="row">
                 <hr/>
                 <div class="col-md-12">
-                    <h2 data-translate="client_view_page.teams">Team</h2>
+                    <div class="row" data-ng-include="'partials/client/tags/client_tags.html'"></div>
                 </div>
             </div>
             <div class="row">
@@ -115,7 +115,8 @@
                         <tr data-ng-repeat="location in clientLocations">
                             <td>
                                 {{location.entity.name}}
-                                <span data-ng-show="location.entity.belongsTo.id !== client.entity.id"> <em>({{location.entity.belongsTo.name}})</em></span>
+                                <span data-ng-show="location.entity.belongsTo && location.entity.belongsTo.id !== client.entity.id"> <em>({{location.entity.belongsTo.name}})</em></span>
+                                <span data-ng-show="!location.entity.belongsTo"> <em>(no client owner)</em></span>
                             </td>
                             <td>{{location.entity.phone}}</td>
                             <td>{{location.entity.city}}</td>
