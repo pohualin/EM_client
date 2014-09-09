@@ -20,7 +20,7 @@
                     <div class="error-circle" data-ng-show="clientForm.clientName.$invalid && !form.$error.unique"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="The client name already exists. {{existsClient.name}}"></div>                         
-                    <input class="form-control" data-ng-model="client.name" id="clientName" name="clientName" type="text" uniqueclient required data-auto-focus data-ng-pattern="/^[\-\.a-zA-Z0-9 '=_;:`@#&,\(\)\/]*$/">
+                    <input class="form-control" data-ng-model="client.name" id="clientName" name="clientName" type="text" data-unique-client required data-auto-focus data-ng-pattern="/^[\-\.a-zA-Z0-9 '=_;:`@#&,\(\)\/]*$/">
                 </div>
             </div>
         </div>

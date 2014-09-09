@@ -144,7 +144,7 @@ angular.module('emmiManager')
             }
         };
     }])
-    .directive('uniqueclient', function(Client) {
+    .directive('uniqueClient', function(Client) {
           return {
             restrict: 'A',
             require: 'ngModel',
