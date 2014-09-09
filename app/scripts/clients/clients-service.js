@@ -101,7 +101,13 @@ angular.module('emmiManager')
                     .then(function (response) {
                         return response.data;
                     });
-            }
+            },
+            findNormalizedName: function(href, searchString){
+                return $http.get(UriTemplate.create(href).stringify({normalizedName: searchString}))
+                    .then(function (response) {
+                        return response.data;
+                    });
+            }               
         };
 
     })
@@ -138,5 +144,27 @@ angular.module('emmiManager')
             }
         };
     }])
+    .directive('uniqueclient', function(Client) {
+          return {
+            restrict: 'A',
+            require: 'ngModel',
+            link: function (scope, element, attrs, ngModel) {
+              
+                ngModel.$parsers.unshift(function (viewValue) {
 
+                    Client.findNormalizedName(scope.findNormalizedNameLink, viewValue).then(function (searchResults) {
+                        scope.existsClient = searchResults.entity;
+                          if (scope.existsClient == null) {
+                            ngModel.$setValidity('unique', true);
+                          } else {
+                            ngModel.$setValidity('unique', false);
+                          }
+                    });
+
+                    return viewValue;
+                });  
+
+            }
+          };
+    })    
 ;
