@@ -85,7 +85,7 @@ angular.module('emmiManager')
 
         $scope.addLibraries = function () {
             var selected = $filter('filter')( this.tagLibraries , { checked : true } );
-            $scope.tagGroups = this.tagGroups.concat(angular.copy(selected));
+            $scope.client.tagGroups = this.client.tagGroups.concat(angular.copy(selected));
             angular.forEach(this.tagLibraries, function(value, key) {
                 value.checked = false;
             });
