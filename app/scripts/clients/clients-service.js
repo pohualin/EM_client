@@ -148,11 +148,14 @@ angular.module('emmiManager')
           return {
             restrict: 'A',
             require: 'ngModel',
+            scope: {
+                url: '=uniqueUrl'
+            },            
             link: function (scope, element, attrs, ngModel) {
-              
+
                 ngModel.$parsers.unshift(function (viewValue) {
 
-                    Client.findNormalizedName(scope.findNormalizedNameLink, viewValue).then(function (searchResults) {
+                    Client.findNormalizedName(scope.url, viewValue).then(function (searchResults) {
                         scope.existsClient = searchResults.entity;
                           if (scope.existsClient == null) {
                             ngModel.$setValidity('unique', true);
