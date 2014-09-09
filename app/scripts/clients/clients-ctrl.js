@@ -114,7 +114,7 @@ angular.module('emmiManager')
 /**
  * Create new controller
  */
-    .controller('ClientCtrl', function ($scope, Client, $controller, Location) {
+    .controller('ClientCtrl', function ($scope, Client, $controller, Location, Tag, $q) {
 
         $controller('ViewEditCommon', {$scope: $scope});
 
@@ -126,6 +126,8 @@ angular.module('emmiManager')
             if (isValid) {
                 Client.updateClient($scope.client).then(function () {
                     // update locations for the client
+                	
+                	
                     Location.updateForClient(Client.getClient()).then(function () {
                         Client.viewClient($scope.client);
                     });
@@ -146,9 +148,14 @@ angular.module('emmiManager')
                     $scope.client = client.data.entity;
                     $scope.save = $scope.saveUpdate;
                     // saved client successfully, switch to saveUpdate if other updates fail
-                    Location.updateForClient(Client.getClient()).then(function () {
-                        Client.viewClient($scope.client);
+                    $scope.client.tagGroups = client.config.data.tagGroups;
+
+                    var insertGroups = Tag.insertGroups($scope.client), 
+                    	updateLocation = Location.updateForClient(Client.getClient());
+                    $q.all([insertGroups, updateLocation]).then(function () {
+                    	Client.viewClient($scope.client);
                     });
+
                 });
             } else {
                 $scope.showError();
@@ -264,7 +271,7 @@ angular.module('emmiManager')
 /**
  *  Edit a single client
  */
-    .controller('ClientDetailCtrl', function ($scope, Client, $controller, Location, clientResource) {
+    .controller('ClientDetailCtrl', function ($scope, Client, $controller, Location, clientResource, Tag, $q) {
 
         $controller('ViewEditCommon', {$scope: $scope});
 
@@ -283,9 +290,14 @@ angular.module('emmiManager')
             if (isValid) {
                 Client.updateClient($scope.client).then(function () {
                     // update locations for the client
-                    Location.updateForClient(Client.getClient()).then(function () {
-                        Client.viewClient($scope.client);
-                    });
+                	
+                	var insertGroups = Tag.insertGroups($scope.client),
+                	updateLocation = Location.updateForClient(Client.getClient());
+                	
+                	$q.all([insertGroups, updateLocation]).then(function(result) {
+                		Client.viewClient($scope.client);
+                	});
+
                 });
             } else {
                 $scope.showError();
@@ -304,7 +316,8 @@ angular.module('emmiManager')
             Client.setClient(clientResource);
         } else {
             Client.viewClientList();
-        }
+        }      
+        
         Location.findForClient(clientResource).then(function (locationPage) {
             $scope.handleResponse(locationPage, 'clientLocations');
         });
