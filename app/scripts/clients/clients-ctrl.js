@@ -75,7 +75,9 @@ angular.module('emmiManager')
                 $scope.currentPageSize = entityPage.page.size;
                 $scope.pageSizes = [5, 10, 15, 25];
                 $scope.status = entityPage.filter.status;
-                angular.extend($scope.sortProperty, entityPage.sort);
+                if ($scope.sortProperty && entityPage.sort){
+                    angular.extend($scope.sortProperty, entityPage.sort);
+                }
             } else {
                 this[scopePropertyNameForEntity] = null;
                 $scope.total = 0;
