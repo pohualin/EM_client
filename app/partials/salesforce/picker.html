@@ -14,7 +14,7 @@
                 <li data-emmi-typeahead-item="account" data-ng-repeat="account in sfResult.account" class="results" data-ng-class="!account.clientName ? 'selectable' : 'unselectable'">
                     <div class="col-md-4 account-name">{{account.name}}</div>
                     <div class="col-md-4 client-name">{{account.clientName}}&nbsp;</div>
-                    <div class="col-md-4 city-state">{{account.city}}<span data-ng-show="account.city && account.state">/</span>{{account.state}}&nbsp;</div>
+                    <div class="col-md-4 city-state">{{account.city}}<span data-ng-show="account.city && account.state">,&nbsp;</span>{{account.state}}&nbsp;</div>
                 </li>
                 <li data-ng-show="hasMore()" class="footer">
                     <div class="col-md-12">Refine search for more results.</div>
