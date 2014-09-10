@@ -62,14 +62,12 @@
                          data-title="Required"></div>
                     <select
                         class="form-control"
-                        data-chosen
-                        data-allow-single-deselect="true"
                         data-placeholder="Select..."
                         data-ng-model="client.contractOwner"
                         data-ng-options="owner as owner.lastName for owner in contractOwners track by owner.id"
                         id="contractOwner"
                         name="clientContractOwner" required>
-                        <option value=""></option>
+                        <option value="">Select...</option>
                     </select>
                 </div>
             </div>
@@ -121,8 +119,8 @@
             <div class="col-md-12">
                 <div class="actions pull-right">
                     <div class="form-group">
-                        <button class="btn btn-link" data-on-ok="cancel()" data-out="cancel()" data-cancel-click>cancel</button>
-                        <button class="btn btn-primary" type="button" data-ng-click="save(clientForm.$valid)">
+                        <button class="btn btn-link" data-on-ok="cancel()" data-cancel-click>cancel</button>
+                        <button class="btn btn-primary" type="button" data-on-ok="save(clientForm.$valid)" data-save-click>
                             <span data-translate="client_edit_page.save_button">Save</span>
                         </button>
                     </div>

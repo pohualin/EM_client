@@ -137,7 +137,7 @@ angular.module('emmiManager')
         $scope.title = 'Edit Location';
 
         $scope.saveLocation = function (isValid) {
-            $scope.formSubmitted = true;
+            $scope.locationFormSubmitted = true;
             if (isValid) {
                 var toBeSaved = $scope.location;
                 Location.update(toBeSaved).then(function (response) {
@@ -184,7 +184,7 @@ angular.module('emmiManager')
         };
 
         $scope.saveLocation = function (isValid, addAnother) {
-            $scope.formSubmitted = true;
+            $scope.locationFormSubmitted = true;
             if (isValid) {
                 var toBeSaved = $scope.location;
                 Location.create(toBeSaved).then(function (location) {
