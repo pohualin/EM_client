@@ -277,6 +277,7 @@ angular.module('emmiManager')
 
         if (clientResource) {
             $scope.client = clientResource.entity;
+            clientResource.currentlyActive = clientResource.entity.active;
         } else {
             Client.viewClientList();
         }
