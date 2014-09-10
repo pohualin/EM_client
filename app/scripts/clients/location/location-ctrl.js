@@ -5,7 +5,7 @@ angular.module('emmiManager')
 /**
  *  Common controller which handles reference data loading and location page response parsing
  */
-    .controller('LocationCommon', function ($scope, Location, Client) {
+    .controller('LocationCommon', function ($scope, Location, Client, $alert) {
 
         Location.getReferenceData().then(function (refData) {
             $scope.statuses = refData.statusFilter;
@@ -40,9 +40,24 @@ angular.module('emmiManager')
             });
         };
 
+        if (Client.getClient()) {
+            if (!Client.getClient().removedLocations) {
+                Client.getClient().removedLocations = {};
+            }
+        }
+
         $scope.removeExistingLocation = function (locationResource) {
             Client.getClient().removedLocations[locationResource.entity.id] = locationResource.entity;
             locationResource.entity.removedFromClient = true;
+            $alert({
+                title: ' ',
+                content: 'The location <b>' + locationResource.entity.name + '</b> has been successfully removed from <b>' +  Client.getClient().entity.name + '</b>',
+                container: '#remove-container',
+                type: 'success',
+                show: true,
+                duration: 5,
+                dismissable: true
+            });
         };
 
         $scope.removeLocationFromRemovedList = function (locationResource) {
@@ -484,16 +499,6 @@ angular.module('emmiManager')
             };
         });
 
-    })
-
-    .controller('ClientRemoveExistingLocationsController', function ($scope, $controller, Client) {
-        $controller('LocationCommon', {$scope: $scope});
-
-        if (Client.getClient()) {
-            if (!Client.getClient().removedLocations) {
-                Client.getClient().removedLocations = {};
-            }
-        }
     })
 
     .controller('ClientBelongsToDeltaLocationsController', function ($scope, $controller, Client) {
