@@ -112,7 +112,7 @@ angular.module('emmiManager')
                 'ok': '&onOk'
             },
             link: function (scope, element) {
-                scope.cancel = function(){
+                scope.cancel = function () {
                     scope.cancelWarning.hide();
                 };
                 element.on('click', function () {
@@ -130,8 +130,43 @@ angular.module('emmiManager')
                             });
                         }
                     } else {
-                        $timeout(function(){
+                        $timeout(function () {
                             scope.ok();
+                        });
+                    }
+                });
+            }
+        };
+    }])
+
+    .directive('saveClick', ['$popover', 'Client', '$timeout', '$translate', function ($popover, Client, $timeout, $translate) {
+        return {
+            restrict: 'EA',
+            scope: {
+                'okDeactivatePopover': '&onOk'
+            },
+            link: function (scope, element) {
+                scope.cancelDeactivatePopover = function () {
+                    scope.saveWarning.hide();
+                };
+                element.on('click', function () {
+                    var clientResource = Client.getClient();
+                    if (!clientResource.entity.active && clientResource.currentlyActive) {
+                        // pop a warning dialog
+                        if (!scope.saveWarning) {
+                            $translate('client_edit_page.deactivate_dialog.title').then(function (title) {
+                                scope.saveWarning = $popover(element, {
+                                    title: title,
+                                    scope: scope,
+                                    show: true,
+                                    placement: 'top',
+                                    contentTemplate: 'partials/client/deactivate_popover.tpl.html'
+                                });
+                            });
+                        }
+                    } else {
+                        $timeout(function () {
+                            scope.okDeactivatePopover();
                         });
                     }
                 });

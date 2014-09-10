@@ -101,6 +101,12 @@
             "content": "Your changes and any newly-created locations won’t be saved.",
             "ok_button": "Yes",
             "cancel_button": "No"
+        },
+        "deactivate_dialog": {
+            "title": "",
+            "content": "Are you sure you want to deactivate this client?",
+            "ok_button": "Yes",
+            "cancel_button": "No"
         }
     },
     "ALL": "All",
