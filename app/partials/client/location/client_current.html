@@ -11,7 +11,10 @@
             <th>&nbsp;</th>
         </tr>
         <tr data-ng-repeat="location in clientLocations">
-            <td>{{location.entity.name}}<span data-ng-show="location.entity.belongsTo.id !== client.entity.id"> <em>({{location.entity.belongsTo.name}})</em></span></td>
+            <td>{{location.entity.name}}
+                <span data-ng-show="location.entity.belongsTo && location.entity.belongsTo.id !== client.entity.id"> <em>({{location.entity.belongsTo.name}})</em></span>
+                <span data-ng-show="!location.entity.belongsTo"> <em>(no client owner)</em></span>
+            </td>
             <td>{{location.entity.phone}}</td>
             <td>{{location.entity.city}}</td>
             <td>{{location.entity.state}}</td>
