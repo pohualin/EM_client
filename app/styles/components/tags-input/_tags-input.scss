@@ -158,3 +158,22 @@
         color: #999;
     }
 }
+
+ul.tags-view {
+	margin: 0 -10px;
+}
+
+.tags-detail{
+	color: #fff;
+	background-color: #5bc0de;
+	border-color: #46b8da;
+	display: inline-block;
+	padding: 6px 12px;
+	margin-left: 10px;
+	margin-top: 5px;
+	white-space: nowrap;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	border-radius: 4px;
+}
