@@ -29,20 +29,15 @@ angular.module('emmiManager')
         });
 
         $scope.findAccount = debounce(function (term) {
-            if (term.length < 3) {
-                $scope.sfResult.account = [];
-            } else {
-                Client.findSalesForceAccount($scope.findSalesForceAccountLink, term).then(function (searchResults) {
-                    if (searchResults.entity) {
-                        $scope.sfResult = searchResults.entity;
-                    } else {
-                        // No results returned
-                        $scope.sfResult = {};
-                        $scope.sfResult.account = [];
-                    }
-                });
-            }
-
+            Client.findSalesForceAccount($scope.findSalesForceAccountLink, term).then(function (searchResults) {
+                if (searchResults.entity) {
+                    $scope.sfResult = searchResults.entity;
+                } else {
+                    // No results returned
+                    $scope.sfResult = {};
+                    $scope.sfResult.account = [];
+                }
+            });
         }, 333);
 
         $scope.chooseAccount = function (account) {
@@ -80,7 +75,9 @@ angular.module('emmiManager')
                 $scope.currentPageSize = entityPage.page.size;
                 $scope.pageSizes = [5, 10, 15, 25];
                 $scope.status = entityPage.filter.status;
-                angular.extend($scope.sortProperty, entityPage.sort);
+                if ($scope.sortProperty && entityPage.sort){
+                    angular.extend($scope.sortProperty, entityPage.sort);
+                }
             } else {
                 this[scopePropertyNameForEntity] = null;
                 $scope.total = 0;
@@ -280,6 +277,7 @@ angular.module('emmiManager')
 
         if (clientResource) {
             $scope.client = clientResource.entity;
+            clientResource.currentlyActive = clientResource.entity.active;
         } else {
             Client.viewClientList();
         }

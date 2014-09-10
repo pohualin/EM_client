@@ -22,7 +22,7 @@
                         <button type="button" class="btn btn-link pull-right" data-ng-click="createNewLocation()">
                             add new location
                         </button>
-                        <span data-ng-class="{'client-search-spinner' : loading}"></span>
+                        <span data-ng-class="{'search-spinner' : loading}"></span>
                     </div>
                 </div>
             </div>
@@ -42,7 +42,6 @@
                                     <select class="form-control" id="status_filter" data-ng-model="status"
                                             data-ng-options="status | translate for status in statuses"
                                             data-ng-change="statusChange()">
-                                        <option value="">Select...</option>
                                     </select>
                                 </div>
                             </form>
