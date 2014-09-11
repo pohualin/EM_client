@@ -145,7 +145,7 @@ angular.module('emmiManager')
         };
     }])
 
-    .directive('uniqueClient', function(Client) {
+    .directive('uniqueClient', ['$popover', 'Client', function ($popover, Client) {
           return {
             restrict: 'A',
             require: 'ngModel',
@@ -153,22 +153,40 @@ angular.module('emmiManager')
                 url: '=uniqueUrl'
             },            
             link: function (scope, element, attrs, ngModel) {
-                ngModel.$parsers.unshift(function (viewValue) {
-                    Client.findNormalizedName(scope.url, viewValue).then(function (searchResults) {
+
+                scope.uniquePopup = $popover(element, {
+                    title: attrs.title,
+                    scope: scope,
+                    placement: attrs.placement,
+                    show:false,
+                    trigger: attrs.trigger,
+                    contentTemplate: 'partials/client/unique_client_popover.tpl.html'
+                });
+
+                element.on('keydown', function() {
+                    if (scope.uniquePopup) {
+                        scope.uniquePopup.hide();
+                    }
+                });
+
+                 element.on('blur', function() {
+                    Client.findNormalizedName(scope.url, element.val()).then(function (searchResults) {
                         scope.existsClient = searchResults.entity;
-                          if (scope.existsClient == null) {
+                          if (scope.existsClient === undefined) {
                             ngModel.$setValidity('unique', true);
+                            if (scope.uniquePopup) {
+                                scope.uniquePopup.hide();
+                            }
                           } else {
                             ngModel.$setValidity('unique', false);
+                                scope.uniquePopup.show();
+                                element.focus();
                           }
                     });
-
-                    return viewValue;
-                });  
-
+                 }) ;  
             }
           };
-    })    
+    }])    
 
     .directive('saveClick', ['$popover', 'Client', '$timeout', '$translate', function ($popover, Client, $timeout, $translate) {
         return {

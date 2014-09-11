@@ -81,7 +81,7 @@
         // load the initial web-api
         var initInjector = angular.injector(['ng']);
         var $http = initInjector.get('$http');
-        $http.get('/webapi')
+        $http.get('/web-rest/webapi')
                 .success(function (data) {
                     var api = {};
                     angular.forEach(data.link, function (item) {
