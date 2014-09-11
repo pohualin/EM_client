@@ -3,6 +3,12 @@
         <div class="modal-content">
             <div class="modal-header">
                 <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10" id="message-container"></div>
+                    <div class="col-md-1"></div>
+                </div>
+                <div class="row">
+
                     <div class="col-md-9 col-sm-9">
                         <form ng-submit="search()">
                             <div class="form-group">
@@ -11,7 +17,7 @@
                                 <div class="input-group">
                                     <input class="form-control" id="locationQuery" data-ng-model="locationQuery"
                                            type="text"
-                                           placeholder="Search locations..." data-auto-focus>
+                                           placeholder="Search locations..." data-auto-focus data-focus-on="LocationSearchFocus">
 
                                     <div class="input-group-addon" data-ng-click="search()">Go</div>
                                 </div>
@@ -22,12 +28,13 @@
                         <button type="button" class="btn btn-link pull-right" data-ng-click="createNewLocation()">
                             add new location
                         </button>
+                        <span data-ng-class="{'search-spinner' : loading}"></span>
                     </div>
                 </div>
             </div>
             <div class="modal-body" data-ng-hide="noSearch">
-                <div data-ng-hide="noSearch">
-                    <div class="row">
+                <div>
+                    <div class="row" data-ng-hide="removeStatusFilterAndTotal">
                         <div class="col-md-12 col-sm-12">
                             <div class="pull-right">
                                 {{total}}
@@ -40,8 +47,7 @@
                                     <label for="status_filter" data-translate="global.labels.statusFilter">Show:</label>
                                     <select class="form-control" id="status_filter" data-ng-model="status"
                                             data-ng-options="status | translate for status in statuses"
-                                            data-ng-change="search()">
-                                        <option value="">Select...</option>
+                                            data-ng-change="statusChange()">
                                     </select>
                                 </div>
                             </form>
@@ -57,10 +63,14 @@
                                    data-ng-show="locations">
                                 <tr>
                                     <th>Add</th>
-                                    <th>Name</th>
+                                    <th data-ng-click="sort('name')">Name <span data-ng-show="sortProperty.property === 'name'">({{sortProperty.ascending ? 'a..z' : 'z..a'}})</span>
+                                    </th>
                                     <th>Clients</th>
-                                    <th>City/State</th>
-                                    <th>Phone</th>
+                                    <th data-ng-click="sort('city')">City/State <span data-ng-show="sortProperty.property === 'city'">({{sortProperty.ascending ? 'a..z' : 'z..a'}})</span>
+                                    </th>
+                                    <th data-ng-click="sort('phone')">Phone <span data-ng-show="sortProperty.property === 'phone'">({{sortProperty.ascending ? '0..9' : '9..0'}})</span>
+                                    </th>
+
                                 </tr>
                                 <tr data-ng-repeat="location in locations">
                                     <td><input type="checkbox" data-ng-model="location.entity.newlocation"
@@ -68,17 +78,17 @@
                                     <td>{{location.entity.name}}</td>
                                     <td>
                                     <span data-ng-repeat="client in location.entity.usingThisLocation">
-                                         {{client.name}}<span data-ng-hide="$last">,</span>
+                                         {{client.name}}<span data-ng-hide="$last">,&nbsp;</span>
                                     </span>
                                     </td>
                                     <td> {{location.entity.city}}<span
-                                            data-ng-show="location.entity.city && location.entity.state">/</span>{{location.entity.state}}
+                                            data-ng-show="location.entity.city && location.entity.state">,&nbsp;</span>{{location.entity.state}}
                                     </td>
                                     <td>{{location.entity.phone}}</td>
                                 </tr>
                             </table>
                             <div data-ng-hide="locations">
-                                <span>There are no locations found.</span>
+                                <span data-translate="global.messages.search.no_results_found"></span>
                             </div>
                             <div class="row" data-ng-show="locations">
                                 <div class="col-md-4 col-sm-4 pull-right" data-ng-show="total > pageSizes[0] || links">
@@ -106,6 +116,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-link" data-ng-click="cancel()">cancel</button>
+                <button type="button" class="btn btn-default" data-ng-show="locations"
+                        data-ng-click="saveAndAddAnother()">Save & Add Another
+                </button>
                 <button type="button" class="btn btn-primary" data-ng-show="locations" data-ng-click="save()">Save
                 </button>
             </div>

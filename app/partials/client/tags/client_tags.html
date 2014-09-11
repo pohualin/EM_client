@@ -1,6 +1,6 @@
             <div class="col-md-12" data-ng-controller="ClientTagsController">
-                <h2>Team Tags</h2>
-                <div class="btn-group" data-ng-repeat="tagGroup in tagGroups" data-ng-class="{ selected: $index == selectedTagGroupIndex }">
+                <h2>Groups/Tags</h2>
+                <div class="btn-group" data-ng-repeat="tagGroup in client.tagGroups" data-ng-class="{ selected: $index == selectedTagGroupIndex }">
                     <div class="tag-group-edit" data-ng-show="tagGroup.editMode">
                         <input type="text" data-ng-model="tagGroup.title" value="{{ tagGroup.title }}" data-focus-on="editMode" data-ng-enter="changeTagGroupTitle($index)" data-ng-blur="changeTagGroupTitle($index)">
                     </div>
@@ -24,4 +24,6 @@
                     </div>
                     <button class="btn btn-default" data-ng-click="exitCreateMode()">Close</button>
                 </div>
+                <small>&nbsp;&nbsp;&nbsp;or</small>
+                <button class="btn btn-link" type="button" title="Select groups to add:" data-content-template="partials/client/tags/tag_library.html" data-trigger="click" data-bs-popover>Add from Library</button>
             </div>

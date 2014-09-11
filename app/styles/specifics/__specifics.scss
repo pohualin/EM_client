@@ -5,7 +5,39 @@
 
 
 // miscellaneous rules
+.search-spinner {
+    display: inline-block;
+    background: url(/images/search_spinner.gif) no-repeat center center;
+    background-size: 24px 24px;
+    margin-left: 4px;
+    margin-top: 4px;
+    width: 28px;
+    height: 24px;
+    .typeahead & {
+        margin: 6px;
+    }
+}
 
+.emmi-fade {
+    opacity: 1;
+    &.ng-enter {
+        transition: opacity .25s ease-out;
+        opacity: 0;
+        &.ng-enter-active {
+            opacity: 1;
+        }
+    }
+    &.ng-leave {
+        transition: opacity .25s ease-out;
+        opacity: 1;
+        &.ng-leave-active {
+          opacity: 0;
+        }
+    }
+}
+.modal-backdrop.emmi-fade {
+    background: rgba(0, 0, 0, 0.5);
+}
 
 // various example component implementations
 @include example();
@@ -16,15 +48,5 @@
 @include example-skin-alt('.example5');
 
 .example6 {
-  @include example2();
-}
-
-.client-search-spinner {
-  display: inline-block;
-  background: url(/images/search_spinner.gif) no-repeat center center;
-  background-size: 24px 24px;
-  margin-left: 4px;
-  margin-top: 4px;
-  width: 28px;
-  height: 24px;
+    @include example2();
 }

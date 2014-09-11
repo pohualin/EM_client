@@ -14,9 +14,11 @@
             </div>
             <div class="col-md-6 col-sm-5">
                 <label class="sr-only" for="query">Search</label>
+
                 <div class="input-group">
                     <input class="form-control" id="query" name="query" data-ng-model="query" type="text"
                            placeholder="Search..." required data-auto-focus>
+
                     <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
                 </div>
             </div>
@@ -25,7 +27,7 @@
                         data-ng-disabled="searchForm.query.$invalid || loading"
                         data-translate="global.buttons.search">
                 </button>
-                <span data-ng-class="{'client-search-spinner' : loading}"></span>
+                <span data-ng-class="{'search-spinner' : loading}"></span>
             </div>
             <div class="col-md-2 col-sm-2">
                 <div class="pull-right">
@@ -38,34 +40,45 @@
     <hr>
     <div class="row" data-ng-show="searchPerformed">
         <div class="col-md-12">
-            <div class="pull-right">
-                {{total}}<span data-translate="global.labels.total"> results</span>
-            </div>
-            <form class="form-inline">
-                <div class="form-group">
-                    <label for="status_filter" data-translate="global.labels.statusFilter">Show:</label>
-                    <select class="form-control" id="status_filter" data-ng-model="status"
-                            data-ng-options="status | translate for status in statuses"
-                            data-ng-change="search()">
-                        <option value="">--status--</option>
-                    </select>
+            <div class="row" data-ng-hide="removeStatusFilterAndTotal">
+                <div class="col-md-12">
+                    <div class="pull-right">
+                        {{total}}
+                        <span data-ng-show="total != 1" data-translate="global.labels.total"> results</span>
+                        <span data-ng-show="total === 1" data-translate="global.labels.totalSingular"> result</span>
+                    </div>
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label for="status_filter" data-translate="global.labels.statusFilter">Show:</label>
+                            <select class="form-control" id="status_filter" data-ng-model="status"
+                                    data-ng-options="status | translate for status in statuses"
+                                    data-ng-change="statusChange()">
+                            </select>
+                        </div>
+                    </form>
                 </div>
-            </form>
+            </div>
             <br>
             <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0" cellspacing="0"
                    data-ng-show="clients">
                 <tr>
-                    <th>Name</th>
-                    <th>Salesforce Account</th>
-                    <th>Contract Owner</th>
-                    <th>Type</th>
+                    <th data-ng-click="sort('name')">Name <span data-ng-show="sortProperty.property === 'name'">({{sortProperty.ascending ? 'a..z' : 'z..a'}})</span>
+                    </th>
+                    <th data-ng-click="sort('salesForceAccount.name')">Salesforce Account <span
+                            data-ng-show="sortProperty.property === 'salesForceAccount.name'">({{sortProperty.ascending ? 'a..z' : 'z..a'}})</span>
+                    </th>
+                    <th data-ng-click="sort('contractOwner.lastName')">Contract Owner <span
+                            data-ng-show="sortProperty.property === 'contractOwner.lastName'">({{sortProperty.ascending ? 'a..z' : 'z..a'}})</span>
+                    </th>
+                    <th data-ng-click="sort('type')">Type <span data-ng-show="sortProperty.property === 'type'">({{sortProperty.ascending ? 'a..z' : 'z..a'}})</span>
+                    </th>
                     <th>&nbsp;</th>
                 </tr>
-                <tr data-ng-repeat="client in clients | orderBy:'entity.id'">
+                <tr data-ng-repeat="client in clients | orderBy:'client.sortIdx'">
                     <td>{{client.entity.name}}</td>
                     <td>{{client.entity.salesForceAccount.name}}</td>
                     <td>{{client.entity.contractOwner.firstName}} {{client.entity.contractOwner.lastName}}</td>
-                    <td>{{client.entity.type}}</td>
+                    <td>{{client.entity.type | translate}}</td>
                     <td>
                         <a href data-ng-click="selectClient(client.entity)">view</a>
                     </td>
@@ -76,7 +89,7 @@
                     <ul class="pagination page-size pull-right">
                         <li data-ng-repeat="pageSize in pageSizes">
                             <a data-ng-if="pageSize != currentPageSize" href
-                               data-ng-click="changePageSize(load, pageSize)">{{pageSize}}</a>
+                               data-ng-click="changePageSize(pageSize)">{{pageSize}}</a>
                             <span data-ng-if="pageSize === currentPageSize">[{{pageSize}}]</span>
                         </li>
                     </ul>
@@ -92,7 +105,7 @@
                 </div>
             </div>
             <div data-ng-hide="clients">
-                <span data-translate="global.messages.search.no_results_found">Nada here.</span>
+                <span data-translate="global.messages.search.no_results_found"></span>
             </div>
         </div>
     </div>

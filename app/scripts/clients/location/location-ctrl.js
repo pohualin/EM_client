@@ -5,7 +5,7 @@ angular.module('emmiManager')
 /**
  *  Common controller which handles reference data loading and location page response parsing
  */
-    .controller('LocationCommon', function ($scope, Location, Client) {
+    .controller('LocationCommon', function ($scope, Location, Client, $alert) {
 
         Location.getReferenceData().then(function (refData) {
             $scope.statuses = refData.statusFilter;
@@ -40,9 +40,24 @@ angular.module('emmiManager')
             });
         };
 
+        if (Client.getClient()) {
+            if (!Client.getClient().removedLocations) {
+                Client.getClient().removedLocations = {};
+            }
+        }
+
         $scope.removeExistingLocation = function (locationResource) {
             Client.getClient().removedLocations[locationResource.entity.id] = locationResource.entity;
             locationResource.entity.removedFromClient = true;
+            $alert({
+                title: ' ',
+                content: 'The location <b>' + locationResource.entity.name + '</b> has been successfully removed from <b>' +  Client.getClient().entity.name + '</b>',
+                container: '#remove-container',
+                type: 'success',
+                show: true,
+                duration: 5,
+                dismissable: true
+            });
         };
 
         $scope.removeLocationFromRemovedList = function (locationResource) {
@@ -101,8 +116,10 @@ angular.module('emmiManager')
                 $scope.status = locationPage.filter.status;
             } else {
                 $scope.total = 0;
+                $scope[locationsPropertyName] = null;
             }
             $scope.noSearch = false;
+            $scope.loading = false;
         };
 
         $scope.setBelongsToPropertiesFor = function (location) {
@@ -134,8 +151,8 @@ angular.module('emmiManager')
 
         $scope.title = 'Edit Location';
 
-        $scope.save = function (isValid) {
-            $scope.formSubmitted = true;
+        $scope.saveLocation = function (isValid) {
+            $scope.locationFormSubmitted = true;
             if (isValid) {
                 var toBeSaved = $scope.location;
                 Location.update(toBeSaved).then(function (response) {
@@ -169,25 +186,20 @@ angular.module('emmiManager')
 /**
  *  Controls the create new location popup (partials/location/new.html)
  */
-    .controller('LocationCreateController', function ($scope, $controller, Location, Client) {
+    .controller('LocationCreateController', function ($scope, $controller, Location, $alert) {
 
         $controller('LocationCommon', {$scope: $scope});
 
-        $scope.location = {
-            name: null,
-            phone: null,
-            city: null,
-            state: null,
-            belongsToMutable: true,
-            belongsToCheckbox: false,
-            belongsTo: null,
-            usingThisLocation: []
-        };
+        $scope.location = Location.newLocation();
 
         $scope.title = 'New Location';
 
-        $scope.save = function (isValid) {
-            $scope.formSubmitted = true;
+        $scope.saveAndAddAnother = function(isValid){
+            $scope.saveLocation(isValid, true);
+        };
+
+        $scope.saveLocation = function (isValid, addAnother) {
+            $scope.locationFormSubmitted = true;
             if (isValid) {
                 var toBeSaved = $scope.location;
                 Location.create(toBeSaved).then(function (location) {
@@ -198,7 +210,19 @@ angular.module('emmiManager')
                     if (toBeSaved.belongsToCheckbox) {
                         $scope.addLocationToBelongsToChangedList(locationResource);
                     }
-                    $scope.$hide();
+                    $scope.hideNewLocationModal();
+                    if (addAnother) {
+                        $scope.addLocations();
+                        $alert({
+                            title: ' ',
+                            content: 'The location <b>' + locationResource.entity.name + '</b> has been successfully created.',
+                            container: '#message-container',
+                            type: 'success',
+                            show: true,
+                            duration: 5,
+                            dismissable: true
+                        });
+                    }
                 });
             }
         };
@@ -208,7 +232,7 @@ angular.module('emmiManager')
 /**
  *  Controls the new location search/select popup (partials/location/search.html)
  */
-    .controller('LocationListController', function ($scope, Location, $http, Session, UriTemplate, $controller, $modal) {
+    .controller('LocationListController', function ($scope, Location, $http, Session, UriTemplate, $controller, $modal, focus, $alert, Client) {
 
         $controller('LocationCommon', {$scope: $scope});
 
@@ -244,8 +268,6 @@ angular.module('emmiManager')
             });
         };
 
-        $scope.changedLocations = {};
-
         /**
          * Called when the checkbox on the select popup is checked or unchecked
          * @param locationResource it was checked on
@@ -260,7 +282,7 @@ angular.module('emmiManager')
             }
         };
 
-        $scope.save = function () {
+        $scope.save = function (addAnother) {
             // for every changed location, put the change into the correct bucket
             angular.forEach($scope.changedLocations, function (locationResource) {
                 var location = locationResource.entity,
@@ -290,7 +312,28 @@ angular.module('emmiManager')
                     }
                 }
             });
-            $scope.$hide();
+            if (!addAnother) {
+                $scope.$hide();
+            }
+        };
+
+        $scope.saveAndAddAnother = function(){
+            $scope.save(true);
+            $scope.locationQuery = null;
+            $scope.status = null;
+            $scope.noSearch = true;
+            $scope[managedLocationList] = null;
+            focus('LocationSearchFocus');
+            var clientName = (Client.getClient().entity.name) ? '<b>' +  Client.getClient().entity.name + '</b>.' : 'the client.';
+            $alert({
+                title: ' ',
+                content: 'The selected locations were successfully added to ' + clientName,
+                container: '#message-container',
+                type: 'success',
+                show: true,
+                duration: 5,
+                dismissable: true
+            });
         };
 
         $scope.cancel = function () {
@@ -299,34 +342,102 @@ angular.module('emmiManager')
         };
 
         $scope.search = function () {
-            $scope[managedLocationList] = null;
+            $scope.changedLocations = {};
+            $scope.loading = true;
             Location.find($scope.locationQuery, $scope.status).then(function (locationPage) {
                 $scope.handleResponse(locationPage, managedLocationList);
                 $scope.setNewLocationAttribute(managedLocationList);
+                $scope.removeStatusFilterAndTotal = $scope.total <= 0;
+            }, function () {
+                // error happened
+                $scope.loading = false;
+            });
+        };
+
+        $scope.statusChange = function(){
+            $scope.loading = true;
+            Location.find($scope.locationQuery, $scope.status, $scope.sortProperty, $scope.currentPageSize).then(function (locationPage) {
+                $scope.handleResponse(locationPage, managedLocationList);
+                $scope.setNewLocationAttribute(managedLocationList);
+            }, function () {
+                // error happened
+                $scope.loading = false;
             });
         };
 
         $scope.fetchPage = function (href) {
-            $scope[managedLocationList] = null;
+            $scope.loading = true;
             Location.fetchPageLink(href).then(function (locationPage) {
                 $scope.handleResponse(locationPage, managedLocationList);
                 $scope.setNewLocationAttribute(managedLocationList);
+            }, function () {
+                // error happened
+                $scope.loading = false;
             });
         };
 
         $scope.changePageSize = function (pageSize) {
-            $scope[managedLocationList] = null;
-            Location.find($scope.locationQuery, $scope.status, pageSize).then(function (locationPage) {
+            $scope.loading = true;
+            Location.find($scope.locationQuery, $scope.status, $scope.sortProperty, pageSize).then(function (locationPage) {
                 $scope.handleResponse(locationPage, managedLocationList);
                 $scope.setNewLocationAttribute(managedLocationList);
+            }, function () {
+                // error happened
+                $scope.loading = false;
             });
         };
 
-        var newLocationModal = $modal({scope: $scope, template: 'partials/client/location/new.html', animation: 'am-fade-and-scale', show: false});
+        $scope.sortProperty = {
+            property: null,
+            ascending: null,
+            resetOnNextSet: false,
+            setProperty: function (property){
+                if (this.property === property) {
+                    if (!this.resetOnNextSet) {
+                        if (this.ascending !== null) {
+                            // this property has already been sorted on once
+                            // the next click after this one should turn off the sort
+                            this.resetOnNextSet = true;
+                        }
+                        this.ascending = !this.ascending;
+                    } else {
+                        this.reset();
+                    }
+                } else {
+                    this.property = property;
+                    this.ascending = true;
+                    this.resetOnNextSet = false;
+                }
+            },
+            reset: function(){
+                this.property = null;
+                this.ascending = null;
+                this.resetOnNextSet = false;
+            }
+        };
+
+        // when a column header is clicked
+        $scope.sort = function(property){
+            $scope.sortProperty.setProperty(property);
+            $scope.loading = true;
+            Location.find($scope.locationQuery, $scope.status, $scope.sortProperty, $scope.currentPageSize).then(function (locationPage) {
+                $scope.handleResponse(locationPage, managedLocationList);
+                $scope.setNewLocationAttribute(managedLocationList);
+            }, function () {
+                // error happened
+                $scope.loading = false;
+            });
+        };
+
+        var newLocationModal = $modal({scope: $scope, template: 'partials/client/location/new.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false});
 
         $scope.createNewLocation = function () {
-            $scope.$hide();
+            $scope.hideAddLocationsModal();
             newLocationModal.$promise.then(newLocationModal.show);
+        };
+
+        $scope.hideNewLocationModal = function () {
+            newLocationModal.$promise.then(newLocationModal.destroy);
         };
     })
 
@@ -337,7 +448,7 @@ angular.module('emmiManager')
 
         $controller('LocationCommon', {$scope: $scope});
 
-        var editLocationModal = $modal({scope: $scope, template: 'partials/client/location/edit.html', animation: 'am-fade-and-scale', show: false});
+        var editLocationModal = $modal({scope: $scope, template: 'partials/client/location/edit.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false});
         var managedLocationList = 'clientLocations';
 
         $scope.editLocation = function (location) {
@@ -385,10 +496,14 @@ angular.module('emmiManager')
 
         $controller('LocationCommon', {$scope: $scope});
 
-        var addNewLocationsModal = $modal({scope: $scope, template: 'partials/client/location/search.html', animation: 'am-fade-and-scale', show: false});
+        var addNewLocationsModal = $modal({scope: $scope, template: 'partials/client/location/search.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false});
 
         $scope.addLocations = function () {
             addNewLocationsModal.$promise.then(addNewLocationsModal.show);
+        };
+
+        $scope.hideAddLocationsModal = function () {
+            addNewLocationsModal.hide();
         };
 
         if (Client.getClient()) {
@@ -413,16 +528,6 @@ angular.module('emmiManager')
             };
         });
 
-    })
-
-    .controller('ClientRemoveExistingLocationsController', function ($scope, $controller, Client) {
-        $controller('LocationCommon', {$scope: $scope});
-
-        if (Client.getClient()) {
-            if (!Client.getClient().removedLocations) {
-                Client.getClient().removedLocations = {};
-            }
-        }
     })
 
     .controller('ClientBelongsToDeltaLocationsController', function ($scope, $controller, Client) {

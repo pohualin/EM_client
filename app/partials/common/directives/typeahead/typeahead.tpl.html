@@ -1,6 +1,7 @@
 <div>
     <form>
         <input type="text" autocomplete="off" class="form-control" data-ng-model="term" data-ng-change="query()" placeholder="{{placeholder}}" focus-on="{{focus}}" id="{{id}}" />
+        <span class="form-control-feedback" data-ng-class="{'search-spinner' : loading}"></span>
     </form>
     <div data-ng-transclude></div>
 </div>

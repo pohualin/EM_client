@@ -15,7 +15,8 @@ angular.module('emmiManager', [
     'emmi.typeahead',
     'localytics.directives',
     'ngTagsInput',
-    'mgcrea.ngStrap'
+    'mgcrea.ngStrap',
+    'emmi.inputMask',
 ])
 
     .constant('USER_ROLES', {
