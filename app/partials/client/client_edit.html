@@ -82,7 +82,7 @@
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Please select a valid date"></div>
                     <input id="contractStart" class="form-control" type="text" name="clientContractStart" data-ng-model="client.contractStart" data-autoclose="true"
-                           data-dateType="iso" data-bs-datepicker required data-date-lower-than="{{client.contractEnd}}" data-ng-change="calculateMinimumEndDate(client.contractStart)" data-max-date="{{client.contractEnd}}" data-num-days="1">
+                           data-dateType="iso" data-bs-datepicker required data-date-lower-than="{{client.contractEnd}}" data-max-date="{{client.contractEnd}}" data-num-days="1">
                 </div>
             </div>
             <div class="col-md-4">
@@ -114,7 +114,7 @@
                 <label class="control-label" for="">SF Account: </label>
                 {{client.salesForceAccount.name}}&nbsp;&nbsp;&nbsp;&nbsp;
                 <span>{{client.salesForceAccount.city}}<span
-                        data-ng-show="client.salesForceAccount.city && client.salesForceAccount.state">,&nbsp;</span>{{client.salesForceAccount.state}}
+                    data-ng-show="client.salesForceAccount.city && client.salesForceAccount.state">,&nbsp;</span>{{client.salesForceAccount.state}}
                 </span>
                 <button class="btn btn-link" data-ng-click="changeSfAccount()">update</button>
             </div>
