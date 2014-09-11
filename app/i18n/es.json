@@ -107,7 +107,13 @@
             "content": "Are you sure you want to deactivate this client?",
             "ok_button": "Yes",
             "cancel_button": "No"
-        }
+        },
+        "unique_popup_dialog": {
+            "title": "Nombre Unico",
+            "exists_content":"The Client name already exists",
+            "Name":"Name",
+            "CITY":"CITY/STATE"
+        }      
     },
     "ALL": "All",
     "ACTIVE_ONLY": "Active",

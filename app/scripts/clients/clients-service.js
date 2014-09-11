@@ -155,32 +155,35 @@ angular.module('emmiManager')
             link: function (scope, element, attrs, ngModel) {
 
                 scope.uniquePopup = $popover(element, {
-                    title: attrs.title,
                     scope: scope,
-                    placement: attrs.placement,
+                    placement: 'top-right',
                     show:false,
-                    trigger: attrs.trigger,
+                    trigger: 'manual',
                     contentTemplate: 'partials/client/unique_client_popover.tpl.html'
                 });
 
                 element.on('keydown', function() {
                     if (scope.uniquePopup) {
                         scope.uniquePopup.hide();
+                        ngModel.$setValidity('unique', true);
                     }
                 });
 
                  element.on('blur', function() {
                     Client.findNormalizedName(scope.url, element.val()).then(function (searchResults) {
-                        scope.existsClient = searchResults.entity;
-                          if (scope.existsClient === undefined) {
+                        scope.existsClient = searchResults;
+                          if (scope.existsClient.entity === undefined) {
                             ngModel.$setValidity('unique', true);
                             if (scope.uniquePopup) {
                                 scope.uniquePopup.hide();
                             }
                           } else {
-                            ngModel.$setValidity('unique', false);
+                            var clientResource = Client.getClient();
+                            if (clientResource && clientResource.entity.id != scope.existsClient.entity.id ) {
+                                ngModel.$setValidity('unique', false);
                                 scope.uniquePopup.show();
-                                element.focus();
+                                //element.focus();
+                            }
                           }
                     });
                  }) ;  
