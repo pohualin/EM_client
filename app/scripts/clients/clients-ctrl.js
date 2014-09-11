@@ -4,6 +4,7 @@ angular.module('emmiManager')
 
     .controller('ViewEditCommon', function ($scope, Client, focus, debounce, $alert) {
 
+        $scope.sfSearch = {};
         $scope.sfResult = {};
         $scope.sfResult.account = [];
         $scope.formSubmitted = false;
@@ -19,7 +20,7 @@ angular.module('emmiManager')
                     $scope.contractOwners = ownerPage.content;
                 });
             $scope.findSalesForceAccount = function () {
-                Client.findSalesForceAccount(refData.link.findSalesForceAccount, $scope.searchQuery).then(function (searchResults) {
+                Client.findSalesForceAccount(refData.link.findSalesForceAccount, $scope.sfSearch.searchQuery).then(function (searchResults) {
                     if (searchResults.entity) {
                         $scope.sfResult = searchResults.entity;
                     } else {
@@ -43,7 +44,6 @@ angular.module('emmiManager')
 
         $scope.chooseAccount = function (account) {
             if (account && !account.clientName) {
-                $scope.searchQuery = account.name;
                 $scope.client.salesForceAccount = account;
                 return true;
             } else {
@@ -92,7 +92,7 @@ angular.module('emmiManager')
         };
 
         $scope.changeSfAccount = function () {
-            $scope.searchQuery = $scope.client.salesForceAccount.name;
+            $scope.sfSearch.searchQuery = $scope.client.salesForceAccount.name;
             $scope.sfResult.account = [];
             $scope.client.salesForceAccount = null;
             focus('SfSearch');
@@ -127,8 +127,8 @@ angular.module('emmiManager')
             if (isValid) {
                 Client.updateClient($scope.client).then(function () {
                     // update locations for the client
-                	
-                	
+
+
                     Location.updateForClient(Client.getClient()).then(function () {
                         Client.viewClient($scope.client);
                     });
@@ -151,7 +151,7 @@ angular.module('emmiManager')
                     // saved client successfully, switch to saveUpdate if other updates fail
                     $scope.client.tagGroups = client.config.data.tagGroups;
 
-                    var insertGroups = Tag.insertGroups($scope.client), 
+                    var insertGroups = Tag.insertGroups($scope.client),
                     	updateLocation = Location.updateForClient(Client.getClient());
                     $q.all([insertGroups, updateLocation]).then(function () {
                     	Client.viewClient($scope.client);
@@ -292,10 +292,10 @@ angular.module('emmiManager')
             if (isValid) {
                 Client.updateClient($scope.client).then(function () {
                     // update locations for the client
-                	
+
                 	var insertGroups = Tag.insertGroups($scope.client),
                 	updateLocation = Location.updateForClient(Client.getClient());
-                	
+
                 	$q.all([insertGroups, updateLocation]).then(function(result) {
                 		Client.viewClient($scope.client);
                 	});
@@ -318,8 +318,8 @@ angular.module('emmiManager')
             Client.setClient(clientResource);
         } else {
             Client.viewClientList();
-        }      
-        
+        }
+
         Location.findForClient(clientResource).then(function (locationPage) {
             $scope.handleResponse(locationPage, 'clientLocations');
         });

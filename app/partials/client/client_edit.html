@@ -108,9 +108,11 @@
         </div>
         <div class="row" data-ng-show="client.salesForceAccount">
             <div class="col-md-12">
-                {{client.salesForceAccount.name}} {{client.salesForceAccount.city}}<span
-                    data-ng-show="client.salesForceAccount.city && client.salesForceAccount.state">/</span>{{client.salesForceAccount.state}}
-                <button class="btn btn-link" data-ng-click="changeSfAccount()">edit</button>
+                {{client.salesForceAccount.name}}&nbsp;&nbsp;&nbsp;&nbsp;
+                <span>{{client.salesForceAccount.city}}<span
+                    data-ng-show="client.salesForceAccount.city && client.salesForceAccount.state">,&nbsp;</span>{{client.salesForceAccount.state}}
+                </span>
+                <button class="btn btn-link" data-ng-click="changeSfAccount()">update</button>
             </div>
         </div>
         <div class="row" data-ng-hide="client.salesForceAccount" data-ng-include="'partials/salesforce/picker.html'"></div>
