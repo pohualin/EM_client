@@ -96,7 +96,7 @@ angular.module('emmiManager', [
                 resolve: clientDetailRequiredResources
             })
             .when('/teams/new', {
-                templateUrl: 'partials/team_edit.html',
+                templateUrl: 'partials/team/team_edit.html',
                 controller: 'TeamCtrl',
                 access: {
                     authorizedRoles: [USER_ROLES.admin]
