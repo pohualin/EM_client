@@ -3,6 +3,12 @@
         <div class="modal-content">
             <div class="modal-header">
                 <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10" id="message-container"></div>
+                    <div class="col-md-1"></div>
+                </div>
+                <div class="row">
+
                     <div class="col-md-9 col-sm-9">
                         <form ng-submit="search()">
                             <div class="form-group">
@@ -11,7 +17,7 @@
                                 <div class="input-group">
                                     <input class="form-control" id="locationQuery" data-ng-model="locationQuery"
                                            type="text"
-                                           placeholder="Search locations..." data-auto-focus>
+                                           placeholder="Search locations..." data-auto-focus data-focus-on="LocationSearchFocus">
 
                                     <div class="input-group-addon" data-ng-click="search()">Go</div>
                                 </div>
@@ -42,7 +48,6 @@
                                     <select class="form-control" id="status_filter" data-ng-model="status"
                                             data-ng-options="status | translate for status in statuses"
                                             data-ng-change="statusChange()">
-                                        <option value="">Select...</option>
                                     </select>
                                 </div>
                             </form>
@@ -73,11 +78,11 @@
                                     <td>{{location.entity.name}}</td>
                                     <td>
                                     <span data-ng-repeat="client in location.entity.usingThisLocation">
-                                         {{client.name}}<span data-ng-hide="$last">, </span>
+                                         {{client.name}}<span data-ng-hide="$last">,&nbsp;</span>
                                     </span>
                                     </td>
                                     <td> {{location.entity.city}}<span
-                                            data-ng-show="location.entity.city && location.entity.state">, </span>{{location.entity.state}}
+                                            data-ng-show="location.entity.city && location.entity.state">,&nbsp;</span>{{location.entity.state}}
                                     </td>
                                     <td>{{location.entity.phone}}</td>
                                 </tr>
@@ -111,6 +116,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-link" data-ng-click="cancel()">cancel</button>
+                <button type="button" class="btn btn-default" data-ng-show="locations"
+                        data-ng-click="saveAndAddAnother()">Save & Add Another
+                </button>
                 <button type="button" class="btn btn-primary" data-ng-show="locations" data-ng-click="save()">Save
                 </button>
             </div>

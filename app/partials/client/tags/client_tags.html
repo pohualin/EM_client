@@ -1,5 +1,5 @@
             <div class="col-md-12" data-ng-controller="ClientTagsController">
-                <h2>Team Tags</h2>
+                <h2>Groups/Tags</h2>
                 <div class="btn-group" data-ng-repeat="tagGroup in client.tagGroups" data-ng-class="{ selected: $index == selectedTagGroupIndex }">
                     <div class="tag-group-edit" data-ng-show="tagGroup.editMode">
                         <input type="text" data-ng-model="tagGroup.title" value="{{ tagGroup.title }}" data-focus-on="editMode" data-ng-enter="changeTagGroupTitle($index)" data-ng-blur="changeTagGroupTitle($index)">
