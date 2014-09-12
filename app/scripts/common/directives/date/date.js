@@ -22,7 +22,8 @@ angular.module('emmiManager')
  * This is a temporary monkey patch for the date picker to resolve https://github.com/mgcrea/angular-strap/issues/1056.
  *
  */
-    .directive('bsDatepickerEmmi', function ($window, $parse, $q, $locale, dateFilter, $datepicker, $dateParser, $timeout) {
+    .directive('bsDatepickerEmmi', ['$window', '$parse', '$q', '$locale', 'dateFilter', '$datepicker', '$dateParser',
+        function ($window, $parse, $q, $locale, dateFilter, $datepicker, $dateParser) {
 
         var defaults = $datepicker.defaults;
         var isNative = /(ip(a|o)d|iphone|android)/ig.test($window.navigator.userAgent);
@@ -211,6 +212,6 @@ angular.module('emmiManager')
             }
         };
 
-    })
+    }])
 
 ;
