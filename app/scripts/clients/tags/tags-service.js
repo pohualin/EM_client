@@ -44,6 +44,26 @@ angular.module('emmiManager')
 	             		}
 	              	});
             	}
+             },
+             loadReferenceData: function(){
+            	 var responseArray = [];
+            	 return $http.get(UriTemplate.create(Session.link.refDataGroups).stringify()).then(function iterateRefGroupPage(response) {
+            		 angular.forEach(response.data.content, function (group){
+            			 group.title = group.entity.name;
+            			 group.tags = group.entity.tag ;
+	             			angular.forEach(group.entity.tag, function(tag){
+	             				tag.text = tag.name;
+	             			});
+	             			responseArray.push(group);
+	             		});
+            		 
+            		 if (response.data.link && response.data.link['page-next']) {
+          				$http.get(response.data.link['page-next']).then(function(response){
+          					iterateRefGroupPage(response);
+          				});
+            		 } 
+              		return responseArray;
+                  });
              }
         };
     })
