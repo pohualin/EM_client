@@ -127,8 +127,8 @@ angular.module('emmiManager')
             if (isValid) {
                 Client.updateClient($scope.client).then(function () {
                     // update locations for the client
-
-
+                	
+                	
                     Location.updateForClient(Client.getClient()).then(function () {
                         Client.viewClient($scope.client);
                     });
@@ -292,10 +292,10 @@ angular.module('emmiManager')
             if (isValid) {
                 Client.updateClient($scope.client).then(function () {
                     // update locations for the client
-
+                	
                 	var insertGroups = Tag.insertGroups($scope.client),
                 	updateLocation = Location.updateForClient(Client.getClient());
-
+                	
                 	$q.all([insertGroups, updateLocation]).then(function(result) {
                 		Client.viewClient($scope.client);
                 	});
@@ -318,8 +318,8 @@ angular.module('emmiManager')
             Client.setClient(clientResource);
         } else {
             Client.viewClientList();
-        }
-
+        }      
+        
         Location.findForClient(clientResource).then(function (locationPage) {
             $scope.handleResponse(locationPage, 'clientLocations');
         });
