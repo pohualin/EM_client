@@ -111,7 +111,11 @@
         </div>
         <div class="row" data-ng-show="client.salesForceAccount">
             <div class="col-md-12">
-                <label class="control-label" for="">SF Account:&nbsp;&nbsp;&nbsp;</label>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label class="control-label" for="">Salesforce Account</label>
+                    </div>
+                </div>
                 {{client.salesForceAccount.name}}&nbsp;&nbsp;&nbsp;&nbsp;
                 <span>{{client.salesForceAccount.city}}<span
                     data-ng-show="client.salesForceAccount.city && client.salesForceAccount.state">,&nbsp;</span>{{client.salesForceAccount.state}}
