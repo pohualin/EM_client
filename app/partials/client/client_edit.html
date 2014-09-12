@@ -78,8 +78,11 @@
                     <div class="error-circle" data-ng-show="clientForm.clientContractStart.$error.required && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Required"></div>
+                    <div class="error-circle" data-ng-show="!clientForm.clientContractStart.$error.required &&  clientForm.clientContractStart.$error.date && formSubmitted"
+                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                         data-title="Please select a valid date"></div>
                     <input id="contractStart" class="form-control" type="text" name="clientContractStart" data-ng-model="client.contractStart" data-autoclose="true"
-                           data-dateType="iso" data-bs-datepicker required>
+                           data-dateType="iso" data-bs-datepicker-emmi required data-max-date="{{client.contractEnd}}">
                 </div>
             </div>
             <div class="col-md-4">
@@ -88,8 +91,11 @@
                     <div class="error-circle" data-ng-show="clientForm.clientContractEnd.$error.required && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Required"></div>
+                    <div class="error-circle" data-ng-show="!clientForm.clientContractEnd.$error.required && clientForm.clientContractEnd.$error.date && formSubmitted"
+                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                         data-title="Please select a valid date"></div>
                     <input id="contractEnd" class="form-control" type="text" name="clientContractEnd" data-ng-model="client.contractEnd" data-autoclose="true"
-                           data-dateType="string" data-bs-datepicker required>
+                           data-dateType="string" data-bs-datepicker-emmi required data-min-date="{{client.contractStart | addDays:1}}">
                 </div>
             </div>
         </div>
@@ -105,6 +111,7 @@
         </div>
         <div class="row" data-ng-show="client.salesForceAccount">
             <div class="col-md-12">
+                <label class="control-label" for="">SF Account:&nbsp;&nbsp;&nbsp;</label>
                 {{client.salesForceAccount.name}}&nbsp;&nbsp;&nbsp;&nbsp;
                 <span>{{client.salesForceAccount.city}}<span
                     data-ng-show="client.salesForceAccount.city && client.salesForceAccount.state">,&nbsp;</span>{{client.salesForceAccount.state}}
