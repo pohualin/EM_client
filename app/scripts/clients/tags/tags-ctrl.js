@@ -18,10 +18,9 @@ angular.module('emmiManager')
         
         $scope.selectedTagGroupIndex = -1;
 
-        // We will retrieve tag libraries using a service here
-        $scope.tagLibraries = [
-            { 'title': 'one', 'tags': [ { 'text': 'one1' }, { 'text': 'one2' }, { 'text': 'one3' } ] }, { 'title': 'two', 'tags': [ { 'text': 'two1' } ] }, { 'title': 'three', 'tags': [ { 'text': 'three1' }, { 'text': 'three2' }, { 'text': 'three3' }, { 'text': 'three4' }, { 'text': 'three5' }, { 'text': 'three6' }, { 'text': 'three7' }, { 'text': 'three8' } ] }
-        ];
+        Tag.loadReferenceData().then(function (response){
+        	$scope.tagLibraries = response;
+        });
 
         $scope.enterCreateMode = function (){
             $scope.createMode = true;
