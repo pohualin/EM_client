@@ -140,6 +140,17 @@ angular.module('emmiManager')
         $scope.addLocationToBelongsToChangedList = function (locationResource) {
             Client.getClient().belongsToChanged[locationResource.entity.id] = locationResource.entity;
         };
+
+        $scope.showErrorBanner = function(){
+            $alert({
+                title: ' ',
+                content: 'Please correct the below information.',
+                container: '#message-container',
+                type: 'danger',
+                show: true,
+                dismissable: false
+            });
+        };
     })
 
 /**
@@ -178,6 +189,8 @@ angular.module('emmiManager')
                     angular.copy(locationResource.entity, $scope.originalLocation);
                     $scope.$hide();
                 });
+            } else {
+                $scope.showErrorBanner();
             }
         };
 
@@ -224,6 +237,8 @@ angular.module('emmiManager')
                         });
                     }
                 });
+            } else {
+                $scope.showErrorBanner();
             }
         };
 
