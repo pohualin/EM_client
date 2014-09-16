@@ -20,32 +20,6 @@ angular.module('emmiManager')
             return angular.equals({}, obj);
         };
 
-        /**
-         * For each location in the managedLocationList check to see if the entity
-         * is in the list of locations that will be removed on save. If so, set the
-         * 'removedFromClient' attribute on the location.
-         *
-         * @param managedLocationList a string, the name of the location list in $scope
-         */
-        $scope.setRemovedOnLocationsWithin = function (managedLocationList) {
-            // look through the clientLocations and 'remove' it if has already been targeted
-            angular.forEach($scope[managedLocationList], function (locationResource) {
-                if (Client.getClient().removedLocations) {
-                    if (Client.getClient().removedLocations[locationResource.entity.id]) {
-                        locationResource.entity.removedFromClient = true;
-                    } else {
-                        delete locationResource.entity.removedFromClient;
-                    }
-                }
-            });
-        };
-
-        if (Client.getClient()) {
-            if (!Client.getClient().removedLocations) {
-                Client.getClient().removedLocations = {};
-            }
-        }
-
         $scope.removeExistingLocation = function (locationResource) {
             Location.removeLocation(locationResource).then(function (){
                 $alert({
@@ -61,10 +35,6 @@ angular.module('emmiManager')
                     $scope.handleResponse(locationPage, 'clientLocations');
                 });
             });
-        };
-
-        $scope.removeLocationFromRemovedList = function (locationResource) {
-            delete Client.getClient().removedLocations[locationResource.entity.id];
         };
 
         $scope.setExistsOnLocationsWithin = function (managedLocationList) {
@@ -163,6 +133,20 @@ angular.module('emmiManager')
                 dismissable: false
             });
         };
+
+        $scope.loadAllIds = function(){
+            $scope.idsFetched = false;
+            return Location.findAllIdsForClient(Client.getClient()).then(function (idSet) {
+                $scope.selectedIdsForClient = idSet;
+                // ensure that the 'add locations' text doesn't appear until we've fetched all of the ids
+                $scope.idsFetched = true;
+                $scope.isExistingLocation = function (locationResource) {
+                    return $scope.selectedIdsForClient.indexOf(locationResource.entity.id) !== -1;
+                };
+            });
+        };
+
+
     })
 
 /**
@@ -273,26 +257,27 @@ angular.module('emmiManager')
          * @param managedLocationList a String, the name of the list in $scope
          */
         $scope.setNewLocationAttribute = function (managedLocationList) {
-            $scope.setExistsOnLocationsWithin(managedLocationList);
-            $scope.setRemovedOnLocationsWithin(managedLocationList);
-            $scope.setAddedOnLocationsWithin(managedLocationList);
-            angular.forEach($scope[managedLocationList], function (locationResource) {
-                var alreadyExists = locationResource.entity.existsOnClient;
-                var alreadyRemoved = locationResource.entity.removedFromClient;
-                var alreadyNew = locationResource.entity.addToClient;
+            $scope.loadAllIds().then(function (){
+                $scope.setExistsOnLocationsWithin(managedLocationList);
+                $scope.setAddedOnLocationsWithin(managedLocationList);
+                angular.forEach($scope[managedLocationList], function (locationResource) {
+                    var alreadyExists = locationResource.entity.existsOnClient;
+                    var alreadyNew = locationResource.entity.addToClient;
 
-                // set the current (saved) state
-                locationResource.entity.currentNewLocationState = !alreadyRemoved && (alreadyExists || alreadyNew);
+                    // set the current (saved) state
+                    locationResource.entity.currentNewLocationState = alreadyExists || alreadyNew;
 
-                var alreadyChangedLocation = $scope.changedLocations[locationResource.entity.id];
-                if (!alreadyChangedLocation) {
-                    // it hasn't been changed yet, set newlocation to the current state
-                    locationResource.entity.newlocation = locationResource.entity.currentNewLocationState;
-                } else {
-                    // it has been changed set newlocation to the changed state
-                    locationResource.entity.newlocation = alreadyChangedLocation.entity.newlocation;
-                }
+                    var alreadyChangedLocation = $scope.changedLocations[locationResource.entity.id];
+                    if (!alreadyChangedLocation) {
+                        // it hasn't been changed yet, set newlocation to the current state
+                        locationResource.entity.newlocation = locationResource.entity.currentNewLocationState;
+                    } else {
+                        // it has been changed set newlocation to the changed state
+                        locationResource.entity.newlocation = alreadyChangedLocation.entity.newlocation;
+                    }
+                });
             });
+
         };
 
         /**
@@ -313,29 +298,14 @@ angular.module('emmiManager')
             // for every changed location, put the change into the correct bucket
             angular.forEach($scope.changedLocations, function (locationResource) {
                 var location = locationResource.entity,
-                    previouslyRemoved = location.removedFromClient,
                     alreadyExists = locationResource.entity.existsOnClient,
                     previouslyAdded = location.addToClient;
 
                 if (location.newlocation) {
                     // location was checked
-                    if (previouslyRemoved) {
-                        // and it was removed previously, remove it from the removed list
-                        $scope.removeLocationFromRemovedList(locationResource);
-                        $scope.setRemovedOnLocationsWithin('clientLocations');
-                    } else {
-                        if (!alreadyExists && !previouslyAdded) {
-                            // add it to the list, if it isn't already there
-                            $scope.addLocationToAddedList(locationResource);
-                        }
-                    }
-                } else {
-                    // location was unchecked
-                    if (previouslyAdded || alreadyExists) {
-                        // and it was added previously, remove it from the added list
-                        $scope.removeLocationFromAddedList(locationResource);
-                        $scope.removeExistingLocation(locationResource);
-                        $scope.setRemovedOnLocationsWithin('clientLocations');
+                    if (!alreadyExists && !previouslyAdded) {
+                        // add it to the list, if it isn't already there
+                        $scope.addLocationToAddedList(locationResource);
                     }
                 }
             });
@@ -496,14 +466,12 @@ angular.module('emmiManager')
 
         Location.findForClient(Client.getClient()).then(function (locationPage) {
             $scope.handleResponse(locationPage, managedLocationList);
-            $scope.setRemovedOnLocationsWithin(managedLocationList);
         });
 
         $scope.fetchPage = function (href) {
             $scope.clientLocations = null;
             Location.fetchPageLink(href).then(function (locationPage) {
                 $scope.handleResponse(locationPage, managedLocationList);
-                $scope.setRemovedOnLocationsWithin(managedLocationList);
             });
         };
 
@@ -511,7 +479,6 @@ angular.module('emmiManager')
             $scope.clientLocations = null;
             Location.findForClient(Client.getClient(), pageSize).then(function (locationPage) {
                 $scope.handleResponse(locationPage, managedLocationList);
-                $scope.setRemovedOnLocationsWithin(managedLocationList);
             });
         };
     })
@@ -545,15 +512,6 @@ angular.module('emmiManager')
                 entity: location
             });
         };
-
-        Location.findAllIdsForClient(Client.getClient()).then(function (idSet) {
-            $scope.selectedIdsForClient = idSet;
-            // ensure that the 'add locations' text doesn't appear until we've fetched all of the ids
-            $scope.idsFetched = true;
-            $scope.isExistingLocation = function (locationResource) {
-                return $scope.selectedIdsForClient.indexOf(locationResource.entity.id) !== -1;
-            };
-        });
 
     })
 
