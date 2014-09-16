@@ -72,7 +72,7 @@
                                     </th>
 
                                 </tr>
-                                <tr data-ng-repeat="location in locations" data-ng-class="location.entity.currentNewLocationState ? 'unselectable' : ''">
+                                <tr data-ng-repeat="location in locations" data-ng-class="location.entity.currentNewLocationState ? 'text-muted' : ''">
                                     <td><input type="checkbox" data-ng-model="location.entity.newlocation"  data-ng-disabled="location.entity.currentNewLocationState"
                                                ng-change="onCheckboxChange(location)"></td>
                                     <td>{{location.entity.name}}</td>

@@ -39,10 +39,6 @@
     background: rgba(0, 0, 0, 0.5);
 }
 
-.unselectable {
-  color: #ccc;
-}
-
 // various example component implementations
 @include example();
 @include example('.example2');
