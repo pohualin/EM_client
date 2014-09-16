@@ -95,9 +95,9 @@ angular.module('emmiManager')
                 return $http.get(UriTemplate.create(href).stringify({sort: field, size: 1}))
                     .then(function load(response) {
                     	var page = response.data;
-                        angular.forEach(page.content, function(a){
-                            owners.push(a);	
-                        });                        
+                        angular.forEach(page.content, function(contentData){
+                            owners.push(contentData);	
+                        });
                         if (page.link && page.link['page-next']) {
                         	$http.get(page.link['page-next']).then(function(response){
 	             				load(response);
