@@ -69,7 +69,7 @@
                         class="form-control"
                         data-placeholder="Select..."
                         data-ng-model="client.contractOwner"
-                        data-ng-options="owner as (owner.firstName + ' ' + owner.lastName) for owner in contractOwners track by owner.id"
+                        data-ng-options="owner as owner | contractOwnerFilter for owner in contractOwners track by owner.id "
                         id="contractOwner"
                         name="clientContractOwner" required>
                         <option value="">Select...</option>
