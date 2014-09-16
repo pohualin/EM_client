@@ -47,16 +47,19 @@ angular.module('emmiManager')
         }
 
         $scope.removeExistingLocation = function (locationResource) {
-            Client.getClient().removedLocations[locationResource.entity.id] = locationResource.entity;
-            locationResource.entity.removedFromClient = true;
-            $alert({
-                title: ' ',
-                content: 'The location <b>' + locationResource.entity.name + '</b> has been successfully removed from <b>' +  Client.getClient().entity.name + '</b>',
-                container: '#remove-container',
-                type: 'success',
-                show: true,
-                duration: 5,
-                dismissable: true
+            Location.removeLocation(locationResource).then(function (){
+                $alert({
+                    title: ' ',
+                    content: 'The location <b>' + locationResource.entity.name + '</b> has been successfully removed from <b>' +  Client.getClient().entity.name + '</b>',
+                    container: '#remove-container',
+                    type: 'success',
+                    show: true,
+                    duration: 5,
+                    dismissable: true
+                });
+                Location.findForClient(Client.getClient()).then(function (locationPage) {
+                    $scope.handleResponse(locationPage, 'clientLocations');
+                });
             });
         };
 
@@ -91,6 +94,15 @@ angular.module('emmiManager')
 
         $scope.removeLocationFromAddedList = function (locationResource) {
             delete Client.getClient().addedLocations[locationResource.entity.id];
+            $alert({
+                title: ' ',
+                content: 'The location <b>' + locationResource.entity.name + '</b> has been successfully removed from <b>' +  Client.getClient().entity.name + '</b>',
+                container: '#remove-container',
+                type: 'success',
+                show: true,
+                duration: 5,
+                dismissable: true
+            });
         };
 
         $scope.handleResponse = function (locationPage, locationsPropertyName) {

@@ -1,7 +1,15 @@
 'use strict';
 angular.module('emmiManager')
-    .service('Location', function ($http, $q, Session, UriTemplate) {
+    .service('Location', function ($http, $q, Session, UriTemplate, arrays) {
         var referenceData, query;
+        function addSortIndex(entityPage){
+            if (entityPage && entityPage.content) {
+                for (var sort = 0, size = entityPage.content.length; sort < size; sort++) {
+                    var content = entityPage.content[sort];
+                    content.sortIdx = sort;
+                }
+            }
+        }
         return {
             find: function (query, status, sort, pageSize) {
                 return $http.get(UriTemplate.create(Session.link.locations).stringify({
@@ -11,12 +19,14 @@ angular.module('emmiManager')
                         size: pageSize
                     }
                 )).then(function (response) {
+                    addSortIndex(response.data);
                     return response.data;
                 });
             },
             fetchPageLink: function (href) {
                 return $http.get(href)
                     .then(function (response) {
+                        addSortIndex(response.data);
                         return response.data;
                     });
 
@@ -63,6 +73,7 @@ angular.module('emmiManager')
                 if (client && client.entity && client.entity.id) {
                     $http.get(UriTemplate.create(client.link.locations).stringify({size: pageSize}))
                         .then(function (response) {
+                            addSortIndex(response.data);
                             deferred.resolve(response.data);
                         });
                 } else {
@@ -87,15 +98,18 @@ angular.module('emmiManager')
                     angular.equals({}, clientResource.removedLocations) &&
                     angular.equals({}, clientResource.belongsToChanged));
             },
+            removeLocation: function (locationResource) {
+                locationResource.links = arrays.convertToObject('rel', 'href', locationResource.link);
+                return $http.delete(UriTemplate.create(locationResource.links.self).stringify())
+                    .then(function (response) {
+                        return response.data;
+                    });
+            },
             updateForClient: function (clientResource) {
                 var added = [],
-                    removed = [],
                     belongsTo = [];
                 angular.forEach(clientResource.addedLocations, function (location) {
                     added.push(location);
-                });
-                angular.forEach(clientResource.removedLocations, function (location) {
-                    removed.push(location);
                 });
                 angular.forEach(clientResource.belongsToChanged, function (location) {
                     if (location.belongsToCheckbox) {
@@ -107,7 +121,6 @@ angular.module('emmiManager')
                 });
                 return $http.put(UriTemplate.create(clientResource.link.locations).stringify(), {
                     added: added,
-                    deleted: removed,
                     belongsToUpdated: belongsTo
                 }).then(function (response) {
                     return response.data;
