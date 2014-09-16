@@ -90,10 +90,17 @@ angular.module('emmiManager')
                 }
                 return deferred.promise;
             },
-            getOwnersReferenceDataList: function (href) {
-                return $http.get(UriTemplate.create(href).stringify({size: 100}))
-                    .then(function (response) {
-                        return response.data;
+            getOwnersReferenceDataList: function (href, field) {
+            	var owners = [];
+                return $http.get(UriTemplate.create(href).stringify({sort: field, size: 1}))
+                    .then(function load(response) {
+                        var page = response.data;                        
+                        owners.push(page);
+                        if (page.link && page.link['page-next']) {
+                        	$http.get(page.link['page-next']).then(function(response){
+	             				load(response);
+                            });
+                        }
                     });
             },
             findSalesForceAccount: function (href, searchString) {

@@ -14,7 +14,7 @@ angular.module('emmiManager')
             $scope.clientRegions = refData.clientRegion;
             $scope.clientTiers = refData.clientTier;
             $scope.findSalesForceAccountLink = refData.link.findSalesForceAccount;
-            Client.getOwnersReferenceDataList(refData.link.potentialOwners)
+            Client.getOwnersReferenceDataList(refData.link.potentialOwners,'firstName')
                 .then(function (ownerPage) {
                     $scope.contractOwners = ownerPage.content;
                 });
