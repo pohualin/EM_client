@@ -99,8 +99,9 @@ angular.module('emmiManager')
                         if (page.link && page.link['page-next']) {
                         	$http.get(page.link['page-next']).then(function(response){
 	             				load(response);
-                            });
+                            });                        	
                         }
+                        return owners;
                     });
             },
             findSalesForceAccount: function (href, searchString) {

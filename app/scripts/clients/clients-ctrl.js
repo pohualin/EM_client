@@ -16,7 +16,8 @@ angular.module('emmiManager')
             $scope.findSalesForceAccountLink = refData.link.findSalesForceAccount;
             Client.getOwnersReferenceDataList(refData.link.potentialOwners,'firstName')
                 .then(function (ownerPage) {
-                    $scope.contractOwners = ownerPage.content;
+                	console.log('Result Received in Controller:'+ownerPage);
+                    $scope.contractOwners = ownerPage[1].content;                	
                 });
             $scope.findSalesForceAccount = function () {
                 Client.findSalesForceAccount(refData.link.findSalesForceAccount, $scope.sfSearch.searchQuery).then(function (searchResults) {
