@@ -90,7 +90,7 @@ angular.module('emmiManager')
                 }
                 return deferred.promise;
             },
-            getOwnersReferenceDataList: function (href, field) {
+            getOwnersReferenceDataList: function (href) {
             	var owners = [];
                 return $http.get(UriTemplate.create(href).stringify())
                     .then(function load(response) {

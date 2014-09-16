@@ -16,7 +16,7 @@ angular.module('emmiManager')
             $scope.findSalesForceAccountLink = refData.link.findSalesForceAccount;
             $scope.findNormalizedNameLink = refData.link.findByNormalizedName;
 
-            Client.getOwnersReferenceDataList(refData.link.potentialOwners,'firstName')
+            Client.getOwnersReferenceDataList(refData.link.potentialOwners)
                 .then(function (owners) {
                     $scope.contractOwners = owners;         	
                 });
