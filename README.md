@@ -21,16 +21,18 @@ Setup
 Pull down the Git repo and run these commands from the root (where the
 package.json and bower.json files live):
 
-- run `npm install`
-- run `bower install`: this fetches all of the javascript dependency libraries
-- install gulp via `npm install -g gulp` (may need to run under `sudo`)
+- run `npm install`: this fetches the 'build system', analogous to building maven itself
+    - If you have problems it could be due to previous global installation of npm based stuff. I ended up removing the npm
+    cached stuff in my local user directory ~/.npm and then things started working properly locally
+- install bower globally `npm install bower -g` (probably need to run under `sudo`)    
+- run `bower install`: this fetches all of the javascript dependency libraries necessary to run the application, analogous to fetching dependencies in maven
 - need sass >= 3.3.8; via `gem install sass` (may need to run under `sudo`)
 
 You can review [Swiip Generator] (https://github.com/Swiip/generator-gulp-angular) for the
 different Gulp commands available.
 
-- `gulp serve`: starts the server which listens for changes (sync server) on the source files
-- `gulp serve:dist`: launch sync server using optimized files
+- `./node_modules/.bin/gulp serve`: starts the server which listens for changes (sync server) on the source files
+- `./node_modules/.bin/gulp serve:dist`: launch sync server using optimized files
 
 File Structure
 -----------------------------------

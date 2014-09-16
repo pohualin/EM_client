@@ -111,7 +111,13 @@ angular.module('emmiManager')
                     .then(function (response) {
                         return response.data;
                     });
-            }
+            },
+            findNormalizedName: function(href, searchString){
+                return $http.get(UriTemplate.create(href).stringify({normalizedName: searchString}))
+                    .then(function (response) {
+                        return response.data;
+                    });
+            }               
         };
 
     })
@@ -148,6 +154,52 @@ angular.module('emmiManager')
             }
         };
     }])
+
+    .directive('uniqueClient', ['$popover', 'Client', function ($popover, Client) {
+          return {
+            restrict: 'A',
+            require: 'ngModel',
+            scope: {
+                url: '=uniqueUrl'
+            },            
+            link: function (scope, element, attrs, ngModel) {
+
+                scope.uniquePopup = $popover(element, {
+                    scope: scope,
+                    placement: 'top-right',
+                    show:false,
+                    trigger: 'manual',
+                    contentTemplate: 'partials/client/unique_client_popover.tpl.html'
+                });
+
+                element.on('keydown', function() {
+                    if (scope.uniquePopup) {
+                        scope.uniquePopup.hide();
+                        ngModel.$setValidity('unique', true);
+                    }
+                });
+
+                 element.on('blur', function() {
+                    Client.findNormalizedName(scope.url, element.val()).then(function (searchResults) {
+                        scope.existsClient = searchResults;
+                          if (scope.existsClient.entity === undefined) {
+                            ngModel.$setValidity('unique', true);
+                            if (scope.uniquePopup) {
+                                scope.uniquePopup.hide();
+                            }
+                          } else {
+                            var clientResource = Client.getClient();
+                            if (clientResource && clientResource.entity.id != scope.existsClient.entity.id ) {
+                                ngModel.$setValidity('unique', false);
+                                scope.uniquePopup.show();
+                                //element.focus();
+                            }
+                          }
+                    });
+                 }) ;  
+            }
+          };
+    }])    
 
     .directive('saveClick', ['$popover', 'Client', '$timeout', '$translate', function ($popover, Client, $timeout, $translate) {
         return {

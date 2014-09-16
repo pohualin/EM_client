@@ -18,7 +18,11 @@
                     <div class="error-circle" data-ng-show="clientForm.clientName.$error.pattern && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Please enter a valid client name."></div>
-                    <input class="form-control" data-ng-model="client.name" id="clientName" name="clientName" type="text" required data-auto-focus data-ng-pattern="/^[\-\.a-zA-Z0-9 '=_;:`@#&,\(\)\/]*$/">
+                    <div class="error-circle" data-ng-show="clientForm.clientName.$dirty && clientForm.clientName.$invalid && !form.$error.unique"
+                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                         data-title="The client name already exists. "></div>                      
+                    <input class="form-control" data-ng-model="client.name" id="clientName" name="clientName" type="text" data-unique-url="findNormalizedNameLink" data-unique-client required data-auto-focus data-ng-pattern="/^[\-\.a-zA-Z0-9 '=_;:`@#&,\(\)\/]*$/"
+                    data-animation="am-flip-x" >
                 </div>
             </div>
         </div>
@@ -78,11 +82,11 @@
                     <div class="error-circle" data-ng-show="clientForm.clientContractStart.$error.required && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Required"></div>
-                    <div class="error-circle" data-ng-show="clientForm.clientContractStart.$error.dateLowerThan && formSubmitted"
+                    <div class="error-circle" data-ng-show="!clientForm.clientContractStart.$error.required &&  clientForm.clientContractStart.$error.date && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Please select a valid date"></div>
                     <input id="contractStart" class="form-control" type="text" name="clientContractStart" data-ng-model="client.contractStart" data-autoclose="true"
-                           data-dateType="iso" data-bs-datepicker required data-date-lower-than="{{client.contractEnd}}" data-max-date="{{client.contractEnd}}" data-num-days="1">
+                           data-dateType="iso" data-bs-datepicker-emmi required data-max-date="{{client.contractEnd}}">
                 </div>
             </div>
             <div class="col-md-4">
@@ -91,11 +95,11 @@
                     <div class="error-circle" data-ng-show="clientForm.clientContractEnd.$error.required && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Required"></div>
-                    <div class="error-circle" data-ng-show="clientForm.clientContractEnd.$error.dateGreaterThan && formSubmitted"
+                    <div class="error-circle" data-ng-show="!clientForm.clientContractEnd.$error.required && clientForm.clientContractEnd.$error.date && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Please select a valid date"></div>
                     <input id="contractEnd" class="form-control" type="text" name="clientContractEnd" data-ng-model="client.contractEnd" data-autoclose="true"
-                           data-dateType="string" data-bs-datepicker required data-date-greater-than="{{client.contractStart}}"  data-min-date="{{client.contractStart | minusDays:1}}" data-num-days="1">
+                           data-dateType="string" data-bs-datepicker-emmi required data-min-date="{{client.contractStart | addDays:1}}">
                 </div>
             </div>
         </div>
@@ -111,7 +115,11 @@
         </div>
         <div class="row" data-ng-show="client.salesForceAccount">
             <div class="col-md-12">
-                <label class="control-label" for="">SF Account:&nbsp;&nbsp;&nbsp;</label>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label class="control-label" for="">Salesforce Account</label>
+                    </div>
+                </div>
                 {{client.salesForceAccount.name}}&nbsp;&nbsp;&nbsp;&nbsp;
                 <span>{{client.salesForceAccount.city}}<span
                     data-ng-show="client.salesForceAccount.city && client.salesForceAccount.state">,&nbsp;</span>{{client.salesForceAccount.state}}
