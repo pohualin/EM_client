@@ -78,9 +78,28 @@ angular.module('emmiManager')
                     }
                 };
 
+                $scope.tagGroupCheck = function () {
+                    var unique = {};
+                    var distinct = [];
+                    $scope.groups.forEach(function (x) {
+                      if (!unique[x.title]) {
+                        distinct.push(x.title);
+                        unique[x.title] = true;
+                      }
+                    });
+                    if (distinct.length !== $scope.groups.length) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                };
+
             }],
             link: function(scope, element, attrs, ngModelCtrl) {
 
+                scope.$watch('groups', function(value) {
+                    ngModelCtrl.$setValidity('unique', !scope.tagGroupCheck());
+                }, true);
 
             }
         };
