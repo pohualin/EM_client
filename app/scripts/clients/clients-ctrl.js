@@ -319,11 +319,7 @@ angular.module('emmiManager')
             Client.setClient(clientResource);
         } else {
             Client.viewClientList();
-        }      
-        
-        Location.findForClient(clientResource).then(function (locationPage) {
-            $scope.handleResponse(locationPage, 'clientLocations');
-        });
+        }
         $scope.edit = function () {
             Client.editClient($scope.client);
         };
