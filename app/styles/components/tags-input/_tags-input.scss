@@ -80,20 +80,20 @@
             float: left;
             height: 26px;
             font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
-            &.invalid-tag {
-                color: red;
-            }
+            // &.invalid-tag {
+            //     color: red;
+            // }
             &::-ms-clear {
                 display: none;
             }
         }
     }
 
-    &.ng-invalid .tags {
-        -webkit-box-shadow: 0 0 3px 1px rgba(255, 0, 0, 0.6);
-        -moz-box-shadow: 0 0 3px 1px rgba(255, 0, 0, 0.6);
-        box-shadow: 0 0 3px 1px rgba(255, 0, 0, 0.6);
-    }
+    // &.ng-invalid .tags {
+    //     -webkit-box-shadow: 0 0 3px 1px rgba(255, 0, 0, 0.6);
+    //     -moz-box-shadow: 0 0 3px 1px rgba(255, 0, 0, 0.6);
+    //     box-shadow: 0 0 3px 1px rgba(255, 0, 0, 0.6);
+    // }
 
     .tag-list {
         margin: 0;

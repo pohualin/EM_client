@@ -124,8 +124,8 @@ tagsInput.directive('tagsInput', ['$timeout','$document','tagsInputConfig','focu
 
             return tagText.length >= options.minLength &&
                    tagText.length <= (options.maxLength || tagText.length) &&
-                   options.allowedTagsPattern.test(tagText) &&
-                   !findInObjectArray(self.items, tag, options.displayProperty);
+                   options.allowedTagsPattern.test(tagText);// &&
+                   //!findInObjectArray(self.items, tag, options.displayProperty);
         };
 
         self.items = [];

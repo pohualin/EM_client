@@ -1,4 +1,4 @@
-    <div class="btn-group" data-ng-repeat="tagGroup in groups" data-ng-class="{ selected: $index == selectedTagGroupIndex }">
+    <div class="btn-group" data-ng-repeat="tagGroup in groups" data-ng-class="{ selected: $index == selectedTagGroupIndex }" data-ng-form="tagGroupForm">
         <div class="tag-group-edit" data-ng-show="tagGroup.editMode">
             <input type="text" data-ng-model="tagGroup.title" value="{{ tagGroup.title }}" data-focus-on="editMode" data-ng-enter="changeTagGroupTitle($index)" data-ng-blur="changeTagGroupTitle($index)">
         </div>
@@ -11,8 +11,11 @@
             <span class="sr-only">Toggle Dropdown</span>
         </button>
         <div class="dropdown-menu" role="menu" style="width:600px">
-            <div data-tags-input class="tags-input" data-ng-model="tagGroup.tags" data-ng-click="$event.stopPropagation();" data-ng-paste="pasteTags($event, $index)" data-enable-editing-last-tag="true" data-add-on-space="true"></div>
+            <div data-tags-input class="tags-input" data-ng-model="tagGroup.tags" data-ng-click="$event.stopPropagation();" data-ng-paste="pasteTags($event, $index)" data-enable-editing-last-tag="true" data-add-on-space="true" data-min-tags="1" data-name="tags"></div>
         </div>
+        <div class="error-circle" data-ng-show="tagGroupForm.tags.$error.minTags && $parent.$parent.$parent.formSubmitted"
+            data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+            data-title="Groups must have at least 1 tag"></div>
         &nbsp;
     </div>
     <button data-ng-hide="createMode" class="btn btn-default" type="button" data-ng-click="enterCreateMode()">Add Groups &amp; Tags</button>
