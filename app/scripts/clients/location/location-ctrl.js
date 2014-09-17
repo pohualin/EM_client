@@ -99,14 +99,16 @@ angular.module('emmiManager')
         };
 
         $scope.showErrorBanner = function () {
-            $alert({
-                title: ' ',
-                content: 'Please correct the below information.',
-                container: '#message-container',
-                type: 'danger',
-                show: true,
-                dismissable: false
-            });
+            if (!$scope.locationErrorAlert) {
+                $scope.locationErrorAlert = $alert({
+                    title: ' ',
+                    content: 'Please correct the below information.',
+                    container: '#message-container',
+                    type: 'danger',
+                    show: true,
+                    dismissable: false
+                });
+            }
         };
 
         $scope.loadAllIds = function () {
