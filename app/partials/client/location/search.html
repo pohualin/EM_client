@@ -65,21 +65,19 @@
                                     <th>Add</th>
                                     <th data-ng-click="sort('name')">Name <span data-ng-show="sortProperty.property === 'name'">({{sortProperty.ascending ? 'a..z' : 'z..a'}})</span>
                                     </th>
-                                    <th>Clients</th>
+                                    <th data-ng-click="sort('belongsTo.name')">Client Owner <span data-ng-show="sortProperty.property === 'belongsTo.name'">({{sortProperty.ascending ? 'a..z' : 'z..a'}})</th>
                                     <th data-ng-click="sort('city')">City/State <span data-ng-show="sortProperty.property === 'city'">({{sortProperty.ascending ? 'a..z' : 'z..a'}})</span>
                                     </th>
                                     <th data-ng-click="sort('phone')">Phone <span data-ng-show="sortProperty.property === 'phone'">({{sortProperty.ascending ? '0..9' : '9..0'}})</span>
                                     </th>
 
                                 </tr>
-                                <tr data-ng-repeat="location in locations">
-                                    <td><input type="checkbox" data-ng-model="location.entity.newlocation"
+                                <tr data-ng-repeat="location in locations" data-ng-class="location.entity.currentNewLocationState ? 'text-muted' : ''">
+                                    <td><input type="checkbox" data-ng-model="location.entity.newlocation"  data-ng-disabled="location.entity.currentNewLocationState"
                                                ng-change="onCheckboxChange(location)"></td>
                                     <td>{{location.entity.name}}</td>
                                     <td>
-                                    <span data-ng-repeat="client in location.entity.usingThisLocation">
-                                         {{client.name}}<span data-ng-hide="$last">,&nbsp;</span>
-                                    </span>
+                                        {{location.entity.belongsTo.name}}
                                     </td>
                                     <td> {{location.entity.city}}<span
                                             data-ng-show="location.entity.city && location.entity.state">,&nbsp;</span>{{location.entity.state}}
