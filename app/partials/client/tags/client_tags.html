@@ -1,6 +1,10 @@
             <div class="col-md-12" data-ng-controller="ClientTagsController">
-                <h2>Groups/Tags</h2>
-                <div class="alert alert-danger" ng-show="clientForm.clientTagGroups.$error.unique">That username is taken, please try another</div>
+                <h2>
+                    Groups/Tags
+                    <div class="error-circle" data-ng-show="clientForm.clientTagGroups.$error.unique && formSubmitted"
+                        data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                        data-title="Groups of tags must have a unique name"></div>
+                </h2>
                 <span data-tag-groups data-ng-model="client.tagGroups" data-name="clientTagGroups" data-form-field="clientForm.clientTagGroups"></span>
                 <small>&nbsp;&nbsp;&nbsp;or</small>
                 <button class="btn btn-link" type="button" title="Select groups to add:" data-content-template="partials/client/tags/tag_library.html" data-trigger="click" data-bs-popover>Add from Library</button>

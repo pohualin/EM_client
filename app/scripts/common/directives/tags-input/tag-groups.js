@@ -33,6 +33,8 @@ angular.module('emmiManager')
                         title: this.newTagGroupTitle,
                         tags: []
                     };
+                    var dup = $scope.tagGroupExists(this.newTagGroupTitle);
+                    $scope.formField.$setValidity('unique', !dup);
                     $scope.groups.push(tagGroup);
                     $scope.createMode = false;
                 };
@@ -52,6 +54,8 @@ angular.module('emmiManager')
                 };
 
                 $scope.changeTagGroupTitle = function (groupIndex) {
+                    var dup = $scope.tagGroupExists($scope.groups[groupIndex].title, groupIndex); // Ignore the edited group's index
+                    $scope.formField.$setValidity('unique', !dup);
                     // Title already gets changed from data binding, so really just need to hide the edit form
                     $scope.groups[groupIndex].editMode = false;
                     $scope.selectedTagGroupIndex = -1;
@@ -78,28 +82,18 @@ angular.module('emmiManager')
                     }
                 };
 
-                $scope.tagGroupCheck = function () {
-                    var unique = {};
-                    var distinct = [];
-                    $scope.groups.forEach(function (x) {
-                      if (!unique[x.title]) {
-                        distinct.push(x.title);
-                        unique[x.title] = true;
-                      }
-                    });
-                    if (distinct.length !== $scope.groups.length) {
-                        return true;
-                    } else {
-                        return false;
+                $scope.tagGroupExists = function (title, ignoreIndex) {
+                    for (var k = 0; k < $scope.groups.length; k++) {
+                        if ($scope.groups[k].title === title && ignoreIndex !== k) {
+                            return true;
+                        }
                     }
+                    return false;
                 };
 
             }],
             link: function(scope, element, attrs, ngModelCtrl) {
 
-                scope.$watch('groups', function(value) {
-                    ngModelCtrl.$setValidity('unique', !scope.tagGroupCheck());
-                }, true);
 
             }
         };
