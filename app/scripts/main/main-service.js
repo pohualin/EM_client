@@ -14,7 +14,7 @@ angular.module('emmiManager')
         return function (scope, elem, attr) {
             scope.$on('focusOn', function (e, name) {
                 if (name === attr.focusOn) {
-                    $timeout(function(){
+                    $timeout(function () {
                         elem[0].focus();
                     }, 0);
                 }
@@ -25,8 +25,8 @@ angular.module('emmiManager')
     .directive('ngEnter', function () {
         return function (scope, element, attrs) {
             element.bind('keydown keypress', function (event) {
-                if(event.which === 13) {
-                    scope.$apply(function (){
+                if (event.which === 13) {
+                    scope.$apply(function () {
                         scope.$eval(attrs.ngEnter);
                     });
 
@@ -36,11 +36,11 @@ angular.module('emmiManager')
         };
     })
 
-    .directive('autoFocus', function($timeout) {
+    .directive('autoFocus', function ($timeout) {
         return {
             restrict: 'AC',
-            link: function(_scope, _element) {
-                $timeout(function(){
+            link: function (_scope, _element) {
+                $timeout(function () {
                     _element[0].focus();
                 }, 250);
             }
@@ -49,30 +49,45 @@ angular.module('emmiManager')
 
     // From http://stackoverflow.com/questions/13320015/how-to-write-a-debounce-service-in-angularjs
     .factory('debounce', function ($timeout, $q) {
-        return function(func, wait, immediate) {
+        return function (func, wait, immediate) {
             var timeout;
             var deferred = $q.defer();
-            return function() {
+            return function () {
                 var context = this, args = arguments;
-                var later = function() {
+                var later = function () {
                     timeout = null;
-                    if(!immediate) {
+                    if (!immediate) {
                         deferred.resolve(func.apply(context, args));
                         deferred = $q.defer();
                     }
                 };
                 var callNow = immediate && !timeout;
-                if ( timeout ) {
+                if (timeout) {
                     $timeout.cancel(timeout);
                 }
                 timeout = $timeout(later, wait);
                 if (callNow) {
-                    deferred.resolve(func.apply(context,args));
+                    deferred.resolve(func.apply(context, args));
                     deferred = $q.defer();
                 }
                 return deferred.promise;
             };
         };
     })
+
+    .factory('arrays', function () {
+        return {
+            convertToObject: function (keyItem, valueItem, array) {
+                var obj = {};
+                angular.forEach(array, function (item) {
+                    if (item[keyItem] && item[valueItem]) {
+                        obj[item[keyItem]] = item[valueItem];
+                    }
+                });
+                return obj;
+            }
+        };
+    })
+
 
 ;

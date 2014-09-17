@@ -17,6 +17,7 @@ angular.module('emmiManager', [
     'ngTagsInput',
     'mgcrea.ngStrap',
     'emmi.inputMask',
+    'angularMoment'
 ])
 
     .constant('USER_ROLES', {
