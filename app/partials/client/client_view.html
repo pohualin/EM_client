@@ -60,7 +60,7 @@
                     <span data-translate="client_view_page.information.contract.owner"></span>
                 </div>
                 <div class="col-md-4">
-                    {{client.contractOwner.firstName}} {{client.clientContractOwner.lastName}}
+                    {{client.contractOwner | contractOwnerFilter}}
                 </div>
             </div>
             <div class="row">
