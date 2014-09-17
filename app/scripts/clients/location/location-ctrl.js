@@ -200,6 +200,8 @@ angular.module('emmiManager')
                     if (toBeSaved.belongsToCheckbox) {
                         locationResource.entity.belongsTo = Client.getClient().entity;
                         $scope.addLocationToBelongsToChangedList(locationResource);
+                    } else {
+                        delete locationResource.entity.belongsTo;
                     }
                     $scope.addLocationToAddedList(locationResource);
                     $scope.hideNewLocationModal();

@@ -122,11 +122,6 @@ angular.module('emmiManager')
                     added.push(location);
                 });
                 angular.forEach(clientResource.belongsToChanged, function (location) {
-                    if (location.belongsToCheckbox) {
-                        location.belongsTo = clientResource.entity;
-                    } else {
-                        location.belongsTo = null;
-                    }
                     belongsTo.push(location);
                 });
                 return $http.put(UriTemplate.create(clientResource.link.locations).stringify(), {
