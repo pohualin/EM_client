@@ -2,13 +2,15 @@
 angular.module('emmiManager')
     .service('Location', function ($http, $q, Session, UriTemplate, arrays) {
         var referenceData, query;
-        function addSortIndex(entityPage){
+        function addSortIndex(entityPage, sort){
+            sort = sort || 0;
             if (entityPage && entityPage.content) {
-                for (var sort = 0, size = entityPage.content.length; sort < size; sort++) {
+                for (var size = entityPage.content.length; sort < size; sort++) {
                     var content = entityPage.content[sort];
                     content.sortIdx = sort;
                 }
             }
+            return sort;
         }
         return {
             find: function (query, status, sort, pageSize) {
@@ -68,13 +70,22 @@ angular.module('emmiManager')
                 }
                 return deferred.promise;
             },
-            findForClient: function (client, pageSize) {
+            findForClient: function (client) {
+                var sortIdx = 0;
+                var allLocations = [];
                 var deferred = $q.defer();
                 if (client && client.entity && client.entity.id) {
-                    $http.get(UriTemplate.create(client.link.locations).stringify({size: pageSize}))
-                        .then(function (response) {
-                            addSortIndex(response.data);
-                            deferred.resolve(response.data);
+                    $http.get(UriTemplate.create(client.link.locations).stringify())
+                        .then(function pageResponse(response) {
+                            sortIdx = addSortIndex(response.data);
+                            allLocations.push.apply(allLocations, response.data.content);
+                            if (response.data.link && response.data.link['page-next']) {
+                                $http.get(response.data.link['page-next']).then(function(response){
+                                    pageResponse(response);
+                                });
+                            } else {
+                                deferred.resolve(allLocations);
+                            }
                         });
                 } else {
                     deferred.resolve(null);
@@ -95,7 +106,6 @@ angular.module('emmiManager')
             },
             hasLocationModifications: function (clientResource) {
                 return  !(angular.equals({}, clientResource.addedLocations) &&
-                    angular.equals({}, clientResource.removedLocations) &&
                     angular.equals({}, clientResource.belongsToChanged));
             },
             removeLocation: function (locationResource) {

@@ -16,23 +16,35 @@ angular.module('emmiManager')
 
         $scope.client = Client.getClient();
 
+        if ($scope.client && !$scope.client.addedLocations) {
+            $scope.client.addedLocations = {};
+            $scope.client.hasLocations = function(){
+                return !angular.equals({}, this.addedLocations) || $scope.clientLocations;
+            };
+        }
+
         $scope.isEmpty = function (obj) {
             return angular.equals({}, obj);
         };
 
+        $scope.showRemovalSuccess = function (locationResource){
+            var clientName = Client.getClient().entity.name ? Client.getClient().entity.name : 'this client';
+            $alert({
+                title: ' ',
+                content: 'The location <b>' + locationResource.entity.name + '</b> has been successfully removed from <b>' + clientName + '</b>',
+                container: '#remove-container',
+                type: 'success',
+                show: true,
+                duration: 5,
+                dismissable: true
+            });
+        };
+
         $scope.removeExistingLocation = function (locationResource) {
-            Location.removeLocation(locationResource).then(function (){
-                $alert({
-                    title: ' ',
-                    content: 'The location <b>' + locationResource.entity.name + '</b> has been successfully removed from <b>' +  Client.getClient().entity.name + '</b>',
-                    container: '#remove-container',
-                    type: 'success',
-                    show: true,
-                    duration: 5,
-                    dismissable: true
-                });
-                Location.findForClient(Client.getClient()).then(function (locationPage) {
-                    $scope.handleResponse(locationPage, 'clientLocations');
+            Location.removeLocation(locationResource).then(function () {
+                $scope.showRemovalSuccess(locationResource);
+                Location.findForClient(Client.getClient()).then(function (allLocations) {
+                    $scope.clientLocations = allLocations;
                 });
             });
         };
@@ -64,44 +76,7 @@ angular.module('emmiManager')
 
         $scope.removeLocationFromAddedList = function (locationResource) {
             delete Client.getClient().addedLocations[locationResource.entity.id];
-            $alert({
-                title: ' ',
-                content: 'The location <b>' + locationResource.entity.name + '</b> has been successfully removed from <b>' +  Client.getClient().entity.name + '</b>',
-                container: '#remove-container',
-                type: 'success',
-                show: true,
-                duration: 5,
-                dismissable: true
-            });
-        };
-
-        $scope.handleResponse = function (locationPage, locationsPropertyName) {
-            if (locationPage) {
-                this[locationsPropertyName] = locationPage.content;
-
-                $scope.total = locationPage.page.totalElements;
-                $scope.links = [];
-                for (var i = 0, l = locationPage.linkList.length; i < l; i++) {
-                    var aLink = locationPage.linkList[i];
-                    if (aLink.rel.indexOf('self') === -1) {
-                        $scope.links.push({
-                            order: i,
-                            name: aLink.rel.substring(5),
-                            href: aLink.href
-                        });
-                    }
-                }
-                $scope.load = locationPage.link.self;
-                $scope.currentPage = locationPage.page.number;
-                $scope.currentPageSize = locationPage.page.size;
-                $scope.pageSizes = [5, 10, 15, 25];
-                $scope.status = locationPage.filter.status;
-            } else {
-                $scope.total = 0;
-                $scope[locationsPropertyName] = null;
-            }
-            $scope.noSearch = false;
-            $scope.loading = false;
+            $scope.showRemovalSuccess(locationResource);
         };
 
         $scope.setBelongsToPropertiesFor = function (location) {
@@ -115,15 +90,15 @@ angular.module('emmiManager')
             }
         };
 
-        $scope.getLocationFromBelongsToChangedList = function (locationResource){
-           return (locationResource && locationResource.entity) ? Client.getClient().belongsToChanged[locationResource.entity.id] : null;
+        $scope.getLocationFromBelongsToChangedList = function (locationResource) {
+            return (locationResource && locationResource.entity) ? Client.getClient().belongsToChanged[locationResource.entity.id] : null;
         };
 
         $scope.addLocationToBelongsToChangedList = function (locationResource) {
             Client.getClient().belongsToChanged[locationResource.entity.id] = locationResource.entity;
         };
 
-        $scope.showErrorBanner = function(){
+        $scope.showErrorBanner = function () {
             $alert({
                 title: ' ',
                 content: 'Please correct the below information.',
@@ -134,7 +109,7 @@ angular.module('emmiManager')
             });
         };
 
-        $scope.loadAllIds = function(){
+        $scope.loadAllIds = function () {
             $scope.idsFetched = false;
             return Location.findAllIdsForClient(Client.getClient()).then(function (idSet) {
                 $scope.selectedIdsForClient = idSet;
@@ -152,7 +127,7 @@ angular.module('emmiManager')
 /**
  *  Controls the edit location popup (partials/location/edit.html)
  */
-    .controller('LocationEditController', function ($scope, $controller, Location) {
+    .controller('LocationEditController', function ($scope, $controller, Location, Client) {
 
         $controller('LocationCommon', {$scope: $scope});
 
@@ -168,6 +143,13 @@ angular.module('emmiManager')
                     // set the properties for managing to belongsTo relations
                     $scope.setBelongsToPropertiesFor(locationResource.entity);
 
+                    // set the belongsTo entity for this location
+                    if (toBeSaved.belongsToCheckbox){
+                        locationResource.entity.belongsTo = Client.getClient().entity;
+                    } else {
+                        delete locationResource.entity.belongsTo;
+                    }
+
                     // add location to change list if the checkbox state in the edit window is
                     // different than what is stored on the db
                     if (toBeSaved.belongsToCheckbox !== locationResource.entity.belongsToCheckbox) {
@@ -177,7 +159,7 @@ angular.module('emmiManager')
 
                     var onChangeList = $scope.getLocationFromBelongsToChangedList(locationResource);
                     // update the copy in the change list
-                    if (onChangeList){
+                    if (onChangeList) {
                         angular.extend(onChangeList, locationResource.entity);
                     }
 
@@ -195,7 +177,7 @@ angular.module('emmiManager')
 /**
  *  Controls the create new location popup (partials/location/new.html)
  */
-    .controller('LocationCreateController', function ($scope, $controller, Location, $alert) {
+    .controller('LocationCreateController', function ($scope, $controller, Location, $alert, Client) {
 
         $controller('LocationCommon', {$scope: $scope});
 
@@ -203,7 +185,7 @@ angular.module('emmiManager')
 
         $scope.title = 'New Location';
 
-        $scope.saveAndAddAnother = function(isValid){
+        $scope.saveAndAddAnother = function (isValid) {
             $scope.saveLocation(isValid, true);
         };
 
@@ -213,12 +195,13 @@ angular.module('emmiManager')
                 var toBeSaved = $scope.location;
                 Location.create(toBeSaved).then(function (location) {
                     var locationResource = location.data;
-                    $scope.addLocationToAddedList(locationResource);
                     locationResource.entity.belongsToMutable = true;
                     locationResource.entity.belongsToCheckbox = toBeSaved.belongsToCheckbox;
                     if (toBeSaved.belongsToCheckbox) {
+                        locationResource.entity.belongsTo = Client.getClient().entity;
                         $scope.addLocationToBelongsToChangedList(locationResource);
                     }
+                    $scope.addLocationToAddedList(locationResource);
                     $scope.hideNewLocationModal();
                     if (addAnother) {
                         $scope.addLocations();
@@ -257,7 +240,7 @@ angular.module('emmiManager')
          * @param managedLocationList a String, the name of the list in $scope
          */
         $scope.setNewLocationAttribute = function (managedLocationList) {
-            $scope.loadAllIds().then(function (){
+            $scope.loadAllIds().then(function () {
                 $scope.setExistsOnLocationsWithin(managedLocationList);
                 $scope.setAddedOnLocationsWithin(managedLocationList);
                 angular.forEach($scope[managedLocationList], function (locationResource) {
@@ -314,14 +297,14 @@ angular.module('emmiManager')
             }
         };
 
-        $scope.saveAndAddAnother = function(){
+        $scope.saveAndAddAnother = function () {
             $scope.save(true);
             $scope.locationQuery = null;
             $scope.status = null;
             $scope.noSearch = true;
             $scope[managedLocationList] = null;
             focus('LocationSearchFocus');
-            var clientName = (Client.getClient().entity.name) ? '<b>' +  Client.getClient().entity.name + '</b>.' : 'the client.';
+            var clientName = (Client.getClient().entity.name) ? '<b>' + Client.getClient().entity.name + '</b>.' : 'the client.';
             $alert({
                 title: ' ',
                 content: 'The selected locations were successfully added to ' + clientName,
@@ -338,6 +321,35 @@ angular.module('emmiManager')
             $scope.$hide();
         };
 
+        $scope.handleResponse = function (locationPage, locationsPropertyName) {
+            if (locationPage) {
+                this[locationsPropertyName] = locationPage.content;
+
+                $scope.total = locationPage.page.totalElements;
+                $scope.links = [];
+                for (var i = 0, l = locationPage.linkList.length; i < l; i++) {
+                    var aLink = locationPage.linkList[i];
+                    if (aLink.rel.indexOf('self') === -1) {
+                        $scope.links.push({
+                            order: i,
+                            name: aLink.rel.substring(5),
+                            href: aLink.href
+                        });
+                    }
+                }
+                $scope.load = locationPage.link.self;
+                $scope.currentPage = locationPage.page.number;
+                $scope.currentPageSize = locationPage.page.size;
+                $scope.pageSizes = [5, 10, 15, 25];
+                $scope.status = locationPage.filter.status;
+            } else {
+                $scope.total = 0;
+                $scope[locationsPropertyName] = null;
+            }
+            $scope.noSearch = false;
+            $scope.loading = false;
+        };
+
         $scope.search = function () {
             $scope.changedLocations = {};
             $scope.loading = true;
@@ -351,7 +363,7 @@ angular.module('emmiManager')
             });
         };
 
-        $scope.statusChange = function(){
+        $scope.statusChange = function () {
             $scope.loading = true;
             Location.find($scope.locationQuery, $scope.status, $scope.sortProperty, $scope.currentPageSize).then(function (locationPage) {
                 $scope.handleResponse(locationPage, managedLocationList);
@@ -388,7 +400,7 @@ angular.module('emmiManager')
             property: null,
             ascending: null,
             resetOnNextSet: false,
-            setProperty: function (property){
+            setProperty: function (property) {
                 if (this.property === property) {
                     if (!this.resetOnNextSet) {
                         if (this.ascending !== null) {
@@ -406,7 +418,7 @@ angular.module('emmiManager')
                     this.resetOnNextSet = false;
                 }
             },
-            reset: function(){
+            reset: function () {
                 this.property = null;
                 this.ascending = null;
                 this.resetOnNextSet = false;
@@ -414,7 +426,7 @@ angular.module('emmiManager')
         };
 
         // when a column header is clicked
-        $scope.sort = function(property){
+        $scope.sort = function (property) {
             $scope.sortProperty.setProperty(property);
             $scope.loading = true;
             Location.find($scope.locationQuery, $scope.status, $scope.sortProperty, $scope.currentPageSize).then(function (locationPage) {
@@ -446,7 +458,6 @@ angular.module('emmiManager')
         $controller('LocationCommon', {$scope: $scope});
 
         var editLocationModal = $modal({scope: $scope, template: 'partials/client/location/edit.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false});
-        var managedLocationList = 'clientLocations';
 
         $scope.editLocation = function (location) {
             // create a copy for editing
@@ -464,23 +475,9 @@ angular.module('emmiManager')
             editLocationModal.$promise.then(editLocationModal.show);
         };
 
-        Location.findForClient(Client.getClient()).then(function (locationPage) {
-            $scope.handleResponse(locationPage, managedLocationList);
+        Location.findForClient(Client.getClient()).then(function (allLocations) {
+            $scope.clientLocations = allLocations;
         });
-
-        $scope.fetchPage = function (href) {
-            $scope.clientLocations = null;
-            Location.fetchPageLink(href).then(function (locationPage) {
-                $scope.handleResponse(locationPage, managedLocationList);
-            });
-        };
-
-        $scope.changePageSize = function (pageSize) {
-            $scope.clientLocations = null;
-            Location.findForClient(Client.getClient(), pageSize).then(function (locationPage) {
-                $scope.handleResponse(locationPage, managedLocationList);
-            });
-        };
     })
 
 /**
@@ -499,12 +496,6 @@ angular.module('emmiManager')
         $scope.hideAddLocationsModal = function () {
             addNewLocationsModal.hide();
         };
-
-        if (Client.getClient()) {
-            if (!Client.getClient().addedLocations) {
-                Client.getClient().addedLocations = {};
-            }
-        }
 
         $scope.removeNewLocation = function (location) {
             // wrap as a resource to remove
