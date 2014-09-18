@@ -283,6 +283,8 @@ angular.module('emmiManager')
 
         $scope.save = function (addAnother) {
             // for every changed location, put the change into the correct bucket
+            var singleLocationAdded = null,
+                count = 0;
             angular.forEach($scope.changedLocations, function (locationResource) {
                 var location = locationResource.entity,
                     alreadyExists = locationResource.entity.existsOnClient,
@@ -293,11 +295,18 @@ angular.module('emmiManager')
                     if (!alreadyExists && !previouslyAdded) {
                         // add it to the list, if it isn't already there
                         $scope.addLocationToAddedList(locationResource);
+                        singleLocationAdded = locationResource;
+                        count++;
                     }
                 }
             });
             if (!addAnother) {
                 $scope.$hide();
+            }
+            if (count === 1){
+                $scope.singleLocationAdded = singleLocationAdded;
+            } else {
+                delete $scope.singleLocationAdded;
             }
         };
 
@@ -309,15 +318,27 @@ angular.module('emmiManager')
             $scope[managedLocationList] = null;
             focus('LocationSearchFocus');
             var clientName = (Client.getClient().entity.name) ? '<b>' + Client.getClient().entity.name + '</b>.' : 'the client.';
-            $alert({
-                title: ' ',
-                content: 'The selected locations were successfully added to ' + clientName,
-                container: '#message-container',
-                type: 'success',
-                show: true,
-                duration: 5,
-                dismissable: true
-            });
+            if (!$scope.singleLocationAdded) {
+                $alert({
+                    title: ' ',
+                    content: 'The selected locations were successfully added to ' + clientName,
+                    container: '#message-container',
+                    type: 'success',
+                    show: true,
+                    duration: 5,
+                    dismissable: true
+                });
+            } else {
+                $alert({
+                    title: ' ',
+                    content: 'The location <b>' + $scope.singleLocationAdded.entity.name + '</b> has been successfully added to ' + clientName,
+                    container: '#message-container',
+                    type: 'success',
+                    show: true,
+                    duration: 5,
+                    dismissable: true
+                });
+            }
         };
 
         $scope.cancel = function () {
