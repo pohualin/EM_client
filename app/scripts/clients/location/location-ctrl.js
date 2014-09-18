@@ -28,10 +28,9 @@ angular.module('emmiManager')
         };
 
         $scope.showRemovalSuccess = function (locationResource){
-            var clientName = Client.getClient().entity.name ? Client.getClient().entity.name : 'this client';
             $alert({
                 title: ' ',
-                content: 'The location <b>' + locationResource.entity.name + '</b> has been successfully removed from <b>' + clientName + '</b>',
+                content: 'The location <b>' + locationResource.entity.name + '</b> has been successfully removed.',
                 container: '#remove-container',
                 type: 'success',
                 show: true,
