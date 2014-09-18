@@ -136,7 +136,13 @@ angular.module('emmiManager', [
 
         // enable HATEOAS link array --> object parsing on $get
         HateoasInterceptorProvider.transformAllResponses();
-
+        
+        if (!$httpProvider.defaults.headers.get) {
+            $httpProvider.defaults.headers.get = {};    
+        }
+        //disable IE ajax request caching
+        $httpProvider.defaults.headers.get['If-Modified-Since'] = '0';
+        
         // ensure dates are compatible with back-end
         angular.extend($datepickerProvider.defaults, {
             dateFormat: 'MM/dd/yyyy',
