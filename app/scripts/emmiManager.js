@@ -141,7 +141,8 @@ angular.module('emmiManager', [
             $httpProvider.defaults.headers.get = {};    
         }
         //disable IE ajax request caching
-        $httpProvider.defaults.headers.get['If-Modified-Since'] = '0';
+        $httpProvider.defaults.headers.get['Cache-Control'] = 'no-cache';
+        $httpProvider.defaults.headers.get['Pragma'] = 'no-cache';
         
         // ensure dates are compatible with back-end
         angular.extend($datepickerProvider.defaults, {
