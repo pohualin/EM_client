@@ -13,7 +13,7 @@
         <div class="dropdown-menu" role="menu" style="width:600px">
             <div data-tags-input class="tags-input" data-ng-model="tagGroup.tags" data-ng-click="$event.stopPropagation();" data-ng-paste="pasteTags($event, $index)" data-enable-editing-last-tag="true" data-add-on-space="true" data-min-tags="1" data-name="tags"></div>
         </div>
-        <div class="error-circle" data-ng-show="tagGroupForm.tags.$error.minTags && $parent.$parent.$parent.formSubmitted"
+        <div class="error-circle" data-ng-show="tagGroupForm.tags.$error.minTags"
             data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
             data-title="Groups must have at least 1 tag"></div>
         &nbsp;
