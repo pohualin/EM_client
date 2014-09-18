@@ -39,6 +39,17 @@
     background: rgba(0, 0, 0, 0.5);
 }
 
+.btn-today {
+  color: #000000;
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.btn-today[disabled] {
+  @extend .btn-today;
+  color: #333;
+}
+
 // various example component implementations
 @include example();
 @include example('.example2');
