@@ -19,11 +19,30 @@ angular.module('emmiManager')
         });
 
         $scope.addLibraries = function () {
-            var selected = $filter('filter')( this.tagLibraries , { checked : true } );
+            // only add non-disabled but selected library groups
+            var selected = $filter('filter')( this.tagLibraries , { checked : true, disabled: false } );
             $scope.client.tagGroups = this.client.tagGroups.concat(angular.copy(selected));
-            angular.forEach(this.tagLibraries, function(value, key) {
+            angular.forEach(this.tagLibraries, function(value) {
                 value.checked = false;
             });
+        };
+
+        $scope.disableLibrary = function(){
+            return function(libraryGroup){
+                var match = false;
+                angular.forEach($scope.client.tagGroups, function(tagGroup){
+                    // exact match between tag group and library group titles
+                    if (libraryGroup.title === tagGroup.title){
+                        match = true;
+                    }
+                });
+                // if there were a match disable and select the library group
+                libraryGroup.disabled = match;
+                if (libraryGroup.disabled ) {
+                    libraryGroup.checked = true;
+                }
+                return libraryGroup;
+            };
         };
 
     })
