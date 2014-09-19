@@ -2,7 +2,7 @@
 
 angular.module('emmiManager')
 
-    .directive('tagGroups', function (focus, $filter) {
+    .directive('tagGroups', function (focus, $filter, $timeout) {
 
         return {
             restrict: 'EA',
@@ -29,12 +29,15 @@ angular.module('emmiManager')
                 };
 
                 $scope.newTagGroup = function (){
-                    var tagGroup = {
-                        title: this.newTagGroupTitle,
-                        tags: []
-                    };
-                    $scope.groups.push(tagGroup);
-                    $scope.createMode = false;
+                    if (this.newTagGroupTitle.length !== 0) {
+                        var tagGroup = {
+                            title: this.newTagGroupTitle,
+                            tags: []
+                        };
+                        $scope.groups.push(tagGroup);
+                        $scope.createMode = false;
+                        $scope.$broadcast('tag:add', tagGroup);
+                    }
                 };
 
                 $scope.selectTagGroup = function (groupIndex) {
@@ -130,6 +133,14 @@ angular.module('emmiManager')
                 scope.$watch('groups.length', function(newVal, oldVal) {
                     // tag added or removed
                     scope.validateForDuplicates();
+                });
+
+                scope.$on('tag:add', function(event, tagGroup) {
+                    $timeout(function() {
+                        var btnGroup = element.find('.btn-group').last();
+                        btnGroup.find('.dropdown-toggle').trigger('click.bs.dropdown');
+                        btnGroup.find('.tags-input .input').focus();
+                    });
                 });
 
             }
