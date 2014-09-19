@@ -160,6 +160,7 @@ tagsInput.directive('tagsInput', ['$timeout','$document','tagsInputConfig','focu
         self.remove = function(index) {
             var tag = self.items.splice(index, 1)[0];
             events.trigger('tag-removed', { $tag: tag });
+            self.selected = null;
             return tag;
         };
 
@@ -377,7 +378,6 @@ tagsInput.directive('tagsInput', ['$timeout','$document','tagsInputConfig','focu
                     }
                     scope.hasFocus = true;
                     events.trigger('input-focus');
-
                     scope.$apply();
                 })
                 .on('blur', function() {

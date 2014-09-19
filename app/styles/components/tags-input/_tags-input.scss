@@ -119,12 +119,12 @@
         .tag-text {
             vertical-align: middle;
             cursor: pointer;
-            // display: inline-block;
-            // padding: 2px 0;
+            display: inline-block;
+            padding: 2px 0;
         }
 
         .remove-button {
-            // display: none;
+            display: none;
             margin: 0 0 0 5px;
             padding: 0;
             border: none;
@@ -141,9 +141,9 @@
 
         &.selected {
             background-color: #428bca;
-            // .remove-button {
-            //     display: inline;
-            // }
+            .remove-button {
+                display: inline;
+            }
         }
 
         input {
