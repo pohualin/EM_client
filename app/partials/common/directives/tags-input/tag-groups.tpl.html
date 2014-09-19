@@ -21,7 +21,7 @@
     <button data-ng-hide="createMode" class="btn btn-default" type="button" data-ng-click="enterCreateMode()">Add Groups &amp; Tags</button>
     <div class="tag-group-create form-inline" data-ng-show="createMode">
         <div class="form-group">
-            <input type="text" class="form-control" data-ng-model="newTagGroupTitle" data-focus-on="createMode" data-ng-enter="newTagGroup()">
+            <input type="text" class="form-control" data-ng-model="newTagGroupTitle" data-focus-on="createMode" data-ng-enter="newTagGroup()" data-ng-blur="newTagGroup()">
         </div>
         <button class="btn btn-default" data-ng-click="exitCreateMode()"><span class="glyphicon glyphicon-remove"></span></button>
     </div>
