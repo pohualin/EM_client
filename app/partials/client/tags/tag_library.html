@@ -1,11 +1,11 @@
 <form name="tagGroupLibraries">
     <div class="form-group">
-        <div class="checkbox" data-ng-repeat="library in tagLibraries">
+        <div class="checkbox" data-ng-repeat="library in tagLibraries | filter:disableLibrary()">
             <label>
-                <input type="checkbox" value="" data-ng-model="library.checked">&nbsp;
+                <input type="checkbox" value="" data-ng-model="library.checked" data-ng-disabled="library.disabled">&nbsp;
             </label>
             <span class="toggle-trigger" data-ng-click="showLibrary=!showLibrary" data-ng-class="{ open: showLibrary }">
-                <span class="caret"></span>{{ library.title }}
+                <span data-ng-show="library.tags.length > 0"  class="caret"></span><span data-ng-class="{'text-muted': library.disabled}">{{ library.title }}</span>
             </span>
             <div class="toggle-content" data-ng-show="showLibrary">
                 <small class="text-muted">{{ library.tags | taglist }}</small>
