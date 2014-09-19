@@ -111,7 +111,7 @@
         "unique_popup_dialog": {
             "title": "Unique Name Validation",
             "exists_content":"The Client name already exists",
-            "Name":"Name",
+            "Name":"NAME",
             "CITY":"CITY/STATE"
         }
     },
