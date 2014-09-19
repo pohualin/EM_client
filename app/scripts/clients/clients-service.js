@@ -153,7 +153,7 @@ angular.module('emmiManager')
         };
     }])
 
-    .directive('uniqueClient', ['$popover', 'Client', '$translate', 'focus', function ($popover, Client, $translate, focus) {
+    .directive('uniqueClient', ['$popover', 'Client', '$translate', function ($popover, Client, $translate) {
           return {
             restrict: 'A',
             require: 'ngModel',
@@ -161,16 +161,6 @@ angular.module('emmiManager')
                 url: '=uniqueUrl'
             },            
             link: function (scope, element, attrs, ngModel) {
-                $translate('client_edit_page.unique_popup_dialog.message').then(function (title) {
-                    scope.uniquePopup = $popover(element, {
-                        title: title,
-                        placement: 'top-right',
-                        scope: scope,
-                        trigger: 'manual',
-                        show: false,
-                        contentTemplate: 'partials/client/unique_client_popover.tpl.html'
-                    });
-                });
 
                 element.on('keydown', function() {
                     if (scope.uniquePopup) {
@@ -191,8 +181,20 @@ angular.module('emmiManager')
                             var clientResource = Client.getClient();
                             if (clientResource && clientResource.entity.id !== scope.existsClient.entity.id ) {
                                 ngModel.$setValidity('unique', false);
-                                scope.uniquePopup.show();
-                                //element.focus(); don't do this or you can't click cancel
+                                if (scope.uniquePopup) {
+                                    scope.uniquePopup.show();
+                                } else {
+                                    $translate('client_edit_page.unique_popup_dialog.message').then(function (title) {
+                                        scope.uniquePopup = $popover(element, {
+                                            title: title,
+                                            placement: 'top-right',
+                                            scope: scope,
+                                            trigger: 'manual',
+                                            show: true,
+                                            contentTemplate: 'partials/client/unique_client_popover.tpl.html'
+                                        });
+                                    });
+                                }
                             }
                           }
                     });
