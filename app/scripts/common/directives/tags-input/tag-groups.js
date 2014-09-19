@@ -2,7 +2,7 @@
 
 angular.module('emmiManager')
 
-    .directive('tagGroups', function (focus, $filter) {
+    .directive('tagGroups', function (focus, $filter, $timeout) {
 
         return {
             restrict: 'EA',
@@ -29,14 +29,15 @@ angular.module('emmiManager')
                 };
 
                 $scope.newTagGroup = function (){
-                    var tagGroup = {
-                        title: this.newTagGroupTitle,
-                        tags: []
-                    };
-                    var dup = $scope.tagGroupExists(this.newTagGroupTitle);
-                    $scope.formField.$setValidity('unique', !dup);
-                    $scope.groups.push(tagGroup);
-                    $scope.createMode = false;
+                    if (this.newTagGroupTitle.length !== 0) {
+                        var tagGroup = {
+                            title: this.newTagGroupTitle,
+                            tags: []
+                        };
+                        $scope.groups.push(tagGroup);
+                        $scope.createMode = false;
+                        $scope.$broadcast('tag:add', tagGroup);
+                    }
                 };
 
                 $scope.selectTagGroup = function (groupIndex) {
@@ -51,11 +52,11 @@ angular.module('emmiManager')
 
                 $scope.removeTagGroup = function (groupIndex) {
                     $scope.groups.splice(groupIndex, 1);
+                    $scope.selectedTagGroupIndex = -1;
                 };
 
                 $scope.changeTagGroupTitle = function (groupIndex) {
-                    var dup = $scope.tagGroupExists($scope.groups[groupIndex].title, groupIndex); // Ignore the edited group's index
-                    $scope.formField.$setValidity('unique', !dup);
+                    $scope.validateForDuplicates();
                     // Title already gets changed from data binding, so really just need to hide the edit form
                     $scope.groups[groupIndex].editMode = false;
                     $scope.selectedTagGroupIndex = -1;
@@ -91,12 +92,74 @@ angular.module('emmiManager')
                     return false;
                 };
 
+                $scope.hasEmpties = function () {
+                    for (var l = 0; l < $scope.groups.length; l++) {
+                        if ($scope.groups[l].tags.length === 0) {
+                            return true;
+                        }
+                    }
+                    return false;
+                };
+
+                $scope.getDupes = function () {
+                    var unique = {};
+                    var dupes = [];
+                    angular.forEach($scope.groups, function (x, i) {
+                        if (!unique[x.title]) {
+                            unique[x.title] = true;
+                        } else {
+                            dupes.push(i);
+                        }
+                    });
+                    return dupes;
+                };
+
+                $scope.validateForDuplicates = function () {
+                    var dupeIndices = $scope.getDupes();
+                    $scope.formField.$setValidity('unique', !dupeIndices.length);
+                    angular.forEach($scope.groups, function (x, i) {
+                        if (dupeIndices.indexOf(i) >= 0) {
+                            $scope.groups[i].isValid = false;
+                        } else {
+                            $scope.groups[i].isValid = true;
+                        }
+                    });
+                };
+
             }],
             link: function(scope, element, attrs, ngModelCtrl) {
 
+                // watch for removed tags and re-check for uniqueness
+                scope.$watch('groups.length', function(newVal, oldVal) {
+                    // tag added or removed
+                    scope.validateForDuplicates();
+                });
+
+                scope.$on('tag:add', function(event, tagGroup) {
+                    $timeout(function() {
+                        var btnGroup = element.find('.btn-group').last();
+                        btnGroup.find('.dropdown-toggle').trigger('click.bs.dropdown');
+                        btnGroup.find('.tags-input .input').focus();
+                    });
+                });
 
             }
         };
 
     })
+
+    .directive('tagGroupsItem', function() {
+        return {
+            require: '^tagGroups',
+            link: function(scope, element, attrs, ngModelCtrl) {
+
+                scope.$watch('groups[$index].tags.length', function() {
+                    // check for empty tags
+                    scope.formField.$setValidity('empty', !scope.hasEmpties()); // shared scope with parent controller (scope.$parent)
+                });
+
+            }
+        };
+    })
+
 ;
