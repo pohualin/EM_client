@@ -15,9 +15,10 @@ angular.module('emmiManager')
             $scope.clientTiers = refData.clientTier;
             $scope.findSalesForceAccountLink = refData.link.findSalesForceAccount;
             $scope.findNormalizedNameLink = refData.link.findByNormalizedName;
+
             Client.getOwnersReferenceDataList(refData.link.potentialOwners)
-                .then(function (ownerPage) {
-                    $scope.contractOwners = ownerPage.content;
+                .then(function (owners) {
+                    $scope.contractOwners = owners;         	
                 });
             $scope.findSalesForceAccount = function () {
                 Client.findSalesForceAccount(refData.link.findSalesForceAccount, $scope.sfSearch.searchQuery).then(function (searchResults) {
@@ -318,11 +319,7 @@ angular.module('emmiManager')
             Client.setClient(clientResource);
         } else {
             Client.viewClientList();
-        }      
-        
-        Location.findForClient(clientResource).then(function (locationPage) {
-            $scope.handleResponse(locationPage, 'clientLocations');
-        });
+        }
         $scope.edit = function () {
             Client.editClient($scope.client);
         };

@@ -1,14 +1,26 @@
 <div class="col-md-12" data-ng-controller="ClientLocationsController" >
     <h2>Locations</h2>
     <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0"
-           cellspacing="0"
-           data-ng-show="clientLocations">
+           cellspacing="0" data-ng-show="client.hasLocations()">
         <tr>
             <th>Name</th>
             <th>Phone</th>
             <th>City</th>
             <th>State</th>
             <th>&nbsp;</th>
+        </tr>
+        <tr data-ng-repeat="(key,location) in client.addedLocations | orderBy:'key'" data-ng-controller="ClientAddNewLocationsController">
+            <td>
+                {{location.name}}
+                <span data-ng-show="location.belongsTo && location.belongsTo.id !== client.entity.id"> <em>({{location.belongsTo.name}})</em></span>
+                <span data-ng-show="!location.belongsTo"> <em>(no client owner)</em></span>
+            </td>
+            <td>{{location.phone}}</td>
+            <td>{{location.city}}</td>
+            <td>{{location.state}}</td>
+            <td>
+                <a href data-ng-click="editLocation(location)">edit</a><span class="text-muted">&nbsp;|&nbsp;</span><a href data-ng-click="removeNewLocation(location)">remove from client</a>
+            </td>
         </tr>
         <tr data-ng-repeat="location in clientLocations">
             <td>{{location.entity.name}}
@@ -18,37 +30,12 @@
             <td>{{location.entity.phone}}</td>
             <td>{{location.entity.city}}</td>
             <td>{{location.entity.state}}</td>
-            <td data-ng-hide="location.entity.removedFromClient">
-                <button class="btn" type="button" data-ng-click="editLocation(location.entity)">edit</button>
-                <button class="btn" type="button" data-ng-click="removeExistingLocation(location)">remove
-                </button>
-            </td>
-            <td data-ng-show="location.entity.removedFromClient">
-                targeted for removal
+            <td>
+                <a href data-ng-click="editLocation(location.entity)">edit</a><span class="text-muted">&nbsp;|&nbsp;</span><a href data-ng-click="removeExistingLocation(location)">remove from client</a>
             </td>
         </tr>
     </table>
-    <div class="row" data-ng-show="clientLocations">
-        <div class="col-md-4 col-sm-4 pull-right" data-ng-show="total > pageSizes[0] || links">
-            <ul class="pagination page-size pull-right">
-                <li data-ng-repeat="pageSize in pageSizes">
-                    <a data-ng-if="pageSize != currentPageSize" href
-                       data-ng-click="changePageSize(pageSize)">{{pageSize}}</a>
-                    <span data-ng-if="pageSize === currentPageSize">[{{pageSize}}]</span>
-                </li>
-            </ul>
-        </div>
-        <div data-ng-show="links" class="col-md-8 col-sm-8">
-            <ul class="pagination">
-                <li data-ng-repeat="link in links | orderBy:'order'">
-                    <a data-ng-if="link.name != currentPage" href
-                       data-ng-click="fetchPage(link.href)">{{link.name}}</a>
-                    <span data-ng-if="link.name == currentPage">[{{link.name}}]</span>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div data-ng-hide="clientLocations">
+    <div data-ng-hide="client.hasLocations()">
         <span>There are no existing locations<span data-ng-show="client.name"> for {{client.name}}</span>.</span>
     </div>
     <div class="row" data-ng-include="'partials/client/location/client_new.html'"></div>

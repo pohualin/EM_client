@@ -91,9 +91,17 @@ angular.module('emmiManager')
                 return deferred.promise;
             },
             getOwnersReferenceDataList: function (href) {
-                return $http.get(UriTemplate.create(href).stringify({size: 100}))
-                    .then(function (response) {
-                        return response.data;
+            	var owners = [];
+                return $http.get(UriTemplate.create(href).stringify())
+                    .then(function load(response) {
+                    	var page = response.data;
+                        owners.push.apply(owners, page.content);
+                        if (page.link && page.link['page-next']) {
+                        	$http.get(page.link['page-next']).then(function(response){
+	             				load(response);
+                            });
+                        }
+                        return owners;
                     });
             },
             findSalesForceAccount: function (href, searchString) {
@@ -179,7 +187,7 @@ angular.module('emmiManager')
                             }
                           } else {
                             var clientResource = Client.getClient();
-                            if (clientResource && clientResource.entity.id != scope.existsClient.entity.id ) {
+                            if (clientResource && clientResource.entity.id !== scope.existsClient.entity.id ) {
                                 ngModel.$setValidity('unique', false);
                                 scope.uniquePopup.show();
                                 //element.focus();
@@ -225,5 +233,23 @@ angular.module('emmiManager')
             }
         };
     }])
+    
+    .filter('contractOwnerFilter', function() {
+        return function(contractOwner) {
+            var name = '';
+            if(contractOwner){
+                if(contractOwner.firstName && contractOwner.lastName){
+              	    name = contractOwner.firstName + ' '+ contractOwner.lastName;
+                }
+                else if(contractOwner.firstName){
+            	    name = contractOwner.firstName;
+                }
+                else if(contractOwner.lastName){
+                	name = contractOwner.lastName;
+                }
+            }
+            return name;
+        };
+    })
 
 ;
