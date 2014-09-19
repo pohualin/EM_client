@@ -32,6 +32,9 @@
         display: block;
     }
 }
+.btn-group:hover .tag-group-remove {
+    display: block;
+}
 
 .tags-input .host {
     position: relative;
