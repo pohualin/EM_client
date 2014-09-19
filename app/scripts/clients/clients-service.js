@@ -153,7 +153,7 @@ angular.module('emmiManager')
         };
     }])
 
-    .directive('uniqueClient', ['$popover', 'Client', function ($popover, Client) {
+    .directive('uniqueClient', ['$popover', 'Client', '$translate', 'focus', function ($popover, Client, $translate, focus) {
           return {
             restrict: 'A',
             require: 'ngModel',
@@ -161,13 +161,15 @@ angular.module('emmiManager')
                 url: '=uniqueUrl'
             },            
             link: function (scope, element, attrs, ngModel) {
-
-                scope.uniquePopup = $popover(element, {
-                    scope: scope,
-                    placement: 'top-right',
-                    show:false,
-                    trigger: 'manual',
-                    contentTemplate: 'partials/client/unique_client_popover.tpl.html'
+                $translate('client_edit_page.unique_popup_dialog.message').then(function (title) {
+                    scope.uniquePopup = $popover(element, {
+                        title: title,
+                        placement: 'top-right',
+                        scope: scope,
+                        trigger: 'manual',
+                        show: false,
+                        contentTemplate: 'partials/client/unique_client_popover.tpl.html'
+                    });
                 });
 
                 element.on('keydown', function() {
@@ -190,7 +192,7 @@ angular.module('emmiManager')
                             if (clientResource && clientResource.entity.id !== scope.existsClient.entity.id ) {
                                 ngModel.$setValidity('unique', false);
                                 scope.uniquePopup.show();
-                                //element.focus();
+                                //element.focus(); don't do this or you can't click cancel
                             }
                           }
                     });

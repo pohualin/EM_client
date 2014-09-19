@@ -50,6 +50,27 @@
   color: #333;
 }
 
+.popover-text {
+  font-size: 14px;
+}
+
+div.masked {
+  #border: 1px solid #0ff;
+  position: relative;
+  cursor: not-allowed;
+}
+div.masked:before {
+  position:absolute;
+  display:block;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.08);
+  z-index:100;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+}
+
 // various example component implementations
 @include example();
 @include example('.example2');
