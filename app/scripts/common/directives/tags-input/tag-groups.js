@@ -30,11 +30,14 @@ angular.module('emmiManager')
                 };
 
                 $scope.newTagGroup = function (){
-                    if (this.newTagGroupTitle.length !== 0) {
+                    if (this.newTagGroupTitle && this.newTagGroupTitle.length !== 0) {
                         var tagGroup = {
                             title: this.newTagGroupTitle,
                             tags: []
                         };
+                        // this method gets called twice for some reason
+                        // don't add the same new group twice
+                        delete this.newTagGroupTitle;
                         $scope.groups.push(tagGroup);
                         $scope.createMode = false;
                         $scope.$broadcast('tag:add', tagGroup);
@@ -161,10 +164,18 @@ angular.module('emmiManager')
             require: '^tagGroups',
             link: function(scope, element, attrs, ngModelCtrl) {
 
+                // when number of tags within a group changes
                 scope.$watch('groups[$index].tags.length', function() {
                     // check for empty tags
                     scope.formField.$setValidity('empty', !scope.hasEmpties()); // shared scope with parent controller (scope.$parent)
                 });
+
+                // when number of groups changes
+                scope.$watch('groups.length', function() {
+                    // check for empty tags
+                    scope.formField.$setValidity('empty', !scope.hasEmpties());
+                });
+
 
             }
         };
