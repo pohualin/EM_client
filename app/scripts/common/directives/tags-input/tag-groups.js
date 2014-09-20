@@ -30,18 +30,24 @@ angular.module('emmiManager')
                 };
 
                 $scope.newTagGroup = function (){
-                    if (this.newTagGroupTitle && this.newTagGroupTitle.length !== 0) {
-                        var tagGroup = {
-                            title: this.newTagGroupTitle,
-                            tags: []
-                        };
-                        // this method gets called twice for some reason
-                        // don't add the same new group twice
-                        delete this.newTagGroupTitle;
-                        $scope.groups.push(tagGroup);
-                        $scope.createMode = false;
-                        $scope.$broadcast('tag:add', tagGroup);
-                    }
+                    var me = this;
+                    $timeout(function () {
+                        // will be executed after ngClick function in case of click
+                        if (!$scope.createMode) {
+                            // if the create mode is already exited, don't do anything
+                            return;
+                        }
+                        if (me.newTagGroupTitle && me.newTagGroupTitle.length !== 0) {
+                            $scope.createMode = false; //
+                            var tagGroup = {
+                                title: me.newTagGroupTitle,
+                                tags: []
+                            };
+                            $scope.groups.push(tagGroup);
+                            $scope.$broadcast('tag:add', tagGroup);
+                        }
+                        return true;
+                    }, 100);
                 };
 
                 $scope.selectTagGroup = function (groupIndex) {

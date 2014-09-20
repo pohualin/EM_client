@@ -20,7 +20,7 @@ angular.module('emmiManager')
             $scope.tagLibraries = tagLibraries;
 
             // set the selected groups and reference library into scope
-            $scope.client.tagGroups = clientGroups;
+            $scope.client.tagGroups = clientGroups || [];
             $scope.tagLibraryMap = libraryMap;
         });
 
@@ -28,7 +28,7 @@ angular.module('emmiManager')
         $scope.addLibraries = function () {
             // only add non-disabled but selected library groups
             var selected = $filter('filter')( this.tagLibraries , { checked : true, disabled: false } );
-            $scope.client.tagGroups = this.client.tagGroups.concat(angular.copy(selected));
+            $scope.client.tagGroups = $scope.client.tagGroups.concat(angular.copy(selected));
             angular.forEach(this.tagLibraries, function(value) {
                 value.checked = false;
             });
