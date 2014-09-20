@@ -9,7 +9,8 @@ angular.module('emmiManager')
             require: '^ngModel',
             scope: {
                 groups: '=ngModel',
-                formField: '='
+                formField: '=',
+                libraryGroups: '='
             },
             replace: false,
             transclude: false,
@@ -124,6 +125,13 @@ angular.module('emmiManager')
                             $scope.groups[i].isValid = true;
                         }
                     });
+                };
+
+                $scope.linkToLibrary = function(){
+                    return function(tagGroup) {
+                        tagGroup.isInLibrary = $scope.libraryGroups && $scope.libraryGroups[tagGroup.title] ? true : false;
+                        return tagGroup;
+                    };
                 };
 
             }],

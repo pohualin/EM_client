@@ -5,19 +5,26 @@ angular.module('emmiManager')
 /**
  *   Controls the tag group section
  */
-    .controller('ClientTagsController', function ($scope, focus, $filter, Tag, Client) {
+    .controller('ClientTagsController', function ($scope, focus, $filter, Tag, Client, $q) {
 
-        $scope.client.tagGroups = [];
+        // load the groups for this client as well as the tag libraries
+        $q.all([Tag.loadGroups(Client.getClient()), Tag.loadReferenceData()]).then(function (response) {
+            var clientGroups = response[0],
+                tagLibraries = response[1],
+                libraryMap = {};
 
-        Tag.loadGroups(Client.getClient());
-        if(Client.getClient().tagGroups){
-            $scope.client.tagGroups = Client.getClient().tagGroups;
-        }
+            // make a map object library tags keyed by title and put it in scope
+            angular.forEach(tagLibraries, function(tagLibrary){
+                libraryMap[tagLibrary.title] = tagLibrary;
+            });
+            $scope.tagLibraries = tagLibraries;
 
-        Tag.loadReferenceData().then(function (response){
-            $scope.tagLibraries = response;
+            // set the selected groups and reference library into scope
+            $scope.client.tagGroups = clientGroups;
+            $scope.tagLibraryMap = libraryMap;
         });
 
+        // called on click of the 'Add' button on the group library popup
         $scope.addLibraries = function () {
             // only add non-disabled but selected library groups
             var selected = $filter('filter')( this.tagLibraries , { checked : true, disabled: false } );
@@ -27,6 +34,7 @@ angular.module('emmiManager')
             });
         };
 
+        // a filter to set the checked and disabled properties of a library group
         $scope.disableLibrary = function(){
             return function(libraryGroup){
                 var match = false;
