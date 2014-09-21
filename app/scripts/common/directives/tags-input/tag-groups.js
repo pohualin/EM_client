@@ -18,6 +18,7 @@ angular.module('emmiManager')
             controller: ['$scope','$attrs','$element', function($scope, $attrs, $element) {
                 $scope.createMode = false;
                 $scope.selectedTagGroupIndex = -1;
+                $scope.groups = $scope.groups || [];
 
                 $scope.enterCreateMode = function (){
                     $scope.createMode = true;
@@ -73,9 +74,11 @@ angular.module('emmiManager')
                 };
 
                 $scope.tagExists = function (tag, groupIndex) {
-                    for (var j = 0; j < $scope.groups[groupIndex].tags.length; j++) {
-                        if ($scope.groups[groupIndex].tags[j].text === tag.text) {
-                            return true;
+                    if ( $scope.groups) {
+                        for (var j = 0; j < $scope.groups[groupIndex].tags.length; j++) {
+                            if ($scope.groups[groupIndex].tags[j].text === tag.text) {
+                                return true;
+                            }
                         }
                     }
                     return false;
@@ -94,18 +97,22 @@ angular.module('emmiManager')
                 };
 
                 $scope.tagGroupExists = function (title, ignoreIndex) {
-                    for (var k = 0; k < $scope.groups.length; k++) {
-                        if ($scope.groups[k].title === title && ignoreIndex !== k) {
-                            return true;
+                    if ($scope.groups) {
+                        for (var k = 0; k < $scope.groups.length; k++) {
+                            if ($scope.groups[k].title === title && ignoreIndex !== k) {
+                                return true;
+                            }
                         }
                     }
                     return false;
                 };
 
                 $scope.hasEmpties = function () {
-                    for (var l = 0; l < $scope.groups.length; l++) {
-                        if ($scope.groups[l].tags.length === 0) {
-                            return true;
+                    if ($scope.groups) {
+                        for (var l = 0; l < $scope.groups.length; l++) {
+                            if ($scope.groups[l].tags.length === 0) {
+                                return true;
+                            }
                         }
                     }
                     return false;
@@ -149,7 +156,10 @@ angular.module('emmiManager')
                 // watch for removed tags and re-check for uniqueness
                 scope.$watch('groups.length', function(newVal, oldVal) {
                     // tag added or removed
-                    scope.validateForDuplicates();
+                    $timeout(function() {
+                        scope.validateForDuplicates();
+                        scope.formField.$setValidity('empty', !scope.hasEmpties());
+                    });
                 });
 
                 scope.$on('tag:add', function(event, tagGroup) {
@@ -165,7 +175,7 @@ angular.module('emmiManager')
 
     })
 
-    .directive('tagGroupsItem', function() {
+    .directive('tagGroupsItem', function($timeout) {
         return {
             require: '^tagGroups',
             link: function(scope, element, attrs, ngModelCtrl) {
@@ -173,15 +183,10 @@ angular.module('emmiManager')
                 // when number of tags within a group changes
                 scope.$watch('groups[$index].tags.length', function() {
                     // check for empty tags
-                    scope.formField.$setValidity('empty', !scope.hasEmpties()); // shared scope with parent controller (scope.$parent)
+                    $timeout(function() {
+                        scope.formField.$setValidity('empty', !scope.hasEmpties()); // shared scope with parent controller (scope.$parent)
+                    });
                 });
-
-                // when number of groups changes
-                scope.$watch('groups.length', function() {
-                    // check for empty tags
-                    scope.formField.$setValidity('empty', !scope.hasEmpties());
-                });
-
 
             }
         };
