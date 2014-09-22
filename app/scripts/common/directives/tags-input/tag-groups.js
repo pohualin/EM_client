@@ -10,12 +10,13 @@ angular.module('emmiManager')
             scope: {
                 groups: '=ngModel',
                 formField: '=',
+                taggingMode: '=',
                 libraryGroups: '='
             },
             replace: false,
             transclude: false,
             templateUrl: 'partials/common/directives/tags-input/tag-groups.tpl.html',
-            controller: ['$scope','$attrs','$element', function($scope, $attrs, $element) {
+            controller: ['$scope','$attrs','$element', function ($scope, $attrs, $element) {
                 $scope.createMode = false;
                 $scope.selectedTagGroupIndex = -1;
                 $scope.groups = $scope.groups || [];
@@ -143,8 +144,8 @@ angular.module('emmiManager')
                     });
                 };
 
-                $scope.linkToLibrary = function(){
-                    return function(tagGroup) {
+                $scope.linkToLibrary = function (){
+                    return function (tagGroup) {
                         tagGroup.isInLibrary = $scope.libraryGroups && $scope.libraryGroups[tagGroup.title] ? true : false;
                         return tagGroup;
                     };
@@ -154,19 +155,33 @@ angular.module('emmiManager')
             link: function(scope, element, attrs, ngModelCtrl) {
 
                 // watch for removed tags and re-check for uniqueness
-                scope.$watch('groups.length', function(newVal, oldVal) {
+                scope.$watch('groups.length', function (newVal, oldVal) {
                     // tag added or removed
-                    $timeout(function() {
+                    $timeout(function () {
                         scope.validateForDuplicates();
                         scope.formField.$setValidity('empty', !scope.hasEmpties());
                     });
                 });
 
-                scope.$on('tag:add', function(event, tagGroup) {
-                    $timeout(function() {
+                scope.$on('tag:add', function (event, tagGroup) {
+                    $timeout(function () {
                         var btnGroup = element.find('.btn-group').last();
                         btnGroup.find('.dropdown-toggle').trigger('click.bs.dropdown');
                         btnGroup.find('.tags-input .input').focus();
+                    });
+                });
+
+                element.on('show.bs.dropdown', function () {
+                    console.log('Show dropdown!');
+                    scope.$apply(function () {
+                        scope.taggingMode = true;
+                    });
+                });
+
+                element.on('hide.bs.dropdown', function () {
+                    console.log('Hide dropdown!');
+                    scope.$apply(function () {
+                        scope.taggingMode = false;
                     });
                 });
 
