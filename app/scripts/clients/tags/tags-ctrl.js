@@ -7,6 +7,8 @@ angular.module('emmiManager')
  */
     .controller('ClientTagsController', function ($scope, focus, $filter, Tag, Client, $q) {
 
+        $scope.tagInputMode = false;
+
         // load the groups for this client as well as the tag libraries
         $q.all([Tag.loadGroups(Client.getClient()), Tag.loadReferenceData()]).then(function (response) {
             var clientGroups = response[0],
