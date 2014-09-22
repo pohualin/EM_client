@@ -62,17 +62,17 @@
             <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0" cellspacing="0"
                    data-ng-show="clients">
                 <tr>
-                    <th data-ng-click="sort('name')">Name <span data-ng-show="sortProperty.property === 'name'">({{sortProperty.ascending ? 'a..z' : 'z..a'}})</span>
+                    <th class="sort col-sm-3" data-ng-click="sort('name')">Name <span data-ng-show="sortProperty.property === 'name'"><span class="glyphicon" data-ng-class="{'glyphicon-sort-by-alphabet': sortProperty.ascending, 'glyphicon-sort-by-alphabet-alt': !sortProperty.ascending}"></span></span>
                     </th>
-                    <th data-ng-click="sort('salesForceAccount.name')">Salesforce Account <span
-                            data-ng-show="sortProperty.property === 'salesForceAccount.name'">({{sortProperty.ascending ? 'a..z' : 'z..a'}})</span>
+                    <th class="sort col-sm-3" data-ng-click="sort('salesForceAccount.name')">Salesforce Account <span
+                            data-ng-show="sortProperty.property === 'salesForceAccount.name'"><span class="glyphicon" data-ng-class="{'glyphicon-arrow-up': sortProperty.ascending, 'glyphicon-arrow-down': !sortProperty.ascending}"></span></span>
                     </th>
-                    <th data-ng-click="sort('contractOwner.lastName')">Contract Owner <span
-                            data-ng-show="sortProperty.property === 'contractOwner.lastName'">({{sortProperty.ascending ? 'a..z' : 'z..a'}})</span>
+                    <th class="sort col-sm-3" data-ng-click="sort('contractOwner.lastName')">Contract Owner <span
+                            data-ng-show="sortProperty.property === 'contractOwner.lastName'"><span class="glyphicon" data-ng-class="{'glyphicon-chevron-up': sortProperty.ascending, 'glyphicon-chevron-down': !sortProperty.ascending}"></span></span>
                     </th>
-                    <th data-ng-click="sort('type')">Type <span data-ng-show="sortProperty.property === 'type'">({{sortProperty.ascending ? 'a..z' : 'z..a'}})</span>
+                    <th class="sort col-sm-2" data-ng-click="sort('type')">Type <span data-ng-show="sortProperty.property === 'type'"><span class="glyphicon" data-ng-class="{'glyphicon-sort-by-attributes': sortProperty.ascending, 'glyphicon-sort-by-attributes-alt': !sortProperty.ascending}"></span></span>
                     </th>
-                    <th>&nbsp;</th>
+                    <th class="col-sm-1">&nbsp;</th>
                 </tr>
                 <tr data-ng-repeat="client in clients | orderBy:'client.sortIdx'">
                     <td>{{client.entity.name}}</td>
