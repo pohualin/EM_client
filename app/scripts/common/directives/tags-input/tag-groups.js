@@ -172,14 +172,12 @@ angular.module('emmiManager')
                 });
 
                 element.on('show.bs.dropdown', function () {
-                    console.log('Show dropdown!');
                     scope.$apply(function () {
                         scope.taggingMode = true;
                     });
                 });
 
                 element.on('hide.bs.dropdown', function () {
-                    console.log('Hide dropdown!');
                     scope.$apply(function () {
                         scope.taggingMode = false;
                     });
