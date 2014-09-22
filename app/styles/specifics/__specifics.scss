@@ -70,6 +70,15 @@ div.masked:before {
   border-radius: 6px;
 }
 
+
+th.sort {
+  cursor: pointer;
+  span.glyphicon {
+    font-size: x-small;
+    vertical-align: baseline;
+  }
+}
+
 // various example component implementations
 @include example();
 @include example('.example2');
