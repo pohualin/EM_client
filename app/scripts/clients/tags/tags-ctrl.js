@@ -5,89 +5,54 @@ angular.module('emmiManager')
 /**
  *   Controls the tag group section
  */
-    .controller('ClientTagsController', function ($scope, focus, $filter, Tag, Client) {
+    .controller('ClientTagsController', function ($scope, focus, $filter, Tag, Client, $q) {
 
-        $scope.noSearch = true;
-        $scope.createMode = false;
-        $scope.client.tagGroups = [];
+        $scope.tagInputMode = false;
 
-        Tag.loadGroups(Client.getClient());
-        if(Client.getClient().tagGroups){
-        	$scope.client.tagGroups = Client.getClient().tagGroups;
-        }
-        
-        $scope.selectedTagGroupIndex = -1;
+        // load the groups for this client as well as the tag libraries
+        $q.all([Tag.loadGroups(Client.getClient()), Tag.loadReferenceData()]).then(function (response) {
+            var clientGroups = response[0],
+                tagLibraries = response[1],
+                libraryMap = {};
 
-        Tag.loadReferenceData().then(function (response){
-        	$scope.tagLibraries = response;
+            // make a map object library tags keyed by title and put it in scope
+            angular.forEach(tagLibraries, function(tagLibrary){
+                libraryMap[tagLibrary.title] = tagLibrary;
+            });
+            $scope.tagLibraries = tagLibraries;
+
+            // set the selected groups and reference library into scope
+            $scope.client.tagGroups = clientGroups || [];
+            $scope.tagLibraryMap = libraryMap;
         });
 
-        $scope.enterCreateMode = function (){
-            $scope.createMode = true;
-            this.newTagGroupTitle = '';
-            focus('createMode');
-        };
-
-        $scope.exitCreateMode = function (){
-            $scope.createMode = false;
-        };
-
-        $scope.newTagGroup = function (){
-            var tagGroup = {
-                title: this.newTagGroupTitle,
-                tags: []
-            };
-            $scope.client.tagGroups.push(tagGroup);
-            $scope.createMode = false;
-        };
-
-        $scope.selectTagGroup = function (groupIndex) {
-            if ($scope.selectedTagGroupIndex === groupIndex) {
-                $scope.client.tagGroups[groupIndex].editMode = true;
-                //$scope.selectedTagGroupIndex = -1;
-                focus('editMode');
-            } else {
-                $scope.selectedTagGroupIndex = groupIndex;
-            }
-        };
-
-        $scope.removeTagGroup = function (groupIndex) {
-            $scope.client.tagGroups.splice(groupIndex, 1);
-        };
-
-        $scope.changeTagGroupTitle = function (groupIndex) {
-            // Title already gets changed from data binding, so really just need to hide the edit form
-            $scope.client.tagGroups[groupIndex].editMode = false;
-            $scope.selectedTagGroupIndex = -1;
-        };
-
-        $scope.tagExists = function (tag, groupIndex) {
-            for (var j = 0; j < $scope.client.tagGroups[groupIndex].tags.length; j++) {
-                if ($scope.client.tagGroups[groupIndex].tags[j].text === tag.text) {
-                    return true;
-                }
-            }
-            return false;
-        };
-
-        $scope.pasteTags = function (event, groupIndex) {
-            event.preventDefault();
-            var tags = event.originalEvent.clipboardData.getData('text/plain').split(' ');
-            for (var i = 0, numTags = tags.length; i < numTags; i++) {
-                var tag = {};
-                tag.text = tags[i];
-                if (tag.text.length > 0 && !$scope.tagExists(tag, groupIndex)) {
-                    $scope.client.tagGroups[groupIndex].tags.push(tag);
-                }
-            }
-        };
-
+        // called on click of the 'Add' button on the group library popup
         $scope.addLibraries = function () {
-            var selected = $filter('filter')( this.tagLibraries , { checked : true } );
-            $scope.client.tagGroups = this.client.tagGroups.concat(angular.copy(selected));
-            angular.forEach(this.tagLibraries, function(value, key) {
+            // only add non-disabled but selected library groups
+            var selected = $filter('filter')( this.tagLibraries , { checked : true, disabled: false } );
+            $scope.client.tagGroups = $scope.client.tagGroups.concat(angular.copy(selected));
+            angular.forEach(this.tagLibraries, function(value) {
                 value.checked = false;
             });
+        };
+
+        // a filter to set the checked and disabled properties of a library group
+        $scope.disableLibrary = function(){
+            return function(libraryGroup){
+                var match = false;
+                angular.forEach($scope.client.tagGroups, function(tagGroup){
+                    // exact match between tag group and library group titles
+                    if (libraryGroup.title === tagGroup.title){
+                        match = true;
+                    }
+                });
+                // if there were a match disable and select the library group
+                libraryGroup.disabled = match;
+                if (libraryGroup.disabled ) {
+                    libraryGroup.checked = true;
+                }
+                return libraryGroup;
+            };
         };
 
     })

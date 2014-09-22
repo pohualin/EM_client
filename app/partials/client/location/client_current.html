@@ -19,9 +19,7 @@
             <td>{{location.city}}</td>
             <td>{{location.state}}</td>
             <td>
-                <button class="btn" type="button" data-ng-click="editLocation(location)">edit</button>
-                <button class="btn" type="button" data-ng-click="removeNewLocation(location)">remove
-                </button>
+                <a href data-ng-click="editLocation(location)">edit</a><span class="text-muted">&nbsp;|&nbsp;</span><a href data-ng-click="removeNewLocation(location)">remove from client</a>
             </td>
         </tr>
         <tr data-ng-repeat="location in clientLocations">
@@ -33,9 +31,7 @@
             <td>{{location.entity.city}}</td>
             <td>{{location.entity.state}}</td>
             <td>
-                <button class="btn" type="button" data-ng-click="editLocation(location.entity)">edit</button>
-                <button class="btn" type="button" data-ng-click="removeExistingLocation(location)">remove
-                </button>
+                <a href data-ng-click="editLocation(location.entity)">edit</a><span class="text-muted">&nbsp;|&nbsp;</span><a href data-ng-click="removeExistingLocation(location)">remove from client</a>
             </td>
         </tr>
     </table>

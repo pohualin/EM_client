@@ -42,6 +42,7 @@ angular.module('emmiManager')
 	             				load(response);
 	             			});
 	             		}
+                        return clientResource.tagGroups;
 	              	});
             	}
              },

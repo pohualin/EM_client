@@ -110,10 +110,9 @@
             "cancel_button": "No"
         },
         "unique_popup_dialog": {
-            "title": "Unique Name Validation",
-            "exists_content":"The Client name already exists",
-            "Name":"Name",
-            "CITY":"CITY/STATE"
+            "message":"This client name already exists.",
+            "name":"NAME:",
+            "city":"CITY/STATE:"
         }
     },
     "team_edit_page": {
