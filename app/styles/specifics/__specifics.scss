@@ -73,6 +73,10 @@ div.masked:before {
 
 th.sort {
   cursor: pointer;
+  span.glyphicon {
+    font-size: x-small;
+    vertical-align: baseline;
+  }
 }
 
 // various example component implementations
