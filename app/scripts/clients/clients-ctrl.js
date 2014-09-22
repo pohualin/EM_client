@@ -311,10 +311,10 @@ angular.module('emmiManager')
         	if (isValid) {
                 Client.updateClient($scope.client).then(function (response) {
             	    Client.selectedClient=response.data;
-            	    Client.createTeam();                    
+            	    Client.createTeam();
                 });
-        	}    
-        }
+        	}
+        };
     })
 
 /**
