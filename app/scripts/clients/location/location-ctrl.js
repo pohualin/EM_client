@@ -5,7 +5,7 @@ angular.module('emmiManager')
 /**
  *  Common controller which handles reference data loading and location page response parsing
  */
-    .controller('LocationCommon', function ($scope, Location, Client, $alert) {
+    .controller('LocationCommon', function ($scope, Location, Client, $alert, $timeout, $filter) {
 
         Location.getReferenceData().then(function (refData) {
             $scope.statuses = refData.statusFilter;
@@ -18,16 +18,31 @@ angular.module('emmiManager')
 
         if ($scope.client && !$scope.client.addedLocations) {
             $scope.client.addedLocations = {};
-            $scope.client.hasLocations = function(){
+            $scope.client.hasLocations = function () {
                 return !angular.equals({}, this.addedLocations) || $scope.clientLocations;
             };
         }
+
+        // returns an array of added locations from the object holding them all
+        // adds a sort property based upon the name and whether or not it is newly added
+        $scope.addedLocationsList = function () {
+            var ret = [];
+            angular.forEach(Client.getClient().addedLocations, function (location) {
+                if (location.newAddition){
+                    location.sort = 0 + location.name;
+                } else {
+                    location.sort = location.name;
+                }
+                ret.push(location);
+            });
+            return ret;
+        };
 
         $scope.isEmpty = function (obj) {
             return angular.equals({}, obj);
         };
 
-        $scope.showRemovalSuccess = function (locationResource){
+        $scope.showRemovalSuccess = function (locationResource) {
             $alert({
                 title: ' ',
                 content: 'The location <b>' + locationResource.entity.name + '</b> has been successfully removed.',
@@ -69,8 +84,43 @@ angular.module('emmiManager')
         };
 
         $scope.addLocationToAddedList = function (locationResource) {
+            locationResource.entity.newAddition = true;
             Client.getClient().addedLocations[locationResource.entity.id] = locationResource.entity;
             locationResource.entity.addToClient = true;
+        };
+
+        // takes all freshly added locations and highlights them and shows a message to the user
+        $scope.highlightChanges = function () {
+            var count = 0, singleLocationAdded;
+            angular.forEach(Client.getClient().addedLocations, function (location) {
+                if (location.newAddition) {
+                    count++;
+                    singleLocationAdded = location;
+                    location.highlight = true;
+                }
+            });
+            if (count > 0) {
+                var message = (count === 1 && singleLocationAdded) ?
+                    ' <b>' + singleLocationAdded.name + '</b> has been added successfully.' :
+                    'The selected locations have been added successfully.';
+                $alert({
+                    title: ' ',
+                    content: message,
+                    container: '#remove-container',
+                    type: 'success',
+                    show: true,
+                    duration: 5,
+                    dismissable: true
+                });
+
+                // fade em out in 5 seconds
+                $timeout(function () {
+                    angular.forEach(Client.getClient().addedLocations, function (location) {
+                        location.highlight = false;
+                        delete location.newAddition;
+                    });
+                }, 5000);
+            }
         };
 
         $scope.removeLocationFromAddedList = function (locationResource) {
@@ -145,7 +195,7 @@ angular.module('emmiManager')
                     $scope.setBelongsToPropertiesFor(locationResource.entity);
 
                     // set the belongsTo entity for this location
-                    if (toBeSaved.belongsToCheckbox){
+                    if (toBeSaved.belongsToCheckbox) {
                         locationResource.entity.belongsTo = Client.getClient().entity;
                     } else {
                         delete locationResource.entity.belongsTo;
@@ -217,6 +267,8 @@ angular.module('emmiManager')
                             duration: 5,
                             dismissable: true
                         });
+                    } else {
+                        $scope.highlightChanges();
                     }
                 });
             } else {
@@ -301,8 +353,9 @@ angular.module('emmiManager')
             });
             if (!addAnother) {
                 $scope.$hide();
+                $scope.highlightChanges();
             }
-            if (count === 1){
+            if (count === 1) {
                 $scope.singleLocationAdded = singleLocationAdded;
             } else {
                 delete $scope.singleLocationAdded;
@@ -316,33 +369,24 @@ angular.module('emmiManager')
             $scope.noSearch = true;
             $scope[managedLocationList] = null;
             focus('LocationSearchFocus');
-            var clientName = (Client.getClient().entity.name) ? '<b>' + Client.getClient().entity.name + '</b>.' : 'the client.';
-            if (!$scope.singleLocationAdded) {
-                $alert({
-                    title: ' ',
-                    content: 'The selected locations were successfully added to ' + clientName,
-                    container: '#message-container',
-                    type: 'success',
-                    show: true,
-                    duration: 5,
-                    dismissable: true
-                });
-            } else {
-                $alert({
-                    title: ' ',
-                    content: 'The location <b>' + $scope.singleLocationAdded.entity.name + '</b> has been successfully added to ' + clientName,
-                    container: '#message-container',
-                    type: 'success',
-                    show: true,
-                    duration: 5,
-                    dismissable: true
-                });
-            }
+            var clientName = (Client.getClient().entity.name) ? '<b>' + Client.getClient().entity.name + '</b>.' : 'the client.',
+                message = (!$scope.singleLocationAdded) ? 'The selected locations were successfully added to ' + clientName :
+                    'The location <b>' + $scope.singleLocationAdded.entity.name + '</b> has been successfully added to ' + clientName;
+            $alert({
+                title: ' ',
+                content: message,
+                container: '#message-container',
+                type: 'success',
+                show: true,
+                duration: 5,
+                dismissable: true
+            });
         };
 
         $scope.cancel = function () {
             // close the window without doing anything
             $scope.$hide();
+            $scope.highlightChanges();
         };
 
         $scope.handleResponse = function (locationPage, locationsPropertyName) {
