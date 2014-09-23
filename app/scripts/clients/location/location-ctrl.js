@@ -5,7 +5,7 @@ angular.module('emmiManager')
 /**
  *  Common controller which handles reference data loading and location page response parsing
  */
-    .controller('LocationCommon', function ($scope, Location, Client, $alert, $timeout, $filter) {
+    .controller('LocationCommon', function ($scope, Location, Client, $alert, $timeout) {
 
         Location.getReferenceData().then(function (refData) {
             $scope.statuses = refData.statusFilter;
