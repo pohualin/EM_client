@@ -104,6 +104,14 @@ angular.module('emmiManager', [
                 },
                 resolve: requiredResources
             })
+            .when('/teams/:teamId/view', {
+                templateUrl: 'partials/team/team_view.html',
+                controller: 'TeamCtrl',
+                access: {
+                    authorizedRoles: [USER_ROLES.admin]
+                },
+                resolve: requiredResources
+            })
             .when('/403', {
                 templateUrl: 'partials/403.html',
                 resolve: requiredResources,

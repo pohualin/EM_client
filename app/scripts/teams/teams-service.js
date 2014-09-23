@@ -6,8 +6,6 @@ angular.module('emmiManager')
     	    insertTeams: function (team) {
                 
                return $http.post(UriTemplate.create(team.client.link.teams).stringify(), team).success(function (response, status) {
-            	   //angular.extend(selectedTeam.entity, response.entity);
-            	   //selectedTeam.link = response.link;
                     return response;
                 });
     	    },
