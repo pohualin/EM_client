@@ -79,6 +79,10 @@ th.sort {
   }
 }
 
+.table-striped > tbody > tr.highlight > td, .highlight {
+  background-color: yellow;
+}
+
 // various example component implementations
 @include example();
 @include example('.example2');
