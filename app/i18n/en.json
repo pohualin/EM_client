@@ -91,7 +91,8 @@
         "teams": "Team Tags",
         "locations": {
             "title": "Locations",
-            "none_found": "no active locations"
+            "none_found": "no active locations",
+            "no_client_owner": "no client owner"
         }
     },
     "client_edit_page": {
@@ -113,6 +114,11 @@
             "message":"This client name already exists.",
             "name":"NAME:",
             "city":"CITY/STATE:"
+        },
+        "locations": {
+            "title": "Locations",
+            "none_found": "no active locations",
+            "no_client_owner": "no client owner"
         }
     },
     "team_edit_page": {
