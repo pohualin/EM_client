@@ -1,27 +1,27 @@
-    <div class="btn-group" data-ng-repeat="tagGroup in groups" data-ng-class="{ selected: $index == selectedTagGroupIndex }" data-ng-form="tagGroupForm">
+    <div data-tag-groups-item class="btn-group" data-ng-repeat="tagGroup in groups | filter:linkToLibrary()" data-ng-class="{ selected: $index == selectedTagGroupIndex}" data-ng-form="tagGroupForm">
         <div class="tag-group-edit" data-ng-show="tagGroup.editMode">
-            <input type="text" data-ng-model="tagGroup.title" value="{{ tagGroup.title }}" data-focus-on="editMode" data-ng-enter="changeTagGroupTitle($index)" data-ng-blur="changeTagGroupTitle($index)">
+            <input type="text" name="tagGroupTitle" data-ng-model="tagGroup.title" value="{{ tagGroup.title }}" data-focus-on="editMode" data-ng-enter="changeTagGroupTitle($index)" data-ng-blur="changeTagGroupTitle($index)">
         </div>
-        <button type="button" class="btn btn-info" data-ng-click="selectTagGroup($index)"><span data-ng-class="{ 'invisible' : tagGroup.editMode }">{{ tagGroup.title }}</span>&nbsp;</button>
-        <button type="button" class="btn btn-info tag-group-remove" data-ng-click="removeTagGroup($index)">
-            <span class="glyphicon glyphicon-remove"></span>
-        </button>
+        <button type="button" class="btn btn-info" data-ng-click="selectTagGroup($index)"><span data-ng-class="{ 'invisible' : tagGroup.editMode }"><span class="glyphicon glyphicon-link" data-ng-show="tagGroup.isInLibrary">&nbsp;</span>{{ tagGroup.title }}</span>&nbsp;</button>
         <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
             <span class="caret"></span>
             <span class="sr-only">Toggle Dropdown</span>
         </button>
         <div class="dropdown-menu" role="menu" style="width:600px">
-            <div data-tags-input class="tags-input" data-ng-model="tagGroup.tags" data-ng-click="$event.stopPropagation();" data-ng-paste="pasteTags($event, $index)" data-enable-editing-last-tag="true" data-add-on-space="true" data-min-tags="1" data-name="tags"></div>
+            <div data-tags-input class="tags-input" data-ng-model="tagGroup.tags" data-ng-click="$event.stopPropagation();" data-ng-paste="pasteTags($event, $index)" data-enable-editing-last-tag="true" data-add-on-space="false" data-replace-spaces-with-dashes="false" data-name="tags"></div>
         </div>
-        <div class="error-circle" data-ng-show="tagGroupForm.tags.$error.minTags"
+        <button type="button" class="btn btn-link tag-group-remove" data-ng-click="removeTagGroup($index)">
+            <span class="glyphicon glyphicon-remove"></span>
+        </button>
+        <div class="error-circle" data-ng-hide="tagGroup.isValid"
             data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-            data-title="Groups must have at least 1 tag"></div>
+            data-title="This tag group already exists"></div>
         &nbsp;
     </div>
-    <button data-ng-hide="createMode" class="btn btn-default" type="button" data-ng-click="enterCreateMode()">Add Groups &amp; Tags</button>
+    <button data-ng-hide="createMode || taggingMode" class="btn btn-default" type="button" data-ng-click="enterCreateMode()">Add Groups &amp; Tags</button>
     <div class="tag-group-create form-inline" data-ng-show="createMode">
-        <div class="form-group">
-            <input type="text" class="form-control" data-ng-model="newTagGroupTitle" data-focus-on="createMode" data-ng-enter="newTagGroup()">
+        <div class="input-group">
+            <input type="text" class="form-control" data-ng-model="newTagGroupTitle" data-focus-on="createMode" data-ng-enter="newTagGroup()" data-ng-blur="newTagGroup()">
+            <div class="input-group-addon btn" data-ng-click="exitCreateMode()"><span data-ng-click="exitCreateMode()" class="glyphicon glyphicon-remove"></span></div>
         </div>
-        <button class="btn btn-default" data-ng-click="exitCreateMode()">Close</button>
     </div>
