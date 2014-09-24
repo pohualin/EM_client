@@ -1,18 +1,15 @@
-<div class="container" data-ng-controller="ClientListCtrl">
+<div class="container"  data-ng-controller="TeamSearchController">
     <h1>
         <a href="#/">Emmi Manager</a>: Search
     </h1>
-
     <h2>Manage Clients, Teams, Providers and Locations:</h2>
-
     <form name="searchForm">
         <div class="row">
-            <div class="col-md-2 col-sm-2">
+			<div class="col-md-2 col-sm-2">
 				<div class="row" data-ng-include="'partials/client/search_option_dropdown.html'"></div>
-            </div>
-            <div class="col-md-6 col-sm-5">
-                <label class="sr-only" for="query">Search</label>
-
+				</div>
+			<div class="col-md-6 col-sm-5">
+                <label class="sr-only" for="query">Search for Team</label>
                 <div class="input-group">
                     <input class="form-control" id="query" name="query" data-ng-model="query" type="text"
                            placeholder="Search..." required data-auto-focus>
@@ -21,7 +18,7 @@
                 </div>
             </div>
             <div class="col-md-2 col-sm-3">
-                <button class="btn btn-default pull-left" data-ng-click="search()"
+                <button class="btn btn-default pull-left" data-ng-click="searchTeams()"
                         data-ng-disabled="searchForm.query.$invalid || loading"
                         data-translate="global.buttons.search">
                 </button>
@@ -29,10 +26,10 @@
             </div>
             <div class="col-md-2 col-sm-2">
                 <div class="pull-right">
-                    <a class="btn btn-primary" data-ng-href="#/clients/new" data-ng-show="searchPerformed">Create New
-                        Client</a>
+                    <a class="btn btn-primary" data-ng-href="#/teams/new" data-ng-show="searchPerformed">Create New
+                        Team</a>
                 </div>
-            </div>
+                </div>
         </div>
     </form>
     <hr>
@@ -57,32 +54,28 @@
                 </div>
             </div>
             <br>
-            <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0" cellspacing="0"
-                   data-ng-show="clients">
+            <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0" cellspacing="0" data-ng-show="teams">
                 <tr>
                     <th class="sort col-sm-3" data-ng-click="sort('name')">Name <span data-ng-show="sortProperty.property === 'name'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
                     </th>
                     <th class="sort col-sm-3" data-ng-click="sort('salesForceAccount.name')">Salesforce Account <span
                             data-ng-show="sortProperty.property === 'salesForceAccount.name'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
                     </th>
-                    <th class="sort col-sm-3" data-ng-click="sort('contractOwner.lastName')">Contract Owner <span
-                            data-ng-show="sortProperty.property === 'contractOwner.lastName'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
-                    </th>
-                    <th class="sort col-sm-2" data-ng-click="sort('type')">Type <span data-ng-show="sortProperty.property === 'type'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
+                    <th class="sort col-sm-3" data-ng-click="sort('client.name')">Client <span
+                            data-ng-show="sortProperty.property === 'client.name'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
                     </th>
                     <th class="col-sm-1">&nbsp;</th>
                 </tr>
-                <tr data-ng-repeat="client in clients | orderBy:'client.sortIdx'">
-                    <td>{{client.entity.name}}</td>
-                    <td>{{client.entity.salesForceAccount.name}}</td>
-                    <td>{{client.entity.contractOwner.firstName}} {{client.entity.contractOwner.lastName}}</td>
-                    <td>{{client.entity.type | translate}}</td>
+                <tr data-ng-repeat="team in teams | orderBy:'team.sortIdx'">
+                    <td>{{team.entity.name}}</td>
+                    <td>{{team.entity.salesForceAccount.name}}</td>
+                    <td>{{team.entity.client.name}}</td>
                     <td>
-                        <a href data-ng-click="selectClient(client.entity)">view</a>
+                        <a href data-ng-click="viewTeam(team.entity)">view</a>
                     </td>
                 </tr>
             </table>
-            <div class="row" data-ng-show="clients">
+            <div class="row" data-ng-show="teams">
                 <div class="col-md-4 col-sm-4 pull-right" data-ng-show="total > pageSizes[0]">
                     <ul class="pagination page-size pull-right">
                         <li data-ng-repeat="pageSize in pageSizes">
@@ -102,7 +95,7 @@
                     </ul>
                 </div>
             </div>
-            <div data-ng-hide="clients">
+            <div data-ng-hide="teams">
                 <span data-translate="global.messages.search.no_results_found"></span>
             </div>
         </div>
