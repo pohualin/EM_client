@@ -38,4 +38,17 @@ angular.module('emmiManager')
                 });
             }
         };
-    });
+    })
+
+    /**
+     * View a single team
+     */
+    .controller('TeamViewCtrl', function ($scope, teamResource, Team, $controller) {
+        $controller('ViewEditCommon', {$scope: $scope});
+
+        if (teamResource) {
+            $scope.team = teamResource.entity;
+            Team.setTeam(teamResource);
+        }
+    })
+;

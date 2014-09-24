@@ -34,7 +34,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label data-translate="team_edit_page.information.phone"/>
-                    <input class="form-control" data-ng-model="team.phone" type="text">
+                    <input class="form-control" data-ng-model="team.phone" type="text" readonly>
                 </div>
             </div>
         </div>
@@ -42,13 +42,13 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label data-translate="team_edit_page.information.fax"/>
-                    <input class="form-control" data-ng-model="team.fax" type="text">
+                    <input class="form-control" data-ng-model="team.fax" type="text" readonly>
                 </div>
             </div>
         </div> 
         <div class="actions">
             <div class="form-group">              
-                <button class="btn btn-primary" type="button" data-ng-click="save(teamForm.$valid)">Save</button>
+                <button class="btn btn-primary" type="button" data-ng-click="save(teamForm.$valid)">Continue</button>
             </div>
         </div>               
     </form>

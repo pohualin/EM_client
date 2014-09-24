@@ -110,6 +110,26 @@
             "cancel_button": "No"
         }
     },
+    "team_edit_page": {
+        "information": {
+            "title": "Team Information",
+             "name": "Name",
+             "description": "Description",
+             "phone": "Phone",
+             "fax": "Fax"
+        }
+    },
+    "team_view_page": {
+        "title": "View Team",
+        "edit_button": "Edit",
+        "information": {
+            "title": "Team Information",
+             "name": "Name",
+             "description": "Description",
+             "phone": "Phone",
+             "fax": "Fax"
+        }
+    },
     "ALL": "All",
     "ACTIVE_ONLY": "Active",
     "INACTIVE_ONLY": "Inactive",

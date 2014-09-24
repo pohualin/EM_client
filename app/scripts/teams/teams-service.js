@@ -14,6 +14,16 @@ angular.module('emmiManager')
             },
     	    viewTeam: function (teamEntity) {
                 $location.path('/teams/' + teamEntity.id + '/view');
+            },
+            selectTeam: function (teamId) {
+                return $http.get(UriTemplate.create(Session.link.teamById).stringify({id: teamId}))
+                    .then(function (response) {
+                        selectedTeam = response.data;
+                        return selectedTeam;
+                    });
+            },
+            setTeam: function (teamResource) {
+                selectedTeam = teamResource;
             }
     	};
 }); 	 
