@@ -1,0 +1,60 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 pull-left">
+            <h1>
+                <a href="#/">Emmi Manager</a>: <span data-translate="team_view_page.title">View Team</span>
+            </h1>
+        </div>
+        <div class="col-md-6">
+            <div class="pull-right">
+                <h1>
+                    <button class="btn btn-primary" data-ng-click="edit()"
+                            data-translate="team_view_page.edit_button">
+                        Edit Team
+                    </button>
+                </h1>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 data-translate="team_view_page.information.title">Team Information</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <span data-translate="team_view_page.information.name"></span>
+                </div>
+                <div class="col-md-4">
+                    {{team.name}} <em>({{team.active ? "active" : "inactive"}})</em>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <span data-translate="team_view_page.information.description"></span>
+        </div>
+        <div class="col-md-4">
+            {{team.description}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <span data-translate="team_view_page.information.phone"></span>
+        </div>
+        <div class="col-md-4">
+            {{team.phone}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <span data-translate="team_view_page.information.fax"></span>
+        </div>
+        <div class="col-md-4">
+            {{team.fax}}
+        </div>
+    </div>    
+</div>            
