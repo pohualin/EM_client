@@ -162,7 +162,8 @@ angular.module('emmiManager')
             } else {
                 $scope.showError();
             }
-        };        
+        };
+        
     })
 
 /**
@@ -304,7 +305,7 @@ angular.module('emmiManager')
             } else {
                 $scope.showError();
             }
-        };        
+        };
     })
 
 /**
