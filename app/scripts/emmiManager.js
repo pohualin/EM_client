@@ -111,6 +111,14 @@ angular.module('emmiManager', [
                     authorizedRoles: [USER_ROLES.all]
                 }
             })
+            .when('/teams', {
+                templateUrl: 'partials/client/team_search.html',
+                controller: 'TeamSearchController',
+                resolve: requiredResources,
+                access: {
+                    authorizedRoles: [USER_ROLES.all]
+                }
+            })
             .otherwise({
                 redirectTo: '/',
                 resolve: requiredResources,
