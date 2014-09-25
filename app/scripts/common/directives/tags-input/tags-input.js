@@ -276,7 +276,9 @@ tagsInput.directive('tagsInput', ['$timeout','$document','tagsInputConfig','focu
                     ngModelCtrl.$setViewValue(scope.tags);
                 })
                 .on('tag-edited', function() {
-                    input[0].focus();
+                    $timeout(function() {
+                        input[0].focus();
+                    });
                 })
                 .on('invalid-tag', function() {
                     scope.newTag.invalid = true;

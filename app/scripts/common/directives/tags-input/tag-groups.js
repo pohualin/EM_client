@@ -43,6 +43,7 @@ angular.module('emmiManager')
                             $scope.createMode = false; //
                             var tagGroup = {
                                 title: me.newTagGroupTitle,
+                                isValid: true,
                                 tags: []
                             };
                             $scope.groups.push(tagGroup);
