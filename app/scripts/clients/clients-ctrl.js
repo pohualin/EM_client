@@ -173,6 +173,8 @@ angular.module('emmiManager')
 
         $controller('ViewEditCommon', {$scope: $scope});
 
+        $scope.option = 'Clients';
+
         Client.getReferenceData().then(function (refData) {
             $scope.statuses = refData.statusFilter;
         });
