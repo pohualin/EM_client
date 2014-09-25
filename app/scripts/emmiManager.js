@@ -26,7 +26,7 @@ angular.module('emmiManager', [
         user: 'PERM_USER'
     })
 
-    .config(function ($routeProvider, $httpProvider, $translateProvider, tmhDynamicLocaleProvider, USER_ROLES, HateoasInterceptorProvider, $datepickerProvider) {
+    .config(function ($routeProvider, $httpProvider, $translateProvider, tmhDynamicLocaleProvider, USER_ROLES, HateoasInterceptorProvider, $datepickerProvider, API) {
 
         var requiredResources = {
             'account': ['AuthSharedService', function (AuthSharedService) {
@@ -120,11 +120,7 @@ angular.module('emmiManager', [
             });
 
         // Initialize angular-translate
-        $translateProvider.useStaticFilesLoader({
-            prefix: 'i18n/',
-            suffix: '.json'
-        });
-
+        $translateProvider.useUrlLoader(API.messages);
         $translateProvider.preferredLanguage('en');
         $translateProvider.useCookieStorage();
 
