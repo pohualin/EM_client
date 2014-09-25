@@ -97,7 +97,6 @@
     },
     "client_edit_page": {
         "save_button": "Continue",
-        "save_and_continue_button": "Save and add Teams", 
         "cancel_dialog": {
             "title": "Are you sure you want to cancel?",
             "content": "Your changes and any newly-created locations won’t be saved.",
