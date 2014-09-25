@@ -108,13 +108,13 @@ angular.module('emmiManager', [
                 },
                 resolve: clientDetailRequiredResources
             })
-            .when('/teams/new', {
+            .when('/clients/:clientId/teams/new', {
                 templateUrl: 'partials/team/team_edit.html',
                 controller: 'TeamCtrl',
                 access: {
                     authorizedRoles: [USER_ROLES.admin]
                 },
-                resolve: requiredResources
+                resolve: clientDetailRequiredResources
             })
             .when('/teams/:teamId/view', {
                 templateUrl: 'partials/team/team_view.html',

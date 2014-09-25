@@ -304,17 +304,7 @@ angular.module('emmiManager')
             } else {
                 $scope.showError();
             }
-        };
-        
-        $scope.addTeamToClient = function (isValid) {
-        	$scope.formSubmitted = true;
-        	if (isValid) {
-                Client.updateClient($scope.client).then(function (response) {
-            	    Client.selectedClient=response.data;
-            	    Client.createTeam();
-                });
-        	}
-        };
+        };        
     })
 
 /**

@@ -2,20 +2,23 @@
 
 angular.module('emmiManager')
 
-    .controller('TeamCtrl',function ($scope,$http, Session, UriTemplate, Client, Team, $alert){
+    .controller('TeamCtrl',function ($scope,$http, Session, UriTemplate, Team, clientResource, $alert){
         $scope.team = {
 	        'name': null,
 	        'description': null,
 	        'active': true,
 	        'phone': null,
 	        'fax': null,
-	        'client': null
+            'client': null            
 	    };
-        $scope.team.client = Client.selectedClient;
-     
+        
+        if (clientResource) {
+            $scope.team.client = clientResource;
+        }
+        
         $scope.save = function (isValid) {
         	$scope.formSubmitted = true;
-        	if(isValid){        		
+        	if(isValid){        		        		
                 Team.insertTeams($scope.team).then(function (team) {
                 	$scope.team = team.data.entity;
                     Team.viewTeam($scope.team);
