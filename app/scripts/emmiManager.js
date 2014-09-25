@@ -47,10 +47,10 @@ angular.module('emmiManager', [
         };
         
         var teamRequiredResources = {
-            'teamResource': ['AuthSharedService','Team', '$route', '$q', function (AuthSharedService, Team, $route, $q){
+            'teamResource': ['AuthSharedService','ViewTeam', '$route', '$q', function (AuthSharedService, ViewTeam, $route, $q){
                 var deferred = $q.defer();
                 AuthSharedService.currentUser().then(function (){
-                    Team.selectTeam($route.current.params.teamId).then(function (teamResource){
+                    ViewTeam.selectTeam($route.current.params.teamId).then(function (teamResource){
                           deferred.resolve(teamResource);
                     });
                 });
@@ -110,7 +110,7 @@ angular.module('emmiManager', [
             })
             .when('/clients/:clientId/teams/new', {
                 templateUrl: 'partials/team/team_edit.html',
-                controller: 'TeamCtrl',
+                controller: 'ClientTeamCreateCtrl',
                 access: {
                     authorizedRoles: [USER_ROLES.admin]
                 },
@@ -118,7 +118,7 @@ angular.module('emmiManager', [
             })
             .when('/teams/:teamId/view', {
                 templateUrl: 'partials/team/team_view.html',
-                controller: 'TeamViewCtrl',
+                controller: 'ClientTeamViewCtrl',
                 access: {
                     authorizedRoles: [USER_ROLES.admin]
                 },

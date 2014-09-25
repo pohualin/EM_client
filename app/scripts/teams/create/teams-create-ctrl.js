@@ -1,27 +1,28 @@
 'use strict';
 
 angular.module('emmiManager')
-
-    .controller('TeamCtrl',function ($scope,$http, Session, UriTemplate, Team, clientResource, $alert){
+	/**
+	 * Create a Single Team
+	 */
+    .controller('ClientTeamCreateCtrl',function ($scope,$http, $routeParams, Session, UriTemplate, CreateTeam, ViewTeam, $alert){
         $scope.team = {
 	        'name': null,
 	        'description': null,
 	        'active': true,
 	        'phone': null,
 	        'fax': null,
-            'client': null            
-	    };
+            'client': {
+            	'id':null
+            }
+	    };        
         
-        if (clientResource) {
-            $scope.team.client = clientResource;
-        }
-        
+        $scope.team.client.id = $routeParams.clientId;
         $scope.save = function (isValid) {
         	$scope.formSubmitted = true;
         	if(isValid){        		        		
-                Team.insertTeams($scope.team).then(function (team) {
+                CreateTeam.insertTeams($scope.team).then(function (team) {
                 	$scope.team = team.data.entity;
-                    Team.viewTeam($scope.team);
+                    ViewTeam.viewTeam($scope.team);
                 });
         	}
         	else {
@@ -41,17 +42,5 @@ angular.module('emmiManager')
                 });
             }
         };
-    })
-
-    /**
-     * View a single team
-     */
-    .controller('TeamViewCtrl', function ($scope, teamResource, Team, $controller) {
-        $controller('ViewEditCommon', {$scope: $scope});
-
-        if (teamResource) {
-            $scope.team = teamResource.entity;
-            Team.setTeam(teamResource);
-        }
     })
 ;
