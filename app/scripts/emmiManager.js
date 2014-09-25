@@ -26,7 +26,7 @@ angular.module('emmiManager', [
         user: 'PERM_USER'
     })
 
-    .config(function ($routeProvider, $httpProvider, $translateProvider, tmhDynamicLocaleProvider, USER_ROLES, HateoasInterceptorProvider, $datepickerProvider) {
+    .config(function ($routeProvider, $httpProvider, $translateProvider, tmhDynamicLocaleProvider, USER_ROLES, HateoasInterceptorProvider, $datepickerProvider, API) {
 
         var requiredResources = {
             'account': ['AuthSharedService', function (AuthSharedService) {
@@ -40,6 +40,18 @@ angular.module('emmiManager', [
                 AuthSharedService.currentUser().then(function (){
                     Client.selectClient($route.current.params.clientId).then(function (clientResource){
                           deferred.resolve(clientResource);
+                    });
+                });
+                return deferred.promise;
+            }]
+        };
+        
+        var teamRequiredResources = {
+            'teamResource': ['AuthSharedService','ViewTeam', '$route', '$q', function (AuthSharedService, ViewTeam, $route, $q){
+                var deferred = $q.defer();
+                AuthSharedService.currentUser().then(function (){
+                    ViewTeam.selectTeam($route.current.params.teamId).then(function (teamResource){
+                          deferred.resolve(teamResource);
                     });
                 });
                 return deferred.promise;
@@ -96,6 +108,22 @@ angular.module('emmiManager', [
                 },
                 resolve: clientDetailRequiredResources
             })
+            .when('/clients/:clientId/teams/new', {
+                templateUrl: 'partials/team/team_edit.html',
+                controller: 'ClientTeamCreateCtrl',
+                access: {
+                    authorizedRoles: [USER_ROLES.admin]
+                },
+                resolve: clientDetailRequiredResources
+            })
+            .when('/teams/:teamId/view', {
+                templateUrl: 'partials/team/team_view.html',
+                controller: 'ClientTeamViewCtrl',
+                access: {
+                    authorizedRoles: [USER_ROLES.admin]
+                },
+                resolve: teamRequiredResources
+            })
             .when('/403', {
                 templateUrl: 'partials/403.html',
                 resolve: requiredResources,
@@ -111,6 +139,14 @@ angular.module('emmiManager', [
                     authorizedRoles: [USER_ROLES.all]
                 }
             })
+            .when('/teams', {
+                templateUrl: 'partials/client/team_search.html',
+                controller: 'TeamSearchController',
+                resolve: requiredResources,
+                access: {
+                    authorizedRoles: [USER_ROLES.all]
+                }
+            })
             .otherwise({
                 redirectTo: '/',
                 resolve: requiredResources,
@@ -120,11 +156,7 @@ angular.module('emmiManager', [
             });
 
         // Initialize angular-translate
-        $translateProvider.useStaticFilesLoader({
-            prefix: 'i18n/',
-            suffix: '.json'
-        });
-
+        $translateProvider.useUrlLoader(API.messages);
         $translateProvider.preferredLanguage('en');
         $translateProvider.useCookieStorage();
 
