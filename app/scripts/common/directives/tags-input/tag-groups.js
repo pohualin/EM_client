@@ -66,6 +66,7 @@ angular.module('emmiManager')
                 $scope.removeTagGroup = function (groupIndex) {
                     $scope.groups.splice(groupIndex, 1);
                     $scope.selectedTagGroupIndex = -1;
+                    $scope.taggingMode = false;
                 };
 
                 $scope.changeTagGroupTitle = function (groupIndex) {
