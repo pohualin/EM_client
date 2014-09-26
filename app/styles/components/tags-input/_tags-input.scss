@@ -26,6 +26,14 @@
     display: inline-block;
 }
 
+.tag-group .dropdown-toggle {
+    display: none;
+}
+.tag-group.open .dropdown-toggle,
+.tag-group:hover .dropdown-toggle {
+    display: block;
+}
+
 .tag-group-remove {
     display: none;
     .selected & {
