@@ -1,4 +1,4 @@
-    <div data-tag-groups-item class="btn-group" data-ng-repeat="tagGroup in groups | filter:linkToLibrary()" data-ng-class="{ selected: $index == selectedTagGroupIndex}" data-ng-form="tagGroupForm">
+    <div data-tag-groups-item class="btn-group tag-group" data-ng-repeat="tagGroup in groups | filter:linkToLibrary()" data-ng-class="{ selected: $index == selectedTagGroupIndex}" data-ng-form="tagGroupForm">
         <div class="tag-group-edit" data-ng-show="tagGroup.editMode">
             <input type="text" name="tagGroupTitle" data-ng-model="tagGroup.title" value="{{ tagGroup.title }}" data-focus-on="editMode" data-ng-enter="changeTagGroupTitle($index)" data-ng-blur="changeTagGroupTitle($index)">
         </div>
