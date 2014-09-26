@@ -11,7 +11,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group" data-ng-class="{ 'has-error' : teamForm.teamName.$invalid && formSubmitted }">
-                    <label data-translate="team_edit_page.information.name"/>
+                    <label data-translate="team_edit_page.information.name">Name</label>
                     <div class="error-circle" data-ng-show="teamForm.teamName.$error.required && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="{{'team_edit_page.error_msg.required' | translate}}"></div>
@@ -25,7 +25,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label data-translate="team_edit_page.information.description"/>
+                    <label data-translate="team_edit_page.information.description">Description</label>
                     <div class="error-circle" data-ng-show="teamForm.teamDescription.$error.pattern && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="{{'team_edit_page.error_msg.invalid_team_description' | translate}}"></div>
@@ -36,7 +36,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label data-translate="team_edit_page.information.phone"/>
+                    <label data-translate="team_edit_page.information.phone">Phone</label>
                     <input class="form-control" data-ng-model="team.phone" type="text" readonly>
                 </div>
             </div>
@@ -44,7 +44,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label data-translate="team_edit_page.information.fax"/>
+                    <label data-translate="team_edit_page.information.fax">Fax</label>
                     <input class="form-control" data-ng-model="team.fax" type="text" readonly>
                 </div>
             </div>
