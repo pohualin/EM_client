@@ -50,7 +50,7 @@ angular.module('emmiManager')
                             $scope.$broadcast('tag:add', tagGroup);
                         }
                         return true;
-                    }, 100);
+                    }, 500);
                 };
 
                 $scope.selectTagGroup = function (groupIndex) {
