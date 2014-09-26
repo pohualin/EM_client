@@ -54,14 +54,6 @@ angular.module('emmiManager')
                     authorizedRoles: [USER_ROLES.admin]
                 },
                 resolve: clientDetailRequiredResources
-            })
-            .when('/clients/:clientId/teams/new', {
-                templateUrl: 'partials/team/team_edit.html',
-                controller: 'ClientTeamCreateCtrl',
-                access: {
-                    authorizedRoles: [USER_ROLES.admin]
-                },
-                resolve: clientDetailRequiredResources
             });
     })
 
