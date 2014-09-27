@@ -52,42 +52,6 @@ angular.module('emmiManager')
             }
         };
 
-        $scope.handleResponse = function (entityPage, scopePropertyNameForEntity) {
-            if (entityPage) {
-                for (var sort = 0, size = entityPage.content.length; sort < size; sort++ ){
-                    var content = entityPage.content[sort];
-                    content.sortIdx = sort;
-                }
-                this[scopePropertyNameForEntity] = entityPage.content;
-
-                $scope.total = entityPage.page.totalElements;
-                $scope.links = [];
-                for (var i = 0, l = entityPage.linkList.length; i < l; i++) {
-                    var aLink = entityPage.linkList[i];
-                    if (aLink.rel.indexOf('self') === -1) {
-                        $scope.links.push({
-                            order: i,
-                            name: aLink.rel.substring(5),
-                            href: aLink.href
-                        });
-                    }
-                }
-                $scope.load = entityPage.link.self;
-                $scope.currentPage = entityPage.page.number;
-                $scope.currentPageSize = entityPage.page.size;
-                $scope.pageSizes = [5, 10, 15, 25];
-                $scope.status = entityPage.filter.status;
-                if ($scope.sortProperty && entityPage.sort){
-                    angular.extend($scope.sortProperty, entityPage.sort);
-                }
-            } else {
-                this[scopePropertyNameForEntity] = null;
-                $scope.total = 0;
-            }
-            $scope.searchPerformed = true;
-            $scope.loading = false;
-        };
-
         $scope.hasMore = function () {
             return !$scope.sfResult.complete && $scope.sfResult.account.length > 0;
         };
@@ -183,7 +147,6 @@ angular.module('emmiManager')
         $scope.search = function () {
             $scope.loading = true;
             Client.find( $scope.query).then(function (clientPage) {
-                $scope.sortProperty.reset();
                 $scope.handleResponse(clientPage, 'clients');
                 $scope.removeStatusFilterAndTotal = $scope.total <= 0;
             }, function () {
@@ -230,38 +193,22 @@ angular.module('emmiManager')
             });
         };
 
-        $scope.sortProperty = {
-            property: null,
-            ascending: null,
-            resetOnNextSet: false,
-            setProperty: function (property){
-               if (this.property === property) {
-                   if (!this.resetOnNextSet) {
-                       if (this.ascending !== null) {
-                           // this property has already been sorted on once
-                           // the next click after this one should turn off the sort
-                           this.resetOnNextSet = true;
-                       }
-                       this.ascending = !this.ascending;
-                   } else {
-                      this.reset();
-                   }
-               } else {
-                   this.property = property;
-                   this.ascending = true;
-                   this.resetOnNextSet = false;
-               }
-            },
-            reset: function(){
-                this.property = null;
-                this.ascending = null;
-                this.resetOnNextSet = false;
-            }
-        };
-
         // when a column header is clicked
         $scope.sort = function(property){
-            $scope.sortProperty.setProperty(property);
+            if ($scope.sortProperty.property === property){
+                // same property was clicked
+                if (!$scope.sortProperty.ascending){
+                    // third click removes sort
+                    delete $scope.sortProperty;
+                } else {
+                    // switch to descending
+                    $scope.sortProperty.ascending = false;
+                }
+            } else {
+                // change sort property
+                $scope.sortProperty.property = property;
+                $scope.sortProperty.ascending = true;
+            }
             $scope.loading = true;
             Client.find( $scope.query, $scope.status, $scope.sortProperty, $scope.currentPageSize).then(function (clientPage) {
                 $scope.handleResponse(clientPage, 'clients');
@@ -270,6 +217,46 @@ angular.module('emmiManager')
                 $scope.loading = false;
             });
         };
+
+        $scope.handleResponse = function (entityPage, scopePropertyNameForEntity) {
+            if (entityPage) {
+                for (var sort = 0, size = entityPage.content.length; sort < size; sort++ ){
+                    var content = entityPage.content[sort];
+                    content.sortIdx = sort;
+                }
+                this[scopePropertyNameForEntity] = entityPage.content;
+
+                $scope.total = entityPage.page.totalElements;
+                $scope.links = [];
+                for (var i = 0, l = entityPage.linkList.length; i < l; i++) {
+                    var aLink = entityPage.linkList[i];
+                    if (aLink.rel.indexOf('self') === -1) {
+                        $scope.links.push({
+                            order: i,
+                            name: aLink.rel.substring(5),
+                            href: aLink.href
+                        });
+                    }
+                }
+                $scope.load = entityPage.link.self;
+                $scope.currentPage = entityPage.page.number;
+                $scope.currentPageSize = entityPage.page.size;
+                $scope.pageSizes = [5, 10, 15, 25];
+                $scope.status = entityPage.filter.status;
+                if (entityPage.sort){
+                    $scope.sortProperty = {
+                        property:  entityPage.sort[0].property,
+                        ascending: entityPage.sort[0].direction === 'ASC'
+                    };
+                }
+            } else {
+                this[scopePropertyNameForEntity] = null;
+                $scope.total = 0;
+            }
+            $scope.searchPerformed = true;
+            $scope.loading = false;
+        };
+
     })
 
 /**
