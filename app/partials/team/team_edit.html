@@ -33,21 +33,21 @@
                 </div>
             </div>
         </div>
-        <div class="row" data-ng-hide="team.teamSalesForceAccount"
+        <div class="row" data-ng-hide="team.salesForceAccount"
              data-ng-include="'partials/team/salesforce/team_salesforce_picker.html'"></div>
 
-        <div class="row" data-ng-show="team.teamSalesForceAccount">
+        <div class="row" data-ng-show="team.salesForceAccount">
             <div class="col-md-12">
                 <div class="row">
                     <div class="col-md-12">
                         <label class="control-label" for="">Salesforce Account</label>
                     </div>
                 </div>
-                {{team.teamSalesForceAccount.name}}&nbsp;&nbsp;&nbsp;&nbsp;
-                <span>{{team.teamSalesForceAccount.city}}<span
-                        data-ng-show="team.teamSalesForceAccount.city && team.teamSalesForceAccount.state">,&nbsp;</span>{{team.teamSalesForceAccount.state}}
+                {{team.salesForceAccount.name}}&nbsp;&nbsp;&nbsp;&nbsp;
+                <span>{{team.salesForceAccount.city}}<span
+                        data-ng-show="team.salesForceAccount.city && team.salesForceAccount.state">,&nbsp;</span>{{team.salesForceAccount.state}}
                 </span>
-                <button class="btn btn-link" data-ng-click="changeSfAccount()" required >update
+                <button class="btn btn-link" data-ng-click="changeSfAccount(team.salesForceAccount)" required >update
                 </button>
             </div>
         </div>
@@ -56,7 +56,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label data-translate="team_edit_page.information.phone">Phone</label>
-                    <input class="form-control" data-ng-model="team.teamSalesForceAccount.phoneNumber" type="text" readonly >
+                    <input class="form-control" data-ng-model="team.salesForceAccount.phoneNumber" type="text" readonly >
                 </div>
             </div>
         </div>
@@ -64,7 +64,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label data-translate="team_edit_page.information.fax">Fax</label>
-                    <input class="form-control" data-ng-model="team.teamSalesForceAccount.fax" type="text" readonly >
+                    <input class="form-control" data-ng-model="team.salesForceAccount.fax" type="text" readonly >
                 </div>
             </div>
         </div> 
