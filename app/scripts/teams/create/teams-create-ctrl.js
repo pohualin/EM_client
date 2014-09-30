@@ -4,7 +4,10 @@ angular.module('emmiManager')
 	/**
 	 * Create a Single Team
 	 */
-    .controller('ClientTeamCreateCtrl',function ($scope,$http, $routeParams, Session, UriTemplate, CreateTeam, ViewTeam, $alert){
+    .controller('ClientTeamCreateCtrl',function ($scope,$http, $routeParams, Session, UriTemplate, CreateTeam, ViewTeam, $controller){
+
+        $controller('TeamErrorController', {$scope: $scope});
+
         $scope.team = {
 	        'name': null,
 	        'description': null,
@@ -29,18 +32,6 @@ angular.module('emmiManager')
                 $scope.showError();
             }
         };
-        
-        $scope.showError = function(){
-            if (!$scope.errorAlert) {
-                $scope.errorAlert = $alert({
-                    title: ' ',
-                    content: 'Please correct the below information.',
-                    container: '#alerts-container',
-                    type: 'danger',
-                    show: true,
-                    dismissable: false
-                });
-            }
-        };
+
     })
 ;
