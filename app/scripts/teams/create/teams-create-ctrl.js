@@ -13,7 +13,8 @@ angular.module('emmiManager')
 	        'fax': null,
             'client': {
             	'id':null
-            }
+            },
+            'normalizedTeamName' : null
 	    };        
         
         $scope.team.client.id = $routeParams.clientId;
