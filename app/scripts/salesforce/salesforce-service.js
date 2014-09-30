@@ -1,15 +1,9 @@
 'use strict';
 angular.module('emmiManager')
-    .service('CreateTeam', function ($http, $q, Session, UriTemplate, $location) {
-      var selectedTeam;
+    .service('SalesForce', function ($http, $q, Session, UriTemplate, $location) {
       var referenceData;
       return {
-          insertTeams: function (team) {
-               return $http.post(UriTemplate.create(Session.link.teamsByClientId).stringify({clientId: team.client.id}), team).
-                   then(function (response) {
-                     return response;
-                   });
-          },
+
             getReferenceData: function () {
                 var deferred = $q.defer();
                 if (!referenceData) {
@@ -22,11 +16,13 @@ angular.module('emmiManager')
                 }
                 return deferred.promise;
             },
+
             findSalesForceAccount: function (href, searchString) {
                 return $http.get(UriTemplate.create(href).stringify({q: searchString}))
                     .then(function (response) {
                         return response.data;
                     });
-            }                             
+            }
+
       };
 });    
