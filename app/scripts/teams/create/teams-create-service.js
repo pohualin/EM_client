@@ -1,8 +1,6 @@
 'use strict';
 angular.module('emmiManager')
-    .service('CreateTeam', function ($http, $q, Session, UriTemplate, $location) {
-      var selectedTeam;
-      var referenceData;
+    .service('CreateTeam', function ($http, $q, Session, UriTemplate) {
       return {
           insertTeams: function (team) {
                return $http.post(UriTemplate.create(Session.link.teamsByClientId).stringify({clientId: team.client.id}), team).
@@ -91,4 +89,4 @@ angular.module('emmiManager')
           };
     }])    
 
-    ;
+;

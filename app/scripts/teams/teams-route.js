@@ -43,6 +43,14 @@ angular.module('emmiManager')
                 },
                 resolve: teamRequiredResources
             })
+            .when('/teams/:teamId/edit', {
+                templateUrl: 'partials/team/team_edit.html',
+                controller: 'TeamEditController',
+                access: {
+                    authorizedRoles: [USER_ROLES.admin]
+                },
+                resolve: teamRequiredResources
+            })
             .when('/teams', {
                 templateUrl: 'partials/client/team_search.html',
                 controller: 'TeamSearchController',
