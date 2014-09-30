@@ -46,8 +46,7 @@ angular.module('emmiManager')
             require: 'ngModel',
             scope: {
                 url: '=uniqueUrl',
-                clientId: '=clientId',
-                teamId: '=teamId'
+                team:'=team'
             },      
             link: function (scope, element, attrs, ngModel) {
 
@@ -59,7 +58,7 @@ angular.module('emmiManager')
                 });
 
                  element.on('blur', function() {
-                	 CreateTeam.findNormalizedName(scope.url, element.val(), scope.clientId).then(function (searchResults) {
+                	 CreateTeam.findNormalizedName(scope.url, element.val(), scope.team.client.id).then(function (searchResults) {
                         scope.existsTeam = searchResults;
                           if (scope.existsTeam.entity === undefined) {
                             ngModel.$setValidity('unique', true);
@@ -67,7 +66,7 @@ angular.module('emmiManager')
                                 scope.uniquePopup.hide();
                             }
                           } else {
-                        	 if((scope.teamId && scope.teamId !== scope.existsTeam.entity.id) || (scope.teamId === undefined && scope.existsTeam.entity.id!==null)){
+                        	 if((scope.team.id !== scope.existsTeam.entity.id)){
                         		 ngModel.$setValidity('unique', false);
                                  if (scope.uniquePopup) {
                                      scope.uniquePopup.show();
