@@ -2,13 +2,13 @@
 
 angular.module('emmiManager')
 
-    .controller('SalesForceCtrl',function ($scope, SalesForce, salesForceAccount, debounce){      
+    .controller('SalesForceCtrl',function ($scope, SalesForce, team, debounce){      
         $scope.sfSearch = {};
         $scope.sfResult = {};
         $scope.sfResult.account = [];
 
         SalesForce.getReferenceData().then(function (refData) {
-            $scope.findSalesForceAccountLink = refData.link.findSalesForceAccount;
+            $scope.findSalesForceAccountLink = refData.link.findTeamSalesForceAccount;
         });
 
         $scope.findAccount = debounce(function (term) {
@@ -24,7 +24,7 @@ angular.module('emmiManager')
 
         $scope.chooseAccount = function (account) {
             if (account ) {
-                salesForceAccount.salesForceAccount = account;
+                team.salesForceAccount = account;
                 return true;
             } else {
                 return false;
@@ -34,7 +34,7 @@ angular.module('emmiManager')
        $scope.changeSfAccount = function (account) {
             $scope.sfSearch.searchQuery = account.name;
             $scope.sfResult.account = [];
-            salesForceAccount.salesForceAccount = null;
+            team.salesForceAccount = null;
             focus('SfSearch');
         };
 

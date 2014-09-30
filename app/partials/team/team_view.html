@@ -8,10 +8,11 @@
         <div class="col-md-6">
             <div class="pull-right">
                 <h1>
-                    <button class="btn btn-primary" data-ng-click="edit()"
+
+                    <a class="btn btn-primary" href="#/teams/{{team.id}}/edit"
                             data-translate="team_view_page.edit_button">
                         Edit Team
-                    </button>
+                    </a>
                 </h1>
             </div>
         </div>
@@ -39,6 +40,14 @@
         </div>
         <div class="col-md-4">
             {{team.description}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <span data-translate="team_view_page.information.salesforce"></span>
+        </div>
+        <div class="col-md-4">
+            {{team.salesForceAccount.name}}
         </div>
     </div>
     <div class="row">
