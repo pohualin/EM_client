@@ -1,13 +1,13 @@
 'use strict';
 angular.module('emmiManager')
-    .service('SalesForce', function ($http, $q, Session, UriTemplate, $location) {
+    .service('SalesForce', function ($http, $q, Session, UriTemplate) {
       var referenceData;
       return {
 
             getReferenceData: function () {
                 var deferred = $q.defer();
                 if (!referenceData) {
-                    $http.get(Session.link.clientsReferenceData).then(function (response) {
+                    $http.get(Session.link.teamsReferenceData).then(function (response) {
                         referenceData = response.data;
                         deferred.resolve(referenceData);
                     });

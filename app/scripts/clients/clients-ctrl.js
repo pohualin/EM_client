@@ -89,11 +89,9 @@ angular.module('emmiManager')
         $scope.saveUpdate = function (isValid) {
             // this will get called if the client form saves but any child calls fail
             $scope.formSubmitted = true;
-            if (isValid) {
+            if (isValid && $scope.client.salesForceAccount) {
                 Client.updateClient($scope.client).then(function () {
                     // update locations for the client
-                	
-                	
                     Location.updateForClient(Client.getClient()).then(function () {
                         Client.viewClient($scope.client);
                     });
@@ -109,7 +107,7 @@ angular.module('emmiManager')
 
         $scope.save = function (isValid) {
             $scope.formSubmitted = true;
-            if (isValid) {
+            if (isValid && $scope.client.salesForceAccount) {
                 Client.insertClient($scope.client).then(function (client) {
                     $scope.client = client.data.entity;
                     $scope.save = $scope.saveUpdate;
@@ -279,7 +277,7 @@ angular.module('emmiManager')
 
         $scope.save = function (isValid) {
             $scope.formSubmitted = true;
-            if (isValid) {
+            if (isValid && $scope.client.salesForceAccount) {
                 Client.updateClient($scope.client).then(function () {
                     // update locations for the client
                 	
