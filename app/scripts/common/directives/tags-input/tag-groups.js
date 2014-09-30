@@ -50,7 +50,7 @@ angular.module('emmiManager')
                             $scope.$broadcast('tag:add', tagGroup);
                         }
                         return true;
-                    }, 100);
+                    }, 500);
                 };
 
                 $scope.selectTagGroup = function (groupIndex) {
@@ -66,6 +66,7 @@ angular.module('emmiManager')
                 $scope.removeTagGroup = function (groupIndex) {
                     $scope.groups.splice(groupIndex, 1);
                     $scope.selectedTagGroupIndex = -1;
+                    $scope.taggingMode = false;
                 };
 
                 $scope.changeTagGroupTitle = function (groupIndex) {

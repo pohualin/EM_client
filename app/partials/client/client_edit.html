@@ -51,7 +51,7 @@
                     <label class="control-label" for="region">Region</label>
                     <select class="form-control" id="region" data-ng-model="client.region"
                             data-ng-options="region | translate for region in clientRegions" name="clientRegion"
-                            required data-ng-disabled="clientForm.clientName.$error.unique">
+                            data-ng-disabled="clientForm.clientName.$error.unique">
                         <option value="">Select...</option>
                     </select>
                 </div>
@@ -61,7 +61,7 @@
                     <label class="control-label" for="tier">Tier</label>
                     <select class="form-control" data-ng-model="client.tier" id="tier"
                             data-ng-options="tier | translate for tier in clientTiers" name="clientTier"
-                            required data-ng-disabled="clientForm.clientName.$error.unique">
+                            data-ng-disabled="clientForm.clientName.$error.unique">
                         <option value="">Select...</option>
                     </select>
                 </div>
