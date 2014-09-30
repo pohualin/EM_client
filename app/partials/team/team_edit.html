@@ -5,7 +5,7 @@
         <span data-ng-show="team.id" data-translate="team_edit_page.edit.title">Edit</span> Team
     </h1>                     
     <form name="teamForm" class="form" novalidate>
-        <div id="alerts-container" data-ng-show="teamForm.$invalid"></div>
+        <div id="alerts-container" data-ng-show="teamForm.$invalid || !team.salesForceAccount"></div>
         <div id="remove-container"></div>
         <h2 data-translate="team_edit_page.information.title">Team Information</h2>
         <div class="row">
@@ -33,7 +33,7 @@
                 </div>
             </div>
         </div>
-        <div class="row" data-ng-include="'partials/team/salesforce/team_salesforce_picker.html'"></div>
+        <div data-ng-include="'partials/team/salesforce/team_salesforce_picker.html'"></div>
 
         <div class="actions">
             <div class="form-group">              

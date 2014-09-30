@@ -17,18 +17,19 @@ angular.module('emmiManager')
             'client': {
             	'id':null
             }
-	    };        
+	    };
+
+        $controller('SalesForceCtrl', {$scope: $scope, team: $scope.team});
         
         $scope.team.client.id = $routeParams.clientId;
         $scope.save = function (isValid) {
         	$scope.formSubmitted = true;
-        	if(isValid){        		        		
+        	if(isValid && $scope.team.salesForceAccount){
                 CreateTeam.insertTeams($scope.team).then(function (team) {
                 	$scope.team = team.data.entity;
                     ViewTeam.viewTeam($scope.team);
                 });
-        	}
-        	else {
+        	} else {
                 $scope.showError();
             }
         };
