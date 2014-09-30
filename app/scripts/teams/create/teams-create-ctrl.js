@@ -4,7 +4,7 @@ angular.module('emmiManager')
 	/**
 	 * Create a Single Team
 	 */
-    .controller('ClientTeamCreateCtrl',function ($scope,$http, $routeParams, Session, UriTemplate, CreateTeam, ViewTeam, $controller){
+    .controller('ClientTeamCreateCtrl',function ($scope,$http, $routeParams, Session, UriTemplate, CreateTeam, ViewTeam, $controller, clientResource){
 
         $controller('TeamErrorController', {$scope: $scope});
 
@@ -16,12 +16,14 @@ angular.module('emmiManager')
 	        'fax': null,
             'client': {
             	'id':null
-            }
+            },
+            'normalizedTeamName' : null
 	    };
 
         $controller('SalesForceCtrl', {$scope: $scope, team: $scope.team});
         
-        $scope.team.client.id = $routeParams.clientId;
+        $scope.team.client = clientResource.entity;
+        $scope.url = clientResource.link.findByNormalizedName;
         $scope.save = function (isValid) {
         	$scope.formSubmitted = true;
         	if(isValid && $scope.team.salesForceAccount){
