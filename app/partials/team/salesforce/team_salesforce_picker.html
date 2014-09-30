@@ -1,26 +1,61 @@
-<div class="col-md-8">
-    <div class="form-group has-feedback" data-ng-class="{ 'has-error' : formSubmitted && !team.salesForceAccount }">
-        <label class="control-label" for="salesForceAccount">Team Salesforce Account</label>
-        <div class="error-circle" data-ng-show="!team.salesForceAccount && formSubmitted"
-             data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-             data-title="Please enter an associated Salesforce account"></div>
-        <div id="salesForceAccount" class="typeahead" data-id="salesForceAccount" data-emmi-typeahead data-items="sfResult.account" data-term="sfSearch.searchQuery" data-search="findAccount(term)" data-select="chooseAccount(item)" data-placeholder="Start typing..." data-focus="SfSearch" data-min-length="5">
-            <div class="menu typeahead-menu dropdown-menu bottom-left container-fluid">
-                <li class="header" data-ng-show="sfResult.account.length">
-                    <div class="col-md-4 account-name">Account Name</div>
-                    <div class="col-md-4 city-state">City/State</div>
-                </li>
-                <li data-emmi-typeahead-item="account" data-ng-repeat="account in sfResult.account" class="results" >
-                    <div class="col-md-4 account-name">{{account.name}}</div>
-                    <div class="col-md-4 city-state">{{account.city}}<span data-ng-show="account.city && account.state">,&nbsp;</span>{{account.state}}&nbsp;</div>
-                </li>
-                <li data-ng-show="hasMore()" class="footer">
-                    <div class="col-md-12">Refine search for more results.</div>
-                </li>
-                <div data-ng-hide="sfResult.account.length">
-                    <div class="col-md-12">No results found</div>
+<div class="row" data-ng-hide="team.salesForceAccount">
+    <div class="col-md-8">
+        <div class="form-group has-feedback" data-ng-class="{ 'has-error' : formSubmitted && !team.salesForceAccount }">
+            <label class="control-label" for="salesForceAccount">Team Salesforce Account</label>
+            <div class="error-circle" data-ng-show="!team.salesForceAccount && formSubmitted"
+                 data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                 data-title="Please enter an associated Salesforce account"></div>
+            <div id="salesForceAccount" class="typeahead" data-id="salesForceAccount" data-emmi-typeahead data-items="sfResult.account" data-term="sfSearch.searchQuery" data-search="findAccount(term)" data-select="chooseAccount(item)" data-placeholder="Start typing..." data-focus="SfSearch" data-min-length="5">
+                <div class="menu typeahead-menu dropdown-menu bottom-left container-fluid">
+                    <li class="header" data-ng-show="sfResult.account.length">
+                        <div class="col-md-4 account-name">Account Name</div>
+                        <div class="col-md-4 city-state">City/State</div>
+                    </li>
+                    <li data-emmi-typeahead-item="account" data-ng-repeat="account in sfResult.account" class="results" >
+                        <div class="col-md-4 account-name">{{account.name}}</div>
+                        <div class="col-md-4 city-state">{{account.city}}<span data-ng-show="account.city && account.state">,&nbsp;</span>{{account.state}}&nbsp;</div>
+                    </li>
+                    <li data-ng-show="hasMore()" class="footer">
+                        <div class="col-md-12">Refine search for more results.</div>
+                    </li>
+                    <div data-ng-hide="sfResult.account.length">
+                        <div class="col-md-12">No results found</div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<div class="row" data-ng-show="team.salesForceAccount">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-12">
+                <label class="control-label" for="">Salesforce Account</label>
+            </div>
+        </div>
+        {{team.salesForceAccount.name}}&nbsp;&nbsp;&nbsp;&nbsp;
+        <span>{{team.salesForceAccount.city}}<span
+                data-ng-show="team.salesForceAccount.city && team.salesForceAccount.state">,&nbsp;</span>{{team.salesForceAccount.state}}
+        </span>
+        <button class="btn btn-link" data-ng-click="changeSfAccount(team.salesForceAccount)" required >update
+        </button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label data-translate="team_edit_page.information.phone">Phone</label>
+            <input class="form-control" data-ng-model="team.salesForceAccount.phoneNumber" type="text" readonly >
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label data-translate="team_edit_page.information.fax">Fax</label>
+            <input class="form-control" data-ng-model="team.salesForceAccount.fax" type="text" readonly >
+        </div>
+    </div>
+</div> 
