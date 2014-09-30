@@ -57,6 +57,30 @@ angular.module('emmiManager')
 
     })
 
+    .directive('popoverToggle', ['$timeout', function ($timeout) {
+        return {
+            restrict: 'EA',
+            link: function (scope, element) {
+                $timeout(function () {
+                    var popover = element.closest('.popover');
+                    var triggers = element.find('.toggle-trigger');
+                    var origHeight = popover.outerHeight();
+                    var origTop = popover.position().top;
+                    triggers.on('click', function(){
+                        var trigger = angular.element(this);
+                        trigger.toggleClass('open');
+                        trigger.next('.toggle-content').toggleClass('open');
+                        var growth = popover.outerHeight() - origHeight;
+                        popover.css({
+                            top: (origTop - growth)+'px'
+                        });
+                    });
+
+                });
+            }
+        };
+    }])
+
     .filter('taglist', function() {
         return function(input) {
             return input.map(function(tag){ return tag.text; }).join(', ');
