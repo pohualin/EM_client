@@ -21,7 +21,7 @@
                     <div class="error-circle" data-ng-show="formSubmitted && teamForm.teamName.$error.unique && teamForm.teamName.$.invalid" 
                     data-bs-tooltip data-placement="right" data-type="danger" data-container="body" data-title="{{'team_edit_page.unique_popup_dialog.message' | translate}}"></div>                                      
                     <input class="form-control" data-ng-model="team.name" id="teamName" name="teamName" type="text" 
-                    data-unique-team-name data-auto-focus
+                    data-unique-team-name data-auto-focus data-client-id="team.client.id" data-team-id="team.id" data-unique-url="url"
                     required data-ng-pattern="/^[\-\.a-zA-Z0-9 '=_;:`@#&,\(\)\/]*$/" data-animation="am-flip-x"  data-focus-on="teamName">
                 </div>
             </div>

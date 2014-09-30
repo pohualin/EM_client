@@ -9,10 +9,12 @@ angular.module('emmiManager')
             	       return response;
                    });
     	    },
-    	    findNormalizedName: function(searchString, clientId){
-                return $http.get(UriTemplate.create(Session.link.findTeamByNormalizedName).stringify({normalizedName:searchString, 
-                	clientId: clientId
-                	})).then(function (response) {
+    	    findNormalizedName: function(url, searchString, clientId){
+                return $http.get(UriTemplate.create(url).stringify({
+                	clientId: clientId , 
+                	normalizedName: searchString
+                	}
+                )).then(function (response) {
                         return response.data;
                     });
             }  
@@ -23,6 +25,11 @@ angular.module('emmiManager')
           return {
             restrict: 'A',
             require: 'ngModel',
+            scope: {
+                url: '=uniqueUrl',
+                clientId: '=clientId',
+                teamId: '=teamId'
+            },      
             link: function (scope, element, attrs, ngModel) {
 
                 element.on('keydown', function() {
@@ -33,7 +40,7 @@ angular.module('emmiManager')
                 });
 
                  element.on('blur', function() {
-                	 CreateTeam.findNormalizedName(element.val(), scope.team.client.id).then(function (searchResults) {
+                	 CreateTeam.findNormalizedName(scope.url, element.val(), scope.clientId).then(function (searchResults) {
                         scope.existsTeam = searchResults;
                           if (scope.existsTeam.entity === undefined) {
                             ngModel.$setValidity('unique', true);
@@ -41,7 +48,8 @@ angular.module('emmiManager')
                                 scope.uniquePopup.hide();
                             }
                           } else {
-                        	 if(scope.team && scope.team.id !== scope.existsTeam.entity.id){
+                        	 if((scope.teamId && scope.teamId !== scope.existsTeam.entity.id) 
+                        			 || (scope.teamId === undefined && scope.existsTeam.entity.id!==null)){
                         		 ngModel.$setValidity('unique', false);
                                  if (scope.uniquePopup) {
                                      scope.uniquePopup.show();

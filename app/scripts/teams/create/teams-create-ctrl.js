@@ -4,7 +4,7 @@ angular.module('emmiManager')
 	/**
 	 * Create a Single Team
 	 */
-    .controller('ClientTeamCreateCtrl',function ($scope,$http, $routeParams, Session, UriTemplate, CreateTeam, ViewTeam, $alert){
+    .controller('ClientTeamCreateCtrl',function ($scope,$http, $routeParams, Session, UriTemplate, CreateTeam, ViewTeam, $alert, clientResource){
         $scope.team = {
 	        'name': null,
 	        'description': null,
@@ -17,7 +17,9 @@ angular.module('emmiManager')
             'normalizedTeamName' : null
 	    };        
         
-        $scope.team.client.id = $routeParams.clientId;
+        $scope.team.client = clientResource.entity;
+        $scope.url = clientResource.link.findByNormalizedName;
+        
         $scope.save = function (isValid) {
         	$scope.formSubmitted = true;
         	if(isValid){        		        		
