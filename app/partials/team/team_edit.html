@@ -5,27 +5,31 @@
         <span data-ng-show="team.id" data-translate="team_edit_page.edit.title">Edit</span> Team
     </h1>                     
     <form name="teamForm" class="form" novalidate>
-        <div id="alerts-container" data-ng-show="teamForm.$invalid"></div>
+        <div id="alerts-container" data-ng-show="teamForm.$invalid || !team.salesForceAccount"></div>
         <div id="remove-container"></div>
         <h2 data-translate="team_edit_page.information.title">Team Information</h2>
         <div class="row">
             <div class="col-md-12">
-                <div class="form-group" data-ng-class="{ 'has-error' : teamForm.teamName.$invalid && formSubmitted }">
+                <div class="form-group" data-ng-class="{ 'has-error' : (teamForm.teamName.$invalid && formSubmitted) || teamForm.teamName.$error.unique}">
                     <label data-translate="team_edit_page.information.name">Name</label>
                     <div class="error-circle" data-ng-show="teamForm.teamName.$error.required && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="{{'team_edit_page.error_msg.required' | translate}}"></div>
                     <div class="error-circle" data-ng-show="teamForm.teamName.$error.pattern && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                         data-title="{{'team_edit_page.error_msg.invalid_team_name' | translate}}"></div>                                      
-                    <input class="form-control" data-ng-model="team.name" id="teamName" name="teamName" type="text" required data-ng-pattern="/^[\-\.a-zA-Z0-9 '=_;:`@#&,\(\)\/]*$/" data-animation="am-flip-x">
+                         data-title="{{'team_edit_page.error_msg.invalid_team_name' | translate}}"></div>     
+                    <div class="error-circle" data-ng-show="formSubmitted && teamForm.teamName.$error.unique && teamForm.teamName.$.invalid" 
+                    data-bs-tooltip data-placement="right" data-type="danger" data-container="body" data-title="{{'team_edit_page.unique_popup_dialog.message' | translate}}"></div>                                      
+                    <input class="form-control" data-ng-model="team.name" id="teamName" name="teamName" type="text" 
+                    data-unique-team-name data-auto-focus data-team="team" data-unique-url="url"
+                    required data-ng-pattern="/^[\-\.a-zA-Z0-9 '=_;:`@#&,\(\)\/]*$/" data-animation="am-flip-x"  data-focus-on="teamName">
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label data-translate="team_edit_page.information.description">Description</label>
+                    <label data-translate="team_edit_page.information.description" for="teamDescription">Description</label>
                     <div class="error-circle" data-ng-show="teamForm.teamDescription.$error.pattern && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="{{'team_edit_page.error_msg.invalid_team_description' | translate}}"></div>
@@ -33,22 +37,8 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label data-translate="team_edit_page.information.phone">Phone</label>
-                    <input class="form-control" data-ng-model="team.phone" type="text" readonly>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label data-translate="team_edit_page.information.fax">Fax</label>
-                    <input class="form-control" data-ng-model="team.fax" type="text" readonly>
-                </div>
-            </div>
-        </div> 
+        <div data-ng-include="'partials/team/salesforce/team_salesforce_picker.html'"></div>
+
         <div class="actions">
             <div class="form-group">              
                 <button class="btn btn-primary" type="button" data-ng-click="save(teamForm.$valid)" data-translate="team_edit_page.continue_button">Continue</button>

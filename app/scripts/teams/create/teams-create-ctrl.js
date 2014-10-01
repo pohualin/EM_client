@@ -4,7 +4,10 @@ angular.module('emmiManager')
 	/**
 	 * Create a Single Team
 	 */
-    .controller('ClientTeamCreateCtrl',function ($scope,$http, $routeParams, Session, UriTemplate, CreateTeam, ViewTeam, $alert){
+    .controller('ClientTeamCreateCtrl',function ($scope,$http, $routeParams, Session, UriTemplate, CreateTeam, ViewTeam, $controller, clientResource){
+
+        $controller('TeamErrorController', {$scope: $scope});
+
         $scope.team = {
 	        'name': null,
 	        'description': null,
@@ -13,34 +16,25 @@ angular.module('emmiManager')
 	        'fax': null,
             'client': {
             	'id':null
-            }
-	    };        
+            },
+            'normalizedTeamName' : null
+	    };
+
+        $controller('SalesForceCtrl', {$scope: $scope, team: $scope.team});
         
-        $scope.team.client.id = $routeParams.clientId;
+        $scope.team.client = clientResource.entity;
+        $scope.url = clientResource.link.findByNormalizedName;
         $scope.save = function (isValid) {
         	$scope.formSubmitted = true;
-        	if(isValid){        		        		
+        	if(isValid && $scope.team.salesForceAccount){
                 CreateTeam.insertTeams($scope.team).then(function (team) {
                 	$scope.team = team.data.entity;
                     ViewTeam.viewTeam($scope.team);
                 });
-        	}
-        	else {
+        	} else {
                 $scope.showError();
             }
         };
-        
-        $scope.showError = function(){
-            if (!$scope.errorAlert) {
-                $scope.errorAlert = $alert({
-                    title: ' ',
-                    content: 'Please correct the below information.',
-                    container: '#alerts-container',
-                    type: 'danger',
-                    show: true,
-                    dismissable: false
-                });
-            }
-        };
+
     })
 ;
