@@ -52,15 +52,12 @@ angular.module('emmiManager')
                                     scope.uniquePopup.show();
                                 }
                                 else {
-                                    $translate('team_edit_page.unique_popup_dialog.name').then(function (title) {
-                                        scope.uniquePopup = $popover(element, {
-                                            title: title,
-                                            placement: 'top-right',
-                                            scope: scope,
-                                            trigger: 'manual',
-                                            show: true,
-                                            contentTemplate: 'partials/client/unique_team_popover.tpl.html'
-                                        });
+                                    scope.uniquePopup = $popover(element, {
+                                        placement: 'top-right',
+                                        scope: scope,
+                                        trigger: 'manual',
+                                        show: true,
+                                        contentTemplate: 'partials/team/unique_team_popover.tpl.html'
                                     });
                                 }
                             }
