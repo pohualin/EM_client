@@ -8,6 +8,7 @@ angular.module('emmiManager')
 
         if (teamClientResource && teamClientResource.teamResource) {
             $scope.team = teamClientResource.teamResource.entity;
+            $scope.team.currentlyActive = teamClientResource.teamResource.entity.active;
             $controller('SalesForceCtrl', {$scope: $scope, team: $scope.team});
         }
 
