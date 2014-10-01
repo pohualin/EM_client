@@ -57,6 +57,50 @@ angular.module('emmiManager')
 
     })
 
+    .directive('popoverToggle', ['$timeout', function ($timeout) {
+        return {
+            restrict: 'EA',
+            link: function (scope, element) {
+                $timeout(function () {
+                    var popover = element.closest('.popover');
+                    var triggers = element.find('.toggle-trigger');
+                    var origHeight = popover.outerHeight();
+                    var origTop = popover.position().top;
+                    triggers.on('click', function(){
+                        var trigger = angular.element(this);
+                        trigger.toggleClass('open');
+                        trigger.next('.toggle-content').toggleClass('open');
+                        var growth = popover.outerHeight() - origHeight;
+                        popover.css({
+                            top: (origTop - growth)+'px'
+                        });
+                    });
+
+                });
+            }
+        };
+    }])
+
+    .directive('popoverDismiss', ['$timeout', function ($timeout) {
+        return {
+            restrict: 'EA',
+            link: function (scope, element) {
+                angular.element('body').on('click', function(e){
+                    //the 'is' for buttons that trigger popups
+                    //the 'has' for icons within a button that triggers a popup
+                    if (!element.is(e.target) && element.has(e.target).length === 0 && angular.element('.popover').has(e.target).length === 0) {
+                        scope.$apply(function () {
+                            var thisPopover = element.next('.popover').first();
+                            if (thisPopover.length) {
+                                thisPopover.scope().$hide();
+                            }
+                        });
+                    }
+                });
+            }
+        };
+    }])
+
     .filter('taglist', function() {
         return function(input) {
             return input.map(function(tag){ return tag.text; }).join(', ');
