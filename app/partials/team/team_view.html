@@ -9,7 +9,7 @@
             <div class="pull-right">
                 <h1>
 
-                    <a class="btn btn-primary" href="#/teams/{{team.id}}/edit"
+                    <a class="btn btn-primary" href="#/clients/{{team.client.id}}/teams/{{team.id}}/edit"
                             data-translate="team_view_page.edit_button">
                         Edit Team
                     </a>
@@ -63,7 +63,7 @@
             <span data-translate="team_view_page.information.fax"></span>
         </div>
         <div class="col-md-4">
-            {{team.salesForceAccount.faxNumber}}
+            {{team.salesForceAccount.fax}}
         </div>
     </div>    
 </div>            

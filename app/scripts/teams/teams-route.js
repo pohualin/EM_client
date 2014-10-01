@@ -9,50 +9,55 @@ angular.module('emmiManager')
             }]
         };
 
-        var teamRequiredResources = {
-            'teamResource': ['AuthSharedService','ViewTeam', '$route', '$q', function (AuthSharedService, ViewTeam, $route, $q){
-                var deferred = $q.defer();
-                AuthSharedService.currentUser().then(function (){
-                    ViewTeam.selectTeam($route.current.params.teamId).then(function (teamResource){
-                        deferred.resolve(teamResource);
-                    });
+        var clientResource = ['AuthSharedService', 'Client', '$route', '$q', 'ViewTeam', function (AuthSharedService, Client, $route, $q, ViewTeam) {
+            var deferred = $q.defer();
+            AuthSharedService.currentUser().then(function () {
+                Client.selectClient($route.current.params.clientId).then(function (clientResource) {
+                    deferred.resolve(clientResource);
                 });
-                return deferred.promise;
-            }]
-        };
-        
-        var clientDetailRequiredResources = {
-                'clientResource': ['AuthSharedService','Client', '$route', '$q', function (AuthSharedService, Client, $route, $q){
-                    var deferred = $q.defer();
-                    AuthSharedService.currentUser().then(function (){
-                        Client.selectClient($route.current.params.clientId).then(function (clientResource){
-                            deferred.resolve(clientResource);
+            });
+            return deferred.promise;
+        }];
+
+        var teamClientResource = ['AuthSharedService', 'Client', '$route', '$q', 'ViewTeam', function (AuthSharedService, Client, $route, $q, ViewTeam) {
+            var deferred = $q.defer();
+            AuthSharedService.currentUser().then(function () {
+                Client.selectClient($route.current.params.clientId).then(function (clientResource) {
+                    ViewTeam.selectTeam(clientResource.link.teamByTeamId, $route.current.params.teamId).then(function (teamResource) {
+                        deferred.resolve({
+                            clientResource: clientResource,
+                            teamResource: teamResource
                         });
                     });
-                    return deferred.promise;
-                }]
-            };
+                });
+            });
+            return deferred.promise;
+        }];
 
         // Routes
         $routeProvider
-            .when('/teams/:teamId/view', {
+            .when('/clients/:clientId/teams/:teamId/view', {
                 templateUrl: 'partials/team/team_view.html',
                 controller: 'ClientTeamViewCtrl',
                 access: {
                     authorizedRoles: [USER_ROLES.admin]
                 },
-                resolve: teamRequiredResources
+                resolve: {
+                    'teamClientResource': teamClientResource
+                }
             })
-            .when('/teams/:teamId/edit', {
+            .when('/clients/:clientId/teams/:teamId/edit', {
                 templateUrl: 'partials/team/team_edit.html',
                 controller: 'TeamEditController',
                 access: {
                     authorizedRoles: [USER_ROLES.admin]
                 },
-                resolve: teamRequiredResources
+                resolve: {
+                    'teamClientResource': teamClientResource
+                }
             })
             .when('/teams', {
-                templateUrl: 'partials/client/team_search.html',
+                templateUrl: 'partials/team/team_search.html',
                 controller: 'TeamSearchController',
                 resolve: requiredResources,
                 access: {
@@ -65,10 +70,11 @@ angular.module('emmiManager')
                 access: {
                     authorizedRoles: [USER_ROLES.admin]
                 },
-                resolve: clientDetailRequiredResources
+                resolve: {
+                    'clientResource': clientResource
+                }
             });
     })
-
 
 
 ;
