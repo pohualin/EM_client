@@ -14,7 +14,7 @@ angular.module('emmiManager')
                 });
             },
             viewTeam: function (teamEntity) {
-                $location.path('/teams/' + teamEntity.id + '/view');
+                $location.path('/clients/' + teamEntity.client.id + '/teams/' + teamEntity.id + '/view');
             },
             fetchPage: function (href) {
                 return $http.get(href).then(function (response) {
