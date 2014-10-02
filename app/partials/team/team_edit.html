@@ -62,13 +62,17 @@
         <div data-ng-include="'partials/team/salesforce/team_salesforce_picker.html'"></div>
         <div class="row">
             <div class="col-md-12">
-                <button class="btn btn-primary" type="button"
-                        data-on-ok="save(teamForm.$valid)" data-team-entity="team"
-                        data-placement="right"
-                        data-ng-disabled="teamForm.teamName.$error.unique"
-                        data-team-edit-save>
-                    <span data-translate="team_edit_page.continue_button">Save</span>
-                </button>
+                <div class="pull-right">
+                    <a class="btn btn-link" href="#/clients/{{team.client.id}}/teams/{{team.id}}/view"
+                       data-translate="team_edit_page.cancel_button">cancel</a>
+                    <button class="btn btn-primary" type="button"
+                            data-on-ok="save(teamForm.$valid)" data-team-entity="team"
+                            data-placement="right"
+                            data-ng-disabled="teamForm.teamName.$error.unique"
+                            data-team-edit-save>
+                        <span data-translate="team_edit_page.continue_button">Save</span>
+                    </button>
+                </div>
             </div>
         </div>
     </form>
