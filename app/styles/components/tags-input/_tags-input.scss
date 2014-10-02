@@ -150,11 +150,14 @@
             }
         }
 
-        &.selected {
-            background-color: #428bca;
+        &:hover {
             .remove-button {
                 display: inline;
             }
+        }
+
+        &.selected {
+            background-color: #428bca;
         }
 
         input {
