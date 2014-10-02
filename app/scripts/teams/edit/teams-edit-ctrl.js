@@ -2,7 +2,7 @@
 
 angular.module('emmiManager')
 
-    .controller('TeamEditController', function ($scope, teamClientResource, EditTeam, ViewTeam, $controller) {
+    .controller('TeamEditController', function ($scope, teamClientResource, EditTeam, ViewTeam, $controller, $location) {
 
         $controller('TeamErrorController', {$scope: $scope});
 
@@ -24,6 +24,10 @@ angular.module('emmiManager')
             } else {
                 $scope.showError();
             }
+        };
+
+        $scope.cancel = function(){
+            ViewTeam.viewTeam($scope.team);
         };
 
     })

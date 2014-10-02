@@ -63,7 +63,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="pull-right">
-                    <a class="btn btn-link" href="#/clients/{{team.client.id}}/teams/{{team.id}}/view"
+                    <a class="btn btn-link" data-ng-click="cancel()" href
                        data-translate="team_edit_page.cancel_button">cancel</a>
                     <button class="btn btn-primary" type="button"
                             data-on-ok="save(teamForm.$valid)" data-team-entity="team"
