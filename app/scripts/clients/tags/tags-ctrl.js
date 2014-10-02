@@ -55,6 +55,13 @@ angular.module('emmiManager')
             };
         };
 
+        // currently have to hook these events into the tooltip for the popover, since AngularStrap popovers do not provide a correct prefixEvent hook to configure popovers
+        $scope.$on('tooltip.hide', function(){
+            angular.forEach($scope.tagLibraries, function(value) {
+                value.checked = false;
+            });
+        });
+
     })
 
     .directive('popoverToggle', ['$timeout', function ($timeout) {
