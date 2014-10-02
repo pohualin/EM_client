@@ -71,9 +71,9 @@ angular.module('emmiManager')
                 $timeout(function () {
                     var popover = element.closest('.popover');
                     var triggers = element.find('.toggle-trigger');
-                    var origHeight = popover.outerHeight();
-                    var origTop = popover.position().top;
                     triggers.on('click', function(){
+                        var origHeight = popover.outerHeight();
+                        var origTop = popover.position().top;
                         var trigger = angular.element(this);
                         trigger.toggleClass('open');
                         trigger.next('.toggle-content').toggleClass('open');
@@ -82,7 +82,6 @@ angular.module('emmiManager')
                             top: (origTop - growth)+'px'
                         });
                     });
-
                 });
             }
         };
