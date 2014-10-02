@@ -4,7 +4,7 @@ angular.module('emmiManager')
 	/**
 	 * Create a Single Team
 	 */
-    .controller('ClientTeamCreateCtrl',function ($scope,$http, $routeParams, Session, UriTemplate, CreateTeam, ViewTeam, $controller, clientResource){
+    .controller('ClientTeamCreateCtrl',function ($scope,$http, $routeParams, Session, UriTemplate, CreateTeam, ViewTeam, $controller, clientResource, Client){
 
         $controller('TeamErrorController', {$scope: $scope});
 
@@ -34,6 +34,10 @@ angular.module('emmiManager')
         	} else {
                 $scope.showError();
             }
+        };
+
+        $scope.cancel = function(){
+            Client.viewClient($scope.team.client);
         };
 
     })
