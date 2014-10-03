@@ -2,12 +2,13 @@
 
 angular.module('emmiManager')
 
-    .controller('TeamEditController', function ($scope, teamClientResource, EditTeam, ViewTeam, $controller) {
+    .controller('TeamEditController', function ($scope, teamClientResource, EditTeam, ViewTeam, $controller, $location) {
 
         $controller('TeamErrorController', {$scope: $scope});
 
         if (teamClientResource && teamClientResource.teamResource) {
             $scope.team = teamClientResource.teamResource.entity;
+            $scope.team.currentlyActive = teamClientResource.teamResource.entity.active;
             $controller('SalesForceCtrl', {$scope: $scope, team: $scope.team});
         }
 
@@ -23,6 +24,10 @@ angular.module('emmiManager')
             } else {
                 $scope.showError();
             }
+        };
+
+        $scope.cancel = function(){
+            ViewTeam.viewTeam($scope.team);
         };
 
     })

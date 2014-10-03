@@ -156,12 +156,20 @@ angular.module('emmiManager')
             }],
             link: function(scope, element, attrs, ngModelCtrl) {
 
+                var addBtn = element.find('.btn-add-group'),
+                    origAddBtnText = addBtn.text();
+
                 // watch for removed tags and re-check for uniqueness
                 scope.$watch('groups.length', function (newVal, oldVal) {
                     // tag added or removed
                     $timeout(function () {
                         scope.validateForDuplicates();
                         scope.formField.$setValidity('empty', !scope.hasEmpties());
+                        if (newVal === 0) {
+                            addBtn.text(origAddBtnText);
+                        } else {
+                            addBtn.text(addBtn.data('swapText'));
+                        }
                     });
                 });
 

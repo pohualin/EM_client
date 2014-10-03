@@ -200,8 +200,15 @@
         }
     }
     .toggle-content {
-        margin-left: 25px;
+        display: none;
+        margin-left: 35px;
         color: #999;
+        &.open {
+            display: block;
+        }
+    }
+    .form-actions .info {
+        display: block;
     }
 }
 

@@ -1,4 +1,4 @@
-<div class="row" data-ng-hide="team.salesForceAccount">
+<div class="row" data-ng-hide="team.salesForceAccount" data-ng-class="{'masked': teamForm.teamName.$error.unique}" >
     <div class="col-md-8">
         <div class="form-group has-feedback" data-ng-class="{ 'has-error' : formSubmitted && !team.salesForceAccount }">
             <label class="control-label" for="salesForceAccount">Team Salesforce Account</label>
@@ -27,7 +27,7 @@
     </div>
 </div>
 
-<div class="row" data-ng-show="team.salesForceAccount">
+<div class="row" data-ng-show="team.salesForceAccount" data-ng-class="{'masked': teamForm.teamName.$error.unique}" >
     <div class="col-md-12">
         <div class="row">
             <div class="col-md-12">

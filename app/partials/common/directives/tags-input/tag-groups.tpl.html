@@ -18,7 +18,7 @@
             data-title="This tag group already exists"></div>
         &nbsp;
     </div>
-    <button data-ng-hide="createMode || taggingMode" class="btn btn-default" type="button" data-ng-click="enterCreateMode()">Add Groups &amp; Tags</button>
+    <button data-ng-hide="createMode || taggingMode" class="btn btn-default btn-add-group" type="button" data-ng-click="enterCreateMode()" data-swap-text="Add New Tag Group">Add Groups &amp; Tags</button>
     <div class="tag-group-create form-inline" data-ng-show="createMode">
         <div class="input-group">
             <input type="text" class="form-control" data-ng-model="newTagGroupTitle" data-focus-on="createMode" data-ng-enter="newTagGroup()" data-ng-blur="newTagGroup()">
