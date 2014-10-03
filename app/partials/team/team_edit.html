@@ -22,7 +22,7 @@
                     data-bs-tooltip data-placement="right" data-type="danger" data-container="body" data-title="{{'team_edit_page.unique_popup_dialog.message' | translate}}"></div>                                      
                     <input class="form-control" data-ng-model="team.name" id="teamName" name="teamName" type="text" 
                     data-unique-team-name data-auto-focus data-team="team" data-unique-url="url"
-                    required data-ng-pattern="/^[\-\.a-zA-Z0-9 '=_;:`@#&,\(\)\/]*$/" data-animation="am-flip-x"  data-focus-on="teamName">
+                    required data-ng-pattern="/^[\-\.a-zA-Z0-9 '=_;:`!@#&,\(\)\/]*$/" data-animation="am-flip-x"  data-focus-on="teamName">
                 </div>
             </div>
         </div>
@@ -33,7 +33,7 @@
                     <div class="error-circle" data-ng-show="teamForm.teamDescription.$error.pattern && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="{{'team_edit_page.error_msg.invalid_team_description' | translate}}"></div>
-                    <input class="form-control" data-ng-model="team.description" id="teamDescription" name="teamDescription" type="text" data-ng-pattern="/^[\-\.a-zA-Z0-9 '=_;:`@#&,\(\)\/]*$/" data-animation="am-flip-x">
+                    <input class="form-control" data-ng-model="team.description" id="teamDescription" name="teamDescription" type="text" data-ng-pattern="/^[\-\.a-zA-Z0-9 '=_;:`!@#&,\(\)\/]*$/" data-animation="am-flip-x">
                 </div>
             </div>
         </div>
