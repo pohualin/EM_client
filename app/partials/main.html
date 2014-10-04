@@ -7,6 +7,7 @@
                 <li data-ng-switch-when="false"><a data-ng-href="#/login" data-translate="global.menu.login">Login</a></li>
                 <li data-ng-switch-when="true"><a data-ng-href="#/logout" data-translate="global.menu.logout">Log Out</a></li>
                 <li data-ng-show="isAuthorized(userRoles.admin)"><a data-ng-href="#/clients" data-translate="global.menu.clients">Clients</a></li>
+                <li data-ng-show="isAuthorized(userRoles.admin)"><a data-ng-href="#/docs">Documentation</a></li>
             </ul>
         </div>
     </div>
