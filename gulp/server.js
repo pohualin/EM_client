@@ -14,7 +14,7 @@ var proxy = httpProxy.createProxyServer({
 });
 
 function proxyMiddleware(req, res, next) {
-    if (req.url.indexOf(proxyApiPrefix) !== -1) {
+    if (req.url.indexOf(proxyApiPrefix) !== -1 || req.url.indexOf('api-docs') !== -1) {
         proxy.web(req, res);
     } else {
         next();

@@ -88,8 +88,15 @@ gulp.task('translations', function () {
         .pipe(gulp.dest('dist/bower_components/angular-i18n'));
 });
 
+gulp.task('api-docs', function () {
+    return gulp.src('app/swagger-ui/**/*')
+        .pipe(gulp.dest('dist/swagger-ui')),
+        gulp.src('app/bower_components/swagger-ui/dist/**/*')
+            .pipe(gulp.dest('dist/bower_components/swagger-ui/dist'));
+});
+
 gulp.task('clean', function () {
     return gulp.src(['.tmp', 'dist'], { read: false }).pipe($.clean());
 });
 
-gulp.task('build', ['html', 'partials', 'images', 'fonts', 'translations']);
+gulp.task('build', ['html', 'partials', 'images', 'fonts', 'translations', 'api-docs']);
