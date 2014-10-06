@@ -43,7 +43,7 @@ angular.module('emmiManager')
                 angular.forEach($scope.client.tagGroups, function(tagGroup){
                     // exact match between tag group and library group titles
                     var type = tagGroup.entity ? tagGroup.entity.type : tagGroup.type;
-                    if (type.id && libraryGroup.entity.type.id === type.id){
+                    if (type && libraryGroup.entity.type.id === type.id){
                         match = true;
                     }
                 });
