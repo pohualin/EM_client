@@ -2,7 +2,7 @@
         <div class="tag-group-edit" data-ng-show="tagGroup.editMode">
             <input type="text" name="tagGroupTitle" data-ng-model="tagGroup.title" value="{{ tagGroup.title }}" data-focus-on="editMode" data-ng-enter="changeTagGroupTitle($index)" data-ng-blur="changeTagGroupTitle($index)">
         </div>
-        <button type="button" class="btn btn-info" data-ng-click="selectTagGroup($index)"><span data-ng-class="{ 'invisible' : tagGroup.editMode }"><span class="glyphicon glyphicon-link" data-ng-show="tagGroup.type">&nbsp;</span>{{ tagGroup.title }}</span>&nbsp;</button>
+        <button type="button" class="btn btn-info" data-ng-click="selectTagGroup($index)"><span data-ng-class="{ 'invisible' : tagGroup.editMode }"><span class="glyphicon glyphicon-link" data-ng-show="tagGroup.entity.type || tagGroup.type">&nbsp;</span>{{ tagGroup.title }}</span>&nbsp;</button>
         <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
             <span class="caret"></span>
             <span class="sr-only">Toggle Dropdown</span>
