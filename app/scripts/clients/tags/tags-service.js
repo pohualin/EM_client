@@ -8,9 +8,8 @@ angular.module('emmiManager')
              		angular.forEach(clientResource.tagGroups, function(group){
                      	var groupToInsert = {};
              			groupToInsert.name = group.title;
-                        groupToInsert.type = group.type;
+                        groupToInsert.type = group.entity ? group.entity.type : group.type;
              			group.group = groupToInsert;
-             			group.tags = group.tags;
              			angular.forEach(group.tags, function(t){
              				t.name = t.text;
              			});
