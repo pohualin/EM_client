@@ -31,6 +31,10 @@ angular.module('emmiManager')
             }
         };
 
+        $scope.hasMore = function () {
+            return !$scope.sfResult.complete && $scope.sfResult.account.length > 0;
+        };        
+
        $scope.changeSfAccount = function (account) {
             $scope.sfSearch.searchQuery = account.name;
             $scope.sfResult.account = [];
