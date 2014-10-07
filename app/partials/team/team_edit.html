@@ -60,6 +60,10 @@
             </div>
         </div>
         <div data-ng-include="'partials/team/salesforce/team_salesforce_picker.html'"></div>
+        <hr>
+        <div class="row" data-ng-include="'partials/team/locations/team_current.html'"
+             data-ng-class="{'masked': teamForm.teamName.$error.unique}" ></div>
+
         <div class="row">
             <div class="col-md-12">
                 <div class="pull-right">
