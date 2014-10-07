@@ -9,6 +9,7 @@ angular.module('emmiManager')
             this.email = email;
             this.userRoles = userRoles;
             this.link = link;
+            return this;
         };
         this.destroy = function () {
             this.login = null;
