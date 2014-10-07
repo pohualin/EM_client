@@ -24,6 +24,10 @@ angular.module('emmiManager')
             link: function (scope, element) {
                 scope.cancelDeactivatePopover = function () {
                     scope.saveWarning.hide();
+                    var teamEntity = scope.teamEntity;
+                    if (teamEntity) {
+                        teamEntity.active = true;
+                    }
                 };
                 var placement = scope.placement || 'right';
                 element.on('click', function () {
@@ -36,10 +40,13 @@ angular.module('emmiManager')
                                     title: title,
                                     scope: scope,
                                     show: true,
+                                    trigger: 'manual',
                                     placement: placement,
                                     contentTemplate: 'partials/team/deactivate_popover.tpl.html'
                                 });
                             });
+                        } else {
+                            scope.saveWarning.show();
                         }
                     } else {
                         $timeout(function () {
