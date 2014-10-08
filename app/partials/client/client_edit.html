@@ -50,7 +50,7 @@
                 <div class="form-group">
                     <label class="control-label" for="region">Region</label>
                     <select class="form-control" id="region" data-ng-model="client.region"
-                            data-ng-options="region | translate for region in clientRegions" name="clientRegion"
+                            data-ng-options="region.typeKey | translate for region in clientRegions track by region.id" name="clientRegion"
                             data-ng-disabled="clientForm.clientName.$error.unique">
                         <option value="">Select...</option>
                     </select>
