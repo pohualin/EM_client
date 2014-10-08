@@ -60,7 +60,7 @@
                 <div class="form-group">
                     <label class="control-label" for="tier">Tier</label>
                     <select class="form-control" data-ng-model="client.tier" id="tier"
-                            data-ng-options="tier | translate for tier in clientTiers" name="clientTier"
+                            data-ng-options="tier.typeKey | translate for tier in clientTiers track by tier.id" name="clientTier"
                             data-ng-disabled="clientForm.clientName.$error.unique">
                         <option value="">Select...</option>
                     </select>
