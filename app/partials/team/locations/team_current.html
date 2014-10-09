@@ -1,5 +1,43 @@
 <div class="col-md-12"  data-ng-controller="TeamsLocationsController">
     <h2>Locations</h2>
+    <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0"
+           cellspacing="0" data-ng-show="client.hasLocations()">
+        <tr>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>City</th>
+            <th>State</th>
+            <th>&nbsp;</th>
+        </tr>
+        <tr data-ng-class="{highlight: location.highlight}"  data-ng-repeat="location in addedLocationsList() | orderBy:'sort'" >
+            <td>
+                {{location.name}}
+                <span data-ng-show="location.belongsTo && location.belongsTo.id !== client.entity.id"> <em>({{location.belongsTo.name}})</em></span>
+                <span data-ng-show="!location.belongsTo"> <em>(<span data-translate="client_edit_page.locations.no_client_owner"></span>)</em></span>
+            </td>
+            <td>{{location.phone}}</td>
+            <td>{{location.city}}</td>
+            <td>{{location.state}}</td>
+            <td>
+                <a href data-ng-click="editLocation(location)">edit</a><span class="text-muted">&nbsp;|&nbsp;</span><a href data-ng-click="removeNewLocation(location)">remove from client</a>
+            </td>
+        </tr>
+        <tr data-ng-repeat="location in clientLocations | orderBy:'entity.name' ">
+            <td>{{location.entity.name}}
+                <span data-ng-show="location.entity.belongsTo && location.entity.belongsTo.id !== client.entity.id"> <em>({{location.entity.belongsTo.name}})</em></span>
+                <span data-ng-show="!location.entity.belongsTo"> <em>(<span data-translate="client_edit_page.locations.no_client_owner"></span>)</em></span>
+            </td>
+            <td>{{location.entity.phone}}</td>
+            <td>{{location.entity.city}}</td>
+            <td>{{location.entity.state}}</td>
+            <td>
+                <a href data-ng-click="editLocation(location.entity)">edit</a><span class="text-muted">&nbsp;|&nbsp;</span><a href data-ng-click="removeExistingLocation(location)">remove from client</a>
+            </td>
+        </tr>
+    </table>
+    <div data-ng-hide="team.hasLocations()">
+        <span>There are no existing locations<span data-ng-show="client.name"> for {{client.name}}</span>.</span>
+    </div>    
     <div class="row" >
 	    <button type="button" class="btn btn-link" data-ng-click="addLocations()">
 	        add locations

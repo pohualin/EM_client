@@ -38,6 +38,11 @@ angular.module('emmiManager')
             });
         };
 
+        $scope.save = function (addAnother) {
+
+            $scope.$hide();
+        };
+
     })
 
 ;
