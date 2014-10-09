@@ -13,11 +13,11 @@
                         <form ng-submit="search()">
                             <div class="form-group">
                                 <div data-ng-show ="clientHasLocations" class="form-inline">
-                                    <button id="locationFromClient" placeholder="Choose from client locations" type="button" class="form-control" data-ng-model="clientLocation" data-multiple="1" data-animation="am-flip-x" data-ng-options="c.entity.name for c in clientLocations" bs-select ng-change="onCheckboxChange(entity)">
+                                    <button id="locationFromClient" placeholder="Choose from client locations" type="button" class="form-control" data-ng-model="clientLocationsSelected" data-multiple="1" data-animation="am-flip-x" data-ng-options="c.entity.name for c in clientLocations" bs-select ng-change="onDropdownChange()">
                                     <br/>
                                 </div>
                                 <br />
-                                <div class="input-group" data-ng-hide="clientLocation" >
+                                <div class="input-group" data-ng-hide="clientLocationsSelected" >
                                     <input class="form-control" id="locationQuery" data-ng-model="locationQuery"
                                            type="text" placeholder="Search locations..." data-auto-focus data-focus-on="LocationSearchFocus">
 
@@ -83,8 +83,8 @@
                                     </th>
 
                                 </tr>
-                                <tr data-ng-repeat="location in locations" data-ng-class="location.entity.currentNewLocationState ? 'text-muted' : ''">
-                                    <td><input type="checkbox" data-ng-model="location.entity.newlocation"  data-ng-disabled="location.entity.currentNewLocationState"
+                                <tr data-ng-repeat="location in locations" data-ng-class="location.entity.disabled ? 'text-muted' : ''">
+                                    <td><input type="checkbox" data-ng-model="location.entity.checked"  data-ng-disabled="location.entity.disabled"
                                                ng-change="onCheckboxChange(location)"></td>
                                     <td>{{location.entity.name}}</td>
                                     <td>
@@ -124,11 +124,11 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-link" data-ng-click="cancel()">cancel</button>
-                <button type="button" class="btn btn-default" data-ng-show="locations || clientLocation"
+                <button type="button" class="btn btn-link" data-ng-click="hidePopupLocations()">cancel</button>
+                <button type="button" class="btn btn-default" data-ng-show="locations || clientLocationsSelected"
                         data-ng-click="saveAndAddAnother()">Save & Add Another 
                 </button>
-                <button type="button" class="btn btn-primary" data-ng-show="locations || clientLocation" data-ng-click="save()">Save
+                <button type="button" class="btn btn-primary" data-ng-show="locations || clientLocationsSelected" data-ng-click="savePopupLocations()">Save
                 </button>
             </div>
         </div>
