@@ -146,13 +146,6 @@ angular.module('emmiManager')
                     });
                 };
 
-                $scope.linkToLibrary = function (){
-                    return function (tagGroup) {
-                        tagGroup.isInLibrary = $scope.libraryGroups && $scope.libraryGroups[tagGroup.title] ? true : false;
-                        return tagGroup;
-                    };
-                };
-
             }],
             link: function(scope, element, attrs, ngModelCtrl) {
 

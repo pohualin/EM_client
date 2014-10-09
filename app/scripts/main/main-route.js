@@ -42,6 +42,12 @@ angular.module('emmiManager')
                     authorizedRoles: [USER_ROLES.all]
                 }
             })
+            .when('/docs', {
+                templateUrl: 'partials/doc/docs.html',
+                access: {
+                    authorizedRoles: [USER_ROLES.admin]
+                }
+            })
             .otherwise({
                 redirectTo: '/',
                 resolve: requiredResources,

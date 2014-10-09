@@ -40,7 +40,7 @@
                     <span data-translate="client_view_page.information.type"></span>
                 </div>
                 <div class="col-md-4">
-                    {{client.type | translate}}
+                    {{client.type.typeKey | translate}}
                 </div>
             </div>
             <div class="row">
@@ -48,7 +48,7 @@
                     <span data-translate="client_view_page.information.region"></span>
                 </div>
                 <div class="col-md-4">
-                    {{client.region | translate}}
+                    {{client.region.typeKey | translate}}
                 </div>
             </div>
             <div class="row">
@@ -56,7 +56,7 @@
                     <span data-translate="client_view_page.information.tier"></span>
                 </div>
                 <div class="col-md-4">
-                    {{client.tier | translate}}
+                    {{client.tier.typeKey | translate}}
                 </div>
             </div>
             <div class="row">
@@ -120,7 +120,7 @@
                             <td>
                                 {{location.entity.name}}
                                 <span data-ng-show="location.entity.belongsTo && location.entity.belongsTo.id !== client.entity.id"> <em>({{location.entity.belongsTo.name}})</em></span>
-                                <span data-ng-show="!location.entity.belongsTo"> <em>(<span class="highlight" data-translate="client_view_page.locations.no_client_owner"></span>)</em></span>
+                                <span data-ng-show="!location.entity.belongsTo"> <em>(<span data-translate="client_view_page.locations.no_client_owner"></span>)</em></span>
                             </td>
                             <td>{{location.entity.phone}}</td>
                             <td>{{location.entity.city}}</td>

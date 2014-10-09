@@ -212,6 +212,10 @@ angular.module('emmiManager')
             link: function (scope, element) {
                 scope.cancelDeactivatePopover = function () {
                     scope.saveWarning.hide();
+                    var clientResource = Client.getClient();
+                    if (clientResource && clientResource.entity) {
+                        clientResource.entity.active = true;
+                    }
                 };
                 element.on('click', function () {
                     var clientResource = Client.getClient();
@@ -222,11 +226,14 @@ angular.module('emmiManager')
                                 scope.saveWarning = $popover(element, {
                                     title: title,
                                     scope: scope,
+                                    trigger: 'manual',
                                     show: true,
                                     placement: 'top',
                                     contentTemplate: 'partials/client/deactivate_popover.tpl.html'
                                 });
                             });
+                        } else {
+                            scope.saveWarning.show();
                         }
                     } else {
                         $timeout(function () {

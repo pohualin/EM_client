@@ -114,7 +114,7 @@ angular.module('emmiManager')
                     // saved client successfully, switch to saveUpdate if other updates fail
                     $scope.client.tagGroups = client.config.data.tagGroups;
 
-                    var insertGroups = Tag.insertGroups($scope.client),
+                    var insertGroups = Tag.insertGroups(Client.getClient()),
                     	updateLocation = Location.updateForClient(Client.getClient());
                     $q.all([insertGroups, updateLocation]).then(function () {
                     	Client.viewClient($scope.client);
@@ -281,10 +281,10 @@ angular.module('emmiManager')
                 Client.updateClient($scope.client).then(function () {
                     // update locations for the client
                 	
-                	var insertGroups = Tag.insertGroups($scope.client),
+                	var insertGroups = Tag.insertGroups(Client.getClient()),
                 	updateLocation = Location.updateForClient(Client.getClient());
                 	
-                	$q.all([insertGroups, updateLocation]).then(function(result) {
+                	$q.all([insertGroups, updateLocation]).then(function() {
                 		Client.viewClient($scope.client);
                 	});
 
