@@ -40,7 +40,6 @@ angular.module('emmiManager')
                                     title: title,
                                     scope: scope,
                                     show: true,
-                                    trigger: 'manual',
                                     placement: placement,
                                     contentTemplate: 'partials/team/deactivate_popover.tpl.html'
                                 });
@@ -66,7 +65,8 @@ angular.module('emmiManager')
                     scope.cancelWarning.hide();
                 };
                 element.on('click', function () {
-                    if (scope.teamClientResource.teamResource.tags.length>0){
+                    if (scope.teamClientResource && scope.teamClientResource.teamResource && scope.teamClientResource.teamResource.tags
+                        && scope.teamClientResource.teamResource.tags.length>0){
                         // pop a warning dialog
                         if (!scope.cancelWarning) {
                             $translate('client_edit_page.cancel_dialog.title').then(function (title) {
