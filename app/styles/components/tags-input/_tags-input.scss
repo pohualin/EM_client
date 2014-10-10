@@ -1,4 +1,10 @@
 
+.tag-group {
+    &.invalid .tag-group-btn-text {
+        color: red;
+    }
+}
+
 .tag-group-edit {
     position: absolute;
     z-index: 10;
@@ -19,6 +25,9 @@
         &:focus {
             outline: 0;
         }
+    }
+    .invalid & input {
+        color: red;
     }
 }
 
