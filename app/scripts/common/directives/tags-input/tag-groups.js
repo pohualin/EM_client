@@ -89,7 +89,7 @@ angular.module('emmiManager')
 
                 $scope.pasteTags = function (event, groupIndex) {
                     event.preventDefault();
-                    var tags = event.originalEvent.clipboardData.getData('text/plain').split(' ');
+                    var tags = event.originalEvent.clipboardData.getData('text/plain').split('\n');
                     for (var i = 0, numTags = tags.length; i < numTags; i++) {
                         var tag = {};
                         tag.text = tags[i];

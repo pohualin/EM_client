@@ -68,7 +68,7 @@
                     <th class="sort col-sm-3" data-ng-click="sort('contractOwner.lastName')">Contract Owner <span
                             data-ng-show="sortProperty.property === 'contractOwner.lastName'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
                     </th>
-                    <th class="sort col-sm-2" data-ng-click="sort('type')">Type <span data-ng-show="sortProperty.property === 'type'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
+                    <th class="sort col-sm-2" data-ng-click="sort('type.typeKey')">Type <span data-ng-show="sortProperty.property === 'type.typeKey'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
                     </th>
                     <th class="col-sm-1">&nbsp;</th>
                 </tr>
@@ -76,7 +76,7 @@
                     <td>{{client.entity.name}}</td>
                     <td>{{client.entity.salesForceAccount.name}}</td>
                     <td>{{client.entity.contractOwner.firstName}} {{client.entity.contractOwner.lastName}}</td>
-                    <td>{{client.entity.type | translate}}</td>
+                    <td>{{client.entity.type.typeKey | translate}}</td>
                     <td>
                         <a href data-ng-click="selectClient(client.entity)">view</a>
                     </td>
