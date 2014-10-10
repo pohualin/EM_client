@@ -1,0 +1,40 @@
+<div class="modal" >
+    <div class="modal-dialog modal-dialog-large container-fluid">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10" id="message-container"></div>
+                    <div class="col-md-1"></div>
+                </div>
+                <div class="row">
+
+                    <div class="col-md-9 col-sm-9">
+                        <form ng-submit="search()">
+                            <div class="form-group">
+                                <label class="sr-only" for="providerQuery">Search providers:</label>
+
+                                <div class="input-group">
+                                    <input class="form-control" id="providerQuery" data-ng-model="providerQuery"
+                                           type="text"
+                                           placeholder="Search providers..." data-auto-focus >
+
+                                    <div class="input-group-addon btn" data-ng-click="search()">Go</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-3 col-sm-3" data-ng-hide="noSearch">
+                        <button type="button" class="btn btn-link pull-right" data-ng-click="createNewProvider()">
+                            add new provider
+                        </button>
+                        <span data-ng-class="{'search-spinner' : loading}"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link" data-ng-click="$hide()">cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
