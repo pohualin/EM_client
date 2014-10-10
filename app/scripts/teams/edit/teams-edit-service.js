@@ -73,7 +73,6 @@ angular.module('emmiManager')
                                 scope.cancelWarning = $popover(element, {
                                     title: title,
                                     scope: scope,
-                                    trigger: 'manual',
                                     show: true,
                                     placement: 'top',
                                     contentTemplate: 'partials/team/tags/cancel_popover_team_edit.tpl.html'
