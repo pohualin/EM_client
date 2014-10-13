@@ -28,7 +28,7 @@ angular.module('emmiManager')
 	        };
 	})
 	
-	.controller('ProviderCreateController', function($scope, ProviderCreate, $route, $controller, $modal){
+	.controller('ProviderCreateController', function($scope, ProviderCreate, $controller){
         $controller('TeamProviderCommon', {$scope: $scope});
 
         $scope.title = 'New Provider';
