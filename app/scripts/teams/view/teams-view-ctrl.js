@@ -13,7 +13,7 @@ angular.module('emmiManager')
             $scope.teamResource = teamClientResource.teamResource;
             
             ProviderCreate.allProvidersForTeam(teamClientResource.teamResource).then(function(response){
-        		teamClientResource.teamResource.providers = response.data.content;
+        		teamClientResource.teamResource.providers = response;
         	});
         }
     })

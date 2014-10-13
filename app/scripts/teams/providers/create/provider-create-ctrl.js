@@ -9,7 +9,8 @@ angular.module('emmiManager')
 
         $scope.allProvidersForTeam = function() {
         	ProviderCreate.allProvidersForTeam($scope.teamResource).then(function(response){
-        		$scope.teamResource.providers = response.data.content;
+        		$scope.teamResource.providers = response;
+
         	});
         };
 	})
@@ -42,7 +43,7 @@ angular.module('emmiManager')
         	ProviderCreate.create($scope.provider, $scope.teamResource).then(function(response){
                 $scope.hideNewProviderModal();
     	        ProviderCreate.allProvidersForTeam($scope.teamResource).then(function(response){
-    	        	$scope.teamResource.providers = response.data.content;
+    	        	$scope.teamResource.providers = response;
     	        });
         	});
         };
