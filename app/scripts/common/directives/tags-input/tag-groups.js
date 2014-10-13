@@ -156,22 +156,22 @@ angular.module('emmiManager')
                 // watch for removed tags and re-check for uniqueness
                 scope.$watch('groups.length', function (newVal, oldVal) {
                     // tag added or removed
-                    $timeout(function () {
-                        scope.validateForDuplicates();
-                        scope.formField.$setValidity('empty', !scope.hasEmpties());
-                        if (newVal === 0) {
-                            addBtn.text(origAddBtnText);
-                        } else {
-                            addBtn.text(addBtn.data('swapText'));
-                        }
-                    });
+                    scope.validateForDuplicates();
+                    scope.formField.$setValidity('empty', !scope.hasEmpties());
+                    if (newVal === 0) {
+                        addBtn.text(origAddBtnText);
+                    } else {
+                        addBtn.text(addBtn.data('swapText'));
+                    }
                 });
 
                 scope.$on('tag:add', function (event, tagGroup) {
                     $timeout(function () {
-                        var btnGroup = element.find('.btn-group').last();
-                        btnGroup.find('.dropdown-toggle').trigger('click.bs.dropdown');
-                        btnGroup.find('.tags-input .input').focus();
+                        if (tagGroup.isValid) {
+                            var btnGroup = element.find('.btn-group').last();
+                            btnGroup.find('.dropdown-toggle').trigger('click.bs.dropdown');
+                            btnGroup.find('.tags-input .input').focus();
+                        }
                     });
                 });
 

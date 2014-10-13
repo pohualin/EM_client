@@ -1,10 +1,4 @@
 
-.tag-group {
-    &.invalid .tag-group-btn-text {
-        color: red;
-    }
-}
-
 .tag-group-edit {
     position: absolute;
     z-index: 10;
@@ -26,9 +20,6 @@
             outline: 0;
         }
     }
-    .invalid & input {
-        color: red;
-    }
 }
 
 .tag-group-create {
@@ -37,6 +28,7 @@
 
 .tag-group-remove {
     display: none;
+    .invalid &,
     .selected & {
         display: block;
     }
