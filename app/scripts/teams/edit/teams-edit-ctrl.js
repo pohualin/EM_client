@@ -2,7 +2,7 @@
 
 angular.module('emmiManager')
 
-    .controller('TeamEditController', function ($scope, teamClientResource, EditTeam, ViewTeam, $controller, $location, ProviderCreate) {
+    .controller('TeamEditController', function ($scope, teamClientResource, EditTeam, ViewTeam, $controller) {
 
         $controller('TeamErrorController', {$scope: $scope});
 
