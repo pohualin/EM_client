@@ -13,8 +13,8 @@
                         <form ng-submit="search()">
                             <div class="form-group">
                                 <div data-ng-show ="clientHasLocations" class="form-inline">
-                                    <select id="locationFromClient" class="form-control" ng-change="onDropdownChange()"
-                                        multiple chosen style="width:200px;" 
+                                    <select id="locationFromClient" class="chosen-container-multi" ng-change="onDropdownChange()"
+                                        multiple chosen 
                                         data-placeholder="Choose from client locations"
                                         data-ng-model="clientLocationsSelected"
                                         no-results-text="'Client Locations not found'"
