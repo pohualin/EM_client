@@ -125,11 +125,13 @@ angular.module('emmiManager')
                     var unique = {};
                     var dupes = [];
                     angular.forEach($scope.groups, function (x, i) {
-                        var groupTitle = x.title.toLowerCase().replace(/[^a-z0-9]+/g, '');
-                        if (!unique[groupTitle]) {
-                            unique[groupTitle] = true;
-                        } else {
-                            dupes.push(i);
+                        if (x.title) {
+                            var groupTitle = x.title.toLowerCase().replace(/[^a-z0-9]+/g, '');
+                            if (!unique[groupTitle]) {
+                                unique[groupTitle] = true;
+                            } else {
+                                dupes.push(i);
+                            }
                         }
                     });
                     return dupes;
