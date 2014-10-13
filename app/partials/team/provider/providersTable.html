@@ -4,10 +4,8 @@
 		    <label>Providers</label>
 			<table class="table table-bordered table-striped table-hover" border="0" cellpadding="0" data-ng-controller="ProviderCreateController" >
 				<tr>
-					<th class="sort col-sm-3" data-ng-click="sort('name')">Name <span data-ng-show="sortProperty.property === 'name'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
-					</th>
-					<th class="sort col-sm-3" data-ng-click="sort('specialty')">Specialty <span data-ng-show="sortProperty.property === 'specialty'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
-					</th>
+					<th class="col-sm-3" >Name </th>
+					<th class="col-sm-3" >Specialty </th>
 				</tr>
 				<tr data-ng-repeat="provider in teamResource.providers">
 			    	<td>{{provider.entity.firstName}} {{provider.entity.lastName}}</td>
@@ -17,4 +15,3 @@
 		</div>
 	</div>
 </div>
- 
