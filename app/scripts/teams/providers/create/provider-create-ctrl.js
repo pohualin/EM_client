@@ -1,7 +1,22 @@
 'use strict';
 angular.module('emmiManager')
-	.controller('TeamAddProvidersController', function ($scope, $modal) {
+
+	.controller('TeamProviderCommon', function($scope, ProviderCreate){
 		
+		ProviderCreate.specialtyRefData($scope.teamResource).then(function(response){
+        	$scope.specialties = response;
+        });
+
+        $scope.allProvidersForTeam = function() {
+        	ProviderCreate.allProvidersForTeam($scope.teamResource).then(function(response){
+        		$scope.teamResource.providers = response.data.content;
+        	});
+        };
+	})
+
+	.controller('TeamAddProvidersController', function ($scope, $modal, $controller) {
+        $controller('TeamProviderCommon', {$scope: $scope});
+
 		   var addNewProviderModal = $modal({scope: $scope, template: 'partials/team/provider/search.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false});
 
 	        $scope.addProviders = function () {
@@ -11,49 +26,44 @@ angular.module('emmiManager')
 	        $scope.hideProviderSearchModal = function(){
 	        	addNewProviderModal.hide();
 	        };
-	        
-	        var newProviderModal = $modal({scope: $scope, template: 'partials/team/provider/new.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false});
-
-	        $scope.createNewProvider = function () {
-	            $scope.hideProviderSearchModal();
-	            newProviderModal.$promise.then(newProviderModal.show);
-	        };
-
-	        $scope.hideNewProviderModal = function () {
-	        	newProviderModal.$promise.then(newProviderModal.destroy);
-	        };
 	})
 	
-	.controller('ProviderCreateController', function($scope, ProviderCreate, $route){
+	.controller('ProviderCreateController', function($scope, ProviderCreate, $route, $controller, $modal){
+        $controller('TeamProviderCommon', {$scope: $scope});
 
         $scope.title = 'New Provider';
-        $scope.provider = ProviderCreate.newProvider();
-
-        ProviderCreate.specialtyRefData($scope.teamResource).then(function(response){
-        	$scope.specialties = response;
-        });
         
-        ProviderCreate.allProvidersForTeam($scope.teamResource).then(function(response){
-        	$scope.providers = response.data.content;
-        });
+        $scope.provider = ProviderCreate.newProvider();
+       
+        $scope.teamResource.providers = $scope.allProvidersForTeam();
         
         $scope.saveProvider = function(isValid){
             $scope.providerFormSubmitted = true;
         	ProviderCreate.create($scope.provider, $scope.teamResource).then(function(response){
-            	$scope.providers = {};
-            	console.log('response =' + JSON.stringify($scope.providers));
-
-//                $route.reload();
-                ProviderCreate.allProvidersForTeam($scope.teamResource).then(function(response1){
-                	console.log('response =' + JSON.stringify(response1));
-                	$scope.providers = response1.data.content;
-                	$scope.newList = response1.data.content;
-                    $scope.hideNewProviderModal();
-
-                });
-
-                
+                $scope.hideNewProviderModal();
+    	        ProviderCreate.allProvidersForTeam($scope.teamResource).then(function(response){
+    	        	$scope.teamResource.providers = response.data.content;
+    	        });
         	});
+        };
+	})
+	
+	.controller('ProviderSearchController', function($scope, $modal, $controller){
+        $controller('TeamProviderCommon', {$scope: $scope});
+
+        $scope.cancel = function () {
+            $scope.$hide();
+        };
+      
+        var newProviderModal = $modal({scope: $scope, template: 'partials/team/provider/new.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false});
+
+        $scope.createNewProvider = function () {
+            $scope.hideProviderSearchModal();
+        	newProviderModal.$promise.then(newProviderModal.show);
+        };
+
+        $scope.hideNewProviderModal = function () {
+        	newProviderModal.$promise.then(newProviderModal.destroy);
         };
 	})
 ;

@@ -14,10 +14,6 @@ angular.module('emmiManager')
         }
 
         $scope.url = teamClientResource.clientResource.link.findByNormalizedName;
-
-/*        ProviderCreate.allProvidersForTeam($scope.teamResource).then(function(response){
-        	$scope.providers = response.data.content;
-        });*/
         
         $scope.save = function (isValid) {
             $scope.formSubmitted = true;

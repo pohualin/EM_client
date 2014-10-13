@@ -61,7 +61,10 @@
         </div>
         <div data-ng-include="'partials/team/salesforce/team_salesforce_picker.html'"></div>
 
-        <div data-ng-include="'partials/team/provider/provider.html'"></div>
+    	<div class="row">
+			<div data-ng-show="teamResource.providers" data-ng-include="'partials/team/provider/providersTable.html'"></div>
+		</div>
+        <div data-ng-show="teamResource.link.provider" data-ng-include="'partials/team/provider/addProviders.html'"></div>
         
         <div class="row">
             <div class="col-md-12">

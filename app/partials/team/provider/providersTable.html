@@ -1,25 +1,20 @@
-<h1></h1>
-<div data-ng-show="teamResource.link.provider" data-ng-controller="TeamAddProvidersController">
-	<button type="button" class="btn btn-link" data-ng-click="addProviders()">add providers</button>
-</div>
-<h1></h1>
-
-
-<label class="control-label" for="providerLabel" data-ng-show="providers" data-ng-controller="ProviderCreateController">Providers:</label>
-
-<div class="row" data-ng-controller="ProviderCreateController">
-	<div class="col-md-6" >
-			<table class="table table-bordered table-striped table-hover" border="0" cellpadding="0" data-ng-show="providers">
+<div class="container" >
+	<div class="row" data-ng-controller="ProviderCreateController" data-ng-show="teamResource.providers.length > 0">
+		<div class="col-md-6" >
+		    <label>Providers</label>
+			<table class="table table-bordered table-striped table-hover" border="0" cellpadding="0" data-ng-controller="ProviderCreateController" >
 				<tr>
 					<th class="sort col-sm-3" data-ng-click="sort('name')">Name <span data-ng-show="sortProperty.property === 'name'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
 					</th>
 					<th class="sort col-sm-3" data-ng-click="sort('specialty')">Specialty <span data-ng-show="sortProperty.property === 'specialty'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
 					</th>
 				</tr>
-				<tr data-ng-repeat="provider in providers">
+				<tr data-ng-repeat="provider in teamResource.providers">
 			    	<td>{{provider.entity.firstName}} {{provider.entity.lastName}}</td>
 			    	<td>{{provider.entity.specialty.name}}</td>
 			    </tr>
 			</table>
 		</div>
 	</div>
+</div>
+ 

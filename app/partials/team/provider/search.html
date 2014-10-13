@@ -1,4 +1,4 @@
-<div class="modal" >
+<div class="modal" tabindex="-1" role="dialog" data-ng-controller="ProviderSearchController">
     <div class="modal-dialog modal-dialog-large container-fluid">
         <div class="modal-content">
             <div class="modal-header">
@@ -8,7 +8,6 @@
                     <div class="col-md-1"></div>
                 </div>
                 <div class="row">
-
                     <div class="col-md-9 col-sm-9">
                         <form ng-submit="search()">
                             <div class="form-group">
@@ -33,8 +32,11 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-link" data-ng-click="$hide()">cancel</button>
+                <button type="button" class="btn btn-link" data-ng-click="cancel()">cancel</button>
+                <button type="button" class="btn btn-primary" data-ng-show="providers" data-ng-click="save()">Save
+                </button>
             </div>
         </div>
     </div>
 </div>
+

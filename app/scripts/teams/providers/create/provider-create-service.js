@@ -21,13 +21,17 @@ angular.module('emmiManager')
                      });
              },
              specialtyRefData: function(teamResource) {
-            	 var responseArray = [];
-            	 return $http.get(UriTemplate.create(teamResource.link.providerReferenceData).stringify()).then(function (response){
-            		 angular.forEach(response.data.content, function(specialty){
-            			 responseArray.push(specialty.entity);
-            		 });
-            		 return responseArray;
-            	 });
+            	 if(teamResource.link.providerReferenceData){
+	            	 var responseArray = [];
+	            	 return $http.get(UriTemplate.create(teamResource.link.providerReferenceData).stringify()).then(function (response){
+	            		 angular.forEach(response.data.content, function(specialty){
+	            			 responseArray.push(specialty.entity);
+	            		 });
+	            		 return responseArray;
+	            	 });
+            	 } else {
+            		 return null;
+            	}
              },
              allProvidersForTeam: function (teamResource) {
                  return $http.get(UriTemplate.create(teamResource.link.provider).stringify())
