@@ -97,7 +97,7 @@
                              data-title="Please enter a specialty."></div>                             
 	                    <select class="form-control" id="specialty" data-ng-model="provider.specialty"
 	                            data-ng-options="specialty.name for specialty in specialties" name="specialty"  
-	                            data-ng-disabled="providerForm.specialty.$error.unique">
+	                            required data-ng-disabled="providerForm.specialty.$error.unique">
 	                        <option value="">Select...</option>
 	                    </select>
 	                </div>
