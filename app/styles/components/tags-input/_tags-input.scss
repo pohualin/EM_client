@@ -28,6 +28,7 @@
 
 .tag-group-remove {
     display: none;
+    .invalid &,
     .selected & {
         display: block;
     }
