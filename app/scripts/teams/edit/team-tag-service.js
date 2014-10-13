@@ -3,7 +3,7 @@ angular.module('emmiManager')
     .service('TeamTag', function ($http, $q, Session, UriTemplate) {
         return {
             loadSelectedTags: function (scope) {
-                var teamResource = scope.teamClientResource.teamResource
+                var teamResource = scope.teamClientResource.teamResource;
                 if (teamResource.entity.id) {
                     teamResource.tags = [];
                     return $http.get(UriTemplate.create(teamResource.link.tags).stringify()).then(function load(response) {

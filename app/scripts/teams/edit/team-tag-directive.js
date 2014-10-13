@@ -9,11 +9,11 @@ angular.module('emmiManager')
                 };
                 element.on('click', function () {
                     if (scope.teamClientResource && scope.teamClientResource.teamResource && scope.teamClientResource.teamResource.tags &&
-                        JSON.stringify(scope.teamClientResource.teamResource.tags) != JSON.stringify(scope.teamClientResource.teamResource.checkTagsForChanges)) {
+                        JSON.stringify(scope.teamClientResource.teamResource.tags) !== JSON.stringify(scope.teamClientResource.teamResource.checkTagsForChanges)) {
                         // pop a warning dialog
                         if (!scope.cancelWarning) {
                             $translate('client_edit_page.cancel_dialog.title').then(function (title) {
-                                scope.cancelWarning = $popover(elementk, {
+                                scope.cancelWarning = $popover(element, {
                                     title: title,
                                     scope: scope,
                                     trigger: 'manual',
