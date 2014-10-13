@@ -57,36 +57,4 @@ angular.module('emmiManager')
         };
     }])
 
-    .directive('cancelClickTeamEdit', ['$popover', '$timeout', '$translate' , function ($popover, $timeout, $translate) {
-        return {
-            restrict: 'EA',
-            link: function (scope,element) {
-                scope.hide = function () {
-                    scope.cancelWarning.hide();
-                };
-                element.on('click', function () {
-                    if (scope.teamClientResource && scope.teamClientResource.teamResource && scope.teamClientResource.teamResource.tags
-                        && scope.teamClientResource.teamResource.tags.length>0){
-                        // pop a warning dialog
-                        if (!scope.cancelWarning) {
-                            $translate('client_edit_page.cancel_dialog.title').then(function (title) {
-                                scope.cancelWarning = $popover(element, {
-                                    title: title,
-                                    scope: scope,
-                                    show: true,
-                                    placement: 'top',
-                                    contentTemplate: 'partials/team/tags/cancel_popover_team_edit.tpl.html'
-                                });
-                            });
-                        }
-                    } else {
-                        $timeout(function () {
-                            scope.cancel();
-                        });
-                    }
-                });
-            }
-        };
-    }])
-
 ;
