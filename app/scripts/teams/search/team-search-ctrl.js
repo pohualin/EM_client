@@ -2,138 +2,79 @@
 
 angular.module('emmiManager')
 
-    .controller('TeamSearchController',function ($scope, Client, TeamSearch){
+    .controller('TeamSearchController',function ($scope, Client, TeamSearch, $controller){
 
-        $scope.option = 'Teams';
-        var teamsProperty = 'teams';
+        $controller('CommonSearch', {$scope: $scope});
+
+        var contentProperty = 'teams';
 
         Client.getReferenceData().then(function (refData) {
             $scope.statuses = refData.statusFilter;
         });
-        
-        $scope.searchTeams = function () {
-            $scope.loading = true;
-            TeamSearch.search($scope.query).then(function (teamPage) {
-                $scope.sortProperty.reset();
-                $scope.searchPerformed = true;
-                $scope.handleResponse(teamPage, teamsProperty);
-                $scope.removeStatusFilterAndTotal = $scope.total <= 0;
-            }, function () {
-                // error happened
-                $scope.loading = false;
-            });
-        };
-        
-        $scope.handleResponse = function (teamPage, teamsPropertyName) {
-            if (teamPage) {
-            	for (var sort = 0, size = teamPage.content.length; sort < size; sort++ ){
-                    var content = teamPage.content[sort];
-                    content.sortIdx = sort;
-                }
-            	
-                this[teamsPropertyName] = teamPage.content;
 
-                $scope.total = teamPage.page.totalElements;
-                $scope.links = [];
-                for (var i = 0, l = teamPage.linkList.length; i < l; i++) {
-                    var aLink = teamPage.linkList[i];
-                    if (aLink.rel.indexOf('self') === -1) {
-                        $scope.links.push({
-                            order: i,
-                            name: aLink.rel.substring(5),
-                            href: aLink.href
-                        });
+        var performSearch = function(q, status, sort, size, recalculateStatusFilterAndTotal){
+            if (!$scope.searchForm || !$scope.searchForm.query.$invalid ) {
+                $scope.loading = true;
+                $scope.serializeToQueryString(q, 't', status, sort, size);
+                TeamSearch.search(q, status, sort, size).then(function (teamPage) {
+                    $scope.handleResponse(teamPage, contentProperty);
+                    if (recalculateStatusFilterAndTotal) {
+                        $scope.removeStatusFilterAndTotal = $scope.total <= 0;
                     }
-                }
-                $scope.load = teamPage.link.self;
-                $scope.currentPage = teamPage.page.number;
-                $scope.currentPageSize = teamPage.page.size;
-                $scope.pageSizes = [5, 10, 15, 25];
-                $scope.status = teamPage.filter.status;
-            } else {
-                $scope.total = 0;
-                $scope[teamsPropertyName] = null;
+                }, function () {
+                    // error happened
+                    $scope.loading = false;
+                });
+                // turn off the sort after the search request has been made, the response will rebuild
+                $scope.sortProperty = null;
             }
-            $scope.noSearch = false;
-            $scope.loading = false;
         };
         
         $scope.viewTeam = function (team) {
         	TeamSearch.viewTeam(team);
         };
 
-        $scope.sortProperty = {
-            property: null,
-            ascending: null,
-            resetOnNextSet: false,
-            setProperty: function (property) {
-                if (this.property === property) {
-                    if (!this.resetOnNextSet) {
-                        if (this.ascending !== null) {
-                            // this property has already been sorted on once
-                            // the next click after this one should turn off the sort
-                            this.resetOnNextSet = true;
-                        }
-                        this.ascending = !this.ascending;
-                    } else {
-                        this.reset();
-                    }
-                } else {
-                    this.property = property;
-                    this.ascending = true;
-                    this.resetOnNextSet = false;
-                }
-            },
-            reset: function () {
-                this.property = null;
-                this.ascending = null;
-                this.resetOnNextSet = false;
+        // when first loading the page, via SearchUriPersistence set variables
+        if ($scope.query) {
+            if ($scope.pageWhereBuilt === 'team') {
+                performSearch($scope.query, $scope.status, $scope.sortProperty, $scope.currentPageSize,
+                        $scope.status !== 'INACTIVE_ONLY');
+            } else {
+                // it was built by a different page, use the query only
+                performSearch($scope.query, null, null, null, true);
             }
+        }
+
+        // when the search button is used
+        $scope.searchTeams = function () {
+            performSearch($scope.query, null, null, null, true);
         };
 
         // when a column header is clicked
         $scope.sort = function (property) {
-            $scope.sortProperty.setProperty(property);
-            $scope.loading = true;
-            TeamSearch.search($scope.query, $scope.status, $scope.sortProperty, $scope.currentPageSize).then(function (teamPage) {
-                $scope.handleResponse(teamPage, teamsProperty);
-            }, function () {
-                // error happened
-                $scope.loading = false;
-            });
+            var sort = $scope.createSortProperty(property);
+            performSearch($scope.query, $scope.status, sort, $scope.currentPageSize);
         };
         
         // when a page size link is used
         $scope.changePageSize = function (pageSize) {
-            $scope.loading = true;
-            TeamSearch.search($scope.query, $scope.status, $scope.sortProperty, pageSize).then(function (teamPage) {
-                $scope.handleResponse(teamPage, teamsProperty);
-            }, function () {
-                // error happened
-                $scope.loading = false;
-            });
+            performSearch($scope.query, $scope.status, $scope.sortProperty, pageSize);
         };
         
-     // when a pagination link is used
+        // when a pagination link is used
         $scope.fetchPage = function (href) {
             $scope.loading = true;
             TeamSearch.fetchPage(href).then(function (teamPage) {
-                $scope.handleResponse(teamPage, teamsProperty);
+                $scope.handleResponse(teamPage, contentProperty);
             }, function () {
                 // error happened
                 $scope.loading = false;
             });
         };
-        
 
         // when the status change select changes
         $scope.statusChange = function(){
-            $scope.loading = true;
-            TeamSearch.search($scope.query, $scope.status, $scope.sortProperty, $scope.currentPageSize).then(function (teamPage) {
-                $scope.handleResponse(teamPage, teamsProperty);
-            }, function () {
-                // error happened
-                $scope.loading = false;
-            });
+            performSearch($scope.query, $scope.status, $scope.sortProperty, $scope.currentPageSize);
         };
+
     });

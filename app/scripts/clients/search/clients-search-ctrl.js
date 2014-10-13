@@ -9,9 +9,9 @@ angular.module('emmiManager')
 
         $controller('ViewEditCommon', {$scope: $scope});
 
-        $scope.option = 'Clients';
+        $controller('CommonSearch', {$scope: $scope});
 
-        $scope.pageSizes = [5, 10, 15, 25];
+        var contentProperty = 'clients';
 
         Client.getReferenceData().then(function (refData) {
             $scope.statuses = refData.statusFilter;
@@ -20,16 +20,9 @@ angular.module('emmiManager')
         var performSearch = function(q, status, sort, size, recalculateStatusFilterAndTotal){
             if (!$scope.searchForm || !$scope.searchForm.query.$invalid ) {
                 $scope.loading = true;
-                $location.search({
-                    q: q,
-                    p: 'c',
-                    status: status,
-                    sort: sort ? sort.property : '',
-                    dir: sort ? (sort.ascending ? 'asc' : 'desc') : '',
-                    size: size
-                }).replace();
+                $scope.serializeToQueryString(q, 'c', status, sort, size);
                 Client.find(q, status, sort, size).then(function (clientPage) {
-                    $scope.handleResponse(clientPage, 'clients');
+                    $scope.handleResponse(clientPage, contentProperty);
                     if (recalculateStatusFilterAndTotal) {
                         $scope.removeStatusFilterAndTotal = $scope.total <= 0;
                     }
@@ -37,6 +30,8 @@ angular.module('emmiManager')
                     // error happened
                     $scope.loading = false;
                 });
+                // turn off the sort after the search request has been made, the response will rebuild
+                $scope.sortProperty = null;
             }
         };
 
@@ -45,117 +40,38 @@ angular.module('emmiManager')
             performSearch($scope.query, null, null, null, true);
         };
 
-        // when first loading the page
-        var searchObject = $location.search();
-        if (searchObject && searchObject.q){
-            $scope.query = searchObject.q;
-            if (searchObject.p === 'c'){
-                // the query string was built by the client page
-                $scope.status = searchObject.status;
-
-                // page size validation
-                if (searchObject.size) {
-                    // ignore a page size not allowed by this page
-                    angular.forEach($scope.pageSizes, function(pageSize){
-                        if ('' + pageSize === searchObject.size){
-                            $scope.currentPageSize = searchObject.size;
-                        }
-                    });
-                }
-                // sort
-                $scope.sortProperty = {};
-                if (searchObject.sort) {
-                    $scope.sortProperty.property =  searchObject.sort;
-                    if (searchObject.dir){
-                        if (searchObject.dir === 'asc'){
-                            $scope.sortProperty.ascending = true;
-                        } else if (searchObject.dir === 'desc'){
-                            $scope.sortProperty.ascending = false;
-                        }
-                    }
-                }
-                performSearch($scope.query, $scope.status, $scope.sortProperty, $scope.currentPageSize, true);
+        // when first loading the page, via SearchUriPersistence set variables
+        if ($scope.query) {
+            if ($scope.pageWhereBuilt === 'client') {
+                performSearch($scope.query, $scope.status, $scope.sortProperty, $scope.currentPageSize,
+                        $scope.status !== 'INACTIVE_ONLY');
             } else {
-                // it was built by a different page, only use the query
+                // it was built by a different page, use the query only
                 performSearch($scope.query, null, null, null, true);
             }
         }
 
         // when the status change select changes
         $scope.statusChange = function () {
-            performSearch($scope.query, $scope.status, $scope.sortProperty, $scope.currentPageSize, false);
+            performSearch($scope.query, $scope.status, $scope.sortProperty, $scope.currentPageSize);
         };
 
         // when a page size link is used
         $scope.changePageSize = function (pageSize) {
-            performSearch($scope.query, $scope.status, $scope.sortProperty, pageSize, false);
+            performSearch($scope.query, $scope.status, $scope.sortProperty, pageSize);
         };
 
         // when a column header is clicked
         $scope.sort = function (property) {
-            var sort = $scope.sortProperty || {};
-            if (sort && sort.property === property) {
-                // same property was clicked
-                if (!sort.ascending) {
-                    // third click removes sort
-                    sort = null;
-                } else {
-                    // switch to descending
-                    sort.ascending = false;
-                }
-            } else {
-                // change sort property
-                sort.property = property;
-                sort.ascending = true;
-            }
-            $scope.sortProperty = null; // it will be reset when a response comes back
-            performSearch($scope.query, $scope.status, sort, $scope.currentPageSize, false);
-        };
-
-        // render the response
-        $scope.handleResponse = function (entityPage, scopePropertyNameForEntity) {
-            if (entityPage) {
-                for (var sort = 0, size = entityPage.content.length; sort < size; sort++) {
-                    var content = entityPage.content[sort];
-                    content.sortIdx = sort;
-                }
-                this[scopePropertyNameForEntity] = entityPage.content;
-
-                $scope.total = entityPage.page.totalElements;
-                $scope.links = [];
-                for (var i = 0, l = entityPage.linkList.length; i < l; i++) {
-                    var aLink = entityPage.linkList[i];
-                    if (aLink.rel.indexOf('self') === -1) {
-                        $scope.links.push({
-                            order: i,
-                            name: aLink.rel.substring(5),
-                            href: aLink.href
-                        });
-                    }
-                }
-                $scope.load = entityPage.link.self;
-                $scope.currentPage = entityPage.page.number;
-                $scope.currentPageSize = entityPage.page.size;
-                $scope.status = entityPage.filter.status;
-                if (entityPage.sort) {
-                    $scope.sortProperty = {
-                        property: entityPage.sort[0].property,
-                        ascending: entityPage.sort[0].direction === 'ASC'
-                    };
-                }
-            } else {
-                this[scopePropertyNameForEntity] = null;
-                $scope.total = 0;
-            }
-            $scope.searchPerformed = true;
-            $scope.loading = false;
+            var sort = $scope.createSortProperty(property);
+            performSearch($scope.query, $scope.status, sort, $scope.currentPageSize);
         };
 
         // when a pagination link is used
         $scope.fetchPage = function (href) {
             $scope.loading = true;
             Client.fetchPage(href).then(function (clientPage) {
-                $scope.handleResponse(clientPage, 'clients');
+                $scope.handleResponse(clientPage, contentProperty);
             }, function () {
                 // error happened
                 $scope.loading = false;
