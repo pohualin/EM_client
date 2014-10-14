@@ -23,7 +23,8 @@ angular.module('emmiManager')
         $scope.teamClientResource = {
             teamResource: {
                 entity: {}
-            }
+            },
+            clientResource:clientResource
         };
 
         $controller('SalesForceCtrl', {$scope: $scope, team: $scope.team});
