@@ -1,0 +1,116 @@
+<div class="modal" tabindex="-1" role="dialog" data-ng-controller="ProviderCreateController">
+    <div class="modal-dialog">
+    <form name="providerForm" class="form" ng-submit="saveProvider(providerForm.$valid)" novalidate>
+    <div class="modal-content">
+        <div class="modal-header" ng-show="title">
+            <h4 class="modal-title">{{title}}</h4>
+        </div>
+        <div class="modal-body">
+            <div class="row" data-ng-show="providerForm.$invalid">
+                <div class="col-md-12" id="message-container"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group"
+                         data-ng-class="{ 'has-error' : providerForm.providerFirstName.$invalid && providerFormSubmitted }">
+                        <label class="control-label" for="providerFirstName">First Name:</label>
+                        <div class="error-circle"
+                             data-ng-show="providerForm.providerFirstName.$error.required && providerFormSubmitted"
+                             data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                             data-title="Required"></div>
+                        <div class="error-circle"
+                             data-ng-show="providerForm.providerFirstName.$error.pattern && providerFormSubmitted"
+                             data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                             data-title="Please enter a valid first name."></div>
+                        <input class="form-control" id="providerFirstName" data-ng-model="provider.firstName" name="providerFirstName"
+                               type="text" maxlength="255" required data-auto-focus
+                               data-ng-pattern="/^[a-zA-Z '-]*$/">
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="form-group"
+                         data-ng-class="{ 'has-error' : providerForm.providerMiddleName.$invalid && providerFormSubmitted }">
+                        <label class="control-label" for="providerMiddleName">Middle Name:</label>
+                        <div class="error-circle"
+                             data-ng-show="providerForm.providerMiddleName.$error.required && providerFormSubmitted"
+                             data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                             data-title="Required"></div>
+                        <div class="error-circle"
+                             data-ng-show="providerForm.providerMiddleName.$error.pattern && providerFormSubmitted"
+                             data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                             data-title="Please enter a valid middle name."></div>
+                        <input class="form-control" id="providerMiddleName" data-ng-model="provider.middleName" name="providerMiddleName"
+                               type="text" maxlength="255" data-auto-focus
+                               data-ng-pattern="/^[a-zA-Z '-]*$/">
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="form-group"
+                         data-ng-class="{ 'has-error' : providerForm.providerLastName.$invalid && providerFormSubmitted }">
+                        <label class="control-label" for="providerLastName">Last Name:</label>
+                        <div class="error-circle"
+                             data-ng-show="providerForm.providerLastName.$error.required && providerFormSubmitted"
+                             data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                             data-title="Required"></div>
+                        <div class="error-circle"
+                             data-ng-show="providerForm.providerLastName.$error.pattern && providerFormSubmitted"
+                             data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                             data-title="Please enter a valid last name."></div>
+                        <input class="form-control" id="providerLastName" data-ng-model="provider.lastName" name="providerLastName"
+                               type="text" maxlength="255" required data-auto-focus
+                               data-ng-pattern="/^[a-zA-Z '-]*$/">
+                    </div>
+                </div>                                
+            </div>
+            <div class="row">
+              
+                <div class="col-md-4">
+                    <div class="form-group"
+                         data-ng-class="{ 'has-error' : providerForm.email.$invalid && providerFormSubmitted }">
+                        <label class="control-label" for="email">Email:</label>
+
+                        <div class="error-circle"
+                             data-ng-show="providerForm.email.$error.required && providerFormSubmitted"
+                             data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                             data-title="Required"></div>
+                        <div class="error-circle"
+                             data-ng-show="providerForm.email.$error.pattern && providerFormSubmitted"
+                             data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                             data-title="Please enter a valid email."></div>
+                        <input class="form-control" data-ng-model="provider.email" id="email" name="email" type="text"
+                               maxlength="255" required data-ng-pattern="/^[\-\.a-zA-Z0-9 '=_;:@#&,\(\)!]*$/">
+                    </div>
+                </div>
+                <div class="col-md-8">
+	                <div class="form-group" data-ng-class="{ 'has-error' : providerForm.specialty.$invalid && providerFormSubmitted }">
+	                    <label class="control-label" for="specialty">Specialty:</label>
+	                    
+	                    <div class="error-circle"
+                             data-ng-show="providerForm.specialty.$error.required && providerFormSubmitted"
+                             data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                             data-title="Required"></div>
+						<div class="error-circle"
+                             data-ng-show="providerForm.specialty.$error.pattern && providerFormSubmitted"
+                             data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                             data-title="Please enter a specialty."></div>                             
+	                    <select class="form-control" id="specialty" data-ng-model="provider.specialty"
+	                            data-ng-options="specialty.name for specialty in specialties" name="specialty"  
+	                            required data-ng-disabled="providerForm.specialty.$error.unique">
+	                        <option value="">Select...</option>
+	                    </select>
+	                </div>
+            	</div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-ng-click="$hide()">Cancel</button>
+            <input type="submit" id="submit" class="btn btn-primary" value="Save"/>
+        </div>
+    </div>
+</form>
+    
+    
+    </div>
+</div>

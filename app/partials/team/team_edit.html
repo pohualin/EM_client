@@ -59,12 +59,21 @@
                 </div>
             </div>
         </div>
+
         <div data-ng-include="'partials/team/salesforce/team_salesforce_picker.html'"></div>
+
+        <div data-ng-include="'partials/team/tags/team_tags.html'"></div>
+
+    	<div class="row">
+			<div data-ng-show="teamResource.providers" data-ng-include="'partials/team/provider/providersTable.html'"></div>
+		</div>
+        <div data-ng-show="teamResource.link.provider" data-ng-include="'partials/team/provider/addProviders.html'"></div>
+        
         <div class="row">
             <div class="col-md-12">
                 <div class="pull-right">
-                    <a class="btn btn-link" data-ng-click="cancel()" href
-                       data-translate="team_edit_page.cancel_button">cancel</a>
+                    <button class="btn btn-link" data-on-ok="cancel()" data-translate="team_edit_page.cancel_button" href data-cancel-click-team-edit>cancel</button>
+
                     <button class="btn btn-primary" type="button"
                             data-on-ok="save(teamForm.$valid)" data-team-entity="team"
                             data-placement="top"
