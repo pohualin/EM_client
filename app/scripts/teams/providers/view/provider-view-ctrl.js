@@ -13,6 +13,7 @@ angular.module('emmiManager')
 
         	});
         };
+	})
 	
 	.controller('ProviderListController', function($scope, ProviderView){
     	ProviderView.allProvidersForTeam($scope.teamResource).then(function(response){
