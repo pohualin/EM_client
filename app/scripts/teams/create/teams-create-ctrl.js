@@ -4,7 +4,7 @@ angular.module('emmiManager')
 	/**
 	 * Create a Single Team
 	 */
-    .controller('ClientTeamCreateCtrl',function ($scope,$http, $routeParams, Session, UriTemplate, CreateTeam, ViewTeam, $controller, clientResource, Client){
+    .controller('ClientTeamCreateCtrl',function ($scope,$http, $routeParams, Session, UriTemplate, CreateTeam, ViewTeam, $controller, clientResource, Client, TeamTag){
 
         $controller('TeamErrorController', {$scope: $scope});
 
@@ -20,6 +20,13 @@ angular.module('emmiManager')
             'normalizedTeamName' : null
 	    };
 
+        $scope.teamClientResource = {
+            teamResource: {
+                entity: {}
+            },
+            clientResource:clientResource
+        };
+
         $controller('SalesForceCtrl', {$scope: $scope, team: $scope.team});
         
         $scope.team.client = clientResource.entity;
@@ -28,7 +35,10 @@ angular.module('emmiManager')
         	$scope.formSubmitted = true;
         	if(isValid && $scope.team.salesForceAccount){
                 CreateTeam.insertTeams($scope.team).then(function (team) {
-                	$scope.team = team.data.entity;
+                	var teamResource = team.data;
+                    $scope.team = teamResource.entity;
+                    teamResource.tags = $scope.teamClientResource.teamResource.tags;
+                    TeamTag.save(teamResource);
                     ViewTeam.viewTeam($scope.team);
                 });
         	} else {

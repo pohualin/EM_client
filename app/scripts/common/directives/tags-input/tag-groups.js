@@ -125,10 +125,13 @@ angular.module('emmiManager')
                     var unique = {};
                     var dupes = [];
                     angular.forEach($scope.groups, function (x, i) {
-                        if (!unique[x.title]) {
-                            unique[x.title] = true;
-                        } else {
-                            dupes.push(i);
+                        if (x.title) {
+                            var groupTitle = x.title.toLowerCase().replace(/[^a-z0-9]+/g, '');
+                            if (!unique[groupTitle]) {
+                                unique[groupTitle] = true;
+                            } else {
+                                dupes.push(i);
+                            }
                         }
                     });
                     return dupes;
@@ -155,22 +158,22 @@ angular.module('emmiManager')
                 // watch for removed tags and re-check for uniqueness
                 scope.$watch('groups.length', function (newVal, oldVal) {
                     // tag added or removed
-                    $timeout(function () {
-                        scope.validateForDuplicates();
-                        scope.formField.$setValidity('empty', !scope.hasEmpties());
-                        if (newVal === 0) {
-                            addBtn.text(origAddBtnText);
-                        } else {
-                            addBtn.text(addBtn.data('swapText'));
-                        }
-                    });
+                    scope.validateForDuplicates();
+                    scope.formField.$setValidity('empty', !scope.hasEmpties());
+                    if (newVal === 0) {
+                        addBtn.text(origAddBtnText);
+                    } else {
+                        addBtn.text(addBtn.data('swapText'));
+                    }
                 });
 
                 scope.$on('tag:add', function (event, tagGroup) {
                     $timeout(function () {
-                        var btnGroup = element.find('.btn-group').last();
-                        btnGroup.find('.dropdown-toggle').trigger('click.bs.dropdown');
-                        btnGroup.find('.tags-input .input').focus();
+                        if (tagGroup.isValid) {
+                            var btnGroup = element.find('.btn-group').last();
+                            btnGroup.find('.dropdown-toggle').trigger('click.bs.dropdown');
+                            btnGroup.find('.tags-input .input').focus();
+                        }
                     });
                 });
 

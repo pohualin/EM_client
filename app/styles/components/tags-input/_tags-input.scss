@@ -28,6 +28,7 @@
 
 .tag-group-remove {
     display: none;
+    .invalid &,
     .selected & {
         display: block;
     }
@@ -111,7 +112,7 @@
         padding: .2em .6em .2em;
         //font-size: 75%;
         font-weight: 700;
-        line-height: 1;
+        line-height: 16px;
         color: #fff;
         text-align: center;
         white-space: nowrap;
@@ -144,7 +145,7 @@
 
         &:hover {
             .remove-button {
-                display: inline;
+                display: inline-block;
             }
         }
 
