@@ -1,7 +1,7 @@
 'use strict';
 angular.module('emmiManager')
 
-	.controller('TeamProviderCommon', function($scope, ProviderView){
+	.controller('TeamProviderCommon', function($scope, ProviderView, $alert){
 		
 		ProviderView.specialtyRefData($scope.teamResource).then(function(response){
         	$scope.specialties = response;
@@ -12,6 +12,19 @@ angular.module('emmiManager')
         		$scope.teamResource.providers = response;
 
         	});
+        };
+
+        $scope.showErrorBanner = function () {
+            if (!$scope.providerErrorAlert) {
+                $scope.providerErrorAlert = $alert({
+                    title: ' ',
+                    content: 'Please correct the below information.',
+                    container: '#message-container',
+                    type: 'danger',
+                    show: true,
+                    dismissable: false
+                });
+            }
         };
 	})
 	
