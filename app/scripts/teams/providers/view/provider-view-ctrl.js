@@ -2,7 +2,8 @@
 angular.module('emmiManager')
 
 	.controller('TeamProviderCommon', function($scope, ProviderView){
-		
+        $scope.noSearch = true;
+
 		ProviderView.specialtyRefData($scope.teamResource).then(function(response){
         	$scope.specialties = response;
         });
