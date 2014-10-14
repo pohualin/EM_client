@@ -2,7 +2,7 @@
 
 angular.module('emmiManager')
 
-    .controller('SearchTeamsLocationsController', function ($scope, Location, $http) {
+    .controller('SearchTeamsLocationsController', function ($scope, Location) {
 
         $scope.clientLocationsSelected = [];
 
@@ -19,7 +19,7 @@ angular.module('emmiManager')
         $scope.savePopupLocations = function() {
             $scope.$hide();
             $scope.save($scope.clientLocationsSelected);
-        }
+        };
 
         $scope.hidePopupLocations = function () {
             $scope.$hide();
