@@ -1,7 +1,7 @@
 'use strict';
 angular.module('emmiManager')
 
-	.controller('TeamProviderCommon', function($scope, ProviderView, $alert){
+	.controller('TeamProviderCommon', function($scope, ProviderView){
 		
 		ProviderView.specialtyRefData($scope.teamResource).then(function(response){
         	$scope.specialties = response;
