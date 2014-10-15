@@ -2,7 +2,7 @@
 
 angular.module('emmiManager')
 
-    .controller('TeamEditController', function ($scope, teamClientResource, EditTeam, TeamTag, ViewTeam, $controller) {
+    .controller('TeamEditController', function ($scope, teamClientResource, EditTeam, TeamTag, ViewTeam, $controller, $q) {
 
         $controller('TeamErrorController', {$scope: $scope});
         $scope.teamClientResource = teamClientResource;
@@ -18,11 +18,13 @@ angular.module('emmiManager')
         $scope.save = function (isValid) {
             $scope.formSubmitted = true;
             if (isValid && $scope.team.salesForceAccount) {
-                EditTeam.save(teamClientResource.teamResource).then(function (team) {
+                var editSave = EditTeam.save(teamClientResource.teamResource).then(function (team) {
                     $scope.team = team.data.entity;
+                });
+                var teamTagSave = TeamTag.save(teamClientResource.teamResource);
+                $q.all([editSave, teamTagSave]).then(function() {
                     ViewTeam.viewTeam($scope.team);
                 });
-                TeamTag.save(teamClientResource.teamResource);
             } else {
                 $scope.showError();
             }
