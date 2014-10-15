@@ -11,10 +11,6 @@ angular.module('emmiManager')
             $scope.team = teamClientResource.teamResource.entity;
             ViewTeam.setTeam(teamClientResource.teamResource);
             $scope.teamResource = teamClientResource.teamResource;
-            
-            ProviderView.allProvidersForTeam(teamClientResource.teamResource).then(function(response){
-        		teamClientResource.teamResource.providers = response;
-        	});
         }
     })
 ;

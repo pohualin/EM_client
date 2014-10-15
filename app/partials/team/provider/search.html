@@ -31,6 +31,19 @@
                     </div>
                 </div>
             </div>
+            
+            <div class="modal-body" data-ng-hide="noSearch">
+                <div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <div data-ng-hide="providers">
+                                <span> No results found</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             <div class="modal-footer">
                 <button type="button" class="btn btn-link" data-ng-click="cancel()">cancel</button>
                 <button type="button" class="btn btn-primary" data-ng-show="providers" data-ng-click="save()">Save

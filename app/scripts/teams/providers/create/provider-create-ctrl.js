@@ -21,17 +21,15 @@ angular.module('emmiManager')
         $scope.title = 'New Provider';
         
         $scope.provider = ProviderCreate.newProvider();
-       
-        $scope.teamResource.providers = $scope.allProvidersForTeam();
-        
+               
         $scope.saveProvider = function(isValid){
             $scope.providerFormSubmitted = true;
-        	ProviderCreate.create($scope.provider, $scope.teamResource).then(function(response){
-                $scope.hideNewProviderModal();
-                ProviderView.allProvidersForTeam($scope.teamResource).then(function(response){
-    	        	$scope.teamResource.providers = response;
-    	        });
-        	});
+	        	ProviderCreate.create($scope.provider, $scope.teamResource).then(function(response){
+	                $scope.hideNewProviderModal();
+	                ProviderView.allProvidersForTeam($scope.teamResource).then(function(response){
+	    	        	$scope.teamResource.providers = response;
+	    	        });
+	        	});
         };
 	})
 ;
