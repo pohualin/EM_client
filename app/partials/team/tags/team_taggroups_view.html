@@ -1,0 +1,14 @@
+<div class="col-md-12" data-ng-controller="TeamTagsViewController">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Tags</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" data-ng-show="tags.length > 0">
+            <div class="tags-detail" data-ng-repeat="tag in tags">
+                {{tag.name}}
+            </div>
+        </div>
+    </div>
+</div>
