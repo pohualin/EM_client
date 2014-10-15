@@ -8,6 +8,7 @@ angular.module('emmiManager')
     .controller('ClientTeamViewCtrl', function ($scope, teamClientResource, ViewTeam, ProviderView) {
 
         if (teamClientResource && teamClientResource.teamResource) {
+            $scope.teamClientResource = teamClientResource;
             $scope.team = teamClientResource.teamResource.entity;
             ViewTeam.setTeam(teamClientResource.teamResource);
             $scope.teamResource = teamClientResource.teamResource;
