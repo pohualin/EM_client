@@ -2,34 +2,29 @@
 
 angular.module('emmiManager')
 
-    .controller('TeamsLocationsController', function ($scope, TeamLocation, Location, $http, Session, UriTemplate, $controller, Client, $modal) {
+    .controller('TeamsLocationsController', function ($scope, $http, Session, UriTemplate, $controller, $modal, Location, Client, TeamLocation) {
 
         $scope.teamLocations = {}; //used to hold the locations and manipulate internally
-        $scope.teamLocationsArray = []; //used to display in the locations list of the team
-
-        $scope.addLocations = function () {
-            addNewLocationsModal.$promise.then(addNewLocationsModal.show);
-        };
 
         Location.findForClient(Client.getClient()).then(function (allLocations) {
             $scope.clientLocations = allLocations;
         });
 
-        $scope.teamHasLocations = function () {
-            return $scope.teamLocationsArray && $scope.teamLocationsArray.length > 0;  
+        TeamLocation.loadTeamLocations($scope);
+
+        $scope.addLocations = function () {
+            addNewLocationsModal.$promise.then(addNewLocationsModal.show);
         };
 
-        $scope.save = function (locations) {
-            $scope.teamLocationsArray = [];
+        $scope.teamHasLocations = function () {
+            return $scope.teamClientResource.teamResource.locations && $scope.teamClientResource.teamResource.locations.length > 0;  
+        };
 
-            angular.forEach( locations , function (location) {
-                location.entity.isNewAdd = true;
-                $scope.teamLocations[location.entity.id] = angular.copy(location);  
-            });
-            angular.forEach( $scope.teamLocations , function (location) {
-                $scope.teamLocationsArray.push(location);
-            });
-
+        $scope.save = function (reload) {
+            if (reload) {
+                TeamLocation.loadTeamLocations($scope);
+            }
+            
             addNewLocationsModal.$promise.then(addNewLocationsModal.hide);
         };
 

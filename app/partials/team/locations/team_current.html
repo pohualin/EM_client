@@ -11,15 +11,15 @@
             <th>&nbsp;</th>
         </tr>
 
-        <tr data-ng-class="{highlight: location.highlight}"  data-ng-repeat="location in teamLocationsArray | orderBy:'sort'" >
+        <tr data-ng-class="{highlight: location.highlight}"  data-ng-repeat="location in teamClientResource.teamResource.locations | orderBy:'sort'" >
             <td>
-                {{location.entity.name}}
-                <span data-ng-show="location.entity.belongsTo && location.entity.belongsTo.id !== team.entity.id"> <em>({{location.entity.belongsTo.name}})</em></span>
+                {{location.name}}
+                <span data-ng-show="location.entity.belongsTo && location.entity.belongsTo.id !== team.entity.id"> <em>({{location.belongsTo.name}})</em></span>
                 <span data-ng-show="!location.entity.belongsTo"> <em>(<span data-translate="client_edit_page.locations.no_client_owner"></span>)</em></span>
             </td>
-            <td>{{location.entity.phone}}</td>
-            <td>{{location.entity.city}}</td>
-            <td>{{location.entity.state}}</td>
+            <td>{{location.phone}}</td>
+            <td>{{location.city}}</td>
+            <td>{{location.state}}</td>
             <td>
                 <a href data-ng-click="editLocation(location)">edit</a><span class="text-muted">&nbsp;|&nbsp;</span><a href data-ng-click="removeNewLocation(location)">remove from team</a>
             </td>
@@ -29,7 +29,7 @@
     <div data-ng-hide="teamHasLocations()">
         <span>There are no existing locations<span data-ng-show="team.name"> for {{team.name}}</span>.</span>
     </div>    
-    <div class="row" >
+    <div class="row" data-ng-show="teamClientResource.teamResource.link.teamLocations">
 	    <button type="button" class="btn btn-link" data-ng-click="addLocations()">
 	        add locations
 	    </button>
