@@ -1,4 +1,11 @@
 
+.tag-group {
+    margin: 3px 0; // add some margin for when tag groups go to next line
+    .error-circle {
+        float: left; // to fix some weird layout bugs (EM-360)
+    }
+}
+
 .tag-group-edit {
     position: absolute;
     z-index: 10;
@@ -34,7 +41,7 @@
     }
 }
 .btn-group:hover .tag-group-remove {
-    display: block;
+    display: inline-block;
 }
 
 .tags-input .host {
