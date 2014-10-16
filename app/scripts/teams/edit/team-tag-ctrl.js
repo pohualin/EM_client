@@ -8,7 +8,7 @@ angular.module('emmiManager')
             angular.forEach(tagGroups, function (group) {
                 var localGroup = angular.copy(group);
                 localGroup.title = localGroup.name;
-                //comment here
+                //rebuild groups on each tag
                 localGroup.tag = null;
                 angular.forEach(group.tag, function (tag) {
                     tag.group = localGroup;
