@@ -12,7 +12,7 @@
                     <div class="col-md-9 col-sm-9">
                         <form ng-submit="search()">
                             <div class="form-group">
-                                <div data-ng-show ="clientHasLocations" class="form-inline">
+                                <div data-ng-show="clientHasLocations()" class="form-inline">
                                     <select id="locationFromClient" class="chosen-container-multi" ng-change="onDropdownChange()"
                                         multiple chosen 
                                         data-placeholder="Choose from client locations"
@@ -23,9 +23,10 @@
                                 <br/>
                                 </div>
                                 <br />
+                                <label  for="locationQuery">Search Locations:</label>
                                 <div class="input-group" data-ng-hide="clientLocationsSelected" >
                                     <input class="form-control" id="locationQuery" data-ng-model="locationQuery"
-                                           type="text" placeholder="Search locations..." data-auto-focus data-focus-on="LocationSearchFocus">
+                                           type="text" placeholder="Search..." data-auto-focus data-focus-on="LocationSearchFocus">
 
                                     <div class="input-group-addon btn" data-ng-click="search()">Go</div>
                                 </div>
