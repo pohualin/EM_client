@@ -12,7 +12,7 @@
                     <div class="col-md-9 col-sm-9">
                         <form ng-submit="search()">
                             <div class="form-group">
-                                <div data-ng-show ="clientHasLocations" class="form-inline">
+                                <div data-ng-show="clientHasLocations()" class="form-inline">
                                     <select id="locationFromClient" class="chosen-container-multi" ng-change="onDropdownChange()"
                                         multiple chosen 
                                         data-placeholder="Choose from client locations"
