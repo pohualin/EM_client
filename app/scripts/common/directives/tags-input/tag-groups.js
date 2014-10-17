@@ -89,7 +89,15 @@ angular.module('emmiManager')
 
                 $scope.pasteTags = function (event, groupIndex) {
                     event.preventDefault();
-                    var tags = event.originalEvent.clipboardData.getData('text/plain').split('\n');
+                    var tags;
+                    if (event.originalEvent.clipboardData) {
+                        tags = event.originalEvent.clipboardData.getData('text/plain').split('\n');
+                    } else if (window.clipboardData) {
+                        // IE event is attached to the window object and accepts different data type options
+                        tags = window.clipboardData.getData('Text').split('\n');
+                    } else {
+                        tags = [];
+                    }
                     for (var i = 0, numTags = tags.length; i < numTags; i++) {
                         var tag = {};
                         tag.text = tags[i];
