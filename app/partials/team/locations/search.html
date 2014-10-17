@@ -42,28 +42,6 @@
             </div>
             <div class="modal-body" data-ng-hide="noSearch">
                 <div>
-                    <div class="row" data-ng-hide="removeStatusFilterAndTotal">
-                        <div class="col-md-12 col-sm-12">
-                            <div class="pull-right">
-                                {{total}}
-                                <span data-ng-show="total != 1" data-translate="global.labels.total"> results</span>
-                                <span data-ng-show="total === 1"
-                                      data-translate="global.labels.totalSingular"> result</span>
-                            </div>
-                            <form class="form-inline">
-                                <div class="form-group">
-                                    <label for="status_filter" data-translate="global.labels.statusFilter">Show:</label>
-                                    <select class="form-control" id="status_filter" data-ng-model="status"
-                                            data-ng-options="status | translate for status in statuses"
-                                            data-ng-change="statusChange()">
-                                    </select>
-                                </div>
-                            </form>
-                        </div>
-
-                    </div>
-                    <br/>
-
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
                             <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0"
