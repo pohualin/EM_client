@@ -3,12 +3,12 @@
         <ul class="tag-list">
             <li class="tag-item" data-ng-repeat="tag in tagList.items track by $index" data-ng-class="{ selected: $index == tagList.selected, editing: tag.editMode }">
                 <span class="tag-text" data-ng-click="tagList.select($index)" data-ng-hide="tag.editMode">{{getDisplayText(tag)}}</span>
-                <input type="text" data-ng-show="tag.editMode" data-ng-model="tag.text" ti-autosize="" data-focus-on="editMode" data-ng-click="tagList.select($index)" data-ng-enter="tagList.saveTag(tag)" data-ng-blur="tagList.saveTag(tag)">
+                <input type="text" data-ng-show="tag.editMode" data-ng-model="tag.text" data-ti-autosize="" data-focus-on="editMode" data-ng-click="tagList.select($index)" data-ng-enter="tagList.saveTag(tag)" data-ng-blur="tagList.saveTag(tag)">
                 <a class="remove-button" data-ng-click="tagList.remove($index)">{{options.removeTagSymbol}}</a>
             </li>
         </ul>
         <div data-ng-form name="tagInputForm">
-            <input name="tagInput" class="input" placeholder="{{options.placeholder}}" tabindex="{{options.tabindex}}" data-ng-model="newTag.text" data-ng-trim="false" ti-autosize="" novalidate="">
+            <input name="tagInput" class="input" placeholder="{{options.placeholder}}" tabindex="{{options.tabindex}}" data-ng-model="newTag.text" data-ng-trim="false" data-ti-autosize="" novalidate="">
         </div>
     </div>
 </div>
