@@ -2,11 +2,16 @@
 
 angular.module('emmiManager')
 
-    .controller('TeamSearchController',function ($scope, Client, TeamSearch, $controller){
+/**
+ *  Show list of clients
+ */
+    .controller('ClientListCtrl', function ($scope, Client, $http, Session, UriTemplate, $controller, $location) {
+
+        $controller('ViewEditCommon', {$scope: $scope});
 
         $controller('CommonSearch', {$scope: $scope});
 
-        var contentProperty = 'teams';
+        var contentProperty = 'clients';
 
         Client.getReferenceData().then(function (refData) {
             $scope.statuses = refData.statusFilter;
@@ -15,9 +20,9 @@ angular.module('emmiManager')
         var performSearch = function(q, status, sort, size, recalculateStatusFilterAndTotal){
             if (!$scope.searchForm || !$scope.searchForm.query.$invalid ) {
                 $scope.loading = true;
-                $scope.serializeToQueryString(q, 't', status, sort, size);
-                TeamSearch.search(q, status, sort, size).then(function (teamPage) {
-                    $scope.handleResponse(teamPage, contentProperty);
+                $scope.serializeToQueryString(q, 'c', status, sort, size);
+                Client.find(q, status, sort, size).then(function (clientPage) {
+                    $scope.handleResponse(clientPage, contentProperty);
                     if (recalculateStatusFilterAndTotal) {
                         $scope.removeStatusFilterAndTotal = $scope.total <= 0;
                     }
@@ -29,14 +34,15 @@ angular.module('emmiManager')
                 $scope.sortProperty = null;
             }
         };
-        
-        $scope.viewTeam = function (team) {
-        	TeamSearch.viewTeam(team);
+
+        // when the search button is used
+        $scope.search = function () {
+            performSearch($scope.query, null, null, null, true);
         };
 
         // when first loading the page, via SearchUriPersistence set variables
         if ($scope.query) {
-            if ($scope.pageWhereBuilt === 'team') {
+            if ($scope.pageWhereBuilt === 'client') {
                 performSearch($scope.query, $scope.status, $scope.sortProperty, $scope.currentPageSize,
                         $scope.status !== 'INACTIVE_ONLY');
             } else {
@@ -45,9 +51,14 @@ angular.module('emmiManager')
             }
         }
 
-        // when the search button is used
-        $scope.searchTeams = function () {
-            performSearch($scope.query, null, null, null, true);
+        // when the status change select changes
+        $scope.statusChange = function () {
+            performSearch($scope.query, $scope.status, $scope.sortProperty, $scope.currentPageSize);
+        };
+
+        // when a page size link is used
+        $scope.changePageSize = function (pageSize) {
+            performSearch($scope.query, $scope.status, $scope.sortProperty, pageSize);
         };
 
         // when a column header is clicked
@@ -55,26 +66,17 @@ angular.module('emmiManager')
             var sort = $scope.createSortProperty(property);
             performSearch($scope.query, $scope.status, sort, $scope.currentPageSize);
         };
-        
-        // when a page size link is used
-        $scope.changePageSize = function (pageSize) {
-            performSearch($scope.query, $scope.status, $scope.sortProperty, pageSize);
-        };
-        
+
         // when a pagination link is used
         $scope.fetchPage = function (href) {
             $scope.loading = true;
-            TeamSearch.fetchPage(href).then(function (teamPage) {
-                $scope.handleResponse(teamPage, contentProperty);
+            Client.fetchPage(href).then(function (clientPage) {
+                $scope.handleResponse(clientPage, contentProperty);
             }, function () {
                 // error happened
                 $scope.loading = false;
             });
         };
 
-        // when the status change select changes
-        $scope.statusChange = function(){
-            performSearch($scope.query, $scope.status, $scope.sortProperty, $scope.currentPageSize);
-        };
-
-    });
+    })
+;

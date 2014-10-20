@@ -104,6 +104,7 @@ angular.module('emmiManager')
         
         $scope.handleResponse = function (providerPage, providerPropertyName) {
             if (providerPage) {
+                $scope.updateAlreadyAssociatedProviders(providerPage, $scope.teamResource);
                 this[providerPropertyName] = providerPage.content;
 
                 $scope.total = providerPage.page.totalElements;
@@ -129,6 +130,16 @@ angular.module('emmiManager')
             }
             $scope.noSearch = false;
             $scope.loading = false;
+        };
+        
+        $scope.updateAlreadyAssociatedProviders = function (providerPage, currentTeam) {
+            angular.forEach(providerPage.content, function (provider) {
+                angular.forEach(provider.entity.teams, function (team) {
+                	if(currentTeam.entity.id === team.id) {
+                		provider.entity.belongsToCurrentTeam = true;
+                	}
+                });
+            });
         };
 	})
 ;	
