@@ -12,7 +12,7 @@
                     <div class="col-md-9 col-sm-9">
                         <form ng-submit="search()">
                             <div class="form-group">
-                                <div data-ng-show ="clientHasLocations" class="form-inline">
+                                <div data-ng-show="clientHasLocations()" class="form-inline">
                                     <select id="locationFromClient" class="chosen-container-multi" ng-change="onDropdownChange()"
                                         multiple chosen 
                                         data-placeholder="Choose from client locations"
@@ -23,9 +23,10 @@
                                 <br/>
                                 </div>
                                 <br />
+                                <label  for="locationQuery">Search Locations:</label>
                                 <div class="input-group" data-ng-hide="clientLocationsSelected" >
                                     <input class="form-control" id="locationQuery" data-ng-model="locationQuery"
-                                           type="text" placeholder="Search locations..." data-auto-focus data-focus-on="LocationSearchFocus">
+                                           type="text" placeholder="Search..." data-auto-focus data-focus-on="LocationSearchFocus">
 
                                     <div class="input-group-addon btn" data-ng-click="search()">Go</div>
                                 </div>
@@ -42,28 +43,6 @@
             </div>
             <div class="modal-body" data-ng-hide="noSearch">
                 <div>
-                    <div class="row" data-ng-hide="removeStatusFilterAndTotal">
-                        <div class="col-md-12 col-sm-12">
-                            <div class="pull-right">
-                                {{total}}
-                                <span data-ng-show="total != 1" data-translate="global.labels.total"> results</span>
-                                <span data-ng-show="total === 1"
-                                      data-translate="global.labels.totalSingular"> result</span>
-                            </div>
-                            <form class="form-inline">
-                                <div class="form-group">
-                                    <label for="status_filter" data-translate="global.labels.statusFilter">Show:</label>
-                                    <select class="form-control" id="status_filter" data-ng-model="status"
-                                            data-ng-options="status | translate for status in statuses"
-                                            data-ng-change="statusChange()">
-                                    </select>
-                                </div>
-                            </form>
-                        </div>
-
-                    </div>
-                    <br/>
-
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
                             <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0"
