@@ -29,6 +29,7 @@ angular.module('emmiManager')
                 access: {
                     authorizedRoles: [USER_ROLES.admin]
                 },
+                reloadOnSearch: false,
                 resolve: requiredResources
             })
             .when('/clients/new', {

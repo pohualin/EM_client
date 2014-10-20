@@ -78,7 +78,7 @@
                     <td>{{client.entity.contractOwner.firstName}} {{client.entity.contractOwner.lastName}}</td>
                     <td>{{client.entity.type.typeKey | translate}}</td>
                     <td>
-                        <a href data-ng-click="selectClient(client.entity)">view</a>
+                        <a href="#/clients/{{client.entity.id}}/view">view</a>
                     </td>
                 </tr>
             </table>
