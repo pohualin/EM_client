@@ -166,7 +166,7 @@
                     <div class="form-group">
                         <button class="btn btn-link" data-on-ok="cancel()" data-cancel-click>cancel</button>
                         <button class="btn btn-primary" type="button" data-on-ok="save(clientForm.$valid)"
-                                data-save-click required data-ng-disabled="clientForm.clientName.$error.unique || clientForm.clientTagGroups.$error.unique">
+                                data-save-click required data-ng-disabled="clientForm.clientName.$error.unique || clientForm.clientTagGroups.$error.unique || clientForm.clientTagGroups.$error.blankTitle">
                             <span data-translate="client_edit_page.save_button">Save</span>
                         </button>
                     </div>
