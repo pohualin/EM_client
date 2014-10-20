@@ -16,6 +16,17 @@ angular.module('emmiManager')
             addNewLocationsModal.$promise.then(addNewLocationsModal.show);
         };
 
+        $scope.cancelPopup = function() {
+            //doing this to remove the teamLocations those locations that was clicked in the search and them press cancel
+            var teamLocationsAux = {}
+            angular.forEach( $scope.teamLocations , function (location) {
+                if (!location.isNewAdd) {
+                    teamLocationsAux[location.id] = angular.copy(location);
+                }
+            });
+            $scope.teamLocations = angular.copy(teamLocationsAux);
+        }
+
         $scope.teamHasLocations = function () {
             return $scope.teamClientResource.teamResource.locations && $scope.teamClientResource.teamResource.locations.length > 0;  
         };
