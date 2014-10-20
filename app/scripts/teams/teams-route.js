@@ -60,6 +60,7 @@ angular.module('emmiManager')
                 templateUrl: 'partials/team/team_search.html',
                 controller: 'TeamSearchController',
                 resolve: requiredResources,
+                reloadOnSearch: false,
                 access: {
                     authorizedRoles: [USER_ROLES.all]
                 }
