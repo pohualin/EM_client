@@ -41,6 +41,7 @@ angular.module('emmiManager')
         };
 
         $scope.hidePopupLocations = function () {
+            $scope.cancelPopup();
             $scope.$hide();
         };
 
