@@ -42,9 +42,13 @@ angular.module('emmiManager')
                         delete tag.text;
                         delete tag.group;
                     });
-                    TeamTag.save(teamResource).then(function () {
+                    if(teamResource.tags) {
+                        TeamTag.save(teamResource).then(function () {
+                            ViewTeam.viewTeam($scope.team);
+                        });
+                    }else{
                         ViewTeam.viewTeam($scope.team);
-                    });
+                    }
                 });
             } else {
                 $scope.showError();
