@@ -4,7 +4,7 @@ Emmi Manager Client
 The client-side setup for this project will run on [AngularJS]
 (https://angularjs.org/). It was scaffolded using the AngularJS
 with [GulpJS Yeoman generator] (https://github.com/Swiip/generator-gulp-angular).
-Front-end dependency management is handled through Bower.
+Front-end dependency management is handled through Bower...
 
 Tools
 -----------------------------------
