@@ -156,14 +156,25 @@
             }
         }
 
-        &:hover {
+        &:hover,
+        &.invalid {
             .remove-button {
                 display: inline-block;
             }
         }
 
+        &.invalid {
+            background-color: #d9534f !important;
+        }
+
         &.selected {
             background-color: #428bca;
+        }
+
+        .error-circle {
+            background: white;
+            border-radius: 16px;
+            float: none;
         }
 
         input {
