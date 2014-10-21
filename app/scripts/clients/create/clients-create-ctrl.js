@@ -5,7 +5,7 @@ angular.module('emmiManager')
 /**
  * Create new controller
  */
-.controller('ClientCreateController', function ($scope, Client, $controller, Location, Tag, $q) {
+.controller('ClientCreateController', function ($scope, Client, $controller, Location) {
 
     $controller('ViewEditCommon', {$scope: $scope});
 
@@ -24,10 +24,6 @@ angular.module('emmiManager')
         } else {
             $scope.showError();
         }
-    };
-
-    $scope.cancel = function () {
-        Client.viewClientList();
     };
 
     $scope.save = function (isValid) {
