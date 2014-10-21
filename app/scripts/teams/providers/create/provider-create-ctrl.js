@@ -22,14 +22,16 @@ angular.module('emmiManager')
         
         $scope.provider = ProviderCreate.newProvider();
                
-        $scope.saveProvider = function(isValid){
+        $scope.saveProvider = function (isValid) {
             $scope.providerFormSubmitted = true;
+        	if (isValid) {
 	        	ProviderCreate.create($scope.provider, $scope.teamResource).then(function(response){
 	                $scope.hideNewProviderModal();
 	                ProviderView.allProvidersForTeam($scope.teamResource).then(function(response){
 	    	        	$scope.teamResource.providers = response;
-	    	        });
+	                });
 	        	});
+	        }
         };
 	})
 ;

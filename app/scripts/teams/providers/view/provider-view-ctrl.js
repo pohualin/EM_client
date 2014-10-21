@@ -4,10 +4,11 @@ angular.module('emmiManager')
 	.controller('TeamProviderCommon', function($scope, ProviderView){
         $scope.noSearch = true;
 
-		ProviderView.specialtyRefData($scope.teamResource).then(function(response){
-        	$scope.specialties = response;
-        });
-
+        if($scope.teamResource){
+			ProviderView.specialtyRefData($scope.teamResource).then(function(response){
+	        	$scope.specialties = response;
+	        });
+        }
         $scope.allProvidersForTeam = function() {
         	ProviderView.allProvidersForTeam($scope.teamResource).then(function(response){
         		$scope.teamResource.providers = response;
@@ -17,8 +18,10 @@ angular.module('emmiManager')
 	})
 	
 	.controller('ProviderListController', function($scope, ProviderView){
-    	ProviderView.allProvidersForTeam($scope.teamResource).then(function(response){
-    		$scope.teamResource.providers = response;
-    	});
+        if($scope.teamResource){
+	    	ProviderView.allProvidersForTeam($scope.teamResource).then(function(response){
+	    		$scope.teamResource.providers = response;
+	    	});
+        }
 	})
 ;

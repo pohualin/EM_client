@@ -10,7 +10,8 @@ angular.module('emmiManager')
                      middleName: null,
                      lastName: null,
                      email: null,
-                     specialty: null
+                     specialty: null,
+                     'active': true
                  };
              },
              create: function (provider, teamResource) {
