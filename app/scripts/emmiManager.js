@@ -65,6 +65,10 @@ angular.module('emmiManager', [
             AuthSharedService.authorizedRoute((next.access) ? next.access.authorizedRoles : [USER_ROLES.all]);
         });
 
+        $rootScope.$on("$routeChangeSuccess", function (e, current) {
+            $rootScope.current_route_query_string = $.param(current.params);
+        });
+
         // Call when the the client is confirmed
         $rootScope.$on('event:auth-loginConfirmed', function (data) {
             $rootScope.authenticated = true;

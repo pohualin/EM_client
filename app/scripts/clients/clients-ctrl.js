@@ -77,56 +77,7 @@ angular.module('emmiManager')
         };
     })
 
-/**
- * Create new controller
- */
-    .controller('ClientCtrl', function ($scope, Client, $controller, Location, Tag, $q) {
 
-        $controller('ViewEditCommon', {$scope: $scope});
-
-        $scope.client = Client.newClient().entity;
-
-        $scope.saveUpdate = function (isValid) {
-            // this will get called if the client form saves but any child calls fail
-            $scope.formSubmitted = true;
-            if (isValid && $scope.client.salesForceAccount) {
-                Client.updateClient($scope.client).then(function () {
-                    // update locations for the client
-                    Location.updateForClient(Client.getClient()).then(function () {
-                        Client.viewClient($scope.client);
-                    });
-                });
-            } else {
-                $scope.showError();
-            }
-        };
-
-        $scope.cancel = function () {
-            Client.viewClientList();
-        };
-
-        $scope.save = function (isValid) {
-            $scope.formSubmitted = true;
-            if (isValid && $scope.client.salesForceAccount) {
-                Client.insertClient($scope.client).then(function (client) {
-                    $scope.client = client.data.entity;
-                    $scope.save = $scope.saveUpdate;
-                    // saved client successfully, switch to saveUpdate if other updates fail
-                    $scope.client.tagGroups = client.config.data.tagGroups;
-
-                    var insertGroups = Tag.insertGroups(Client.getClient()),
-                    	updateLocation = Location.updateForClient(Client.getClient());
-                    $q.all([insertGroups, updateLocation]).then(function () {
-                    	Client.viewClient($scope.client);
-                    });
-
-                });
-            } else {
-                $scope.showError();
-            }
-        };
-
-    })
 
 
 /**

@@ -21,7 +21,7 @@ angular.module('emmiManager')
  * 3. Handles tri-click sorting properties
  * 4. Handles response page pagination and sorting
  */
-    .controller('CommonSearch', function ($scope, $location) {
+    .controller('CommonSearch', function ($scope, $location, $rootScope) {
 
         // set the proper value in the search chooser based upon the path
         if ($location.path() === '/clients'){
@@ -71,6 +71,7 @@ angular.module('emmiManager')
                 dir: sort ? (sort.ascending ? 'asc' : 'desc') : '',
                 size: size
             }).replace();
+            $rootScope.current_route_query_string = $.param($location.search());
         };
 
         $scope.createSortProperty = function (property){
