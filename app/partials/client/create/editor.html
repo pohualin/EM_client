@@ -1,8 +1,6 @@
 <div class="container">
     <h1>
-        <a href="#/">Emmi Manager</a>:&nbsp;
-        <span data-ng-hide="client.id">New</span>
-        <span data-ng-show="client.id">Edit</span> Client
+        <a href="#/">Emmi Manager</a>:&nbsp;New Client
     </h1>
     <form name="clientForm" class="form" novalidate>
         <div id="alerts-container" data-ng-show="clientForm.$invalid || !client.salesForceAccount"></div>
@@ -155,19 +153,14 @@
         <div class="row" data-ng-class="{'masked': clientForm.clientName.$error.unique}" data-ng-hide="client.salesForceAccount"
              data-ng-include="'partials/salesforce/picker.html'"></div>
         <hr>
-        <div class="row" data-ng-class="{'masked': clientForm.clientName.$error.unique}" data-ng-include="'partials/client/tags/client_tags.html'"></div>
-        <hr>
-        <div class="row" data-ng-include="'partials/client/location/client_current.html'"
-             data-ng-class="{'masked': clientForm.clientName.$error.unique}" ></div>
-        <hr>
         <div class="row">
             <div class="col-md-12">
                 <div class="actions pull-right">
                     <div class="form-group">
-                        <button class="btn btn-link" data-on-ok="cancel()" data-cancel-click>cancel</button>
+                        <button class="btn btn-link" data-on-ok="cancel()">cancel</button>
                         <button class="btn btn-primary" type="button" data-on-ok="save(clientForm.$valid)"
-                                data-save-click required data-ng-disabled="clientForm.clientName.$error.unique || clientForm.clientTagGroups.$error.unique">
-                            <span data-translate="client_edit_page.save_button">Save</span>
+                                data-ng-disabled="clientForm.clientName.$error.unique">
+                            <span data-translate="client_edit_page.save_button">Continue...</span>
                         </button>
                     </div>
                 </div>
