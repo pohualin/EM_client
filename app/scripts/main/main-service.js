@@ -85,6 +85,13 @@ angular.module('emmiManager')
                     }
                 });
                 return obj;
+            },
+            toQueryString: function(object){
+                var array = [];
+                angular.forEach(object, function(value, key){
+                    array.push(key + '=' + value);
+                });
+                return array.join('&');
             }
         };
     })
