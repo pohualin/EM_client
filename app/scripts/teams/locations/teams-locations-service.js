@@ -9,9 +9,9 @@ angular.module('emmiManager')
                     return $http.get(UriTemplate.create(teamResource.link.teamLocations).stringify()).then(function load(response) {
                         var page = response.data;
                         angular.forEach(page.content, function (teamLocation) {
-                            teamResource.locations.push(teamLocation.entity.location);
+                            teamResource.locations.push(teamLocation);
                             teamLocation.entity.location.isNewAdd = false;
-                            scope.teamLocations[teamLocation.entity.location.id] = angular.copy(teamLocation.entity.location);  
+                            scope.teamLocations[teamLocation.entity.location.id] = angular.copy(teamLocation);  
                         });
 
                         if (page.link && page.link['page-next']) {
@@ -23,7 +23,14 @@ angular.module('emmiManager')
                         return teamResource.locations;
                     });
                 }
-            }
+            },
+            removeLocation: function (locationResource) {
+                locationResource.links = arrays.convertToObject('rel', 'href', locationResource.link);
+                return $http.delete(UriTemplate.create(locationResource.links.self).stringify())
+                    .then(function (response) {
+                        return response.data;
+                    });
+            },            
 
         };
     })
