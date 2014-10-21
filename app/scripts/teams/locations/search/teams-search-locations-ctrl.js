@@ -4,6 +4,8 @@ angular.module('emmiManager')
 
     .controller('SearchTeamsLocationsController', function ($scope, TeamSearchLocation, Location) {
 
+        $scope.noSearch = true;
+
         $scope.clientLocationsSelected = [];
 
         angular.forEach( $scope.clientLocations , function (location) {
@@ -39,6 +41,7 @@ angular.module('emmiManager')
         };
 
         $scope.hidePopupLocations = function () {
+            $scope.cancelPopup();
             $scope.$hide();
         };
 
@@ -55,6 +58,7 @@ angular.module('emmiManager')
                     }
                 });
                 $scope.loading = false;
+                $scope.noSearch = false;
             }, function () {
                 // error happened
                 $scope.loading = false;
