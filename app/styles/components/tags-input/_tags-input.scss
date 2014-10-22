@@ -140,6 +140,7 @@
             padding: 2px 0;
             white-space: pre;
             min-width: 16px;
+            min-height: 20px;
         }
 
         .remove-button {
@@ -177,6 +178,7 @@
             background: white;
             border-radius: 16px;
             float: none;
+            vertical-align: middle;
         }
 
         input {
@@ -186,7 +188,7 @@
             border: 0;
             background: transparent;
             color: #fff;
-            padding: 1px 0 0;
+            padding: 2px 0;
             width: 16px;
             min-width: 16px;
             &:focus {
