@@ -70,7 +70,7 @@ angular.module('emmiManager')
                 };
 
                 $scope.changeTagGroupTitle = function (groupIndex) {
-                    $scope.validateForDuplicates();
+                    $scope.validateGroupTitles();
                     // Title already gets changed from data binding, so really just need to hide the edit form
                     $scope.groups[groupIndex].editMode = false;
                     $scope.selectedTagGroupIndex = -1;
@@ -145,16 +145,23 @@ angular.module('emmiManager')
                     return dupes;
                 };
 
-                $scope.validateForDuplicates = function () {
+                $scope.validateGroupTitles = function () {
                     var dupeIndices = $scope.getDupes();
+                    var blankIndices = [];
                     $scope.formField.$setValidity('unique', !dupeIndices.length);
                     angular.forEach($scope.groups, function (x, i) {
                         if (dupeIndices.indexOf(i) >= 0) {
                             $scope.groups[i].isValid = false;
+                            $scope.groups[i].isValidMessage = 'This tag group already exists';
+                        } else if (x.title.length === 0) {
+                            blankIndices.push(i);
+                            $scope.groups[i].isValid = false;
+                            $scope.groups[i].isValidMessage = 'Group titles cannot be blank.';
                         } else {
                             $scope.groups[i].isValid = true;
                         }
                     });
+                    $scope.formField.$setValidity('blankTitle', !blankIndices.length);
                 };
 
             }],
@@ -166,7 +173,7 @@ angular.module('emmiManager')
                 // watch for removed tags and re-check for uniqueness
                 scope.$watch('groups.length', function (newVal, oldVal) {
                     // tag added or removed
-                    scope.validateForDuplicates();
+                    scope.validateGroupTitles();
                     scope.formField.$setValidity('empty', !scope.hasEmpties());
                     if (newVal === 0) {
                         addBtn.text(origAddBtnText);
