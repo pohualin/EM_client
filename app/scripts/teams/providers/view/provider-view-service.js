@@ -5,7 +5,7 @@ angular.module('emmiManager')
     .service('ProviderView', function ($http, $q, Session, UriTemplate) {
         return {
         	specialtyRefData: function(teamResource) {
-            	 if(teamResource.link.providerReferenceData){
+        		if(teamResource.link.providerReferenceData){
 	            	 var responseArray = [];
 	            	 return $http.get(UriTemplate.create(teamResource.link.providerReferenceData).stringify()).then(function addToResponseArray(response){
 	            		 angular.forEach(response.data.content, function(specialty){
@@ -36,6 +36,17 @@ angular.module('emmiManager')
 	                        }
 	            		 return providers;
                  });
+             },
+             removeProvider: function (provider, teamResource) {
+             	console.log('remove provider, provider = ' + provider);
+            	console.log('remove provider, $scope.teamResource = ' + teamResource);
+                 return $http.delete(UriTemplate.create(teamResource.link.teamProviderSelfLinkWithDummy).stringify(), provider).then( function (response) {
+                	 console.log('deleted');
+                	 return null;
+                 });
+             },
+             getProviderById: function () {
+            	 
              }
         };
     })

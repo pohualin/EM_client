@@ -1,0 +1,23 @@
+<div class="container" >
+	<div class="row" data-ng-controller="ProviderListController" data-ng-show="teamResource.providers.length > 0">
+		<div class="col-md-9" >
+		    <h2>Providers</h2>
+			<table class="table table-bordered table-striped table-hover" border="0" cellpadding="0">
+				<tr>
+					<th class="col-sm-3">Name </th>
+					<th class="col-sm-3">Specialty </th>
+					<th class="col-sm-3">Email </th>
+		            <th>&nbsp;</th>
+				</tr>
+				<tr data-ng-repeat="provider in teamResource.providers">
+			    	<td>{{provider.entity.firstName}} {{provider.entity.lastName}}</td>
+			    	<td>{{provider.entity.specialty.name}}</td>
+			    	<td>{{provider.entity.email}}</td>
+					<td>
+                		<a href data-ng-click="editProvider(provider)">edit</a><span class="text-muted">&nbsp;|&nbsp;</span><a href data-ng-click="removeProvider(provider)">remove from team</a>
+            		</td>			    	
+			    </tr>
+			</table>
+		</div>
+	</div>
+</div>
