@@ -1,0 +1,32 @@
+<div class="container">
+
+    <div class="row" data-ng-include="'partials/client/edit/metadata.html'"></div>
+    <hr>
+    <span>Stuff below here will still work (as it has in the past),
+        where you need to push the 'save tags/locations' button to truly save</span>
+
+    <form name="clientForm" class="form" novalidate>
+        <div class="row" data-ng-include="'partials/client/tags/client_tags.html'"
+             data-ng-class="{'masked': metadataForm.clientName.$error.unique || editMode}"></div>
+        <hr>
+        <div class="row" data-ng-include="'partials/client/location/client_current.html'"
+             data-ng-class="{'masked': metadataForm.clientName.$error.unique || editMode}"></div>
+        <hr>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="actions pull-right">
+                    <div class="form-group">
+                        <button class="btn btn-link" data-on-ok="cancelTagsAndLocations()" data-cancel-click>cancel
+                            tags/locations
+                        </button>
+                        <button class="btn btn-primary" type="button"
+                                data-ng-click="saveTagsAndLocations(clientForm.$valid)"
+                                data-ng-disabled="clientForm.clientName.$error.unique || clientForm.clientTagGroups.$error.unique">
+                            <span>Save Tags/Locations</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

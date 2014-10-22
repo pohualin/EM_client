@@ -42,13 +42,10 @@ angular.module('emmiManager')
 
             },
             viewClient: function (clientEntity) {
-                $location.path('/clients/' + clientEntity.id + '/view');
+                $location.path('/clients/' + clientEntity.id);
             },
             viewClientList: function () {
                 $location.path('/clients');
-            },
-            editClient: function (clientEntity) {
-                $location.path('/clients/' + clientEntity.id + '/edit');
             },
             getClient: function () {
                 return selectedClient;
@@ -228,7 +225,7 @@ angular.module('emmiManager')
                                     scope: scope,
                                     trigger: 'manual',
                                     show: true,
-                                    placement: 'top',
+                                    placement: 'bottom',
                                     contentTemplate: 'partials/client/deactivate_popover.tpl.html'
                                 });
                             });
