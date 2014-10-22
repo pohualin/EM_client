@@ -109,7 +109,7 @@ var tagsInput = angular.module('ngTagsInput', []);
  */
 tagsInput.directive('tagsInput', ['$timeout','$document','tagsInputConfig','focus', function($timeout, $document, tagsInputConfig, focus) {
     function TagList(options, events) {
-        var self = {}, getTagText, setTagText, tagIsValid;
+        var self = {}, getTagText, setTagText, tagIsValid, tagIsDupe, getDupes;
 
         getTagText = function(tag) {
             return tag[options.displayProperty];
@@ -124,12 +124,52 @@ tagsInput.directive('tagsInput', ['$timeout','$document','tagsInputConfig','focu
 
             return tagText.length >= options.minLength &&
                    tagText.length <= (options.maxLength || tagText.length) &&
-                   options.allowedTagsPattern.test(tagText);// &&
-                   //!findInObjectArray(self.items, tag, options.displayProperty);
+                   options.allowedTagsPattern.test(tagText);
+        };
+
+        tagIsDupe = function(tag) {
+            var tagText = getTagText(tag);
+
+            return findInObjectArray(self.items, tag, options.displayProperty);
+        };
+
+        getDupes = function () {
+            var unique = {};
+            var dupes = [];
+            angular.forEach(self.items, function (x, i) {
+                if (x[options.displayProperty]) {
+                    var tagText = x[options.displayProperty].toLowerCase().replace(/[^a-z0-9]+/g, '');
+                    if (!unique[tagText]) {
+                        unique[tagText] = true;
+                    } else {
+                        dupes.push(i);
+                    }
+                }
+            });
+            return dupes;
         };
 
         self.items = [];
         self.selected = null;
+
+        self.validateTags = function() {
+            var dupeIndices = getDupes();
+            var blankIndices = [];
+            angular.forEach(self.items, function (x, i) {
+                if (dupeIndices.indexOf(i) >= 0) {
+                    self.items[i].invalid = true;
+                    self.items[i].invalidMessage = 'This tag already exists';
+                } else if (x[options.displayProperty].length === 0) {
+                    blankIndices.push(i);
+                    self.items[i].invalid = true;
+                    self.items[i].invalidMessage = 'Tag names cannot be blank.';
+                } else {
+                    self.items[i].invalid = false;
+                }
+            });
+            events.trigger('duplicate-tag', dupeIndices.length);
+            events.trigger('blank-tag', blankIndices.length);
+        };
 
         self.addText = function(text) {
             var tag = {};
@@ -276,12 +316,24 @@ tagsInput.directive('tagsInput', ['$timeout','$document','tagsInputConfig','focu
                     ngModelCtrl.$setViewValue(scope.tags);
                 })
                 .on('tag-edited', function() {
+                    tagList.validateTags();
                     $timeout(function() {
                         input[0].focus();
                     });
                 })
                 .on('invalid-tag', function() {
                     scope.newTag.invalid = true;
+                })
+                .on('duplicate-tag', function(yes) {
+                    if (yes) {
+                        scope.newTag.hidden = true;
+                    } else {
+                        scope.newTag.hidden = false;
+                    }
+                    ngModelCtrl.$setValidity('duplicate', !yes);
+                })
+                .on('blank-tag', function(yes) {
+                    ngModelCtrl.$setValidity('blankTag', !yes);
                 })
                 .on('input-change', function() {
                     tagList.selected = null;
@@ -291,14 +343,15 @@ tagsInput.directive('tagsInput', ['$timeout','$document','tagsInputConfig','focu
                     ngModelCtrl.$setValidity('leftoverText', true);
                 })
                 .on('input-blur', function() {
-                    if (options.addOnBlur) {
-                        tagList.addText(getInputText());
+                    var inputText = getInputText();
+                    if (options.addOnBlur && inputText.length) {
+                        tagList.addText(inputText);
                     }
 
-                    ngModelCtrl.$setValidity('leftoverText', options.allowLeftoverText ? true : !getInputText());
+                    ngModelCtrl.$setValidity('leftoverText', options.allowLeftoverText ? true : !inputText);
                 });
 
-            scope.newTag = { text: '', invalid: null };
+            scope.newTag = { text: '', invalid: null, hidden: null };
 
             scope.getDisplayText = function(tag) {
                 return tag[options.displayProperty].trim();
@@ -320,6 +373,7 @@ tagsInput.directive('tagsInput', ['$timeout','$document','tagsInputConfig','focu
             scope.$watch('tags.length', function(value) {
                 ngModelCtrl.$setValidity('maxTags', angular.isUndefined(options.maxTags) || value <= options.maxTags);
                 ngModelCtrl.$setValidity('minTags', angular.isUndefined(options.minTags) || value >= options.minTags);
+                tagList.validateTags();
             });
 
             input
