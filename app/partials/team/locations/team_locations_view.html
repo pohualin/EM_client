@@ -1,0 +1,25 @@
+<div class="col-md-12"  data-ng-controller="TeamsLocationsController">
+    <h2>Locations</h2>
+           {{teamLocations.lenght}}
+    <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0"
+           cellspacing="0" data-ng-show="teamHasLocations()">
+        <tr>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>City</th>
+            <th>State</th>
+        </tr>
+
+        <tr data-ng-class="{highlight: location.highlight}"  data-ng-repeat="location in teamClientResource.teamResource.locations | orderBy:'location.name'" >
+            <td>
+                {{location.entity.location.name}}
+                <span data-ng-show="location.entity.location.belongsTo && location.entity.location.belongsTo.id !== team.entity.id"> <em>({{location.entity.location.belongsTo.name}})</em></span>
+                <span data-ng-show="!location.entity.location.belongsTo"> <em>(<span data-translate="client_edit_page.locations.no_client_owner"></span>)</em></span>
+            </td>
+            <td>{{location.entity.location.phone}}</td>
+            <td>{{location.entity.location.city}}</td>
+            <td>{{location.entity.location.state}}</td>
+        </tr>
+
+    </table>
+</div>
