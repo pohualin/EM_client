@@ -4,7 +4,7 @@ Emmi Manager Client
 The client-side setup for this project will run on [AngularJS]
 (https://angularjs.org/). It was scaffolded using the AngularJS
 with [GulpJS Yeoman generator] (https://github.com/Swiip/generator-gulp-angular).
-Front-end dependency management is handled through Bower.
+Front-end dependency management is handled through Bower...
 
 Tools
 -----------------------------------
@@ -28,11 +28,33 @@ package.json and bower.json files live):
 - run `bower install`: this fetches all of the javascript dependency libraries necessary to run the application, analogous to fetching dependencies in maven
 - need sass >= 3.3.8; via `gem install sass` (may need to run under `sudo`)
 
+Running on 3002 (gulp)
+-----------------------------------
+
 You can review [Swiip Generator] (https://github.com/Swiip/generator-gulp-angular) for the
 different Gulp commands available.
 
 - `./node_modules/.bin/gulp serve`: starts the server which listens for changes (sync server) on the source files
 - `./node_modules/.bin/gulp serve:dist`: launch sync server using optimized files
+
+Running on 80
+-----------------------------------
+
+To run the server on port 80, you'll need:
+
+- a web server running on your local machine (e.g. apache, nginx, etc) 
+- a virtual host that has a document root on the client-angular/app directory
+    - I use [virtualhost.sh] (https://github.com/virtualhost/virtualhost.sh) 
+- proxy all requests from /webapi and /api-docs to the server WAR
+    - My Apache configuration looks like this:
+    
+          ProxyPass /webapi http://localhost:8080/webapi
+          ProxyPassReverse /webapi http://localhost:8080/webapi
+          ProxyPass /api-docs http://localhost:8080/api-docs
+          ProxyPassReverse /webapi http://localhost:8080/api-docs
+- compile the main.scss file
+    - In this directory run `sass app/styles/main.scss:app/styles/main.css`
+
 
 File Structure
 -----------------------------------

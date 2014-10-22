@@ -1,7 +1,19 @@
 
+.tag-group {
+    margin: 3px 0; // add some margin for when tag groups go to next line
+    .error-circle {
+        float: left; // to fix some weird layout bugs (EM-360)
+    }
+}
+
+.tag-group-btn-text {
+    white-space: pre;
+}
+
 .tag-group-edit {
     position: absolute;
     z-index: 10;
+    width: 100%;
     input {
         // styles copied form .btn to match when editing
         display: inline-block;
@@ -16,6 +28,7 @@
         border: 1px solid transparent;
         background: transparent;
         color: #fff;
+        width: 100%;
         &:focus {
             outline: 0;
         }
@@ -34,7 +47,7 @@
     }
 }
 .btn-group:hover .tag-group-remove {
-    display: block;
+    display: inline-block;
 }
 
 .tags-input .host {
@@ -125,6 +138,9 @@
             cursor: pointer;
             display: inline-block;
             padding: 2px 0;
+            white-space: pre;
+            min-width: 16px;
+            min-height: 20px;
         }
 
         .remove-button {
@@ -143,14 +159,26 @@
             }
         }
 
-        &:hover {
+        &:hover,
+        &.invalid {
             .remove-button {
                 display: inline-block;
             }
         }
 
+        &.invalid {
+            background-color: #d9534f !important;
+        }
+
         &.selected {
             background-color: #428bca;
+        }
+
+        .error-circle {
+            background: white;
+            border-radius: 16px;
+            float: none;
+            vertical-align: middle;
         }
 
         input {
@@ -160,7 +188,9 @@
             border: 0;
             background: transparent;
             color: #fff;
-            padding: 1px 0 0;
+            padding: 2px 0;
+            width: 16px;
+            min-width: 16px;
             &:focus {
                 outline: 0;
             }
