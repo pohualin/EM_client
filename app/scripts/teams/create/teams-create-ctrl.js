@@ -38,10 +38,6 @@ angular.module('emmiManager')
                     var teamResource = team.data;
                     $scope.team = teamResource.entity;
                     teamResource.tags = $scope.teamClientResource.teamResource.tags;
-                    angular.forEach(teamResource.entity.tags, function(tag){
-                        delete tag.text;
-                        delete tag.group;
-                    });
                     if(teamResource.tags) {
                         TeamTag.save(teamResource).then(function () {
                             ViewTeam.viewTeam($scope.team);
