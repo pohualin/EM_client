@@ -152,12 +152,16 @@ tagsInput.directive('tagsInput', ['$timeout','$document','tagsInputConfig','focu
         self.items = [];
         self.selected = null;
 
-        self.checkForDupes = function() {
+        self.validateTags = function() {
             var dupeIndices = getDupes();
             var blankIndices = [];
             angular.forEach(self.items, function (x, i) {
                 if (dupeIndices.indexOf(i) >= 0) {
                     self.items[i].invalid = true;
+                    self.items[i].invalidMessage = 'This tag already exists';
+                } else if (x.text.length === 0) {
+                    self.items[i].invalid = true;
+                    self.items[i].invalidMessage = 'Tag names cannot be blank.';
                 } else {
                     self.items[i].invalid = false;
                 }
@@ -310,7 +314,7 @@ tagsInput.directive('tagsInput', ['$timeout','$document','tagsInputConfig','focu
                     ngModelCtrl.$setViewValue(scope.tags);
                 })
                 .on('tag-edited', function() {
-                    tagList.checkForDupes();
+                    tagList.validateTags();
                     $timeout(function() {
                         input[0].focus();
                     });
@@ -363,7 +367,7 @@ tagsInput.directive('tagsInput', ['$timeout','$document','tagsInputConfig','focu
             scope.$watch('tags.length', function(value) {
                 ngModelCtrl.$setValidity('maxTags', angular.isUndefined(options.maxTags) || value <= options.maxTags);
                 ngModelCtrl.$setValidity('minTags', angular.isUndefined(options.minTags) || value >= options.minTags);
-                tagList.checkForDupes();
+                tagList.validateTags();
             });
 
             input

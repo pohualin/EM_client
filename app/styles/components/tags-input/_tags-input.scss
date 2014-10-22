@@ -138,6 +138,8 @@
             cursor: pointer;
             display: inline-block;
             padding: 2px 0;
+            white-space: pre;
+            min-width: 16px;
         }
 
         .remove-button {
@@ -185,6 +187,8 @@
             background: transparent;
             color: #fff;
             padding: 1px 0 0;
+            width: 16px;
+            min-width: 16px;
             &:focus {
                 outline: 0;
             }

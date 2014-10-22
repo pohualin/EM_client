@@ -7,7 +7,7 @@
                 <a class="remove-button" data-ng-click="tagList.remove($index)">{{options.removeTagSymbol}}</a>
                 <span class="error-circle glyphicon glyphicon-exclamation-sign" data-ng-show="tag.invalid"
                     data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                    data-title="This tag already exists"></span>
+                    data-title="{{tag.invalidMessage}}"></span>
             </li>
         </ul>
         <div data-ng-form name="tagInputForm" data-ng-hide="newTag.hidden">
