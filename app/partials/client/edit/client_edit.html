@@ -25,15 +25,15 @@
             <div class="col-md-8">
                 <label class="control-label" for="clientName">Name</label>
 
-                <div class="error-circle"
+                <div  class="error-circle glyphicon glyphicon-exclamation-sign"
                      data-ng-show="metadataForm.clientName.$error.required && metadataSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                      data-title="Required"></div>
-                <div class="error-circle"
+                <div  class="error-circle glyphicon glyphicon-exclamation-sign"
                      data-ng-show="metadataForm.clientName.$error.pattern && metadataSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                      data-title="Please enter a valid client name."></div>
-                <div class="error-circle"
+                <div  class="error-circle glyphicon glyphicon-exclamation-sign"
                      data-ng-show="metadataSubmitted && metadataForm.clientName.$invalid && metadataForm.clientName.$error.unique"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                      data-title="{{'client_edit_page.unique_popup_dialog.message' | translate}}"></div>
@@ -62,7 +62,7 @@
                  data-ng-class="{ 'has-error' : metadataForm.clientType.$invalid && metadataSubmitted }">
                 <label class="control-label" for="clientType">Client Type</label>
 
-                <div class="error-circle" data-ng-show="metadataForm.clientType.$invalid && metadataSubmitted"
+                <div  class="error-circle glyphicon glyphicon-exclamation-sign" data-ng-show="metadataForm.clientType.$invalid && metadataSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                      data-title="Required"></div>
                 <select id="clientType" class="form-control" data-ng-model="client.type"
@@ -102,7 +102,7 @@
                  data-ng-class="{ 'has-error' : metadataForm.clientContractOwner.$invalid && metadataSubmitted }">
                 <label class="control-label" for="contractOwner">Contract Owner</label>
 
-                <div class="error-circle"
+                <div  class="error-circle glyphicon glyphicon-exclamation-sign"
                      data-ng-show="metadataForm.clientContractOwner.$invalid && metadataSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                      data-title="Required"></div>
@@ -123,11 +123,11 @@
                  data-ng-class="{ 'has-error' : metadataForm.clientContractStart.$invalid && metadataSubmitted }">
                 <label class="control-label" for="contractStart">Contract Start</label>
 
-                <div class="error-circle"
+                <div  class="error-circle glyphicon glyphicon-exclamation-sign"
                      data-ng-show="!metadataForm.clientContractStart.$error.date && metadataForm.clientContractStart.$error.required && metadataSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                      data-title="Required"></div>
-                <div class="error-circle"
+                <div  class="error-circle glyphicon glyphicon-exclamation-sign"
                      data-ng-show="metadataForm.clientContractStart.$error.date && metadataSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                      data-title="Please select a valid date"></div>
@@ -143,11 +143,11 @@
                  data-ng-class="{ 'has-error' : metadataForm.clientContractEnd.$invalid && metadataSubmitted }">
                 <label class="control-label" for="contractEnd">Contract End</label>
 
-                <div class="error-circle"
+                <div  class="error-circle glyphicon glyphicon-exclamation-sign"
                      data-ng-show="!metadataForm.clientContractEnd.$error.date && metadataForm.clientContractEnd.$error.required && metadataSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                      data-title="Required"></div>
-                <div class="error-circle"
+                <div  class="error-circle glyphicon glyphicon-exclamation-sign"
                      data-ng-show="metadataForm.clientContractEnd.$error.date && metadataSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                      data-title="Please select a valid date"></div>
