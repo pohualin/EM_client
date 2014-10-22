@@ -137,8 +137,8 @@ tagsInput.directive('tagsInput', ['$timeout','$document','tagsInputConfig','focu
             var unique = {};
             var dupes = [];
             angular.forEach(self.items, function (x, i) {
-                if (x.text) {
-                    var tagText = x.text.toLowerCase().replace(/[^a-z0-9]+/g, '');
+                if (x[options.displayProperty]) {
+                    var tagText = x[options.displayProperty].toLowerCase().replace(/[^a-z0-9]+/g, '');
                     if (!unique[tagText]) {
                         unique[tagText] = true;
                     } else {
@@ -159,7 +159,7 @@ tagsInput.directive('tagsInput', ['$timeout','$document','tagsInputConfig','focu
                 if (dupeIndices.indexOf(i) >= 0) {
                     self.items[i].invalid = true;
                     self.items[i].invalidMessage = 'This tag already exists';
-                } else if (x.text.length === 0) {
+                } else if (x[options.displayProperty].length === 0) {
                     self.items[i].invalid = true;
                     self.items[i].invalidMessage = 'Tag names cannot be blank.';
                 } else {
