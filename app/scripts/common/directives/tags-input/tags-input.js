@@ -160,6 +160,7 @@ tagsInput.directive('tagsInput', ['$timeout','$document','tagsInputConfig','focu
                     self.items[i].invalid = true;
                     self.items[i].invalidMessage = 'This tag already exists';
                 } else if (x[options.displayProperty].length === 0) {
+                    blankIndices.push(i);
                     self.items[i].invalid = true;
                     self.items[i].invalidMessage = 'Tag names cannot be blank.';
                 } else {
@@ -167,6 +168,7 @@ tagsInput.directive('tagsInput', ['$timeout','$document','tagsInputConfig','focu
                 }
             });
             events.trigger('duplicate-tag', dupeIndices.length);
+            events.trigger('blank-tag', blankIndices.length);
         };
 
         self.addText = function(text) {
@@ -328,6 +330,10 @@ tagsInput.directive('tagsInput', ['$timeout','$document','tagsInputConfig','focu
                     } else {
                         scope.newTag.hidden = false;
                     }
+                    ngModelCtrl.$setValidity('duplicate', !yes);
+                })
+                .on('blank-tag', function(yes) {
+                    ngModelCtrl.$setValidity('blankTag', !yes);
                 })
                 .on('input-change', function() {
                     tagList.selected = null;
