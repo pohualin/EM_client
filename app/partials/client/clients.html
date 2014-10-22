@@ -29,7 +29,7 @@
             </div>
             <div class="col-md-2 col-sm-2">
                 <div class="pull-right">
-                    <a class="btn btn-primary" data-ng-href="#/clients/new" data-ng-show="searchPerformed">Create New
+                    <a class="btn btn-primary" data-ng-href="#clients/new?{{currentRouteQueryString}}" data-ng-show="searchPerformed">Create New
                         Client</a>
                 </div>
             </div>
@@ -78,7 +78,7 @@
                     <td>{{client.entity.contractOwner.firstName}} {{client.entity.contractOwner.lastName}}</td>
                     <td>{{client.entity.type.typeKey | translate}}</td>
                     <td>
-                        <a href data-ng-click="selectClient(client.entity)">view</a>
+                        <a href="#/clients/{{client.entity.id}}/view">view</a>
                     </td>
                 </tr>
             </table>

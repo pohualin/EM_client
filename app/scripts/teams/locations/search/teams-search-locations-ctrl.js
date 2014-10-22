@@ -2,12 +2,15 @@
 
 angular.module('emmiManager')
 
-    .controller('SearchTeamsLocationsController', function ($scope, Location) {
+    .controller('SearchTeamsLocationsController', function ($scope, TeamSearchLocation, Location) {
+
+        $scope.noSearch = true;
 
         $scope.clientLocationsSelected = [];
 
         angular.forEach( $scope.clientLocations , function (location) {
             if ($scope.teamLocations[location.entity.id]) {
+                location.entity.isNewAdd = false;
                 $scope.clientLocationsSelected.push(location);
             }
         }); 
@@ -17,11 +20,28 @@ angular.module('emmiManager')
         };
 
         $scope.savePopupLocations = function() {
-            $scope.$hide();
-            $scope.save($scope.clientLocationsSelected);
+            var locationsToAdd = [];
+
+            angular.forEach( $scope.clientLocationsSelected , function (location) {
+                $scope.teamLocations[location.entity.id] = angular.copy(location.entity);  
+            });
+            angular.forEach( $scope.teamLocations , function (location) {
+                if (location.isNewAdd) {
+                    locationsToAdd.push(location);
+                }
+            });
+
+            if (locationsToAdd.length > 0) {
+                TeamSearchLocation.save($scope.teamClientResource.teamResource.link.teamLocations,locationsToAdd).then(function () {
+                    $scope.save(true);
+                });
+            } else {
+                $scope.save(false);
+            }
         };
 
         $scope.hidePopupLocations = function () {
+            $scope.cancelPopup();
             $scope.$hide();
         };
 
@@ -38,6 +58,7 @@ angular.module('emmiManager')
                     }
                 });
                 $scope.loading = false;
+                $scope.noSearch = false;
             }, function () {
                 // error happened
                 $scope.loading = false;
@@ -53,8 +74,7 @@ angular.module('emmiManager')
                 delete $scope.teamLocations[locationResource.entity.id];
             } else {
                 locationResource.entity.isNewAdd = true;
-                // this is a change from the saved state, store a copy of the object
-                $scope.teamLocations[locationResource.entity.id] = angular.copy(locationResource);
+                $scope.teamLocations[locationResource.entity.id] = angular.copy(locationResource.entity);
             }
         };
 
