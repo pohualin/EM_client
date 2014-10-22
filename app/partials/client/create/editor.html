@@ -1,0 +1,171 @@
+<div class="container">
+    <h1>
+        <a href="#/">Emmi Manager</a>:&nbsp;New Client
+    </h1>
+    <form name="clientForm" class="form" novalidate>
+        <div id="alerts-container" data-ng-show="clientForm.$invalid || !client.salesForceAccount"></div>
+        <div id="remove-container"></div>
+        <h2>Client Information</h2>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group"
+                     data-ng-class="{ 'has-error' : (clientForm.clientName.$invalid && formSubmitted) || clientForm.clientName.$error.unique}">
+                    <label class="control-label" for="clientName">Name</label>
+                    <div class="error-circle" data-ng-show="clientForm.clientName.$error.required && formSubmitted"
+                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                         data-title="Required"></div>
+                    <div class="error-circle" data-ng-show="clientForm.clientName.$error.pattern && formSubmitted"
+                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                         data-title="Please enter a valid client name."></div>
+                    <div class="error-circle"
+                         data-ng-show="formSubmitted && clientForm.clientName.$invalid && clientForm.clientName.$error.unique"
+                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                         data-title="{{'client_edit_page.unique_popup_dialog.message' | translate}}"></div>
+                    <input class="form-control" data-ng-model="client.name" id="clientName" name="clientName"
+                           type="text" data-unique-url="findNormalizedNameLink" data-unique-client required
+                           data-auto-focus
+                           data-ng-pattern="/^[\-\.a-zA-Z0-9 '=_;:`@#&,\(\)\/]*$/" data-animation="am-flip-x"
+                           data-focus-on="clientName">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group"
+                     data-ng-class="{ 'has-error' : clientForm.clientType.$invalid && formSubmitted }">
+                    <label class="control-label" for="clientType">Client Type</label>
+                    <div class="error-circle" data-ng-show="clientForm.clientType.$invalid && formSubmitted"
+                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                         data-title="Required"></div>
+                    <select id="clientType" class="form-control" data-ng-model="client.type"
+                            data-ng-options="type.typeKey | translate for type in clientTypes track by type.id" name="clientType" required
+                            data-ng-disabled="clientForm.clientName.$error.unique">
+                        <option value="">Select...</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label" for="region">Region</label>
+                    <select class="form-control" id="region" data-ng-model="client.region"
+                            data-ng-options="region.typeKey | translate for region in clientRegions track by region.id" name="clientRegion"
+                            data-ng-disabled="clientForm.clientName.$error.unique">
+                        <option value="">Select...</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label" for="tier">Tier</label>
+                    <select class="form-control" data-ng-model="client.tier" id="tier"
+                            data-ng-options="tier.typeKey | translate for tier in clientTiers track by tier.id" name="clientTier"
+                            data-ng-disabled="clientForm.clientName.$error.unique">
+                        <option value="">Select...</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group"
+                     data-ng-class="{ 'has-error' : clientForm.clientContractOwner.$invalid && formSubmitted }">
+                    <label class="control-label" for="contractOwner">Contract Owner</label>
+                    <div class="error-circle" data-ng-show="clientForm.clientContractOwner.$invalid && formSubmitted"
+                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                         data-title="Required"></div>
+                    <select
+                            class="form-control"
+                            data-placeholder="Select..."
+                            data-ng-model="client.contractOwner"
+                            data-ng-options="owner as owner | contractOwnerFilter for owner in contractOwners track by owner.id "
+                            id="contractOwner"
+                            name="clientContractOwner" required required
+                            data-ng-disabled="clientForm.clientName.$error.unique">
+                        <option value="">Select...</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group"
+                     data-ng-class="{ 'has-error' : clientForm.clientContractStart.$invalid && formSubmitted }">
+                    <label class="control-label" for="contractStart">Contract Start</label>
+
+                    <div class="error-circle"
+                         data-ng-show="!clientForm.clientContractStart.$error.date && clientForm.clientContractStart.$error.required && formSubmitted"
+                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                         data-title="Required"></div>
+                    <div class="error-circle" data-ng-show="clientForm.clientContractStart.$error.date && formSubmitted"
+                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                         data-title="Please select a valid date"></div>
+                    <input id="contractStart" class="form-control" type="text" name="clientContractStart"
+                           data-ng-model="client.contractStart" data-autoclose="true"
+                           data-dateType="iso" data-bs-datepicker-emmi required data-max-date="{{client.contractEnd}}"
+                           required data-ng-disabled="clientForm.clientName.$error.unique">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group"
+                     data-ng-class="{ 'has-error' : clientForm.clientContractEnd.$invalid && formSubmitted }">
+                    <label class="control-label" for="contractEnd">Contract End</label>
+
+                    <div class="error-circle"
+                         data-ng-show="!clientForm.clientContractEnd.$error.date && clientForm.clientContractEnd.$error.required && formSubmitted"
+                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                         data-title="Required"></div>
+                    <div class="error-circle" data-ng-show="clientForm.clientContractEnd.$error.date && formSubmitted"
+                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                         data-title="Please select a valid date"></div>
+                    <input id="contractEnd" class="form-control" type="text" name="clientContractEnd"
+                           data-ng-model="client.contractEnd" data-autoclose="true"
+                           data-dateType="string" data-bs-datepicker-emmi required
+                           data-min-date="{{client.contractStart | addDays:1}}"
+                           required data-ng-disabled="clientForm.clientName.$error.unique">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="checkbox">
+                    <label for="active">
+                        <input id="active" type="checkbox" data-ng-model="client.active"
+                               data-ng-disabled="clientForm.clientName.$error.unique"/>
+                        Active
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row" data-ng-class="{'masked': clientForm.clientName.$error.unique}" data-ng-show="client.salesForceAccount">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label class="control-label" for="">Salesforce Account</label>
+                    </div>
+                </div>
+                {{client.salesForceAccount.name}}&nbsp;&nbsp;&nbsp;&nbsp;
+                <span>{{client.salesForceAccount.city}}<span
+                        data-ng-show="client.salesForceAccount.city && client.salesForceAccount.state">,&nbsp;</span>{{client.salesForceAccount.state}}
+                </span>
+                <button class="btn btn-link" data-ng-click="changeSfAccount()" required
+                        data-ng-disabled="clientForm.clientName.$error.unique">update
+                </button>
+            </div>
+        </div>
+        <div class="row" data-ng-class="{'masked': clientForm.clientName.$error.unique}" data-ng-hide="client.salesForceAccount"
+             data-ng-include="'partials/salesforce/picker.html'"></div>
+        <hr>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="actions pull-right">
+                    <div class="form-group">
+                        <a class="btn btn-link" href="#/clients?{{currentRouteQueryString}}">cancel</a>
+                        <button class="btn btn-primary" type="button" data-ng-click="save(clientForm.$valid)"
+                                data-ng-disabled="clientForm.clientName.$error.unique">
+                            <span data-translate="client_edit_page.save_button">Continue...</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>

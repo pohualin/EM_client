@@ -57,12 +57,16 @@ angular.module('emmiManager', [
         });
     })
 
-    .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES) {
+    .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, arrays) {
 
         $rootScope.$on('$routeChangeStart', function (event, next) {
             $rootScope.userRoles = USER_ROLES;
             $rootScope.isAuthorized = AuthSharedService.isAuthorized;
             AuthSharedService.authorizedRoute((next.access) ? next.access.authorizedRoles : [USER_ROLES.all]);
+        });
+
+        $rootScope.$on('$routeChangeSuccess', function (e, current) {
+            $rootScope.currentRouteQueryString = arrays.toQueryString(current.params);
         });
 
         // Call when the the client is confirmed
