@@ -13,15 +13,15 @@
 
         <tr data-ng-class="{highlight: location.highlight}"  data-ng-repeat="location in teamClientResource.teamResource.locations | orderBy:'location.name'" >
             <td>
-                {{location.name}}
-                <span data-ng-show="location.entity.belongsTo && location.entity.belongsTo.id !== team.entity.id"> <em>({{location.belongsTo.name}})</em></span>
-                <span data-ng-show="!location.entity.belongsTo"> <em>(<span data-translate="client_edit_page.locations.no_client_owner"></span>)</em></span>
+                {{location.entity.location.name}}
+                <span data-ng-show="location.entity.location.belongsTo && location.entity.location.belongsTo.id !== team.entity.id"> <em>({{location.entity.location.belongsTo.name}})</em></span>
+                <span data-ng-show="!location.entity.location.belongsTo"> <em>(<span data-translate="client_edit_page.locations.no_client_owner"></span>)</em></span>
             </td>
-            <td>{{location.phone}}</td>
-            <td>{{location.city}}</td>
-            <td>{{location.state}}</td>
+            <td>{{location.entity.location.phone}}</td>
+            <td>{{location.entity.location.city}}</td>
+            <td>{{location.entity.location.state}}</td>
             <td>
-                <a href data-ng-click="editLocation(location)">edit</a><span class="text-muted">&nbsp;|&nbsp;</span><a href data-ng-click="removeNewLocation(location)">remove from team</a>
+                <a href data-ng-click="editLocation(location)">edit</a><span class="text-muted">&nbsp;|&nbsp;</span><a href data-ng-click="removeExistingLocation(location)">remove from team</a>
             </td>
         </tr>
 

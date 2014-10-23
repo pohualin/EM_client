@@ -2,7 +2,7 @@
 
 angular.module('emmiManager')
 
-    .controller('SearchTeamsLocationsController', function ($scope, TeamSearchLocation, Location) {
+    .controller('SearchTeamsLocationsController', function ($scope, $translate,TeamSearchLocation, Location) {
 
         $scope.noSearch = true;
 
