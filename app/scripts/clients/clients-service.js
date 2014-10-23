@@ -34,7 +34,7 @@ angular.module('emmiManager')
             updateClient: function (client) {
                 return $http.put(UriTemplate.create(Session.link.clients).stringify(), client)
                     .success(function (response) {
-                        angular.extend(selectedClient, response.data);
+                        angular.extend(selectedClient.entity, response.entity);
                         return response;
                     });
             },

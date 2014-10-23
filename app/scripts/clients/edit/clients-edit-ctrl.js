@@ -34,9 +34,8 @@ angular.module('emmiManager')
         $scope.save = function (isValid) {
             $scope.metadataSubmitted = true;
             if (isValid && $scope.clientToEdit.salesForceAccount) {
-                Client.updateClient($scope.clientToEdit).then(function (response) {
+                Client.updateClient($scope.clientToEdit).then(function () {
                     $scope.editMode = false;
-                    angular.extend($scope.client, response.data.entity); //update view after save
                 });
             } else {
                 $scope.showError();
