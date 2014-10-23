@@ -2,7 +2,7 @@
 
 angular.module('emmiManager')
 
-    .service('ProviderView', function ($http, $q, Session, UriTemplate) {
+    .service('ProviderView', function ($http, $q, Session, UriTemplate, arrays) {
         return {
         	specialtyRefData: function(teamResource) {
         		if(teamResource.link.providerReferenceData){
@@ -24,10 +24,11 @@ angular.module('emmiManager')
              },
              allProvidersForTeam: function (teamResource) {
             	 var providers = [];
-                 return $http.get(UriTemplate.create(teamResource.link.provider).stringify()).then(function addToProviders(response) {
+                 return $http.get(UriTemplate.create(teamResource.link.teamProviders).stringify(), teamResource.entity).then(function addToProviders(response) {
                 	 var page = response.data;
-                    	 angular.forEach(page.content, function(provider){
-                    		 providers.push(provider);
+                    	 angular.forEach(page.content, function(teamProvider){
+                    		 providers.push(teamProvider);
+
 	            		 });
                     	 if (page.link && page.link['page-next']) {
 	                            $http.get(page.link['page-next']).then(function (response) {
@@ -38,15 +39,8 @@ angular.module('emmiManager')
                  });
              },
              removeProvider: function (provider, teamResource) {
-             	console.log('remove provider, provider = ' + provider);
-            	console.log('remove provider, $scope.teamResource = ' + teamResource);
-                 return $http.delete(UriTemplate.create(teamResource.link.teamProviderSelfLinkWithDummy).stringify(), provider).then( function (response) {
-                	 console.log('deleted');
-                	 return null;
-                 });
-             },
-             getProviderById: function () {
-            	 
+             	provider.link = arrays.convertToObject('rel', 'href', provider.link);
+             	 return $http.delete(UriTemplate.create(provider.link.findProviderById).stringify());
              }
         };
     })

@@ -1,5 +1,5 @@
 <div class="container" >
-	<div class="row" data-ng-controller="ProviderListController" data-ng-show="teamResource.providers.length > 0">
+	<div class="row" data-ng-controller="ProviderListController" data-ng-show="teamResource.teamProviders.length > 0">
 		<div class="col-md-9" >
 		    <h2>Providers</h2>
 			<table class="table table-bordered table-striped table-hover" border="0" cellpadding="0">
@@ -9,12 +9,12 @@
 					<th class="col-sm-3">Email </th>
 		            <th>&nbsp;</th>
 				</tr>
-				<tr data-ng-repeat="provider in teamResource.providers">
-			    	<td>{{provider.entity.firstName}} {{provider.entity.lastName}}</td>
-			    	<td>{{provider.entity.specialty.name}}</td>
-			    	<td>{{provider.entity.email}}</td>
+				<tr data-ng-repeat="teamProvider in teamResource.teamProviders">
+			    	<td>{{teamProvider.entity.provider.firstName}} {{teamProvider.entity.provider.lastName}}</td>
+			    	<td>{{teamProvider.entity.provider.specialty.name}}</td>
+			    	<td>{{teamProvider.entity.provider.email}}</td>
 					<td>
-                		<a href data-ng-click="editProvider(provider)">edit</a><span class="text-muted">&nbsp;|&nbsp;</span><a href data-ng-click="removeProvider(provider)">remove from team</a>
+                		<a href data-ng-click="editProvider(teamProvider.provider)">edit</a><span class="text-muted">&nbsp;|&nbsp;</span><a href data-ng-click="removeProvider(teamProvider)">remove from team</a>
             		</td>			    	
 			    </tr>
 			</table>
