@@ -5,19 +5,20 @@ angular.module('emmiManager')
 /**
  *  Edit a single client
  */
-    .controller('ClientDetailCtrl', function ($scope, Client, $controller, Location, clientResource, Tag, $q) {
+    .controller('ClientDetailCtrl', function ($scope, Client, $controller, Location, clientResource, Tag, $q, focus) {
 
         $controller('ViewEditCommon', {$scope: $scope});
 
         if (clientResource) {
-            $scope.client = clientResource.entity;
-            clientResource.currentlyActive = clientResource.entity.active;
+            $scope.client = clientResource.entity; //for the view state
+            Client.setClient(clientResource);
         } else {
             Client.viewClientList();
         }
 
         $scope.cancel = function () {
             $scope.editMode = false;
+            delete $scope.clientToEdit;
         };
 
         $scope.cancelTagsAndLocations = function () {
@@ -26,13 +27,16 @@ angular.module('emmiManager')
 
         $scope.edit = function () {
             $scope.editMode = true;
+            $scope.clientToEdit = angular.copy($scope.client);
+            focus('clientName');
         };
 
         $scope.save = function (isValid) {
             $scope.metadataSubmitted = true;
-            if (isValid && $scope.client.salesForceAccount) {
-                Client.updateClient($scope.client).then(function () {
+            if (isValid && $scope.clientToEdit.salesForceAccount) {
+                Client.updateClient($scope.clientToEdit).then(function (response) {
                     $scope.editMode = false;
+                    angular.extend($scope.client, response.data.entity); //update view after save
                 });
             } else {
                 $scope.showError();

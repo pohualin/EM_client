@@ -45,7 +45,7 @@ angular.module('emmiManager')
 
         $scope.chooseAccount = function (account) {
             if (account && !account.clientName) {
-                $scope.client.salesForceAccount = account;
+                $scope.clientToEdit.salesForceAccount = account;
                 return true;
             } else {
                 return false;
@@ -57,9 +57,9 @@ angular.module('emmiManager')
         };
 
         $scope.changeSfAccount = function () {
-            $scope.sfSearch.searchQuery = $scope.client.salesForceAccount.name;
+            $scope.sfSearch.searchQuery = $scope.clientToEdit.salesForceAccount.name;
             $scope.sfResult.account = [];
-            $scope.client.salesForceAccount = null;
+            $scope.clientToEdit.salesForceAccount = null;
             focus('SfSearch');
         };
 

@@ -9,12 +9,12 @@ angular.module('emmiManager')
 
     $controller('ViewEditCommon', {$scope: $scope});
 
-    $scope.client = Client.newClient().entity;
+    $scope.clientToEdit = Client.newClient().entity;
 
     $scope.save = function (isValid) {
         $scope.formSubmitted = true;
-        if (isValid && $scope.client.salesForceAccount) {
-            Client.insertClient($scope.client).then(function (response) {
+        if (isValid && $scope.clientToEdit.salesForceAccount) {
+            Client.insertClient($scope.clientToEdit).then(function (response) {
                 Client.viewClient(response.data.entity);
             });
         } else {
