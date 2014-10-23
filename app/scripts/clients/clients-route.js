@@ -40,17 +40,9 @@ angular.module('emmiManager')
                 },
                 resolve: requiredResources
             })
-            .when('/clients/:clientId/edit', {
-                templateUrl: 'partials/client/client_edit.html',
+            .when('/clients/:clientId', {
+                templateUrl: 'partials/client/edit/editor.html',
                 controller: 'ClientDetailCtrl',
-                access: {
-                    authorizedRoles: [USER_ROLES.admin]
-                },
-                resolve: clientDetailRequiredResources
-            })
-            .when('/clients/:clientId/view', {
-                templateUrl: 'partials/client/client_view.html',
-                controller: 'ClientViewCtrl',
                 access: {
                     authorizedRoles: [USER_ROLES.admin]
                 },

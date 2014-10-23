@@ -34,21 +34,15 @@ angular.module('emmiManager')
             updateClient: function (client) {
                 return $http.put(UriTemplate.create(Session.link.clients).stringify(), client)
                     .success(function (response) {
-                        angular.extend(client, response.entity);
+                        angular.extend(selectedClient.entity, response.entity);
                         return response;
                     });
             },
-            deleteClient: function (id) {
-
-            },
             viewClient: function (clientEntity) {
-                $location.path('/clients/' + clientEntity.id + '/view');
+                $location.path('/clients/' + clientEntity.id);
             },
             viewClientList: function () {
                 $location.path('/clients');
-            },
-            editClient: function (clientEntity) {
-                $location.path('/clients/' + clientEntity.id + '/edit');
             },
             getClient: function () {
                 return selectedClient;
@@ -157,20 +151,27 @@ angular.module('emmiManager')
           return {
             restrict: 'A',
             require: 'ngModel',
-            scope: {
-                url: '=uniqueUrl'
-            },            
             link: function (scope, element, attrs, ngModel) {
 
-                element.on('keydown', function() {
+                var reset = function (){
                     if (scope.uniquePopup) {
                         scope.uniquePopup.hide();
                         ngModel.$setValidity('unique', true);
                     }
+                };
+
+                element.on('keydown', function() {
+                    reset();
+                });
+
+                scope.$watch('editMode', function(value) {
+                    if (!value) {
+                        reset();
+                    }
                 });
 
                  element.on('blur', function() {
-                    Client.findNormalizedName(scope.url, element.val()).then(function (searchResults) {
+                    Client.findNormalizedName(scope.findNormalizedNameLink, element.val()).then(function (searchResults) {
                         scope.existsClient = searchResults;
                           if (scope.existsClient.entity === undefined) {
                             ngModel.$setValidity('unique', true);
@@ -207,19 +208,17 @@ angular.module('emmiManager')
         return {
             restrict: 'EA',
             scope: {
-                'okDeactivatePopover': '&onOk'
+                'okDeactivatePopover': '&onOk',
+                'clientToEdit': '=clientToEdit'
             },
             link: function (scope, element) {
                 scope.cancelDeactivatePopover = function () {
                     scope.saveWarning.hide();
-                    var clientResource = Client.getClient();
-                    if (clientResource && clientResource.entity) {
-                        clientResource.entity.active = true;
-                    }
+                    scope.clientToEdit.active = true;
                 };
                 element.on('click', function () {
                     var clientResource = Client.getClient();
-                    if (!clientResource.entity.active && clientResource.currentlyActive) {
+                    if (!scope.clientToEdit.active && clientResource.entity.active) {
                         // pop a warning dialog
                         if (!scope.saveWarning) {
                             $translate('client_edit_page.deactivate_dialog.title').then(function (title) {
@@ -228,7 +227,7 @@ angular.module('emmiManager')
                                     scope: scope,
                                     trigger: 'manual',
                                     show: true,
-                                    placement: 'top',
+                                    placement: 'bottom',
                                     contentTemplate: 'partials/client/deactivate_popover.tpl.html'
                                 });
                             });

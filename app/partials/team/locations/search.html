@@ -13,10 +13,10 @@
                         <form ng-submit="search()">
                             <div class="form-group">
                                 <div data-ng-show="clientHasLocations()" class="form-inline">
-                                    <label for="locationFromClient"><span data-translate="team_locations_search_page.dropdown_locations.search_label"></span></label>
+                                    <label for="locationFromClient" data-translate="team_locations_search_page.dropdown_locations.search_label"></label>
                                     <select id="locationFromClient" class="chosen-container-multi" ng-change="onDropdownChange()"
                                         multiple chosen 
-                                        data-placeholder="Select Locations..."
+                                        data-placeholder="{{'team_locations_search_page.dropdown_locations.placeholder_label' | translate}}"
                                         data-ng-model="clientLocationsSelected"
                                         no-results-text="'Client Locations not found'"
                                         data-ng-options="c.entity.name for c in clientLocations">
@@ -24,10 +24,10 @@
                                 <br/>
                                 </div>
                                 <br />
-                                <label for="locationQuery"><span data-translate="team_locations_search_page.search_dialog.search_label"></span></label>
+                                <label for="locationQuery" data-translate="team_locations_search_page.search_dialog.search_label" data-ng-hide="clientLocationsSelected"></label>
                                 <div class="input-group" data-ng-hide="clientLocationsSelected" >
                                     <input class="form-control" id="locationQuery" data-ng-model="locationQuery"
-                                           type="text" placeholder="Search..." data-auto-focus data-focus-on="LocationSearchFocus">
+                                           type="text" placeholder="{{'team_locations_search_page.search_dialog.placeholder_label' | translate}}"  data-auto-focus >
                                     <div class="input-group-addon btn" data-ng-click="search()"><span data-translate="team_locations_search_page.search_dialog.go_label"></span></div>
                                 </div>
                             </div>
