@@ -40,7 +40,7 @@ angular.module('emmiManager')
              },
              removeProvider: function (provider, teamResource) {
              	provider.link = arrays.convertToObject('rel', 'href', provider.link);
-             	 return $http.delete(UriTemplate.create(provider.link.findProviderById).stringify());
+             	return $http.delete(UriTemplate.create(provider.link.findProviderById).stringify());
              }
         };
     })
