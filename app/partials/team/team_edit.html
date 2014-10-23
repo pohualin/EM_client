@@ -16,13 +16,13 @@
                      data-ng-class="{ 'has-error' : (teamForm.teamName.$invalid && formSubmitted) || teamForm.teamName.$error.unique}">
                     <label data-translate="team_edit_page.information.name" for="teamName">Name</label>
 
-                    <div class="error-circle" data-ng-show="teamForm.teamName.$error.required && formSubmitted"
+                    <div class="error-circle glyphicon glyphicon-exclamation-sign" data-ng-show="teamForm.teamName.$error.required && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="{{'team_edit_page.error_msg.required' | translate}}"></div>
-                    <div class="error-circle" data-ng-show="teamForm.teamName.$error.pattern && formSubmitted"
+                    <div class="error-circle glyphicon glyphicon-exclamation-sign" data-ng-show="teamForm.teamName.$error.pattern && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="{{'team_edit_page.error_msg.invalid_team_name' | translate}}"></div>
-                    <div class="error-circle"
+                    <div class="error-circle glyphicon glyphicon-exclamation-sign"
                          data-ng-show="formSubmitted && teamForm.teamName.$error.unique && teamForm.teamName.$.invalid"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="{{'team_edit_page.unique_popup_dialog.message' | translate}}"></div>
@@ -39,7 +39,7 @@
                     <label data-translate="team_edit_page.information.description"
                            for="teamDescription">Description</label>
 
-                    <div class="error-circle" data-ng-show="teamForm.teamDescription.$error.pattern && formSubmitted"
+                    <div class="error-circle glyphicon glyphicon-exclamation-sign" data-ng-show="teamForm.teamDescription.$error.pattern && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="{{'team_edit_page.error_msg.invalid_team_description' | translate}}"></div>
                     <input class="form-control" data-ng-model="team.description" id="teamDescription"
@@ -69,10 +69,11 @@
     	<div class="row">
 			<div data-ng-show="teamResource.providers" data-ng-include="'partials/team/provider/providersTable.html'"></div>
 		</div>
-        <div data-ng-show="teamResource.link.provider" data-ng-include="'partials/team/provider/addProviders.html'"></div>        
+        <div data-ng-show="teamResource.link.provider" data-ng-include="'partials/team/provider/addProviders.html'"></div>
         <div class="row">
             <div class="col-md-12">
                 <div class="pull-right">
+                    <div class="form-group">
                     <button class="btn btn-link" data-on-ok="cancel()" data-translate="team_edit_page.cancel_button" href data-cancel-click-team-edit>cancel</button>
 
                     <button class="btn btn-primary" type="button"
@@ -82,6 +83,7 @@
                             data-team-edit-save>
                         <span data-translate="team_edit_page.continue_button">Save</span>
                     </button>
+                    </div>
                 </div>
             </div>
         </div>

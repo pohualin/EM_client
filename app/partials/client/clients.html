@@ -8,7 +8,7 @@
     <form name="searchForm">
         <div class="row">
             <div class="col-md-2 col-sm-2">
-				<div class="row" data-ng-include="'partials/client/search_option_dropdown.html'"></div>
+				<div data-ng-include="'partials/search/search_option_dropdown.html'"></div>
             </div>
             <div class="col-md-6 col-sm-5">
                 <label class="sr-only" for="query">Search</label>
@@ -78,7 +78,7 @@
                     <td>{{client.entity.contractOwner.firstName}} {{client.entity.contractOwner.lastName}}</td>
                     <td>{{client.entity.type.typeKey | translate}}</td>
                     <td>
-                        <a href="#/clients/{{client.entity.id}}/view">view</a>
+                        <a href="#/clients/{{client.entity.id}}?{{currentRouteQueryString}}">view</a>
                     </td>
                 </tr>
             </table>

@@ -23,7 +23,12 @@ angular.module('emmiManager')
                 }
             },
             save: function (teamResource) {
-                return $http.post(UriTemplate.create(teamResource.link.tags).stringify(), teamResource.tags).
+                var tags = teamResource.tags || [];
+                angular.forEach(tags, function(tag){
+                    delete tag.text;
+                    delete tag.group;
+                });
+                return $http.post(UriTemplate.create(teamResource.link.tags).stringify(), tags).
                     then(function (response) {
                         return response;
                     });
