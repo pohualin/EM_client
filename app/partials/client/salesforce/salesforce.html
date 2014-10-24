@@ -1,7 +1,7 @@
 <div class="col-md-8">
-    <div class="form-group has-feedback" data-ng-class="{ 'has-error' : formSubmitted && !client.salesForceAccount }">
+    <div class="form-group has-feedback" data-ng-class="{ 'has-error' : formSubmitted && !clientToEdit.salesForceAccount }">
         <label class="control-label" for="salesForceAccount">Salesforce Account</label>
-        <div class="error-circle" data-ng-show="!client.salesForceAccount && formSubmitted"
+        <div class="error-circle glyphicon glyphicon-exclamation-sign" data-ng-show="!clientToEdit.salesForceAccount && formSubmitted"
              data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
              data-title="Please enter an associated Salesforce account"></div>
         <div id="salesForceAccount" class="typeahead" data-id="salesForceAccount" data-emmi-typeahead data-items="sfResult.account" data-term="sfSearch.searchQuery" data-search="findAccount(term)" data-select="chooseAccount(item)" data-placeholder="Start typing..." data-focus="SfSearch" data-min-length="5">

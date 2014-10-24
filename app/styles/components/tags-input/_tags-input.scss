@@ -138,6 +138,9 @@
             cursor: pointer;
             display: inline-block;
             padding: 2px 0;
+            white-space: pre;
+            min-width: 16px;
+            min-height: 20px;
         }
 
         .remove-button {
@@ -156,14 +159,26 @@
             }
         }
 
-        &:hover {
+        &:hover,
+        &.invalid {
             .remove-button {
                 display: inline-block;
             }
         }
 
+        &.invalid {
+            background-color: #d9534f !important;
+        }
+
         &.selected {
             background-color: #428bca;
+        }
+
+        .error-circle {
+            background: white;
+            border-radius: 16px;
+            float: none;
+            vertical-align: middle;
         }
 
         input {
@@ -173,7 +188,9 @@
             border: 0;
             background: transparent;
             color: #fff;
-            padding: 1px 0 0;
+            padding: 2px 0;
+            width: 16px;
+            min-width: 16px;
             &:focus {
                 outline: 0;
             }
