@@ -2,7 +2,7 @@
 
 angular.module('emmiManager')
 
-    .controller('TeamTagsController', function ($scope, TeamTag,Tag) {
+    .controller('TeamTagsController', function ($scope, TeamTag, Tag) {
         Tag.loadGroups($scope.teamClientResource.clientResource).then(function (tagGroups) {
             var tagGroupToDisplay = [];
             angular.forEach(tagGroups, function (group) {
@@ -19,6 +19,10 @@ angular.module('emmiManager')
             $scope.team.tags = tagGroupToDisplay;
 
         });
-        TeamTag.loadSelectedTags($scope);
+        TeamTag.loadSelectedTags($scope.teamClientResource.teamResource);
+
+        $scope.saveTagState = function () {
+            TeamTag.save($scope.teamClientResource.teamResource);
+        };
     })
 ;
