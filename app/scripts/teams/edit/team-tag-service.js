@@ -2,8 +2,7 @@
 angular.module('emmiManager')
     .service('TeamTag', function ($http, $q, Session, UriTemplate) {
         return {
-            loadSelectedTags: function (scope) {
-                var teamResource = scope.teamClientResource.teamResource;
+            loadSelectedTags: function (teamResource) {
                 if (teamResource.entity.id) {
                     teamResource.tags = [];
                     return $http.get(UriTemplate.create(teamResource.link.tags).stringify()).then(function load(response) {
@@ -17,18 +16,25 @@ angular.module('emmiManager')
                                 load(response);
                             });
                         }
-                        scope.teamClientResource.teamResource.checkTagsForChanges = teamResource.tags;
+                        teamResource.checkTagsForChanges = teamResource.tags;
                         return teamResource.tags;
                     });
                 }
             },
             save: function (teamResource) {
                 var tags = teamResource.tags || [];
-                angular.forEach(tags, function(tag){
+                var tagsCopy = angular.copy(tags);
+                angular.forEach(tagsCopy, function(tag){
                     delete tag.text;
                     delete tag.group;
                 });
-                return $http.post(UriTemplate.create(teamResource.link.tags).stringify(), tags).
+                return $http.post(UriTemplate.create(teamResource.link.tags).stringify(), tagsCopy).
+                    then(function (response) {
+                        return response;
+                    });
+            },
+            deleteSingleTeamTag: function(teamResource){
+                return $http.delete(UriTemplate.create(teamResource.link.teamTag).stringify(), teamResource.tags).
                     then(function (response) {
                         return response;
                     });

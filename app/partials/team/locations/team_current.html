@@ -1,4 +1,4 @@
-<div class="col-md-12"  data-ng-controller="TeamsLocationsController">
+<div class="col-md-12"  data-ng-controller="TeamsLocationsController" data-ng-show="teamClientResource.teamResource.link.teamLocations">
     <h2>Locations</h2>
            {{teamLocations.lenght}}
     <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0"
@@ -29,7 +29,7 @@
     <div data-ng-hide="teamHasLocations()">
         <span>There are no existing locations<span data-ng-show="team.name"> for {{team.name}}</span>.</span>
     </div>    
-    <div class="row" data-ng-show="teamClientResource.teamResource.link.teamLocations">
+    <div class="row" >
 	    <button type="button" class="btn btn-link" data-ng-click="addLocations()">
 	        add locations
 	    </button>

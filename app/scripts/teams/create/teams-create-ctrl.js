@@ -4,7 +4,7 @@ angular.module('emmiManager')
 /**
  * Create a Single Team
  */
-    .controller('ClientTeamCreateCtrl', function ($scope, $http, $routeParams, Session, UriTemplate, CreateTeam, ViewTeam, $controller, clientResource, Client, TeamTag) {
+    .controller('ClientTeamCreateCtrl', function ($scope, $http, $routeParams, Session, UriTemplate, CreateTeam, ViewTeam, $controller, clientResource, Client) {
 
         $controller('TeamErrorController', {$scope: $scope});
 
@@ -38,13 +38,7 @@ angular.module('emmiManager')
                     var teamResource = team.data;
                     $scope.team = teamResource.entity;
                     teamResource.tags = $scope.teamClientResource.teamResource.tags;
-                    if(teamResource.tags) {
-                        TeamTag.save(teamResource).then(function () {
-                            ViewTeam.viewTeam($scope.team);
-                        });
-                    }else{
-                        ViewTeam.viewTeam($scope.team);
-                    }
+                    ViewTeam.viewTeam($scope.team);
                 });
             } else {
                 $scope.showError();
