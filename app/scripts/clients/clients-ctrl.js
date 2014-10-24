@@ -18,7 +18,7 @@ angular.module('emmiManager')
 
             Client.getOwnersReferenceDataList(refData.link.potentialOwners)
                 .then(function (owners) {
-                    $scope.contractOwners = owners;         	
+                    $scope.contractOwners = owners;
                 });
             $scope.findSalesForceAccount = function () {
                 Client.findSalesForceAccount(refData.link.findSalesForceAccount, $scope.sfSearch.searchQuery).then(function (searchResults) {
@@ -59,8 +59,19 @@ angular.module('emmiManager')
         $scope.changeSfAccount = function () {
             $scope.sfSearch.searchQuery = $scope.clientToEdit.salesForceAccount.name;
             $scope.sfResult.account = [];
+            // save the previous salesforce account in case they blur the input without re-searching
+            $scope.clientToEdit.prevSalesForceAccount = $scope.clientToEdit.salesForceAccount;
             $scope.clientToEdit.salesForceAccount = null;
             focus('SfSearch');
+        };
+
+        $scope.revertSfAccount = function () {
+            if (!$scope.clientToEdit.salesForceAccount && $scope.clientToEdit.prevSalesForceAccount) {
+                // make sure the search term hasn't been changes
+                if ($scope.sfSearch.searchQuery === $scope.clientToEdit.prevSalesForceAccount.name) {
+                    $scope.clientToEdit.salesForceAccount = $scope.clientToEdit.prevSalesForceAccount;
+                }
+            }
         };
 
         $scope.showError = function(){
