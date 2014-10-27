@@ -11,7 +11,7 @@ angular.module('emmiManager')
                         angular.forEach(page.content, function (teamLocation) {
                             teamResource.locations.push(teamLocation);
                             teamLocation.entity.location.isNewAdd = false;
-                            scope.teamLocations[teamLocation.entity.location.id] = angular.copy(teamLocation);  
+                            scope.teamLocations[teamLocation.entity.location.id] = angular.copy(teamLocation.entity.location);  
                         });
 
                         if (page.link && page.link['page-next']) {

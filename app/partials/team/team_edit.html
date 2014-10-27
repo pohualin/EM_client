@@ -67,14 +67,14 @@
         <div data-ng-include="'partials/team/tags/team_tags.html'"></div>
 
     	<div class="row">
-			<div data-ng-show="teamResource.providers" data-ng-include="'partials/team/provider/providersTable.html'"></div>
+			<div data-ng-show="teamResource.teamProviders" data-ng-include="'partials/team/provider/providersTable_edit.html'"></div>
 		</div>
         <div data-ng-show="teamResource.link.provider" data-ng-include="'partials/team/provider/addProviders.html'"></div>
         <div class="row">
             <div class="col-md-12">
                 <div class="pull-right">
                     <div class="form-group">
-                    <button class="btn btn-link" data-on-ok="cancel()" data-translate="team_edit_page.cancel_button" href data-cancel-click-team-edit>cancel</button>
+                    <button class="btn btn-link" data-ng-click="cancel()" data-translate="team_edit_page.cancel_button" href data-cancel-click-team-edit>cancel</button>
 
                     <button class="btn btn-primary" type="button"
                             data-on-ok="save(teamForm.$valid)" data-team-entity="team"
