@@ -8,12 +8,12 @@ angular.module('emmiManager')
 
         $scope.clientLocationsSelected = [];
 
-        angular.forEach( $scope.clientLocations , function (location) {
-            if ($scope.teamLocations[location.entity.id]) {
+        /*angular.forEach( $scope.clientLocations , function (location) {
+            if (!$scope.teamLocations[location.entity.id]) {
                 location.entity.isNewAdd = false;
                 $scope.clientLocationsSelected.push(location);
             }
-        }); 
+        });*/ 
 
         $scope.clientHasLocations = function () {
             return $scope.clientLocations.length > 0;
@@ -23,7 +23,9 @@ angular.module('emmiManager')
             var locationsToAdd = [];
 
             angular.forEach( $scope.clientLocationsSelected , function (location) {
-                $scope.teamLocations[location.entity.id] = angular.copy(location.entity);  
+                if ($scope.teamLocations[location.entity.id]) {
+                    $scope.teamLocations[location.entity.id] = angular.copy(location.entity);  
+                }
             });
             angular.forEach( $scope.teamLocations , function (location) {
                 if (location.isNewAdd) {
@@ -49,6 +51,7 @@ angular.module('emmiManager')
             $scope.clientLocationsSelected = [];
             $scope.loading = true;
             $scope.locations = [];
+            $scope.cancelPopup(); //clean the locations checked in other search
             Location.find($scope.locationQuery, $scope.status).then(function (locationPage) {
                 $scope.locations = locationPage.content ;
                 angular.forEach( $scope.locations , function (location) {
@@ -80,6 +83,11 @@ angular.module('emmiManager')
 
         $scope.onDropdownChange = function () {
             $scope.locations = null;
+            angular.forEach( $scope.clientLocationsSelected , function (location) {
+                location.entity.isNewAdd = true;
+                $scope.teamLocations[location.entity.id] = angular.copy(location.entity);  
+            });
+
         };
 
     })
