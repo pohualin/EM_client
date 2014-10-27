@@ -11,7 +11,7 @@
 
                     <div class="col-md-9 col-sm-9">
                         <form ng-submit="search()" class="form-horizontal">
-                            <div class="form-group" data-ng-show="clientHasLocations()">
+                            <div class="form-group" data-ng-show="clientHasLocations()" data-ng-hide="locations" id"fromClientLocations">
                                 <label for="locationFromClient" class="col-sm-4 control-label" data-translate="team_locations_search_page.dropdown_locations.search_label"></label>
                                 <div class="col-sm-8">
                                 <select id="locationFromClient" class="chosen-container-multi form-control" 
@@ -25,7 +25,7 @@
                                 </div>
                             </div>
                             <br />
-                            <div class="form-group" data-ng-hide="clientLocationsSelected">
+                            <div class="form-group" id="allLocations">
                                 <label for="locationQuery" class="col-sm-4 control-label" data-translate="team_locations_search_page.search_dialog.search_label"></label>
                                 <div class="col-sm-7">
                                 <input class="form-control" id="locationQuery" data-ng-model="locationQuery"
