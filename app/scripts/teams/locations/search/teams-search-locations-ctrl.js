@@ -86,13 +86,11 @@ angular.module('emmiManager')
 
         $scope.onDropdownChange = function () {
             $scope.locations = null;
+             $("#allLocations").hide();
             angular.forEach( $scope.clientLocationsSelected , function (location) {
                 if (!$scope.teamLocations[location.entity.id]) {
                     location.entity.isNewAdd = true;
                     $scope.teamLocations[location.entity.id] = angular.copy(location.entity);  
-                }
-                else {
-                    $("#allLocations").hide();
                 }
             });
 
