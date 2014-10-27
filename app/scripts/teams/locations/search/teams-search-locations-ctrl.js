@@ -8,12 +8,14 @@ angular.module('emmiManager')
 
         $scope.clientLocationsSelected = [];
 
-        /*angular.forEach( $scope.clientLocations , function (location) {
-            if (!$scope.teamLocations[location.entity.id]) {
+        angular.forEach( $scope.clientLocations , function (location) {
+            if ($scope.teamLocations[location.entity.id]) {
                 location.entity.isNewAdd = false;
+                location.entity.disabled = true;
+                location.entity.checked = true;                
                 $scope.clientLocationsSelected.push(location);
             }
-        });*/ 
+        }); 
 
         $scope.clientHasLocations = function () {
             return $scope.clientLocations.length > 0;
@@ -48,6 +50,7 @@ angular.module('emmiManager')
         };
 
         $scope.search = function () {
+            $("#fromClientLocations").hide();
             $scope.clientLocationsSelected = [];
             $scope.loading = true;
             $scope.locations = [];
@@ -84,8 +87,13 @@ angular.module('emmiManager')
         $scope.onDropdownChange = function () {
             $scope.locations = null;
             angular.forEach( $scope.clientLocationsSelected , function (location) {
-                location.entity.isNewAdd = true;
-                $scope.teamLocations[location.entity.id] = angular.copy(location.entity);  
+                if (!$scope.teamLocations[location.entity.id]) {
+                    location.entity.isNewAdd = true;
+                    $scope.teamLocations[location.entity.id] = angular.copy(location.entity);  
+                }
+                else {
+                    $("#allLocations").hide();
+                }
             });
 
         };
