@@ -67,10 +67,7 @@ angular.module('emmiManager')
 
         $scope.revertSfAccount = function () {
             if (!$scope.clientToEdit.salesForceAccount && $scope.clientToEdit.prevSalesForceAccount) {
-                // make sure the search term hasn't been changes
-                if ($scope.sfSearch.searchQuery === $scope.clientToEdit.prevSalesForceAccount.name) {
-                    $scope.clientToEdit.salesForceAccount = $scope.clientToEdit.prevSalesForceAccount;
-                }
+                $scope.clientToEdit.salesForceAccount = $scope.clientToEdit.prevSalesForceAccount;
             }
         };
 
