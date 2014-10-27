@@ -32,8 +32,8 @@ angular.module('emmiManager')
             //doing this to remove the teamLocations those locations that was clicked in the search and them press cancel
             var teamLocationsAux = {};
             angular.forEach( $scope.teamLocations , function (location) {
-                if (!location.entity.location.isNewAdd) {
-                    teamLocationsAux[location.entity.location.id] = angular.copy(location);
+                if (!location.isNewAdd) {
+                    teamLocationsAux[location.id] = angular.copy(location);
                 }
             });
             $scope.teamLocations = angular.copy(teamLocationsAux);
