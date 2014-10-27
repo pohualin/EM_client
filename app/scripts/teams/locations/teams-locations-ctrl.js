@@ -2,7 +2,7 @@
 
 angular.module('emmiManager')
 
-    .controller('TeamsLocationsController', function ($scope, $http, Session, UriTemplate, $controller, $modal, $alert, Location, Client, TeamLocation) {
+    .controller('TeamsLocationsController', function ($scope, $http, Session, UriTemplate, $controller, $modal, $alert, Location, TeamLocation) {
 
         $scope.teamLocations = {}; //used to hold the locations and manipulate internally
 
@@ -17,10 +17,6 @@ angular.module('emmiManager')
                 dismissable: true
             });
         };
-
-        Location.findForClient(Client.getClient()).then(function (allLocations) {
-            $scope.clientLocations = allLocations;
-        });
 
         TeamLocation.loadTeamLocations($scope);
 
