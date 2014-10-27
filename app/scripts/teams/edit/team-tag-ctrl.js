@@ -28,7 +28,6 @@ angular.module('emmiManager')
         var showClientTagsModal = $modal({scope: $scope, template: 'partials/team/tags/client_tags_modal.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false});
 
         $scope.showClientTags = function(){
-            console.log('clicked');
             showClientTagsModal.$promise.then(showClientTagsModal.show);
         };
         $scope.hideClientTags = function(){
