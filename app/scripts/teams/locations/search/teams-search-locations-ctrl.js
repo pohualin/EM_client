@@ -2,20 +2,24 @@
 
 angular.module('emmiManager')
 
-    .controller('SearchTeamsLocationsController', function ($scope, $translate,TeamSearchLocation, Location) {
+    .controller('SearchTeamsLocationsController', function ($scope, $translate,TeamSearchLocation, Location, Client) {
 
-        $scope.noSearch = true;
-
+        $scope.clientLocationsSearch = true;
+        $scope.allLocationsSearch = true;
         $scope.clientLocationsSelected = [];
 
-        angular.forEach( $scope.clientLocations , function (location) {
-            if ($scope.teamLocations[location.entity.id]) {
-                location.entity.isNewAdd = false;
-                location.entity.disabled = true;
-                location.entity.checked = true;                
-                $scope.clientLocationsSelected.push(location);
-            }
-        }); 
+        Location.findForClient(Client.getClient()).then(function (allLocations) {
+            $scope.clientLocations = allLocations;
+
+            angular.forEach( $scope.clientLocations , function (location) {
+                if ($scope.teamLocations[location.entity.id]) {
+                    location.entity.isNewAdd = false;
+                    location.entity.disabled = true;
+                    location.entity.checked = true;                
+                    $scope.clientLocationsSelected.push(location);
+                }
+            }); 
+        });
 
         $scope.clientHasLocations = function () {
             return $scope.clientLocations.length > 0;
@@ -50,10 +54,10 @@ angular.module('emmiManager')
         };
 
         $scope.search = function () {
-            $("#fromClientLocations").hide();
-            $scope.clientLocationsSelected = [];
+            $scope.clientLocationsSelected = null;
+
             $scope.loading = true;
-            $scope.locations = [];
+            $scope.locations = null;
             $scope.cancelPopup(); //clean the locations checked in other search
             Location.find($scope.locationQuery, $scope.status).then(function (locationPage) {
                 $scope.locations = locationPage.content ;
@@ -64,7 +68,8 @@ angular.module('emmiManager')
                     }
                 });
                 $scope.loading = false;
-                $scope.noSearch = false;
+                $scope.clientLocationsSearch = false;
+                $scope.allLocationsSearch = true;
             }, function () {
                 // error happened
                 $scope.loading = false;
@@ -84,9 +89,10 @@ angular.module('emmiManager')
             }
         };
 
-        $scope.onDropdownChange = function () {
+        $scope.onDropdownChange = function () {          
             $scope.locations = null;
-             $("#allLocations").hide();
+            $scope.clientLocationsSearch = true;
+            $scope.allLocationsSearch = false;            
             angular.forEach( $scope.clientLocationsSelected , function (location) {
                 if (!$scope.teamLocations[location.entity.id]) {
                     location.entity.isNewAdd = true;
