@@ -8,23 +8,23 @@
                     <div class="col-md-1"></div>
                 </div>
                 <div class="row">
-
                     <div class="col-md-9 col-sm-9">
                         <form ng-submit="search()" class="form-horizontal">
-                            <div class="form-group" data-ng-show="clientHasLocations()">
+                            <div class="form-group" data-ng-show="clientHasLocations() && clientLocationsSearch" >
                                 <label for="locationFromClient" class="col-sm-4 control-label" data-translate="team_locations_search_page.dropdown_locations.search_label"></label>
                                 <div class="col-sm-8">
-                                <select id="locationFromClient" class="chosen-container-multi form-control" ng-change="onDropdownChange()"
+                                <select id="locationFromClient" class="chosen-container-multi form-control" 
                                     multiple chosen 
                                     data-placeholder="{{'team_locations_search_page.dropdown_locations.placeholder_label' | translate}}"
                                     data-ng-model="clientLocationsSelected"
                                     no-results-text="'Client Locations not found'"
-                                    data-ng-options="c.entity.name for c in clientLocations">
+                                    data-ng-options="c.entity.name for c in clientLocations"
+                                    ng-change="onDropdownChange()" >
                                 </select>
                                 </div>
                             </div>
                             <br />
-                            <div class="form-group" data-ng-hide="clientLocationsSelected">
+                            <div class="form-group" data-ng-show="allLocationsSearch">
                                 <label for="locationQuery" class="col-sm-4 control-label" data-translate="team_locations_search_page.search_dialog.search_label"></label>
                                 <div class="col-sm-7">
                                 <input class="form-control" id="locationQuery" data-ng-model="locationQuery"
@@ -36,7 +36,7 @@
                             </div>
                         </form>
                     </div>
-                    <div class="col-md-3 col-sm-3" data-ng-hide="noSearch">
+                    <div class="col-md-3 col-sm-3" data-ng-show="!(clientLocationsSearch && allLocationsSearch)">
                         <button type="button" class="btn btn-link pull-right" data-ng-click="createNewLocation()">
                             <span data-translate="team_locations_search_page.add_new.label"></span>
                         </button>
@@ -44,13 +44,13 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-body" data-ng-hide="noSearch">
+            <div class="modal-body">
                 <div>
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
                             <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0"
                                    cellspacing="0"
-                                   data-ng-show="locations">
+                                   data-ng-show="locations && allLocationsSearch">
                                 <tr>
                                     <th class="sort col-sm-1">&nbsp;</th>
                                     <th class="sort col-sm-3" data-ng-click="sort('name')">
@@ -84,7 +84,7 @@
                                     <td>{{location.entity.phone}}</td>
                                 </tr>
                             </table>
-                            <div data-ng-hide="locations">
+                            <div data-ng-show="!locations && allLocationsSearch && !clientLocationsSearch">
                                 <span data-translate="global.messages.search.no_results_found"></span>
                             </div>
                             <div class="row" data-ng-show="locations">
