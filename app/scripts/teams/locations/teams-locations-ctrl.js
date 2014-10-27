@@ -2,14 +2,14 @@
 
 angular.module('emmiManager')
 
-    .controller('TeamsLocationsController', function ($scope, $http, Session, UriTemplate, $controller, $modal, $alert, Location, Client, TeamLocation) {
+    .controller('TeamsLocationsController', function ($scope, $http, Session, UriTemplate, $controller, $modal, $alert, Location, TeamLocation) {
 
         $scope.teamLocations = {}; //used to hold the locations and manipulate internally
 
         $scope.showRemovalSuccess = function (locationResource) {
             $alert({
                 title: ' ',
-                content: 'The Team location <b>' + locationResource.entity.location.name + '</b> has been successfully removed.',
+                content: 'The Team location <b>' + locationResource.entity.location.name + '</b> has been successfully removed from ' + locationResource.entity.team.name,
                 container: '#remove-container',
                 type: 'success',
                 show: true,
@@ -17,10 +17,6 @@ angular.module('emmiManager')
                 dismissable: true
             });
         };
-
-        Location.findForClient(Client.getClient()).then(function (allLocations) {
-            $scope.clientLocations = allLocations;
-        });
 
         TeamLocation.loadTeamLocations($scope);
 
