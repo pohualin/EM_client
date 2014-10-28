@@ -36,10 +36,10 @@ angular.module('emmiManager')
                 if (searchResults.entity) {
                     if ($scope.clientToEdit) {
                         angular.forEach(searchResults.entity.account, function(value, key) {
-                            if (value.client) {
+                            if (value.clientName) {
                                 // Remove the client from the Account if it matches the id of the current client (so you can re-select the account when editing)
-                                if ($scope.clientToEdit.id === value.client.id) {
-                                    value.client = null;
+                                if ($scope.clientToEdit.origSalesForceAccount === value.accountNumber) {
+                                    value.clientName = null;
                                 }
                             }
                         });
@@ -54,7 +54,7 @@ angular.module('emmiManager')
         }, 333);
 
         $scope.chooseAccount = function (account) {
-            if (account && !account.client) {
+            if (account && !account.clientName) {
                 $scope.clientToEdit.salesForceAccount = account;
                 return true;
             } else {
