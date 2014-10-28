@@ -41,10 +41,10 @@ angular.module('emmiManager')
 
             if (locationsToAdd.length > 0) {
                 TeamSearchLocation.save($scope.teamClientResource.teamResource.link.teamLocations,locationsToAdd).then(function () {
-                    $scope.save(true);
+                    $scope.save(true, locationsToAdd);
                 });
             } else {
-                $scope.save(false);
+                $scope.save(false, locationsToAdd);
             }
         };
 
