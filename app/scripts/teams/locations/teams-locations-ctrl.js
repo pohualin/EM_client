@@ -18,7 +18,7 @@ angular.module('emmiManager')
             });
         };
 
-        TeamLocation.loadTeamLocations($scope);
+        TeamLocation.loadTeamLocations($scope, []);
 
         $scope.addLocations = function () {
             addNewLocationsModal.$promise.then(addNewLocationsModal.show);
@@ -39,9 +39,9 @@ angular.module('emmiManager')
             return $scope.teamClientResource.teamResource.locations && $scope.teamClientResource.teamResource.locations.length > 0;  
         };
 
-        $scope.save = function (reload) {
+        $scope.save = function (reload, locationsToAdd) {
             if (reload) {
-                TeamLocation.loadTeamLocations($scope);
+                TeamLocation.loadTeamLocations($scope,locationsToAdd);
             }
             
             addNewLocationsModal.$promise.then(addNewLocationsModal.hide);
@@ -49,7 +49,7 @@ angular.module('emmiManager')
 
         $scope.removeExistingLocation = function (locationResource) {
             TeamLocation.removeLocation(locationResource).then(function () {
-                TeamLocation.loadTeamLocations($scope).then(function() {
+                TeamLocation.loadTeamLocations($scope,[]).then(function() {
                     $scope.showRemovalSuccess(locationResource);
                     delete $scope.teamLocations[locationResource.entity.location.id];
                 });
