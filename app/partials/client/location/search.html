@@ -8,7 +8,6 @@
                     <div class="col-md-1"></div>
                 </div>
                 <div class="row">
-
                     <div class="col-md-9 col-sm-9">
                         <form ng-submit="search()">
                             <div class="form-group">
@@ -24,7 +23,7 @@
                             </div>
                         </form>
                     </div>
-                    <div class="col-md-3 col-sm-3" data-ng-hide="noSearch">
+                    <div class="col-md-3 col-sm-3" data-ng-show="searchPerformed">
                         <button type="button" class="btn btn-link pull-right" data-ng-click="createNewLocation()">
                             add new location
                         </button>
@@ -32,7 +31,7 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-body" data-ng-hide="noSearch">
+            <div class="modal-body" data-ng-show="searchPerformed">
                 <div>
                     <div class="row" data-ng-hide="removeStatusFilterAndTotal">
                         <div class="col-md-12 col-sm-12">
@@ -81,17 +80,22 @@
                                     </th>
 
                                 </tr>
-                                <tr data-ng-repeat="location in locations" data-ng-class="location.entity.currentNewLocationState ? 'text-muted' : ''">
-                                    <td><input type="checkbox" data-ng-model="location.entity.newlocation"  data-ng-disabled="location.entity.currentNewLocationState"
-                                               ng-change="onCheckboxChange(location)"></td>
-                                    <td>{{location.entity.name}}</td>
+                                <tr data-ng-repeat="clientLocation in locations| orderBy:sortIdx" data-ng-class="clientLocation.link.length > 0 ? 'text-muted' : ''">
+                                    <td data-ng-hide="clientLocation.link.length > 0">
+                                        <input type="checkbox" data-ng-model="clientLocation.location.entity.newlocation"
+                                               ng-change="onCheckboxChange(clientLocation.location)">
+                                    </td>
+                                    <td data-ng-show="clientLocation.link.length > 0">
+                                        <input type="checkbox" disabled="disabled" checked>
+                                    </td>
+                                    <td>{{clientLocation.location.entity.name}}</td>
                                     <td>
-                                        {{location.entity.belongsTo.name}}
+                                        {{clientLocation.location.entity.belongsTo.name}}
                                     </td>
-                                    <td> {{location.entity.city}}<span
-                                            data-ng-show="location.entity.city && location.entity.state">,&nbsp;</span>{{location.entity.state}}
+                                    <td> {{clientLocation.location.entity.city}}<span
+                                            data-ng-show="clientLocation.location.entity.city && clientLocation.location.entity.state">,&nbsp;</span>{{clientLocation.location.entity.state}}
                                     </td>
-                                    <td>{{location.entity.phone}}</td>
+                                    <td>{{clientLocation.location.entity.phone}}</td>
                                 </tr>
                             </table>
                             <div data-ng-hide="locations">
