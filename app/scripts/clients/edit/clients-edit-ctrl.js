@@ -45,9 +45,7 @@ angular.module('emmiManager')
         $scope.saveTagsAndLocations = function (isValid) {
             $scope.formSubmitted = true;
             if (isValid) {
-                var insertGroups = Tag.insertGroups(Client.getClient()),
-                    updateLocation = Location.updateForClient(Client.getClient());
-                $q.all([insertGroups, updateLocation]);
+                Tag.insertGroups(Client.getClient());
             } else {
                 $scope.showError();
             }
