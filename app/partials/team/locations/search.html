@@ -8,7 +8,7 @@
                     <div class="col-md-1"></div>
                 </div>
                 <div class="row">
-                    <div class="col-md-9 col-sm-9">
+                    <div class="col-md-10 col-sm-10">
                         <form ng-submit="search()" class="form-horizontal">
                             <div class="form-group" data-ng-show="clientHasLocations() && clientLocationsSearch" >
                                 <label for="locationFromClient" class="col-sm-4 control-label" data-translate="team_locations_search_page.dropdown_locations.search_label"></label>
@@ -26,20 +26,20 @@
                             <br />
                             <div class="form-group" data-ng-show="allLocationsSearch">
                                 <label for="locationQuery" class="col-sm-4 control-label" data-translate="team_locations_search_page.search_dialog.search_label"></label>
-                                <div class="col-sm-7">
+                                <div class="col-sm-6">
                                 <input class="form-control" id="locationQuery" data-ng-model="locationQuery"
                                        type="text" placeholder="{{'team_locations_search_page.search_dialog.placeholder_label' | translate}}"  data-auto-focus >
                                 </div>
-                                <div class="input-group-addon btn col-md-offset-" data-ng-click="search()">
+                                <div class="input-group-addon btn col-md-1" data-ng-click="search()">
                                     <span data-translate="team_locations_search_page.search_dialog.go_label" ></span>
                                 </div>
-                                <div class="btn btn-link col-md-offset-" data-ng-click="cleanSearch()">
+                                <div class="btn btn-link" data-ng-click="cleanSearch()">
                                     <span data-translate="team_locations_search_page.search_dialog.clear_search" ></span>
                                 </div>                            
                             </div>
                         </form>
                     </div>
-                    <div class="col-md-3 col-sm-3" data-ng-show="!(clientLocationsSearch && allLocationsSearch)">
+                    <div class="col-md-2 col-sm-2" data-ng-show="!(clientLocationsSearch && allLocationsSearch)">
                         <button type="button" class="btn btn-link pull-right" data-ng-click="createNewLocation()">
                             <span data-translate="team_locations_search_page.add_new.label"></span>
                         </button>
