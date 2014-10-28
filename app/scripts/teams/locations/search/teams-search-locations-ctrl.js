@@ -22,7 +22,7 @@ angular.module('emmiManager')
         });
 
         $scope.clientHasLocations = function () {
-            return $scope.clientLocations.length > 0;
+            return $scope.clientLocations && $scope.clientLocations.length > 0;
         };
 
         $scope.savePopupLocations = function() {
@@ -92,7 +92,16 @@ angular.module('emmiManager')
         $scope.onDropdownChange = function () {          
             $scope.locations = null;
             $scope.clientLocationsSearch = true;
-            $scope.allLocationsSearch = false;            
+            $scope.allLocationsSearch = false;    
+
+            //remove all the new added then add the selected
+            angular.forEach( $scope.clientLocations , function (location) {
+
+                if ($scope.teamLocations[location.location.entity.id] && $scope.teamLocations[location.location.entity.id].isNewAdd) {
+                    delete $scope.teamLocations[location.location.entity.id];
+                }
+            });
+
             angular.forEach( $scope.clientLocationsSelected , function (location) {
                 if (!$scope.teamLocations[location.location.entity.id]) {
                     location.location.entity.isNewAdd = true;
