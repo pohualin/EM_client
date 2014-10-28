@@ -18,7 +18,7 @@
                                     data-placeholder="{{'team_locations_search_page.dropdown_locations.placeholder_label' | translate}}"
                                     data-ng-model="clientLocationsSelected"
                                     no-results-text="'Client Locations not found'"
-                                    data-ng-options="c.entity.name for c in clientLocations"
+                                    data-ng-options="c.location.entity.name for c in clientLocations"
                                     ng-change="onDropdownChange()" >
                                 </select>
                                 </div>
@@ -71,17 +71,17 @@
                                     </th>
 
                                 </tr>
-                                <tr data-ng-repeat="location in locations" data-ng-class="location.entity.disabled ? 'text-muted' : ''">
-                                    <td><input type="checkbox" data-ng-model="location.entity.checked"  data-ng-disabled="location.entity.disabled"
+                                <tr data-ng-repeat="location in locations" data-ng-class="location.location.entity.disabled ? 'text-muted' : ''">
+                                    <td><input type="checkbox" data-ng-model="location.location.entity.checked"  data-ng-disabled="location.location.entity.disabled"
                                                ng-change="onCheckboxChange(location)"></td>
-                                    <td>{{location.entity.name}}</td>
+                                    <td>{{location.location.entity.name}}</td>
                                     <td>
-                                        {{location.entity.belongsTo.name}}
+                                        {{location.location.entity.belongsTo.name}}
                                     </td>
-                                    <td> {{location.entity.city}}<span
-                                            data-ng-show="location.entity.city && location.entity.state">,&nbsp;</span>{{location.entity.state}}
+                                    <td> {{location.location.entity.city}}<span
+                                            data-ng-show="location.location.entity.city && location.location.entity.state">,&nbsp;</span>{{location.location.entity.state}}
                                     </td>
-                                    <td>{{location.entity.phone}}</td>
+                                    <td>{{location.location.entity.phone}}</td>
                                 </tr>
                             </table>
                             <div data-ng-show="!locations && allLocationsSearch && !clientLocationsSearch">
