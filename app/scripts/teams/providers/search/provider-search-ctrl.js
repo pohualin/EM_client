@@ -131,11 +131,11 @@ angular.module('emmiManager')
             $scope.noSearch = false;
             $scope.loading = false;
         };
-        
+
         $scope.updateAlreadyAssociatedProviders = function (providerPage, currentTeam) {
             angular.forEach(providerPage.content, function (provider) {
-                angular.forEach(provider.entity.teams, function (team) {
-                	if(currentTeam.entity.id === team.id) {
+                angular.forEach($scope.teamResource.teamProviders, function (teamProvider) {
+                	if(provider.entity.id === teamProvider.entity.provider.id) {
                 		provider.entity.belongsToCurrentTeam = true;
                 	}
                 });
