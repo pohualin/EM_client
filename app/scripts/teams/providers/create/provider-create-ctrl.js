@@ -28,7 +28,7 @@ angular.module('emmiManager')
 	        	ProviderCreate.create($scope.provider, $scope.teamResource).then(function(response){
 	                $scope.hideNewProviderModal();
 	                ProviderView.allProvidersForTeam($scope.teamResource).then(function(response){
-	    	        	$scope.teamResource.providers = response;
+	    	        	$scope.teamResource.teamProviders = response;
 	                });
 	        	});
 	        }

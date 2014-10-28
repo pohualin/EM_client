@@ -13,6 +13,62 @@ angular.module('emmiManager')
 
     })
 
+    .controller('CommonPagination', ['$scope', function($scope){
+
+        $scope.handleResponse = function (responsePage, contentProperty) {
+            if (responsePage) {
+                // sort the rows the way they exist on the response page
+                for (var sort = 0, size = responsePage.content.length; sort < size; sort++ ){
+                    var content = responsePage.content[sort];
+                    content.sortIdx = sort;
+                }
+                // put the content in scope
+                $scope[contentProperty] = responsePage.content;
+
+                // set the total
+                $scope.total = responsePage.page.totalElements;
+
+                // create links in scope
+                $scope.links = [];
+                for (var i = 0, l = responsePage.linkList.length; i < l; i++) {
+                    var aLink = responsePage.linkList[i];
+                    if (aLink.rel.indexOf('self') === -1) {
+                        $scope.links.push({
+                            order: i,
+                            name: aLink.rel.substring(5),
+                            href: aLink.href
+                        });
+                    }
+                }
+
+                // create current loading plus page
+                $scope.load = responsePage.link.self;
+
+                // page numbers
+                $scope.currentPage = responsePage.page.number;
+                $scope.currentPageSize = responsePage.page.size;
+
+                // status filter on response
+                if (responsePage.filter) {
+                    $scope.status = responsePage.filter.status;
+                }
+
+                // handle sort response object
+                if (responsePage.sort) {
+                    $scope.sortProperty = {
+                        property: responsePage.sort[0].property,
+                        ascending: responsePage.sort[0].direction === 'ASC'
+                    };
+                }
+            } else {
+                $scope.total = 0;
+                $scope[contentProperty] = null;
+            }
+            $scope.searchPerformed = true;
+            $scope.loading = false;
+        };
+    }])
+
 /**
  * Features of the common search controller are:
  *
@@ -21,7 +77,10 @@ angular.module('emmiManager')
  * 3. Handles tri-click sorting properties
  * 4. Handles response page pagination and sorting
  */
-    .controller('CommonSearch', ['$scope', '$location', '$rootScope', 'arrays', function ($scope, $location, $rootScope, arrays) {
+    .controller('CommonSearch', ['$scope', '$location', '$rootScope', 'arrays', '$controller',
+            function ($scope, $location, $rootScope, arrays, $controller) {
+
+        $controller('CommonPagination', {$scope: $scope});
 
         // set the proper value in the search chooser based upon the path
         if ($location.path() === '/clients'){
@@ -93,43 +152,5 @@ angular.module('emmiManager')
             return sort;
         };
 
-        $scope.handleResponse = function (responsePage, contentProperty) {
-            if (responsePage) {
-                for (var sort = 0, size = responsePage.content.length; sort < size; sort++ ){
-                    var content = responsePage.content[sort];
-                    content.sortIdx = sort;
-                }
-
-                $scope[contentProperty] = responsePage.content;
-
-                $scope.total = responsePage.page.totalElements;
-                $scope.links = [];
-                for (var i = 0, l = responsePage.linkList.length; i < l; i++) {
-                    var aLink = responsePage.linkList[i];
-                    if (aLink.rel.indexOf('self') === -1) {
-                        $scope.links.push({
-                            order: i,
-                            name: aLink.rel.substring(5),
-                            href: aLink.href
-                        });
-                    }
-                }
-                $scope.load = responsePage.link.self;
-                $scope.currentPage = responsePage.page.number;
-                $scope.currentPageSize = responsePage.page.size;
-                $scope.status = responsePage.filter.status;
-                if (responsePage.sort) {
-                    $scope.sortProperty = {
-                        property: responsePage.sort[0].property,
-                        ascending: responsePage.sort[0].direction === 'ASC'
-                    };
-                }
-            } else {
-                $scope.total = 0;
-                $scope[contentProperty] = null;
-            }
-            $scope.searchPerformed = true;
-            $scope.loading = false;
-        };
     }])
 ;
