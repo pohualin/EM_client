@@ -4,22 +4,26 @@ angular.module('emmiManager')
 
     .controller('SearchTeamsLocationsController', function ($scope, $translate,TeamSearchLocation, Location, Client) {
 
-        $scope.clientLocationsSearch = true;
-        $scope.allLocationsSearch = true;
-        $scope.clientLocationsSelected = [];
+        $scope.cleanSearch = function() {
+            $scope.clientLocationsSearch = true;
+            $scope.allLocationsSearch = true;
+            $scope.clientLocationsSelected = [];
+            $scope.locations = null;
+            $scope.cancelPopup(); //clean the locations checked in other search
 
-        Location.findForClient(Client.getClient()).then(function (allLocations) {
-            $scope.clientLocations = allLocations;
+            Location.findForClient(Client.getClient()).then(function (allLocations) {
+                $scope.clientLocations = allLocations;
 
-            angular.forEach( $scope.clientLocations , function (location) {
-                if ($scope.teamLocations[location.entity.id]) {
-                    location.entity.isNewAdd = false;
-                    location.entity.disabled = true;
-                    location.entity.checked = true;                
-                    $scope.clientLocationsSelected.push(location);
-                }
-            }); 
-        });
+                angular.forEach( $scope.clientLocations , function (location) {
+                    if ($scope.teamLocations[location.entity.id]) {
+                        location.entity.isNewAdd = false;
+                        location.entity.disabled = true;
+                        location.entity.checked = true;                
+                        $scope.clientLocationsSelected.push(location);
+                    }
+                }); 
+            });
+        }
 
         $scope.clientHasLocations = function () {
             return $scope.clientLocations.length > 0;
@@ -55,7 +59,6 @@ angular.module('emmiManager')
 
         $scope.search = function () {
             $scope.clientLocationsSelected = null;
-
             $scope.loading = true;
             $scope.locations = null;
             $scope.cancelPopup(); //clean the locations checked in other search
@@ -92,7 +95,7 @@ angular.module('emmiManager')
         $scope.onDropdownChange = function () {          
             $scope.locations = null;
             $scope.clientLocationsSearch = true;
-            $scope.allLocationsSearch = false;            
+            //$scope.allLocationsSearch = false;  need to clarify what happend when the search is made by dropdown          
             angular.forEach( $scope.clientLocationsSelected , function (location) {
                 if (!$scope.teamLocations[location.entity.id]) {
                     location.entity.isNewAdd = true;
@@ -101,6 +104,8 @@ angular.module('emmiManager')
             });
 
         };
+
+        $scope.cleanSearch();
 
     })
 
