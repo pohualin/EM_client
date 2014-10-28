@@ -1,8 +1,9 @@
 'use strict';
 angular.module('emmiManager')
-    .service('Location', function ($http, $q, Session, UriTemplate, arrays) {
+    .service('Location', function ($http, $q, Session, UriTemplate, arrays, Client) {
         var referenceData, query;
-        function addSortIndex(entityPage, sort){
+
+        function addSortIndex(entityPage, sort) {
             sort = sort || 0;
             if (entityPage && entityPage.content) {
                 for (var size = entityPage.content.length; sort < size; sort++) {
@@ -12,9 +13,10 @@ angular.module('emmiManager')
             }
             return sort;
         }
+
         return {
-            find: function (query, status, sort, pageSize) {
-                return $http.get(UriTemplate.create(Session.link.locations).stringify({
+            find: function (clientResource, query, status, sort, pageSize) {
+                return $http.get(UriTemplate.create(clientResource.link.possibleLocations).stringify({
                         name: query,
                         status: status,
                         sort: sort && sort.property ? sort.property + ',' + (sort.ascending ? 'asc' : 'desc') : '',
@@ -28,7 +30,6 @@ angular.module('emmiManager')
             fetchPageLink: function (href) {
                 return $http.get(href)
                     .then(function (response) {
-                        addSortIndex(response.data);
                         return response.data;
                     });
 
@@ -45,14 +46,29 @@ angular.module('emmiManager')
                     usingThisLocation: []
                 };
             },
-            create: function (location) {
-                return $http.post(UriTemplate.create(Session.link.locations).stringify(), location)
+            create: function (clientResource, location) {
+                if (location.belongsToCheckbox){
+                    location.belongsTo = {
+                        id: clientResource.entity.id,
+                        version: clientResource.entity.version
+                    };
+                }
+                return $http.post(UriTemplate.create(clientResource.link.locations).stringify(), location)
                     .success(function (response) {
                         return response;
                     });
             },
-            update: function (location) {
-                return $http.put(UriTemplate.create(Session.link.locations).stringify(), location)
+            update: function (clientResource, location) {
+                if (location.belongsToCheckbox){
+                    location.belongsTo = {
+                        id: clientResource.entity.id,
+                        version: clientResource.entity.version
+                    };
+                } else {
+                    // make sure un-checking works as well
+                    delete location.belongsTo;
+                }
+                return $http.put(UriTemplate.create(clientResource.link.locations).stringify(), location)
                     .success(function (response) {
                         location.version = response.entity.version;
                         return response;
@@ -70,43 +86,11 @@ angular.module('emmiManager')
                 }
                 return deferred.promise;
             },
-            findForClient: function (client) {
-                var sortIdx = 0;
-                var allLocations = [];
-                var deferred = $q.defer();
-                if (client && client.entity && client.entity.id) {
-                    $http.get(UriTemplate.create(client.link.locations).stringify())
-                        .then(function pageResponse(response) {
-                            sortIdx = addSortIndex(response.data);
-                            allLocations.push.apply(allLocations, response.data.content);
-                            if (response.data.link && response.data.link['page-next']) {
-                                $http.get(response.data.link['page-next']).then(function(response){
-                                    pageResponse(response);
-                                });
-                            } else {
-                                deferred.resolve(allLocations);
-                            }
-                        });
-                } else {
-                    deferred.resolve(null);
-                }
-                return deferred.promise;
-            },
-            findAllIdsForClient: function (client) {
-                var deferred = $q.defer();
-                if (client && client.entity && client.entity.id) {
-                    $http.get(UriTemplate.create(client.link.allLocationIds).stringify())
-                        .then(function (response) {
-                            deferred.resolve(response.data);
-                        });
-                } else {
-                    deferred.resolve([]);
-                }
-                return deferred.promise;
-            },
-            hasLocationModifications: function (clientResource) {
-                return  !(angular.equals({}, clientResource.addedLocations) &&
-                    angular.equals({}, clientResource.belongsToChanged));
+            findForClient: function (clientResource, pageSize) {
+                return $http.get(UriTemplate.create(clientResource.link.locations).stringify({size: pageSize}))
+                    .then(function pageResponse(response) {
+                        return response.data;
+                    });
             },
             removeLocation: function (locationResource) {
                 locationResource.links = arrays.convertToObject('rel', 'href', locationResource.link);
@@ -115,21 +99,11 @@ angular.module('emmiManager')
                         return response.data;
                     });
             },
-            updateForClient: function (clientResource) {
-                var added = [],
-                    belongsTo = [];
-                angular.forEach(clientResource.addedLocations, function (location) {
-                    added.push(location);
-                });
-                angular.forEach(clientResource.belongsToChanged, function (location) {
-                    belongsTo.push(location);
-                });
-                return $http.put(UriTemplate.create(clientResource.link.locations).stringify(), {
-                    added: added,
-                    belongsToUpdated: belongsTo
-                }).then(function (response) {
-                    return response.data;
-                });
+            addLocationsToClient: function(clientResource, locations){
+                return $http.post(UriTemplate.create(clientResource.link.possibleLocations).stringify(), locations)
+                    .then(function (response) {
+                        return response.data;
+                    });
             }
         };
     })
