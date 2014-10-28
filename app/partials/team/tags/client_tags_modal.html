@@ -12,15 +12,16 @@
                   data-name="clientTagGroups" data-form-field="clientForm.clientTagGroups"
                   data-tagging-mode="tagInputMode"></span>
             <span data-ng-hide="tagInputMode || clientForm.clientTagGroups.$error.unique">
-                <small>&nbsp;&nbsp;&nbsp;or</small>
+                <small data-translate="team_edit.client_tags.modal_or">&nbsp;&nbsp;&nbsp;</small>
                 <button class="btn btn-link btn-tag-library" type="button" title="Select groups to add:"
                         data-placement="bottom" data-content-template="partials/client/tags/tag_library.html"
-                        data-trigger="click" data-bs-popover data-popover-dismiss>Add from Library
+                        data-trigger="click" data-bs-popover data-popover-dismiss
+                        data-translate="team_edit.client_tags.modal_add_from_library">
                 </button>
             </span>
 
             <div class="modal-footer">
-                <button class="btn btn-link" ng-click="hideClientTags()">Close</button>
+                <button class="btn btn-link" ng-click="hideClientTags()" data-translate="team_edit.client_tags.modal_close"></button>
             </div>
         </div>
 
