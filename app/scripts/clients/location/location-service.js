@@ -48,7 +48,7 @@ angular.module('emmiManager')
             },
             create: function (clientResource, location) {
                 if (location.belongsToCheckbox){
-                    location['belongsTo'] = {
+                    location.belongsTo = {
                         id: clientResource.entity.id,
                         version: clientResource.entity.version
                     };
@@ -60,13 +60,13 @@ angular.module('emmiManager')
             },
             update: function (clientResource, location) {
                 if (location.belongsToCheckbox){
-                    location['belongsTo'] = {
+                    location.belongsTo = {
                         id: clientResource.entity.id,
                         version: clientResource.entity.version
                     };
                 } else {
                     // make sure un-checking works as well
-                    delete location['belongsTo'];
+                    delete location.belongsTo;
                 }
                 return $http.put(UriTemplate.create(clientResource.link.locations).stringify(), location)
                     .success(function (response) {
