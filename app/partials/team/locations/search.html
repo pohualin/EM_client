@@ -13,28 +13,29 @@
                             <div class="form-group" data-ng-show="clientHasLocations() && clientLocationsSearch" >
                                 <label for="locationFromClient" class="col-sm-4 control-label" data-translate="team_locations_search_page.dropdown_locations.search_label"></label>
                                 <div class="col-sm-8">
-                                <select id="locationFromClient" class="chosen-container-multi form-control" 
-                                    multiple chosen 
-                                    data-placeholder="{{'team_locations_search_page.dropdown_locations.placeholder_label' | translate}}"
-                                    data-ng-model="clientLocationsSelected"
-                                    no-results-text="'Client Locations not found'"
-                                    data-ng-options="c.location.entity.name for c in clientLocations"
-                                    ng-change="onDropdownChange()" >
-                                </select>
+                                    <select id="locationFromClient" class="chosen-container-multi form-control" 
+                                        multiple chosen 
+                                        data-placeholder="{{'team_locations_search_page.dropdown_locations.placeholder_label' | translate}}"
+                                        data-ng-model="clientLocationsSelected"
+                                        no-results-text="'Client Locations not found'"
+                                        data-ng-options="c.location.entity.name for c in clientLocations"
+                                        ng-change="onDropdownChange()" >
+                                    </select>
                                 </div>
                             </div>
                             <br />
                             <div class="form-group" data-ng-show="allLocationsSearch">
                                 <label for="locationQuery" class="col-sm-4 control-label" data-translate="team_locations_search_page.search_dialog.search_label"></label>
-                                <div class="col-sm-6">
-                                <input class="form-control" id="locationQuery" data-ng-model="locationQuery"
+                                <div class="input-group">
+                                    <input class="form-control" id="locationQuery" data-ng-model="locationQuery"
                                        type="text" placeholder="{{'team_locations_search_page.search_dialog.placeholder_label' | translate}}"  data-auto-focus >
-                                </div>
-                                <div class="input-group-addon btn col-md-1" data-ng-click="search()">
-                                    <span data-translate="team_locations_search_page.search_dialog.go_label" ></span>
-                                </div>
-                                <div class="btn btn-link" data-ng-click="cleanSearch()">
-                                    <span data-translate="team_locations_search_page.search_dialog.clear_search" ></span>
+                                
+                                    <div class="input-group-addon btn" data-ng-click="search()">
+                                        <span data-translate="team_locations_search_page.search_dialog.go_label" ></span>
+                                    </div>
+                                    <div class="btn btn-link" data-ng-click="cleanSearch()">
+                                        <span data-translate="team_locations_search_page.search_dialog.clear_search" ></span>
+                                    </div>
                                 </div>                            
                             </div>
                         </form>
