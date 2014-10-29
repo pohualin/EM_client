@@ -1,14 +1,11 @@
 <div class="container">
-
     <div class="row" data-ng-include="'partials/client/edit/metadata.html'"></div>
     <hr>
-    <form name="clientForm" class="form" novalidate>
-        <div class="row" data-ng-include="'partials/client/tags/client_tags.html'"
-             data-ng-class="{'masked': metadataForm.clientName.$error.unique || editMode}">
-        </div>
-        <hr>
-        <div class="row" data-ng-include="'partials/client/location/client_current.html'"
-             data-ng-class="{'masked': metadataForm.clientName.$error.unique || editMode}"></div>
-        <hr>
-    </form>
+    <div class="row" data-ng-include="'partials/client/tags/client_tags.html'"
+         data-ng-class="{'masked': metadataForm.clientName.$error.unique || editMode}">
+    </div>
+    <hr>
+    <div class="row" data-ng-include="'partials/client/location/client_current.html'"
+         data-ng-class="{'masked': metadataForm.clientName.$error.unique || editMode}"></div>
+    <hr>
 </div>
