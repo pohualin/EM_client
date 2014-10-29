@@ -28,6 +28,7 @@ angular.module('emmiManager')
         $scope.edit = function () {
             $scope.editMode = true;
             $scope.clientToEdit = angular.copy($scope.client);
+            $scope.clientToEdit.origSalesForceAccount = $scope.clientToEdit.salesForceAccount.accountNumber;
             focus('clientName');
         };
 

@@ -34,6 +34,16 @@ angular.module('emmiManager')
         $scope.findAccount = debounce(function (term) {
             Client.findSalesForceAccount($scope.findSalesForceAccountLink, term).then(function (searchResults) {
                 if (searchResults.entity) {
+                    if ($scope.clientToEdit) {
+                        angular.forEach(searchResults.entity.account, function(value, key) {
+                            if (value.clientName) {
+                                // Remove the client from the Account if it matches the id of the current client (so you can re-select the account when editing)
+                                if ($scope.clientToEdit.origSalesForceAccount === value.accountNumber) {
+                                    value.clientName = null;
+                                }
+                            }
+                        });
+                    }
                     $scope.sfResult = searchResults.entity;
                 } else {
                     // No results returned
@@ -67,7 +77,10 @@ angular.module('emmiManager')
 
         $scope.revertSfAccount = function () {
             if (!$scope.clientToEdit.salesForceAccount && $scope.clientToEdit.prevSalesForceAccount) {
-                $scope.clientToEdit.salesForceAccount = $scope.clientToEdit.prevSalesForceAccount;
+                // make sure the search term hasn't been changes
+                if ($scope.sfSearch.searchQuery === $scope.clientToEdit.prevSalesForceAccount.name) {
+                    $scope.clientToEdit.salesForceAccount = $scope.clientToEdit.prevSalesForceAccount;
+                }
             }
         };
 
