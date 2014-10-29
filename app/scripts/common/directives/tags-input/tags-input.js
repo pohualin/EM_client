@@ -260,7 +260,8 @@ tagsInput.directive('tagsInput', ['$timeout','$document','tagsInputConfig','focu
             tags: '=ngModel',
             onTagAdded: '&',
             onTagRemoved: '&',
-            onTagSelected: '&'
+            onTagSelected: '&',
+            onTagEdited: '&'
         },
         replace: false,
         transclude: true,
@@ -307,6 +308,7 @@ tagsInput.directive('tagsInput', ['$timeout','$document','tagsInputConfig','focu
 
             events
                 .on('tag-added', scope.onTagAdded)
+                .on('tag-edited', scope.onTagEdited)
                 .on('tag-removed', scope.onTagRemoved)
                 .on('tag-selected', scope.onTagSelected)
                 .on('tag-added', function() {
