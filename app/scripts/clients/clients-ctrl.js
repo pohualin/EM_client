@@ -36,9 +36,9 @@ angular.module('emmiManager')
                 if (searchResults.entity) {
                     if ($scope.clientToEdit) {
                         angular.forEach(searchResults.entity.account, function(value, key) {
-                            if (value.id) {
-                                // Remove the clientName from the Account if it matches the id of the current client (so you can re-select the account when editing)
-                                if ($scope.clientToEdit.id === value.id) {
+                            if (value.clientName) {
+                                // Remove the client from the Account if it matches the id of the current client (so you can re-select the account when editing)
+                                if ($scope.clientToEdit.origSalesForceAccount === value.accountNumber) {
                                     value.clientName = null;
                                 }
                             }
