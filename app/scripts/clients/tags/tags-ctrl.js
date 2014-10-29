@@ -5,7 +5,7 @@ angular.module('emmiManager')
 /**
  *   Controls the tag group section
  */
-    .controller('ClientTagsController', function ($scope, focus, $filter, Tag, Client, $q) {
+    .controller('ClientTagsController', function ($scope, focus, $filter, Tag, Client, $q, $timeout) {
 
         $scope.tagInputMode = false;
 
@@ -16,40 +16,76 @@ angular.module('emmiManager')
                 libraryMap = {};
 
             // make a map object library tags keyed by title and put it in scope
-            angular.forEach(tagLibraries, function(tagLibrary){
+            angular.forEach(tagLibraries, function (tagLibrary) {
                 libraryMap[tagLibrary.title] = tagLibrary;
             });
             $scope.tagLibraries = tagLibraries;
-
-            // set the selected groups and reference library into scope
-            $scope.client.tagGroups = clientGroups || [];
             $scope.tagLibraryMap = libraryMap;
+
+            // set the selected groups
+            $scope.client.savedGroups = clientGroups || [];
+            $scope.client.tagGroups = angular.copy($scope.client.savedGroups);
+
         });
+
+        $scope.saveTags = function (isValid) {
+            $scope.formSubmitted = true;
+            if (isValid) {
+                $scope.saving = true;
+                Tag.insertGroups(Client.getClient()).then(function () {
+                    // eventually we'll have a save response that we need to deal with here
+                    Tag.loadGroups(Client.getClient()).then(function (clientGroups) {
+                        $scope.client.savedGroups = clientGroups || [];
+                        $scope.client.tagGroups = angular.copy($scope.client.savedGroups);
+                        $scope.clientTagsHaveChanges = false;
+                        $scope.saving = false;
+                    }, function () {
+                        // error happened
+                        $scope.saving = false;
+                    });
+                }, function () {
+                    // error happened
+                    $scope.saving = false;
+                });
+            }
+        };
+
+        $scope.tagsChanged = function () {
+            $scope.clientTagsHaveChanges = true;
+        };
+
+        $scope.cancelTagChanges = function () {
+            $scope.client.tagGroups = angular.copy($scope.client.savedGroups);
+            $scope.clientTagsHaveChanges = false;
+        };
 
         // called on click of the 'Add' button on the group library popup
         $scope.addLibraries = function () {
             // only add non-disabled but selected library groups
-            var selected = $filter('filter')( this.tagLibraries , { checked : true, disabled: false } );
-            $scope.client.tagGroups = $scope.client.tagGroups.concat(angular.copy(selected));
-            angular.forEach(this.tagLibraries, function(value) {
+            var selected = $filter('filter')(this.tagLibraries, { checked: true, disabled: false });
+            if (selected.length > 0) {
+                $scope.client.tagGroups = $scope.client.tagGroups.concat(angular.copy(selected));
+                $scope.clientTagsHaveChanges = true;
+            }
+            angular.forEach(this.tagLibraries, function (value) {
                 value.checked = false;
             });
         };
 
         // a filter to set the checked and disabled properties of a library group
-        $scope.disableLibrary = function(){
-            return function(libraryGroup){
+        $scope.disableLibrary = function () {
+            return function (libraryGroup) {
                 var match = false;
-                angular.forEach($scope.client.tagGroups, function(tagGroup){
+                angular.forEach($scope.client.tagGroups, function (tagGroup) {
                     // exact match between tag group and library group titles
                     var type = tagGroup.entity ? tagGroup.entity.type : tagGroup.type;
-                    if (type && libraryGroup.entity.type.id === type.id){
+                    if (type && libraryGroup.entity.type.id === type.id) {
                         match = true;
                     }
                 });
                 // if there were a match disable and select the library group
                 libraryGroup.disabled = match;
-                if (libraryGroup.disabled ) {
+                if (libraryGroup.disabled) {
                     libraryGroup.checked = true;
                 }
                 return libraryGroup;
@@ -57,8 +93,8 @@ angular.module('emmiManager')
         };
 
         // currently have to hook these events into the tooltip for the popover, since AngularStrap popovers do not provide a correct prefixEvent hook to configure popovers
-        $scope.$on('tooltip.hide', function(){
-            angular.forEach($scope.tagLibraries, function(value) {
+        $scope.$on('tooltip.hide', function () {
+            angular.forEach($scope.tagLibraries, function (value) {
                 value.checked = false;
             });
         });
@@ -72,7 +108,7 @@ angular.module('emmiManager')
                 $timeout(function () {
                     var popover = element.closest('.popover');
                     var triggers = element.find('.toggle-trigger');
-                    triggers.on('click', function(){
+                    triggers.on('click', function () {
                         var origHeight = popover.outerHeight();
                         var origTop = popover.position().top;
                         var trigger = angular.element(this);
@@ -80,7 +116,7 @@ angular.module('emmiManager')
                         trigger.next('.toggle-content').toggleClass('open');
                         var growth = popover.outerHeight() - origHeight;
                         popover.css({
-                            top: (origTop - growth)+'px'
+                            top: (origTop - growth) + 'px'
                         });
                     });
                 });
@@ -92,7 +128,7 @@ angular.module('emmiManager')
         return {
             restrict: 'EA',
             link: function (scope, element) {
-                angular.element('body').on('click', function(e){
+                angular.element('body').on('click', function (e) {
                     //the 'is' for buttons that trigger popups
                     //the 'has' for icons within a button that triggers a popup
                     if (!element.is(e.target) && element.has(e.target).length === 0 && angular.element('.popover').has(e.target).length === 0) {
@@ -108,9 +144,11 @@ angular.module('emmiManager')
         };
     }])
 
-    .filter('taglist', function() {
-        return function(input) {
-            return input.map(function(tag){ return tag.text; }).join(', ');
+    .filter('taglist', function () {
+        return function (input) {
+            return input.map(function (tag) {
+                return tag.text;
+            }).join(', ');
         };
     })
 ;

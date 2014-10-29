@@ -42,14 +42,5 @@ angular.module('emmiManager')
                 $scope.showError();
             }
         };
-
-        $scope.saveTagsAndLocations = function (isValid) {
-            $scope.formSubmitted = true;
-            if (isValid) {
-                Tag.insertGroups(Client.getClient());
-            } else {
-                $scope.showError();
-            }
-        };
     })
 ;
