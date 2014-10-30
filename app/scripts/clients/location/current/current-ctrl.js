@@ -13,7 +13,7 @@ angular.module('emmiManager')
 
         $scope.pageSizes = [5, 10, 15, 25];
 
-        var editLocationModal = $modal({scope: $scope, template: 'partials/client/location/edit.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false});
+        var editLocationModal = $modal({scope: $scope, template: 'partials/client/location/edit.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
 
         $scope.editLocation = function (location) {
             // create a copy for editing

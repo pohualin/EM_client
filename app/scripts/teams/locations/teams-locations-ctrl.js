@@ -9,7 +9,7 @@ angular.module('emmiManager')
         $scope.showRemovalSuccess = function (locationResource) {
             $alert({
                 title: ' ',
-                content: 'The Team location <b>' + locationResource.entity.location.name + '</b> has been successfully removed from ' + locationResource.entity.team.name,
+                content: 'The location <b>' + locationResource.entity.location.name + '</b> has been successfully removed from ' + locationResource.entity.team.name,
                 container: '#remove-container',
                 type: 'success',
                 show: true,
@@ -56,7 +56,7 @@ angular.module('emmiManager')
             });
         };
 
-        var addNewLocationsModal = $modal({scope: $scope, template: 'partials/team/locations/search.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false});
+        var addNewLocationsModal = $modal({scope: $scope, template: 'partials/team/locations/search.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
 
     })
 

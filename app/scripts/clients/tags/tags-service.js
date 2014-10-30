@@ -4,18 +4,22 @@ angular.module('emmiManager')
         return {
             insertGroups: function (clientResource) {
                 if (clientResource) {
-                    var translatedGroups = [];
-                    angular.forEach(clientResource.entity.tagGroups, function (group) {
-                        var groupToInsert = {};
-                        groupToInsert.name = group.title;
-                        groupToInsert.type = group.entity ? group.entity.type : group.type;
-                        group.group = groupToInsert;
-                        angular.forEach(group.tags, function (t) {
+                    var groupSaveRequests = [];
+                    angular.forEach(clientResource.entity.tagGroups, function (groupToSave) {
+                        angular.forEach(groupToSave.tags, function (t) {
                             t.name = t.text;
                         });
-                        translatedGroups.push(group);
+                        groupSaveRequests.push({
+                            group: {
+                                id: groupToSave.id,
+                                version: groupToSave.version,
+                                name: groupToSave.title,
+                                type: groupToSave.entity ? groupToSave.entity.type : groupToSave.type
+                            },
+                            tags: groupToSave.tags
+                        });
                     });
-                    return $http.post(UriTemplate.create(clientResource.link.groups).stringify(), translatedGroups).then(function (response) {
+                    return $http.post(UriTemplate.create(clientResource.link.groups).stringify(), groupSaveRequests).then(function (response) {
                         return response.data;
                     });
                 }
@@ -24,7 +28,6 @@ angular.module('emmiManager')
                 if (clientResource.entity.id) {
                     clientResource.tagGroups = [];
                     return $http.get(UriTemplate.create(clientResource.link.groups).stringify()).then(function load(response) {
-
                         var page = response.data;
                         angular.forEach(page.content, function (group) {
                             group.entity.title = group.entity.name;
