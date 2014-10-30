@@ -9,7 +9,7 @@ angular.module('emmiManager')
 
         $controller('LocationCommon', {$scope: $scope});
 
-        var addNewLocationsModal = $modal({scope: $scope, template: 'partials/client/location/search.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false});
+        var addNewLocationsModal = $modal({scope: $scope, template: 'partials/client/location/search.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
 
         $scope.addLocations = function () {
             $scope.searchPerformed = false;
@@ -184,7 +184,7 @@ angular.module('emmiManager')
             });
         };
 
-        var newLocationModal = $modal({scope: $scope, template: 'partials/client/location/new.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false});
+        var newLocationModal = $modal({scope: $scope, template: 'partials/client/location/new.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
 
         $scope.createNewLocation = function () {
             $scope.hideAddLocationsModal();

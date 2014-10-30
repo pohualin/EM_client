@@ -25,7 +25,7 @@ angular.module('emmiManager')
             TeamTag.save($scope.teamClientResource.teamResource);
         };
 
-        var showClientTagsModal = $modal({scope: $scope, template: 'partials/team/tags/client_tags_modal.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false});
+        var showClientTagsModal = $modal({scope: $scope, template: 'partials/team/tags/client_tags_modal.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
 
         $scope.showClientTags = function(){
             showClientTagsModal.$promise.then(showClientTagsModal.show);
