@@ -8,7 +8,7 @@
             <span class="sr-only">Toggle Dropdown</span>
         </button>
         <div class="dropdown-menu" role="menu" style="width:600px">
-            <div data-tags-input class="tags-input" data-ng-model="tagGroup.tags" data-ng-click="$event.stopPropagation();" data-ng-paste="pasteTags($event, $index)" data-enable-editing-last-tag="true" data-add-on-space="false" data-replace-spaces-with-dashes="false" data-name="tags"></div>
+            <div data-tags-input class="tags-input" data-ng-model="tagGroup.tags" data-on-tag-added="onChange('tag added')" data-on-tag-removed="onChange('tag removed')" data-on-tag-edited="onChange('tag edited')" data-ng-click="$event.stopPropagation();" data-ng-paste="pasteTags($event, $index)" data-enable-editing-last-tag="true" data-add-on-space="false" data-replace-spaces-with-dashes="false" data-name="tags"></div>
         </div>
         <button type="button" class="btn btn-link tag-group-remove" data-ng-click="removeTagGroup($index)">
             <span class="glyphicon glyphicon-remove"></span>

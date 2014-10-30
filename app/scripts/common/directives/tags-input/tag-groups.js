@@ -9,6 +9,7 @@ angular.module('emmiManager')
             require: '^ngModel',
             scope: {
                 groups: '=ngModel',
+                onChange: '=ngChange',
                 formField: '=',
                 taggingMode: '=',
                 libraryGroups: '='
@@ -67,13 +68,16 @@ angular.module('emmiManager')
                     $scope.groups.splice(groupIndex, 1);
                     $scope.selectedTagGroupIndex = -1;
                     $scope.taggingMode = false;
+                    $scope.onChange('remove group');
                 };
 
                 $scope.changeTagGroupTitle = function (groupIndex) {
-                    $scope.validateGroupTitles();
+                    $scope.hasEmpties();
+
                     // Title already gets changed from data binding, so really just need to hide the edit form
                     $scope.groups[groupIndex].editMode = false;
                     $scope.selectedTagGroupIndex = -1;
+                    $scope.onChange('change group title');
                 };
 
                 $scope.tagExists = function (tag, groupIndex) {
@@ -119,10 +123,18 @@ angular.module('emmiManager')
                 };
 
                 $scope.hasEmpties = function () {
+                    $scope.validateGroupTitles();
                     if ($scope.groups) {
                         for (var l = 0; l < $scope.groups.length; l++) {
                             if ($scope.groups[l].tags.length === 0) {
+                                $scope.groups[l].isValid = false;
+                                $scope.groups[l].invalidDueToEmpty = true;
+                                if (!$scope.groups[l].isValidMessage) {
+                                    $scope.groups[l].isValidMessage = 'Tag groups must contain at least one tag';
+                                }
                                 return true;
+                            } else {
+                                $scope.groups[l].invalidDueToEmpty = false;
                             }
                         }
                     }
@@ -152,13 +164,18 @@ angular.module('emmiManager')
                     angular.forEach($scope.groups, function (x, i) {
                         if (dupeIndices.indexOf(i) >= 0) {
                             $scope.groups[i].isValid = false;
+                            $scope.groups[i].invalidDueToDuplicate = true;
                             $scope.groups[i].isValidMessage = 'This tag group already exists';
                         } else if (x.title.length === 0) {
                             blankIndices.push(i);
                             $scope.groups[i].isValid = false;
+                            $scope.groups[i].invalidDueToBlankTitle = true;
                             $scope.groups[i].isValidMessage = 'Group titles cannot be blank.';
                         } else {
                             $scope.groups[i].isValid = true;
+                            delete $scope.groups[i].isValidMessage;
+                            $scope.groups[i].invalidDueToBlankTitle = false;
+                            $scope.groups[i].invalidDueToDuplicate = false;
                         }
                     });
                     $scope.formField.$setValidity('blankTitle', !blankIndices.length);
@@ -171,20 +188,21 @@ angular.module('emmiManager')
                     origAddBtnText = addBtn.text();
 
                 // watch for removed tags and re-check for uniqueness
-                scope.$watch('groups.length', function (newVal, oldVal) {
+                scope.$watchCollection('groups', function (newVal, oldVal) {
                     // tag added or removed
-                    scope.validateGroupTitles();
                     scope.formField.$setValidity('empty', !scope.hasEmpties());
-                    if (newVal === 0) {
+                    if (newVal && newVal.length === 0) {
                         addBtn.text(origAddBtnText);
                     } else {
                         addBtn.text(addBtn.data('swapText'));
                     }
                 });
 
-                scope.$on('tag:add', function (event, tagGroup) {
+                scope.$on('tag:add', function (event, tagGroup, scope) {
                     $timeout(function () {
-                        if (tagGroup.isValid) {
+                        if (tagGroup.isValid ||
+                            (tagGroup.invalidDueToEmpty && !tagGroup.invalidDueToDuplicate)) {
+                            // pop the tags input when the group is invalid because of 'no tags' only
                             var btnGroup = element.find('.btn-group').last();
                             btnGroup.find('.dropdown-toggle').trigger('click.bs.dropdown');
                             btnGroup.find('.tags-input .input').focus();
