@@ -26,17 +26,17 @@
                             <br />
                             <div class="form-group" data-ng-show="allLocationsSearch">
                                 <label for="locationQuery" class="col-sm-4 control-label" data-translate="team_locations_search_page.search_dialog.search_label"></label>
-                                <div class="input-group">
+                                <div class="col-sm-6">
                                     <input class="form-control" id="locationQuery" data-ng-model="locationQuery"
-                                       type="text" placeholder="{{'team_locations_search_page.search_dialog.placeholder_label' | translate}}"  data-auto-focus >
-                                
-                                    <div class="input-group-addon btn" data-ng-click="search()">
-                                        <span data-translate="team_locations_search_page.search_dialog.go_label" ></span>
-                                    </div>
-                                    <div class="btn btn-link" data-ng-click="cleanSearch()">
-                                        <span data-translate="team_locations_search_page.search_dialog.clear_search" ></span>
-                                    </div>
-                                </div>                            
+                                       type="text" placeholder="{{'team_locations_search_page.search_dialog.placeholder_label' | translate}}"  data-auto-focus />
+                                </div>
+                                <div class="btn btn-default" data-ng-click="search()">
+                                    <span data-translate="team_locations_search_page.search_dialog.go_label" ></span>
+                                </div>
+                                <div class="btn btn-link" data-ng-click="cleanSearch()">
+                                    <span data-translate="team_locations_search_page.search_dialog.clear_search" ></span>
+                                </div>
+                                                            
                             </div>
                         </form>
                     </div>
