@@ -12,7 +12,7 @@ angular.module('emmiManager')
             $scope.$hide();
         };
       
-        var newProviderModal = $modal({scope: $scope, template: 'partials/team/provider/new.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false});
+        var newProviderModal = $modal({scope: $scope, template: 'partials/team/provider/new.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
 
         $scope.createNewProvider = function () {
             $scope.hideProviderSearchModal();
