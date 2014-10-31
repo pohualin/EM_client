@@ -166,7 +166,7 @@ angular.module('emmiManager')
                             $scope.groups[i].isValid = false;
                             $scope.groups[i].invalidDueToDuplicate = true;
                             $scope.groups[i].isValidMessage = 'This tag group already exists';
-                        } else if (x.title.length === 0) {
+                        } else if (!x.title || x.title.length === 0) {
                             blankIndices.push(i);
                             $scope.groups[i].isValid = false;
                             $scope.groups[i].invalidDueToBlankTitle = true;
