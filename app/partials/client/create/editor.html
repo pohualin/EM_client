@@ -133,7 +133,7 @@
                 </div>
             </div>
         </div>
-        <div class="row" data-ng-class="{'masked': clientForm.clientName.$error.unique}" data-ng-show="clientToEdit.salesForceAccount">
+        <div class="row" data-ng-class="{'masked': clientForm.clientName.$error.unique}" data-ng-hide="updatingSalesForceAccount || clientToEdit.salesForceAccount == null">
             <div class="col-md-12">
                 <div class="row">
                     <div class="col-md-12">
@@ -149,7 +149,7 @@
                 </button>
             </div>
         </div>
-        <div class="row" data-ng-class="{'masked': clientForm.clientName.$error.unique}" data-ng-hide="clientToEdit.salesForceAccount"
+        <div class="row" data-ng-class="{'masked': clientForm.clientName.$error.unique}" data-ng-show="updatingSalesForceAccount || clientToEdit.salesForceAccount == null"
              data-ng-include="'partials/client/salesforce/salesforce.html'"></div>
         <hr>
         <div class="row">

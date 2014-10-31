@@ -158,7 +158,7 @@
         </div>
     </div>
     <div class="row" data-ng-class="{'masked': metadataForm.clientName.$error.unique}"
-         data-ng-show="clientToEdit.salesForceAccount">
+         data-ng-hide="updatingSalesForceAccount || clientToEdit.salesForceAccount == null">
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-12">
@@ -175,6 +175,6 @@
         </div>
     </div>
     <div class="row" data-ng-class="{'masked': metadataForm.clientName.$error.unique}"
-         data-ng-hide="clientToEdit.salesForceAccount"
+         data-ng-show="updatingSalesForceAccount || clientToEdit.salesForceAccount == null"
          data-ng-include="'partials/client/salesforce/salesforce.html'"></div>
 </div>
