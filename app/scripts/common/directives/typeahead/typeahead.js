@@ -82,6 +82,7 @@ angular.module('emmi.typeahead', [])
 
                 this.blur = function () {
                     $timeout(function(){
+                        $scope.hide = true;
                         $scope.blur();
                     }, 500);
 
