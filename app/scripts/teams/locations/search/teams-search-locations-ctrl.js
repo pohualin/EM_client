@@ -4,6 +4,8 @@ angular.module('emmiManager')
 
     .controller('SearchTeamsLocationsController', function ($scope, $translate,TeamSearchLocation, Location, Client) {
 
+        var keypressed = false;
+
         $scope.cleanSearch = function() {
             $scope.clientLocationsSearch = true;
             $scope.allLocationsSearch = true;
@@ -114,6 +116,13 @@ angular.module('emmiManager')
         };
 
         $scope.onKeypress = function () {  
+            
+            if ($scope.locationQuery.length === 0 && keypressed)  {
+                $scope.cleanSearch();
+                keypressed = false;
+            } else {
+                keypressed = true;
+            }
 
         };
 
