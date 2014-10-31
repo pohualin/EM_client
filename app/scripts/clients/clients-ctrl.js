@@ -35,7 +35,7 @@ angular.module('emmiManager')
             Client.findSalesForceAccount($scope.findSalesForceAccountLink, term).then(function (searchResults) {
                 if (searchResults.entity) {
                     if ($scope.clientToEdit) {
-                        angular.forEach(searchResults.entity.account, function(value, key) {
+                        angular.forEach(searchResults.entity.account, function (value, key) {
                             if (value.clientName) {
                                 // Remove the client from the Account if it matches the id of the current client (so you can re-select the account when editing)
                                 if ($scope.clientToEdit.origSalesForceAccount === value.accountNumber) {
@@ -51,11 +51,12 @@ angular.module('emmiManager')
                     $scope.sfResult.account = [];
                 }
             });
-        }, 333);
+        }, 500);
 
         $scope.chooseAccount = function (account) {
             if (account && !account.clientName) {
                 $scope.clientToEdit.salesForceAccount = account;
+                $scope.updatingSalesForceAccount = false;
                 return true;
             } else {
                 return false;
@@ -69,22 +70,21 @@ angular.module('emmiManager')
         $scope.changeSfAccount = function () {
             $scope.sfSearch.searchQuery = $scope.clientToEdit.salesForceAccount.name;
             $scope.sfResult.account = [];
-            // save the previous salesforce account in case they blur the input without re-searching
-            $scope.clientToEdit.prevSalesForceAccount = $scope.clientToEdit.salesForceAccount;
-            $scope.clientToEdit.salesForceAccount = null;
+            $scope.updatingSalesForceAccount = true;
             focus('SfSearch');
         };
 
         $scope.revertSfAccount = function () {
-            if (!$scope.clientToEdit.salesForceAccount && $scope.clientToEdit.prevSalesForceAccount) {
-                // make sure the search term hasn't been changes
-                if ($scope.sfSearch.searchQuery === $scope.clientToEdit.prevSalesForceAccount.name) {
-                    $scope.clientToEdit.salesForceAccount = $scope.clientToEdit.prevSalesForceAccount;
-                }
+            $scope.updatingSalesForceAccount = false;
+        };
+
+        $scope.hideError = function () {
+            if ($scope.errorAlert) {
+                $scope.errorAlert.hide();
             }
         };
 
-        $scope.showError = function(){
+        $scope.showError = function () {
             if (!$scope.errorAlert) {
                 $scope.errorAlert = $alert({
                     title: ' ',
