@@ -27,7 +27,7 @@
                                 <label for="locationQuery" data-ng-hide ="clientHasLocations() && clientLocationsSearch" class="col-sm-4 control-label" data-translate="team_locations_search_page.search_dialog.search_label_only"></label>
                                 <label for="locationQuery" data-ng-show ="clientHasLocations() && clientLocationsSearch" class="col-sm-4 control-label" data-translate="team_locations_search_page.search_dialog.search_label"></label>
                                 <div class="col-sm-6">
-                                    <input class="form-control" id="locationQuery" data-ng-model="locationQuery"
+                                    <input class="form-control" id="locationQuery" data-ng-model="locationQuery" data-clear-search
                                        type="text" placeholder="{{'team_locations_search_page.search_dialog.placeholder_label' | translate}}"  data-auto-focus />
                                 </div>
                                 <div class="btn btn-default" data-ng-click="search()">
