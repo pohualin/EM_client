@@ -113,6 +113,10 @@ angular.module('emmiManager')
 
         };
 
+        $scope.onKeypress = function () {  
+
+        };
+
         $scope.cleanSearch();
 
     })

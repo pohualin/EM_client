@@ -27,7 +27,7 @@
                                 <label for="locationQuery" data-ng-hide ="clientHasLocations() && clientLocationsSearch" class="col-sm-4 control-label" data-translate="team_locations_search_page.search_dialog.search_label_only"></label>
                                 <label for="locationQuery" data-ng-show ="clientHasLocations() && clientLocationsSearch" class="col-sm-4 control-label" data-translate="team_locations_search_page.search_dialog.search_label"></label>
                                 <div class="col-sm-6">
-                                    <input class="form-control" id="locationQuery" data-ng-model="locationQuery"
+                                    <input class="form-control" id="locationQuery" data-ng-model="locationQuery" ng-keypress="onKeypress()"
                                        type="text" placeholder="{{'team_locations_search_page.search_dialog.placeholder_label' | translate}}"  data-auto-focus />
                                 </div>
                                 <div class="btn btn-default" data-ng-click="search()">
@@ -48,7 +48,7 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-body" data-ng-hide="clientLocationsSearch && allLocationsSearch">
+            <div class="modal-body" data-ng-hide="clientLocationsSearch">
                 <div>
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
@@ -88,7 +88,7 @@
                                     <td>{{location.location.entity.phone}}</td>
                                 </tr>
                             </table>
-                            <div data-ng-hide="locations">
+                            <div data-ng-hide="locations || clientLocationsSearch">
                                 <span data-translate="global.messages.search.no_results_found"></span>
                             </div>
                             <div class="row" data-ng-show="locations">
