@@ -8,8 +8,7 @@
                     <div class="col-md-1"></div>
                 </div>
                 <div class="row">
-                    <div class="col-md-10 col-sm-10">
-                        <form ng-submit="search()" class="form-horizontal">
+                    <div class="col-md-10 col-sm-10 form-horizontal">
                             <div class="form-group" data-ng-show="clientHasLocations() && clientLocationsSearch" >
                                 <label for="locationFromClient" class="col-sm-4 control-label" data-translate="team_locations_search_page.dropdown_locations.search_label"></label>
                                 <div class="col-sm-8">
@@ -23,9 +22,10 @@
                                     </select>
                                 </div>
                             </div>
-                            <br />
+                         <form ng-submit="search()" >
                             <div class="form-group" data-ng-show="allLocationsSearch">
-                                <label for="locationQuery" class="col-sm-4 control-label" data-translate="team_locations_search_page.search_dialog.search_label"></label>
+                                <label for="locationQuery" data-ng-hide ="clientHasLocations() && clientLocationsSearch" class="col-sm-4 control-label" data-translate="team_locations_search_page.search_dialog.search_label_only"></label>
+                                <label for="locationQuery" data-ng-show ="clientHasLocations() && clientLocationsSearch" class="col-sm-4 control-label" data-translate="team_locations_search_page.search_dialog.search_label"></label>
                                 <div class="col-sm-6">
                                     <input class="form-control" id="locationQuery" data-ng-model="locationQuery"
                                        type="text" placeholder="{{'team_locations_search_page.search_dialog.placeholder_label' | translate}}"  data-auto-focus />
@@ -48,12 +48,12 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-body" data-ng-show="locations && allLocationsSearch">
+            <div class="modal-body" data-ng-hide="clientLocationsSearch">
                 <div>
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
                             <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0"
-                                   cellspacing="0"
+                                   cellspacing="0" data-ng-show="locations"
                                    >
                                 <tr>
                                     <th class="sort col-sm-1">&nbsp;</th>
@@ -88,7 +88,7 @@
                                     <td>{{location.location.entity.phone}}</td>
                                 </tr>
                             </table>
-                            <div data-ng-show="!locations && allLocationsSearch && !clientLocationsSearch">
+                            <div data-ng-hide="locations || clientLocationsSearch">
                                 <span data-translate="global.messages.search.no_results_found"></span>
                             </div>
                             <div class="row" data-ng-show="locations">
