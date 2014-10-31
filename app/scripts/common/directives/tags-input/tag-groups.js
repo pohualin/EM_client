@@ -94,7 +94,7 @@ angular.module('emmiManager')
 
                 $scope.pasteTags = function (event, groupIndex) {
                     event.preventDefault();
-                    var tags;
+                    var tags, createdTags;
                     if (event.originalEvent.clipboardData) {
                         tags = event.originalEvent.clipboardData.getData('text/plain').split('\n');
                     } else if (window.clipboardData) {
@@ -108,7 +108,11 @@ angular.module('emmiManager')
                         tag.text = tags[i];
                         if (tag.text.length > 0 && !$scope.tagExists(tag, groupIndex)) {
                             $scope.groups[groupIndex].tags.push(tag);
+                            createdTags = true;
                         }
+                    }
+                    if (createdTags){
+                        $scope.onChange('pasted tags');
                     }
                 };
 
