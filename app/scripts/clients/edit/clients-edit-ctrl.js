@@ -17,12 +17,10 @@ angular.module('emmiManager')
         }
 
         $scope.cancel = function () {
+            $scope.hideError();
             $scope.editMode = false;
+            $scope.metadataSubmitted = false;
             delete $scope.clientToEdit;
-        };
-
-        $scope.cancelTagsAndLocations = function () {
-            Client.viewClientList();
         };
 
         $scope.edit = function () {
