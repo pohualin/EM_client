@@ -4,6 +4,8 @@ angular.module('emmiManager')
 	.controller('ProviderSearchController', function($scope, $modal, $controller, ProviderSearch){
         $controller('TeamProviderCommon', {$scope: $scope});
         
+        $scope.providersToAssociateToCurrentTeam = [];
+
         ProviderSearch.getReferenceData().then(function (refData) {
             $scope.statuses = refData.statusFilter;
         });
@@ -136,10 +138,33 @@ angular.module('emmiManager')
             angular.forEach(providerPage.content, function (provider) {
                 angular.forEach($scope.teamResource.teamProviders, function (teamProvider) {
                 	if(provider.entity.id === teamProvider.entity.provider.id) {
-                		provider.entity.belongsToCurrentTeam = true;
+                		provider.entity.checked = true;
+                		provider.entity.disabled = true;
                 	}
                 });
             });
+        };
+        
+        $scope.saveAssociationAndAddAnotherProvider = function () {
+        	$scope.associateSelectedProvidersToTeam (true);
+        };
+        
+        $scope.associateSelectedProvidersToTeam = function (addAnother) {
+        	ProviderSearch.updateProviderTeamAssociations($scope.providersToAssociateToCurrentTeam, $scope.teamResource).then(function (response) {
+        		$scope.hideProviderSearchModal();
+        		if (addAnother) {
+        			$scope.addProviders();
+        		}
+        	});
+        };
+        
+        $scope.onCheckboxChange = function (provider) {
+        	 if (provider.entity.checked) {
+        		 $scope.providersToAssociateToCurrentTeam.push(provider.entity);
+        	 } 
+        	 else {
+             	 $scope.providersToAssociateToCurrentTeam.splice(provider.entity, 1);
+        	 }
         };
 	})
 ;	
