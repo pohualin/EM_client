@@ -12,4 +12,18 @@ angular.module('emmiManager')
             }
         };
     })
+
+    .directive('clearSearch', [function () {
+          return {
+            restrict: 'A',
+            link: function (scope, element, attrs, ngModel) {
+                
+               element.bind('keyup', function (event) {
+                    if (event.which === 8 && scope.locationQuery.length === 0 )  {
+                        scope.cleanSearch();
+                    } 
+                });
+            }
+          };
+    }])   
 ;
