@@ -31,7 +31,12 @@ angular.module('emmiManager')
                     .then(function (response) {
                         return response.data;
                     });
-
+            },
+            updateProviderTeamAssociations: function (providersToAssociateToCurrentTeam, teamResource) {
+                return $http.post(UriTemplate.create(teamResource.link.teamProviders).stringify(), providersToAssociateToCurrentTeam)
+                    .success(function (response) {
+                        return response;
+                    });
             }
 		};
 	})
