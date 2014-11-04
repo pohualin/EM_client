@@ -152,6 +152,7 @@ angular.module('emmiManager')
         $scope.associateSelectedProvidersToTeam = function (addAnother) {
         	ProviderSearch.updateProviderTeamAssociations($scope.providersToAssociateToCurrentTeam, $scope.teamResource).then(function (response) {
         		$scope.hideProviderSearchModal();
+        		$scope.allProvidersForTeam();
         		if (addAnother) {
         			$scope.addProviders();
         		}
