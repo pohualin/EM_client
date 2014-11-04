@@ -45,6 +45,7 @@ angular.module('emmiManager')
                             var tagGroup = {
                                 title: me.newTagGroupTitle,
                                 isValid: true,
+                                brandNew: true,
                                 tags: []
                             };
                             $scope.groups.push(tagGroup);
@@ -93,7 +94,7 @@ angular.module('emmiManager')
 
                 $scope.pasteTags = function (event, groupIndex) {
                     event.preventDefault();
-                    var tags;
+                    var tags, createdTags;
                     if (event.originalEvent.clipboardData) {
                         tags = event.originalEvent.clipboardData.getData('text/plain').split('\n');
                     } else if (window.clipboardData) {
@@ -107,7 +108,11 @@ angular.module('emmiManager')
                         tag.text = tags[i];
                         if (tag.text.length > 0 && !$scope.tagExists(tag, groupIndex)) {
                             $scope.groups[groupIndex].tags.push(tag);
+                            createdTags = true;
                         }
+                    }
+                    if (createdTags){
+                        $scope.onChange('pasted tags');
                     }
                 };
 
@@ -124,21 +129,23 @@ angular.module('emmiManager')
 
                 $scope.hasEmpties = function () {
                     $scope.validateGroupTitles();
+                    var ret = false;
                     if ($scope.groups) {
                         for (var l = 0; l < $scope.groups.length; l++) {
-                            if ($scope.groups[l].tags.length === 0) {
-                                $scope.groups[l].isValid = false;
-                                $scope.groups[l].invalidDueToEmpty = true;
-                                if (!$scope.groups[l].isValidMessage) {
-                                    $scope.groups[l].isValidMessage = 'Tag groups must contain at least one tag';
+                            var tagGroup = $scope.groups[l];
+                            if (tagGroup.tags.length === 0 && !tagGroup.brandNew) {
+                                tagGroup.isValid = false;
+                                tagGroup.invalidDueToEmpty = true;
+                                if (!tagGroup.isValidMessage) {
+                                    tagGroup.isValidMessage = 'Tag groups must contain at least one tag';
                                 }
-                                return true;
+                                ret = true;
                             } else {
-                                $scope.groups[l].invalidDueToEmpty = false;
+                                tagGroup.invalidDueToEmpty = false;
                             }
                         }
                     }
-                    return false;
+                    return ret;
                 };
 
                 $scope.getDupes = function () {
@@ -166,7 +173,7 @@ angular.module('emmiManager')
                             $scope.groups[i].isValid = false;
                             $scope.groups[i].invalidDueToDuplicate = true;
                             $scope.groups[i].isValidMessage = 'This tag group already exists';
-                        } else if (x.title.length === 0) {
+                        } else if (!x.title || x.title.length === 0) {
                             blankIndices.push(i);
                             $scope.groups[i].isValid = false;
                             $scope.groups[i].invalidDueToBlankTitle = true;
@@ -198,14 +205,14 @@ angular.module('emmiManager')
                     }
                 });
 
-                scope.$on('tag:add', function (event, tagGroup, scope) {
+                scope.$on('tag:add', function (event, tagGroup) {
                     $timeout(function () {
                         if (tagGroup.isValid ||
                             (tagGroup.invalidDueToEmpty && !tagGroup.invalidDueToDuplicate)) {
-                            // pop the tags input when the group is invalid because of 'no tags' only
                             var btnGroup = element.find('.btn-group').last();
                             btnGroup.find('.dropdown-toggle').trigger('click.bs.dropdown');
                             btnGroup.find('.tags-input .input').focus();
+                            tagGroup.brandNew = false;
                         }
                     });
                 });
@@ -219,6 +226,7 @@ angular.module('emmiManager')
                 element.on('hide.bs.dropdown', function () {
                     scope.$apply(function () {
                         scope.taggingMode = false;
+                        scope.hasEmpties();
                     });
                 });
 
@@ -230,14 +238,16 @@ angular.module('emmiManager')
     .directive('tagGroupsItem', function($timeout) {
         return {
             require: '^tagGroups',
-            link: function(scope, element, attrs, ngModelCtrl) {
+            link: function(scope) {
 
                 // when number of tags within a group changes
-                scope.$watch('groups[$index].tags.length', function() {
-                    // check for empty tags
-                    $timeout(function() {
-                        scope.formField.$setValidity('empty', !scope.hasEmpties()); // shared scope with parent controller (scope.$parent)
-                    });
+                scope.$watchCollection('groups[$index].tags', function(newVal, oldVal) {
+                    // check for empty tags only when the number of tags has changed for the group
+                    if (newVal && oldVal && newVal.length !== oldVal.length) {
+                        $timeout(function () {
+                            scope.formField.$setValidity('empty', !scope.hasEmpties()); // shared scope with parent controller (scope.$parent)
+                        });
+                    }
                 });
 
             }

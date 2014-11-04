@@ -3,7 +3,6 @@
 angular.module('emmiManager')
 
     .controller('SearchTeamsLocationsController', function ($scope, $translate,TeamSearchLocation, Location, Client) {
-
         $scope.cleanSearch = function() {
             $scope.clientLocationsSearch = true;
             $scope.allLocationsSearch = true;

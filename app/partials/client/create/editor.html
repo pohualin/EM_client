@@ -11,20 +11,20 @@
                 <div class="form-group"
                      data-ng-class="{ 'has-error' : (clientForm.clientName.$invalid && formSubmitted) || clientForm.clientName.$error.unique}">
                     <label class="control-label" for="clientName">Name</label>
-                    <div class="error-circle" data-ng-show="clientForm.clientName.$error.required && formSubmitted"
+                    <div class="error-circle glyphicon glyphicon-exclamation-sign" data-ng-show="clientForm.clientName.$error.required && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Required"></div>
-                    <div class="error-circle" data-ng-show="clientForm.clientName.$error.pattern && formSubmitted"
+                    <div class="error-circle glyphicon glyphicon-exclamation-sign" data-ng-show="clientForm.clientName.$error.pattern && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Please enter a valid client name."></div>
-                    <div class="error-circle"
+                    <div class="error-circle glyphicon glyphicon-exclamation-sign"
                          data-ng-show="formSubmitted && clientForm.clientName.$invalid && clientForm.clientName.$error.unique"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="{{'client_edit_page.unique_popup_dialog.message' | translate}}"></div>
                     <input class="form-control" data-ng-model="clientToEdit.name" id="clientName" name="clientName"
                            type="text" data-unique-url="findNormalizedNameLink" data-unique-client required
                            data-auto-focus
-                           data-ng-pattern="/^[\-\.a-zA-Z0-9 '=_;:`@#&,\(\)\/]*$/" data-animation="am-flip-x"
+                           data-ng-pattern="/^[\-\.a-zA-Z0-9 '=_;:`@#&,\(\)\/!]*$/" data-animation="am-flip-x"
                            data-focus-on="clientName">
                 </div>
             </div>
@@ -44,7 +44,7 @@
                 <div class="form-group"
                      data-ng-class="{ 'has-error' : clientForm.clientType.$invalid && formSubmitted }">
                     <label class="control-label" for="clientType">Client Type</label>
-                    <div class="error-circle" data-ng-show="clientForm.clientType.$invalid && formSubmitted"
+                    <div class="error-circle glyphicon glyphicon-exclamation-sign" data-ng-show="clientForm.clientType.$invalid && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Required"></div>
                     <select id="clientType" class="form-control" data-ng-model="clientToEdit.type"
@@ -80,7 +80,7 @@
                 <div class="form-group"
                      data-ng-class="{ 'has-error' : clientForm.clientContractOwner.$invalid && formSubmitted }">
                     <label class="control-label" for="contractOwner">Contract Owner</label>
-                    <div class="error-circle" data-ng-show="clientForm.clientContractOwner.$invalid && formSubmitted"
+                    <div class="error-circle glyphicon glyphicon-exclamation-sign" data-ng-show="clientForm.clientContractOwner.$invalid && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Required"></div>
                     <select
@@ -100,11 +100,11 @@
                      data-ng-class="{ 'has-error' : clientForm.clientContractStart.$invalid && formSubmitted }">
                     <label class="control-label" for="contractStart">Contract Start</label>
 
-                    <div class="error-circle"
+                    <div class="error-circle glyphicon glyphicon-exclamation-sign"
                          data-ng-show="!clientForm.clientContractStart.$error.date && clientForm.clientContractStart.$error.required && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Required"></div>
-                    <div class="error-circle" data-ng-show="clientForm.clientContractStart.$error.date && formSubmitted"
+                    <div class="error-circle glyphicon glyphicon-exclamation-sign" data-ng-show="clientForm.clientContractStart.$error.date && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Please select a valid date"></div>
                     <input id="contractStart" class="form-control" type="text" name="clientContractStart"
@@ -118,11 +118,11 @@
                      data-ng-class="{ 'has-error' : clientForm.clientContractEnd.$invalid && formSubmitted }">
                     <label class="control-label" for="contractEnd">Contract End</label>
 
-                    <div class="error-circle"
+                    <div class="error-circle glyphicon glyphicon-exclamation-sign"
                          data-ng-show="!clientForm.clientContractEnd.$error.date && clientForm.clientContractEnd.$error.required && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Required"></div>
-                    <div class="error-circle" data-ng-show="clientForm.clientContractEnd.$error.date && formSubmitted"
+                    <div class="error-circle glyphicon glyphicon-exclamation-sign" data-ng-show="clientForm.clientContractEnd.$error.date && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Please select a valid date"></div>
                     <input id="contractEnd" class="form-control" type="text" name="clientContractEnd"
@@ -133,7 +133,7 @@
                 </div>
             </div>
         </div>
-        <div class="row" data-ng-class="{'masked': clientForm.clientName.$error.unique}" data-ng-show="clientToEdit.salesForceAccount">
+        <div class="row" data-ng-class="{'masked': clientForm.clientName.$error.unique}" data-ng-hide="updatingSalesForceAccount || clientToEdit.salesForceAccount == null">
             <div class="col-md-12">
                 <div class="row">
                     <div class="col-md-12">
@@ -149,7 +149,7 @@
                 </button>
             </div>
         </div>
-        <div class="row" data-ng-class="{'masked': clientForm.clientName.$error.unique}" data-ng-hide="clientToEdit.salesForceAccount"
+        <div class="row" data-ng-class="{'masked': clientForm.clientName.$error.unique}" data-ng-show="updatingSalesForceAccount || clientToEdit.salesForceAccount == null"
              data-ng-include="'partials/client/salesforce/salesforce.html'"></div>
         <hr>
         <div class="row">
