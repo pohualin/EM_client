@@ -41,7 +41,7 @@
                              data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                              data-title="Please enter a valid middle name."></div>
                         <input class="form-control" id="providerMiddleName" data-ng-model="provider.middleName" name="providerMiddleName"
-                               type="text" maxlength="255" data-auto-focus
+                               type="text" maxlength="255"
                                data-ng-pattern="/^[a-zA-Z '-]*$/">
                     </div>
                 </div>
@@ -59,15 +59,15 @@
                              data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                              data-title="Please enter a valid last name."></div>
                         <input class="form-control" id="providerLastName" data-ng-model="provider.lastName" name="providerLastName"
-                               type="text" maxlength="255" required data-auto-focus
+                               type="text" maxlength="255" required
                                data-ng-pattern="/^[a-zA-Z '-]*$/">
                     </div>
-                </div>
+                </div> 
             </div>
             <div class="row">
             	<div class="col-md-7">
 	                <div class="form-group" data-ng-class="{ 'has-error' : providerForm.specialty.$invalid && providerFormSubmitted }">
-	                    <label class="control-label" for="specialty">Specialty:</label>
+	                    <label class="control-label" for="specialty">Primary Specialty:</label>
 
 	                    <div class="error-circle glyphicon glyphicon-exclamation-sign"
                              data-ng-show="providerForm.specialty.$error.required && providerFormSubmitted"
@@ -104,6 +104,9 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-link" data-ng-click="$hide()">Cancel</button>
+            <button type="button" class="btn btn-default"
+                    data-ng-click="saveAndAddAnotherProvider(providerForm.$valid)">Save & Add Another
+            </button>
             <input type="submit" id="submit" class="btn btn-primary" value="Save"/>
         </div>
     </div>
