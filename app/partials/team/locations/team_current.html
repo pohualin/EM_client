@@ -2,7 +2,7 @@
     <h2>Locations</h2>
            {{teamLocations.lenght}}
     <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0"
-           cellspacing="0" data-ng-show="teamHasLocations()">
+           cellspacing="0" data-ng-show="locations">
         <tr>
             <th>Name</th>
             <th>Phone</th>
@@ -11,7 +11,7 @@
             <th>&nbsp;</th>
         </tr>
 
-        <tr data-ng-class="{highlight: location.highlight}"  data-ng-repeat="location in teamClientResource.teamResource.locations" >
+        <tr data-ng-class="{highlight: location.highlight}"  data-ng-repeat="location in locations" >
             <td>
                 {{location.entity.location.name}}
                 <span data-ng-show="location.entity.location.belongsTo && location.entity.location.belongsTo.id !== team.entity.id"> <em>({{location.entity.location.belongsTo.name}})</em></span>
@@ -26,8 +26,28 @@
         </tr>
 
     </table>
-    <div data-ng-hide="teamHasLocations()">
+    <div data-ng-hide="locations">
         <span>There are no existing locations<span data-ng-show="team.name"> for {{team.name}}</span>.</span>
+    </div>    
+    <div class="row" data-ng-show="locations">
+        <div class="col-md-4 col-sm-4 pull-right" data-ng-show="total > pageSizes[0] || links">
+            <ul class="pagination page-size pull-right">
+                <li data-ng-repeat="pageSize in pageSizes">
+                    <a data-ng-if="pageSize != currentPageSize" href
+                       data-ng-click="changePageSize(pageSize)">{{pageSize}}</a>
+                    <span data-ng-if="pageSize === currentPageSize">[{{pageSize}}]</span>
+                </li>
+            </ul>
+        </div>
+        <div data-ng-show="links" class="col-md-8 col-sm-8">
+            <ul class="pagination">
+                <li data-ng-repeat="link in links | orderBy:'order'">
+                    <a data-ng-if="link.name != currentPage" href
+                       data-ng-click="fetchPage(link.href)">{{link.name}}</a>
+                    <span data-ng-if="link.name == currentPage">[{{link.name}}]</span>
+                </li>
+            </ul>
+        </div>
     </div>    
     <div class="row" >
 	    <button type="button" class="btn btn-link" data-ng-click="addLocations()">

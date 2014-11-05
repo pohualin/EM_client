@@ -2,7 +2,7 @@
 
 angular.module('emmiManager')
 
-    .controller('SearchTeamsLocationsController', function ($scope, $translate, $controller,TeamSearchLocation, Location, Client) {
+    .controller('SearchTeamsLocationsController', function ($scope, $translate, $controller,$filter,TeamSearchLocation, Location, Client) {
 
         $scope.pageSizes = [5, 10, 15, 25];
 
@@ -76,16 +76,40 @@ angular.module('emmiManager')
         };
 
         $scope.search = function () {
-            $scope.clientLocationsSelected = null;
+            
             $scope.loading = true;
             $scope.locations = null;
             $scope.cancelPopup(); //clean the locations checked in other search
             Location.find(Client.getClient(), $scope.locationQuery, $scope.status).then(function (locationPage) {
-                //$scope.locations = locationPage.content ;
+                //matching locations associated to the client are listed first (top)in alphabetical order followed by all other matcing results inalphabetical order
+                var associated = [], other = [];
+                var isClientLocation = false;
+
+                angular.forEach( locationPage.content, function (location) {
+                    isClientLocation = false;
+                    angular.forEach( $scope.clientLocationsSelected , function (locationAssoc) {
+                        if (location.location.entity.id === locationAssoc.location.entity.id) {
+                            isClientLocation = true;
+                        } 
+                    });
+
+                    if (isClientLocation) {
+                        associated.push(location);
+                    } else {
+                        other.push(location);                            
+                    }
+                });
+
+                associated = $filter('orderBy')(associated, '+entity.location.name', false);
+                angular.forEach(other, function (teamLocation) {
+                    associated.push(teamLocation);
+                });
+                locationPage.content = associated;
                 $scope.handleResponse(locationPage, managedLocationList);
                 $scope.setLocationChecked();
                 $scope.clientLocationsSearch = false;
                 $scope.allLocationsSearch = true;
+                $scope.clientLocationsSelected = null;
             }, function () {
                 // error happened
                 $scope.loading = false;
