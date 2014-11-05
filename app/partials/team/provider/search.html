@@ -109,8 +109,8 @@
             
             <div class="modal-footer">
                 <button type="button" class="btn btn-link" data-ng-click="cancel()">cancel</button>
-                <button type="button" class="btn btn-default" data-ng-click="saveAssociationAndAddAnotherProvider()">Save & Add Another</button>
-                <button type="button" class="btn btn-primary" data-ng-click="associateSelectedProvidersToTeam()">Save</button>
+                <button type="button" class="btn btn-default" data-ng-show="searchedProvidersList" data-ng-click="saveAssociationAndAddAnotherProvider()">Save & Add Another</button>
+                <button type="button" class="btn btn-primary" data-ng-show="searchedProvidersList" data-ng-click="associateSelectedProvidersToTeam()">Save</button>
             </div>
         </div>
     </div>

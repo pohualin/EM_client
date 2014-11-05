@@ -150,13 +150,15 @@ angular.module('emmiManager')
         };
         
         $scope.associateSelectedProvidersToTeam = function (addAnother) {
-        	ProviderSearch.updateProviderTeamAssociations($scope.providersToAssociateToCurrentTeam, $scope.teamResource).then(function (response) {
-        		$scope.hideProviderSearchModal();
-        		$scope.allProvidersForTeam();
-        		if (addAnother) {
-        			$scope.addProviders();
-        		}
-        	});
+        	if ($scope.providersToAssociateToCurrentTeam.length > 0) {
+	        	ProviderSearch.updateProviderTeamAssociations($scope.providersToAssociateToCurrentTeam, $scope.teamResource).then(function (response) {
+	        		$scope.hideProviderSearchModal();
+	        		$scope.allProvidersForTeam();
+	        		if (addAnother) {
+	        			$scope.addProviders();
+	        		}
+	        	});
+        	}
         };
         
         $scope.onCheckboxChange = function (provider) {
