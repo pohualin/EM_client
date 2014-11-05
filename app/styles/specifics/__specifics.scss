@@ -3,7 +3,6 @@
 // import contextual entities
 @import 'sample';
 
-
 // miscellaneous rules
 .search-spinner {
     display: inline-block;
@@ -81,6 +80,17 @@ th.sort {
 
 .table-striped > tbody > tr.highlight > td, .highlight {
   background-color: yellow;
+}
+
+.pagination > .active > span {
+    &:hover {
+        color: darken(#428bca, 15%);
+        background-color: lighten(#000, 93.5%); // #eee
+        border-color: #ddd;
+    }
+    color: darken(#428bca, 15%);
+    background-color: lighten(#000, 93.5%); // #eee
+    border-color: #ddd;
 }
 
 // various example component implementations
