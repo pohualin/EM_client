@@ -19,7 +19,7 @@ angular.module('emmiManager')
             link: function (scope, element, attrs, ngModel) {
                 
                element.bind('keyup', function (event) {
-                    if (event.which === 8 && scope.locationQuery.length === 0 )  {
+                    if (scope.locationQuery.length === 0 )  {
                         scope.cleanSearch();
                     } 
                 });
