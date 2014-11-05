@@ -4,6 +4,12 @@ angular.module('emmiManager')
 
     .controller('TeamsLocationsController', function ($scope, $http, Session, UriTemplate, $controller, $modal, $alert, Location, TeamLocation) {
 
+        $controller('CommonPagination', {$scope: $scope});
+        
+        $scope.pageSizes = [5, 10, 15, 25];
+
+        var managedLocationList = 'locations';
+        
         $scope.teamLocations = {}; //used to hold the locations and manipulate internally
 
         $scope.showRemovalSuccess = function (locationResource) {
@@ -18,7 +24,9 @@ angular.module('emmiManager')
             });
         };
 
-        TeamLocation.loadTeamLocations($scope, []);
+        TeamLocation.loadTeamLocationsSimple($scope, []).then(function(pageLocations) {
+            $scope.handleResponse(pageLocations, managedLocationList);
+        });
 
         $scope.addLocations = function () {
             addNewLocationsModal.$promise.then(addNewLocationsModal.show);
@@ -35,13 +43,11 @@ angular.module('emmiManager')
             $scope.teamLocations = angular.copy(teamLocationsAux);
         };
 
-        $scope.teamHasLocations = function () {
-            return $scope.teamClientResource.teamResource.locations && $scope.teamClientResource.teamResource.locations.length > 0;  
-        };
-
         $scope.save = function (reload, locationsToAdd) {
             if (reload) {
-                TeamLocation.loadTeamLocations($scope,locationsToAdd);
+                TeamLocation.loadTeamLocations($scope,locationsToAdd).then(function(pageLocations) {
+                    $scope.handleResponse(pageLocations, managedLocationList);
+                });
             }
             
             addNewLocationsModal.$promise.then(addNewLocationsModal.hide);
@@ -49,12 +55,25 @@ angular.module('emmiManager')
 
         $scope.removeExistingLocation = function (locationResource) {
             TeamLocation.removeLocation(locationResource).then(function () {
-                TeamLocation.loadTeamLocations($scope,[]).then(function() {
+                TeamLocation.loadTeamLocationsSimple($scope,[]).then(function(pageLocations) {
+                    $scope.handleResponse(pageLocations, managedLocationList);
                     $scope.showRemovalSuccess(locationResource);
                     delete $scope.teamLocations[locationResource.entity.location.id];
                 });
             });
         };
+
+        $scope.changePageSize = function (pageSize) {
+            TeamLocation.loadTeamLocations($scope, [], $scope.sortProperty, pageSize).then(function(pageLocations) {
+                $scope.handleResponse(pageLocations, managedLocationList);
+            });
+        };
+
+        $scope.fetchPage = function (href) {
+            Location.fetchPageLink(href).then(function (locationPage) {
+                $scope.handleResponse(locationPage, managedLocationList);
+            });
+        };        
 
         var addNewLocationsModal = $modal({scope: $scope, template: 'partials/team/locations/search.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
 

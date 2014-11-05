@@ -2,7 +2,7 @@
 
 angular.module('emmiManager')
 
-    .controller('TeamTagsController', function ($scope, TeamTag, Tag, $modal) {
+    .controller('TeamTagsController', function ($scope, Client, TeamTag, Tag, $modal) {
         Tag.loadGroups($scope.teamClientResource.clientResource).then(function (tagGroups) {
             var tagGroupToDisplay = [];
             angular.forEach(tagGroups, function (group) {
@@ -25,12 +25,14 @@ angular.module('emmiManager')
             TeamTag.save($scope.teamClientResource.teamResource);
         };
 
-        var showClientTagsModal = $modal({scope: $scope, template: 'partials/team/tags/client_tags_modal.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
+        var showClientTagsModal = $modal({scope: $scope, template: 'partials/team/tags/client_tags_modal.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, placement: 'center', backdrop: 'static'});
+        $scope.client = $scope.teamClientResource.clientResource.entity;
+        Client.setClient($scope.teamClientResource.clientResource);
 
-        $scope.showClientTags = function(){
+        $scope.showClientTags = function () {
             showClientTagsModal.$promise.then(showClientTagsModal.show);
         };
-        $scope.hideClientTags = function(){
+        $scope.hideClientTags = function () {
             showClientTagsModal.hide();
         };
     })

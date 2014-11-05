@@ -18,8 +18,8 @@ angular.module('emmiManager')
             restrict: 'A',
             link: function (scope, element, attrs, ngModel) {
                 
-               element.bind('keydown keypress', function (event) {
-                    if (event.which === 8 && scope.locationQuery.length === 1 )  {
+               element.bind('keyup', function (event) {
+                    if (scope.locationQuery.length === 0 )  {
                         scope.cleanSearch();
                     } 
                 });

@@ -2,7 +2,16 @@
 
 angular.module('emmiManager')
 
-    .controller('SearchTeamsLocationsController', function ($scope, $translate,TeamSearchLocation, Location, Client) {
+    .controller('SearchTeamsLocationsController', function ($scope, $translate, $controller,$filter,TeamSearchLocation, Location, Client) {
+
+        $scope.pageSizes = [5, 10, 15, 25];
+
+        $controller('LocationCommon', {$scope: $scope});
+
+        $controller('CommonPagination', {$scope: $scope});
+
+        var managedLocationList = 'locations';
+
         $scope.cleanSearch = function() {
             $scope.clientLocationsSearch = true;
             $scope.allLocationsSearch = true;
@@ -56,22 +65,59 @@ angular.module('emmiManager')
             $scope.$hide();
         };
 
+
+        $scope.setLocationChecked = function () {
+            angular.forEach( $scope.locations , function (location) {
+                if ($scope.teamLocations[location.location.entity.id]) {
+                    location.location.entity.disabled = true;
+                    location.location.entity.checked = true;
+                }
+            });
+        };
+
         $scope.search = function () {
-            $scope.clientLocationsSelected = null;
+            $scope.clientLocationsSelected = null;            
             $scope.loading = true;
             $scope.locations = null;
             $scope.cancelPopup(); //clean the locations checked in other search
             Location.find(Client.getClient(), $scope.locationQuery, $scope.status).then(function (locationPage) {
-                $scope.locations = locationPage.content ;
-                angular.forEach( $scope.locations , function (location) {
-                    if ($scope.teamLocations[location.location.entity.id]) {
-                        location.location.entity.disabled = true;
-                        location.location.entity.checked = true;
-                    }
-                });
-                $scope.loading = false;
+                $scope.handleResponse(locationPage, managedLocationList);
+                $scope.setLocationChecked();
                 $scope.clientLocationsSearch = false;
                 $scope.allLocationsSearch = true;
+            }, function () {
+                // error happened
+                $scope.loading = false;
+            });
+        };
+
+        $scope.statusChange = function () {
+            $scope.loading = true;
+            Location.find(Client.getClient(), $scope.locationQuery, $scope.status, $scope.sortProperty, $scope.currentPageSize).then(function (locationPage) {
+                $scope.handleResponse(locationPage, managedLocationList);
+                $scope.setLocationChecked();           
+            }, function () {
+                // error happened
+                $scope.loading = false;
+            });
+        };
+
+        $scope.fetchPage = function (href) {
+            $scope.loading = true;
+            Location.fetchPageLink(href).then(function (locationPage) {
+                $scope.handleResponse(locationPage, managedLocationList);
+                $scope.setLocationChecked();
+            }, function () {
+                // error happened
+                $scope.loading = false;
+            });
+        };
+
+        $scope.changePageSize = function (pageSize) {
+            $scope.loading = true;
+            Location.find(Client.getClient(), $scope.locationQuery, $scope.status, $scope.sortProperty, pageSize).then(function (locationPage) {
+                $scope.handleResponse(locationPage, managedLocationList);
+                $scope.setLocationChecked();
             }, function () {
                 // error happened
                 $scope.loading = false;
