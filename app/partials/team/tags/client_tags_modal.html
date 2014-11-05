@@ -1,30 +1,52 @@
 <div class="modal" tabindex="-1" role="dialog">
-    <form name="clientForm" class="form ng-pristine ng-valid modal-dialog  modal-dialog-large" novalidate="">
+    <form name="clientForm" class="form ng-pristine ng-valid modal-dialog modal-dialog-large" data-ng-controller="ClientTagsController" novalidate="">
 
-        <div class="col-md-12 modal-content" data-ng-controller="ClientTagsController">
-            <h2 data-translate="team_edit.client_tags.modal_title">
-
-                <div class="error-circle" data-ng-show="clientForm.clientTagGroups.$error.empty && formSubmitted"
-                     data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                     data-title="Tag groups must contain at least one tag"></div>
-            </h2>
-            <span data-tag-groups data-ng-model="client.tagGroups" data-library-groups="tagLibraryMap"
-                  data-name="clientTagGroups" data-form-field="clientForm.clientTagGroups"
-                  data-tagging-mode="tagInputMode"></span>
-            <span data-ng-hide="tagInputMode || clientForm.clientTagGroups.$error.unique">
-                <small data-translate="team_edit.client_tags.modal_or">&nbsp;&nbsp;&nbsp;</small>
-                <button class="btn btn-link btn-tag-library" type="button" title="Select groups to add:"
-                        data-placement="bottom" data-content-template="partials/client/tags/tag_library.html"
-                        data-trigger="click" data-bs-popover data-popover-dismiss
-                        data-translate="team_edit.client_tags.modal_add_from_library">
-                </button>
-            </span>
+        <div class="col-md-12 modal-content" >
+            <div class="row">
+                <div class="col-md-6 pull-left">
+                    <h2 data-translate="team_edit.client_tags.modal_title">
+                    </h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <span data-tag-groups data-ng-model="client.tagGroups" data-library-groups="tagLibraryMap"
+                          data-name="clientTagGroups" data-form-field="clientForm.clientTagGroups"
+                          data-tagging-mode="tagInputMode" data-ng-change="tagsChanged"></span>
+                    <span data-ng-hide="tagInputMode || clientForm.clientTagGroups.$error.unique || clientForm.clientTagGroups.$error.blankTitle">
+                        <small data-translate="team_edit.client_tags.modal_or">&nbsp;&nbsp;&nbsp;</small>
+                        <button class="btn btn-link btn-tag-library" type="button" title="Select groups to add:"
+                                data-placement="bottom" data-content-template="partials/client/tags/tag_library.html"
+                                data-trigger="click" data-bs-popover data-popover-dismiss
+                                data-translate="team_edit.client_tags.modal_add_from_library">
+                        </button>
+                    </span>
+                </div>
+            </div>
 
             <div class="modal-footer">
-                <button class="btn btn-link" ng-click="hideClientTags()" data-translate="team_edit.client_tags.modal_close"></button>
+                <div>
+                    <h2></h2>
+                        </button>
+
+                        <div class="pull-right">
+                            <button class="btn btn-link" data-ng-click="hideClientTags()">cancel</button>
+                            <button class="btn btn-primary" type="button"
+                                    data-ng-click="saveTags(clientForm.$valid);$hide()"
+                                    data-ng-disabled="!clientForm.$valid || !clientTagsHaveChanges">
+                            <span>save</span>
+
+                    </div>
+                </div>
+                <div class="col-md-6" data-ng-show="saving">
+                    <h2></h2>
+
+                    <div class="pull-right">
+                        <span class="text-muted">saving...</span>
+
+                    </div>
+                </div>
             </div>
         </div>
-
-
     </form>
 </div>

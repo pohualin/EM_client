@@ -21,8 +21,12 @@ angular.module('emmiManager')
         $scope.title = 'New Provider';
         
         $scope.provider = ProviderCreate.newProvider();
+        
+        $scope.saveAndAddAnotherProvider = function (isValid) {
+            $scope.saveProvider(isValid, true);
+        };
                
-        $scope.saveProvider = function (isValid) {
+        $scope.saveProvider = function (isValid, addAnother) {
             $scope.providerFormSubmitted = true;
         	if (isValid) {
 	        	ProviderCreate.create($scope.provider, $scope.teamResource).then(function(response){
@@ -30,6 +34,9 @@ angular.module('emmiManager')
 	                ProviderView.allProvidersForTeam($scope.teamResource).then(function(response){
 	    	        	$scope.teamResource.teamProviders = response;
 	                });
+	                if (addAnother) {
+                        $scope.addProviders();
+                    } 
 	        	});
 	        }
         };

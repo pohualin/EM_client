@@ -72,8 +72,8 @@
                                         <span data-ng-show="sortProperty.property === 'email'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
                                     </th>
                                 </tr>
-                                <tr data-ng-repeat="provider in searchedProvidersList" data-ng-class="provider.entity.belongsToCurrentTeam ? 'text-muted' : ''">
-									<td><input type="checkbox" data-ng-model="provider.entity.belongsToCurrentTeam"  data-ng-disabled="provider.entity.belongsToCurrentTeam"></td>
+                                <tr data-ng-repeat="provider in searchedProvidersList" data-ng-class="provider.entity.disabled ? 'text-muted' : ''">
+									<td><input type="checkbox" data-ng-model="provider.entity.checked"  data-ng-disabled="provider.entity.disabled" ng-change="onCheckboxChange(provider)"></td>
 									<td>{{provider.entity.firstName}} {{provider.entity.middleName}} {{provider.entity.lastName}}</td>
                                     <td>{{provider.entity.specialty.name}}</td>
                                     <td>{{provider.entity.email}}</td>
@@ -100,8 +100,8 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-link" data-ng-click="cancel()">cancel</button>
-                <button type="button" class="btn btn-primary" data-ng-show="providers" data-ng-click="save()">Save
-                </button>
+                <button type="button" class="btn btn-default" data-ng-show="searchedProvidersList" data-ng-click="saveAssociationAndAddAnotherProvider()">Save & Add Another</button>
+                <button type="button" class="btn btn-primary" data-ng-show="searchedProvidersList" data-ng-click="associateSelectedProvidersToTeam()">Save</button>
             </div>
         </div>
     </div>
