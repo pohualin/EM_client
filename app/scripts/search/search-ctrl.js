@@ -33,9 +33,15 @@ angular.module('emmiManager')
                 for (var i = 0, l = responsePage.linkList.length; i < l; i++) {
                     var aLink = responsePage.linkList[i];
                     if (aLink.rel.indexOf('self') === -1) {
+                        var linkValue = aLink.rel.substring(5);
+                        if (linkValue === 'next'){
+                            linkValue = '>';
+                        } else if (linkValue === 'prev'){
+                            linkValue = '<';
+                        }
                         $scope.links.push({
                             order: i,
-                            name: aLink.rel.substring(5),
+                            name: linkValue,
                             href: aLink.href
                         });
                     }
@@ -45,7 +51,7 @@ angular.module('emmiManager')
                 $scope.load = responsePage.link.self;
 
                 // page numbers
-                $scope.currentPage = responsePage.page.number;
+                $scope.currentPage = responsePage.page.number + 1;
                 $scope.currentPageSize = responsePage.page.size;
 
                 // status filter on response

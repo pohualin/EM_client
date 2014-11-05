@@ -1,4 +1,4 @@
-<div class="modal" tabindex="-1" role="dialog" data-ng-controller="LocationListController">
+<div class="modal" tabindex="-1" role="dialog" data-ng-controller="ClientAssociateProviderSearchController">
     <div class="modal-dialog modal-dialog-large container-fluid">
         <div class="modal-content">
             <div class="modal-header">
@@ -11,12 +11,12 @@
                     <div class="col-md-9 col-sm-9">
                         <form ng-submit="search()">
                             <div class="form-group">
-                                <label class="sr-only" for="locationQuery">Search locations:</label>
+                                <label class="sr-only" for="providerQuery">Search providers:</label>
 
                                 <div class="input-group">
-                                    <input class="form-control" id="locationQuery" data-ng-model="locationQuery"
+                                    <input class="form-control" id="providerQuery" data-ng-model="providerQuery"
                                            type="text"
-                                           placeholder="Search locations..." data-auto-focus data-focus-on="LocationSearchFocus">
+                                           placeholder="Search providers..." data-auto-focus data-focus-on="ProviderSearchFocus">
 
                                     <div class="input-group-addon btn" data-ng-click="search()">Go</div>
                                 </div>
@@ -24,8 +24,9 @@
                         </form>
                     </div>
                     <div class="col-md-3 col-sm-3" data-ng-show="searchPerformed">
-                        <button type="button" class="btn btn-link pull-right" data-ng-click="createNewLocation()">
-                            add new location
+                        <button type="button" class="btn btn-link pull-right" data-ng-click="createNewProvider()"
+                                data-ng-controller="ClientAssociateNewProviderController">
+                            add new provider
                         </button>
                         <span data-ng-class="{'search-spinner' : loading}"></span>
                     </div>
@@ -59,49 +60,43 @@
                         <div class="col-md-12 col-sm-12">
                             <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0"
                                    cellspacing="0"
-                                   data-ng-show="locations">
+                                   data-ng-show="providers">
                                 <tr>
                                     <th class="sort col-sm-1">&nbsp;</th>
-                                    <th class="sort col-sm-3" data-ng-click="sort('name')">
+                                    <th class="sort col-sm-3" data-ng-click="sort('firstName')">
                                         Name
-                                        <span data-ng-show="sortProperty.property === 'name'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span>
+                                        <span data-ng-show="sortProperty.property === 'firstName'">
+                                            <span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span>
+                                        </span>
                                     </th>
-                                    <th class="sort col-sm-3" data-ng-click="sort('belongsTo.name')">
-                                        Client Owner
-                                        <span data-ng-show="sortProperty.property === 'belongsTo.name'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span>
+                                    <th class="sort col-sm-3" data-ng-click="sort('specialty.name')">
+                                        Specialty
+                                        <span data-ng-show="sortProperty.property === 'specialty.name'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
                                     </th>
-                                    <th class="sort col-sm-3" data-ng-click="sort('city')">
-                                        City/State
-                                        <span data-ng-show="sortProperty.property === 'city'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span>
+                                    <th class="sort col-sm-3" data-ng-click="sort('email')">
+                                        Email
+                                        <span data-ng-show="sortProperty.property === 'email'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
                                     </th>
-                                    <th class="sort col-sm-2" data-ng-click="sort('phone')">
-                                        Phone
-                                        <span data-ng-show="sortProperty.property === 'phone'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span>
-                                    </th>
-
                                 </tr>
-                                <tr data-ng-repeat="clientLocation in locations| orderBy:sortIdx" data-ng-class="clientLocation.link.length > 0 ? 'text-muted' : ''">
-                                    <td data-ng-hide="clientLocation.link.length > 0">
-                                        <input type="checkbox" data-ng-model="clientLocation.location.entity.newlocation"
-                                               ng-change="onCheckboxChange(clientLocation.location)">
+                                <tr data-ng-repeat="clientProvider in providers| orderBy:sortIdx" data-ng-class="clientProvider.link.self ? 'text-muted' : ''">
+                                    <td data-ng-hide="clientProvider.link.self">
+                                        <input type="checkbox" data-ng-model="clientProvider.provider.entity.newprovider"
+                                               ng-change="onCheckboxChange(clientProvider.provider)">
                                     </td>
-                                    <td data-ng-show="clientLocation.link.length > 0">
+                                    <td data-ng-show="clientProvider.link.self">
                                         <input type="checkbox" disabled="disabled" checked>
                                     </td>
-                                    <td>{{clientLocation.location.entity.name}}</td>
+                                    <td>{{clientProvider.provider.entity.firstName}} {{clientProvider.provider.entity.middleName}} {{clientProvider.provider.entity.lastName}}</td>
                                     <td>
-                                        {{clientLocation.location.entity.belongsTo.name}}
+                                        {{clientProvider.provider.entity.specialty.name}}
                                     </td>
-                                    <td> {{clientLocation.location.entity.city}}<span
-                                            data-ng-show="clientLocation.location.entity.city && clientLocation.location.entity.state">,&nbsp;</span>{{clientLocation.location.entity.state}}
-                                    </td>
-                                    <td>{{clientLocation.location.entity.phone}}</td>
+                                    <td>{{clientProvider.provider.entity.email}}</td>
                                 </tr>
                             </table>
-                            <div data-ng-hide="locations">
+                            <div data-ng-hide="providers">
                                 <span data-translate="global.messages.search.no_results_found"></span>
                             </div>
-                            <div class="row" data-ng-show="locations">
+                            <div class="row" data-ng-show="providers">
                                 <div data-ng-show="links" class="col-md-8 col-sm-8">
                                     <ul class="pagination">
                                         <li data-ng-repeat="link in links | orderBy:'order'" data-ng-class="{'active': link.name == currentPage}">
@@ -118,10 +113,10 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-link" data-ng-click="cancel()">cancel</button>
-                <button type="button" class="btn btn-default" data-ng-show="locations"
+                <button type="button" class="btn btn-default" data-ng-show="providers"
                         data-ng-click="saveAndAddAnother()">Save & Add Another
                 </button>
-                <button type="button" class="btn btn-primary" data-ng-show="locations" data-ng-click="save()">Save
+                <button type="button" class="btn btn-primary" data-ng-show="providers" data-ng-click="save()">Save
                 </button>
             </div>
         </div>
