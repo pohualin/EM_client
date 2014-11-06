@@ -59,6 +59,9 @@ angular.module('emmiManager')
             angular.forEach($scope.changedLocations, function (locationResource) {
                 newClientLocations.push(locationResource.entity);
             });
+            
+            // Reset changedLocations to empty
+            $scope.changedLocations = {};
             // save the new locations
             return Location.addLocationsToClient(Client.getClient(), newClientLocations).then(function(){
                 // reload the existing locations
@@ -193,6 +196,10 @@ angular.module('emmiManager')
 
         $scope.hideNewLocationModal = function () {
             newLocationModal.$promise.then(newLocationModal.destroy);
+        };
+        
+        $scope.isChangedLocationsEmpty = function(){
+        	return Object.keys($scope.changedLocations).length === 0 ? true : false;
         };
     })
 ;
