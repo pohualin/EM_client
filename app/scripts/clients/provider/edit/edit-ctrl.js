@@ -35,6 +35,10 @@ angular.module('emmiManager')
                     }
                 }
             };
+
+            $scope.doNotDeactivateProvider = function(){
+                $scope.clientProvider.provider.entity.active = true;
+            };
         }
     ])
 ;
