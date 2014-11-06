@@ -91,6 +91,33 @@ angular.module('emmiManager')
             });
         };
 
+        // when a column header is clicked
+        $scope.sort = function (property) {
+            var sort = $scope.sortProperty || {};
+            if (sort && sort.property === property) {
+                // same property was clicked
+                if (!sort.ascending) {
+                    // third click removes sort
+                    sort = null;
+                } else {
+                    // switch to descending
+                    sort.ascending = false;
+                }
+            } else {
+                // change sort property
+                sort.property = property;
+                sort.ascending = true;
+            }
+            $scope.loading = true;
+            Location.find(Client.getClient(), $scope.locationQuery, $scope.status, sort, $scope.currentPageSize).then(function (locationPage) {
+                $scope.handleResponse(locationPage, managedLocationList);
+                $scope.setLocationChecked();
+            }, function () {
+                // error happened
+                $scope.loading = false;
+            });
+        };
+
         $scope.statusChange = function () {
             $scope.loading = true;
             Location.find(Client.getClient(), $scope.locationQuery, $scope.status, $scope.sortProperty, $scope.currentPageSize).then(function (locationPage) {
