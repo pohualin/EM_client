@@ -3,17 +3,17 @@ angular.module('emmiManager')
 
 	.controller('ProviderSearchController', function($scope, $modal, $controller, ProviderSearch){
         $controller('TeamProviderCommon', {$scope: $scope});
-        
+
         $scope.providersToAssociateToCurrentTeam = [];
 
         ProviderSearch.getReferenceData().then(function (refData) {
             $scope.statuses = refData.statusFilter;
         });
-        
+
         $scope.cancel = function () {
             $scope.$hide();
         };
-      
+
         var newProviderModal = $modal({scope: $scope, template: 'partials/team/provider/new.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
 
         $scope.createNewProvider = function () {
@@ -24,7 +24,7 @@ angular.module('emmiManager')
         $scope.hideNewProviderModal = function () {
         	newProviderModal.$promise.then(newProviderModal.destroy);
         };
-        
+
         $scope.search = function (){
             $scope.noSearch = false;
         	ProviderSearch.search($scope.providerQuery).then( function (providerPage){
@@ -103,7 +103,7 @@ angular.module('emmiManager')
                 $scope.loading = false;
             });
         };
-        
+
         $scope.handleResponse = function (providerPage, providerPropertyName) {
             if (providerPage) {
                 $scope.updateAlreadyAssociatedProviders(providerPage, $scope.teamResource);
@@ -122,7 +122,7 @@ angular.module('emmiManager')
                     }
                 }
                 $scope.load = providerPage.link.self;
-                $scope.currentPage = providerPage.page.number;
+                $scope.currentPage = providerPage.page.number + 1;
                 $scope.currentPageSize = providerPage.page.size;
                 $scope.pageSizes = [5, 10, 15, 25];
                 $scope.status = providerPage.filter.status;
@@ -144,11 +144,11 @@ angular.module('emmiManager')
                 });
             });
         };
-        
+
         $scope.saveAssociationAndAddAnotherProvider = function () {
         	$scope.associateSelectedProvidersToTeam (true);
         };
-        
+
         $scope.associateSelectedProvidersToTeam = function (addAnother) {
         	if ($scope.providersToAssociateToCurrentTeam.length > 0) {
 	        	ProviderSearch.updateProviderTeamAssociations($scope.providersToAssociateToCurrentTeam, $scope.teamResource).then(function (response) {
@@ -160,14 +160,14 @@ angular.module('emmiManager')
 	        	});
         	}
         };
-        
+
         $scope.onCheckboxChange = function (provider) {
         	 if (provider.entity.checked) {
         		 $scope.providersToAssociateToCurrentTeam.push(provider.entity);
-        	 } 
+        	 }
         	 else {
              	 $scope.providersToAssociateToCurrentTeam.splice(provider.entity, 1);
         	 }
         };
 	})
-;	
+;
