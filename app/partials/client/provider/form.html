@@ -1,4 +1,4 @@
-<form name="providerForm" class="form" ng-submit="saveProvider(providerForm.$valid)" novalidate>
+<form name="providerForm" class="form" novalidate>
     <div class="modal-content">
         <div class="modal-header" ng-show="title">
             <h4 class="modal-title">{{title}}</h4>
@@ -132,11 +132,11 @@
         </div>
 
         <div class="modal-footer">
-            <button type="button" class="btn btn-link" data-ng-click="$hide()">cancel</button>
+            <button type="button" class="btn btn-link" data-ng-click="cancelProviderSave();$hide()">cancel</button>
             <button type="button" class="btn btn-default" data-ng-show="saveAndAddAnother"
                     data-ng-click="saveAndAddAnother(providerForm.$valid)">Save & Add Another
             </button>
-            <input type="submit" id="submit" class="btn btn-primary" value="Save"/>
+            <input type="submit" id="submit" class="btn btn-primary" value="Save" data-client-provider-deactivate-warning/>
         </div>
     </div>
 </form>
