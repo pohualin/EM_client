@@ -58,7 +58,9 @@ angular.module('emmiManager')
                     angular.forEach(response.data.content, function (teamLocation) {
                         scope.teamLocations[teamLocation.entity.location.id] = angular.copy(teamLocation.entity.location);  
                     });
-                    response.data.content = $filter('orderBy')(response.data.content, '+entity.location.name', false);
+                    if (response.data.content) {
+                        response.data.content = $filter('orderBy')(response.data.content, '+entity.location.name', false);
+                    }
                     return response.data;
                 });
             },
