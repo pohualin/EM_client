@@ -27,26 +27,15 @@
     </table>
     <div data-ng-hide="locations">
         <span>There are no existing locations<span data-ng-show="team.name"> for {{team.name}}</span>.</span>
-    </div>      
+    </div>
     <div class="row" data-ng-show="locations">
-        <div class="col-md-4 col-sm-4 pull-right" data-ng-show="total > pageSizes[0] || links">
-            <ul class="pagination page-size pull-right">
-                <li data-ng-repeat="pageSize in pageSizes">
-                    <a data-ng-if="pageSize != currentPageSize" href
-                       data-ng-click="changePageSize(pageSize)">{{pageSize}}</a>
-                    <span data-ng-if="pageSize === currentPageSize">[{{pageSize}}]</span>
-                </li>
-            </ul>
-        </div>
-        <div data-ng-show="links" class="col-md-8 col-sm-8">
-            <ul class="pagination">
-                <li data-ng-repeat="link in links | orderBy:'order'">
-                    <a data-ng-if="link.name != currentPage" href
-                       data-ng-click="fetchPage(link.href)">{{link.name}}</a>
-                    <span data-ng-if="link.name == currentPage">[{{link.name}}]</span>
-                </li>
-            </ul>
-        </div>
-    </div>    
-      
+        <ul class="pagination">
+            <li data-ng-repeat="link in links | orderBy:'order'" data-ng-class="{'active': link.name == currentPage}">
+                <a data-ng-show="link.name != currentPage" href
+                   data-ng-click="fetchPage(link.href)">{{link.name}}</a>
+                <span data-ng-hide="link.name != currentPage">{{link.name}}</span>
+            </li>
+        </ul>
+    </div>
+
 </div>
