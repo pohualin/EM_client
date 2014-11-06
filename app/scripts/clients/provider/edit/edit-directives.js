@@ -11,14 +11,14 @@ angular.module('emmiManager')
             link: function (scope, element) {
                 element.on('click', function (event) {
                     event.stopPropagation();
-                    scope.cancelProviderSave = function() {
-                        if (scope.saveClientProviderWarning){
+                    scope.cancelProviderSave = function () {
+                        if (scope.saveClientProviderWarning) {
                             scope.saveClientProviderWarning.hide();
                         }
                     };
-                    if (scope.clientProvider && scope.clientProvider.provider && scope.clientProvider.provider.entity
-                        && !scope.clientProvider.provider.entity.active && scope.originalClientProvider &&
-                        scope.originalClientProvider.provider.entity.active) {
+                    if (scope.clientProvider && scope.clientProvider.provider &&
+                        scope.clientProvider.provider.entity && !scope.clientProvider.provider.entity.active &&
+                        scope.originalClientProvider && scope.originalClientProvider.provider.entity.active) {
                         // pop a warning dialog
                         if (!scope.saveClientProviderWarning) {
                             scope.saveClientProviderWarning = $popover(element, {
@@ -36,7 +36,7 @@ angular.module('emmiManager')
                         }
                     } else {
                         $timeout(function () {
-                            scope.saveProvider(scope.providerForm.$valid)
+                            scope.saveProvider(scope.providerForm.$valid);
                         });
                     }
                 });
