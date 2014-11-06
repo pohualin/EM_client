@@ -6,10 +6,6 @@ angular.module('emmiManager')
 
         $controller('ClientLocationsController', {$scope: $scope}); //here is the editlocation controller
 
-        //$controller('CommonPagination', {$scope: $scope});
-        
-        //$scope.pageSizes = [5, 10, 15, 25];
-
         var managedLocationList = 'locations';
         
         $scope.teamLocations = {}; //used to hold the locations and manipulate internally
