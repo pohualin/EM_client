@@ -5,15 +5,23 @@ angular.module('emmiManager')
         $scope.changehref = function (option) {
             if (option === 'Clients') {
                 $location.path('/clients');
-            }
-            if (option === 'Teams') {
+            } else if (option === 'Teams') {
                 $location.path('/teams');
+            } else if (option === 'Providers') {
+                $location.path('/providers');
             }
         };
 
     })
 
     .controller('CommonPagination', ['$scope', function($scope){
+
+        $scope.isEmpty = function (obj) {
+            if (!obj){
+                return true;
+            }
+            return angular.equals({}, obj);
+        };
 
         $scope.handleResponse = function (responsePage, contentProperty) {
             if (responsePage) {
@@ -33,9 +41,15 @@ angular.module('emmiManager')
                 for (var i = 0, l = responsePage.linkList.length; i < l; i++) {
                     var aLink = responsePage.linkList[i];
                     if (aLink.rel.indexOf('self') === -1) {
+                        var linkValue = aLink.rel.substring(5);
+                        if (linkValue === 'next'){
+                            linkValue = '>';
+                        } else if (linkValue === 'prev'){
+                            linkValue = '<';
+                        }
                         $scope.links.push({
                             order: i,
-                            name: aLink.rel.substring(5),
+                            name: linkValue,
                             href: aLink.href
                         });
                     }
@@ -45,7 +59,7 @@ angular.module('emmiManager')
                 $scope.load = responsePage.link.self;
 
                 // page numbers
-                $scope.currentPage = responsePage.page.number;
+                $scope.currentPage = responsePage.page.number + 1;
                 $scope.currentPageSize = responsePage.page.size;
 
                 // status filter on response
@@ -87,6 +101,8 @@ angular.module('emmiManager')
             $scope.option = 'Clients';
         } else if ($location.path() === '/teams'){
             $scope.option = 'Teams';
+        } else if ($location.path() === '/providers'){
+            $scope.option = 'Providers';
         }
 
         $scope.pageSizes = [5, 10, 15, 25];
@@ -118,7 +134,20 @@ angular.module('emmiManager')
                     }
                 }
             }
-            $scope.pageWhereBuilt = searchObject.p === 'c' ? 'client' : 'team';
+            // Set $scope.pageWhereBuilt
+            switch (searchObject.p) {
+            case 'c':
+              $scope.pageWhereBuilt = 'client';
+              break;
+            case 't':
+              $scope.pageWhereBuilt = 'team';
+              break;
+            case 'p':
+              $scope.pageWhereBuilt = 'provider';
+              break;
+            default:
+              break;
+            }
         }
 
         $scope.serializeToQueryString = function (query, page, status, sort, size){

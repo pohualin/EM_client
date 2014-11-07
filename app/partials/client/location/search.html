@@ -102,21 +102,12 @@
                                 <span data-translate="global.messages.search.no_results_found"></span>
                             </div>
                             <div class="row" data-ng-show="locations">
-                                <div class="col-md-4 col-sm-4 pull-right" data-ng-show="total > pageSizes[0] || links">
-                                    <ul class="pagination page-size pull-right">
-                                        <li data-ng-repeat="pageSize in pageSizes">
-                                            <a data-ng-if="pageSize != currentPageSize" href
-                                               data-ng-click="changePageSize(pageSize)">{{pageSize}}</a>
-                                            <span data-ng-if="pageSize === currentPageSize">[{{pageSize}}]</span>
-                                        </li>
-                                    </ul>
-                                </div>
                                 <div data-ng-show="links" class="col-md-8 col-sm-8">
                                     <ul class="pagination">
-                                        <li data-ng-repeat="link in links | orderBy:'order'">
-                                            <a data-ng-if="link.name != currentPage" href
+                                        <li data-ng-repeat="link in links | orderBy:'order'" data-ng-class="{'active': link.name == currentPage}">
+                                            <a data-ng-show="link.name != currentPage" href
                                                data-ng-click="fetchPage(link.href)">{{link.name}}</a>
-                                            <span data-ng-if="link.name == currentPage">[{{link.name}}]</span>
+                                            <span data-ng-hide="link.name != currentPage">{{link.name}}</span>
                                         </li>
                                     </ul>
                                 </div>
@@ -127,10 +118,10 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-link" data-ng-click="cancel()">cancel</button>
-                <button type="button" class="btn btn-default" data-ng-show="locations"
+                <button type="button" class="btn btn-default" data-ng-hide="isEmpty(changedLocations)"
                         data-ng-click="saveAndAddAnother()">Save & Add Another
                 </button>
-                <button type="button" class="btn btn-primary" data-ng-show="locations" data-ng-click="save()">Save
+                <button type="button" class="btn btn-primary" data-ng-hide="isEmpty(changedLocations)" data-ng-click="save()">Save
                 </button>
             </div>
         </div>

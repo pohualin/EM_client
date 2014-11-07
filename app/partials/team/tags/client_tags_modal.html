@@ -33,7 +33,7 @@
                             <button class="btn btn-link" data-ng-click="hideClientTags()">cancel</button>
                             <button class="btn btn-primary" type="button"
                                     data-ng-click="saveTags(clientForm.$valid);$hide()"
-                                    data-ng-disabled="!clientForm.$valid">
+                                    data-ng-disabled="!clientForm.$valid || !clientTagsHaveChanges">
                             <span>save</span>
 
                     </div>

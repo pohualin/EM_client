@@ -26,6 +26,11 @@ angular.module('emmiManager')
                 }
                 return deferred.promise;
             },
+            fetchPage: function (href) {
+              return $http.get(href).then(function (response) {
+                      return response.data;
+                  });
+            },
             fetchPageLink: function (href) {
                 return $http.get(href)
                     .then(function (response) {

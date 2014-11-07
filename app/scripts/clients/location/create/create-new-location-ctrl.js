@@ -44,6 +44,7 @@ angular.module('emmiManager')
                             content: ' <b>' +locationResource.entity.name + '</b> has been added successfully.',
                             container: '#remove-container',
                             type: 'success',
+                            placement: 'top',
                             show: true,
                             duration: 5,
                             dismissable: true
