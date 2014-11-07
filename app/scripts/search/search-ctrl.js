@@ -5,9 +5,10 @@ angular.module('emmiManager')
         $scope.changehref = function (option) {
             if (option === 'Clients') {
                 $location.path('/clients');
-            }
-            if (option === 'Teams') {
+            } else if (option === 'Teams') {
                 $location.path('/teams');
+            } else if (option === 'Providers') {
+                $location.path('/providers');
             }
         };
 
@@ -100,6 +101,8 @@ angular.module('emmiManager')
             $scope.option = 'Clients';
         } else if ($location.path() === '/teams'){
             $scope.option = 'Teams';
+        } else if ($location.path() === '/providers'){
+            $scope.option = 'Providers';
         }
 
         $scope.pageSizes = [5, 10, 15, 25];
@@ -131,7 +134,20 @@ angular.module('emmiManager')
                     }
                 }
             }
-            $scope.pageWhereBuilt = searchObject.p === 'c' ? 'client' : 'team';
+            // Set $scope.pageWhereBuilt
+            switch (searchObject.p) {
+            case 'c':
+              $scope.pageWhereBuilt = 'client';
+              break;
+            case 't':
+              $scope.pageWhereBuilt = 'team';
+              break;
+            case 'p':
+              $scope.pageWhereBuilt = 'provider';
+              break;
+            default:
+              break;
+            }
         }
 
         $scope.serializeToQueryString = function (query, page, status, sort, size){
