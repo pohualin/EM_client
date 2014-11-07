@@ -43,4 +43,42 @@ angular.module('emmiManager')
             }
         };
     }])
+
+    .directive('clientProviderDeleteWarning', ['$popover', '$timeout', 'ClientProviderService',
+        function ($popover, $timeout, ClientProviderService) {
+            var popover;
+            return {
+                restrict: 'EA',
+                scope: {
+                    onOk: '&onOk',
+                    toRemove: '='
+                },
+                link: function (scope, element) {
+                    element.on('click', function (event) {
+                        event.stopPropagation();
+                        ClientProviderService.findTeamsUsing(scope.toRemove).then(function(teams){
+                            if (teams && teams.length > 0) {
+                                scope.teamsBlocking = teams;
+                                if (popover){
+                                    popover.hide();
+                                }
+                                popover = $popover(element, {
+                                    title: 'Are you sure?',
+                                    scope: scope,
+                                    trigger: 'manual',
+                                    show: true,
+                                    placement: 'top',
+                                    target: element,
+                                    contentTemplate: 'partials/client/provider/delete_popover.tpl.html'
+                                });
+                            } else {
+                                $timeout(function () {
+                                    scope.onOk();
+                                });
+                            }
+                        });
+                    });
+                }
+            };
+        }])
 ;
