@@ -5,7 +5,7 @@ angular.module('emmiManager')
 /**
  *  Show list of clients
  */
-    .controller('ClientListCtrl', function ($scope, Client, $http, Session, UriTemplate, $controller, $location) {
+    .controller('ClientListCtrl', function ($scope, Client, $http, Session, UriTemplate, $controller) {
 
         $controller('ViewEditCommon', {$scope: $scope});
 

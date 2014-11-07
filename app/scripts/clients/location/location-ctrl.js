@@ -16,10 +16,6 @@ angular.module('emmiManager')
 
         $scope.client = Client.getClient();
 
-        $scope.isEmpty = function (obj) {
-            return angular.equals({}, obj);
-        };
-
         $scope.setBelongsToPropertiesFor = function (location) {
             if (!location.belongsTo) {
                 location.belongsToMutable = true;
