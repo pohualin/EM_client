@@ -15,6 +15,13 @@ angular.module('emmiManager')
 
     .controller('CommonPagination', ['$scope', function($scope){
 
+        $scope.isEmpty = function (obj) {
+            if (!obj){
+                return true;
+            }
+            return angular.equals({}, obj);
+        };
+
         $scope.handleResponse = function (responsePage, contentProperty) {
             if (responsePage) {
                 // sort the rows the way they exist on the response page
