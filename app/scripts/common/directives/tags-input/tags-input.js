@@ -283,7 +283,7 @@ tagsInput.directive('tagsInput', ['$timeout','$document','tagsInputConfig','focu
                 minTags: [Number],
                 maxTags: [Number],
                 displayProperty: [String, 'text'],
-                allowLeftoverText: [Boolean, false]
+                allowLeftoverText: [Boolean, true]
             });
 
             $scope.events = new SimplePubSub();
@@ -349,7 +349,6 @@ tagsInput.directive('tagsInput', ['$timeout','$document','tagsInputConfig','focu
                     if (options.addOnBlur && inputText.length) {
                         tagList.addText(inputText);
                     }
-
                     ngModelCtrl.$setValidity('leftoverText', options.allowLeftoverText ? true : !inputText);
                 });
 
