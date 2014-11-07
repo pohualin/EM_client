@@ -69,8 +69,9 @@ angular.module('emmiManager')
                         $alert({
                             title: ' ',
                             content: message,
-                            container: '#remove-container',
+                            container: 'body',
                             type: 'success',
+                            placement: 'top',
                             show: true,
                             duration: 5,
                             dismissable: true
@@ -84,6 +85,7 @@ angular.module('emmiManager')
                     $scope.providerQuery = null;
                     $scope.status = null;
                     $scope.searchPerformed = false;
+                    $scope.changedProviders = {};
                     $scope[managedProviderList] = null;
                     focus('ProviderSearchFocus');
                     var clientName = (Client.getClient().entity.name) ? '<b>' + Client.getClient().entity.name + '</b>.' : 'the client.',

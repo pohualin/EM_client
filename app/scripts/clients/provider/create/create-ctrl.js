@@ -47,8 +47,9 @@ angular.module('emmiManager')
                             $alert({
                                 title: ' ',
                                 content: ' <b>' + providerName + '</b> has been added successfully.',
-                                container: '#remove-container',
+                                container: 'body',
                                 type: 'success',
+                                placement: 'top',
                                 show: true,
                                 duration: 5,
                                 dismissable: true

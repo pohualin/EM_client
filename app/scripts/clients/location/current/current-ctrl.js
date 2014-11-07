@@ -48,6 +48,7 @@ angular.module('emmiManager')
                 content: 'The location <b>' + locationResource.location.entity.name + '</b> has been successfully removed.',
                 container: '#remove-container',
                 type: 'success',
+                placement: 'top',
                 show: true,
                 duration: 5,
                 dismissable: true

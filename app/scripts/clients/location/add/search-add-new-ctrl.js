@@ -90,6 +90,7 @@ angular.module('emmiManager')
                         content: message,
                         container: '#remove-container',
                         type: 'success',
+                        placement: 'top',
                         show: true,
                         duration: 5,
                         dismissable: true
