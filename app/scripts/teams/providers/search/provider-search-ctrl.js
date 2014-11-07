@@ -126,7 +126,7 @@ angular.module('emmiManager')
                     }
                 }
                 $scope.load = providerPage.link.self;
-                $scope.currentPage = providerPage.page.number;
+                $scope.currentPage = providerPage.page.number + 1;
                 $scope.currentPageSize = providerPage.page.size;
                 $scope.pageSizes = [5, 10, 15, 25];
                 $scope.status = providerPage.filter.status;
