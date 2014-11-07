@@ -33,7 +33,7 @@
                                 <div class="btn btn-default" data-ng-click="search()">
                                     <span data-translate="team_locations_search_page.search_dialog.go_label" ></span>
                                 </div>
-                                <div class="btn btn-link" data-ng-click="cleanSearch()">
+                                <div class="btn btn-link" data-ng-click="cleanSearch()" data-ng-hide="allLocationsSearch && clientLocationsSearch">
                                     <span data-translate="team_locations_search_page.search_dialog.clear_search" ></span>
                                 </div>
 
