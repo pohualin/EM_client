@@ -24,9 +24,9 @@ angular.module('emmiManager')
 
                 angular.forEach( $scope.clientLocations , function (location) {
                     if ($scope.teamLocations[location.location.entity.id]) {
-                        location.location.entity.isNewAdd = false;
-                        location.location.entity.disabled = true;
-                        location.location.entity.checked = true;                
+                        $scope.teamLocations[location.location.entity.id].isNewAdd = false;
+                        $scope.teamLocations[location.location.entity.id].disabled = true;
+                        $scope.teamLocations[location.location.entity.id].checked = true;                
                         $scope.clientLocationsSelected.push(location);
                     }
                 }); 
@@ -69,7 +69,7 @@ angular.module('emmiManager')
         $scope.setLocationChecked = function () {
             angular.forEach( $scope.locations , function (location) {
                 if ($scope.teamLocations[location.location.entity.id]) {
-                    location.location.entity.disabled = true;
+                    location.location.entity.disabled = !$scope.teamLocations[location.location.entity.id].isNewAdd ;
                     location.location.entity.checked = true;
                 }
             });

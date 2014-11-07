@@ -42,6 +42,20 @@ angular.module('emmiManager')
                 TeamLocation.loadTeamLocations($scope,locationsToAdd).then(function(pageLocations) {
                     $scope.handleResponse(pageLocations, managedLocationList);
                 });
+
+                var message = (locationsToAdd.length === 1) ?
+                    ' <b>' + locationsToAdd[0].name + '</b> has been added successfully.' :
+                    'The new locations have been added successfully.';
+
+                $alert({
+                    title: ' ',
+                    content: message,
+                    container: '#remove-container',
+                    type: 'success',
+                    show: true,
+                    duration: 5,
+                    dismissable: true
+                });                
             }
             
             addNewLocationsModal.$promise.then(addNewLocationsModal.hide);
