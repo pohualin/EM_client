@@ -49,6 +49,12 @@ angular.module('emmiManager')
             }
         };
 
+        $scope.setCheckboxesForChanged = function(clientLocationResources) {
+            angular.forEach(clientLocationResources, function(clientLocationResource){
+                clientLocationResource.location.entity.newlocation = $scope.changedLocations[clientLocationResource.location.entity.id] ? true : false;
+            });
+        };
+
         /**
          * Adds locations to the client
          * @param addAnother whether or not we're going to add more after this save
@@ -59,6 +65,9 @@ angular.module('emmiManager')
             angular.forEach($scope.changedLocations, function (locationResource) {
                 newClientLocations.push(locationResource.entity);
             });
+
+            // Reset changedLocations to empty
+            $scope.changedLocations = {};
             // save the new locations
             return Location.addLocationsToClient(Client.getClient(), newClientLocations).then(function(){
                 // reload the existing locations
@@ -81,6 +90,7 @@ angular.module('emmiManager')
                         content: message,
                         container: '#remove-container',
                         type: 'success',
+                        placement: 'top',
                         show: true,
                         duration: 5,
                         dismissable: true
@@ -132,6 +142,7 @@ angular.module('emmiManager')
             $scope.loading = true;
             Location.find(Client.getClient(), $scope.locationQuery, $scope.status, $scope.sortProperty, $scope.currentPageSize).then(function (locationPage) {
                 $scope.handleResponse(locationPage, managedLocationList);
+                $scope.setCheckboxesForChanged($scope[managedLocationList]);
             }, function () {
                 // error happened
                 $scope.loading = false;
@@ -142,6 +153,7 @@ angular.module('emmiManager')
             $scope.loading = true;
             Location.fetchPageLink(href).then(function (locationPage) {
                 $scope.handleResponse(locationPage, managedLocationList);
+                $scope.setCheckboxesForChanged($scope[managedLocationList]);
             }, function () {
                 // error happened
                 $scope.loading = false;
@@ -152,6 +164,7 @@ angular.module('emmiManager')
             $scope.loading = true;
             Location.find(Client.getClient(), $scope.locationQuery, $scope.status, $scope.sortProperty, pageSize).then(function (locationPage) {
                 $scope.handleResponse(locationPage, managedLocationList);
+                $scope.setCheckboxesForChanged($scope[managedLocationList]);
             }, function () {
                 // error happened
                 $scope.loading = false;
@@ -178,6 +191,7 @@ angular.module('emmiManager')
             $scope.loading = true;
             Location.find(Client.getClient(), $scope.locationQuery, $scope.status, sort, $scope.currentPageSize).then(function (locationPage) {
                 $scope.handleResponse(locationPage, managedLocationList);
+                $scope.setCheckboxesForChanged($scope[managedLocationList]);
             }, function () {
                 // error happened
                 $scope.loading = false;
@@ -194,5 +208,6 @@ angular.module('emmiManager')
         $scope.hideNewLocationModal = function () {
             newLocationModal.$promise.then(newLocationModal.destroy);
         };
+
     })
 ;

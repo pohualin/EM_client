@@ -33,6 +33,12 @@ angular.module('emmiManager')
                 }
             };
 
+            $scope.setCheckboxesForChanged = function(providers) {
+                angular.forEach(providers, function(clientProvider){
+                    clientProvider.provider.entity.newprovider = $scope.changedProviders[clientProvider.provider.entity.id] ? true : false;
+                });
+            };
+
             /**
              * Adds providers to the client
              * @param addAnother whether or not we're going to add more after this save
@@ -63,8 +69,9 @@ angular.module('emmiManager')
                         $alert({
                             title: ' ',
                             content: message,
-                            container: '#remove-container',
+                            container: 'body',
                             type: 'success',
+                            placement: 'top',
                             show: true,
                             duration: 5,
                             dismissable: true
@@ -78,6 +85,7 @@ angular.module('emmiManager')
                     $scope.providerQuery = null;
                     $scope.status = null;
                     $scope.searchPerformed = false;
+                    $scope.changedProviders = {};
                     $scope[managedProviderList] = null;
                     focus('ProviderSearchFocus');
                     var clientName = (Client.getClient().entity.name) ? '<b>' + Client.getClient().entity.name + '</b>.' : 'the client.',
@@ -116,6 +124,7 @@ angular.module('emmiManager')
                 $scope.loading = true;
                 ClientProviderService.find(Client.getClient(), $scope.providerQuery, $scope.status, $scope.sortProperty, $scope.currentPageSize).then(function (providerPage) {
                     $scope.handleResponse(providerPage, managedProviderList);
+                    $scope.setCheckboxesForChanged($scope[managedProviderList]);
                 }, function () {
                     // error happened
                     $scope.loading = false;
@@ -126,6 +135,7 @@ angular.module('emmiManager')
                 $scope.loading = true;
                 ClientProviderService.fetchPageLink(href).then(function (providerPage) {
                     $scope.handleResponse(providerPage, managedProviderList);
+                    $scope.setCheckboxesForChanged($scope[managedProviderList]);
                 }, function () {
                     // error happened
                     $scope.loading = false;
@@ -136,6 +146,7 @@ angular.module('emmiManager')
                 $scope.loading = true;
                 ClientProviderService.find(Client.getClient(), $scope.providerQuery, $scope.status, $scope.sortProperty, pageSize).then(function (providerPage) {
                     $scope.handleResponse(providerPage, managedProviderList);
+                    $scope.setCheckboxesForChanged($scope[managedProviderList]);
                 }, function () {
                     // error happened
                     $scope.loading = false;
@@ -162,6 +173,7 @@ angular.module('emmiManager')
                 $scope.loading = true;
                 ClientProviderService.find(Client.getClient(), $scope.providerQuery, $scope.status, sort, $scope.currentPageSize).then(function (providerPage) {
                     $scope.handleResponse(providerPage, managedProviderList);
+                    $scope.setCheckboxesForChanged($scope[managedProviderList]);
                 }, function () {
                     // error happened
                     $scope.loading = false;

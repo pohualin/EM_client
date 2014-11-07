@@ -93,6 +93,21 @@ angular.module('emmiManager')
                         return response.data;
                     });
             },
+            findTeamsUsing: function (clientProviderResource) {
+                var responseArray = [];
+                return $http.get(UriTemplate.create(clientProviderResource.link.teams).stringify())
+                    .then(function addToResponseArray(response) {
+                        angular.forEach(response.data.content, function (teamResource) {
+                            responseArray.push(teamResource.entity);
+                        });
+                        if (response.data.link && response.data.link['page-next']) {
+                            $http.get(response.data.link['page-next']).then(function (response) {
+                                addToResponseArray(response);
+                            });
+                        }
+                        return responseArray;
+                    });
+            },
             addProvidersToClient: function (clientResource, providers) {
                 return $http.post(UriTemplate.create(clientResource.link.possibleProviders).stringify(), providers)
                     .then(function (response) {

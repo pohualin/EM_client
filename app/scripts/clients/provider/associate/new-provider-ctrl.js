@@ -19,7 +19,7 @@ angular.module('emmiManager')
             });
 
             $scope.createNewProvider = function () {
-                $scope.$hide();
+                $scope.hideProviderAssociationModal();
                 newProviderModal.$promise.then(newProviderModal.show);
             };
 

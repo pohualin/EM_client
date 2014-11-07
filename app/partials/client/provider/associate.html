@@ -113,10 +113,10 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-link" data-ng-click="cancel()">cancel</button>
-                <button type="button" class="btn btn-default" data-ng-show="providers"
+                <button type="button" class="btn btn-default" data-ng-hide="isEmpty(changedProviders)"
                         data-ng-click="saveAndAddAnother()">Save & Add Another
                 </button>
-                <button type="button" class="btn btn-primary" data-ng-show="providers" data-ng-click="save()">Save
+                <button type="button" class="btn btn-primary" data-ng-hide="isEmpty(changedProviders)" data-ng-click="save()">Save
                 </button>
             </div>
         </div>
