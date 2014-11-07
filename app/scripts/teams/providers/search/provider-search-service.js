@@ -32,12 +32,19 @@ angular.module('emmiManager')
                         return response.data;
                     });
             },
-            updateProviderTeamAssociations: function (providersToAssociateToCurrentTeam, teamResource) {
-                return $http.post(UriTemplate.create(teamResource.link.teamProviders).stringify(), providersToAssociateToCurrentTeam)
+            updateProviderTeamAssociations: function (teamProviderTeamLocationSaveReq, teamResource) {
+                return $http.post(UriTemplate.create(teamResource.link.teamProviders).stringify(), teamProviderTeamLocationSaveReq)
                     .success(function (response) {
                         return response;
                     });
-            }
+            },
+        	fetchLocationsForTeam : function (teamResource) {
+        		return $http.get(UriTemplate.create(teamResource.link.teamLocations).stringify())
+                .success(function (response) {
+                    return response;
+                });
+        	}
+
 		};
 	})
 

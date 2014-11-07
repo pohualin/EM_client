@@ -59,7 +59,7 @@
                             <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0" cellspacing="0" data-ng-show="searchedProvidersList">
                                 <tr>
                                     <th class="sort col-sm-1">&nbsp;</th>
-                                    <th class="sort col-sm-3" data-ng-click="sort('normalizedName')">
+                                    <th class="sort col-sm-2" data-ng-click="sort('normalizedName')">
                                         Name
                                         <span data-ng-show="sortProperty.property === 'normalizedName'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
                                     </th>
@@ -70,13 +70,22 @@
                                     <th class="sort col-sm-3" data-ng-click="sort('email')">
                                         Email
                                         <span data-ng-show="sortProperty.property === 'email'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
-                                    </th>
+                                    </th >
+                                    <th class="sort col-sm-3"> Locations
+                                </th>
                                 </tr>
                                 <tr data-ng-repeat="provider in searchedProvidersList" data-ng-class="provider.entity.disabled ? 'text-muted' : ''">
-									<td><input type="checkbox" data-ng-model="provider.entity.checked"  data-ng-disabled="provider.entity.disabled" ng-change="onCheckboxChange(provider)"></td>
+									<td><input type="checkbox" data-ng-model="provider.entity.checked"  data-ng-disabled="provider.entity.disabled"  data-ng-change="onCheckboxChange(provider)"></td>
 									<td>{{provider.entity.firstName}} {{provider.entity.middleName}} {{provider.entity.lastName}}</td>
                                     <td>{{provider.entity.specialty.name}}</td>
                                     <td>{{provider.entity.email}}</td>
+                                    <td><div data-ng-show="provider.entity.showLocations">
+                                    		<select data-chosen data-placeholder="Use: all locations" multiple data-ng-model="provider.entity.teamLocations"
+                							data-ng-options="location.entity.location.name group by location.name for location in teamLocations | orderBy:'location.entity.location.name' track by location.entity.id" 
+               								class="form-control" data-ng-change="updateTeamLocationsForProvider(provider)" >
+               								 </select>
+               							</div>
+                                	</td>
                                 </tr>
                             </table>
                             <div data-ng-hide="searchedProvidersList">
