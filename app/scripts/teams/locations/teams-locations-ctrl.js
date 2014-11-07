@@ -24,10 +24,6 @@ angular.module('emmiManager')
             });
         };
 
-        TeamLocation.loadTeamLocationsSimple($scope, []).then(function(pageLocations) {
-            $scope.handleResponse(pageLocations, managedLocationList);
-        });
-
         $scope.addLocations = function () {
             addNewLocationsModal.$promise.then(addNewLocationsModal.show);
         };
@@ -76,6 +72,12 @@ angular.module('emmiManager')
         };        
 
         var addNewLocationsModal = $modal({scope: $scope, template: 'partials/team/locations/search.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
+        
+        if ($scope.teamClientResource.teamResource.entity.id) { // to check is the team is created
+            TeamLocation.loadTeamLocationsSimple($scope, []).then(function(pageLocations) {
+                $scope.handleResponse(pageLocations, managedLocationList);
+            });
+        }
 
     })
 
