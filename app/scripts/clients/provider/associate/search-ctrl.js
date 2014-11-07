@@ -35,7 +35,7 @@ angular.module('emmiManager')
 
             $scope.setCheckboxesForChanged = function(providers) {
                 angular.forEach(providers, function(clientProvider){
-                    clientProvider.provider.entity.newprovider = $scope.changedProviders[clientProvider.provider.entity.id] != null;
+                    clientProvider.provider.entity.newprovider = $scope.changedProviders[clientProvider.provider.entity.id] !== null;
                 });
             };
 
