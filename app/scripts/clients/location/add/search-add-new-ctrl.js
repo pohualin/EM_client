@@ -51,7 +51,7 @@ angular.module('emmiManager')
 
         $scope.setCheckboxesForChanged = function(clientLocationResources) {
             angular.forEach(clientLocationResources, function(clientLocationResource){
-                clientLocationResource.location.entity.newlocation = $scope.changedLocations[clientLocationResource.location.entity.id] !== null;
+                clientLocationResource.location.entity.newlocation = $scope.changedLocations[clientLocationResource.location.entity.id] ? true : false;
             });
         };
 
