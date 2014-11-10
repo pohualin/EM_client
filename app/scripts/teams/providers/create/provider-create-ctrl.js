@@ -4,14 +4,8 @@ angular.module('emmiManager')
 	.controller('TeamAddProvidersController', function ($scope, $modal, $controller) {
         $controller('TeamProviderCommon', {$scope: $scope});
 
-		   var addNewProviderModal = $modal({scope: $scope, template: 'partials/team/provider/search.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
-
 	        $scope.addProviders = function () {
-	        	addNewProviderModal.$promise.then(addNewProviderModal.show);
-	        };
-	        
-	        $scope.hideProviderSearchModal = function(){
-	        	addNewProviderModal.hide();
+			   $modal({scope: $scope, template: 'partials/team/provider/search.html', animation: 'none', backdropAnimation: 'emmi-fade', show: true, backdrop: 'static'});
 	        };
 	})
 	
@@ -30,13 +24,13 @@ angular.module('emmiManager')
             $scope.providerFormSubmitted = true;
         	if (isValid) {
 	        	ProviderCreate.create($scope.provider, $scope.teamResource).then(function(response){
-	                $scope.hideNewProviderModal();
+	                $scope.$hide();
 	                ProviderView.allProvidersForTeam($scope.teamResource).then(function(response){
 	    	        	$scope.teamResource.teamProviders = response;
+	    	        	if (addAnother) {
+	                        $scope.addProviders();
+	                    } 
 	                });
-	                if (addAnother) {
-                        $scope.addProviders();
-                    } 
 	        	});
 	        }
         };

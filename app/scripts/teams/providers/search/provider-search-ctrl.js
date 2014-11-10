@@ -1,7 +1,7 @@
 'use strict';
 angular.module('emmiManager')
 
-	.controller('ProviderSearchController', function($scope, $modal, $controller, ProviderSearch){
+	.controller('ProviderSearchController', function($scope, $modal, $controller, ProviderSearch, ProviderView){
         $controller('TeamProviderCommon', {$scope: $scope});
         
         $scope.teamProviderTeamLocationSaveRequest = [];
@@ -17,23 +17,20 @@ angular.module('emmiManager')
         ProviderSearch.fetchLocationsForTeam($scope.teamResource).then( function (response){
         	$scope.teamLocations = response.data.content;
     	});
-        
-        var newProviderModal = $modal({scope: $scope, template: 'partials/team/provider/new.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
 
         $scope.createNewProvider = function () {
-            $scope.hideProviderSearchModal();
-        	newProviderModal.$promise.then(newProviderModal.show);
+        	$scope.$hide();
+        	$modal({scope: $scope, template: 'partials/team/provider/new.html', animation: 'none', backdropAnimation: 'emmi-fade', backdrop: 'static'});
         };
 
         $scope.hideNewProviderModal = function () {
-        	newProviderModal.$promise.then(newProviderModal.destroy);
+        	$scope.$hide();
         };
         
         $scope.search = function (){
             $scope.noSearch = false;
-        	ProviderSearch.search($scope.providerQuery).then( function (providerPage){
+        	ProviderSearch.search($scope.providerQuery, $scope.status).then( function (providerPage){
                 $scope.handleResponse(providerPage, 'searchedProvidersList');
-                $scope.removeStatusFilterAndTotal = $scope.total <= 0;
         	});
         };
 
@@ -133,6 +130,9 @@ angular.module('emmiManager')
             } else {
                 $scope.total = 0;
                 $scope[providerPropertyName] = null;
+                if($scope.status === undefined){
+                	 $scope.status = 'ACTIVE_ONLY';
+                }
             }
             $scope.noSearch = false;
             $scope.loading = false;
@@ -156,11 +156,13 @@ angular.module('emmiManager')
         $scope.associateSelectedProvidersToTeam = function (addAnother) {
         	if ($scope.teamProviderTeamLocationSaveRequest.length > 0) {
 	        	ProviderSearch.updateProviderTeamAssociations($scope.teamProviderTeamLocationSaveRequest, $scope.teamResource).then(function (response) {
-	        		$scope.hideProviderSearchModal();
-	        		$scope.allProvidersForTeam();
-	        		if (addAnother) {
-	        			$scope.addProviders();
-	        		}
+	        		$scope.$hide();
+	            	ProviderView.allProvidersForTeam($scope.teamResource).then(function(response){
+	            		$scope.teamResource.teamProviders = response;
+	        			if (addAnother) {
+	        				$scope.addProviders();   
+		        		}
+	            	});
 	        	});
         	}
         };
