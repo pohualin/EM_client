@@ -179,9 +179,6 @@ angular.module('emmiManager')
             		 provider.entity.showLocations = true;
         		 }
         		 request.provider = provider.entity; 
-        		 angular.forEach($scope.teamLocations, function(teamLocation){
-        			 request.teamLocations.push(teamLocation.entity);
-        		 });
         		 $scope.teamProviderTeamLocationSaveRequest.push(request);
         	 } 
         	 else {
