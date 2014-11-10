@@ -32,7 +32,7 @@
             </div>
             <div class="modal-body" data-ng-hide="noSearch">
                 <div>
-                    <div class="row" data-ng-hide="removeStatusFilterAndTotal">
+                    <div class="row">
                         <div class="col-md-12 col-sm-12">
                             <div class="pull-right">
                                 {{total}}
@@ -51,6 +51,10 @@
                             </form>
                         </div>
 
+                    </div>
+                    <br/>
+                    <div data-ng-hide="searchedProvidersList">
+                    	<span data-translate="global.messages.search.no_results_found"></span>
                     </div>
                     <br/>
 
@@ -88,9 +92,6 @@
                                 	</td>
                                 </tr>
                             </table>
-                            <div data-ng-hide="searchedProvidersList">
-                                <span data-translate="global.messages.search.no_results_found"></span>
-                            </div>
                             <div class="row" data-ng-show="searchedProvidersList">
                                 <div data-ng-show="links" class="col-md-8 col-sm-8">
                                     <ul class="pagination">
