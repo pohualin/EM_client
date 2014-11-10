@@ -14,13 +14,11 @@ angular.module('emmiManager')
                         var isNewAdd =false;
                         angular.forEach(page.content, function (teamLocation) {
                             //search if the location is in the locationsToAdd list
+                            isNewAdd = false;
                             angular.forEach(locationsToAdd, function (location) {
                                 if (location.id === teamLocation.entity.location.id) {
                                     isNewAdd = true;
-                                } else {
-                                    isNewAdd = false;
-                                }
-
+                                } 
                             });
 
                             //split the locations, recently added, and already added

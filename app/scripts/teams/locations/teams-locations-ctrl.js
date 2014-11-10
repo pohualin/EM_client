@@ -4,7 +4,25 @@ angular.module('emmiManager')
 
     .controller('TeamsLocationsController', function ($scope, $http, Session, UriTemplate, $controller, $modal, $alert, Location, TeamLocation) {
 
-        $controller('ClientLocationsController', {$scope: $scope}); //here is the editlocation controller
+        $controller('LocationCommon', {$scope: $scope});
+
+        $controller('CommonPagination', {$scope: $scope});
+
+        var editLocationModal = $modal({scope: $scope, template: 'partials/client/location/edit.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
+
+        $scope.editLocation = function (location) {
+            // create a copy for editing
+            $scope.location = angular.copy(location);
+
+            // save the original for overlay if save is clicked
+            $scope.originalLocation = location;
+
+            // set belongsTo property
+            $scope.setBelongsToPropertiesFor($scope.location);
+
+            // show the dialog box
+            editLocationModal.$promise.then(editLocationModal.show);
+        };
 
         var managedLocationList = 'locations';
         
@@ -42,6 +60,20 @@ angular.module('emmiManager')
                 TeamLocation.loadTeamLocations($scope,locationsToAdd).then(function(pageLocations) {
                     $scope.handleResponse(pageLocations, managedLocationList);
                 });
+
+                var message = (locationsToAdd.length === 1) ?
+                    ' <b>' + locationsToAdd[0].name + '</b> has been added successfully.' :
+                    'The new locations have been added successfully.';
+
+                $alert({
+                    title: ' ',
+                    content: message,
+                    container: '#remove-container',
+                    type: 'success',
+                    show: true,
+                    duration: 5,
+                    dismissable: true
+                });                
             }
             
             addNewLocationsModal.$promise.then(addNewLocationsModal.hide);
