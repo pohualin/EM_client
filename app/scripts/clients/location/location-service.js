@@ -1,7 +1,7 @@
 'use strict';
 angular.module('emmiManager')
-    .service('Location', function ($http, $q, Session, UriTemplate, arrays, Client) {
-        var referenceData, query;
+    .service('Location', function ($http, $q, Session, UriTemplate, arrays) {
+        var referenceData;
 
         function addSortIndex(entityPage, sort) {
             sort = sort || 0;
@@ -13,7 +13,13 @@ angular.module('emmiManager')
             }
             return sort;
         }
-
+        function convertPageContentLinks(page){
+            if (page) {
+                angular.forEach(page, function (clientProviderResource) {
+                    clientProviderResource.link = arrays.convertToObject('rel', 'href', clientProviderResource.link);
+                });
+            }
+        }
         return {
             find: function (clientResource, query, status, sort, pageSize) {
                 var uri = clientResource ? clientResource.link.possibleLocations: Session.link.locations;
@@ -90,12 +96,12 @@ angular.module('emmiManager')
             findForClient: function (clientResource, pageSize) {
                 return $http.get(UriTemplate.create(clientResource.link.locations).stringify({size: pageSize}))
                     .then(function pageResponse(response) {
+                        convertPageContentLinks(response.data.content);
                         return response.data;
                     });
             },
             removeLocation: function (locationResource) {
-                locationResource.links = arrays.convertToObject('rel', 'href', locationResource.link);
-                return $http.delete(UriTemplate.create(locationResource.links.self).stringify())
+                return $http.delete(UriTemplate.create(locationResource.link.self).stringify())
                     .then(function (response) {
                         return response.data;
                     });
