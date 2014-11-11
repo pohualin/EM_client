@@ -2,7 +2,7 @@
 
 angular.module('emmiManager')
 
-    .controller('SearchTeamsLocationsController', function ($scope, $translate, $controller,$filter,TeamSearchLocation, Location, Client) {
+    .controller('SearchTeamsLocationsController', function ($scope, $translate, $controller,$filter,$modal,TeamSearchLocation, Location, Client) {
 
         $scope.pageSizes = [5, 10, 15, 25];
 
@@ -183,6 +183,17 @@ angular.module('emmiManager')
                 }
             });
 
+        };
+
+        var newLocationModal = $modal({scope: $scope, template: 'partials/team/locations/new.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
+
+        $scope.createNewLocation = function () {
+            $scope.hidePopupLocations();
+            newLocationModal.$promise.then(newLocationModal.show);
+        };
+
+        $scope.hideNewLocationModal = function () {
+            newLocationModal.$promise.then(newLocationModal.destroy);
         };
 
         $scope.cleanSearch();
