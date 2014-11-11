@@ -18,7 +18,11 @@
             <td class="col-sm-2">{{clientLocation.location.entity.city}}</td>
             <td class="col-sm-1">{{clientLocation.location.entity.state}}</td>
             <td class="col-sm-3">
-                <a href data-ng-click="editLocation(clientLocation.location.entity)">edit</a><span class="text-muted">&nbsp;|&nbsp;</span><a href data-ng-click="removeExistingLocation(clientLocation)">remove from client</a>
+                <a href data-ng-click="editLocation(clientLocation.location.entity)">edit</a>
+                <span class="text-muted">&nbsp;|&nbsp;</span>
+                <a href data-to-remove="clientLocation"
+                   data-on-ok="removeExistingLocation(clientLocation)"
+                   data-client-location-delete-warning="">remove from client</a>
             </td>
         </tr>
     </table>
