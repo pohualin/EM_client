@@ -1,13 +1,13 @@
 'use strict';
 angular.module('emmiManager')
     .service('ClientProviderService', function ($http, $q, Session, UriTemplate, arrays) {
-        var convertPageContentLinks = function (page){
+        function convertPageContentLinks(page){
             if (page) {
                 angular.forEach(page, function (clientProviderResource) {
                     clientProviderResource.link = arrays.convertToObject('rel', 'href', clientProviderResource.link);
                 });
             }
-        };
+        }
         return {
             find: function (clientResource, query, status, sort, pageSize) {
                 return $http.get(UriTemplate.create(clientResource.link.possibleProviders).stringify({
