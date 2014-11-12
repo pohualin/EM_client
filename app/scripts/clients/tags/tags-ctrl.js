@@ -116,6 +116,23 @@ angular.module('emmiManager')
 
     })
 
+    .directive('preventBackspaceNavigation', [function () {
+        return {
+            restrict: 'EA',
+            link: function (scope, element) {
+                element.bind('keydown keypress', function (event) {
+                    if(event.which === 8) {
+                        var d = event.srcElement || event.target;
+                        if (!(d.tagName.toUpperCase() === 'INPUT' && d.type.toUpperCase() === 'TEXT'))
+                        {
+                            event.preventDefault();
+                        }
+                    }
+                });
+            }
+        };
+    }])
+
     .directive('popoverToggle', ['$timeout', function ($timeout) {
         return {
             restrict: 'EA',
