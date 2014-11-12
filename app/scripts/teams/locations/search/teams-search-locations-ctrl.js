@@ -4,13 +4,21 @@ angular.module('emmiManager')
 
     .controller('SearchTeamsLocationsController', function ($scope, $translate, $controller,$filter,$modal,TeamSearchLocation, Location, Client) {
 
-        $scope.pageSizes = [5, 10, 15, 25];
-
         $controller('LocationCommon', {$scope: $scope});
 
         $controller('CommonPagination', {$scope: $scope});
 
         var managedLocationList = 'locations';
+
+        $scope.hasLocationsAdded = function() {
+            var resp = false;
+            angular.forEach( $scope.teamLocations , function (location) {
+                if (location.isNewAdd) {
+                    resp = true;
+                }
+            });
+            return resp;
+        };
 
         $scope.cleanSearch = function() {
             $scope.clientLocationsSearch = true;
