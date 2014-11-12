@@ -187,15 +187,15 @@ angular.module('emmiManager')
 
         };
 
-        var newLocationModal = $modal({scope: $scope, template: 'partials/team/locations/new.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
+        var newTeamLocationModal = $modal({scope: $scope, template: 'partials/team/locations/new.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
 
-        $scope.createNewLocation = function () {
+        $scope.createNewTeamLocation = function () {
             $scope.hidePopupLocations();
-            newLocationModal.$promise.then(newLocationModal.show);
+            newTeamLocationModal.$promise.then(newTeamLocationModal.show);
         };
 
         $scope.hideNewLocationModal = function () {
-            newLocationModal.$promise.then(newLocationModal.destroy);
+            newTeamLocationModal.$promise.then(newTeamLocationModal.destroy);
         };
 
         $scope.cleanSearch();

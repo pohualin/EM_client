@@ -22,8 +22,6 @@ angular.module('emmiManager')
             if (isValid) {
                 var toBeSaved = $scope.location;
                 Location.create(Client.getClient(), toBeSaved).then(function (location) {
-                    // reload the existing locations
-                    //$scope.performSearch();
                     var locationsToAdd = [];
                     locationsToAdd.push(location.data.location.entity);
 
@@ -43,9 +41,7 @@ angular.module('emmiManager')
                                 duration: 5,
                                 dismissable: true
                             });
-                        } else {
-                            $scope.save(true, locationsToAdd);
-                        }                        
+                        }                     
                     });
 
                 });
