@@ -4,13 +4,21 @@ angular.module('emmiManager')
 
     .controller('SearchTeamsLocationsController', function ($scope, $translate, $controller,$filter,$modal,TeamSearchLocation, Location, Client) {
 
-        $scope.pageSizes = [5, 10, 15, 25];
-
         $controller('LocationCommon', {$scope: $scope});
 
         $controller('CommonPagination', {$scope: $scope});
 
         var managedLocationList = 'locations';
+
+        $scope.hasLocationsAdded = function() {
+            var resp = false;
+            angular.forEach( $scope.teamLocations , function (location) {
+                if (location.isNewAdd) {
+                    resp = true;
+                }
+            });
+            return resp;
+        };
 
         $scope.cleanSearch = function() {
             $scope.clientLocationsSearch = true;
@@ -187,15 +195,15 @@ angular.module('emmiManager')
 
         };
 
-        var newLocationModal = $modal({scope: $scope, template: 'partials/team/locations/new.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
+        var newTeamLocationModal = $modal({scope: $scope, template: 'partials/team/locations/new.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
 
-        $scope.createNewLocation = function () {
+        $scope.createNewTeamLocation = function () {
             $scope.hidePopupLocations();
-            newLocationModal.$promise.then(newLocationModal.show);
+            newTeamLocationModal.$promise.then(newTeamLocationModal.show);
         };
 
         $scope.hideNewLocationModal = function () {
-            newLocationModal.$promise.then(newLocationModal.destroy);
+            newTeamLocationModal.$promise.then(newTeamLocationModal.destroy);
         };
 
         $scope.cleanSearch();
