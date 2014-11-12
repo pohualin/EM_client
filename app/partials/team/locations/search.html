@@ -22,15 +22,15 @@
                                     </select>
                                 </div>
                             </div>
-                         <form ng-submit="search()" >
+                         <form name="searchForm" ng-submit="search(searchForm.locationQuery.$valid)" >
                             <div class="form-group" data-ng-show="allLocationsSearch">
                                 <label for="locationQuery" data-ng-hide ="clientHasLocations() && clientLocationsSearch" class="col-sm-4 control-label" data-translate="team_locations_search_page.search_dialog.search_label_only"></label>
                                 <label for="locationQuery" data-ng-show ="clientHasLocations() && clientLocationsSearch" class="col-sm-4 control-label" data-translate="team_locations_search_page.search_dialog.search_label"></label>
                                 <div class="col-sm-6">
-                                    <input class="form-control" id="locationQuery" data-ng-model="locationQuery" data-clear-search
-                                       type="text" placeholder="{{'team_locations_search_page.search_dialog.placeholder_label' | translate}}"  data-auto-focus />
+                                    <input class="form-control" id="locationQuery" name="locationQuery" data-ng-model="locationQuery" data-clear-search
+                                       type="text" placeholder="{{'team_locations_search_page.search_dialog.placeholder_label' | translate}}"  data-auto-focus required/>
                                 </div>
-                                <div class="btn btn-default" data-ng-click="search()">
+                                <div class="btn btn-default" data-ng-click="search(searchForm.locationQuery.$valid)" data-ng-disabled="searchForm.locationQuery.$invalid">
                                     <span data-translate="team_locations_search_page.search_dialog.go_label" ></span>
                                 </div>
                                 <div class="btn btn-link" data-ng-click="cleanSearch()" data-ng-hide="allLocationsSearch && clientLocationsSearch">
