@@ -126,16 +126,18 @@ angular.module('emmiManager')
             $scope.$hide();
         };
 
-        $scope.search = function () {
-            $scope.changedLocations = {};
-            $scope.loading = true;
-            Location.find(Client.getClient(), $scope.locationQuery).then(function (locationPage) {
-                $scope.handleResponse(locationPage, managedLocationList);
-                $scope.removeStatusFilterAndTotal = $scope.total <= 0;
-            }, function () {
-                // error happened
-                $scope.loading = false;
-            });
+        $scope.search = function (formValid) {
+            if (formValid) {
+                $scope.changedLocations = {};
+                $scope.loading = true;
+                Location.find(Client.getClient(), $scope.locationQuery).then(function (locationPage) {
+                    $scope.handleResponse(locationPage, managedLocationList);
+                    $scope.removeStatusFilterAndTotal = $scope.total <= 0;
+                }, function () {
+                    // error happened
+                    $scope.loading = false;
+                });
+            }
         };
 
         $scope.statusChange = function () {

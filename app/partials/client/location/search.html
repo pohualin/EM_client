@@ -9,16 +9,16 @@
                 </div>
                 <div class="row">
                     <div class="col-md-9 col-sm-9">
-                        <form ng-submit="search()">
+                        <form name="searchForm" ng-submit="search(searchForm.locationQuery.$valid)">
                             <div class="form-group">
                                 <label class="sr-only" for="locationQuery">Search locations:</label>
 
                                 <div class="input-group">
-                                    <input class="form-control" id="locationQuery" data-ng-model="locationQuery"
+                                    <input class="form-control" name="locationQuery" id="locationQuery" data-ng-model="locationQuery"
                                            type="text"
-                                           placeholder="Search locations..." data-auto-focus data-focus-on="LocationSearchFocus">
-
-                                    <div class="input-group-addon btn" data-ng-click="search()">Go</div>
+                                           placeholder="Search locations..." required data-auto-focus data-focus-on="LocationSearchFocus">
+                                    <div class="input-group-addon btn" data-ng-click="search()"
+                                         data-ng-disabled="searchForm.locationQuery.$invalid">Go</div>
                                 </div>
                             </div>
                         </form>
