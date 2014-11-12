@@ -41,14 +41,14 @@ angular.module('emmiManager', [
 
         // enable HATEOAS link array --> object parsing on $get
         HateoasInterceptorProvider.transformAllResponses();
-        
+
         if (!$httpProvider.defaults.headers.get) {
-            $httpProvider.defaults.headers.get = {};    
+            $httpProvider.defaults.headers.get = {};
         }
         //disable IE ajax request caching
         $httpProvider.defaults.headers.get['Cache-Control'] = 'no-cache';
         $httpProvider.defaults.headers.get.Pragma = 'no-cache';
-        
+
         // ensure dates are compatible with back-end
         angular.extend($datepickerProvider.defaults, {
             dateFormat: 'MM/dd/yyyy',
@@ -59,6 +59,20 @@ angular.module('emmiManager', [
 
     .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, arrays) {
 
+        var modals = [];
+
+        $rootScope.$on('modal.show',function(e, $modal){
+            // if modal is not already in list
+            if(modals.indexOf($modal) === -1) {
+                modals.push($modal);
+            }
+        });
+
+        $rootScope.$on('modal.hide',function(e, $modal){
+            var modalIndex = modals.indexOf($modal);
+            modals.splice(modalIndex, 1);
+        });
+
         $rootScope.$on('$routeChangeStart', function (event, next) {
             $rootScope.userRoles = USER_ROLES;
             $rootScope.isAuthorized = AuthSharedService.isAuthorized;
@@ -67,6 +81,13 @@ angular.module('emmiManager', [
 
         $rootScope.$on('$routeChangeSuccess', function (e, current) {
             $rootScope.currentRouteQueryString = arrays.toQueryString(current.params);
+            // hide all modals
+            if(modals.length) {
+                angular.forEach(modals, function($modal) {
+                    $modal.$promise.then($modal.hide);
+                });
+                modals = [];
+            }
         });
 
         // Call when the the client is confirmed
