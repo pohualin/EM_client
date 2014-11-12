@@ -25,7 +25,7 @@ angular.module('emmiManager')
         };
 
         var managedLocationList = 'locations';
-        
+
         $scope.teamLocations = {}; //used to hold the locations and manipulate internally
 
         $scope.showRemovalSuccess = function (locationResource) {
@@ -73,9 +73,9 @@ angular.module('emmiManager')
                     show: true,
                     duration: 5,
                     dismissable: true
-                });                
+                });
             }
-            
+
             addNewLocationsModal.$promise.then(addNewLocationsModal.hide);
         };
 
@@ -99,10 +99,10 @@ angular.module('emmiManager')
             Location.fetchPageLink(href).then(function (locationPage) {
                 $scope.handleResponse(locationPage, managedLocationList);
             });
-        };        
+        };
 
-        var addNewLocationsModal = $modal({scope: $scope, template: 'partials/team/locations/search.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
-        
+        var addNewLocationsModal = $modal({scope: $scope, template: 'partials/team/location/search.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
+
         if ($scope.teamClientResource.teamResource.entity.id) { // to check is the team is created
             TeamLocation.loadTeamLocationsSimple($scope, []).then(function(pageLocations) {
                 $scope.handleResponse(pageLocations, managedLocationList);
