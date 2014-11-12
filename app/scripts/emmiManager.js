@@ -57,7 +57,7 @@ angular.module('emmiManager', [
         });
     })
 
-    .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, arrays) {
+    .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, arrays, $document) {
 
         var modals = [];
 
@@ -118,4 +118,13 @@ angular.module('emmiManager', [
             $location.path('');
         });
 
+        $document.bind('keydown keypress', function(event) {
+            if(event.which === 8) {
+                var d = event.srcElement || event.target;
+                if (!(d.tagName.toUpperCase() === 'INPUT' && d.type.toUpperCase() === 'TEXT'))
+                {
+                    event.preventDefault();
+                }
+            }
+        });
     });
