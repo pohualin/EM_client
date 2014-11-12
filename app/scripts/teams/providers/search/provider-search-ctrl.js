@@ -27,11 +27,13 @@ angular.module('emmiManager')
         	$scope.$hide();
         };
         
-        $scope.search = function (){
-            $scope.noSearch = false;
-        	ProviderSearch.search($scope.providerQuery, $scope.status).then( function (providerPage){
-                $scope.handleResponse(providerPage, 'searchedProvidersList');
-        	});
+        $scope.search = function (isValid){
+        	if(isValid){
+	            $scope.noSearch = false;
+	        	ProviderSearch.search($scope.providerQuery, $scope.status).then( function (providerPage){
+	                $scope.handleResponse(providerPage, 'searchedProvidersList');
+	        	});
+        	}
         };
 
         $scope.statusChange = function () {

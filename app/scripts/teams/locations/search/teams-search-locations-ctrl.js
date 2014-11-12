@@ -75,20 +75,22 @@ angular.module('emmiManager')
             });
         };
 
-        $scope.search = function () {
-            $scope.clientLocationsSelected = null;            
-            $scope.loading = true;
-            $scope.locations = null;
-            $scope.cancelPopup(); //clean the locations checked in other search
-            Location.find(Client.getClient(), $scope.locationQuery, $scope.status).then(function (locationPage) {
-                $scope.handleResponse(locationPage, managedLocationList);
-                $scope.setLocationChecked();
-                $scope.clientLocationsSearch = false;
-                $scope.allLocationsSearch = true;
-            }, function () {
-                // error happened
-                $scope.loading = false;
-            });
+        $scope.search = function (isValid) {
+        	if (isValid){
+	            $scope.clientLocationsSelected = null;            
+	            $scope.loading = true;
+	            $scope.locations = null;
+	            $scope.cancelPopup(); //clean the locations checked in other search
+	            Location.find(Client.getClient(), $scope.locationQuery, $scope.status).then(function (locationPage) {
+	                $scope.handleResponse(locationPage, managedLocationList);
+	                $scope.setLocationChecked();
+	                $scope.clientLocationsSearch = false;
+	                $scope.allLocationsSearch = true;
+	            }, function () {
+	                // error happened
+	                $scope.loading = false;
+	            });
+        	}
         };
 
         // when a column header is clicked
