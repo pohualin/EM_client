@@ -8,16 +8,17 @@
                     <div class="col-md-1"></div>
                 </div>
                 <div class="row">
-                    <div class="col-md-9 col-sm-9">
-                        <form ng-submit="search()" novalidate>
+                     <div class="col-md-9 col-sm-9">
+                        <form name="searchForm" ng-submit="search(searchForm.providerQuery.$valid)" novalidate>
                             <div class="form-group">
                                 <label class="sr-only" for="providerQuery">Search providers:</label>
 
                                 <div class="input-group">
-                                    <input class="form-control" id="providerQuery" data-ng-model="providerQuery"
+                                    <input class="form-control" id="providerQuery" name="providerQuery" data-ng-model="providerQuery"
                                            type="text"
-                                           placeholder="Search providers..." data-auto-focus >
-                                    <div class="input-group-addon btn" data-ng-click="search()">Go</div>
+                                           placeholder="Search providers..." required data-auto-focus>
+
+                                    <div class="input-group-addon btn" data-ng-click="search(searchForm.providerQuery.$valid)" data-ng-disabled="searchForm.providerQuery.$invalid">Go</div>
                                 </div>
                             </div>
                         </form>
@@ -85,7 +86,7 @@
                                     <td>{{provider.entity.email}}</td>
                                     <td><div data-ng-show="provider.entity.showLocations">
                                     		<select data-chosen data-placeholder="Use: all locations" multiple data-ng-model="provider.entity.teamLocations"
-                							data-ng-options="location.entity.location.name group by location.name for location in teamLocations | orderBy:'location.entity.location.name' track by location.entity.id"
+                							data-ng-options="location.entity.location.name group by location.name for location in teamLocations | orderBy:'location.entity.location.name' track by location.entity.id" 
                								class="form-control" data-ng-change="updateTeamLocationsForProvider(provider)" >
                								 </select>
                							</div>
