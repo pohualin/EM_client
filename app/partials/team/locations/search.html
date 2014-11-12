@@ -22,7 +22,7 @@
                                     </select>
                                 </div>
                             </div>
-                         <form ng-submit="search()" >
+                         <form ng-submit="search()" novalidate>
                             <div class="form-group" data-ng-show="allLocationsSearch">
                                 <label for="locationQuery" data-ng-hide ="clientHasLocations() && clientLocationsSearch" class="col-sm-4 control-label" data-translate="team_locations_search_page.search_dialog.search_label_only"></label>
                                 <label for="locationQuery" data-ng-show ="clientHasLocations() && clientLocationsSearch" class="col-sm-4 control-label" data-translate="team_locations_search_page.search_dialog.search_label"></label>
@@ -70,7 +70,7 @@
                         </div>
 
                     </div>
-                    <br/>                    
+                    <br/>
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
                             <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0"

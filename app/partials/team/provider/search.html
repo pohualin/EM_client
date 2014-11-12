@@ -9,7 +9,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-9 col-sm-9">
-                        <form ng-submit="search()">
+                        <form ng-submit="search()" novalidate>
                             <div class="form-group">
                                 <label class="sr-only" for="providerQuery">Search providers:</label>
 
@@ -85,7 +85,7 @@
                                     <td>{{provider.entity.email}}</td>
                                     <td><div data-ng-show="provider.entity.showLocations">
                                     		<select data-chosen data-placeholder="Use: all locations" multiple data-ng-model="provider.entity.teamLocations"
-                							data-ng-options="location.entity.location.name group by location.name for location in teamLocations | orderBy:'location.entity.location.name' track by location.entity.id" 
+                							data-ng-options="location.entity.location.name group by location.name for location in teamLocations | orderBy:'location.entity.location.name' track by location.entity.id"
                								class="form-control" data-ng-change="updateTeamLocationsForProvider(provider)" >
                								 </select>
                							</div>
