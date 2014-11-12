@@ -22,7 +22,7 @@
                                     </select>
                                 </div>
                             </div>
-                         <form name="searchForm" ng-submit="search(searchForm.locationQuery.$valid)" >
+                         <form name="searchForm" ng-submit="search(searchForm.locationQuery.$valid)" novalidate>
                             <div class="form-group" data-ng-show="allLocationsSearch">
                                 <label for="locationQuery" data-ng-hide ="clientHasLocations() && clientLocationsSearch" class="col-sm-4 control-label" data-translate="team_locations_search_page.search_dialog.search_label_only"></label>
                                 <label for="locationQuery" data-ng-show ="clientHasLocations() && clientLocationsSearch" class="col-sm-4 control-label" data-translate="team_locations_search_page.search_dialog.search_label"></label>
