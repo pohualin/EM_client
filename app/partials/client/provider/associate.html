@@ -18,7 +18,7 @@
                                            type="text"
                                            placeholder="Search providers..." required data-auto-focus data-focus-on="ProviderSearchFocus">
 
-                                    <div class="input-group-addon btn" data-ng-click="search()" data-ng-disabled="searchForm.providerQuery.$invalid">Go</div>
+                                    <div class="input-group-addon btn" data-ng-click="search(searchForm.providerQuery.$valid)" data-ng-disabled="searchForm.providerQuery.$invalid">Go</div>
                                 </div>
                             </div>
                         </form>

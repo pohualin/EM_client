@@ -17,7 +17,7 @@
                                     <input class="form-control" name="locationQuery" id="locationQuery" data-ng-model="locationQuery"
                                            type="text"
                                            placeholder="Search locations..." required data-auto-focus data-focus-on="LocationSearchFocus">
-                                    <div class="input-group-addon btn" data-ng-click="search()"
+                                    <div class="input-group-addon btn" data-ng-click="search(searchForm.locationQuery.$valid)"
                                          data-ng-disabled="searchForm.locationQuery.$invalid">Go</div>
                                 </div>
                             </div>
