@@ -4,13 +4,21 @@ angular.module('emmiManager')
 
     .controller('SearchTeamsLocationsController', function ($scope, $translate, $controller,$filter,$modal,TeamSearchLocation, Location, Client) {
 
-        $scope.pageSizes = [5, 10, 15, 25];
-
         $controller('LocationCommon', {$scope: $scope});
 
         $controller('CommonPagination', {$scope: $scope});
 
         var managedLocationList = 'locations';
+
+        $scope.hasLocationsAdded = function() {
+            var resp = false;
+            angular.forEach( $scope.teamLocations , function (location) {
+                if (location.isNewAdd) {
+                    resp = true;
+                }
+            });
+            return resp;
+        };
 
         $scope.cleanSearch = function() {
             $scope.clientLocationsSearch = true;
@@ -37,7 +45,11 @@ angular.module('emmiManager')
             return $scope.clientLocations && $scope.clientLocations.length > 0;
         };
 
-        $scope.savePopupLocations = function() {
+        $scope.saveAndAddAnother = function () {
+            $scope.savePopupLocations(true);
+        };
+
+        $scope.savePopupLocations = function(addAnother) {
             var locationsToAdd = [];
 
             angular.forEach( $scope.clientLocationsSelected , function (location) {
@@ -47,24 +59,20 @@ angular.module('emmiManager')
             });
             angular.forEach( $scope.teamLocations , function (location) {
                 if (location.isNewAdd) {
+                    location.isNewAdd = false;
                     locationsToAdd.push(location);
                 }
             });
 
-            if (locationsToAdd.length > 0) {
-                TeamSearchLocation.save($scope.teamClientResource.teamResource.link.teamLocations,locationsToAdd).then(function () {
-                    $scope.save(true, locationsToAdd);
-                });
-            } else {
-                $scope.save(false, locationsToAdd);
-            }
+            TeamSearchLocation.save($scope.teamClientResource.teamResource.link.teamLocations,locationsToAdd).then(function () {
+                $scope.save(locationsToAdd,addAnother);
+            });
         };
 
         $scope.hidePopupLocations = function () {
             $scope.cancelPopup();
             $scope.$hide();
         };
-
 
         $scope.setLocationChecked = function () {
             angular.forEach( $scope.locations , function (location) {
@@ -75,20 +83,22 @@ angular.module('emmiManager')
             });
         };
 
-        $scope.search = function () {
-            $scope.clientLocationsSelected = null;
-            $scope.loading = true;
-            $scope.locations = null;
-            $scope.cancelPopup(); //clean the locations checked in other search
-            Location.find(Client.getClient(), $scope.locationQuery, $scope.status).then(function (locationPage) {
-                $scope.handleResponse(locationPage, managedLocationList);
-                $scope.setLocationChecked();
-                $scope.clientLocationsSearch = false;
-                $scope.allLocationsSearch = true;
-            }, function () {
-                // error happened
-                $scope.loading = false;
-            });
+        $scope.search = function (isValid) {
+            if (isValid){
+                $scope.clientLocationsSelected = null;
+                $scope.loading = true;
+                $scope.locations = null;
+                $scope.cancelPopup(); //clean the locations checked in other search
+                Location.find(Client.getClient(), $scope.locationQuery, $scope.status).then(function (locationPage) {
+                    $scope.handleResponse(locationPage, managedLocationList);
+                    $scope.setLocationChecked();
+                    $scope.clientLocationsSearch = false;
+                    $scope.allLocationsSearch = true;
+                }, function () {
+                    // error happened
+                    $scope.loading = false;
+                });
+            }
         };
 
         // when a column header is clicked
@@ -185,15 +195,15 @@ angular.module('emmiManager')
 
         };
 
-        var newLocationModal = $modal({scope: $scope, template: 'partials/team/location/new.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
+        var newTeamLocationModal = $modal({scope: $scope, template: 'partials/team/location/new.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
 
-        $scope.createNewLocation = function () {
+        $scope.createNewTeamLocation = function () {
             $scope.hidePopupLocations();
-            newLocationModal.$promise.then(newLocationModal.show);
+            newTeamLocationModal.$promise.then(newTeamLocationModal.show);
         };
 
         $scope.hideNewLocationModal = function () {
-            newLocationModal.$promise.then(newLocationModal.destroy);
+            newTeamLocationModal.$promise.then(newTeamLocationModal.destroy);
         };
 
         $scope.cleanSearch();

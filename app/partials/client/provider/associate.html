@@ -9,7 +9,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-9 col-sm-9">
-                        <form name="searchForm" ng-submit="search(searchForm.providerQuery.$valid)">
+                        <form name="searchForm" ng-submit="search(searchForm.providerQuery.$valid)" novalidate>
                             <div class="form-group">
                                 <label class="sr-only" for="providerQuery">Search providers:</label>
 
@@ -63,14 +63,14 @@
                                    data-ng-show="providers">
                                 <tr>
                                     <th class="sort col-sm-1">&nbsp;</th>
-                                    <th class="sort col-sm-3" data-ng-click="sort('firstName')">
+                                    <th class="sort col-sm-3" data-ng-click="sort('lastName')">
                                         Name
-                                        <span data-ng-show="sortProperty.property === 'firstName'">
+                                        <span data-ng-show="sortProperty.property === 'lastName'">
                                             <span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span>
                                         </span>
                                     </th>
                                     <th class="sort col-sm-3" data-ng-click="sort('specialty.name')">
-                                        Specialty
+                                        Primary Specialty
                                         <span data-ng-show="sortProperty.property === 'specialty.name'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
                                     </th>
                                     <th class="sort col-sm-3" data-ng-click="sort('email')">
