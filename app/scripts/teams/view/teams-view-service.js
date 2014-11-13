@@ -4,7 +4,7 @@ angular.module('emmiManager')
     	var selectedTeam;
     	return {
     	    viewTeam: function (teamEntity) {
-                $location.path('/clients/' + teamEntity.client.id + '/teams/' + teamEntity.id + '/view');
+                $location.path('/clients/' + teamEntity.client.id + '/teams/' + teamEntity.id);
             },
             selectTeam: function (url, teamId) {
                 return $http.get(UriTemplate.create(url).stringify({id: teamId}))
@@ -17,4 +17,4 @@ angular.module('emmiManager')
                 selectedTeam = teamResource;
             }
     	};
-}); 	 
+});
