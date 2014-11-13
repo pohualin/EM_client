@@ -56,6 +56,7 @@ angular.module('emmiManager')
                     angular.forEach(response.data.content, function (teamLocation) {
                         scope.teamLocations[teamLocation.entity.location.id] = angular.copy(teamLocation.entity.location);  
                     });
+                    response.data.content = $filter('orderBy')(response.data.content, '+entity.location.name', false); // i have to do this because is not used the order in the partials
                     return response.data;
                 });
             },
