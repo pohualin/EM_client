@@ -9,7 +9,7 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div id="alerts-container" data-ng-show="teamForm.$invalid || !team.salesForceAccount"></div>
+            <div id="alerts-container" data-ng-show="teamForm.$invalid || !teamToSave.salesForceAccount"></div>
             <div id="remove-container"></div>
             <h2 data-translate="team_edit_page.information.title">Team Information</h2>
             <form name="teamForm" class="form" novalidate>
@@ -18,7 +18,7 @@
             <div class="pull-right">
                 <button class="btn btn-link" data-ng-click="cancel()" data-translate="team_edit_page.cancel_button" href data-cancel-click-team-edit>cancel</button>
                 <button class="btn btn-primary" type="button"
-                        data-on-ok="save(teamForm.$valid)" data-team-entity="team"
+                        data-on-ok="save(teamForm.$valid)" data-team-entity="teamToSave"
                         data-placement="top"
                         data-ng-disabled="teamForm.teamName.$error.unique"
                         data-team-edit-save>

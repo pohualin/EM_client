@@ -3,6 +3,11 @@
 angular.module('emmiManager')
 
     .controller('TeamErrorController', function ($scope, $alert) {
+        $scope.hideError = function () {
+            if ($scope.errorAlert) {
+                $scope.errorAlert.hide();
+            }
+        };
         $scope.showError = function(){
             if (!$scope.errorAlert) {
                 $scope.errorAlert = $alert({
