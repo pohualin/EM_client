@@ -2,6 +2,22 @@
 angular.module('emmiManager')
     .service('CreateTeam', function ($http, $q, Session, UriTemplate) {
         return {
+            newTeam: function () {
+                var selectedTeam = {
+                    entity: {
+                        'name': null,
+                        'description': null,
+                        'active': true,
+                        'phone': null,
+                        'fax': null,
+                        'client': {
+                            'id': null
+                        },
+                        'normalizedTeamName': null
+                    }
+                };
+                return selectedTeam;
+            },
             insertTeams: function (team) {
                 return $http.post(UriTemplate.create(Session.link.teamsByClientId).stringify({clientId: team.client.id}), team).
                     then(function (response) {
@@ -26,7 +42,7 @@ angular.module('emmiManager')
             require: 'ngModel',
             scope: {
                 url: '=uniqueUrl',
-                team: '=team'
+                team: '='
             },
             link: function (scope, element, attrs, ngModel) {
 
