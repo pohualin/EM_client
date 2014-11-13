@@ -34,6 +34,13 @@ angular.module('emmiManager')
                     authorizedRoles: [USER_ROLES.all]
                 }
             })
+            .when('/500', {
+                templateUrl: 'partials/500.html',
+                resolve: requiredResources,
+                access: {
+                    authorizedRoles: [USER_ROLES.all]
+                }
+            })
             .when('/logout', {
                 templateUrl: 'partials/main.html',
                 controller: 'LogoutCtrl',
