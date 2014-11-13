@@ -8,17 +8,7 @@ angular.module('emmiManager')
 
         $controller('TeamErrorController', {$scope: $scope});
 
-        $scope.team = {
-            'name': null,
-            'description': null,
-            'active': true,
-            'phone': null,
-            'fax': null,
-            'client': {
-                'id': null
-            },
-            'normalizedTeamName': null
-        };
+        $scope.teamToSave = CreateTeam.newTeam().entity;
 
         $scope.teamClientResource = {
             teamResource: {
@@ -27,18 +17,15 @@ angular.module('emmiManager')
             clientResource: clientResource
         };
 
-        $controller('SalesForceCtrl', {$scope: $scope, team: $scope.team});
+        $controller('SalesForceCtrl', {$scope: $scope, team: $scope.teamToSave});
 
-        $scope.team.client = clientResource.entity;
+        $scope.teamToSave.client = clientResource.entity;
         $scope.url = clientResource.link.findByNormalizedName;
         $scope.save = function (isValid) {
             $scope.formSubmitted = true;
-            if (isValid && $scope.team.salesForceAccount) {
-                CreateTeam.insertTeams($scope.team).then(function (team) {
-                    var teamResource = team.data;
-                    $scope.team = teamResource.entity;
-                    teamResource.tags = $scope.teamClientResource.teamResource.tags;
-                    ViewTeam.viewTeam($scope.team);
+            if (isValid && $scope.teamToSave.salesForceAccount) {
+                CreateTeam.insertTeams($scope.teamToSave).then(function (team) {
+                    ViewTeam.viewTeam(team.data.entity);
                 });
             } else {
                 $scope.showError();
@@ -46,7 +33,7 @@ angular.module('emmiManager')
         };
 
         $scope.cancel = function () {
-            Client.viewClient($scope.team.client);
+            Client.viewClient($scope.teamToSave.client);
         };
 
     })
