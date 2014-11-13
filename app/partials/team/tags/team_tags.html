@@ -1,20 +1,19 @@
-<div class="row" data-ng-show="teamClientResource.teamResource.link.teamLocations">
-    <div class="col-md-12">
+    <div class="col-md-12" data-ng-controller="TeamTagsController" data-ng-show="teamClientResource.teamResource.link.teamLocations">
         <h2>Tags:</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <select data-chosen data-placeholder="Choose some tags" multiple
+                        data-ng-model="teamClientResource.teamResource.tags" data-ng-change="saveTagState()"
+                        data-ng-options="tag.text
+                group by tag.group.title
+                for tag in team.tags | orderBy:'text'
+                track by tag.id" class="form-control">
+                </select>
+            </div>
+            <div class="col-md-6">
+                <button type="button" class="btn btn-link" data-ng-click="showClientTags()">
+                    Manage Client Tags
+                </button>
+            </div>
+        </div>
     </div>
-</div>
-<div data-ng-controller="TeamTagsController" class="row" data-ng-show="teamClientResource.teamResource.link.teamLocations">
-    <div class="col-md-6" >
-
-        <select data-chosen data-placeholder="Choose some tags" multiple
-                data-ng-model="teamClientResource.teamResource.tags" data-ng-change="saveTagState()"
-                data-ng-options="tag.text
-        group by tag.group.title
-        for tag in team.tags | orderBy:'text'
-        track by tag.id" class="form-control">
-        </select>
-    </div>
-    <button type="button" class="btn btn-link" data-ng-click="showClientTags()">
-        Manage Client Tags
-    </button>
-</div>
