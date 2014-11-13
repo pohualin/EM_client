@@ -40,6 +40,7 @@ angular.module('emmiManager')
                                     title: title,
                                     scope: scope,
                                     show: true,
+                                    trigger: 'manual',
                                     placement: placement,
                                     contentTemplate: 'partials/team/deactivate_popover.tpl.html'
                                 });

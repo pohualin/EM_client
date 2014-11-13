@@ -10,14 +10,14 @@
     <div class="row" data-ng-hide="editMode" data-ng-include="'partials/team/team_view.html'"></div>
     <div class="row" data-ng-show="editMode">
         <div class="col-md-12">
-            <div id="alerts-container" data-ng-show="teamForm.$invalid || !team.salesForceAccount"></div>
+            <div id="alerts-container" data-ng-show="teamForm.$invalid || !teamToSave.salesForceAccount"></div>
             <div id="remove-container"></div>
             <div class="pull-right">
                 <a class="btn btn-link" data-ng-click="cancel()">cancel</a>
                 |
                 <a class="btn btn-link" type="button"
                     data-on-ok="save(teamForm.$valid)" data-team-entity="teamToSave"
-                    data-placement="top"
+                    data-placement="bottom"
                     data-ng-disabled="teamForm.teamName.$error.unique"
                     data-team-edit-save>
                     <span>save edits</span>
