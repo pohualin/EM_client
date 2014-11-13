@@ -109,43 +109,10 @@ angular.module('emmiManager')
                     .then(function (response) {
                         return response.data;
                     });
-            }               
+            }
         };
 
     })
-    .directive('cancelClick', ['$popover', 'Client', 'Location', '$timeout', '$translate', function ($popover, Client, Location, $timeout, $translate) {
-        return {
-            restrict: 'EA',
-            scope: {
-                'ok': '&onOk'
-            },
-            link: function (scope, element) {
-                scope.cancel = function () {
-                    scope.cancelWarning.hide();
-                };
-                element.on('click', function () {
-                    if (Location.hasLocationModifications(Client.getClient())) {
-                        // pop a warning dialog
-                        if (!scope.cancelWarning) {
-                            $translate('client_edit_page.cancel_dialog.title').then(function (title) {
-                                scope.cancelWarning = $popover(element, {
-                                    title: title,
-                                    scope: scope,
-                                    show: true,
-                                    placement: 'top',
-                                    contentTemplate: 'partials/client/cancel_popover.tpl.html'
-                                });
-                            });
-                        }
-                    } else {
-                        $timeout(function () {
-                            scope.ok();
-                        });
-                    }
-                });
-            }
-        };
-    }])
 
     .directive('uniqueClient', ['$popover', 'Client', '$translate', function ($popover, Client, $translate) {
           return {
@@ -199,10 +166,10 @@ angular.module('emmiManager')
                             }
                           }
                     });
-                 }) ;  
+                 }) ;
             }
           };
-    }])    
+    }])
 
     .directive('saveClick', ['$popover', 'Client', '$timeout', '$translate', function ($popover, Client, $timeout, $translate) {
         return {
@@ -243,7 +210,7 @@ angular.module('emmiManager')
             }
         };
     }])
-    
+
     .filter('contractOwnerFilter', function() {
         return function(contractOwner) {
             var name = '';
