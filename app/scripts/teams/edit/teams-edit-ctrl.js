@@ -5,30 +5,44 @@ angular.module('emmiManager')
     .controller('TeamEditController', function ($scope, teamClientResource, EditTeam, ViewTeam, $controller) {
 
         $controller('TeamErrorController', {$scope: $scope});
-        $scope.teamClientResource = teamClientResource;
+
         if (teamClientResource && teamClientResource.teamResource) {
-            $scope.team = teamClientResource.teamResource.entity;
+            $scope.teamClientResource = teamClientResource;
             $scope.teamResource = teamClientResource.teamResource;
+            $scope.team = teamClientResource.teamResource.entity;
+            ViewTeam.setTeam(teamClientResource.teamResource);
             $scope.team.currentlyActive = teamClientResource.teamResource.entity.active;
             $controller('SalesForceCtrl', {$scope: $scope, team: $scope.team});
         }
 
         $scope.url = teamClientResource.clientResource.link.findByNormalizedName;
-        
+
+        $scope.cancel = function () {
+            $scope.hideError();
+            $scope.editMode = false;
+            $scope.formSubmitted = false;
+            delete $scope.teamToSave;
+        };
+
+        $scope.edit = function () {
+            $scope.editMode = true;
+            $scope.teamToSave = angular.copy($scope.team);
+            $scope.teamToSave.origSalesForceAccount = $scope.teamToSave.salesForceAccount.accountNumber;
+            focus('teamName');
+        };
+
         $scope.save = function (isValid) {
             $scope.formSubmitted = true;
-            if (isValid && $scope.team.salesForceAccount) {
-                EditTeam.save(teamClientResource.teamResource).then(function (team) {
-                    $scope.team = team.data.entity;
-                    ViewTeam.viewTeam($scope.team);
+            if (isValid && $scope.teamToSave.salesForceAccount) {
+                EditTeam.save($scope.teamToSave, teamClientResource.teamResource.link.self).then(function (team) {
+                    angular.extend($scope.team, team.data.entity);
+                    angular.extend($scope.teamResource, team.data);
+                    $scope.teamClientResource.teamResource = $scope.teamResource;
+                    $scope.editMode = false;
                 });
             } else {
                 $scope.showError();
             }
-        };
-
-        $scope.cancel = function () {
-            ViewTeam.viewTeam($scope.team);
         };
 
     })

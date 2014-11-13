@@ -34,10 +34,10 @@ angular.module('emmiManager')
                     if ($scope.teamLocations[location.location.entity.id]) {
                         $scope.teamLocations[location.location.entity.id].isNewAdd = false;
                         $scope.teamLocations[location.location.entity.id].disabled = true;
-                        $scope.teamLocations[location.location.entity.id].checked = true;                
+                        $scope.teamLocations[location.location.entity.id].checked = true;
                         $scope.clientLocationsSelected.push(location);
                     }
-                }); 
+                });
             });
         };
 
@@ -47,18 +47,19 @@ angular.module('emmiManager')
 
         $scope.saveAndAddAnother = function () {
             $scope.savePopupLocations(true);
-        };        
+        };
 
         $scope.savePopupLocations = function(addAnother) {
             var locationsToAdd = [];
 
             angular.forEach( $scope.clientLocationsSelected , function (location) {
                 if ($scope.teamLocations[location.location.entity.id]) {
-                    $scope.teamLocations[location.location.entity.id] = angular.copy(location.location.entity);  
+                    $scope.teamLocations[location.location.entity.id] = angular.copy(location.location.entity);
                 }
             });
             angular.forEach( $scope.teamLocations , function (location) {
                 if (location.isNewAdd) {
+                    location.isNewAdd = false;
                     locationsToAdd.push(location);
                 }
             });
@@ -73,7 +74,6 @@ angular.module('emmiManager')
             $scope.$hide();
         };
 
-
         $scope.setLocationChecked = function () {
             angular.forEach( $scope.locations , function (location) {
                 if ($scope.teamLocations[location.location.entity.id]) {
@@ -85,7 +85,7 @@ angular.module('emmiManager')
 
         $scope.search = function (isValid) {
             if (isValid){
-                $scope.clientLocationsSelected = null;            
+                $scope.clientLocationsSelected = null;
                 $scope.loading = true;
                 $scope.locations = null;
                 $scope.cancelPopup(); //clean the locations checked in other search
@@ -132,7 +132,7 @@ angular.module('emmiManager')
             $scope.loading = true;
             Location.find(Client.getClient(), $scope.locationQuery, $scope.status, $scope.sortProperty, $scope.currentPageSize).then(function (locationPage) {
                 $scope.handleResponse(locationPage, managedLocationList);
-                $scope.setLocationChecked();           
+                $scope.setLocationChecked();
             }, function () {
                 // error happened
                 $scope.loading = false;
@@ -174,10 +174,10 @@ angular.module('emmiManager')
             }
         };
 
-        $scope.onDropdownChange = function () {          
+        $scope.onDropdownChange = function () {
             $scope.locations = null;
             $scope.clientLocationsSearch = true;
-            $scope.allLocationsSearch = false;    
+            $scope.allLocationsSearch = false;
 
             //remove all the new added then add the selected
             angular.forEach( $scope.clientLocations , function (location) {
@@ -189,21 +189,21 @@ angular.module('emmiManager')
             angular.forEach( $scope.clientLocationsSelected , function (location) {
                 if (!$scope.teamLocations[location.location.entity.id]) {
                     location.location.entity.isNewAdd = true;
-                    $scope.teamLocations[location.location.entity.id] = angular.copy(location.location.entity);  
+                    $scope.teamLocations[location.location.entity.id] = angular.copy(location.location.entity);
                 }
             });
 
         };
 
-        var newLocationModal = $modal({scope: $scope, template: 'partials/team/locations/new.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
+        var newTeamLocationModal = $modal({scope: $scope, template: 'partials/team/location/new.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
 
-        $scope.createNewLocation = function () {
+        $scope.createNewTeamLocation = function () {
             $scope.hidePopupLocations();
-            newLocationModal.$promise.then(newLocationModal.show);
+            newTeamLocationModal.$promise.then(newTeamLocationModal.show);
         };
 
         $scope.hideNewLocationModal = function () {
-            newLocationModal.$promise.then(newLocationModal.destroy);
+            newTeamLocationModal.$promise.then(newTeamLocationModal.destroy);
         };
 
         $scope.cleanSearch();
