@@ -1,8 +1,8 @@
 <div class="container" >
-	<div class="row" data-ng-controller="ProviderListController" data-ng-show="teamResource.teamProviders.length > 0">
+	<div class="row" data-ng-controller="ProviderListController">
 		<div class="col-md-9" >
 		    <h2>Providers</h2>
-			<table class="table table-bordered table-striped table-hover" border="0" cellpadding="0">
+			<table class="table table-bordered table-striped table-hover" border="0" cellpadding="0" data-ng-show="teamResource.teamProviders.length > 0">
 				<tr>
 					<th class="col-sm-3">Name </th>
 					<th class="col-sm-3">Specialty </th>
@@ -15,9 +15,12 @@
 			    	<td>{{teamProvider.entity.provider.email}}</td>
 					<td>
                 		<a href data-ng-click="editProvider(teamProvider.provider)">edit</a><span class="text-muted">&nbsp;|&nbsp;</span><a href data-ng-click="removeProvider(teamProvider)">remove from team</a>
-            		</td>			    	
+            		</td>
 			    </tr>
 			</table>
+            <div data-ng-hide="teamResource.teamProviders.length > 0">
+                <span>There are no existing providers<span data-ng-show="team.name"> for {{team.name}}</span>.</span>
+            </div>
 		</div>
 	</div>
 </div>

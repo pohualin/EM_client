@@ -26,3 +26,7 @@ app/logs
 .classpath
 .project
 .settings/
+
+# Sublime
+*.sublime-project
+*.sublime-workspace
