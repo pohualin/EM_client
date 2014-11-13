@@ -109,8 +109,13 @@ angular.module('emmiManager', [
 
         // Call when the 403 response is returned by the server
         $rootScope.$on('event:auth-notAuthorized', function (rejection) {
-            //$rootScope.errorMessage = 'errors.403';
             $location.path('/403').replace();
+        });
+
+        // Call when the 500 response is returned by the server
+        $rootScope.$on('event:server-error', function (event, rejection) {
+            $rootScope.error = rejection;
+            $location.path('/500').replace();
         });
 
         // Call when the user logs out
