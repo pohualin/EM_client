@@ -59,6 +59,7 @@ angular.module('emmiManager')
             });
             angular.forEach( $scope.teamLocations , function (location) {
                 if (location.isNewAdd) {
+                    location.isNewAdd = false;
                     locationsToAdd.push(location);
                 }
             });
@@ -72,7 +73,6 @@ angular.module('emmiManager')
             $scope.cancelPopup();
             $scope.$hide();
         };
-
 
         $scope.setLocationChecked = function () {
             angular.forEach( $scope.locations , function (location) {
@@ -195,15 +195,15 @@ angular.module('emmiManager')
 
         };
 
-        var newLocationModal = $modal({scope: $scope, template: 'partials/team/locations/new.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
+        var newTeamLocationModal = $modal({scope: $scope, template: 'partials/team/locations/new.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
 
-        $scope.createNewLocation = function () {
+        $scope.createNewTeamLocation = function () {
             $scope.hidePopupLocations();
-            newLocationModal.$promise.then(newLocationModal.show);
+            newTeamLocationModal.$promise.then(newTeamLocationModal.show);
         };
 
         $scope.hideNewLocationModal = function () {
-            newLocationModal.$promise.then(newLocationModal.destroy);
+            newTeamLocationModal.$promise.then(newTeamLocationModal.destroy);
         };
 
         $scope.cleanSearch();
