@@ -55,28 +55,38 @@ angular.module('emmiManager')
             $scope.teamLocations = angular.copy(teamLocationsAux);
         };
 
-        $scope.save = function (reload, locationsToAdd) {
-            if (reload) {
-                TeamLocation.loadTeamLocations($scope,locationsToAdd).then(function(pageLocations) {
-                    $scope.handleResponse(pageLocations, managedLocationList);
-                });
+        $scope.displaySuccessfull = function(locationsToAdd, container) {
+            var message = (locationsToAdd.length === 1) ?
+                ' <b>' + locationsToAdd[0].name + '</b> has been added successfully.' :
+                'The new locations have been added successfully.';
 
-                var message = (locationsToAdd.length === 1) ?
-                    ' <b>' + locationsToAdd[0].name + '</b> has been added successfully.' :
-                    'The new locations have been added successfully.';
+            $alert({
+                title: ' ',
+                content: message,
+                container: container,
+                type: 'success',
+                show: true,
+                duration: 5,
+                dismissable: true
+            });  
+        };
 
-                $alert({
-                    title: ' ',
-                    content: message,
-                    container: '#remove-container',
-                    type: 'success',
-                    show: true,
-                    duration: 5,
-                    dismissable: true
-                });                
-            }
-            
+        $scope.save = function (locationsToAdd, addAnother) {
+            TeamLocation.loadTeamLocations($scope,locationsToAdd).then(function(pageLocations) {
+                $scope.handleResponse(pageLocations, managedLocationList);
+            });     
+
             addNewLocationsModal.$promise.then(addNewLocationsModal.hide);
+
+            if (addAnother) {
+                $scope.addLocations();
+                $scope.displaySuccessfull(locationsToAdd, '#message-container');     
+            } else {
+                $scope.displaySuccessfull(locationsToAdd, '#remove-container');     
+            }
+
+                
+
         };
 
         $scope.removeExistingLocation = function (locationResource) {
