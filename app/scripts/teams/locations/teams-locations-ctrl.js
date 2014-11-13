@@ -84,9 +84,6 @@ angular.module('emmiManager')
             } else {
                 $scope.displaySuccessfull(locationsToAdd, '#remove-container');     
             }
-
-                
-
         };
 
         $scope.removeExistingLocation = function (locationResource) {
