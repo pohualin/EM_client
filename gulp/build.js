@@ -73,6 +73,11 @@ gulp.task('images', function () {
         .pipe($.size({title: 'images', showFiles:true}));
 });
 
+gulp.task('favicon', function () {
+    return gulp.src('app/favicon.ico')
+        .pipe(gulp.dest('dist'));
+});
+
 gulp.task('fonts', function () {
     return $.bowerFiles()
         .pipe($.filter('**/*.{eot,svg,ttf,woff}'))
@@ -99,4 +104,4 @@ gulp.task('clean', function () {
     return gulp.src(['.tmp', 'dist'], { read: false }).pipe($.clean());
 });
 
-gulp.task('build', ['html', 'partials', 'images', 'fonts', 'translations', 'api-docs']);
+gulp.task('build', ['html', 'partials', 'images', 'favicon', 'fonts', 'translations', 'api-docs']);
