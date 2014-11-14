@@ -27,7 +27,7 @@ angular.module('emmiManager')
             $scope.locations = null;
             $scope.cancelPopup(); //clean the locations checked in other search
             $scope.locationQuery = '';
-            Location.findForClient(Client.getClient(), 5000).then(function (allLocations) { //pagesize = 5000 to bring all data
+            Location.findForClient(Client.getClient()).then(function (allLocations) { 
                 $scope.clientLocations = allLocations.content;
 
                 angular.forEach( $scope.clientLocations , function (location) {
