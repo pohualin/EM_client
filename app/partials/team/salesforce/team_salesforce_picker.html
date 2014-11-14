@@ -1,7 +1,6 @@
-<div class="row"
-     data-ng-show="updatingSalesForceAccount || teamToSave.salesForceAccount == null"
-     data-ng-class="{'masked': teamForm.teamName.$error.unique}" >
-    <div class="col-md-8">
+    <div class="col-md-8"
+        data-ng-show="updatingSalesForceAccount || teamToSave.salesForceAccount == null"
+        data-ng-class="{'masked': teamForm.teamName.$error.unique}" >
         <div class="form-group has-feedback" data-ng-class="{ 'has-error' : formSubmitted && !teamToSave.salesForceAccount }">
             <label class="control-label" for="salesForceAccount">Team Salesforce Account</label>
             <div class="error-circle glyphicon glyphicon-exclamation-sign" data-ng-show="!teamToSave.salesForceAccount && formSubmitted"
@@ -27,37 +26,29 @@
             </div>
         </div>
     </div>
-</div>
 
-<div class="row" data-ng-hide="updatingSalesForceAccount || teamToSave.salesForceAccount == null" data-ng-class="{'masked': teamForm.teamName.$error.unique}" >
-    <div class="col-md-12">
+    <div class="col-md-12"
+        data-ng-hide="updatingSalesForceAccount || teamToSave.salesForceAccount == null"
+        data-ng-class="{'masked': teamForm.teamName.$error.unique}" >
         <div class="row">
-            <div class="col-md-12">
-                <label class="control-label" for="">Salesforce Account</label>
+            <div class="col-md-6">
+                <label class="control-label">Salesforce Account</label>
+                <div>
+                    {{teamToSave.salesForceAccount.name}}&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span>
+                        {{teamToSave.salesForceAccount.city}}<span data-ng-show="teamToSave.salesForceAccount.city && teamToSave.salesForceAccount.state">,&nbsp;{{teamToSave.salesForceAccount.state}}</span>
+                    </span>
+                    <button class="btn btn-link" data-ng-click="changeSfAccount(teamToSave.salesForceAccount)" required >update</button>
+                </div>
+            </div>
+            <div class="col-md-2" data-ng-show="teamToSave.salesForceAccount.phoneNumber">
+                <label class="control-label" data-translate="team_edit_page.information.phone">Phone</label>
+                <div>{{ teamToSave.salesForceAccount.phoneNumber }}</div>
+            </div>
+            <div class="col-md-2" data-ng-show="teamToSave.salesForceAccount.fax">
+                <label class="control-label" data-translate="team_edit_page.information.fax">Fax</label>
+                <div>{{ teamToSave.salesForceAccount.fax }}</div>
             </div>
         </div>
-        {{teamToSave.salesForceAccount.name}}&nbsp;&nbsp;&nbsp;&nbsp;
-        <span>{{teamToSave.salesForceAccount.city}}<span
-                data-ng-show="teamToSave.salesForceAccount.city && teamToSave.salesForceAccount.state">,&nbsp;</span>{{teamToSave.salesForceAccount.state}}
-        </span>
-        <button class="btn btn-link" data-ng-click="changeSfAccount(teamToSave.salesForceAccount)" required >update
-        </button>
     </div>
-</div>
 
-<div class="row">
-    <div class="col-md-6">
-        <div class="form-group">
-            <label data-translate="team_edit_page.information.phone">Phone</label>
-            <input class="form-control" data-ng-model="teamToSave.salesForceAccount.phoneNumber" type="text" readonly >
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-6">
-        <div class="form-group">
-            <label data-translate="team_edit_page.information.fax">Fax</label>
-            <input class="form-control" data-ng-model="teamToSave.salesForceAccount.fax" type="text" readonly >
-        </div>
-    </div>
-</div>
