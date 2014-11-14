@@ -16,7 +16,7 @@ angular.module('emmiManager')
         }
 
         function setTitle(){
-            $scope.page.setTitle("Team " + $scope.team.id + ' - ' + $scope.team.name);
+            $scope.page.setTitle('Team ' + $scope.team.id + ' - ' + $scope.team.name);
         }
 
         setTitle();
