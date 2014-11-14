@@ -2,7 +2,7 @@
 
 angular.module('emmiManager')
 
-    .controller('SalesForceCtrl',function ($scope, SalesForce, team, debounce){      
+    .controller('SalesForceCtrl',function ($scope, SalesForce, team, debounce, focus){
         $scope.sfSearch = {};
         $scope.sfResult = {};
         $scope.sfResult.account = [];
@@ -22,9 +22,11 @@ angular.module('emmiManager')
             });
         }, 333);
 
+
         $scope.chooseAccount = function (account) {
-            if (account ) {
-                team.salesForceAccount = account;
+            if (account && !account.teamName) {
+                $scope.teamToSave.salesForceAccount = account;
+                $scope.updatingSalesForceAccount = false;
                 return true;
             } else {
                 return false;
@@ -33,13 +35,17 @@ angular.module('emmiManager')
 
         $scope.hasMore = function () {
             return !$scope.sfResult.complete && $scope.sfResult.account.length > 0;
-        };        
+        };
 
-       $scope.changeSfAccount = function (account) {
-            $scope.sfSearch.searchQuery = account.name;
+        $scope.revertSfAccount = function () {
+            $scope.updatingSalesForceAccount = false;
+        };
+
+        $scope.changeSfAccount = function () {
+            $scope.sfSearch.searchQuery = $scope.teamToSave.salesForceAccount.name;
             $scope.sfResult.account = [];
-            team.salesForceAccount = null;
-            focus('SfSearch');
+            $scope.updatingSalesForceAccount = true;
+            focus('TeamSfSearch');
         };
 
     })

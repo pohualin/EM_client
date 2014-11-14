@@ -36,17 +36,17 @@ angular.module('emmiManager')
 
         // Routes
         $routeProvider
-            .when('/clients/:clientId/teams/:teamId/view', {
-                templateUrl: 'partials/team/team_view.html',
-                controller: 'ClientTeamViewCtrl',
+            .when('/clients/:clientId/teams/new', {
+                templateUrl: 'partials/team/team_new.html',
+                controller: 'ClientTeamCreateCtrl',
                 access: {
                     authorizedRoles: [USER_ROLES.admin]
                 },
                 resolve: {
-                    'teamClientResource': teamClientResource
+                    'clientResource': clientResource
                 }
             })
-            .when('/clients/:clientId/teams/:teamId/edit', {
+            .when('/clients/:clientId/teams/:teamId', {
                 templateUrl: 'partials/team/team_edit.html',
                 controller: 'TeamEditController',
                 access: {
@@ -63,16 +63,6 @@ angular.module('emmiManager')
                 reloadOnSearch: false,
                 access: {
                     authorizedRoles: [USER_ROLES.all]
-                }
-            })
-            .when('/clients/:clientId/teams/new', {
-                templateUrl: 'partials/team/team_edit.html',
-                controller: 'ClientTeamCreateCtrl',
-                access: {
-                    authorizedRoles: [USER_ROLES.admin]
-                },
-                resolve: {
-                    'clientResource': clientResource
                 }
             });
     })

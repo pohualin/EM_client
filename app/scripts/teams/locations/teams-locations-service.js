@@ -18,7 +18,7 @@ angular.module('emmiManager')
                             angular.forEach(locationsToAdd, function (location) {
                                 if (location.id === teamLocation.entity.location.id) {
                                     isNewAdd = true;
-                                } 
+                                }
                             });
 
                             //split the locations, recently added, and already added
@@ -30,13 +30,13 @@ angular.module('emmiManager')
                             }
 
                             teamLocation.entity.location.isNewAdd = false;
-                            scope.teamLocations[teamLocation.entity.location.id] = angular.copy(teamLocation.entity.location);  
+                            scope.teamLocations[teamLocation.entity.location.id] = angular.copy(teamLocation.entity.location);
                         });
 
                         //order both arrays.
                         auxLocations = $filter('orderBy')(auxLocations, '+entity.location.name', false);
                         locations = $filter('orderBy')(locations, '+entity.location.name', false);
-                        
+
                         //join sortered arrays
                         angular.forEach(auxLocations, function (teamLocation) {
                             locations.push(teamLocation);
@@ -53,10 +53,12 @@ angular.module('emmiManager')
                         sort: sort && sort.property ? sort.property + ',' + (sort.ascending ? 'asc' : 'desc') : '',
                         size: pageSize
                     })).then(function load(response) {
-                    angular.forEach(response.data.content, function (teamLocation) {
-                        scope.teamLocations[teamLocation.entity.location.id] = angular.copy(teamLocation.entity.location);  
-                    });
-                    response.data.content = $filter('orderBy')(response.data.content, '+entity.location.name', false); // i have to do this because is not used the order in the partials
+                    if (response.data !== '') {
+                        angular.forEach(response.data.content, function (teamLocation) {
+                            scope.teamLocations[teamLocation.entity.location.id] = angular.copy(teamLocation.entity.location);
+                        });
+                        response.data.content = $filter('orderBy')(response.data.content, '+entity.location.name', false); // i have to do this because is not used the order in the partials
+                    }
                     return response.data;
                 });
             },
@@ -66,7 +68,7 @@ angular.module('emmiManager')
                     .then(function (response) {
                         return response.data;
                     });
-            },            
+            },
 
         };
     })

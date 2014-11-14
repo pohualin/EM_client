@@ -1,11 +1,13 @@
-<div class="row" data-ng-hide="team.salesForceAccount" data-ng-class="{'masked': teamForm.teamName.$error.unique}" >
+<div class="row"
+     data-ng-show="updatingSalesForceAccount || teamToSave.salesForceAccount == null"
+     data-ng-class="{'masked': teamForm.teamName.$error.unique}" >
     <div class="col-md-8">
-        <div class="form-group has-feedback" data-ng-class="{ 'has-error' : formSubmitted && !team.salesForceAccount }">
+        <div class="form-group has-feedback" data-ng-class="{ 'has-error' : formSubmitted && !teamToSave.salesForceAccount }">
             <label class="control-label" for="salesForceAccount">Team Salesforce Account</label>
-            <div class="error-circle glyphicon glyphicon-exclamation-sign" data-ng-show="!team.salesForceAccount && formSubmitted"
+            <div class="error-circle glyphicon glyphicon-exclamation-sign" data-ng-show="!teamToSave.salesForceAccount && formSubmitted"
                  data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                  data-title="Please enter an associated Salesforce account"></div>
-            <div id="salesForceAccount" class="typeahead" data-id="salesForceAccount" data-emmi-typeahead data-items="sfResult.account" data-term="sfSearch.searchQuery" data-search="findAccount(term)" data-select="chooseAccount(item)" data-placeholder="Start typing..." data-focus="SfSearch" data-min-length="5">
+            <div id="teamSalesforceAccount" class="typeahead" data-id="salesForceAccount" data-emmi-typeahead data-items="sfResult.account" data-term="sfSearch.searchQuery" data-search="findAccount(term)" data-select="chooseAccount(item)" data-placeholder="Start typing..." data-blur="revertSfAccount()" data-focus="TeamSfSearch" data-min-length="5">
                 <div class="menu typeahead-menu dropdown-menu bottom-left container-fluid">
                     <li class="header" data-ng-show="sfResult.account.length">
                         <div class="col-md-6 account-name">Account Name</div>
@@ -27,18 +29,18 @@
     </div>
 </div>
 
-<div class="row" data-ng-show="team.salesForceAccount" data-ng-class="{'masked': teamForm.teamName.$error.unique}" >
+<div class="row" data-ng-hide="updatingSalesForceAccount || teamToSave.salesForceAccount == null" data-ng-class="{'masked': teamForm.teamName.$error.unique}" >
     <div class="col-md-12">
         <div class="row">
             <div class="col-md-12">
                 <label class="control-label" for="">Salesforce Account</label>
             </div>
         </div>
-        {{team.salesForceAccount.name}}&nbsp;&nbsp;&nbsp;&nbsp;
-        <span>{{team.salesForceAccount.city}}<span
-                data-ng-show="team.salesForceAccount.city && team.salesForceAccount.state">,&nbsp;</span>{{team.salesForceAccount.state}}
+        {{teamToSave.salesForceAccount.name}}&nbsp;&nbsp;&nbsp;&nbsp;
+        <span>{{teamToSave.salesForceAccount.city}}<span
+                data-ng-show="teamToSave.salesForceAccount.city && teamToSave.salesForceAccount.state">,&nbsp;</span>{{teamToSave.salesForceAccount.state}}
         </span>
-        <button class="btn btn-link" data-ng-click="changeSfAccount(team.salesForceAccount)" required >update
+        <button class="btn btn-link" data-ng-click="changeSfAccount(teamToSave.salesForceAccount)" required >update
         </button>
     </div>
 </div>
@@ -47,7 +49,7 @@
     <div class="col-md-6">
         <div class="form-group">
             <label data-translate="team_edit_page.information.phone">Phone</label>
-            <input class="form-control" data-ng-model="team.salesForceAccount.phoneNumber" type="text" readonly >
+            <input class="form-control" data-ng-model="teamToSave.salesForceAccount.phoneNumber" type="text" readonly >
         </div>
     </div>
 </div>
@@ -55,7 +57,7 @@
     <div class="col-md-6">
         <div class="form-group">
             <label data-translate="team_edit_page.information.fax">Fax</label>
-            <input class="form-control" data-ng-model="team.salesForceAccount.fax" type="text" readonly >
+            <input class="form-control" data-ng-model="teamToSave.salesForceAccount.fax" type="text" readonly >
         </div>
     </div>
 </div>
