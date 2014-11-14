@@ -29,7 +29,7 @@ angular.module('emmiManager')
                         $scope.save(locationsToAdd, false);
 
                         var locationResource = location.data.location;
-                        $scope.hideNewLocationModal();
+                        $scope.$hide();
                         if (addAnother) {
                             $scope.addLocations();
                             $alert({
