@@ -39,6 +39,7 @@ angular.module('emmiManager')
             .when('/clients/:clientId/teams/new', {
                 templateUrl: 'partials/team/team_new.html',
                 controller: 'ClientTeamCreateCtrl',
+                title: 'New Team',
                 access: {
                     authorizedRoles: [USER_ROLES.admin]
                 },
@@ -59,6 +60,7 @@ angular.module('emmiManager')
             .when('/teams', {
                 templateUrl: 'partials/team/team_search.html',
                 controller: 'TeamSearchController',
+                title: 'Team Search',
                 resolve: requiredResources,
                 reloadOnSearch: false,
                 access: {
