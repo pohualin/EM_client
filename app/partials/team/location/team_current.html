@@ -28,7 +28,7 @@
     <div data-ng-hide="locations">
         <span>There are no existing locations<span data-ng-show="team.name"> for {{team.name}}</span>.</span>
     </div>
-    <div data-ng-show="locations">
+    <div data-ng-show="links">
         <ul class="pagination">
             <li data-ng-repeat="link in links | orderBy:'order'" data-ng-class="{'active': link.name == currentPage}">
                 <a data-ng-show="link.name != currentPage" href
