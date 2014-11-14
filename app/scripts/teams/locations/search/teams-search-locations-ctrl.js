@@ -27,7 +27,7 @@ angular.module('emmiManager')
             $scope.locations = null;
             $scope.cancelPopup(); //clean the locations checked in other search
             $scope.locationQuery = '';
-            Location.findForClient(Client.getClient()).then(function (allLocations) { 
+            Location.findForClient(Client.getClient()).then(function (allLocations) {
                 $scope.clientLocations = allLocations.content;
 
                 angular.forEach( $scope.clientLocations , function (location) {
@@ -198,7 +198,7 @@ angular.module('emmiManager')
 
         $scope.createNewTeamLocation = function () {
             $scope.$hide();
-            $modal({scope: $scope, template: 'partials/team/locations/new.html', animation: 'none', backdropAnimation: 'emmi-fade', backdrop: 'static'});
+            $modal({scope: $scope, template: 'partials/team/location/new.html', animation: 'none', backdropAnimation: 'emmi-fade', backdrop: 'static'});
         };
 
         $scope.cleanSearch();
