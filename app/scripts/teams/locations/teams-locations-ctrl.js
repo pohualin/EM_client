@@ -8,8 +8,6 @@ angular.module('emmiManager')
 
         $controller('CommonPagination', {$scope: $scope});
 
-        var editLocationModal = $modal({scope: $scope, template: 'partials/client/location/edit.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
-
         $scope.editLocation = function (location) {
             // create a copy for editing
             $scope.location = angular.copy(location);
@@ -21,11 +19,12 @@ angular.module('emmiManager')
             $scope.setBelongsToPropertiesFor($scope.location);
 
             // show the dialog box
-            editLocationModal.$promise.then(editLocationModal.show);
+            $modal({scope: $scope, template: 'partials/client/location/edit.html', animation: 'none', backdropAnimation: 'emmi-fade', show: true, backdrop: 'static'});
+
         };
 
         var managedLocationList = 'locations';
-
+        
         $scope.teamLocations = {}; //used to hold the locations and manipulate internally
 
         $scope.showRemovalSuccess = function (locationResource) {
@@ -41,9 +40,9 @@ angular.module('emmiManager')
         };
 
         $scope.addLocations = function () {
-            addNewLocationsModal.$promise.then(addNewLocationsModal.show);
+           $modal({scope: $scope, template: 'partials/team/locations/search.html', animation: 'none', backdropAnimation: 'emmi-fade', show: true, backdrop: 'static'});
         };
-
+        
         $scope.cancelPopup = function() {
             //doing this to remove the teamLocations those locations that was clicked in the search and them press cancel
             var teamLocationsAux = {};
@@ -68,21 +67,19 @@ angular.module('emmiManager')
                 show: true,
                 duration: 5,
                 dismissable: true
-            });
+            });  
         };
 
         $scope.save = function (locationsToAdd, addAnother) {
             TeamLocation.loadTeamLocations($scope,locationsToAdd).then(function(pageLocations) {
                 $scope.handleResponse(pageLocations, managedLocationList);
-            });
-
-            addNewLocationsModal.$promise.then(addNewLocationsModal.hide);
+            }); 
 
             if (addAnother) {
                 $scope.addLocations();
-                $scope.displaySuccessfull(locationsToAdd, '#message-container');
+                $scope.displaySuccessfull(locationsToAdd, '#message-container');     
             } else {
-                $scope.displaySuccessfull(locationsToAdd, '#remove-container');
+                $scope.displaySuccessfull(locationsToAdd, '#remove-container');     
             }
         };
 
@@ -106,9 +103,7 @@ angular.module('emmiManager')
             Location.fetchPageLink(href).then(function (locationPage) {
                 $scope.handleResponse(locationPage, managedLocationList);
             });
-        };
-
-        var addNewLocationsModal = $modal({scope: $scope, template: 'partials/team/location/search.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
+        };        
 
         if ($scope.teamClientResource.teamResource.entity.id) { // to check is the team is created
             TeamLocation.loadTeamLocationsSimple($scope, []).then(function(pageLocations) {
