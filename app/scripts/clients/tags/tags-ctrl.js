@@ -28,9 +28,9 @@ angular.module('emmiManager')
 
         });
 
-        $scope.checkForConflicts = function(isValid) {
+        $scope.checkForConflicts = function (isValid) {
             Tag.checkForConflicts(Client.getClient()).then(function (conflictingTeamTags) {
-                if (conflictingTeamTags.length>0) {
+                if (conflictingTeamTags.length > 0) {
                     $scope.conflictingTeamTags = conflictingTeamTags;
                     $scope.showPopover();
                 } else {
@@ -40,7 +40,7 @@ angular.module('emmiManager')
             });
         };
 
-        $scope.overrideConflictingTeamTags = function(isValid){
+        $scope.overrideConflictingTeamTags = function (isValid) {
             $scope.saveTags(isValid);
             $scope.cancelDeactivatePopover();
             $scope.hideClientTags();
@@ -168,20 +168,18 @@ angular.module('emmiManager')
                     scope.saveWarning.show();
                 };
                 element.on('click', function () {
-                        // pop a warning dialog
-                        if (!scope.saveWarning) {
-                            $translate('team_edit_page.deactivate_dialog.title').then(function () {
-                                scope.saveWarning = $popover(element, {
-                                    title: 'Are you sure?',
-                                    scope: scope,
-                                    show: false,
-                                    placement: 'top',
-                                    contentTemplate: 'partials/client/tags/conflictingTeam_popover.tpl.html'
-                                });
-                            });
-                        } else {
-                            scope.saveWarning.show();
-                        }
+                    // pop a warning dialog
+                    if (!scope.saveWarning) {
+                        scope.saveWarning = $popover(element, {
+                            title: 'Are you sure?',
+                            scope: scope,
+                            show: false,
+                            placement: 'top',
+                            contentTemplate: 'partials/client/tags/conflictingTeam_popover.tpl.html'
+                        });
+                    } else {
+                        scope.saveWarning.show();
+                    }
                 });
             }
         };
