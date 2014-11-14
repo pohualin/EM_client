@@ -35,7 +35,8 @@ angular.module('emmiManager')
                 type: 'success',
                 show: true,
                 duration: 5,
-                dismissable: true
+                dismissable: true,
+                placement: 'top'
             });
         };
 
@@ -54,10 +55,11 @@ angular.module('emmiManager')
             $scope.teamLocations = angular.copy(teamLocationsAux);
         };
 
-        $scope.displaySuccessfull = function(locationsToAdd, container) {
+        $scope.displaySuccessfull = function(locationsToAdd, container, addAnother) {
             var message = (locationsToAdd.length === 1) ?
                 ' <b>' + locationsToAdd[0].name + '</b> has been added successfully.' :
                 'The new locations have been added successfully.';
+            var placement = addAnother ? '': 'top';
 
             $alert({
                 title: ' ',
@@ -66,7 +68,8 @@ angular.module('emmiManager')
                 type: 'success',
                 show: true,
                 duration: 5,
-                dismissable: true
+                dismissable: true,
+                placement: placement
             });
         };
 
@@ -77,9 +80,9 @@ angular.module('emmiManager')
 
             if (addAnother) {
                 $scope.addLocations();
-                $scope.displaySuccessfull(locationsToAdd, '#message-container');
+                $scope.displaySuccessfull(locationsToAdd, '#message-container', addAnother);
             } else {
-                $scope.displaySuccessfull(locationsToAdd, '#remove-container');
+                $scope.displaySuccessfull(locationsToAdd, '#remove-container', addAnother);
             }
         };
 
