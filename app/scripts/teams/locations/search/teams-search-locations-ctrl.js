@@ -2,7 +2,7 @@
 
 angular.module('emmiManager')
 
-    .controller('SearchTeamsLocationsController', function ($scope, $translate, $controller,$filter,$modal,TeamSearchLocation, Location, Client) {
+    .controller('SearchTeamsLocationsController', function ($scope,$modal, $controller,TeamSearchLocation, Location, Client) {
 
         $controller('LocationCommon', {$scope: $scope});
 
@@ -65,6 +65,7 @@ angular.module('emmiManager')
             });
 
             TeamSearchLocation.save($scope.teamClientResource.teamResource.link.teamLocations,locationsToAdd).then(function () {
+                $scope.$hide();
                 $scope.save(locationsToAdd,addAnother);
             });
         };
@@ -195,15 +196,9 @@ angular.module('emmiManager')
 
         };
 
-        var newTeamLocationModal = $modal({scope: $scope, template: 'partials/team/location/new.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
-
         $scope.createNewTeamLocation = function () {
-            $scope.hidePopupLocations();
-            newTeamLocationModal.$promise.then(newTeamLocationModal.show);
-        };
-
-        $scope.hideNewLocationModal = function () {
-            newTeamLocationModal.$promise.then(newTeamLocationModal.destroy);
+            $scope.$hide();
+            $modal({scope: $scope, template: 'partials/team/location/new.html', animation: 'none', backdropAnimation: 'emmi-fade', backdrop: 'static'});
         };
 
         $scope.cleanSearch();

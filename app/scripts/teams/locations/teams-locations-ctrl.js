@@ -8,8 +8,6 @@ angular.module('emmiManager')
 
         $controller('CommonPagination', {$scope: $scope});
 
-        var editLocationModal = $modal({scope: $scope, template: 'partials/client/location/edit.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
-
         $scope.editLocation = function (location) {
             // create a copy for editing
             $scope.location = angular.copy(location);
@@ -21,7 +19,8 @@ angular.module('emmiManager')
             $scope.setBelongsToPropertiesFor($scope.location);
 
             // show the dialog box
-            editLocationModal.$promise.then(editLocationModal.show);
+            $modal({scope: $scope, template: 'partials/client/location/edit.html', animation: 'none', backdropAnimation: 'emmi-fade', show: true, backdrop: 'static'});
+
         };
 
         var managedLocationList = 'locations';
@@ -41,7 +40,7 @@ angular.module('emmiManager')
         };
 
         $scope.addLocations = function () {
-            addNewLocationsModal.$promise.then(addNewLocationsModal.show);
+           $modal({scope: $scope, template: 'partials/team/location/search.html', animation: 'none', backdropAnimation: 'emmi-fade', show: true, backdrop: 'static'});
         };
 
         $scope.cancelPopup = function() {
@@ -76,8 +75,6 @@ angular.module('emmiManager')
                 $scope.handleResponse(pageLocations, managedLocationList);
             });
 
-            addNewLocationsModal.$promise.then(addNewLocationsModal.hide);
-
             if (addAnother) {
                 $scope.addLocations();
                 $scope.displaySuccessfull(locationsToAdd, '#message-container');
@@ -107,8 +104,6 @@ angular.module('emmiManager')
                 $scope.handleResponse(locationPage, managedLocationList);
             });
         };
-
-        var addNewLocationsModal = $modal({scope: $scope, template: 'partials/team/location/search.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
 
         if ($scope.teamClientResource.teamResource.entity.id) { // to check is the team is created
             TeamLocation.loadTeamLocationsSimple($scope, []).then(function(pageLocations) {
