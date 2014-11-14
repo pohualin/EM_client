@@ -66,7 +66,7 @@ angular.module('emmiManager')
 
             TeamSearchLocation.save($scope.teamClientResource.teamResource.link.teamLocations,locationsToAdd).then(function () {
                 $scope.$hide();
-                $scope.save(locationsToAdd,addAnother);
+                $scope.save(locationsToAdd,addAnother, 'added');
             });
         };
 
