@@ -24,7 +24,7 @@ angular.module('emmiManager')
         };
 
         var managedLocationList = 'locations';
-        
+
         $scope.teamLocations = {}; //used to hold the locations and manipulate internally
 
         $scope.showRemovalSuccess = function (locationResource) {
@@ -40,9 +40,9 @@ angular.module('emmiManager')
         };
 
         $scope.addLocations = function () {
-           $modal({scope: $scope, template: 'partials/team/locations/search.html', animation: 'none', backdropAnimation: 'emmi-fade', show: true, backdrop: 'static'});
+           $modal({scope: $scope, template: 'partials/team/location/search.html', animation: 'none', backdropAnimation: 'emmi-fade', show: true, backdrop: 'static'});
         };
-        
+
         $scope.cancelPopup = function() {
             //doing this to remove the teamLocations those locations that was clicked in the search and them press cancel
             var teamLocationsAux = {};
@@ -67,19 +67,19 @@ angular.module('emmiManager')
                 show: true,
                 duration: 5,
                 dismissable: true
-            });  
+            });
         };
 
         $scope.save = function (locationsToAdd, addAnother) {
             TeamLocation.loadTeamLocations($scope,locationsToAdd).then(function(pageLocations) {
                 $scope.handleResponse(pageLocations, managedLocationList);
-            }); 
+            });
 
             if (addAnother) {
                 $scope.addLocations();
-                $scope.displaySuccessfull(locationsToAdd, '#message-container');     
+                $scope.displaySuccessfull(locationsToAdd, '#message-container');
             } else {
-                $scope.displaySuccessfull(locationsToAdd, '#remove-container');     
+                $scope.displaySuccessfull(locationsToAdd, '#remove-container');
             }
         };
 
@@ -103,7 +103,7 @@ angular.module('emmiManager')
             Location.fetchPageLink(href).then(function (locationPage) {
                 $scope.handleResponse(locationPage, managedLocationList);
             });
-        };        
+        };
 
         if ($scope.teamClientResource.teamResource.entity.id) { // to check is the team is created
             TeamLocation.loadTeamLocationsSimple($scope, []).then(function(pageLocations) {
