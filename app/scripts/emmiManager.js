@@ -73,6 +73,12 @@ angular.module('emmiManager', [
             modals.splice(modalIndex, 1);
         });
 
+        $rootScope.page = {
+            setTitle: function(title) {
+                this.title = title + ' | Emmi Manager';
+            }
+        };
+
         $rootScope.$on('$routeChangeStart', function (event, next) {
             $rootScope.userRoles = USER_ROLES;
             $rootScope.isAuthorized = AuthSharedService.isAuthorized;
@@ -88,6 +94,7 @@ angular.module('emmiManager', [
                 });
                 modals = [];
             }
+            $rootScope.page.setTitle(current.$$route.title || 'Emmi Manager');
         });
 
         // Call when the the client is confirmed

@@ -14,6 +14,7 @@ angular.module('emmiManager').config(function($routeProvider, USER_ROLES) {
         access: {
             authorizedRoles: [USER_ROLES.admin]
         },
+        title: 'Location Search',
         reloadOnSearch: false,
         resolve: requiredResources
 	});

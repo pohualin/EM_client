@@ -30,11 +30,13 @@ angular.module('emmiManager')
                     authorizedRoles: [USER_ROLES.admin]
                 },
                 reloadOnSearch: false,
+                title: 'Client Search',
                 resolve: requiredResources
             })
             .when('/clients/new', {
                 templateUrl: 'partials/client/create/editor.html',
                 controller: 'ClientCreateController',
+                title: 'New Client',
                 access: {
                     authorizedRoles: [USER_ROLES.admin]
                 },

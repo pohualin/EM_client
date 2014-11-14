@@ -15,6 +15,12 @@ angular.module('emmiManager')
             $controller('SalesForceCtrl', {$scope: $scope, team: $scope.team});
         }
 
+        function setTitle(){
+            $scope.page.setTitle('Team ' + $scope.team.id + ' - ' + $scope.team.name);
+        }
+
+        setTitle();
+
         $scope.url = teamClientResource.clientResource.link.findByNormalizedName;
 
         $scope.cancel = function () {
@@ -37,6 +43,7 @@ angular.module('emmiManager')
                 EditTeam.save($scope.teamToSave, teamClientResource.teamResource.link.self).then(function (team) {
                     angular.extend($scope.team, team.data.entity);
                     angular.extend($scope.teamResource, team.data);
+                    setTitle();
                     $scope.teamClientResource.teamResource = $scope.teamResource;
                     $scope.editMode = false;
                 });
@@ -44,6 +51,7 @@ angular.module('emmiManager')
                 $scope.showError();
             }
         };
+
 
     })
 ;

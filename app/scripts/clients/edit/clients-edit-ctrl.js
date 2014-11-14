@@ -16,6 +16,12 @@ angular.module('emmiManager')
             Client.viewClientList();
         }
 
+        function setTitle(){
+            $scope.page.setTitle('Client ' + Client.getClient().entity.id + ' - ' + Client.getClient().entity.name);
+        }
+
+        setTitle();
+
         $scope.cancel = function () {
             $scope.hideError();
             $scope.editMode = false;
@@ -35,10 +41,12 @@ angular.module('emmiManager')
             if (isValid && $scope.clientToEdit.salesForceAccount) {
                 Client.updateClient($scope.clientToEdit).then(function () {
                     $scope.editMode = false;
+                    setTitle();
                 });
             } else {
                 $scope.showError();
             }
         };
+
     })
 ;
