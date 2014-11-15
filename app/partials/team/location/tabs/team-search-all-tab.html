@@ -78,15 +78,11 @@
                         </td>
                         <td>{{location.location.entity.phone}}</td>
                         <td data-ng-show="teamResource.teamProviders">          
-                            <select class="form-control" id="provider" data-ng-model="selectedProvider" data-ng-disabled="location.location.entity.disabled"
-                                    data-ng-options="c.entity.provider.firstName for c in teamResource.teamProviders" name="provider" >
-                                <option value="" selected>All ({{teamResource.teamProviders.length}})</option>
-                            </select>
 
-                            <button type="button" class="btn btn-default" ng-model="selectedProvider" data-html="1" data-multiple="1" data-ng-disabled="location.location.entity.disabled" data-ng-options="c.entity.provider.firstName for c in teamResource.teamProviders" placeholder="Providers"  template=" <input type='checkbox' /> " bs-select >
-                              All ({{teamResource.teamProviders.length}})
-                            </button>
-
+                            <select data-chosen data-placeholder="Use: all providers{{teamResource.teamProviders.length}}" multiple data-ng-model="selectedProvider"
+                            data-ng-options="c.entity.provider.firstName for c in teamResource.teamProviders" data-ng-disabled="location.location.entity.disabled"
+                            class="form-control" data-ng-change="updateTeamLocationsForProvider(provider)" >
+                             </select>                            
                         </td>
                     </tr>
                 </table>
