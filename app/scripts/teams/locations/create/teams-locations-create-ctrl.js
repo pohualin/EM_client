@@ -26,7 +26,7 @@ angular.module('emmiManager')
                     locationsToAdd.push(location.data.location.entity);
 
                     TeamSearchLocation.save($scope.teamClientResource.teamResource.link.teamLocations,locationsToAdd).then(function () {
-                        $scope.save(locationsToAdd, false);
+                        $scope.save(locationsToAdd, false, 'created');
 
                         var locationResource = location.data.location;
                         $scope.$hide();
