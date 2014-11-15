@@ -45,7 +45,7 @@
                 <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0"
                        cellspacing="0" data-ng-show="locations" >
                     <tr>
-                        <th class="sort col-sm-1">&nbsp;</th>
+                        <th class="sort col-sm-0">&nbsp;</th>
                         <th class="sort col-sm-3" data-ng-click="sort('name')">
                             Name
                             <span data-ng-show="sortProperty.property === 'name'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span>
@@ -54,7 +54,7 @@
                             Client Owner
                             <span data-ng-show="sortProperty.property === 'belongsTo.name'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span>
                         </th>
-                        <th class="sort col-sm-3" data-ng-click="sort('city')">
+                        <th class="sort col-sm-2" data-ng-click="sort('city')">
                             City/State
                             <span data-ng-show="sortProperty.property === 'city'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span>
                         </th>
@@ -62,6 +62,9 @@
                             Phone
                             <span data-ng-show="sortProperty.property === 'phone'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span>
                         </th>
+                        <th class="sort col-sm-3" data-ng-show="teamResource.teamProviders">
+                            Use
+                        </th>                        
                     </tr>
                     <tr data-ng-repeat="location in locations" data-ng-class="location.location.entity.disabled ? 'text-muted' : ''">
                         <td><input type="checkbox" data-ng-model="location.location.entity.checked"  data-ng-disabled="location.location.entity.disabled"
@@ -74,6 +77,17 @@
                                 data-ng-show="location.location.entity.city && location.location.entity.state">,&nbsp;</span>{{location.location.entity.state}}
                         </td>
                         <td>{{location.location.entity.phone}}</td>
+                        <td data-ng-show="teamResource.teamProviders">          
+                            <select class="form-control" id="provider" data-ng-model="selectedProvider" data-ng-disabled="location.location.entity.disabled"
+                                    data-ng-options="c.entity.provider.firstName for c in teamResource.teamProviders" name="provider" >
+                                <option value="" selected>All ({{teamResource.teamProviders.length}})</option>
+                            </select>
+
+                            <button type="button" class="btn btn-default" ng-model="selectedProvider" data-html="1" data-multiple="1" data-ng-disabled="location.location.entity.disabled" data-ng-options="c.entity.provider.firstName for c in teamResource.teamProviders" placeholder="Providers"  template=" <input type='checkbox' /> " bs-select >
+                              All ({{teamResource.teamProviders.length}})
+                            </button>
+
+                        </td>
                     </tr>
                 </table>
                 <div data-ng-hide="!allLocationsSearch || locations">
