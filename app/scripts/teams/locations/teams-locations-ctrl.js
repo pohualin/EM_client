@@ -55,10 +55,10 @@ angular.module('emmiManager')
             $scope.teamLocations = angular.copy(teamLocationsAux);
         };
 
-        $scope.displaySuccessfull = function(locationsToAdd, container, addAnother) {
+        $scope.displaySuccessfull = function(locationsToAdd, container, addAnother, action) {
             var message = (locationsToAdd.length === 1) ?
-                ' <b>' + locationsToAdd[0].name + '</b> has been added successfully.' :
-                'The new locations have been added successfully.';
+                ' <b>' + locationsToAdd[0].name + '</b> has been '+action+' successfully.' :
+                'The new locations have been '+action+' successfully.';
             var placement = addAnother ? '': 'top';
 
             $alert({
@@ -73,16 +73,16 @@ angular.module('emmiManager')
             });
         };
 
-        $scope.save = function (locationsToAdd, addAnother) {
+        $scope.save = function (locationsToAdd, addAnother, action) {
             TeamLocation.loadTeamLocations($scope,locationsToAdd).then(function(pageLocations) {
                 $scope.handleResponse(pageLocations, managedLocationList);
             });
 
             if (addAnother) {
                 $scope.addLocations();
-                $scope.displaySuccessfull(locationsToAdd, '#message-container', addAnother);
+                $scope.displaySuccessfull(locationsToAdd, '#message-container', addAnother, action);
             } else {
-                $scope.displaySuccessfull(locationsToAdd, '#remove-container', addAnother);
+                $scope.displaySuccessfull(locationsToAdd, '#remove-container', addAnother, action);
             }
         };
 
