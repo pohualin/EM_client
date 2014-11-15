@@ -10,6 +10,8 @@ angular.module('emmiManager')
 
         var managedLocationList = 'locations';
 
+        $scope.tabs = {};
+
         $scope.hasLocationsAdded = function() {
             var resp = false;
             angular.forEach( $scope.teamLocations , function (location) {
@@ -21,21 +23,22 @@ angular.module('emmiManager')
         };
 
         $scope.cleanSearch = function() {
-            $scope.clientLocationsSearch = true;
-            $scope.allLocationsSearch = true;
-            $scope.clientLocationsSelected = [];
+            $scope.allLocationsSearch = false;
             $scope.locations = null;
             $scope.cancelPopup(); //clean the locations checked in other search
             $scope.locationQuery = '';
             Location.findForClient(Client.getClient()).then(function (allLocations) {
                 $scope.clientLocations = allLocations.content;
-
+                
                 angular.forEach( $scope.clientLocations , function (location) {
                     if ($scope.teamLocations[location.location.entity.id]) {
                         $scope.teamLocations[location.location.entity.id].isNewAdd = false;
                         $scope.teamLocations[location.location.entity.id].disabled = true;
                         $scope.teamLocations[location.location.entity.id].checked = true;
-                        $scope.clientLocationsSelected.push(location);
+                        $scope.teamLocations[location.location.entity.id].associated = true;
+                        location.location.entity.isNewAdd = false;
+                        location.location.entity.disabled = true;
+                        location.location.entity.checked = true;
                     }
                 });
             });
@@ -52,11 +55,6 @@ angular.module('emmiManager')
         $scope.savePopupLocations = function(addAnother) {
             var locationsToAdd = [];
 
-            angular.forEach( $scope.clientLocationsSelected , function (location) {
-                if ($scope.teamLocations[location.location.entity.id]) {
-                    $scope.teamLocations[location.location.entity.id] = angular.copy(location.location.entity);
-                }
-            });
             angular.forEach( $scope.teamLocations , function (location) {
                 if (location.isNewAdd) {
                     location.isNewAdd = false;
@@ -75,7 +73,9 @@ angular.module('emmiManager')
             $scope.$hide();
         };
 
+        //disabled the already selected and also search results will not contain associated client locations
         $scope.setLocationChecked = function () {
+
             angular.forEach( $scope.locations , function (location) {
                 if ($scope.teamLocations[location.location.entity.id]) {
                     location.location.entity.disabled = !$scope.teamLocations[location.location.entity.id].isNewAdd ;
@@ -84,16 +84,14 @@ angular.module('emmiManager')
             });
         };
 
-        $scope.search = function (isValid) {
-            if (isValid){
-                $scope.clientLocationsSelected = null;
+        $scope.search = function (term) {
+            if (term.$valid){
                 $scope.loading = true;
                 $scope.locations = null;
                 $scope.cancelPopup(); //clean the locations checked in other search
                 Location.find(Client.getClient(), $scope.locationQuery, $scope.status).then(function (locationPage) {
                     $scope.handleResponse(locationPage, managedLocationList);
                     $scope.setLocationChecked();
-                    $scope.clientLocationsSearch = false;
                     $scope.allLocationsSearch = true;
                 }, function () {
                     // error happened
@@ -173,27 +171,6 @@ angular.module('emmiManager')
                 locationResource.location.entity.isNewAdd = true;
                 $scope.teamLocations[locationResource.location.entity.id] = angular.copy(locationResource.location.entity);
             }
-        };
-
-        $scope.onDropdownChange = function () {
-            $scope.locations = null;
-            $scope.clientLocationsSearch = true;
-            $scope.allLocationsSearch = false;
-
-            //remove all the new added then add the selected
-            angular.forEach( $scope.clientLocations , function (location) {
-                if ($scope.teamLocations[location.location.entity.id] && $scope.teamLocations[location.location.entity.id].isNewAdd) {
-                    delete $scope.teamLocations[location.location.entity.id];
-                }
-            });
-
-            angular.forEach( $scope.clientLocationsSelected , function (location) {
-                if (!$scope.teamLocations[location.location.entity.id]) {
-                    location.location.entity.isNewAdd = true;
-                    $scope.teamLocations[location.location.entity.id] = angular.copy(location.location.entity);
-                }
-            });
-
         };
 
         $scope.createNewTeamLocation = function () {
