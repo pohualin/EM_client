@@ -13,6 +13,8 @@ angular.module('emmiManager')
 
         $scope.title = 'New Location';
 
+        var managedLocationList = 'locations';
+
         $scope.saveAndAddAnother = function (isValid) {
             $scope.saveLocation(isValid, true);
         };
@@ -28,10 +30,7 @@ angular.module('emmiManager')
                     TeamSearchLocation.save($scope.teamClientResource.teamResource.link.teamLocations,locationsToAdd).then(function () {
                         $scope.$hide();
 
-                        TeamLocation.loadTeamLocationsSimple($scope,locationsToAdd).then(function(pageLocations) {
-                            $scope.handleResponse(pageLocations, 'locations');
-                        });
-
+                        $scope.refresh();
                         var container = '#remove-container';
                         var locationResource = location.data.location;
                         

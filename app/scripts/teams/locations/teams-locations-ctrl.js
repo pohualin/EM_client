@@ -73,11 +73,15 @@ angular.module('emmiManager')
             });
         };
 
-        $scope.save = function (locationsToAdd, addAnother) {
-            TeamLocation.loadTeamLocationsSimple($scope,locationsToAdd).then(function(pageLocations) {
+        $scope.refresh = function() {
+            TeamLocation.loadTeamLocationsSimple($scope).then(function(pageLocations) {
                 $scope.handleResponse(pageLocations, managedLocationList);
                 $scope.fetchAllPages(pageLocations);
             });
+        };
+
+        $scope.save = function (locationsToAdd, addAnother) {
+            $scope.refresh();
 
             if (addAnother) {
                 $scope.addLocations();
@@ -89,12 +93,8 @@ angular.module('emmiManager')
 
         $scope.removeExistingLocation = function (locationResource) {
             TeamLocation.removeLocation(locationResource).then(function () {
-                TeamLocation.loadTeamLocationsSimple($scope,[]).then(function(pageLocations) {
-                    $scope.handleResponse(pageLocations, managedLocationList);
-                    $scope.showRemovalSuccess(locationResource);
-                    delete $scope.teamLocations[locationResource.entity.location.id];
-                    $scope.fetchAllPages(pageLocations);
-                });
+                $scope.refresh();
+                $scope.showRemovalSuccess(locationResource);
             });
         };
 
@@ -118,10 +118,7 @@ angular.module('emmiManager')
         };
 
         if ($scope.teamClientResource.teamResource.entity.id) { // to check is the team is created
-            TeamLocation.loadTeamLocationsSimple($scope).then(function(pageLocations) {
-                $scope.handleResponse(pageLocations, managedLocationList);
-                $scope.fetchAllPages(pageLocations);
-            });
+            $scope.refresh();
         }
 
     })
