@@ -2,12 +2,12 @@
 angular.module('emmiManager')
     .service('Tag', function ($http, $q, Session, UriTemplate) {
         function groupSaveRequests(clientResource) {
-            var groupSaveRequests = [];
+            var ret = [];
             angular.forEach(clientResource.entity.tagGroups, function (groupToSave) {
                 angular.forEach(groupToSave.tags, function (t) {
                     t.name = t.text;
                 });
-                groupSaveRequests.push({
+                ret.push({
                     group: {
                         id: groupToSave.id,
                         version: groupToSave.version,
@@ -17,7 +17,7 @@ angular.module('emmiManager')
                     tags: groupToSave.tags
                 });
             });
-            return groupSaveRequests;
+            return ret;
         }
         return {
 
