@@ -1,24 +1,29 @@
 'use strict';
 angular.module('emmiManager')
     .service('Tag', function ($http, $q, Session, UriTemplate) {
+        function groupSaveRequests(clientResource) {
+            var groupSaveRequests = [];
+            angular.forEach(clientResource.entity.tagGroups, function (groupToSave) {
+                angular.forEach(groupToSave.tags, function (t) {
+                    t.name = t.text;
+                });
+                groupSaveRequests.push({
+                    group: {
+                        id: groupToSave.id,
+                        version: groupToSave.version,
+                        name: groupToSave.title,
+                        type: groupToSave.entity ? groupToSave.entity.type : groupToSave.type
+                    },
+                    tags: groupToSave.tags
+                });
+            });
+            return groupSaveRequests;
+        }
         return {
+
             insertGroups: function (clientResource) {
                 if (clientResource) {
-                    var groupSaveRequests = [];
-                    angular.forEach(clientResource.entity.tagGroups, function (groupToSave) {
-                        angular.forEach(groupToSave.tags, function (t) {
-                            t.name = t.text;
-                        });
-                        groupSaveRequests.push({
-                            group: {
-                                id: groupToSave.id,
-                                version: groupToSave.version,
-                                name: groupToSave.title,
-                                type: groupToSave.entity ? groupToSave.entity.type : groupToSave.type
-                            },
-                            tags: groupToSave.tags
-                        });
-                    });
+                    var groupSaveRequests = groupSaveRequests(clientResource);
                     return $http.post(UriTemplate.create(clientResource.link.groups).stringify(), groupSaveRequests).then(function (response) {
                         return response.data;
                     });
@@ -66,7 +71,29 @@ angular.module('emmiManager')
                     }
                     return responseArray;
                 });
+            },
+            checkForConflicts: function (clientResource) {
+                var groupSaveRequests = groupSaveRequests(clientResource);
+                return $http.post(UriTemplate.create(clientResource.link.invalidTeams).stringify(), groupSaveRequests).then(function (response) {
+                    var tagMap = {};
+                    var tagNames = [];
+                    angular.forEach(response.data, function (teamTag) {
+                        if (!tagMap[teamTag.tag.name]) {
+                            tagMap[teamTag.tag.name] = 1;
+                            tagNames.push(teamTag.tag.name);
+                        } else {
+                            tagMap[teamTag.tag.name]++;
+                        }
+                    });
+                    var numberOfTeamForTagMap = [];
+                    angular.forEach(tagNames, function (tagName) {
+                        numberOfTeamForTagMap.push({
+                            tag: tagName,
+                            numberOfTeams: tagMap[tagName]
+                        });
+                    });
+                    return numberOfTeamForTagMap;
+                });
             }
         };
-    })
-;
+    });
