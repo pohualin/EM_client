@@ -5,7 +5,7 @@ angular.module('emmiManager')
 /**
  *  Controls the create new location popup (partials/location/new.html) from a Team search page
  */
-    .controller('TeamLocationCreateController', function ($scope, $controller, Location, TeamSearchLocation, $alert, Client) {
+    .controller('TeamLocationCreateController', function ($scope, $controller, Location, TeamSearchLocation, $alert, Client, TeamLocation) {
 
         $controller('LocationCommon', {$scope: $scope});
 
@@ -26,22 +26,29 @@ angular.module('emmiManager')
                     locationsToAdd.push(location.data.location.entity);
 
                     TeamSearchLocation.save($scope.teamClientResource.teamResource.link.teamLocations,locationsToAdd).then(function () {
-                        $scope.save(locationsToAdd, false, 'created');
-
-                        var locationResource = location.data.location;
                         $scope.$hide();
+
+                        TeamLocation.loadTeamLocationsSimple($scope,locationsToAdd).then(function(pageLocations) {
+                            $scope.handleResponse(pageLocations, 'locations');
+                        });
+
+                        var container = '#remove-container';
+                        var locationResource = location.data.location;
+                        
                         if (addAnother) {
                             $scope.addLocations();
-                            $alert({
-                                title: ' ',
-                                content: 'The location <b>' + locationResource.entity.name + '</b> has been successfully created.',
-                                container: '#message-container',
-                                type: 'success',
-                                show: true,
-                                duration: 5,
-                                dismissable: true
-                            });
-                        }                     
+                            container = '#message-container';
+                        }     
+
+                        $alert({
+                            title: ' ',
+                            content: 'The location <b>' + locationResource.entity.name + '</b> has been successfully created.',
+                            container: container,
+                            type: 'success',
+                            show: true,
+                            duration: 5,
+                            dismissable: true
+                        });                
                     });
 
                 });
