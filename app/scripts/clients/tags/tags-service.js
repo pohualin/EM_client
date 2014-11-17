@@ -1,32 +1,36 @@
 'use strict';
 angular.module('emmiManager')
-    .service('Tag', function ($http, $q, Session, UriTemplate) {
-        function groupSaveRequests(clientResource) {
-            var ret = [];
-            angular.forEach(clientResource.entity.tagGroups, function (groupToSave) {
-                angular.forEach(groupToSave.tags, function (t) {
-                    t.name = t.text;
-                });
-                ret.push({
-                    group: {
-                        id: groupToSave.id,
-                        version: groupToSave.version,
-                        name: groupToSave.title,
-                        type: groupToSave.entity ? groupToSave.entity.type : groupToSave.type
-                    },
-                    tags: groupToSave.tags
-                });
-            });
-            return ret;
-        }
+    .factory('GroupSaveRequest', function () {
         return {
+            create: function (clientResource) {
+                var ret = [];
+                angular.forEach(clientResource.entity.tagGroups, function (groupToSave) {
+                    angular.forEach(groupToSave.tags, function (t) {
+                        t.name = t.text;
+                    });
+                    ret.push({
+                        group: {
+                            id: groupToSave.id,
+                            version: groupToSave.version,
+                            name: groupToSave.title,
+                            type: groupToSave.entity ? groupToSave.entity.type : groupToSave.type
+                        },
+                        tags: groupToSave.tags
+                    });
+                });
+                return ret;
+            }
+        }
+    })
 
+    .service('Tag', function ($http, $q, Session, UriTemplate, GroupSaveRequest) {
+        return {
             insertGroups: function (clientResource) {
                 if (clientResource) {
-                    var groupSaveRequests = groupSaveRequests(clientResource);
-                    return $http.post(UriTemplate.create(clientResource.link.groups).stringify(), groupSaveRequests).then(function (response) {
-                        return response.data;
-                    });
+                    return $http.post(UriTemplate.create(clientResource.link.groups).stringify(),
+                        GroupSaveRequest.create(clientResource)).then(function (response) {
+                            return response.data;
+                        });
                 }
             },
             loadGroups: function (clientResource) {
@@ -73,27 +77,27 @@ angular.module('emmiManager')
                 });
             },
             checkForConflicts: function (clientResource) {
-                var groupSaveRequests = groupSaveRequests(clientResource);
-                return $http.post(UriTemplate.create(clientResource.link.invalidTeams).stringify(), groupSaveRequests).then(function (response) {
-                    var tagMap = {};
-                    var tagNames = [];
-                    angular.forEach(response.data, function (teamTag) {
-                        if (!tagMap[teamTag.tag.name]) {
-                            tagMap[teamTag.tag.name] = 1;
-                            tagNames.push(teamTag.tag.name);
-                        } else {
-                            tagMap[teamTag.tag.name]++;
-                        }
-                    });
-                    var numberOfTeamForTagMap = [];
-                    angular.forEach(tagNames, function (tagName) {
-                        numberOfTeamForTagMap.push({
-                            tag: tagName,
-                            numberOfTeams: tagMap[tagName]
+                return $http.post(UriTemplate.create(clientResource.link.invalidTeams).stringify(),
+                    GroupSaveRequest.create(clientResource)).then(function (response) {
+                        var tagMap = {};
+                        var tagNames = [];
+                        angular.forEach(response.data, function (teamTag) {
+                            if (!tagMap[teamTag.tag.name]) {
+                                tagMap[teamTag.tag.name] = 1;
+                                tagNames.push(teamTag.tag.name);
+                            } else {
+                                tagMap[teamTag.tag.name]++;
+                            }
                         });
+                        var numberOfTeamForTagMap = [];
+                        angular.forEach(tagNames, function (tagName) {
+                            numberOfTeamForTagMap.push({
+                                tag: tagName,
+                                numberOfTeams: tagMap[tagName]
+                            });
+                        });
+                        return numberOfTeamForTagMap;
                     });
-                    return numberOfTeamForTagMap;
-                });
             }
         };
     });
