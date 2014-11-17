@@ -1,28 +1,29 @@
 'use strict';
 angular.module('emmiManager')
     .service('Tag', function ($http, $q, Session, UriTemplate) {
-        return {
-            groupSaveRequests: function (clientResource) {
-                var groupSaveRequests = [];
-                angular.forEach(clientResource.entity.tagGroups, function (groupToSave) {
-                    angular.forEach(groupToSave.tags, function (t) {
-                        t.name = t.text;
-                    });
-                    groupSaveRequests.push({
-                        group: {
-                            id: groupToSave.id,
-                            version: groupToSave.version,
-                            name: groupToSave.title,
-                            type: groupToSave.entity ? groupToSave.entity.type : groupToSave.type
-                        },
-                        tags: groupToSave.tags
-                    });
+        function groupSaveRequests(clientResource) {
+            var groupSaveRequests = [];
+            angular.forEach(clientResource.entity.tagGroups, function (groupToSave) {
+                angular.forEach(groupToSave.tags, function (t) {
+                    t.name = t.text;
                 });
-                return groupSaveRequests;
-            },
+                groupSaveRequests.push({
+                    group: {
+                        id: groupToSave.id,
+                        version: groupToSave.version,
+                        name: groupToSave.title,
+                        type: groupToSave.entity ? groupToSave.entity.type : groupToSave.type
+                    },
+                    tags: groupToSave.tags
+                });
+            });
+            return groupSaveRequests;
+        }
+        return {
+
             insertGroups: function (clientResource) {
                 if (clientResource) {
-                    var groupSaveRequests = this.groupSaveRequests(clientResource);
+                    var groupSaveRequests = groupSaveRequests(clientResource);
                     return $http.post(UriTemplate.create(clientResource.link.groups).stringify(), groupSaveRequests).then(function (response) {
                         return response.data;
                     });
@@ -72,7 +73,7 @@ angular.module('emmiManager')
                 });
             },
             checkForConflicts: function (clientResource) {
-                var groupSaveRequests = this.groupSaveRequests(clientResource);
+                var groupSaveRequests = groupSaveRequests(clientResource);
                 return $http.post(UriTemplate.create(clientResource.link.invalidTeams).stringify(), groupSaveRequests).then(function (response) {
                     var tagMap = {};
                     var tagNames = [];
