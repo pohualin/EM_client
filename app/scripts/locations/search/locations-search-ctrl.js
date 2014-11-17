@@ -31,7 +31,8 @@ angular.module('emmiManager')
                 $scope.currentPageSize);
           };
 
-          $scope.view = function(entity) {
+          $scope.view = function(location) {
+        	  window.paul = location;
           };
 
           // Function declarations start here
