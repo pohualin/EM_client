@@ -35,7 +35,9 @@ angular.module('emmiManager')
                     $scope.showPopover();
                 } else {
                     $scope.saveTags(isValid);
-                    $scope.hideClientTags();
+                    if ($scope.hideClientTags) {
+                        $scope.hideClientTags();
+                    }
                 }
             });
         };
@@ -57,21 +59,22 @@ angular.module('emmiManager')
                         $scope.client.tagGroups = angular.copy($scope.client.savedGroups);
                         $scope.clientTagsHaveChanges = false;
                         $scope.saving = false;
-
-                        var tagGroupToDisplay = [];
-                        angular.forEach(clientGroups, function (group) {
-                            var localGroup = angular.copy(group);
-                            localGroup.title = localGroup.name;
-                            //rebuild groups on each tag
-                            localGroup.tag = null;
-                            angular.forEach(group.tag, function (tag) {
-                                tag.group = localGroup;
-                                tag.text = tag.name;
-                                tagGroupToDisplay.push(tag);
+                        if ($scope.team) {
+                            var tagGroupToDisplay = [];
+                            angular.forEach(clientGroups, function (group) {
+                                var localGroup = angular.copy(group);
+                                localGroup.title = localGroup.name;
+                                //rebuild groups on each tag
+                                localGroup.tag = null;
+                                angular.forEach(group.tag, function (tag) {
+                                    tag.group = localGroup;
+                                    tag.text = tag.name;
+                                    tagGroupToDisplay.push(tag);
+                                });
                             });
-                        });
-                        $scope.team.tags = tagGroupToDisplay;
-                        TeamTag.loadSelectedTags($scope.teamClientResource.teamResource);
+                            $scope.team.tags = tagGroupToDisplay;
+                            TeamTag.loadSelectedTags($scope.teamClientResource.teamResource);
+                        }
                     }, function () {
                         // error happened
                         $scope.saving = false;
