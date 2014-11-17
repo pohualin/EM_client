@@ -58,7 +58,7 @@ angular.module('emmiManager')
         $scope.displaySuccessfull = function(locationsToAdd, container, addAnother, action) {
             var message = (locationsToAdd.length === 1) ?
                 ' <b>' + locationsToAdd[0].name + '</b> has been '+action+' successfully.' :
-                'The new locations have been '+action+' successfully.';
+                'The new locations have been added successfully.';
             var placement = addAnother ? '': 'top';
 
             $alert({
@@ -73,32 +73,28 @@ angular.module('emmiManager')
             });
         };
 
-        $scope.save = function (locationsToAdd, addAnother, action) {
-            TeamLocation.loadTeamLocations($scope,locationsToAdd).then(function(pageLocations) {
+        $scope.refresh = function() {
+            TeamLocation.loadTeamLocationsSimple($scope).then(function(pageLocations) {
                 $scope.handleResponse(pageLocations, managedLocationList);
+                $scope.fetchAllPages(pageLocations);
             });
+        };
+
+        $scope.save = function (locationsToAdd, addAnother) {
+            $scope.refresh();
 
             if (addAnother) {
                 $scope.addLocations();
-                $scope.displaySuccessfull(locationsToAdd, '#message-container', addAnother, action);
+                $scope.displaySuccessfull(locationsToAdd, '#message-container', addAnother);
             } else {
-                $scope.displaySuccessfull(locationsToAdd, '#remove-container', addAnother, action);
+                $scope.displaySuccessfull(locationsToAdd, '#remove-container', addAnother);
             }
         };
 
         $scope.removeExistingLocation = function (locationResource) {
             TeamLocation.removeLocation(locationResource).then(function () {
-                TeamLocation.loadTeamLocationsSimple($scope,[]).then(function(pageLocations) {
-                    $scope.handleResponse(pageLocations, managedLocationList);
-                    $scope.showRemovalSuccess(locationResource);
-                    delete $scope.teamLocations[locationResource.entity.location.id];
-                });
-            });
-        };
-
-        $scope.changePageSize = function (pageSize) {
-            TeamLocation.loadTeamLocations($scope, [], $scope.sortProperty, pageSize).then(function(pageLocations) {
-                $scope.handleResponse(pageLocations, managedLocationList);
+                $scope.refresh();
+                $scope.showRemovalSuccess(locationResource);
             });
         };
 
@@ -108,10 +104,21 @@ angular.module('emmiManager')
             });
         };
 
-        if ($scope.teamClientResource.teamResource.entity.id) { // to check is the team is created
-            TeamLocation.loadTeamLocationsSimple($scope, []).then(function(pageLocations) {
-                $scope.handleResponse(pageLocations, managedLocationList);
+        $scope.fetchAllPages = function (content) {
+            //fetch all pages in order to fill the dropdown with all clients locations, not only the first page.
+            angular.forEach(content.linkList, function(link, key) {
+                if (key >= 1 && key < content.page.totalPages) {
+                    Location.fetchPageLink(link.href).then(function (clientPage) {
+                        angular.forEach(clientPage.content, function (teamLocation) {
+                            $scope.teamLocations[teamLocation.entity.location.id] = angular.copy(teamLocation.entity.location);
+                        });                        
+                    });
+                }
             });
+        };
+
+        if ($scope.teamClientResource.teamResource.entity.id) { // to check is the team is created
+            $scope.refresh();
         }
 
     })
