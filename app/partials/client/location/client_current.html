@@ -9,11 +9,11 @@
             <th>State</th>
             <th>&nbsp;</th>
         </tr>
-        <tr data-ng-repeat="(key,location) in client.addedLocations | orderBy:'key'" data-ng-controller="ClientAddNewLocationsController">
+        <tr data-ng-class="{highlight: location.highlight}"  data-ng-repeat="location in addedLocationsList() | orderBy:'sort'" data-ng-controller="ClientAddNewLocationsController">
             <td>
                 {{location.name}}
                 <span data-ng-show="location.belongsTo && location.belongsTo.id !== client.entity.id"> <em>({{location.belongsTo.name}})</em></span>
-                <span data-ng-show="!location.belongsTo"> <em>(no client owner)</em></span>
+                <span data-ng-show="!location.belongsTo"> <em>(<span data-translate="client_edit_page.locations.no_client_owner"></span>)</em></span>
             </td>
             <td>{{location.phone}}</td>
             <td>{{location.city}}</td>
@@ -22,10 +22,10 @@
                 <a href data-ng-click="editLocation(location)">edit</a><span class="text-muted">&nbsp;|&nbsp;</span><a href data-ng-click="removeNewLocation(location)">remove from client</a>
             </td>
         </tr>
-        <tr data-ng-repeat="location in clientLocations">
+        <tr data-ng-repeat="location in clientLocations | orderBy:'entity.name' ">
             <td>{{location.entity.name}}
                 <span data-ng-show="location.entity.belongsTo && location.entity.belongsTo.id !== client.entity.id"> <em>({{location.entity.belongsTo.name}})</em></span>
-                <span data-ng-show="!location.entity.belongsTo"> <em>(no client owner)</em></span>
+                <span data-ng-show="!location.entity.belongsTo"> <em>(<span data-translate="client_edit_page.locations.no_client_owner"></span>)</em></span>
             </td>
             <td>{{location.entity.phone}}</td>
             <td>{{location.entity.city}}</td>

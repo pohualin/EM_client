@@ -1,7 +1,19 @@
 
+.tag-group {
+    margin: 3px 0; // add some margin for when tag groups go to next line
+    .error-circle {
+        float: left; // to fix some weird layout bugs (EM-360)
+    }
+}
+
+.tag-group-btn-text {
+    white-space: pre;
+}
+
 .tag-group-edit {
     position: absolute;
     z-index: 10;
+    width: 100%;
     input {
         // styles copied form .btn to match when editing
         display: inline-block;
@@ -16,6 +28,7 @@
         border: 1px solid transparent;
         background: transparent;
         color: #fff;
+        width: 100%;
         &:focus {
             outline: 0;
         }
@@ -28,12 +41,13 @@
 
 .tag-group-remove {
     display: none;
+    .invalid &,
     .selected & {
         display: block;
     }
 }
 .btn-group:hover .tag-group-remove {
-    display: block;
+    display: inline-block;
 }
 
 .tags-input .host {
@@ -111,7 +125,7 @@
         padding: .2em .6em .2em;
         //font-size: 75%;
         font-weight: 700;
-        line-height: 1;
+        line-height: 16px;
         color: #fff;
         text-align: center;
         white-space: nowrap;
@@ -142,11 +156,14 @@
             }
         }
 
+        &:hover {
+            .remove-button {
+                display: inline-block;
+            }
+        }
+
         &.selected {
             background-color: #428bca;
-            .remove-button {
-                display: inline;
-            }
         }
 
         input {
@@ -168,6 +185,9 @@
 
 
 // Tag library popover
+.btn-tag-library + .popover {
+    max-width: 316px;
+}
 .popover {
     .btn-close {
         position: absolute;
@@ -192,8 +212,18 @@
         }
     }
     .toggle-content {
-        margin-left: 25px;
+        display: none;
+        margin-left: 35px;
         color: #999;
+        &.open {
+            display: block;
+        }
+        small {
+            display: block;
+        }
+    }
+    .form-actions .info {
+        display: block;
     }
 }
 

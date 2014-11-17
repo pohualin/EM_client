@@ -26,105 +26,10 @@ angular.module('emmiManager', [
         user: 'PERM_USER'
     })
 
-    .config(function ($routeProvider, $httpProvider, $translateProvider, tmhDynamicLocaleProvider, USER_ROLES, HateoasInterceptorProvider, $datepickerProvider) {
-
-        var requiredResources = {
-            'account': ['AuthSharedService', function (AuthSharedService) {
-                return AuthSharedService.currentUser();
-            }]
-        };
-
-        var clientDetailRequiredResources = {
-            'clientResource': ['AuthSharedService','Client', '$route', '$q', function (AuthSharedService, Client, $route, $q){
-                var deferred = $q.defer();
-                AuthSharedService.currentUser().then(function (){
-                    Client.selectClient($route.current.params.clientId).then(function (clientResource){
-                          deferred.resolve(clientResource);
-                    });
-                });
-                return deferred.promise;
-            }]
-        };
-
-        // Routes
-        $routeProvider
-            .when('/', {
-                templateUrl: 'partials/main.html',
-                controller: 'MainCtrl',
-                access: {
-                    authorizedRoles: [USER_ROLES.all]
-                },
-                resolve: requiredResources
-            })
-            .when('/login', {
-                templateUrl: 'partials/login.html',
-                controller: 'LoginCtrl',
-                access: {
-                    authorizedRoles: [USER_ROLES.all]
-                },
-                resolve: requiredResources
-            })
-            .when('/clients', {
-                templateUrl: 'partials/client/clients.html',
-                controller: 'ClientListCtrl',
-                access: {
-                    authorizedRoles: [USER_ROLES.admin]
-                },
-                resolve: requiredResources
-            })
-            .when('/clients/new', {
-                templateUrl: 'partials/client/client_edit.html',
-                controller: 'ClientCtrl',
-                access: {
-                    authorizedRoles: [USER_ROLES.admin]
-                },
-                resolve: requiredResources
-            })
-            .when('/clients/:clientId/edit', {
-                templateUrl: 'partials/client/client_edit.html',
-                controller: 'ClientDetailCtrl',
-                access: {
-                    authorizedRoles: [USER_ROLES.admin]
-                },
-                resolve: clientDetailRequiredResources
-            })
-            .when('/clients/:clientId/view', {
-                templateUrl: 'partials/client/client_view.html',
-                controller: 'ClientViewCtrl',
-                access: {
-                    authorizedRoles: [USER_ROLES.admin]
-                },
-                resolve: clientDetailRequiredResources
-            })
-            .when('/403', {
-                templateUrl: 'partials/403.html',
-                resolve: requiredResources,
-                access: {
-                    authorizedRoles: [USER_ROLES.all]
-                }
-            })
-            .when('/logout', {
-                templateUrl: 'partials/main.html',
-                controller: 'LogoutCtrl',
-                resolve: requiredResources,
-                access: {
-                    authorizedRoles: [USER_ROLES.all]
-                }
-            })
-            .otherwise({
-                redirectTo: '/',
-                resolve: requiredResources,
-                access: {
-                    authorizedRoles: [USER_ROLES.all]
-                }
-            });
+    .config(function ($httpProvider, $translateProvider, tmhDynamicLocaleProvider, HateoasInterceptorProvider, $datepickerProvider, API) {
 
         // Initialize angular-translate
-        $translateProvider.useStaticFilesLoader({
-            prefix: 'i18n/',
-            suffix: '.json'
-        });
-
+        $translateProvider.useUrlLoader(API.messages);
         $translateProvider.preferredLanguage('en');
         $translateProvider.useCookieStorage();
 

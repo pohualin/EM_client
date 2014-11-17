@@ -1,0 +1,91 @@
+<div class="container">
+    <h1>
+        <a href="#/">Emmi Manager</a>:&nbsp;
+        <span data-ng-hide="team.id" data-translate="team_edit_page.new.title">New</span>
+        <span data-ng-show="team.id" data-translate="team_edit_page.edit.title">Edit</span> Team
+    </h1>
+
+    <form name="teamForm" class="form" novalidate>
+        <div id="alerts-container" data-ng-show="teamForm.$invalid || !team.salesForceAccount"></div>
+        <div id="remove-container"></div>
+        <h2 data-translate="team_edit_page.information.title">Team Information</h2>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group"
+                     data-ng-class="{ 'has-error' : (teamForm.teamName.$invalid && formSubmitted) || teamForm.teamName.$error.unique}">
+                    <label data-translate="team_edit_page.information.name" for="teamName">Name</label>
+
+                    <div class="error-circle" data-ng-show="teamForm.teamName.$error.required && formSubmitted"
+                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                         data-title="{{'team_edit_page.error_msg.required' | translate}}"></div>
+                    <div class="error-circle" data-ng-show="teamForm.teamName.$error.pattern && formSubmitted"
+                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                         data-title="{{'team_edit_page.error_msg.invalid_team_name' | translate}}"></div>
+                    <div class="error-circle"
+                         data-ng-show="formSubmitted && teamForm.teamName.$error.unique && teamForm.teamName.$.invalid"
+                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                         data-title="{{'team_edit_page.unique_popup_dialog.message' | translate}}"></div>
+                    <input class="form-control" data-ng-model="team.name" id="teamName" name="teamName" type="text"
+                           data-unique-team-name data-auto-focus data-team="team" data-unique-url="url"
+                           required data-ng-pattern="/^[\-\.a-zA-Z0-9 '=_;:`!@#&,\(\)\/]*$/" data-animation="am-flip-x"
+                           data-focus-on="teamName">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label data-translate="team_edit_page.information.description"
+                           for="teamDescription">Description</label>
+
+                    <div class="error-circle" data-ng-show="teamForm.teamDescription.$error.pattern && formSubmitted"
+                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                         data-title="{{'team_edit_page.error_msg.invalid_team_description' | translate}}"></div>
+                    <input class="form-control" data-ng-model="team.description" id="teamDescription"
+                           name="teamDescription" type="text" data-ng-pattern="/^[\-\.a-zA-Z0-9 '=_;:`!@#&,\(\)\/]*$/"
+                           data-animation="am-flip-x" data-ng-disabled="teamForm.teamName.$error.unique">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="checkbox">
+                    <label for="active">
+                        <input id="active" type="checkbox" data-ng-model="team.active"
+                               data-ng-disabled="teamForm.teamName.$error.unique"/>
+                        Active
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div data-ng-include="'partials/team/salesforce/team_salesforce_picker.html'"></div>
+        <hr>
+        <div class="row" data-ng-include="'partials/team/locations/team_current.html'"
+             data-ng-class="{'masked': teamForm.teamName.$error.unique}" ></div>
+        <div data-ng-include="'partials/team/tags/team_tags.html'"></div>
+
+    	<div class="row">
+			<div data-ng-show="teamResource.providers" data-ng-include="'partials/team/provider/providersTable.html'"></div>
+		</div>
+        <div data-ng-show="teamResource.link.provider" data-ng-include="'partials/team/provider/addProviders.html'"></div>        
+        <div class="row">
+            <div class="col-md-12">
+                <div class="pull-right">
+                    <div class="form-group">
+                    <button class="btn btn-link" data-on-ok="cancel()" data-translate="team_edit_page.cancel_button" href data-cancel-click-team-edit>cancel</button>
+
+                    <button class="btn btn-primary" type="button"
+                            data-on-ok="save(teamForm.$valid)" data-team-entity="team"
+                            data-placement="top"
+                            data-ng-disabled="teamForm.teamName.$error.unique"
+                            data-team-edit-save>
+                        <span data-translate="team_edit_page.continue_button">Save</span>
+                    </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

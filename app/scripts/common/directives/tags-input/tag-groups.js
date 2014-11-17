@@ -10,12 +10,13 @@ angular.module('emmiManager')
             scope: {
                 groups: '=ngModel',
                 formField: '=',
+                taggingMode: '=',
                 libraryGroups: '='
             },
             replace: false,
             transclude: false,
             templateUrl: 'partials/common/directives/tags-input/tag-groups.tpl.html',
-            controller: ['$scope','$attrs','$element', function($scope, $attrs, $element) {
+            controller: ['$scope','$attrs','$element', function ($scope, $attrs, $element) {
                 $scope.createMode = false;
                 $scope.selectedTagGroupIndex = -1;
                 $scope.groups = $scope.groups || [];
@@ -42,13 +43,14 @@ angular.module('emmiManager')
                             $scope.createMode = false; //
                             var tagGroup = {
                                 title: me.newTagGroupTitle,
+                                isValid: true,
                                 tags: []
                             };
                             $scope.groups.push(tagGroup);
                             $scope.$broadcast('tag:add', tagGroup);
                         }
                         return true;
-                    }, 100);
+                    }, 500);
                 };
 
                 $scope.selectTagGroup = function (groupIndex) {
@@ -64,6 +66,7 @@ angular.module('emmiManager')
                 $scope.removeTagGroup = function (groupIndex) {
                     $scope.groups.splice(groupIndex, 1);
                     $scope.selectedTagGroupIndex = -1;
+                    $scope.taggingMode = false;
                 };
 
                 $scope.changeTagGroupTitle = function (groupIndex) {
@@ -86,7 +89,15 @@ angular.module('emmiManager')
 
                 $scope.pasteTags = function (event, groupIndex) {
                     event.preventDefault();
-                    var tags = event.originalEvent.clipboardData.getData('text/plain').split(' ');
+                    var tags;
+                    if (event.originalEvent.clipboardData) {
+                        tags = event.originalEvent.clipboardData.getData('text/plain').split('\n');
+                    } else if (window.clipboardData) {
+                        // IE event is attached to the window object and accepts different data type options
+                        tags = window.clipboardData.getData('Text').split('\n');
+                    } else {
+                        tags = [];
+                    }
                     for (var i = 0, numTags = tags.length; i < numTags; i++) {
                         var tag = {};
                         tag.text = tags[i];
@@ -122,10 +133,13 @@ angular.module('emmiManager')
                     var unique = {};
                     var dupes = [];
                     angular.forEach($scope.groups, function (x, i) {
-                        if (!unique[x.title]) {
-                            unique[x.title] = true;
-                        } else {
-                            dupes.push(i);
+                        if (x.title) {
+                            var groupTitle = x.title.toLowerCase().replace(/[^a-z0-9]+/g, '');
+                            if (!unique[groupTitle]) {
+                                unique[groupTitle] = true;
+                            } else {
+                                dupes.push(i);
+                            }
                         }
                     });
                     return dupes;
@@ -143,30 +157,43 @@ angular.module('emmiManager')
                     });
                 };
 
-                $scope.linkToLibrary = function(){
-                    return function(tagGroup) {
-                        tagGroup.isInLibrary = $scope.libraryGroups && $scope.libraryGroups[tagGroup.title] ? true : false;
-                        return tagGroup;
-                    };
-                };
-
             }],
             link: function(scope, element, attrs, ngModelCtrl) {
 
+                var addBtn = element.find('.btn-add-group'),
+                    origAddBtnText = addBtn.text();
+
                 // watch for removed tags and re-check for uniqueness
-                scope.$watch('groups.length', function(newVal, oldVal) {
+                scope.$watch('groups.length', function (newVal, oldVal) {
                     // tag added or removed
-                    $timeout(function() {
-                        scope.validateForDuplicates();
-                        scope.formField.$setValidity('empty', !scope.hasEmpties());
+                    scope.validateForDuplicates();
+                    scope.formField.$setValidity('empty', !scope.hasEmpties());
+                    if (newVal === 0) {
+                        addBtn.text(origAddBtnText);
+                    } else {
+                        addBtn.text(addBtn.data('swapText'));
+                    }
+                });
+
+                scope.$on('tag:add', function (event, tagGroup) {
+                    $timeout(function () {
+                        if (tagGroup.isValid) {
+                            var btnGroup = element.find('.btn-group').last();
+                            btnGroup.find('.dropdown-toggle').trigger('click.bs.dropdown');
+                            btnGroup.find('.tags-input .input').focus();
+                        }
                     });
                 });
 
-                scope.$on('tag:add', function(event, tagGroup) {
-                    $timeout(function() {
-                        var btnGroup = element.find('.btn-group').last();
-                        btnGroup.find('.dropdown-toggle').trigger('click.bs.dropdown');
-                        btnGroup.find('.tags-input .input').focus();
+                element.on('show.bs.dropdown', function () {
+                    scope.$apply(function () {
+                        scope.taggingMode = true;
+                    });
+                });
+
+                element.on('hide.bs.dropdown', function () {
+                    scope.$apply(function () {
+                        scope.taggingMode = false;
                     });
                 });
 
