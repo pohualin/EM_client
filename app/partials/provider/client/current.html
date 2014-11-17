@@ -1,0 +1,38 @@
+<div class="col-md-12" data-ng-controller="ProviderClientController">
+	<h2>Clients</h2>
+	<table class="table table-bordered table-striped table-hover"
+		border="0" cellpadding="0" cellspacing="0"
+		data-ng-show="clientProviders">
+		<tr>
+			<th>Name</th>
+			<th>Salesforce Account</th>
+			<th>Contract Owner</th>
+			<th>Type</th>
+			<th>&nbsp;</th>
+		</tr>
+		<tr data-ng-repeat="clientProvider in clientProviders">
+			<td class="col-sm-4">{{clientProvider.client.entity.name}}</td>
+			<td>{{clientProvider.client.entity.salesForceAccount.name}}</td>
+			<td>{{clientProvider.client.entity.contractOwner.firstName}}
+				{{clientProvider.client.entity.contractOwner.lastName}}</td>
+			<td>{{clientProvider.client.entity.type.typeKey | translate}}</td>
+			<td><a
+				href="#/clients/{{clientProvider.client.entity.id}}?{{currentRouteQueryString}}">view</a>
+			</td>
+		</tr>
+	</table>
+	<div data-ng-hide="clientProviders">
+		<span>This provider is not associated to any clients.</span>
+	</div>
+	<div class="row" data-ng-show="clientProviders">
+		<div data-ng-show="links" class="col-md-8 col-sm-8">
+			<ul class="pagination">
+				<li data-ng-repeat="link in links | orderBy:'order'"
+					data-ng-class="{'active': link.name == currentPage}"><a
+					data-ng-show="link.name != currentPage" href
+					data-ng-click="fetchPage(link.href)">{{link.name}}</a> <span
+					data-ng-hide="link.name != currentPage">{{link.name}}</span></li>
+			</ul>
+		</div>
+	</div>
+</div>

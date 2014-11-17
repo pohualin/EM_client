@@ -34,6 +34,21 @@ angular.module('emmiManager')
                         } else {
                             scope.saveClientProviderWarning.show();
                         }
+                    } else if(scope.provider && scope.provider.active && scope.providerToEdit && !scope.providerToEdit.active) {
+                    	if (!scope.saveClientProviderWarning) {
+                            scope.saveClientProviderWarning = $popover(element, {
+                                title: '',
+                                scope: scope,
+                                trigger: 'manual',
+                                container: 'body',
+                                show: true,
+                                placement: 'bottom',
+                                target: element,
+                                contentTemplate: 'partials/client/provider/deactivate_popover.tpl.html'
+                            });
+                        } else {
+                            scope.saveClientProviderWarning.show();
+                        }
                     } else {
                         $timeout(function () {
                             scope.saveProvider(scope.providerForm.$valid);
