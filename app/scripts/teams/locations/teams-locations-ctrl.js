@@ -55,7 +55,7 @@ angular.module('emmiManager')
             $scope.teamLocations = angular.copy(teamLocationsAux);
         };
 
-        $scope.displaySuccessfull = function(locationsToAdd, container, addAnother, action) {
+        $scope.displaySuccessfull = function(locationsToAdd, container, addAnother) {
             var message = (locationsToAdd.length === 1) ?
                 ' <b>' + locationsToAdd[0].name + '</b> has been added successfully.' :
                 'The new locations have been added successfully.';
