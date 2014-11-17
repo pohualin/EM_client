@@ -12,8 +12,9 @@
                     <button class="btn btn-link" data-ng-click="cancelTagChanges()">cancel</button>
                     |
                     <button class="btn btn-link" type="button"
-                            data-ng-click="saveTags(clientForm.$valid)"
-                            data-ng-disabled="!clientForm.$valid">
+                            data-ng-click="checkForConflicts(clientForm.$valid);"
+                            data-ng-disabled="!clientForm.$valid"
+                            data-team-conflict-popover>
                         <span>save changes</span>
                     </button>
 
