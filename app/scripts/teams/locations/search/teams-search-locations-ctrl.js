@@ -9,6 +9,7 @@ angular.module('emmiManager')
         $controller('CommonPagination', {$scope: $scope});
 
         var managedLocationList = 'locations';
+        var managedClientLocationList = 'clientLocations';
 
         $scope.tabs = {};
 
@@ -43,7 +44,7 @@ angular.module('emmiManager')
             $scope.cancelPopup(); //clean the locations checked in other search
             $scope.locationQuery = '';
             Location.findForClient(Client.getClient()).then(function (allLocations) {
-                $scope.clientLocations = allLocations.content;
+                $scope.handleResponse(allLocations, managedClientLocationList);
                 $scope.setClientLocationSelected($scope.clientLocations);
             });
         };
@@ -105,7 +106,18 @@ angular.module('emmiManager')
         };
 
         // when a column header is clicked
-        $scope.sort = function (property) {
+        $scope.sortTeam = function (property) {
+            $scope.loading = true;
+            Location.find(Client.getClient(), $scope.locationQuery, $scope.status, $scope.sort(property), $scope.currentPageSize).then(function (locationPage) {
+                $scope.handleResponse(locationPage, managedLocationList);
+                $scope.setLocationChecked();
+            }, function () {
+                // error happened
+                $scope.loading = false;
+            });
+        };
+
+        $scope.sort = function(property) {
             var sort = $scope.sortProperty || {};
             if (sort && sort.property === property) {
                 // same property was clicked
@@ -121,15 +133,22 @@ angular.module('emmiManager')
                 sort.property = property;
                 sort.ascending = true;
             }
+
+            return sort;
+        };
+
+
+        // when a column header is clicked
+        $scope.sortClient = function (property) {
             $scope.loading = true;
-            Location.find(Client.getClient(), $scope.locationQuery, $scope.status, sort, $scope.currentPageSize).then(function (locationPage) {
+            Location.findForClient(Client.getClient(), $scope.currentPageSize, $scope.sort(property)).then(function (locationPage) {
                 $scope.handleResponse(locationPage, managedLocationList);
                 $scope.setLocationChecked();
             }, function () {
                 // error happened
                 $scope.loading = false;
             });
-        };
+        };        
 
         $scope.statusChange = function () {
             $scope.loading = true;
@@ -147,6 +166,17 @@ angular.module('emmiManager')
             Location.fetchPageLink(href).then(function (locationPage) {
                 $scope.handleResponse(locationPage, managedLocationList);
                 $scope.setLocationChecked();
+            }, function () {
+                // error happened
+                $scope.loading = false;
+            });
+        };
+
+        $scope.fetchPageClientLocations = function (href) {
+            $scope.loading = true;
+            Location.fetchPageLink(href).then(function (locationPage) {                          
+                $scope.handleResponse(locationPage, managedClientLocationList);
+                $scope.setClientLocationSelected($scope.clientLocations);   
             }, function () {
                 // error happened
                 $scope.loading = false;

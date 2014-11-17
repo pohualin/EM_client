@@ -4,19 +4,19 @@
                cellspacing="0" data-ng-show="clientLocations" >
             <tr>
                 <th class="sort col-sm-0">&nbsp;</th>
-                <th class="sort col-sm-3" data-ng-click="sort('name')">
+                <th class="sort col-sm-3" data-ng-click="sortClient('name')">
                     Name
                     <span data-ng-show="sortProperty.property === 'name'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span>
                 </th>
-                <th class="sort col-sm-3" data-ng-click="sort('belongsTo.name')">
+                <th class="sort col-sm-3" data-ng-click="sortClient('belongsTo.name')">
                     Client Owner
                     <span data-ng-show="sortProperty.property === 'belongsTo.name'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span>
                 </th>
-                <th class="sort col-sm-s" data-ng-click="sort('city')">
+                <th class="sort col-sm-s" data-ng-click="sortClient('city')">
                     City/State
                     <span data-ng-show="sortProperty.property === 'city'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span>
                 </th>
-                <th class="sort col-sm-2" data-ng-click="sort('phone')">
+                <th class="sort col-sm-2" data-ng-click="sortClient('phone')">
                     Phone
                     <span data-ng-show="sortProperty.property === 'phone'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span>
                 </th>
@@ -45,5 +45,14 @@
                 </td>                
             </tr>
         </table>
+        <div data-ng-show="links">
+            <ul class="pagination">
+                <li data-ng-repeat="link in links | orderBy:'order'" data-ng-class="{'active': link.name == currentPage}">
+                    <a data-ng-show="link.name != currentPage" href
+                       data-ng-click="fetchPageClientLocations(link.href)">{{link.name}}</a>
+                    <span data-ng-hide="link.name != currentPage">{{link.name}}</span>
+                </li>
+            </ul>
+        </div>        
     </div>  
 </div>
