@@ -1,0 +1,36 @@
+<div class="col-md-12">
+	<div class="row">
+		<div class="col-md-6 pull-left">
+			<h2>Provider Information</h2>
+		</div>
+		<div class="col-md-6">
+			<div class="pull-right">
+				<h2>
+					<a class="btn btn-link" data-ng-click="edit()">edit</a>
+				</h2>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-4">
+			<span>Name: </span>
+		</div>
+		<div class="col-md-4">
+			{{provider.firstName}} {{provider.lastName}} <em>({{provider.active
+				? "active" : "inactive"}})</em>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-4">
+			<span>Primary Specialty: </span>
+		</div>
+		<div class="col-md-4">{{provider.specialty.name}}</div>
+	</div>
+	<div class="row">
+		<div class="col-md-4">
+			<span>Email: </span>
+		</div>
+		<div class="col-md-4">{{provider.email}}</div>
+	</div>
+</div>
+
