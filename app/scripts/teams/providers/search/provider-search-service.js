@@ -2,7 +2,7 @@
 
 angular.module('emmiManager')
 
-	.service('ProviderSearch', function ($http, $q, Session, UriTemplate) {
+	.service('ProviderSearch', function ($http, $q, Session, UriTemplate, CommonService) {
         var referenceData;
 		return {
 			search: function (query, status, sort, pageSize) {
@@ -11,6 +11,7 @@ angular.module('emmiManager')
                         sort: sort && sort.property ? sort.property + ',' + (sort.ascending ? 'asc' : 'desc') : '',
                         size: pageSize
 				})).then(function (response) {
+					CommonService.convertPageContentLinks(response.data);
 					return response.data;
 				});
 			},
@@ -28,6 +29,7 @@ angular.module('emmiManager')
             },
             fetchPage: function (href) {
               return $http.get(href).then(function (response) {
+            	      CommonService.convertPageContentLinks(response.data);
                       return response.data;
                   });
             },
