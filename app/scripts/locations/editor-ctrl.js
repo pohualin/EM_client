@@ -20,9 +20,7 @@ angular.module('emmiManager').controller(
 
         $scope.saveLocation = function(isValid) {
         	$scope.locationFormSubmitted = true;
-        	console.log('HERE');
         	if (isValid) {
-        		console.log('HERE A');
                 LocationService.updateLocation($scope.locationToEdit).then(function(response) {
                     angular.copy(response.data, $scope.locationResource);
                     angular.copy(response.data.entity, $scope.location);

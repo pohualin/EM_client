@@ -32,7 +32,6 @@ angular.module('emmiManager').service(
             
             // LocationsResource.update(Location location)
             updateLocation: function(locationToUpdate) {
-            	console.log('HIT ME ' + Session.link.locations);
                 return $http.put(UriTemplate.create(Session.link.locations).stringify(), locationToUpdate)
                     .success(function(response) {
                         return response.data;
