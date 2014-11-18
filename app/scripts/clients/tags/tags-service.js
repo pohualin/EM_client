@@ -77,9 +77,7 @@ angular.module('emmiManager')
                 });
             },
             checkForConflicts: function (clientResource) {
-                var groupSaveRequests = GroupSaveRequest.create(clientResource).then(function (response) {
-                    return response.data;
-                });
+                var groupSaveRequests = GroupSaveRequest.create(clientResource);
                 return $http.post(UriTemplate.create(clientResource.link.invalidTeams).stringify(), groupSaveRequests).then(function (response) {
                     var tagMap = {};
                     var tagNames = [];
