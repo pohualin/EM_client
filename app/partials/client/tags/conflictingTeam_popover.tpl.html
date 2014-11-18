@@ -1,0 +1,21 @@
+
+<form>
+    <div data-translate="">The following tags are in use and will be removed from teams:</div>
+    <br>
+    <table border="0" cellpadding="0" cellspacing="0">
+        <tr style="font-size: 14px" data-ng-repeat="teamTag in conflictingTeamTags">
+            <td><span>{{teamTag.tag}}: </span></td>
+            <td>{{teamTag.numberOfTeams}} teams</td>
+        </tr>
+    </table>
+    <br>
+    <div class="form-actions">
+        <button class="btn btn-primary" type="button" data-ng-click="cancelDeactivatePopover()"
+                data-translate="">No
+        </button>
+        <button class="btn btn-danger" data-ng-click="overrideConflictingTeamTags(clientForm.$valid)"
+                data-translate="">Yes
+        </button>
+    </div>
+
+</form>
