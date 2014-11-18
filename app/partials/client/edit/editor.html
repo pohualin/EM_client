@@ -1,20 +1,24 @@
 <div class="container">
-    <div class="row" data-ng-include="'partials/client/edit/metadata.html'"></div>
-    <hr>
-    <div class="row" data-ng-include="'partials/client/tags/client_tags.html'"
-         data-ng-class="{'masked': metadataForm.clientName.$error.unique || editMode}">
+    <div class="col-md-3" style="border-right:2px solid lightgrey" data-ng-include="'partials/client/teamsFilter/teams_filter.html'"></div>
+    <div class="col-md-9">
+        <div class="row" data-ng-include="'partials/client/edit/metadata.html'"></div>
+        <hr>
+        <div class="row" data-ng-include="'partials/client/tags/client_tags.html'"
+             data-ng-class="{'masked': metadataForm.clientName.$error.unique || editMode}">
+        </div>
+        <hr>
+        <div class="row" data-ng-include="'partials/client/location/client_current.html'"
+             data-ng-class="{'masked': metadataForm.clientName.$error.unique || editMode}"></div>
+        <hr>
+        <div class="row" data-ng-include="'partials/client/provider/current.html'"
+             data-ng-class="{'masked': metadataForm.clientName.$error.unique || editMode}"></div>
+        <hr>
+        <div class="row">
+            <div class="col-md-6">
+                <a href="#/roles/client">Manage Client Roles</a>
+            </div>
+        </div>
+
+        <hr/>
     </div>
-    <hr>
-    <div class="row" data-ng-include="'partials/client/location/client_current.html'"
-         data-ng-class="{'masked': metadataForm.clientName.$error.unique || editMode}"></div>
-    <hr>
-    <div class="row" data-ng-include="'partials/client/provider/current.html'"
-         data-ng-class="{'masked': metadataForm.clientName.$error.unique || editMode}"></div>
-    <hr>
-    <div class="row">
-         <div class="col-md-6">
-             <a href="#/roles/client">Manage Client Roles</a>
-         </div>
-    </div>
-    <hr/>
 </div>
