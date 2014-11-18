@@ -3,7 +3,7 @@
 angular.module('emmiManager')
     .controller(
         'LocationsSearchController',
-        function($scope, $controller, Client, Location) {
+        function($scope, $controller, $location, Client, Location, LocationService) {
 
           // when a pagination link is used
           $scope.fetchPage = function(href) {
@@ -32,7 +32,8 @@ angular.module('emmiManager')
           };
 
           $scope.view = function(location) {
-        	  window.paul = location;
+        	  LocationService.setSelectedLocation(location);
+              $location.path('/locations/' + location.entity.id);
           };
 
           // Function declarations start here
