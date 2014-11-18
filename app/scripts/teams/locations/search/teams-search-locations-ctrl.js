@@ -20,6 +20,18 @@ angular.module('emmiManager')
             return resp;
         };
 
+        //set which the client locations are associated to the team
+        $scope.setClientLocationSelected = function (locations) {
+            angular.forEach( locations , function (location) {
+                if ($scope.teamLocations[location.location.entity.id]) {
+                    $scope.teamLocations[location.location.entity.id].isNewAdd = false;
+                    $scope.teamLocations[location.location.entity.id].disabled = true;
+                    $scope.teamLocations[location.location.entity.id].checked = true;
+                    $scope.clientLocationsSelected.push(location);
+                }
+            });
+        };
+
         $scope.cleanSearch = function() {
             $scope.clientLocationsSearch = true;
             $scope.allLocationsSearch = true;
@@ -30,14 +42,18 @@ angular.module('emmiManager')
             Location.findForClient(Client.getClient()).then(function (allLocations) {
                 $scope.clientLocations = allLocations.content;
 
-                angular.forEach( $scope.clientLocations , function (location) {
-                    if ($scope.teamLocations[location.location.entity.id]) {
-                        $scope.teamLocations[location.location.entity.id].isNewAdd = false;
-                        $scope.teamLocations[location.location.entity.id].disabled = true;
-                        $scope.teamLocations[location.location.entity.id].checked = true;
-                        $scope.clientLocationsSelected.push(location);
+                //fetch all pages in order to fill the dropdown with all clients locations, not only the first page.
+                angular.forEach(allLocations.linkList, function(link, key) {
+                    if (key >= 1 && key < allLocations.page.totalPages) {
+                        Location.fetchPageLink(link.href).then(function (clientPage) {
+                            $scope.clientLocations = $scope.clientLocations.concat(clientPage.content);
+                            $scope.setClientLocationSelected(clientPage.content);
+                        });
                     }
                 });
+
+                $scope.setClientLocationSelected($scope.clientLocations);
+
             });
         };
 
@@ -66,7 +82,7 @@ angular.module('emmiManager')
 
             TeamSearchLocation.save($scope.teamClientResource.teamResource.link.teamLocations,locationsToAdd).then(function () {
                 $scope.$hide();
-                $scope.save(locationsToAdd,addAnother, 'added');
+                $scope.save(locationsToAdd,addAnother);
             });
         };
 
@@ -143,17 +159,6 @@ angular.module('emmiManager')
         $scope.fetchPage = function (href) {
             $scope.loading = true;
             Location.fetchPageLink(href).then(function (locationPage) {
-                $scope.handleResponse(locationPage, managedLocationList);
-                $scope.setLocationChecked();
-            }, function () {
-                // error happened
-                $scope.loading = false;
-            });
-        };
-
-        $scope.changePageSize = function (pageSize) {
-            $scope.loading = true;
-            Location.find(Client.getClient(), $scope.locationQuery, $scope.status, $scope.sortProperty, pageSize).then(function (locationPage) {
                 $scope.handleResponse(locationPage, managedLocationList);
                 $scope.setLocationChecked();
             }, function () {
