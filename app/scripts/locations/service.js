@@ -21,7 +21,6 @@ angular.module('emmiManager').service(
             
             // LocationsResource.currentClients(Long id)
             getCurrentClientsByLocation: function(location, pageSize) {
-            	window.paul = location;
                 return $http.get(
                     UriTemplate.create(location.link.clients)
                     .stringify({
