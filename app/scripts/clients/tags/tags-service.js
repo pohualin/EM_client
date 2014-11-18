@@ -20,7 +20,7 @@ angular.module('emmiManager')
                 });
                 return ret;
             }
-        }
+        };
     })
 
     .service('Tag', function ($http, $q, Session, UriTemplate, GroupSaveRequest) {
