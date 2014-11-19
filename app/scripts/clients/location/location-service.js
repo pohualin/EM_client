@@ -31,12 +31,14 @@ angular.module('emmiManager')
                     }
                 )).then(function (response) {
                     addSortIndex(response.data);
+                    convertPageContentLinks(response.data.content);
                     return response.data;
                 });
             },
             fetchPageLink: function (href) {
                 return $http.get(href)
                     .then(function (response) {
+                    	convertPageContentLinks(response.data.content);
                         return response.data;
                     });
 

@@ -1,0 +1,8 @@
+<div data-ng-controller="TeamsFilterController">
+    <b>Teams</b>
+    <hr>
+    <div data-ng-repeat="team in clientTeams | orderBy:'entity.name'">
+        <a ng-href="index.html#/clients/{{clientId}}/teams/{{team.entity.id}}">{{team.entity.name}}</a>
+    </div>
+    <hr>
+</div>
