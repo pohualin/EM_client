@@ -5,8 +5,8 @@ angular.module('emmiManager')
 	.service('ProviderSearch', function ($http, $q, Session, UriTemplate, CommonService) {
         var referenceData;
 		return {
-			search: function (query, status, sort, pageSize) {
-				return $http.get(UriTemplate.create(Session.link.providers).stringify({name: query,
+			search: function (teamResource, query, status, sort, pageSize) {
+				return $http.get(UriTemplate.create(teamResource.link.possibleProviders).stringify({name: query,
                         status: status,
                         sort: sort && sort.property ? sort.property + ',' + (sort.ascending ? 'asc' : 'desc') : '',
                         size: pageSize
