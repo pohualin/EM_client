@@ -35,6 +35,20 @@ angular.module('emmiManager')
                     return response.data;
                 });
             },
+            findWithoutCL: function (clientResource, query, status, sort, pageSize) {
+                var uri = clientResource.link.possibleLocationsWithoutCL;
+                return $http.get(UriTemplate.create(uri).stringify({
+                        name: query,
+                        status: status,
+                        sort: sort && sort.property ? sort.property + ',' + (sort.ascending ? 'asc' : 'desc') : '',
+                        size: pageSize
+                    }
+                )).then(function (response) {
+                    addSortIndex(response.data);
+                    convertPageContentLinks(response.data.content);
+                    return response.data;
+                });
+            },            
             fetchPageLink: function (href) {
                 return $http.get(href)
                     .then(function (response) {
