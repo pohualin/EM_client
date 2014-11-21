@@ -1,0 +1,105 @@
+<div class="form-group" >
+    <div class="col-md-12 col-sm-12 form-horizontal" data-ng-controller="SearchTeamsLocationsController">
+        <form name="searchForm" ng-submit="search(searchForm.locationQuery)" novalidate>
+            <div data-ng-class="'col-sm-6'">
+                <div class="input-group">
+                    <input class="form-control" name="locationQuery" id="locationQuery" data-ng-model="locationQuery"
+                           type="text"
+                           placeholder="{{'team_locations_search_page.search_dialog.placeholder_label' | translate}}" required data-auto-focus>
+                    <div class="input-group-addon btn" data-ng-click="search(searchForm.locationQuery)"
+                         data-ng-disabled="searchForm.locationQuery.$invalid"><span data-translate="team_locations_search_page.search_dialog.go_label" ></span></div>
+                </div>
+            </div>
+            <div class="btn btn-link col-sm-4" data-ng-click="cleanSearch()" data-ng-show="allLocationsSearch">
+                <p class="text-left" data-translate="team_locations_search_page.search_dialog.clear_search" ></p>
+            </div>
+            <div class="col-md-2 col-sm-2 pull-right" data-ng-show="allLocationsSearch">
+                <button type="button" class="btn btn-link pull-right" data-ng-click="createNewTeamLocation()">
+                    <span  data-translate="team_locations_search_page.add_new.label"></span>
+                </button>
+                <span data-ng-class="{'search-spinner' : loading}"></span>
+            </div>
+        </form>
+
+        <div class="row" data-ng-show="allLocationsSearch">
+            <div class="col-md-12 col-sm-12 ">
+                <div class="pull-right">
+                    {{total}}
+                    <span data-ng-show="total != 1" data-translate="global.labels.total"> results</span>
+                    <span data-ng-show="total === 1"
+                          data-translate="global.labels.totalSingular"> result</span>
+                </div>
+                <form class="form-inline">
+                    <label for="status_filter" data-translate="global.labels.statusFilter">Show:</label>
+                    <select class="form-control" id="status_filter" data-ng-model="status"
+                            data-ng-options="status | translate for status in statuses"
+                            data-ng-change="statusChange()">
+                    </select>
+
+                </form>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0"
+                       cellspacing="0" data-ng-show="locations" >
+                    <tr>
+                        <th class="sort col-sm-0">&nbsp;</th>
+                        <th class="sort col-sm-3" data-ng-click="sortTeam('name')">
+                            Name
+                            <span data-ng-show="sortProperty.property === 'name'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span>
+                        </th>
+                        <th class="sort col-sm-3" data-ng-click="sortTeam('belongsTo.name')">
+                            Client Owner
+                            <span data-ng-show="sortProperty.property === 'belongsTo.name'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span>
+                        </th>
+                        <th class="sort col-sm-2" data-ng-click="sortTeam('city')">
+                            City/State
+                            <span data-ng-show="sortProperty.property === 'city'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span>
+                        </th>
+                        <th class="sort col-sm-2" data-ng-click="sortTeam('phone')">
+                            Phone
+                            <span data-ng-show="sortProperty.property === 'phone'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span>
+                        </th>
+                        <th class="sort col-sm-3" data-ng-show="teamResource.teamProviders">
+                            Use
+                        </th>                        
+                    </tr>
+                    <tr data-ng-repeat="location in locations" data-ng-class="location.location.entity.disabled ? 'text-muted' : ''">
+                        <td><input type="checkbox" data-ng-model="location.location.entity.checked"  data-ng-disabled="location.location.entity.disabled"
+                                   ng-change="onCheckboxChange(location)"></td>
+                        <td>{{location.location.entity.name}}</td>
+                        <td>
+                            {{location.location.entity.belongsTo.name}}
+                        </td>
+                        <td> {{location.location.entity.city}}<span
+                                data-ng-show="location.location.entity.city && location.location.entity.state">,&nbsp;</span>{{location.location.entity.state}}
+                        </td>
+                        <td>{{location.location.entity.phone}}</td>
+                        <td data-ng-show="teamResource.teamProviders">          
+                            <select data-chosen data-placeholder="Use: all providers{{teamResource.teamProviders.length}}" multiple data-ng-model="selectedProvider"
+                            data-ng-options="c.entity.provider.firstName for c in teamResource.teamProviders" data-ng-disabled="location.location.entity.disabled"
+                            class="form-control" data-ng-change="updateTeamLocationsForProvider(provider)" >
+                             </select>                            
+                        </td>
+                    </tr>
+                </table>
+                <div data-ng-hide="!allLocationsSearch || locations">
+                    <span data-translate="global.messages.search.no_results_found"></span>
+                </div>
+                <div class="row" data-ng-show="locations">
+                    <div data-ng-show="links" class="col-md-8 col-sm-8">
+                        <ul class="pagination">
+                            <li data-ng-repeat="link in links | orderBy:'order'" data-ng-class="{'active': link.name == currentPage}">
+                                <a data-ng-show="link.name != currentPage" href
+                                   data-ng-click="fetchPage(link.href)">{{link.name}}</a>
+                                <span data-ng-hide="link.name != currentPage">{{link.name}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
