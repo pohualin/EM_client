@@ -41,6 +41,14 @@ angular.module('emmiManager')
              removeProvider: function (provider, teamResource) {
              	provider.link = arrays.convertToObject('rel', 'href', provider.link);
              	return $http.delete(UriTemplate.create(provider.link.findProviderById).stringify());
+             },
+             convertLinkObjects : function(response){
+            	 if(response){
+            		 angular.forEach(response, function(content){
+            			 content.link = arrays.convertToObject('rel', 'href',
+ 								content.link);
+            		 });
+            	 }
              }
         };
     })
