@@ -15,8 +15,8 @@ angular.module('emmiManager')
         }
     ])
 
-    .controller('ClientRoleAdminCtrl', ['$scope', 'ManageUserRolesService', '$filter',
-        function ($scope, ManageUserRolesService, $filter) {
+    .controller('ClientRoleAdminCtrl', ['$scope', 'ManageUserRolesService', '$filter', 'focus',
+        function ($scope, ManageUserRolesService, $filter, focus) {
 
             /**
              * Loads existing roles for the current client
@@ -32,6 +32,7 @@ angular.module('emmiManager')
              */
             $scope.createNewClientRole = function () {
                 $scope.newClientRole = ManageUserRolesService.newClientRole();
+                focus('focus-new-role');
             };
 
             /**
@@ -99,6 +100,7 @@ angular.module('emmiManager')
              */
             $scope.panelStateChange = function (clientRoleResource) {
                 if (clientRoleResource.activePanel === 0) {
+                    focus('focus-' + clientRoleResource.entity.id);
                     clientRoleResource.original = angular.copy(clientRoleResource);
                     ManageUserRolesService.loadPermissions(clientRoleResource).then(function (permissions) {
                         angular.forEach(permissions, function (savedPermission) {
