@@ -77,27 +77,27 @@ angular.module('emmiManager')
                 });
             },
             checkForConflicts: function (clientResource) {
-                return $http.post(UriTemplate.create(clientResource.link.invalidTeams).stringify(),
-                    GroupSaveRequest.create(clientResource)).then(function (response) {
-                        var tagMap = {};
-                        var tagNames = [];
-                        angular.forEach(response.data, function (teamTag) {
-                            if (!tagMap[teamTag.tag.name]) {
-                                tagMap[teamTag.tag.name] = 1;
-                                tagNames.push(teamTag.tag.name);
-                            } else {
-                                tagMap[teamTag.tag.name]++;
-                            }
-                        });
-                        var numberOfTeamForTagMap = [];
-                        angular.forEach(tagNames, function (tagName) {
-                            numberOfTeamForTagMap.push({
-                                tag: tagName,
-                                numberOfTeams: tagMap[tagName]
-                            });
-                        });
-                        return numberOfTeamForTagMap;
+                var groupSaveRequests = GroupSaveRequest.create(clientResource);
+                return $http.post(UriTemplate.create(clientResource.link.invalidTeams).stringify(), groupSaveRequests).then(function (response) {
+                    var tagMap = {};
+                    var tagNames = [];
+                    angular.forEach(response.data, function (teamTag) {
+                        if (!tagMap[teamTag.tag.name]) {
+                            tagMap[teamTag.tag.name] = 1;
+                            tagNames.push(teamTag.tag.name);
+                        } else {
+                            tagMap[teamTag.tag.name]++;
+                        }
                     });
+                    var numberOfTeamForTagMap = [];
+                    angular.forEach(tagNames, function (tagName) {
+                        numberOfTeamForTagMap.push({
+                            tag: tagName,
+                            numberOfTeams: tagMap[tagName]
+                        });
+                    });
+                    return numberOfTeamForTagMap;
+                });
             }
         };
     });

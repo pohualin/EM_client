@@ -44,7 +44,7 @@ angular.module('emmiManager')
 
         $scope.overrideConflictingTeamTags = function (isValid) {
             $scope.saveTags(isValid);
-            $scope.cancelDeactivatePopover();
+            $scope.cancelConflictingTeamsPopover();
             $scope.hideClientTags();
         };
 
@@ -164,24 +164,22 @@ angular.module('emmiManager')
         return {
             restrict: 'EA',
             link: function (scope, element) {
-                scope.cancelDeactivatePopover = function () {
-                    scope.saveWarning.hide();
+                scope.cancelConflictingTeamsPopover = function () {
+                    scope.teamConflictWarning.hide();
                 };
                 scope.showPopover = function () {
-                    scope.saveWarning.show();
+                    scope.teamConflictWarning.show();
                 };
                 element.on('click', function () {
                     // pop a warning dialog
-                    if (!scope.saveWarning) {
-                        scope.saveWarning = $popover(element, {
+                    if (!scope.teamConflictWarning) {
+                        scope.teamConflictWarning = $popover(element, {
                             title: 'Are you sure?',
                             scope: scope,
-                            show: false,
+                            show: true,
                             placement: 'top',
                             contentTemplate: 'partials/client/tags/conflictingTeam_popover.tpl.html'
                         });
-                    } else {
-                        scope.saveWarning.show();
                     }
                 });
             }

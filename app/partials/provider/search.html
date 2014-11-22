@@ -3,7 +3,7 @@
 		<a href="#/">Emmi Manager</a>: Search
 	</h1>
 	<h2>Manage Clients, Teams, Providers and Locations:</h2>
-	<form name="searchForm" novalidate>
+	<form name="searchForm">
 		<div class="row">
 			<div class="col-md-2 col-sm-2">
 				<div data-ng-include="'partials/search/search_option_dropdown.html'"></div>
@@ -51,46 +51,34 @@
 			</div>
 			<br>
 			<table class="table table-bordered table-striped table-hover"
-				border="0" cellpadding="0" cellspacing="0" data-ng-show="locations">
+				border="0" cellpadding="0" cellspacing="0" data-ng-show="providers">
 				<tr>
-					<th class="sort col-sm-3" data-ng-click="sort('name')">Name <span
-						data-ng-show="sortProperty.property === 'name'"><span
+					<th class="sort col-sm-3" data-ng-click="sort('lastName')">Name
+						<span data-ng-show="sortProperty.property === 'lastName'"><span
 							class="glyphicon sort-icon"
 							data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
 					</th>
-					<th class="sort col-sm-3" data-ng-click="sort('belongsTo.name')">Client Owner <span
-						data-ng-show="sortProperty.property === 'belongsTo.name'"><span
+					<th class="sort col-sm-3" data-ng-click="sort('specialty.name')">Specialty
+						<span data-ng-show="sortProperty.property === 'specialty.name'"><span
 							class="glyphicon sort-icon"
 							data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
 					</th>
-					<th class="sort col-sm-3" data-ng-click="sort('phone')">Phone
-						<span data-ng-show="sortProperty.property === 'phone'"><span
-							class="glyphicon sort-icon"
-							data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
-					</th>
-					<th class="sort col-sm-3" data-ng-click="sort('city')">City <span
-						data-ng-show="sortProperty.property === 'city'"><span
-							class="glyphicon sort-icon"
-							data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
-					</th>
-					<th class="sort col-sm-3" data-ng-click="sort('state')">State
-						<span data-ng-show="sortProperty.property === 'state'"><span
+					<th class="sort col-sm-3" data-ng-click="sort('email')">Email
+						<span data-ng-show="sortProperty.property === 'email'"><span
 							class="glyphicon sort-icon"
 							data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
 					</th>
 					<th class="col-sm-1">&nbsp;</th>
 				</tr>
 				<tr
-					data-ng-repeat="location in locations | orderBy:'location.sortIdx'">
-					<td>{{location.entity.name}}</td>
-					<td>{{location.entity.belongsTo.name}}</td>
-					<td>{{location.entity.phone}}</td>
-					<td>{{location.entity.city}}</td>
-					<td>{{location.entity.state}}</td>
-					<td><a href data-ng-click="view(location.entity)">view</a></td>
+					data-ng-repeat="provider in providers | orderBy:'provider.sortIdx'">
+					<td>{{provider.entity.firstName}} {{provider.entity.lastName}}</td>
+					<td>{{provider.entity.specialty.name}}</td>
+					<td>{{provider.entity.email}}</td>
+					<td><a href data-ng-click="view(provider)">view</a></td>
 				</tr>
 			</table>
-			<div class="row" data-ng-show="locations">
+			<div class="row" data-ng-show="providers">
 				<div data-ng-show="links" class="col-md-8 col-sm-8">
 					<ul class="pagination">
 						<li data-ng-repeat="link in links | orderBy:'order'"
@@ -101,7 +89,7 @@
 					</ul>
 				</div>
 			</div>
-			<div data-ng-hide="locations">
+			<div data-ng-hide="providers">
 				<span data-translate="global.messages.search.no_results_found"></span>
 			</div>
 		</div>
