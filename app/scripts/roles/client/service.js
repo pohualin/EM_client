@@ -76,8 +76,8 @@ angular.module('emmiManager')
                     return {
                         name: '',
                         userClientPermissions: (referenceData) ? angular.copy(referenceData.permission) : []
-                    }
+                    };
                 }
-            }
+            };
         }])
 ;
