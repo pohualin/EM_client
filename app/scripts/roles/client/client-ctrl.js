@@ -3,18 +3,8 @@
 angular.module('emmiManager')
 
 /**
- *   Manage Client Level roles
+ *   Manage Client Level roles for a client
  */
-    .controller('ManageClientRolesMainCtrl', ['$scope', 'Client', 'ManageUserRolesService',
-        function ($scope, Client, ManageUserRolesService) {
-            $scope.client = Client.getClient().entity;
-            $scope.page.setTitle('Manage User Roles - ' + $scope.client.name);
-            ManageUserRolesService.referenceData().then(function (rolesReferenceData) {
-                $scope.rolesReferenceData = rolesReferenceData;
-            });
-        }
-    ])
-
     .controller('ClientRoleAdminCtrl', ['$scope', 'ManageUserRolesService', '$filter', 'focus',
         function ($scope, ManageUserRolesService, $filter, focus) {
 
