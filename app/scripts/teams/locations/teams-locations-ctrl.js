@@ -74,7 +74,11 @@ angular.module('emmiManager')
         };
 
         $scope.refresh = function() {
-            TeamLocation.loadTeamLocationsSimple($scope).then(function(pageLocations) {
+            $scope.teamLocations = {};
+            TeamLocation.loadTeamLocationsSimple($scope.teamClientResource.teamResource.link.teamLocations).then(function(pageLocations) {
+                angular.forEach(pageLocations.content, function (teamLocation) {
+                    $scope.teamLocations[teamLocation.entity.location.id] = angular.copy(teamLocation.entity.location);
+                });
                 $scope.handleResponse(pageLocations, managedLocationList);
                 $scope.fetchAllPages(pageLocations);
             });
