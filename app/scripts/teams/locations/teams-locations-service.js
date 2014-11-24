@@ -4,8 +4,8 @@ angular.module('emmiManager')
         return {
             loadTeamLocationsSimple: function (scope) {
                 return $http.get(UriTemplate.create(scope.teamClientResource.teamResource.link.teamLocations).stringify()).then(function load(response) {
+                    scope.teamLocations = {};
                     if (response.data !== '') {
-                        scope.teamLocations = {};
                         angular.forEach(response.data.content, function (teamLocation) {
                             scope.teamLocations[teamLocation.entity.location.id] = angular.copy(teamLocation.entity.location);
                         });

@@ -19,11 +19,11 @@ angular.module('emmiManager')
             link: function (scope, element, attrs, ngModel) {
                 
                element.bind('keyup', function (event) {
-                    if (scope.locationQuery.length === 0 )  {
+                    if (!scope.locationQuery || scope.locationQuery.length === 0 )  {
                         scope.cleanSearch();
                     } 
                 });
             }
-          };
+          };    
     }])   
 ;

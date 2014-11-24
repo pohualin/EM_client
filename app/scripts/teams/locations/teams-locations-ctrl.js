@@ -57,7 +57,7 @@ angular.module('emmiManager')
 
         $scope.displaySuccessfull = function(locationsToAdd, container, addAnother) {
             var message = (locationsToAdd.length === 1) ?
-                ' <b>' + locationsToAdd[0].name + '</b> has been successfully added.' :
+                ' <b>' + locationsToAdd[0].location.name + '</b> has been successfully added.' :
                 'The new locations have been successfully added.';
             var placement = addAnother ? '': 'top';
 

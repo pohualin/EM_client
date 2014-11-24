@@ -4,7 +4,7 @@
             <div data-ng-class="'col-sm-6'">
                 <div class="input-group">
                     <input class="form-control" name="locationQuery" id="locationQuery" data-ng-model="locationQuery"
-                           type="text"
+                           type="text" data-clear-search
                            placeholder="{{'team_locations_search_page.search_dialog.placeholder_label' | translate}}" required data-auto-focus>
                     <div class="input-group-addon btn" data-ng-click="search(searchForm.locationQuery)"
                          data-ng-disabled="searchForm.locationQuery.$invalid"><span data-translate="team_locations_search_page.search_dialog.go_label" ></span></div>
@@ -62,7 +62,7 @@
                             Phone
                             <span data-ng-show="sortProperty.property === 'phone'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span>
                         </th>
-                        <th class="sort col-sm-3" data-ng-show="teamResource.teamProviders">
+                        <th class="sort col-sm-3" data-ng-show="providersData">
                             Use
                         </th>                        
                     </tr>
@@ -77,12 +77,17 @@
                                 data-ng-show="location.location.entity.city && location.location.entity.state">,&nbsp;</span>{{location.location.entity.state}}
                         </td>
                         <td>{{location.location.entity.phone}}</td>
-                        <td data-ng-show="teamResource.teamProviders">          
-                            <select data-chosen data-placeholder="Use: all providers{{teamResource.teamProviders.length}}" multiple data-ng-model="selectedProvider"
-                            data-ng-options="c.entity.provider.firstName for c in teamResource.teamProviders" data-ng-disabled="location.location.entity.disabled"
-                            class="form-control" data-ng-change="updateTeamLocationsForProvider(provider)" >
-                             </select>                            
-                        </td>
+                        <td data-ng-show="providersData">
+                            <div class="col-xs-12" data-ng-show="providersData && location.location.entity.checked && !location.location.entity.disabled">                    
+                                   <multi-select 
+                                    values="providersData" 
+                                    model="location.location.entity.providersSelected"    
+                                    show-filters="true"
+                                    value-field="id" 
+                                    label-field="firstName" >
+                                    </multi-select>
+                            </div>
+                        </td>   
                     </tr>
                 </table>
                 <div data-ng-hide="!allLocationsSearch || locations">
