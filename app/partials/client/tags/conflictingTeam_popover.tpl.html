@@ -1,12 +1,12 @@
 
-<form style="width: 15em">
+<form class='conflictingTeamForm'>
     <div>The following tags are in use and will be removed from teams:</div>
     <br>
     <table border="0" cellpadding="1px" cellspacing="0">
-        <tr style="font-size: 14px" data-ng-repeat="teamTag in conflictingTeamTags">
-            <td class=".col-md-7">{{teamTag.tag}}: </td>
-            <td ng-if="teamTag.numberOfTeams == 1 " class=".col-md-5">{{teamTag.numberOfTeams}} team</td>
-            <td ng-if="teamTag.numberOfTeams > 1 " class=".col-md-5">{{teamTag.numberOfTeams}} teams</td>
+        <tr class='conflictingTeamRow' data-ng-repeat="teamTag in conflictingTeamTags">
+            <td class="col-md-7">{{teamTag.tag}}: </td>
+            <td ng-if="teamTag.numberOfTeams == 1 " class="col-md-5">{{teamTag.numberOfTeams}} team</td>
+            <td ng-if="teamTag.numberOfTeams > 1 " class="col-md-5">{{teamTag.numberOfTeams}} teams</td>
         </tr>
     </table>
     <br>
