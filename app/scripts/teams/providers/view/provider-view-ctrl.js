@@ -40,20 +40,25 @@ angular.module('emmiManager')
              $scope.teamProviderToBeEdit = angular.copy(teamProvider);
              // save the original for overlay if save is clicked
              $scope.teamProvider = teamProvider;
-             // get a list of team locations by team
-             TeamLocation.getTeamLocations($scope).then(function(response){
-            	 $scope.multiSelectData = buildMultiSelectData($scope.teamLocations);
-             });
-             // get a list of existing team locations by team provider
-             TeamProviderService.getTeamLocationsByTeamProvider($scope).then(function(response){
-        		 $scope.selectedItems = buildMultiSelectData($scope.existingTeamLocations);
-        	 });
              // get ClientProvider for external provider id
              TeamProviderService.findClientProviderByClientIdAndProviderId($scope).then(function(response){
             	 $scope.clientProvider = response;
              });
-             // show the dialog box
-             editProviderModal.$promise.then(editProviderModal.show);
+             // get a list of team locations by team
+             TeamLocation.getTeamLocations($scope.teamProvider.link.teamLocations).then(function(response){
+            	 var potential = response;
+            	 $scope.multiSelectData = buildMultiSelectData(potential);
+            	// get a list of existing team locations by team provider
+                 TeamProviderService.getTeamLocationsByTeamProvider($scope.teamProviderToBeEdit.link.findTeamLocationsByTeamProvider).then(function(response){
+                	 if(response.length > 0){
+                		 $scope.selectedItems = buildSelectedItem(response);
+                	 } else {
+                		 $scope.selectedItems = buildMultiSelectData(potential);
+                	 }
+                	 // show the dialog box
+                     editProviderModal.$promise.then(editProviderModal.show);
+            	 });
+             });
          };
 
         $scope.removeProvider = function (provider) {
@@ -76,11 +81,14 @@ angular.module('emmiManager')
         	return options;
         }
         
-        function buildSelectedItem(teamLocations){
+        function buildSelectedItem(teamProviderTeamLocations){
         	var options = [];
-        	angular.forEach(teamLocations, function(teamLocation){
+        	angular.forEach(teamProviderTeamLocations, function(teamProviderTeamLocation){
         		var option = new Object({});
-        		option.id = teamLocation.id;
+        		option.id = teamProviderTeamLocation.teamLocation.entity.id;
+        		option.label = teamProviderTeamLocation.teamLocation.entity.location.name;
+        		option.teamLocation = teamProviderTeamLocation.teamLocation;
+        		option.teamProviderTeamLocation = teamProviderTeamLocation;
         		options.push(option);
         	});
         	return options;

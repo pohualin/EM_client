@@ -20,15 +20,13 @@ angular.module('emmiManager')
                         return response.data;
                     });
             },
-            getTeamLocations: function(scope){
-            	return $http.get(UriTemplate.create(scope.teamProvider.link.teamLocations).stringify()).then(function load(response) {
-            		if (response.data !== '') {
-                        scope.teamLocations = {};
-                        angular.forEach(response.data.content, function (teamLocation) {
-                            scope.teamLocations[teamLocation.entity.id] = angular.copy(teamLocation);
-                        });
-                    }
-                    return response.data;
+            getTeamLocations: function(url){
+            	var teamLocations = {};
+            	return $http.get(UriTemplate.create(url).stringify()).then(function load(response) {
+                    angular.forEach(response.data.content, function (teamLocation) {
+                        teamLocations[teamLocation.entity.id] = angular.copy(teamLocation);
+                    });
+                    return teamLocations;
                 });
             }
         };

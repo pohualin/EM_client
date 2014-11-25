@@ -10,18 +10,20 @@ angular.module('emmiManager')
                  		return response.data;
                  });
              },
-             getTeamLocationsByTeamProvider: function(scope){
-            	 return $http.get(UriTemplate.create(scope.teamProviderToBeEdit.link.findTeamLocationsByTeamProvider).stringify()).then(function load(response) {
-             		if (response.data !== '') {
-             			 scope.existingTeamLocations = {};
-                         angular.forEach(response.data, function (teamLocation) {
-                             scope.existingTeamLocations[teamLocation.entity.id] = angular.copy(teamLocation);
-                         });
-                     } else {
-                    	 scope.existingTeamLocations = {};
-                     }
-                     return response.data;
-                 });
+             getTeamLocationsByTeamProvider: function(url){
+            	 var teamLocations = [];
+                 return $http.get(UriTemplate.create(url).stringify())
+                 	.then(function addToResponseArray(response) {
+                 		angular.forEach(response.data.content, function(teamProviderTeamLocation) {
+                 			teamLocations.push(teamProviderTeamLocation);
+	                    });
+	                    if (response.data.link && response.data.link['page-next']) {
+	                    	$http.get(response.data.link['page-next']).then(function (response) {
+                                addToResponseArray(response);
+                            });
+	                    }
+	                    return teamLocations;
+                 	});
              },
              findClientProviderByClientIdAndProviderId: function(scope){
             	 return $http.get(UriTemplate.create(scope.teamProviderToBeEdit.link.findClientProviderByClientIdProviderId).stringify()).then(function load(response) {

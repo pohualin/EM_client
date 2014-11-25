@@ -16,16 +16,29 @@ angular.module('emmiManager')
                 if (isValid) {
                 	// Compose teamProviderTeamLocationSaveRequest
 	            	var teamProviderTeamLocationSaveRequest = new Object({});
-	            	// Push all selectedItems to teamProviderTeamLocation
-	            	var teamProviderTeamLocation = [];
-	            	angular.forEach($scope.selectedItems, function(selected){
-	            		teamProviderTeamLocation.push(selected.teamLocation.entity);
-	            	});
+	            	// Push all selectedItems to teamProviderTeamLocation only if selectedItems != select all
+	            	var teamProviderTeamLocations = [];
+	            	if($scope.selectedItems.length > 0 && $scope.selectedItems.length !== $scope.multiSelectData.length){
+	            		angular.forEach($scope.selectedItems, function(selected){
+	            			var tptl = new Object({});
+	            			if(selected.teamProviderTeamLocation){
+	            				tptl.teamLocation = selected.teamProviderTeamLocation.teamLocation.entity;
+	            				tptl.teamProvider = selected.teamProviderTeamLocation.teamProvider.entity;
+	            				tptl.id = selected.teamProviderTeamLocation.teamProviderTeamLocationId;
+	            			}else {
+	            				tptl.teamLocation = selected.teamLocation.entity;
+	            				tptl.teamProvider = $scope.teamProvider.entity;
+	            			}
+	            			teamProviderTeamLocations.push(tptl);
+		            	});
+	            	}
 	            	// Set provider and teamProviderTeamLocation to teamProviderTeamLocationSaveRequest
 	            	teamProviderTeamLocationSaveRequest.provider = $scope.teamProviderToBeEdit.entity.provider;
 	            	teamProviderTeamLocationSaveRequest.teamProvider = $scope.teamProviderToBeEdit.entity;
-	            	teamProviderTeamLocationSaveRequest.teamLocations = teamProviderTeamLocation;
-	            	teamProviderTeamLocationSaveRequest.clientProvider = $scope.clientProvider;
+	            	teamProviderTeamLocationSaveRequest.teamProviderTeamLocations = teamProviderTeamLocations;
+	            	if($scope.clientProvider){
+	            		teamProviderTeamLocationSaveRequest.clientProvider = $scope.clientProvider;
+	            	}
 	            	$scope.teamProviderTeamLocationSaveRequest = teamProviderTeamLocationSaveRequest;
 	            	// Call update service
 	            	TeamProviderService.updateTeamProvider($scope).then(function(){
