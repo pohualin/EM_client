@@ -1,4 +1,6 @@
 <div class="container">
+    <div class="col-md-3" style="border-right:2px solid lightgrey" data-ng-include="'partials/client/teamsFilter/teams_filter.html'"></div>
+    <div class="col-md-9">
     <div class="row">
         <div id="remove-container"></div>
         <div class="col-md-12">
@@ -38,4 +40,6 @@
     <hr>
     <div class="row" data-ng-include="'partials/team/provider/providersTable_edit.html'" data-ng-class="{'masked': teamForm.teamName.$error.unique || editMode}"></div>
     <div class="row" data-ng-show="teamResource.link.provider" data-ng-include="'partials/team/provider/addProviders.html'" data-ng-class="{'masked': teamForm.teamName.$error.unique || editMode}"></div>
+
+    </div>
 </div>
