@@ -34,6 +34,7 @@ angular.module('emmiManager')
             $scope.editMode = true;
             $scope.teamToSave = angular.copy($scope.team);
             $scope.teamToSave.origSalesForceAccount = $scope.teamToSave.salesForceAccount.accountNumber;
+            if (!$scope.team.description) { $scope.teamToSave.description = ''; } // EM-517: TODO: this should be fixed with a larger refactor to that angular.extend is not necessary
             focus('teamName');
         };
 
@@ -41,6 +42,7 @@ angular.module('emmiManager')
             $scope.formSubmitted = true;
             if (isValid && $scope.teamToSave.salesForceAccount) {
                 EditTeam.save($scope.teamToSave, teamClientResource.teamResource.link.self).then(function (team) {
+                    if (!team.data.entity.description) { team.data.entity.description = ''; } // EM-517: TODO: this should be fixed with a larger refactor to that angular.extend is not necessary
                     angular.extend($scope.team, team.data.entity);
                     angular.extend($scope.teamResource, team.data);
                     setTitle();

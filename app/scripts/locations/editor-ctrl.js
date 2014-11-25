@@ -8,7 +8,7 @@ angular.module('emmiManager').controller(
         $scope.cancel = function() {
             $scope.hideError();
             $scope.editMode = false;
-            $scope.metadataSubmitted = false;
+            $scope.locationFormSubmitted = false;
             delete $scope.locationToEdit;
         };
 
