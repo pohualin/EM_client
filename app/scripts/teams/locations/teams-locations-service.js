@@ -21,13 +21,19 @@ angular.module('emmiManager')
                     });
             },
             getTeamLocations: function(url){
-            	var teamLocations = {};
-            	return $http.get(UriTemplate.create(url).stringify()).then(function load(response) {
-                    angular.forEach(response.data.content, function (teamLocation) {
-                        teamLocations[teamLocation.entity.id] = angular.copy(teamLocation);
-                    });
-                    return teamLocations;
-                });
+            	var teamLocations = [];
+            	return $http.get(UriTemplate.create(url).stringify())
+            		.then(function addToResponseArray(response) {
+                		angular.forEach(response.data.content, function(teamLocation) {
+                			teamLocations.push(teamLocation);
+	                    });
+	                    if (response.data.link && response.data.link['page-next']) {
+	                    	$http.get(response.data.link['page-next']).then(function (response) {
+                               addToResponseArray(response);
+                           });
+	                    }
+	                    return teamLocations;
+                	});
             }
         };
     })
