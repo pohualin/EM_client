@@ -1,6 +1,10 @@
 'use strict';
 
 angular.module('emmiManager')
+
+/**
+ * Route definitions for roles
+ */
     .config(function ($routeProvider, USER_ROLES) {
 
         var clientDetailRequiredResources = {
@@ -27,5 +31,17 @@ angular.module('emmiManager')
                 resolve: clientDetailRequiredResources
             });
     })
+
+/**
+ * Controller for the route landing place
+ */
+    .controller('ManageClientRolesMainCtrl', ['$scope', 'Client', 'ManageUserRolesService', 'ManageUserTeamRolesService',
+        function ($scope, Client, ManageUserRolesService, ManageUserTeamRolesService) {
+            $scope.client = Client.getClient().entity;
+            $scope.page.setTitle('Manage User Roles - ' + $scope.client.name);
+            ManageUserRolesService.referenceData();
+            ManageUserTeamRolesService.referenceData();
+        }
+    ])
 
 ;
