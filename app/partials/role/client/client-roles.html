@@ -14,11 +14,6 @@
                                     <span class="glyphicon sort-icon glyphicon-play glyphicon-small"></span>
                                     {{ role.entity.name }}
                                 </button>
-                                <div class="pull-right">
-                                    <button type="button" class="btn-link" data-ng-click="delete(role)">
-                                        <small>remove</small>
-                                    </button>
-                                </div>
                             </div>
 
                             <div class="row panel-title" data-ng-show="role.activePanel === 0">
@@ -28,7 +23,15 @@
                                            maxlength="50"
                                            required>
                                 </div>
-
+                                <div class="pull-right">
+                                    <button type="button" class="btn btn-link"
+                                            data-placement="top"
+                                            data-content-template="partials/role/client/delete.tpl.html"
+                                            data-auto-close="1"
+                                            data-bs-popover>
+                                        <small>remove</small>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                         <div class="panel-collapse" data-bs-collapse-target>
