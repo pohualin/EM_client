@@ -1,10 +1,6 @@
 'use strict';
 
 angular.module('emmiManager')
-
-/**
- * Route definitions for roles
- */
     .config(function ($routeProvider, USER_ROLES) {
 
         var clientDetailRequiredResources = {
@@ -21,9 +17,17 @@ angular.module('emmiManager')
 
         // Routes
         $routeProvider
-            .when('/clients/:clientId/roles', {
-                templateUrl: 'partials/role/client/main.html',
-                controller: 'ManageClientRolesMainCtrl',
+            .when('/clients/:clientId/users', {
+                templateUrl: 'partials/user/client/main.html',
+                controller: 'ManageClientUsersMainCtrl',
+                access: {
+                    authorizedRoles: [USER_ROLES.admin]
+                },
+                reloadOnSearch: false,
+                resolve: clientDetailRequiredResources
+            }).when('/clients/:clientId/users/new', {
+                templateUrl: 'partials/user/client/create/editor.html',
+                controller: 'ManageClientUsersMainCtrl',
                 access: {
                     authorizedRoles: [USER_ROLES.admin]
                 },
@@ -31,17 +35,5 @@ angular.module('emmiManager')
                 resolve: clientDetailRequiredResources
             });
     })
-
-/**
- * Controller for the route landing place
- */
-    .controller('ManageClientRolesMainCtrl', ['$scope', 'Client', 'ManageUserRolesService', 'ManageUserTeamRolesService',
-        function ($scope, Client, ManageUserRolesService, ManageUserTeamRolesService) {
-            $scope.client = Client.getClient().entity;
-            $scope.page.setTitle('Manage User Roles - ' + $scope.client.name);
-            ManageUserRolesService.referenceData();
-            ManageUserTeamRolesService.referenceData();
-        }
-    ])
 
 ;
