@@ -96,7 +96,17 @@
                     </div>
                 </div>
             </div>
-
+            <div class="row">
+                <div class="col-md-12">
+                   <multi-select 
+                    values="providersData" 
+                    model="providersSelected"    
+                    show-filters="true"
+                    value-field="id" 
+                    label-field="firstName" >
+                    </multi-select>
+                </div>
+            </div>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-ng-click="$hide()">Cancel</button>

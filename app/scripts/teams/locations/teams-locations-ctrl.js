@@ -2,18 +2,24 @@
 
 angular.module('emmiManager')
 
-    .controller('TeamsLocationsController', function ($scope, $http, Session, UriTemplate, $controller, $modal, $alert, Location, TeamLocation) {
+    .controller('TeamsLocationsController', function ($scope, $http, Session, UriTemplate, $controller, $modal, $alert, Location, TeamLocation, ProviderView) {
 
         $controller('LocationCommon', {$scope: $scope});
 
         $controller('CommonPagination', {$scope: $scope});
 
+        var managedLocationList = 'locations';
+        $scope.providersData = [];
+        $scope.teamLocations = {}; //used to hold the locations and manipulate internally
+
         $scope.editLocation = function (location) {
             // create a copy for editing
-            $scope.location = angular.copy(location);
+            $scope.location = angular.copy(location.entity.location);
+
+            $scope.providerUrl = location.link[1].href;
 
             // save the original for overlay if save is clicked
-            $scope.originalLocation = location;
+            $scope.originalLocation = location.entity.location;
 
             // set belongsTo property
             $scope.setBelongsToPropertiesFor($scope.location);
@@ -22,10 +28,6 @@ angular.module('emmiManager')
             $modal({scope: $scope, template: 'partials/client/location/edit.html', animation: 'none', backdropAnimation: 'emmi-fade', show: true, backdrop: 'static'});
 
         };
-
-        var managedLocationList = 'locations';
-
-        $scope.teamLocations = {}; //used to hold the locations and manipulate internally
 
         $scope.showRemovalSuccess = function (locationResource) {
             $alert({
@@ -123,6 +125,12 @@ angular.module('emmiManager')
 
         if ($scope.teamClientResource.teamResource.entity.id) { // to check is the team is created
             $scope.refresh();
+
+            ProviderView.allProvidersForTeam($scope.teamResource).then(function(response){
+                angular.forEach( response , function (location) {
+                    $scope.providersData.push(location.entity.provider);
+                });
+            });
         }
 
     })

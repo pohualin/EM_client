@@ -10,10 +10,8 @@ angular.module('emmiManager')
 
         var managedLocationList = 'locations';
         var managedClientLocationList = 'clientLocations';
-        $scope.providersData = [];
 
         $scope.teamClientLocations = {};
-        $scope.selectedProvider = [];
 
         $scope.hasLocationsAdded = function() {
             var resp = false;
@@ -226,10 +224,6 @@ angular.module('emmiManager')
         };
 
         $scope.cleanSearch();
-
-        angular.forEach( $scope.teamResource.teamProviders , function (location) {
-            $scope.providersData.push(location.entity.provider);
-        });
 
         Location.findForClient(Client.getClient()).then(function (allLocations) {
             $scope.handleResponse(allLocations, managedClientLocationList);

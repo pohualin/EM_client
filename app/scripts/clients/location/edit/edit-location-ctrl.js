@@ -5,11 +5,15 @@ angular.module('emmiManager')
 /**
  *  Controls the edit location popup (partials/location/edit.html)
  */
-    .controller('LocationEditController', function ($scope, $controller, Location, Client) {
+    .controller('LocationEditController', function ($scope, $controller, Location, Client, TeamLocationCreate) {
 
         $controller('LocationCommon', {$scope: $scope});
 
         $scope.title = 'Edit Location';
+        $scope.providersSelected = [];
+        TeamLocationCreate.findTeamLocationTeamProviders($scope.providerUrl).then(function(pageLocations) {
+            $scope.providersSelected = pageLocations;
+        });
 
         $scope.saveLocation = function (isValid) {
             $scope.locationFormSubmitted = true;
