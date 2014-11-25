@@ -126,11 +126,11 @@ angular.module('emmiManager')
             listTeamsForTagId: function (tagResource) {
                 if (tagResource) {
                     return $http.get(UriTemplate.create(tagResource.link[1].href).stringify()).then(function load(response) {
-                        var page = response.data;
+                        var page = response.data.content;
                         var teams = [];
 
                         angular.forEach(page, function (teamTag) {
-                            teams.push(teamTag.team);
+                            teams.push(teamTag.entity.team);
                         });
 
                         if (page.link && page.link['page-next']) {

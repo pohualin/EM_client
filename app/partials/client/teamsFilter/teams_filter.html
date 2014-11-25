@@ -15,14 +15,14 @@
         </div>
         <hr>
         <div data-ng-hide="selectedGroup" data-ng-repeat="team in clientTeams">
-            <a ng-href="index.html#/clients/{{clientId}}/teams/{{team.entity.id}}">{{team.entity.name}}</a>
+            <a ng-href="#/clients/{{clientId}}/teams/{{team.entity.id}}">{{team.entity.name}}</a>
         </div>
 
         <div data-ng-show="selectedGroup" data-ng-repeat="teamList in listOfTeamLists">
             <b>{{tagsInSelectedGroup[$index].entity.name}}</b>
 
             <div data-ng-repeat="team in teamList">
-                <a ng-href="index.html#/clients/{{clientId}}/teams/{{team.id}}">{{team.name}}</a>
+                <a ng-href="#/clients/{{clientId}}/teams/{{team.id}}">{{team.name}}</a>
 
             </div>
         </div>
