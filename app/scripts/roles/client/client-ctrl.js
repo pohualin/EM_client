@@ -133,7 +133,7 @@ angular.module('emmiManager')
              *
              * @param clientRoleResource to delete
              */
-            $scope.delete = function (clientRoleResource) {
+            $scope.remove = function (clientRoleResource) {
                 ManageUserRolesService.deleteExistingClientRole(clientRoleResource).then(function () {
                     $scope.loadExisting();
                 });
