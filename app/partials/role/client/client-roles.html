@@ -14,17 +14,30 @@
                                     <span class="glyphicon sort-icon glyphicon-play glyphicon-small"></span>
                                     {{ role.entity.name }}
                                 </button>
+                                <div class="pull-right">
+                                    <button type="button" class="btn-link"
+                                            data-placement="top"
+                                            data-content-template="partials/role/client/delete.tpl.html"
+                                            data-auto-close="1"
+                                            data-bs-popover>
+                                        <small>remove</small>
+                                    </button>
+                                </div>
                             </div>
 
                             <div class="row panel-title" data-ng-show="role.activePanel === 0">
-                                <div class="col-md-9">
+                                <button type="button" class="btn-link" data-ng-hide="role.editName" data-sglclick="collapseButDontCancel(role)" data-ng-dblclick="startEditName(role)">
+                                    <span class="glyphicon glyphicon-play glyphicon-small rotate-90"></span>
+                                    {{ role.entity.name }}
+                                </button>
+                                <div class="col-md-9" data-ng-show="role.editName">
                                     <input class="form-control" data-ng-model="role.entity.name"
                                            data-focus-on="focus-{{role.entity.id}}"
                                            maxlength="50"
                                            required>
                                 </div>
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-link"
+                                    <button type="button" class="btn-link"
                                             data-placement="top"
                                             data-content-template="partials/role/client/delete.tpl.html"
                                             data-auto-close="1"
@@ -37,7 +50,7 @@
                         <div class="panel-collapse" data-bs-collapse-target>
                             <div class="panel-body">
                                 <div class="checkbox"
-                                     data-ng-repeat="permission in role.entity.userClientPermissions  | orderBy:translated">
+                                     data-ng-repeat="permission in role.entity.userClientPermissions  | orderBy:'rank'">
                                     <label for="{{role.entity.id}}_perm_{{permission.name}}">
                                         <input id="{{role.entity.id}}_perm_{{permission.name}}" type="checkbox"
                                                data-ng-model="permission.active"/>
@@ -52,7 +65,7 @@
                                     </button>
                                     <button class="btn btn-default" data-ng-click="update(role)"
                                             data-bs-collapse-toggle
-                                            data-ng-show="existingRoleForm_{{$index}}.$valid && hasAPermissionChecked(role.entity)">
+                                            data-ng-show="existingRoleForm_{{$index}}.$valid && existingHasChanged(role) && hasAPermissionChecked(role.entity)">
                                         Save Role
                                     </button>
                                 </div>
@@ -78,7 +91,7 @@
                         <div class="panel-collapse">
                             <div class="panel-body">
                                 <div class="checkbox"
-                                     data-ng-repeat="permission in newClientRole.userClientPermissions  | orderBy:translated">
+                                     data-ng-repeat="permission in newClientRole.userClientPermissions  | orderBy:'rank'">
                                     <label for="perm_{{permission.name}}">
                                         <input id="perm_{{permission.name}}" type="checkbox"
                                                data-ng-model="permission.active"/>
