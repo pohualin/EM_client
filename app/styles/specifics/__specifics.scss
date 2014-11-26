@@ -100,6 +100,22 @@ th.sort {
     border-color: #ddd;
 }
 
+.conflictingTeamForm{
+  width: 15em;
+}
+
+.conflictingTeamRow{
+  font-size: 14px;
+}
+
+.teamFilterSelect{
+  padding-right: 0;
+}
+
+.teamFilterSideBorder{
+  border-right:2px solid lightgrey;
+}
+
 // various example component implementations
 @include example();
 @include example('.example2');
