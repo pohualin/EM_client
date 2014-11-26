@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  *   Manage Client Level roles for a client
  */
-    .controller('ClientRoleAdminCtrl', ['$scope', 'ManageUserRolesService', '$filter', 'focus',
-        function ($scope, ManageUserRolesService, $filter, focus) {
+    .controller('ClientRoleAdminCtrl', ['$scope', 'ManageUserRolesService', '$filter', 'focus', '$q',
+        function ($scope, ManageUserRolesService, $filter, focus, $q) {
 
             /**
              * Loads existing roles for the current client
@@ -138,6 +138,31 @@ angular.module('emmiManager')
                     $scope.loadExisting();
                 });
             };
+
+            /**
+             * called on click of the 'Add' button on the group library popup
+             */
+            $scope.addLibraries = function () {
+                ManageUserRolesService.saveSelectedLibraries($scope.clientReferenceData.roleLibrary).then(function (){
+                    $scope.loadExisting();
+                });
+            };
+
+            /**
+             * a filter function to set the checked and disabled properties of a library group
+             */
+            $scope.disableLibrary = function () {
+                return function (libraryRole) {
+                    return ManageUserRolesService.disableSelectedLibraries($scope.existingClientRoles, libraryRole);
+                };
+            };
+
+            /**
+             * when the library hides, uncheck everything
+             */
+            $scope.$on('tooltip.hide', function () {
+                ManageUserRolesService.deselectAllLibraries($scope.clientReferenceData.roleLibrary);
+            });
 
             // start by loading the currently saved roles
             $scope.loadExisting();
