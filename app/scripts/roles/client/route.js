@@ -8,10 +8,10 @@ angular.module('emmiManager')
     .config(function ($routeProvider, USER_ROLES) {
 
         var clientDetailRequiredResources = {
-            'clientResource': ['AuthSharedService','Client', '$route', '$q', function (AuthSharedService, Client, $route, $q){
+            'clientResource': ['AuthSharedService', 'Client', '$route', '$q', function (AuthSharedService, Client, $route, $q) {
                 var deferred = $q.defer();
-                AuthSharedService.currentUser().then(function (){
-                    Client.selectClient($route.current.params.clientId).then(function (clientResource){
+                AuthSharedService.currentUser().then(function () {
+                    Client.selectClient($route.current.params.clientId).then(function (clientResource) {
                         deferred.resolve(clientResource);
                     });
                 });
@@ -39,9 +39,22 @@ angular.module('emmiManager')
         function ($scope, Client, ManageUserRolesService, ManageUserTeamRolesService) {
             $scope.client = Client.getClient().entity;
             $scope.page.setTitle('Manage User Roles - ' + $scope.client.name);
-            ManageUserRolesService.referenceData();
+            ManageUserRolesService.referenceData().then(function (referenceData) {
+                $scope.clientReferenceData = referenceData;
+            });
             ManageUserTeamRolesService.referenceData();
         }
     ])
+
+/**
+ * Convert an input array into a comma delimited translated list
+ */
+    .filter('permissionName', ['$translate', function ($translate) {
+        return function (input) {
+            return input.map(function (permission) {
+                return $translate.instant(permission.name);
+            }).join(', ');
+        };
+    }])
 
 ;
