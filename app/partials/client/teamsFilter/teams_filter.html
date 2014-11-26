@@ -7,7 +7,7 @@
     <div data-ng-show="clientTeams">
         <div class="row">
             <div class="col-md-5">organize by:</div>
-            <select class="col-md-6" style="padding-right: 0" data-ng-model="selectedGroup"
+            <select class="col-md-6" data-ng-model="selectedGroup"
                     data-ng-options="group.entity.name for group in clientGroups track by group.entity.id | orderBy:'name'"
                     data-ng-change="getTeamTagsForClientAndGroup()">
                 <option value="">Select...</option>
