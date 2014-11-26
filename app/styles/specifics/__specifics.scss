@@ -118,6 +118,14 @@ th.sort {
   font-size: 14px;
 }
 
+.teamFilterSelect{
+  padding-right: 0;
+}
+
+.teamFilterSideBorder{
+  border-right:2px solid lightgrey;
+}
+
 // various example component implementations
 @include example();
 @include example('.example2');
