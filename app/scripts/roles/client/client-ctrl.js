@@ -8,6 +8,11 @@ angular.module('emmiManager')
     .controller('ClientRoleAdminCtrl', ['$scope', 'ManageUserRolesService', '$filter', 'focus', '$q',
         function ($scope, ManageUserRolesService, $filter, focus, $q) {
 
+            ManageUserRolesService.referenceData().then(function (referenceData) {
+                $scope.clientReferenceData = referenceData;
+                $scope.libraries = referenceData.roleLibrary;
+            });
+
             /**
              * Loads existing roles for the current client
              */
