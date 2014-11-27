@@ -119,7 +119,18 @@ angular.module('emmiManager')
                     if (!referenceData) {
                         $http.get((Client.getClient().link.teamRolesReferenceData)).then(function (response) {
                             referenceData = response.data;
-                            deferred.resolve(referenceData);
+                            referenceData.roleLibrary = [];
+                            // load library roles for reference data
+                            $http.get(UriTemplate.create(referenceData.link.roles).stringify()).then(function load(roleResponse) {
+                                var rolePage = roleResponse.data;
+                                referenceData.roleLibrary.push.apply(referenceData.roleLibrary, rolePage.content);
+                                if (rolePage.link && rolePage.link['page-next']) {
+                                    $http.get(rolePage.link['page-next']).then(function (nextPage) {
+                                        load(nextPage);
+                                    });
+                                }
+                                deferred.resolve(referenceData);
+                            });
                         });
                     } else {
                         deferred.resolve(referenceData);
@@ -136,6 +147,68 @@ angular.module('emmiManager')
                         name: '',
                         userClientTeamPermissions: (referenceData) ? angular.copy(referenceData.permission) : []
                     };
+                },
+                /**
+                 * Save all selected roles within the role library
+                 *
+                 * @param roleLibrary that has the mods
+                 * @returns the clean roleLibrary
+                 */
+                saveSelectedLibraries: function (roleLibrary) {
+                    var deferred = $q.defer();
+                    var selections = $filter('filter')(roleLibrary, {checked: true, disabled: false});
+                    if (selections.length > 0) {
+                        var saveFunctions = [];
+                        // save each selection
+                        angular.forEach(selections, function (selection) {
+                            saveFunctions.push(
+                                $http.post(UriTemplate.create(Client.getClient().link.teamRoles).stringify(), {
+                                    name: selection.entity.name,
+                                    userClientTeamPermissions: selection.entity.permission,
+                                    type: {
+                                        id: selection.entity.type.id
+                                    }
+                                })
+                            );
+                        });
+                        // wait till they all come back
+                        $q.all(saveFunctions).then(function allDone() {
+                            deferred.resolve(roleLibrary);
+                        });
+                    }
+                    return deferred.promise;
+                },
+                /**
+                 * Disables a library role when it is already present in the savedClientTeamRoles
+                 *
+                 * @param savedClientTeamRoles what is already saved
+                 * @param libraryRole to disable or not
+                 * @returns libraryRole modified
+                 */
+                disableSelectedLibraries: function (savedClientTeamRoles, libraryRole) {
+                    var match = false;
+                    angular.forEach(savedClientTeamRoles, function (existingClientTeamRole) {
+                        var type = existingClientTeamRole.entity ? existingClientTeamRole.entity.type : null;
+                        if (type && libraryRole.entity.type.id === type.id) {
+                            match = true;
+                        }
+                    });
+                    // if there were a match, disable and select the library group
+                    libraryRole.disabled = match;
+                    if (libraryRole.disabled) {
+                        libraryRole.checked = true;
+                    }
+                    return libraryRole;
+                },
+                /**
+                 * Deselect all of the role libraries
+                 *
+                 * @param libraries to deselect
+                 */
+                deselectAllLibraries: function (libraries) {
+                    angular.forEach(libraries, function (library) {
+                        library.checked = false;
+                    });
                 }
             };
         }])
