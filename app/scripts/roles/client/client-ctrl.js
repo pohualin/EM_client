@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  *   Manage Client Level roles for a client
  */
-    .controller('ClientRoleAdminCtrl', ['$scope', 'ManageUserRolesService', '$filter', 'focus',
-        function ($scope, ManageUserRolesService, $filter, focus) {
+    .controller('ClientRoleAdminCtrl', ['$scope', 'ManageUserRolesService', '$filter', 'focus', '$q',
+        function ($scope, ManageUserRolesService, $filter, focus, $q) {
 
             /**
              * Loads existing roles for the current client
@@ -18,37 +18,48 @@ angular.module('emmiManager')
             };
 
             /**
+             * Puts a role into a mode where the role name is editable
+             * @param clientRoleResource to be put in edit name mode
+             */
+            $scope.startEditName = function (clientRoleResource) {
+                clientRoleResource.editName = true;
+                focus('focus-' + clientRoleResource.entity.id);
+            };
+
+            /**
              * Called when 'create new client role' is clicked
              */
             $scope.createNewClientRole = function () {
-                $scope.newClientRole = ManageUserRolesService.newClientRole();
+                $scope.newClientRole = ManageUserRolesService.newClientRoleEntity();
                 focus('focus-new-role');
             };
 
             /**
-             * Takes a permission name and translates it
+             * Evaluates if a permission has been checked for a client role entity
              *
-             * @param permission to translate
-             * @returns the translated text
+             * @param clientRoleEntity to check permissions on
+             * @returns {boolean} true for at least one checked
              */
-            $scope.translated = function (permission) {
-                return $filter('translate')(permission.name);
+            $scope.hasAPermissionChecked = function (clientRoleEntity) {
+                var ret = false;
+                var activePermissions = $filter('filter')(clientRoleEntity.userClientPermissions, {active: true}, true);
+                if (activePermissions && activePermissions.length > 0) {
+                    ret = true;
+                }
+                return ret;
             };
 
             /**
-             * Evaluates if a permission has been checked for a client role
+             * Evaluates if an existing client role resource has changed
              *
-             * @param clientRole to check permissions on
+             * @param clientRoleResource to check permissions on
              * @returns {boolean} true for at least one checked
              */
-            $scope.hasAPermissionChecked = function (clientRole) {
+            $scope.existingHasChanged = function (clientRoleResource) {
                 var ret = false;
-                if (clientRole) {
-                    angular.forEach(clientRole.userClientPermissions, function (permission) {
-                        if (permission.active) {
-                            ret = true;
-                        }
-                    });
+                if (clientRoleResource) {
+                    var original = clientRoleResource.original ? clientRoleResource.original : clientRoleResource;
+                    ret = !angular.equals(clientRoleResource.entity, original.entity, true);
                 }
                 return ret;
             };
@@ -56,10 +67,10 @@ angular.module('emmiManager')
             /**
              * Called when the save button is clicked on a new client role
              *
-             * @param clientRole to be saved
+             * @param clientRoleEntity to be saved
              */
-            $scope.saveNewRole = function (clientRole) {
-                ManageUserRolesService.saveNewClientRole(clientRole).then(function () {
+            $scope.saveNewRole = function (clientRoleEntity) {
+                ManageUserRolesService.saveNewClientRole(clientRoleEntity).then(function () {
                     delete $scope.newClientRole;
                     $scope.loadExisting();
                 });
@@ -78,29 +89,32 @@ angular.module('emmiManager')
              * @param clientRoleResource
              */
             $scope.cancelExisting = function (clientRoleResource) {
+                clientRoleResource.editName = false;
                 angular.extend(clientRoleResource, clientRoleResource.original);
+                delete clientRoleResource.original;
             };
 
             /**
              * When a client role panel is opened or closed. Copy the original
              * resource into a .original property, then load permissions from
-             * the back and check the boxes as necessary.
+             * the back.
              *
              * @param clientRoleResource for the panel
              */
             $scope.panelStateChange = function (clientRoleResource) {
-                if (clientRoleResource.activePanel === 0) {
-                    focus('focus-' + clientRoleResource.entity.id);
-                    clientRoleResource.original = angular.copy(clientRoleResource);
-                    ManageUserRolesService.loadPermissions(clientRoleResource).then(function (permissions) {
-                        angular.forEach(permissions, function (savedPermission) {
-                            // find the checkbox for each of the saved permissions
-                            var checkboxPermission =
-                                $filter('filter')(clientRoleResource.entity.userClientPermissions, {name: savedPermission.name}, true);
-                            // check it
-                            checkboxPermission[0].active = true;
-                        });
-                    });
+                if (clientRoleResource.activePanel === 0 && !clientRoleResource.original) {
+                    ManageUserRolesService.loadPermissions(clientRoleResource);
+                }
+            };
+
+            /**
+             * This collapses a panel but does not 'cancel' the changes
+             * @param clientRoleResource to perform this on
+             */
+            $scope.collapseButDontCancel = function (clientRoleResource) {
+                // ensures double click on collapsed doesn't re-collapse
+                if (!clientRoleResource.editName) {
+                    clientRoleResource.activePanel = 1;
                 }
             };
 
@@ -111,9 +125,7 @@ angular.module('emmiManager')
              * @param clientRoleResource to be updated
              */
             $scope.update = function (clientRoleResource) {
-                ManageUserRolesService.saveExistingClientRole(clientRoleResource).then(function(savedClientRoleResource){
-                    angular.extend(clientRoleResource, savedClientRoleResource);
-                });
+                ManageUserRolesService.saveExistingClientRole(clientRoleResource);
             };
 
             /**
@@ -121,11 +133,36 @@ angular.module('emmiManager')
              *
              * @param clientRoleResource to delete
              */
-            $scope.delete = function (clientRoleResource) {
-                ManageUserRolesService.deleteExistingClientRole(clientRoleResource).then(function(){
+            $scope.remove = function (clientRoleResource) {
+                ManageUserRolesService.deleteExistingClientRole(clientRoleResource).then(function () {
                     $scope.loadExisting();
                 });
             };
+
+            /**
+             * called on click of the 'Add' button on the group library popup
+             */
+            $scope.addLibraries = function () {
+                ManageUserRolesService.saveSelectedLibraries($scope.clientReferenceData.roleLibrary).then(function (){
+                    $scope.loadExisting();
+                });
+            };
+
+            /**
+             * a filter function to set the checked and disabled properties of a library group
+             */
+            $scope.disableLibrary = function () {
+                return function (libraryRole) {
+                    return ManageUserRolesService.disableSelectedLibraries($scope.existingClientRoles, libraryRole);
+                };
+            };
+
+            /**
+             * when the library hides, uncheck everything
+             */
+            $scope.$on('tooltip.hide', function () {
+                ManageUserRolesService.deselectAllLibraries($scope.clientReferenceData.roleLibrary);
+            });
 
             // start by loading the currently saved roles
             $scope.loadExisting();

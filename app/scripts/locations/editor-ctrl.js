@@ -53,6 +53,7 @@ angular.module('emmiManager').controller(
             	
                 $scope.locationResource = locationResource;
                 $scope.location = locationResource.entity; // for the view state
+                $scope.edit();
             } else {
                 $location.path('/locations');
             }
