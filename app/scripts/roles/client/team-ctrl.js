@@ -8,6 +8,11 @@ angular.module('emmiManager')
     .controller('ClientTeamRoleAdminCtrl', ['$scope', 'ManageUserTeamRolesService', '$filter', 'focus',
         function ($scope, ManageUserTeamRolesService, $filter, focus) {
 
+            ManageUserTeamRolesService.referenceData().then(function(referenceData){
+                $scope.clientTeamReferenceData = referenceData;
+                $scope.libraries = referenceData.roleLibrary;
+            });
+
             /**
              * Loads existing roles for the current client
              */
@@ -138,6 +143,31 @@ angular.module('emmiManager')
                     $scope.loadExisting();
                 });
             };
+
+            /**
+             * called on click of the 'Add' button on the group library popup
+             */
+            $scope.addLibraries = function () {
+                ManageUserTeamRolesService.saveSelectedLibraries($scope.libraries).then(function (){
+                    $scope.loadExisting();
+                });
+            };
+
+            /**
+             * a filter function to set the checked and disabled properties of a library group
+             */
+            $scope.disableLibrary = function () {
+                return function (libraryRole) {
+                    return ManageUserTeamRolesService.disableSelectedLibraries($scope.existingClientTeamRoles, libraryRole);
+                };
+            };
+
+            /**
+             * when the library hides, uncheck everything
+             */
+            $scope.$on('tooltip.hide', function () {
+                ManageUserTeamRolesService.deselectAllLibraries($scope.libraries);
+            });
 
             // start by loading the currently saved roles
             $scope.loadExisting();

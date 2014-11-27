@@ -130,8 +130,8 @@ angular.module('emmiManager')
                                         load(nextPage);
                                     });
                                 }
+                                deferred.resolve(referenceData);
                             });
-                            deferred.resolve(referenceData);
                         });
                     } else {
                         deferred.resolve(referenceData);
