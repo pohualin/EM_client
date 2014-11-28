@@ -1,8 +1,31 @@
 <div data-ng-controller="TeamsFilterController">
+    <br>
     <b>Teams</b>
-    <hr>
-    <div data-ng-repeat="team in clientTeams | orderBy:'entity.name'">
-        <a ng-href="index.html#/clients/{{clientId}}/teams/{{team.entity.id}}">{{team.entity.name}}</a>
+
+    <div data-ng-hide="clientTeams"><br>No teams exist for this client.</div>
+
+    <div data-ng-show="clientTeams">
+        <div class="row">
+            <div class="col-md-5">organize by:</div>
+            <select class="col-md-6" data-ng-model="selectedGroup"
+                    data-ng-options="group.entity.name for group in clientGroups track by group.entity.id | orderBy:'name'"
+                    data-ng-change="getTeamTagsForClientAndGroup()">
+                <option value="">Select...</option>
+            </select>
+        </div>
+        <hr>
+        <div data-ng-hide="selectedGroup" data-ng-repeat="team in clientTeams">
+            <a ng-href="#/clients/{{clientId}}/teams/{{team.entity.id}}">{{team.entity.name}}</a>
+        </div>
+
+        <div data-ng-show="selectedGroup" data-ng-repeat="teamList in listOfTeamLists">
+            <b>{{tagsInSelectedGroup[$index].entity.name}}</b>
+
+            <div data-ng-repeat="team in teamList">
+                <a ng-href="#/clients/{{clientId}}/teams/{{team.id}}">{{team.name}}</a>
+
+            </div>
+        </div>
     </div>
     <hr>
 </div>

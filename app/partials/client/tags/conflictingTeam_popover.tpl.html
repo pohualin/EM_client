@@ -4,9 +4,9 @@
     <br>
     <table border="0" cellpadding="1px" cellspacing="0">
         <tr class='conflictingTeamRow' data-ng-repeat="teamTag in conflictingTeamTags">
-            <td class="col-md-7">{{teamTag.tag}}: </td>
-            <td ng-if="teamTag.numberOfTeams == 1 " class="col-md-5">{{teamTag.numberOfTeams}} team</td>
-            <td ng-if="teamTag.numberOfTeams > 1 " class="col-md-5">{{teamTag.numberOfTeams}} teams</td>
+            <td class="col-md-6">{{teamTag.tag}}: </td>
+            <td ng-if="teamTag.numberOfTeams == 1 " class="col-md-6">{{teamTag.numberOfTeams}} team</td>
+            <td ng-if="teamTag.numberOfTeams > 1 " class="col-md-6">{{teamTag.numberOfTeams}} teams</td>
         </tr>
     </table>
     <br>
