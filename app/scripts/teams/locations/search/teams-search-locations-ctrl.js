@@ -43,7 +43,7 @@ angular.module('emmiManager')
                     location.location.entity.checked = true;
                 }
                 //location.location.entity.providers = angular.copy(providersData);
-                location.location.entity.providersSelected = [];
+                location.location.entity.providersSelected = angular.copy($scope.providersData);
             });
         };
 
