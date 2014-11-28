@@ -83,7 +83,17 @@ th.sort {
     padding-right: .5em;
     vertical-align: top;
     margin-top: .2em;
+    &.rotate-90 {
+        margin-top: .6em;
+        -webkit-transform: rotate(90deg);
+        -moz-transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
+        -o-transform: rotate(90deg);
+        transform: rotate(90deg);
+    }
 }
+
+
 
 .table-striped > tbody > tr.highlight > td, .highlight {
   background-color: yellow;
@@ -106,6 +116,14 @@ th.sort {
 
 .conflictingTeamRow{
   font-size: 14px;
+}
+
+.teamFilterSelect{
+  padding-right: 0;
+}
+
+.teamFilterSideBorder{
+  border-right:2px solid lightgrey;
 }
 
 // various example component implementations
