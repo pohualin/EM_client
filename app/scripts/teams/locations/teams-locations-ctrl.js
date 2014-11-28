@@ -112,15 +112,17 @@ angular.module('emmiManager')
 
         $scope.fetchAllPages = function (content) {
             //fetch all pages in order to fill the dropdown with all clients locations, not only the first page.
-            angular.forEach(content.linkList, function(link, key) {
-                if (key >= 1 && key < content.page.totalPages) {
-                    Location.fetchPageLink(link.href).then(function (clientPage) {
-                        angular.forEach(clientPage.content, function (teamLocation) {
+            //for (var i = 1; i<content.page.totalPages; i++) {
+               if (content.link && content.link['page-next']) {
+                    $http.get(content.link['page-next']).then(function (response) {
+                        angular.forEach(response.data.content, function (teamLocation) {
+                            $scope.locations.push(teamLocation);
                             $scope.teamLocations[teamLocation.entity.location.id] = angular.copy(teamLocation.entity.location);
-                        });                        
+                        }); 
+                        $scope.fetchAllPages(response);
                     });
                 }
-            });
+            //}
         };
 
         if ($scope.teamClientResource.teamResource.entity.id) { // to check is the team is created
