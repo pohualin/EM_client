@@ -9,6 +9,45 @@ angular.module('emmiManager')
                     then(function (response) {
                         return response;
                     });
+            },
+            /**
+             * create the TeamProviderTeamLocationSaveRequest to be saved
+             *
+             * @param teamClientLocations   locations selected on Client locations TAB
+             * @param teamLocations         locations selected on Search All TAB
+             * @param providersList         team location providers list to compare with selected in order to avoid to send save when select all is checked
+             * @return TeamProviderTeamLocationSaveRequest
+             *
+             */
+            getTeamProviderTeamLocationSaveRequest: function (teamClientLocations, teamLocations, providersList) {
+                var teamProviderTeamLocationSaveRequest = [];
+
+                angular.forEach( teamClientLocations , function (location) {
+                    var req = {};
+                    req.location = location;
+                    //Select ALL no rows on database
+                    if (providersList.length === location.providersSelected.length) { 
+                        req.providers = [];
+                    } else {
+                        req.providers = location.providersSelected;
+                    }
+                    teamProviderTeamLocationSaveRequest.push(req);
+                });
+                angular.forEach( teamLocations , function (location) {
+                    var req = {};
+                    if (location.isNewAdd) {
+                        location.isNewAdd = false;
+                        req.location = location;
+                        if (providersList.length === location.providersSelected.length) { 
+                            req.providers = [];
+                        } else {
+                            req.providers = location.providersSelected;
+                        }
+                        teamProviderTeamLocationSaveRequest.push(req);
+                    }
+                });
+
+                return teamProviderTeamLocationSaveRequest;
             }
         };
     })
