@@ -10,7 +10,7 @@ angular.module('emmiManager')
 
         var managedLocationList = 'locations';
         var managedClientLocationList = 'clientLocations';
-
+        $scope.sizeClass =  $scope.providersData.length === 0 ? 'sort col-sm-4' : 'sort col-sm-3';
         $scope.teamClientLocations = {};
 
         $scope.hasLocationsAdded = function() {

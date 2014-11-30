@@ -5,15 +5,11 @@ angular.module('emmiManager')
 /**
  *  Controls the edit location popup (partials/location/edit.html)
  */
-    .controller('LocationEditController', function ($scope, $controller, Location, Client, TeamLocationCreate) {
+    .controller('LocationEditController', function ($scope, $controller, Location, Client, TeamLocation) {
 
         $controller('LocationCommon', {$scope: $scope});
 
         $scope.title = 'Edit Location';
-        $scope.providersSelected = [];
-        TeamLocationCreate.findTeamLocationTeamProviders($scope.providerUrl).then(function(pageLocations) {
-            $scope.providersSelected = pageLocations;
-        });
 
         $scope.saveLocation = function (isValid) {
             $scope.locationFormSubmitted = true;
@@ -21,6 +17,12 @@ angular.module('emmiManager')
                 var toBeSaved = $scope.location;
                 Location.update(Client.getClient(), toBeSaved).then(function (response) {
                     var locationResource = response.data;
+
+                    var req = {};
+                    req.location = locationResource.entity;
+                    req.providers = $scope.location.providersSelected;
+
+                    TeamLocation.updateTPTL($scope.locationResource.link[1].href,req);
 
                     // set belongsTo property
                     $scope.setBelongsToPropertiesFor(locationResource.entity);

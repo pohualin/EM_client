@@ -47,11 +47,11 @@
                            cellspacing="0" data-ng-show="locations" >
                         <tr>
                             <th class="sort col-sm-0">&nbsp;</th>
-                            <th class="sort col-sm-3" data-ng-click="sortTeam('name')">
+                            <th data-ng-class="sizeClass" data-ng-click="sortTeam('name')" >
                                 Name
                                 <span data-ng-show="sortProperty.property === 'name'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span>
                             </th>
-                            <th class="sort col-sm-3" data-ng-click="sortTeam('belongsTo.name')">
+                            <th data-ng-class="sizeClass" data-ng-click="sortTeam('belongsTo.name')" >
                                 Client Owner
                                 <span data-ng-show="sortProperty.property === 'belongsTo.name'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span>
                             </th>
@@ -85,7 +85,7 @@
                                         model="location.location.entity.providersSelected"    
                                         show-filters="true"
                                         value-field="id" 
-                                        label-field="firstName" >
+                                        label-field="label" >
                                         </multi-select>
                                 </div>
                             </td>   

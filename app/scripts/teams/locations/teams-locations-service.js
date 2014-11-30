@@ -14,6 +14,12 @@ angular.module('emmiManager')
                         return response.data;
                     });
             },
+            updateTPTL: function (url, request) {
+                return $http.post(UriTemplate.create(url).stringify(), request).
+                    then(function (response) {
+                        return response;
+                    });
+            },            
             getTeamLocations: function(url){
             	var teamLocations = [];
             	return $http.get(UriTemplate.create(url).stringify())

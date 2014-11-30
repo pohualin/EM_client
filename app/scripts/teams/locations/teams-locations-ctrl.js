@@ -2,7 +2,7 @@
 
 angular.module('emmiManager')
 
-    .controller('TeamsLocationsController', function ($scope, $http, Session, UriTemplate, $controller, $modal, $alert, Location, TeamLocation, ProviderView) {
+    .controller('TeamsLocationsController', function ($scope, $http, Session, UriTemplate, $controller, $modal, $alert, Location, TeamLocation, ProviderView, TeamLocationCreate) {
 
         $controller('LocationCommon', {$scope: $scope});
 
@@ -13,10 +13,14 @@ angular.module('emmiManager')
         $scope.teamLocations = {}; //used to hold the locations and manipulate internally
 
         $scope.editLocation = function (location) {
+
+            $scope.fillProviders();
+
             // create a copy for editing
             $scope.location = angular.copy(location.entity.location);
+            $scope.locationResource = location;
 
-            $scope.providerUrl = location.link[1].href;
+            $scope.location.providersSelected = [];
 
             // save the original for overlay if save is clicked
             $scope.originalLocation = location.entity.location;
@@ -24,8 +28,15 @@ angular.module('emmiManager')
             // set belongsTo property
             $scope.setBelongsToPropertiesFor($scope.location);
 
-            // show the dialog box
-            $modal({scope: $scope, template: 'partials/client/location/edit.html', animation: 'none', backdropAnimation: 'emmi-fade', show: true, backdrop: 'static'});
+            TeamLocationCreate.findTeamLocationTeamProviders(location.link[1].href).then(function(pageLocations) {
+                angular.forEach( pageLocations.content , function (location) {
+                    $scope.location.providersSelected.push(location.teamProvider.entity);
+                });                
+    
+                // show the dialog box, to avoid display the popup without the providers
+                $modal({scope: $scope, template: 'partials/client/location/edit.html', animation: 'none', backdropAnimation: 'emmi-fade', show: true, backdrop: 'static'});
+            });
+
 
         };
 
@@ -125,14 +136,19 @@ angular.module('emmiManager')
             //}
         };
 
-        if ($scope.teamClientResource.teamResource.entity.id) { // to check is the team is created
-            $scope.refresh();
-
+        $scope.fillProviders = function() {
             ProviderView.allProvidersForTeam($scope.teamResource).then(function(response){
+                $scope.providersData = [];
                 angular.forEach( response , function (location) {
-                    $scope.providersData.push(location.entity.provider);
+                    location.entity.label = location.entity.provider.firstName + ' ' + location.entity.provider.lastName; //do this because the multiselet do not support nested prop
+                    $scope.providersData.push(location.entity);
                 });
             });
+        };
+
+        if ($scope.teamClientResource.teamResource.entity.id) { // to check is the team is created
+            $scope.refresh();
+            $scope.fillProviders();
         }
 
     })
