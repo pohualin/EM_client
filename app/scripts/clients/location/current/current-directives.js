@@ -9,11 +9,15 @@ angular.module('emmiManager')
             restrict: 'EA',
             scope: {
                 onOk: '&onOk',
-                toRemove: '='
+                toRemove: '=',
+                isDeleting: '=',
+                onOpenPopover: '&onOpenPopover',
+                onClosePopover: '&onClosePopover'
             },
             link: function (scope, element) {
                 element.on('click', function (event) {
                     event.stopPropagation();
+                    scope.onOpenPopover();
                     ClientLocationService.findTeamsUsing(scope.toRemove).then(function(teams){
                         if (teams && teams.length > 0) {
                             scope.teamsBlocking = teams;
@@ -32,6 +36,7 @@ angular.module('emmiManager')
                         } else {
                             $timeout(function () {
                                 scope.onOk();
+                                scope.onClosePopover();
                             });
                         }
                     });
