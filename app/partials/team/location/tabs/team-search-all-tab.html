@@ -80,13 +80,13 @@
                             <td>{{location.location.entity.phone}}</td>
                             <td data-ng-show="providersData">
                                 <div class="col-xs-12" data-ng-show="providersData && location.location.entity.checked && !location.location.entity.disabled">                  
-                                       <multi-select 
+                                       <div data-multi-select 
                                         values="providersData" 
                                         model="location.location.entity.providersSelected"    
                                         show-filters="true"
                                         value-field="id" 
                                         label-field="label" >
-                                        </multi-select>
+                                        </div>
                                 </div>
                             </td>   
                         </tr>
