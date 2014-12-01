@@ -93,14 +93,14 @@
                          data-ng-class="{ 'has-error' : providerForm.specialty.$invalid && providerFormSubmitted }">
                         <label class="control-label" for="specialty">Use Locations:</label>
                         <div>
-				            <multi-select 
+				            <div data-multi-select
 				            values="multiSelectData" 
 				            model="selectedItems" 
 				            show-filters="true"
 				            value-field="id" 
 				            label-field="label"
-				            template-path="partials/vendor/multi-select.html">
-				            </multi-select>
+				            template-path = "partials/vendor/multi-select.html">
+				            </div>
 			          	</div>
                     </div>
                 </div>

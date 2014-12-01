@@ -18,7 +18,7 @@ angular.module('emmiManager', [
     'mgcrea.ngStrap',
     'emmi.inputMask',
     'angularMoment',
-    'shalotelli-angular-multiselect'
+    'emmi-angular-multiselect'
 ])
 
     .constant('USER_ROLES', {
