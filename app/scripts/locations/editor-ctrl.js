@@ -8,7 +8,7 @@ angular.module('emmiManager').controller(
         $scope.cancel = function() {
             $scope.hideError();
             $scope.editMode = false;
-            $scope.metadataSubmitted = false;
+            $scope.locationFormSubmitted = false;
             delete $scope.locationToEdit;
         };
 
@@ -53,6 +53,7 @@ angular.module('emmiManager').controller(
             	
                 $scope.locationResource = locationResource;
                 $scope.location = locationResource.entity; // for the view state
+                $scope.edit();
             } else {
                 $location.path('/locations');
             }

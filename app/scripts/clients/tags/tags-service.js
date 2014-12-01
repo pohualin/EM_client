@@ -98,6 +98,52 @@ angular.module('emmiManager')
                     });
                     return numberOfTeamForTagMap;
                 });
+            },
+            listTagsByGroupId: function (groupResource) {
+                if (groupResource) {
+                    var deferred = $q.defer();
+                    var tags = [];
+
+                    $http.get(UriTemplate.create(groupResource.link[1].href).stringify({
+                        sort:'name,asc'
+                    })).then(function load(response) {
+                        var page = response.data;
+
+                        angular.forEach(page.content, function (tag) {
+                            tags.push(tag);
+                        });
+
+                        if (page.link && page.link['page-next']) {
+                            $http.get(page.link['page-next']).then(function (response) {
+                                load(response);
+                            });
+                        }
+                        deferred.resolve(tags);
+                    });
+                    return deferred.promise;
+                }
+            },
+            listTeamsForTagId: function (tagResource) {
+                if (tagResource) {
+                    return $http.get(UriTemplate.create(tagResource.link[1].href).stringify()).then(function load(response) {
+                        var page = response.data.content;
+                        var teams = [];
+
+                        angular.forEach(page, function (teamTag) {
+                            teams.push(teamTag.entity.team);
+                        });
+
+                        if (page.link && page.link['page-next']) {
+                            $http.get(page.link['page-next']).then(function (response) {
+                                load(response);
+                            });
+                        }
+                        teams.sort(function(a,b){
+                           return  a.name.localeCompare(b.name);
+                        });
+                        return teams;
+                    });
+                }
             }
         };
     });
