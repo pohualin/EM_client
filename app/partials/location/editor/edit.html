@@ -94,8 +94,10 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label class="control-label" for="belongsTo">Belongs To:</label>
-                    <span data-ng-show="locationToEdit.belongsTo"> <em>({{locationToEdit.belongsTo.name}})</em></span>
-            		<span data-ng-show="!locationToEdit.belongsTo"> <em>(<span data-translate="client_edit_page.locations.no_client_owner"></span>)</em></span>
+                    <div>
+                    	<span data-ng-show="locationToEdit.belongsTo"> {{locationToEdit.belongsTo.name}}</span>
+            			<span data-ng-show="!locationToEdit.belongsTo"> <span data-translate="client_edit_page.locations.no_client_owner"></span></span>
+                    </div>
                 </div>
             </div>
         </div>
