@@ -1,13 +1,20 @@
 'use strict';
 angular.module('emmiManager')
-    .service('TeamSearchLocation', function ($http, $q, Session, UriTemplate) {
+
+    .service('TeamSearchLocation', ['$http','UriTemplate', 'CommonService', function ($http, UriTemplate, CommonService) {
         var referenceData;
 
         return {
             save: function (url, locations) {
                 return $http.post(UriTemplate.create(url).stringify(), locations).
                     then(function (response) {
-                        return response;
+                        var page = response.data;
+                        angular.forEach(page, function(data) {
+                            CommonService.convertPageContentLinks(data);
+                            CommonService.convertPageContentLinks(data.teamLocation);
+                        });
+
+                        return page;
                     });
             },
             /**
@@ -50,7 +57,7 @@ angular.module('emmiManager')
                 return teamProviderTeamLocationSaveRequest;
             }
         };
-    })
+    }])
 
     .directive('clearSearch', [function () {
           return {

@@ -20,9 +20,14 @@ angular.module('emmiManager')
 
                     var req = {};
                     req.location = locationResource.entity;
-                    req.providers = $scope.location.providersSelected;
+                    //Select ALL no rows on database
+                    if ($scope.providersData.length === location.providersSelected.length) { 
+                        req.providers = [];
+                    } else {
+                        req.providers = $scope.location.providersSelected;
+                    }
 
-                    TeamLocation.updateTPTL($scope.locationResource.link[1].href,req);
+                    TeamLocation.updateTPTL($scope.locationResource.link.tptls,req);
 
                     // set belongsTo property
                     $scope.setBelongsToPropertiesFor(locationResource.entity);

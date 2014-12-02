@@ -1,15 +1,16 @@
 'use strict';
 angular.module('emmiManager')
-    .service('TeamLocation', function ($http, $q, $filter, Session, UriTemplate, arrays) {
+    .service('TeamLocation', ['$http','UriTemplate', 'arrays','CommonService', function ($http, UriTemplate, arrays, CommonService) {
         return {
             loadTeamLocationsSimple: function (url) {
                 return $http.get(UriTemplate.create(url).stringify()).then(function load(response) {
-                    return response.data;
+                    var page = response.data;
+                    CommonService.convertPageContentLinks(page);
+                    return page;
                 });
             },
             removeLocation: function (locationResource) {
-                locationResource.links = arrays.convertToObject('rel', 'href', locationResource.link);
-                return $http.delete(UriTemplate.create(locationResource.links.self).stringify())
+                return $http.delete(UriTemplate.create(locationResource.link.self).stringify())
                     .then(function (response) {
                         return response.data;
                     });
@@ -36,5 +37,5 @@ angular.module('emmiManager')
                 	});
             }
         };
-    })
+    }])
 ;

@@ -32,9 +32,9 @@ angular.module('emmiManager')
                     }
                     teamProviderTeamLocationSaveRequest.push(req);
 
-                    TeamSearchLocation.save($scope.teamClientResource.teamResource.link.teamLocations,teamProviderTeamLocationSaveRequest).then(function (response) {
-                        if (response.data) {
-                            TeamLocation.updateTPTL(response.data[0].teamLocation.link[1].href,req);
+                    TeamSearchLocation.save($scope.teamClientResource.teamResource.link.teamLocations,teamProviderTeamLocationSaveRequest).then(function (page) {
+                        if (page) {
+                            TeamLocation.updateTPTL(page.link.tptls,req);
                         }
                         $scope.$hide();
                         $scope.refresh();
