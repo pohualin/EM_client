@@ -3,20 +3,16 @@
 angular.module('emmiManager').service(
     'LocationService',
     function($http, arrays, Session, UriTemplate) {
-    	var selectedLocation;
-    	
         return {
             // LocationsResource.get(Long id)
             getLocationById: function(id) {
-            	if(selectedLocation){
-	        		return $http.get(
-	                    UriTemplate.create(selectedLocation.link.self)
-	                    .stringify({
-	                        id: id
-	                    })).then(function(response) {
-	                    return response.data;
-	                });            		
-            	}
+        		return $http.get(
+                    UriTemplate.create(Session.link.locationById)
+                    .stringify({
+                        id: id
+                    })).then(function(response) {
+                    return response.data;
+                });            		
             },
             
             // LocationsResource.currentClients(Long id)
@@ -36,16 +32,6 @@ angular.module('emmiManager').service(
                     .success(function(response) {
                         return response.data;
                     });
-            },
-            
-            // Set selectedLocation
-            setSelectedLocation: function(location){
-            	selectedLocation = location;
-            },
-            
-            // Get selectedLocation
-            getSelectedLocation: function(){
-            	return selectedLocation;
             }
         };
     });
