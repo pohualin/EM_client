@@ -55,6 +55,7 @@ angular.module('emmiManager').controller(
                 });
                 $scope.providerResource = providerResource;
                 $scope.provider = providerResource.entity; // for the view state
+                $scope.edit();
             } else {
                 $location.path('/providers');
             }

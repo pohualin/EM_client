@@ -31,7 +31,7 @@ angular.module('emmiManager')
                     $scope.currentPageSize);
             };
 
-            $scope.view = function(provider) {
+            $scope.edit = function(provider) {
             	ProviderService.setSelectedProvider(provider);
                 $location.path('/providers/' + provider.entity.id);
             };
