@@ -20,7 +20,7 @@
 				             data-title="Please enter a valid first name."></div>
 				        <input class="form-control" id="firstName" data-ng-model="clientUserToBeEdit.entity.firstName"
 				               name="firstName"
-				               type="text" maxlength="255" required data-auto-focus
+				               type="text" maxlength="50" required data-auto-focus
 				               data-ng-pattern="/^[a-zA-Z '-]*$/">
 				    </div>
 				</div>
@@ -40,7 +40,7 @@
 					         data-title="Please enter a valid last name."></div>
 					    <input class="form-control" id="lastName" data-ng-model="clientUserToBeEdit.entity.lastName"
 					           name="lastName"
-					           type="text" maxlength="255" required
+					           type="text" maxlength="50" required
 					           data-ng-pattern="/^[a-zA-Z '-]*$/">
 					</div>
 				</div>
@@ -68,7 +68,10 @@
 					<div class="form-group">
 						<label class="control-label" for="useEmail">User Id:</label>
 						<div>
-							<input id="useEmail" type="checkbox" checked /> Use Email
+							<input class="form-control" id="userId" data-ng-model="clientUserToBeEdit.entity.login" 
+		                       name="login" type="text" data-ng-hide="useEmail"
+		                       maxlength="255" data-ng-pattern="/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/"/>
+							<input id="useEmail" type="checkbox" checked data-ng-click="toggleUseEmail(this)" /> Use Email
 						</div>
 					</div>
 				</div>

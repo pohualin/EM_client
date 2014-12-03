@@ -11,7 +11,8 @@ angular.module('emmiManager')
                         entity: {
                             'firstName': null,
                             'lastName': null,
-                            'email': null
+                            'email': null,
+                            'login': null
                         }
                     };
                     return selectedClientUser;
@@ -19,6 +20,8 @@ angular.module('emmiManager')
                 
                 createClientUser: function(client, clientUserToBeEdit){
                 	console.log('create client user.');
+                	clientUserToBeEdit.login = clientUserToBeEdit.email;
+                	clientUserToBeEdit.client = client.entity;
                 	return $http.post(UriTemplate.create(client.link.users).stringify(), clientUserToBeEdit)
 	                    .success(function(response) {
 	                        return response;

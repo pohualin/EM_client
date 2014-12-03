@@ -59,9 +59,18 @@ angular.module('emmiManager')
                     }
                 }
     		};
+    		
+    		/**
+	         * Called when Use Email checked box is toggled
+	         */
+    		$scope.toggleUseEmail = function(input){
+    			console.log('toggle ' + $scope.useEmail);
+    			// $scope.useEmail = $scope.useEmail ? false : true;
+    		};
             
             function init(){
             	$scope.client = Client.getClient();
+            	$scope.useEmail = true;
                 $scope.page.setTitle('Create Users - ' + $scope.client.entity.name);
                 $scope.createNewClientUser();
             }
