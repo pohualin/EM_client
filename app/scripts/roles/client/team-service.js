@@ -161,10 +161,14 @@ angular.module('emmiManager')
                         var saveFunctions = [];
                         // save each selection
                         angular.forEach(selections, function (selection) {
+                            var permissions = [];
+                            angular.forEach(selection.entity.permission, function(p){
+                                permissions.push(p.permission);
+                            });
                             saveFunctions.push(
                                 $http.post(UriTemplate.create(Client.getClient().link.teamRoles).stringify(), {
                                     name: selection.entity.name,
-                                    userClientTeamPermissions: selection.entity.permission,
+                                    userClientTeamPermissions: permissions,
                                     type: {
                                         id: selection.entity.type.id
                                     }

@@ -30,7 +30,7 @@ angular.module('emmiManager')
                         $rootScope.account = Session.create(user.login, user.firstName, user.lastName, user.email, user.permission, user.link);
                         $rootScope.authenticated = true;
                         deferred.resolve($rootScope.account);
-                    }).error(function (err) {
+                    }).error(function () {
                         deferred.resolve({notLoggedIn: true});
                         $rootScope.authenticated = false;
                     });
@@ -46,7 +46,6 @@ angular.module('emmiManager')
                 var self = this;
                 self.currentUser().then(function (user) {
                     if (!self.isAuthorized(authorizedRoles)) {
-                        event.preventDefault();
                         if (user === null || user.notLoggedIn) {
                             // user needs to login
                             $rootScope.$broadcast('event:auth-loginRequired');
