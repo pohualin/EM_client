@@ -58,7 +58,6 @@ angular.module('emmiManager')
             	var teamProviderTeamLocationSaveRequest = new Object({});
             	// Push all selectedItems to teamProviderTeamLocation only if selectedItems != select all
             	var teamLocations = [];
-            	window.paul = selectedItems;
             	if(selectedItems.length > 0 && selectedItems.length !== multiSelectData.length){
             		angular.forEach(selectedItems, function(selected){
             			teamLocations.push(selected.teamLocation.entity);
