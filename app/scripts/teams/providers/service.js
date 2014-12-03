@@ -57,25 +57,17 @@ angular.module('emmiManager')
             	// Compose teamProviderTeamLocationSaveRequest
             	var teamProviderTeamLocationSaveRequest = new Object({});
             	// Push all selectedItems to teamProviderTeamLocation only if selectedItems != select all
-            	var teamProviderTeamLocations = [];
+            	var teamLocations = [];
+            	window.paul = selectedItems;
             	if(selectedItems.length > 0 && selectedItems.length !== multiSelectData.length){
             		angular.forEach(selectedItems, function(selected){
-            			var tptl = new Object({});
-            			if(selected.teamProviderTeamLocation){
-            				tptl.teamLocation = selected.teamProviderTeamLocation.teamLocation.entity;
-            				tptl.teamProvider = selected.teamProviderTeamLocation.teamProvider.entity;
-            				tptl.id = selected.teamProviderTeamLocation.teamProviderTeamLocationId;
-            			}else {
-            				tptl.teamLocation = selected.teamLocation.entity;
-            				tptl.teamProvider = teamProvider.entity;
-            			}
-            			teamProviderTeamLocations.push(tptl);
+            			teamLocations.push(selected.teamLocation.entity);
 	            	});
             	}
             	// Set provider and teamProviderTeamLocation to teamProviderTeamLocationSaveRequest
             	teamProviderTeamLocationSaveRequest.provider = teamProviderToBeEdit.entity.provider;
             	teamProviderTeamLocationSaveRequest.teamProvider = teamProviderToBeEdit.entity;
-            	teamProviderTeamLocationSaveRequest.teamProviderTeamLocations = teamProviderTeamLocations;
+            	teamProviderTeamLocationSaveRequest.teamLocations = teamLocations;
             	if(clientProvider){
             		teamProviderTeamLocationSaveRequest.clientProvider = clientProvider;
             	}
