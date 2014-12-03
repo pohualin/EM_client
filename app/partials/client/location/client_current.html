@@ -18,12 +18,12 @@
             <td class="col-sm-2">{{clientLocation.location.entity.city}}</td>
             <td class="col-sm-1">{{clientLocation.location.entity.state}}</td>
             <td class="col-sm-3">
-                <a href data-ng-click="editLocation(clientLocation.location.entity)" data-ng-hide="deleting">edit</a>
-                <span class="text-muted" data-ng-hide="deleting">&nbsp;|&nbsp;</span>
+                <a href data-ng-click="editLocation(clientLocation.location.entity)" data-ng-hide="clientLocation.location.entity.deleting">edit</a>
+                <span class="text-muted" data-ng-hide="clientLocation.location.entity.deleting">&nbsp;|&nbsp;</span>
                 <a href data-to-remove="clientLocation"
                    data-on-ok="removeExistingLocation(clientLocation)"
-                   data-on-open-popover="openDeletePopover()"
-                   data-on-close-popover="closeDeletePopover()"
+                   data-on-open-popover="openDeletePopover(clientLocation.location.entity)"
+                   data-on-close-popover="closeDeletePopover(clientLocation.location.entity)"
                    data-client-location-delete-warning="">remove from client</a>
             </td>
         </tr>
