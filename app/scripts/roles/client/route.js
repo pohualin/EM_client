@@ -42,15 +42,4 @@ angular.module('emmiManager')
         }
     ])
 
-/**
- * Convert an input array into a comma delimited translated list
- */
-    .filter('permissionName', ['$translate', function ($translate) {
-        return function (input) {
-            return input.map(function (permission) {
-                return $translate.instant(permission.name);
-            }).join(', ');
-        };
-    }])
-
 ;
