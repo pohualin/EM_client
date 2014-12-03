@@ -58,7 +58,7 @@ angular.module('emmiManager', [
         });
     })
 
-    .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, arrays, $document) {
+    .run(function ($rootScope, $window, $location, $http, AuthSharedService, Session, USER_ROLES, arrays, $document) {
 
         var modals = [];
 
@@ -96,6 +96,7 @@ angular.module('emmiManager', [
                 modals = [];
             }
             $rootScope.page.setTitle(current.$$route.title || 'Emmi Manager');
+            $window._paq.push(['trackPageView']);
         });
 
         // Call when the the client is confirmed

@@ -39,8 +39,8 @@
 <script src="bower_components/angular-animate/angular-animate.js"></script>
 <script src="bower_components/angular-route/angular-route.js"></script>
 <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-<script src="bower_components/angular-strap/dist/angular-strap.min.js"></script>
-<script src="bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
+<script src="bower_components/angular-strap/dist/angular-strap.js"></script>
+<script src="bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
 <script src="bower_components/angular-dynamic-locale/src/tmhDynamicLocale.js"></script>
 <script src="bower_components/chosen/chosen.jquery.js"></script>
 <script src="bower_components/angular-chosen-localytics/chosen.js"></script>
@@ -55,6 +55,7 @@
 <script src="bower_components/angular-translate/angular-translate.js"></script>
 <script src="bower_components/angular-translate-loader-url/angular-translate-loader-url.js"></script>
 <script src="bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.js"></script>
+<script src="bower_components/shalotelli-angular-multiselect/multiselect.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
@@ -120,6 +121,7 @@
 <script src="scripts/teams/locations/search/teams-search-locations-service.js"></script>
 <script src="scripts/teams/locations/search/teams-search-locations-ctrl.js"></script>
 <script src="scripts/teams/locations/create/teams-locations-create-ctrl.js"></script>
+<script src="scripts/teams/locations/create/teams-locations-create-service.js"></script>
 <script src="scripts/teams/providers/edit-ctrl.js"></script>
 <script src="scripts/teams/providers/create/provider-create-ctrl.js"></script>
 <script src="scripts/teams/providers/create/provider-create-service.js"></script>
@@ -147,8 +149,10 @@
 <script src="scripts/roles/client/client-service.js"></script>
 <script src="scripts/roles/client/team-ctrl.js"></script>
 <script src="scripts/roles/client/team-service.js"></script>
-<script src="scripts/users/client/main-ctrl.js"></script>
 <script src="scripts/users/client/route.js"></script>
+<script src="scripts/users/client/editor-ctrl.js"></script>
+<script src="scripts/users/client/main-ctrl.js"></script>
+<script src="scripts/users/client/service.js"></script>
 <!-- inject:partials -->
 <!-- endinject -->
 <!-- endbuild -->
@@ -183,5 +187,17 @@
                 });
     })();
 </script>
+
+<!-- Piwik -->
+<script>
+    var _paqSiteId = (location.hostname.match('qa6')) ? 6 : 4; // dev6 site ID = 4, qa6 site ID = 6
+    var _paq = _paq || [];
+    _paq.push(['enableLinkTracking']);
+    (function()
+    { var u=(("https:" == document.location.protocol) ? "https" : "http") + "://devpiwik.emmisolutions.com/"; _paq.push(['setTrackerUrl', u+'piwik.php']); _paq.push(['setSiteId', _paqSiteId]); var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0]; g.type='text/javascript'; g.defer=true; g.async=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s); }
+    )();
+</script>
+<!-- End Piwik Code -->
+
 </body>
 </html>

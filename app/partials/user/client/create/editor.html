@@ -2,12 +2,25 @@
     <div class="row">
         <div class="col-md-12">
             <h3>
-                <a href="#/">Emmi Manager</a> : <a href="#/clients/{{client.id}}">{{client.name}}</a>
+                <a href="#/">Emmi Manager</a> : <a href="#/clients/{{client.entity.id}}">{{client.entity.name}}</a>
             </h3>
         </div>
     </div>
     <hr/>
-    <div>
-    	CREATE NEW USER TODO
+    <div class="row" data-ng-hide="editMode" data-ng-include="'partials/user/client/create/view.html'"></div>
+    <div class="row" data-ng-show="editMode" data-ng-include="'partials/user/client/create/edit.html'"></div>
+    <hr data-ng-show="createdClientUser" />
+    <div data-ng-show="createdClientUser">
+    	<h2>Roles</h2>
+    	<div class="row">
+            <div class="col-md-6">
+                <a href="#/">Add client role</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <a href="#/">Add team roles</a>
+            </div>
+        </div>
     </div>
 </div>

@@ -27,7 +27,7 @@ angular.module('emmiManager')
                 resolve: clientDetailRequiredResources
             }).when('/clients/:clientId/users/new', {
                 templateUrl: 'partials/user/client/create/editor.html',
-                controller: 'ManageClientUsersMainCtrl',
+                controller: 'ClientUsersEditorCtrl',
                 access: {
                     authorizedRoles: [USER_ROLES.admin]
                 },
