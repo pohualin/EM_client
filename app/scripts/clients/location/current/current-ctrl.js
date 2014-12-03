@@ -13,6 +13,8 @@ angular.module('emmiManager')
 
         $scope.pageSizes = [5, 10, 15, 25];
 
+        $scope.deleting = false; //used to hide the edit link when we are deleting a location and the popup is displayed
+
         var editLocationModal = $modal({scope: $scope, template: 'partials/client/location/edit.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
 
         $scope.editLocation = function (location) {
@@ -27,6 +29,14 @@ angular.module('emmiManager')
 
             // show the dialog box
             editLocationModal.$promise.then(editLocationModal.show);
+        };
+
+        $scope.openDeletePopover = function (location) {
+            location.deleting = true;
+        };
+
+        $scope.closeDeletePopover = function (location) {
+            location.deleting = false;
         };
 
         var contentProperty = 'clientLocations';

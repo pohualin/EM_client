@@ -31,11 +31,6 @@ angular.module('emmiManager')
                 $scope.currentPageSize);
           };
 
-          $scope.view = function(location) {
-        	  LocationService.setSelectedLocation(location);
-              $location.path('/locations/' + location.entity.id);
-          };
-
           // Function declarations start here
           function init() {
             // Inject CommonSearch

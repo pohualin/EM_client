@@ -7,9 +7,7 @@ angular.module('emmiManager').controller(
 
         $scope.cancel = function() {
             $scope.hideError();
-            $scope.editMode = false;
-            $scope.locationFormSubmitted = false;
-            delete $scope.locationToEdit;
+            $scope.edit();
         };
 
         $scope.edit = function() {
@@ -39,7 +37,11 @@ angular.module('emmiManager').controller(
                 }
             }
         };
-
+        
+        $scope.showCancelSave = function(){
+        	return !angular.equals($scope.location, $scope.locationToEdit);
+        };
+        
         function init() {
             $controller('ViewEditCommon', {
                 $scope: $scope
