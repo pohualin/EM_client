@@ -44,7 +44,7 @@ angular.module('emmiManager').controller(
         
         $scope.showCancelSave = function(){
         	return !angular.equals($scope.provider, $scope.providerToEdit);
-        }
+        };
 
         function init() {
             $controller('ViewEditCommon', {
