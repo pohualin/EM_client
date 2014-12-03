@@ -9,7 +9,11 @@
                 <span data-ng-class="{'text-muted': library.disabled}">{{ library.entity.name }}</span>
             </span>
             <div class="toggle-content">
-                <small class="text-muted">{{ library.entity.permission | permissionName }}</small>
+                <small class="text-muted">
+                    <span data-ng-repeat="aPermission in library.entity.permission | orderBy:'permission.rank'">
+                    {{aPermission.permission.name  | translate }}{{!$last ? ',' : ''}}
+                    </span>
+                </small>
             </div>
         </div>
     </div>
