@@ -23,7 +23,7 @@ angular.module('emmiManager')
 	        	angular.forEach(locationResponse.data.content, function(location){
 	        		locationsArray.push(' '+ location.entity.location.name);
 	        	});
-	        	ProviderView.allProvidersForTeam($scope.teamResource, locationsArray).then(function(response){
+	        	ProviderView.paginatedProvidersForTeam($scope.teamResource, locationsArray).then(function(response){
 	        		$scope.teamResource.teamProviders = response.content;
 	        		$scope.handleResponse(response, 'teamProviders');      
 	        	});      	

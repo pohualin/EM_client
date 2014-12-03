@@ -29,7 +29,7 @@ angular.module('emmiManager')
             		 return null;
             	}
              },
-             allProvidersForTeam: function (teamResource, allLocations) {
+             paginatedProvidersForTeam: function (teamResource, allLocations) {
             	 var providers = [];
                  return $http.get(UriTemplate.create(teamResource.link.teamProviders).stringify(), teamResource.entity).then(function addToProviders(response) {
                 	 var page = response.data;
@@ -45,6 +45,22 @@ angular.module('emmiManager')
                     	 return page;
                  });
              },
+             allProvidersForTeam: function (teamResource) {
+            	 var providers = [];
+                 return $http.get(UriTemplate.create(teamResource.link.teamProviders).stringify(), teamResource.entity).then(function addToProviders(response) {
+                	 var page = response.data;
+                    	 angular.forEach(page.content, function(teamProvider){
+                            teamProvider.entity.label = teamProvider.entity.provider.firstName + ' ' + teamProvider.entity.provider.lastName; //do this because the multiselet do not support nested prop
+                    		 providers.push(teamProvider);
+	            		 });
+                    	 if (page.link && page.link['page-next']) {
+	                            $http.get(page.link['page-next']).then(function (response) {
+	                            	addToProviders(response);
+	                            });
+	                        }
+	            		 return providers;
+                 });
+             },            
              fetchPageLink: function (href) {
                  return $http.get(href)
                      .then(function (response) {
