@@ -34,6 +34,11 @@ angular.module('emmiManager')
                                 target: element,
                                 contentTemplate: 'partials/client/location/delete_popover.tpl.html'
                             });
+
+                            scope.$on('tooltip.hide', function() {
+                                scope.onClosePopover();
+                                scope.$apply();
+                            });
                         } else {
                             $timeout(function () {
                                 scope.onOk();

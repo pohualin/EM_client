@@ -22,7 +22,7 @@
                 </th>
                 <th class="sort col-sm-3" data-ng-show="providersData">
                     Use
-                </th>                  
+                </th>
             </tr>
             <tr data-ng-repeat="location in clientLocations" data-ng-class="location.location.entity.disabled ? 'text-muted' : ''">
                 <td><input type="checkbox" data-ng-model="location.location.entity.checked"  data-ng-disabled="location.location.entity.disabled"
@@ -36,17 +36,17 @@
                 </td>
                 <td>{{location.location.entity.phone}}</td>
                 <td data-ng-show="providersData">
-                    <div class="col-xs-12" data-ng-show="providersData && location.location.entity.checked && !location.location.entity.disabled">                    
-                           <div data-multi-select 
-                            values="providersData" 
-                            model="location.location.entity.providersSelected"    
+                    <div class="col-xs-12" data-ng-show="providersData && location.location.entity.checked && !location.location.entity.disabled">
+                           <div data-multi-select
+                            values="providersData"
+                            model="location.location.entity.providersSelected"
                             show-filters="true"
-                            value-field="id" 
-                            label-field="label" 
-                            template-path = "partials/vendor/multi-select.html" >
+                            value-field="id"
+                            label-field="label"
+                            template-path = "partials/common/directives/multi-select/multi-select.html" >
                             </div>
                     </div>
-                </td>                
+                </td>
             </tr>
         </table>
         <div data-ng-show="links">
@@ -57,6 +57,6 @@
                     <span data-ng-hide="link.name != currentPage">{{link.name}}</span>
                 </li>
             </ul>
-        </div>        
-    </div>  
+        </div>
+    </div>
 </div>
