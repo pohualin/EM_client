@@ -29,6 +29,7 @@ angular.module('emmiManager')
                                 scope: scope,
                                 trigger: 'manual',
                                 show: true,
+                                autoClose: true,
                                 placement: 'top',
                                 target: element,
                                 contentTemplate: 'partials/client/location/delete_popover.tpl.html'

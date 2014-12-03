@@ -28,7 +28,7 @@ angular.module('emmiManager')
             // set belongsTo property
             $scope.setBelongsToPropertiesFor($scope.location);
 
-            TeamLocationCreate.findTeamLocationTeamProviders(location.link[1].href).then(function(pageLocations) {
+            TeamLocationCreate.findTeamLocationTeamProviders(location).then(function(pageLocations) {
                 angular.forEach( pageLocations.content , function (location) {
                     $scope.location.providersSelected.push(location.teamProvider.entity);
                 });                
@@ -140,7 +140,6 @@ angular.module('emmiManager')
             ProviderView.allProvidersForTeam($scope.teamResource).then(function(response){
                 $scope.providersData = [];
                 angular.forEach( response , function (location) {
-                    location.entity.label = location.entity.provider.firstName + ' ' + location.entity.provider.lastName; //do this because the multiselet do not support nested prop
                     $scope.providersData.push(location.entity);
                 });
             });

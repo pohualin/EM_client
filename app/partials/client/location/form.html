@@ -98,13 +98,14 @@
             </div>
             <div class="row" data-ng-show="providersData">
                 <div class="col-md-12">
-                       <multi-select 
+                       <div data-multi-select 
                         values="providersData" 
                         model="location.providersSelected"    
                         show-filters="true"
                         value-field="id" 
-                        label-field="label" >
-                        </multi-select>
+                        label-field="label" 
+                        template-path = "partials/vendor/multi-select.html" >
+                        </div>
                 </div>
             </div>
         </div>
