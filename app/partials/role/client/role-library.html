@@ -11,7 +11,7 @@
             <div class="toggle-content">
                 <small class="text-muted">
                     <span data-ng-repeat="aPermission in library.entity.permission | orderBy:'permission.rank'">
-                    {{aPermission.permission.name  | translate }}{{!$last ? ',' : ''}}
+                    {{aPermission.permission.name  | translate }}{{!$last ? ',' : ''}}&nbsp;
                     </span>
                 </small>
             </div>
