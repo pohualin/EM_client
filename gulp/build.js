@@ -16,7 +16,7 @@ gulp.task('scripts', function () {
     return gulp.src('app/scripts/**/*.js')
         .pipe($.jshint())
         .pipe($.jshint.reporter('jshint-stylish'))
-        // .pipe($.jshint.reporter('fail'))
+        .pipe($.jshint.reporter('fail'))
         .pipe($.size({title: 'scripts', showFiles:true}));
 });
 
