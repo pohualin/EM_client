@@ -7,9 +7,7 @@ angular.module('emmiManager').controller(
 
         $scope.cancel = function() {
             $scope.hideError();
-            $scope.editMode = false;
-            $scope.locationFormSubmitted = false;
-            delete $scope.locationToEdit;
+            $scope.edit();
         };
 
         $scope.edit = function() {
@@ -39,6 +37,20 @@ angular.module('emmiManager').controller(
                 }
             }
         };
+        
+        /**
+         * Show/hide cancel and save link
+         * Only show when locationToEdit !== location
+         */
+        $scope.$watch(function () {
+            return angular.equals($scope.location, $scope.locationToEdit);
+        }, function (equals) {
+            if (equals) {
+                $scope.showCancelSave = false;
+            } else {
+            	$scope.showCancelSave = true;
+            }
+        });
 
         function init() {
             $controller('ViewEditCommon', {
