@@ -2,30 +2,43 @@
 
 angular.module('emmiManager')
 
-    .controller('TeamsLocationsController', function ($scope, $http, Session, UriTemplate, $controller, $modal, $alert, Location, TeamLocation) {
+    .controller('TeamsLocationsController', function ($scope, $http, Session, UriTemplate, $controller, $modal, $alert, Location, TeamLocation, ProviderView, TeamLocationCreate) {
 
         $controller('LocationCommon', {$scope: $scope});
 
         $controller('CommonPagination', {$scope: $scope});
 
+        var managedLocationList = 'locations';
+        $scope.providersData = [];
+        $scope.teamLocations = {}; //used to hold the locations and manipulate internally
+
         $scope.editLocation = function (location) {
+
+            $scope.fillProviders();
+
             // create a copy for editing
-            $scope.location = angular.copy(location);
+            $scope.location = angular.copy(location.entity.location);
+            $scope.locationResource = location;
+
+            $scope.location.providersSelected = [];
 
             // save the original for overlay if save is clicked
-            $scope.originalLocation = location;
+            $scope.originalLocation = location.entity.location;
 
             // set belongsTo property
             $scope.setBelongsToPropertiesFor($scope.location);
 
-            // show the dialog box
-            $modal({scope: $scope, template: 'partials/client/location/edit.html', animation: 'none', backdropAnimation: 'emmi-fade', show: true, backdrop: 'static'});
+            TeamLocationCreate.findTeamLocationTeamProviders(location).then(function(pageLocations) {
+                angular.forEach( pageLocations.content , function (location) {
+                    $scope.location.providersSelected.push(location.teamProvider.entity);
+                });                
+    
+                // show the dialog box, to avoid display the popup without the providers
+                $modal({scope: $scope, template: 'partials/client/location/edit.html', animation: 'none', backdropAnimation: 'emmi-fade', show: true, backdrop: 'static'});
+            });
+
 
         };
-
-        var managedLocationList = 'locations';
-
-        $scope.teamLocations = {}; //used to hold the locations and manipulate internally
 
         $scope.showRemovalSuccess = function (locationResource) {
             $alert({
@@ -57,7 +70,7 @@ angular.module('emmiManager')
 
         $scope.displaySuccessfull = function(locationsToAdd, container, addAnother) {
             var message = (locationsToAdd.length === 1) ?
-                ' <b>' + locationsToAdd[0].name + '</b> has been successfully added.' :
+                ' <b>' + locationsToAdd[0].location.name + '</b> has been successfully added.' :
                 'The new locations have been successfully added.';
             var placement = addAnother ? '': 'top';
 
@@ -74,7 +87,11 @@ angular.module('emmiManager')
         };
 
         $scope.refresh = function() {
-            TeamLocation.loadTeamLocationsSimple($scope).then(function(pageLocations) {
+            $scope.teamLocations = {};
+            TeamLocation.loadTeamLocationsSimple($scope.teamClientResource.teamResource.link.teamLocations).then(function(pageLocations) {
+                angular.forEach(pageLocations.content, function (teamLocation) {
+                    $scope.teamLocations[teamLocation.entity.location.id] = angular.copy(teamLocation.entity.location);
+                });
                 $scope.handleResponse(pageLocations, managedLocationList);
                 $scope.fetchAllPages(pageLocations);
             });
@@ -106,19 +123,31 @@ angular.module('emmiManager')
 
         $scope.fetchAllPages = function (content) {
             //fetch all pages in order to fill the dropdown with all clients locations, not only the first page.
-            angular.forEach(content.linkList, function(link, key) {
-                if (key >= 1 && key < content.page.totalPages) {
-                    Location.fetchPageLink(link.href).then(function (clientPage) {
-                        angular.forEach(clientPage.content, function (teamLocation) {
+            //for (var i = 1; i<content.page.totalPages; i++) {
+               if (content.link && content.link['page-next']) {
+                    $http.get(content.link['page-next']).then(function (response) {
+                        angular.forEach(response.data.content, function (teamLocation) {
+                            $scope.locations.push(teamLocation);
                             $scope.teamLocations[teamLocation.entity.location.id] = angular.copy(teamLocation.entity.location);
-                        });                        
+                        }); 
+                        $scope.fetchAllPages(response);
                     });
                 }
+            //}
+        };
+
+        $scope.fillProviders = function() {
+            ProviderView.allProvidersForTeam($scope.teamResource).then(function(response){
+                $scope.providersData = [];
+                angular.forEach( response , function (location) {
+                    $scope.providersData.push(location.entity);
+                });
             });
         };
 
         if ($scope.teamClientResource.teamResource.entity.id) { // to check is the team is created
             $scope.refresh();
+            $scope.fillProviders();
         }
 
     })
