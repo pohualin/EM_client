@@ -7,7 +7,7 @@
 			<div class="col-md-6 pull-left">
 				<h2>Location Information</h2>
 			</div>
-			<div class="col-md-6" data-ng-show="showCancelSave">
+			<div class="col-md-6" data-ng-show="showCancelSave()">
 				<div class="pull-right">
 					<h2></h2>
 					<a class="btn btn-link" data-ng-click="cancel()">cancel</a> | 
@@ -31,7 +31,7 @@
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Please enter a valid name."></div>
                     <input class="form-control" id="locationName" data-ng-model="locationToEdit.name" name="locationName"
-                           type="text" maxlength="255" required data-auto-focus
+                           type="text" maxlength="255" required
                            data-ng-pattern="/^[\-\.a-zA-Z0-9 '=_;:@#&,\(\)!]*$/">
                 </div>
             </div>

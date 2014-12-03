@@ -38,20 +38,10 @@ angular.module('emmiManager').controller(
             }
         };
         
-        /**
-         * Show/hide cancel and save link
-         * Only show when locationToEdit !== location
-         */
-        $scope.$watch(function () {
-            return angular.equals($scope.location, $scope.locationToEdit);
-        }, function (equals) {
-            if (equals) {
-                $scope.showCancelSave = false;
-            } else {
-            	$scope.showCancelSave = true;
-            }
-        });
-
+        $scope.showCancelSave = function(){
+        	return !angular.equals($scope.location, $scope.locationToEdit);
+        }
+        
         function init() {
             $controller('ViewEditCommon', {
                 $scope: $scope

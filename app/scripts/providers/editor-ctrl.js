@@ -42,19 +42,9 @@ angular.module('emmiManager').controller(
             }
         };
         
-        /**
-         * Show/hide cancel and save link
-         * Only show when providerToEdit !== provider
-         */
-        $scope.$watch(function () {
-            return angular.equals($scope.provider, $scope.providerToEdit);
-        }, function (equals) {
-            if (equals) {
-                $scope.showCancelSave = false;
-            } else {
-            	$scope.showCancelSave = true;
-            }
-        });
+        $scope.showCancelSave = function(){
+        	return !angular.equals($scope.provider, $scope.providerToEdit);
+        }
 
         function init() {
             $controller('ViewEditCommon', {
@@ -67,6 +57,7 @@ angular.module('emmiManager').controller(
                 });
                 $scope.providerResource = providerResource;
                 $scope.provider = providerResource.entity; // for the view state
+                window.paul = $scope.provider;
                 $scope.edit();
             } else {
                 $location.path('/providers');
