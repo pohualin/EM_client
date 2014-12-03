@@ -30,7 +30,6 @@ angular.module('emmiManager')
 
             TeamLocationCreate.findTeamLocationTeamProviders(location).then(function(pageLocations) {
                 angular.forEach( pageLocations.content , function (location) {
-                    location.teamProvider.entity.checked = true;
                     $scope.location.providersSelected.push(location.teamProvider.entity);
                 });                
     
