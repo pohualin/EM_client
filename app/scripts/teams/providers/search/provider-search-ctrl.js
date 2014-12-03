@@ -5,7 +5,7 @@ angular.module('emmiManager')
 		
         $controller('TeamProviderCommon', {$scope: $scope});
         
-        $controller('CommonPagination', {$scope: $scope});
+		$controller('CommonPagination', {$scope: $scope});
 
         $scope.teamProviderTeamLocationSaveRequest = [];
 
@@ -116,14 +116,22 @@ angular.module('emmiManager')
         
         $scope.associateSelectedProvidersToTeam = function (addAnother) {
         	if ($scope.teamProviderTeamLocationSaveRequest.length > 0) {
-	        	ProviderSearch.updateProviderTeamAssociations($scope.teamProviderTeamLocationSaveRequest, $scope.teamResource).then(function (response) {
+	        	ProviderSearch.updateProviderTeamAssociations($scope.teamProviderTeamLocationSaveRequest, $scope.teamResource).then(function () {
 	        		$scope.$hide();
-	            	ProviderView.allProvidersForTeam($scope.teamResource).then(function(response){
-	            		$scope.teamResource.teamProviders = response.content;
-	        			if (addAnother) {
-	        				$scope.addProviders();   
-		        		}
-	            	});
+	        		ProviderSearch.fetchLocationsForTeam($scope.teamResource).then( function (locationResponse){
+	    				var locationsArray=[];
+	    	        	var allLocations = locationResponse.data.content;
+	    	        	angular.forEach(locationResponse.data.content, function(location){
+	    	        		locationsArray.push(' '+ location.entity.location.name);
+	    	        	});
+	    	        	ProviderView.allProvidersForTeam($scope.teamResource, locationsArray).then(function(response){
+	    	        		$scope.teamResource.teamProviders = response.content;
+	    	        		$scope.handleResponse(response, 'teamProviders');      
+		    	        	if (addAnother) {
+		        				$scope.addProviders();   
+			        		}
+	    	        	});
+	        		});
 	        	});
         	}
         };

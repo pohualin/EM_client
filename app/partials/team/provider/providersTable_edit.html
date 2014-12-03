@@ -4,11 +4,11 @@
 		    <h2>Providers</h2>
 			<table class="table table-bordered table-striped table-hover" border="0" cellpadding="0" data-ng-show="teamResource.teamProviders.length > 0">
 				<tr>
-					<th>Name </th>
-					<th>Primary Specialty </th>
-					<th>Email </th>
-					<th>Locations</th>
-		            <th>&nbsp;</th>
+					<th  class="col-md-2">Name </th>
+					<th  class="col-md-2">Primary Specialty </th>
+					<th  class="col-md-3">Email </th>
+					<th  class="col-md-2">Locations</th>
+		            <th  class="col-md-3">&nbsp;</th>
 				</tr>
 					<tr data-ng-repeat="teamProvider in teamResource.teamProviders">
 			    	<td>{{teamProvider.entity.provider.firstName}} {{teamProvider.entity.provider.lastName}}</td>

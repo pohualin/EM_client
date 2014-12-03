@@ -18,7 +18,7 @@ angular.module('emmiManager', [
     'mgcrea.ngStrap',
     'emmi.inputMask',
     'angularMoment',
-    'emmi-angular-multiselect'
+    'emmi-angular-multiselect',
     'truncate'
 ])
 
