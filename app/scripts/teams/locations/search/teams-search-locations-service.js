@@ -9,9 +9,11 @@ angular.module('emmiManager')
                 return $http.post(UriTemplate.create(url).stringify(), locations).
                     then(function (response) {
                         var page = response.data;
-                        angular.forEach(page, function(data) {
-                            CommonService.convertPageContentLinks(data);
-                            CommonService.convertPageContentLinks(data.teamLocation);
+                        var teamLocation;
+                        angular.forEach(page.content, function(data) {
+                            teamLocation = {'content':[data.teamLocation]};
+                            CommonService.convertPageContentLinks(teamLocation);
+                            data.teamLocation = teamLocation;
                         });
 
                         return page;
