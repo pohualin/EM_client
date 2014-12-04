@@ -36,6 +36,7 @@ angular.module('emmiManager')
             fetchPageLink: function (href) {
                 return $http.get(href)
                     .then(function (response) {
+                    	CommonService.convertPageContentLinks(response.data);
                         return response.data;
                     });
             },
