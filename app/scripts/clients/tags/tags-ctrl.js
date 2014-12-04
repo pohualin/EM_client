@@ -35,6 +35,7 @@ angular.module('emmiManager')
                     $scope.showPopover();
                 } else {
                     $scope.saveTags(isValid);
+                    $scope.cancelConflictingTeamsPopover();
                     if ($scope.hideClientTags) {
                         $scope.hideClientTags();
                     }
