@@ -5,7 +5,7 @@ angular.module('emmiManager')
 /**
  * Create new controller
  */
-.controller('ClientCreateController', function ($scope, Client, $controller) {
+.controller('ClientCreateController', function ($scope, Client, $controller, $window) {
 
     $controller('ViewEditCommon', {$scope: $scope});
 
@@ -19,6 +19,15 @@ angular.module('emmiManager')
             });
         } else {
             $scope.showError();
+            // Loop through the form's validation errors and log to Piwik
+            var formErrors = $scope.clientForm.$error;
+            for (var errorType in formErrors) {
+                if (formErrors.hasOwnProperty(errorType)) {
+                    for (var i = 0; i < formErrors[errorType].length; i++) {
+                        $window._paq.push(['trackEvent', 'Validation Error', 'Client Create', formErrors[errorType][i].$name+' '+errorType]);
+                    }
+                }
+            }
         }
     };
 

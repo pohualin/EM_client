@@ -2,7 +2,7 @@
 
 angular.module('emmiManager')
 
-    .controller('TeamEditController', function ($scope, teamClientResource, EditTeam, ViewTeam, $controller) {
+    .controller('TeamEditController', function ($scope, teamClientResource, EditTeam, ViewTeam, $controller, $window) {
 
         $controller('TeamErrorController', {$scope: $scope});
 
@@ -51,6 +51,15 @@ angular.module('emmiManager')
                 });
             } else {
                 $scope.showError();
+                // Loop through the form's validation errors and log to Piwik
+                var formErrors = $scope.teamForm.$error;
+                for (var errorType in formErrors) {
+                    if (formErrors.hasOwnProperty(errorType)) {
+                        for (var i = 0; i < formErrors[errorType].length; i++) {
+                            $window._paq.push(['trackEvent', 'Validation Error', 'Team Edit', formErrors[errorType][i].$name+' '+errorType]);
+                        }
+                    }
+                }
             }
         };
 

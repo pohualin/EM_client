@@ -36,7 +36,7 @@ angular.module('emmiManager')
         };
     })
 
-    .directive('uniqueTeamName', ['$popover', 'CreateTeam', '$translate', function ($popover, CreateTeam, $translate) {
+    .directive('uniqueTeamName', ['$popover', 'CreateTeam', '$translate', '$window', function ($popover, CreateTeam, $translate, $window) {
         return {
             restrict: 'A',
             require: 'ngModel',
@@ -64,6 +64,7 @@ angular.module('emmiManager')
                         } else {
                             if ((scope.team.id !== scope.existsTeam.entity.id)) {
                                 ngModel.$setValidity('unique', false);
+                                $window._paq.push(['trackEvent', 'Validation Error', 'Team', 'teamName unique']);
                                 if (scope.uniquePopup) {
                                     scope.uniquePopup.show();
                                 }

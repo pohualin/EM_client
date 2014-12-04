@@ -5,7 +5,7 @@ angular.module('emmiManager')
 /**
  *  Edit a single client
  */
-    .controller('ClientDetailCtrl', function ($scope, Client, $controller, Location, clientResource, Tag, $q, focus) {
+    .controller('ClientDetailCtrl', function ($scope, Client, $controller, Location, clientResource, Tag, $q, focus, $window) {
 
         $controller('ViewEditCommon', {$scope: $scope});
 
@@ -45,6 +45,15 @@ angular.module('emmiManager')
                 });
             } else {
                 $scope.showError();
+                // Loop through the form's validation errors and log to Piwik
+                var formErrors = $scope.metadataForm.$error;
+                for (var errorType in formErrors) {
+                    if (formErrors.hasOwnProperty(errorType)) {
+                        for (var i = 0; i < formErrors[errorType].length; i++) {
+                            $window._paq.push(['trackEvent', 'Validation Error', 'Client Edit', formErrors[errorType][i].$name+' '+errorType]);
+                        }
+                    }
+                }
             }
         };
 

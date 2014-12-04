@@ -114,7 +114,7 @@ angular.module('emmiManager')
 
     })
 
-    .directive('uniqueClient', ['$popover', 'Client', '$translate', function ($popover, Client, $translate) {
+    .directive('uniqueClient', ['$popover', 'Client', '$translate', '$window', function ($popover, Client, $translate, $window) {
           return {
             restrict: 'A',
             require: 'ngModel',
@@ -149,6 +149,7 @@ angular.module('emmiManager')
                             var clientResource = Client.getClient();
                             if (clientResource && clientResource.entity.id !== scope.existsClient.entity.id ) {
                                 ngModel.$setValidity('unique', false);
+                                $window._paq.push(['trackEvent', 'Validation Error', 'Client', 'clientName unique']);
                                 if (scope.uniquePopup) {
                                     scope.uniquePopup.show();
                                 } else {
