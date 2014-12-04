@@ -96,7 +96,7 @@ angular.module('emmiManager', [
                 modals = [];
             }
             var pageTitle = current.$$route.title || 'Emmi Manager';
-            var pageUrl = $location.host() + $location.path();
+            var pageUrl = $location.path();
             $rootScope.page.setTitle(pageTitle);
             _paq.push(['setDocumentTitle', pageTitle]); // overide document title as document.title reports the previous page
             _paq.push(['setCustomUrl', pageUrl]); // need to check and see if the hashes are tracking okay now with the setting from the Admin Panel changed
