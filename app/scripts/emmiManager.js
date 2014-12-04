@@ -17,7 +17,8 @@ angular.module('emmiManager', [
     'ngTagsInput',
     'mgcrea.ngStrap',
     'emmi.inputMask',
-    'angularMoment'
+    'angularMoment',
+    'emmi-angular-multiselect'
 ])
 
     .constant('USER_ROLES', {
@@ -57,7 +58,7 @@ angular.module('emmiManager', [
         });
     })
 
-    .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, arrays, $document) {
+    .run(function ($rootScope, $window, $location, $http, AuthSharedService, Session, USER_ROLES, arrays, $document) {
 
         var modals = [];
 
@@ -94,7 +95,11 @@ angular.module('emmiManager', [
                 });
                 modals = [];
             }
-            $rootScope.page.setTitle(current.$$route.title || 'Emmi Manager');
+            var pageTitle = current.$$route.title || 'Emmi Manager';
+            $rootScope.page.setTitle(pageTitle);
+            $window._paq.push(['setDocumentTitle', pageTitle]); // overide document title as document.title reports the previous page
+            //$window._paq.push(['setCustomUrl', current.$$route.originalPath]); // need to check and see if the hashes are tracking okay now with the setting from the Admin Panel changed
+            $window._paq.push(['trackPageView']);
         });
 
         // Call when the the client is confirmed

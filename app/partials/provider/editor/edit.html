@@ -7,7 +7,7 @@
 			<div class="col-md-6 pull-left">
 				<h2>Provider Information</h2>
 			</div>
-			<div class="col-md-6">
+			<div class="col-md-6" data-ng-show="showCancelSave()">
 				<div class="pull-right">
 					<h2></h2>
 					<a class="btn btn-link" data-ng-click="cancel()">cancel</a> | 
@@ -35,7 +35,7 @@
 					<input class="form-control" id="providerFirstName"
 						data-ng-model="providerToEdit.firstName"
 						name="providerFirstName" type="text" maxlength="255" required
-						data-auto-focus data-ng-pattern="/^[a-zA-Z '-]*$/">
+					    data-ng-pattern="/^[a-zA-Z '-]*$/">
 				</div>
 			</div>
 
@@ -123,15 +123,6 @@
 						data-ng-model="providerToEdit.email" name="email"
 						type="text" maxlength="255" required
 						data-ng-pattern="/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/" />
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="form-group"
-					data-ng-class="{ 'has-error' : providerForm.providerId.$invalid && providerFormSubmitted }">
-					<label class="control-label" for="providerId">Provider Id:</label>
-					<input class="form-control"
-						data-ng-model="providerToEdit.externalId" name="providerId"
-						type="text" maxlength="255" />
 				</div>
 			</div>
 		</div>

@@ -3,20 +3,16 @@
 angular.module('emmiManager').service(
     'ProviderService',
     function($http, arrays, Session, UriTemplate) {
-    	var selectedProvider;
-    	
         return {
             // ProvidersResource.getById(Long id)
             getProviderById: function(id) {
-            	if(selectedProvider){
-	        		return $http.get(
-	                    UriTemplate.create(selectedProvider.link.self)
-	                    .stringify({
-	                        id: id
-	                    })).then(function(response) {
-	                    return response.data;
-	                });            		
-            	}
+        		return $http.get(
+                    UriTemplate.create(Session.link.providerById)
+                    .stringify({
+                        id: id
+                    })).then(function(response) {
+                    return response.data;
+                });            		
             },
 
             // ProvidersResource.currentClients(Long id)
@@ -56,16 +52,6 @@ angular.module('emmiManager').service(
                 } else {
                     return null;
                 }
-            },
-            
-            // Set selectedProvider
-            setSelectedProvider: function(provider){
-            	selectedProvider = provider;
-            },
-            
-            // Get selectedProvider
-            getSelectedProvider: function(){
-            	return selectedProvider;
             }
         };
     });

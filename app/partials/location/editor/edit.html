@@ -7,7 +7,7 @@
 			<div class="col-md-6 pull-left">
 				<h2>Location Information</h2>
 			</div>
-			<div class="col-md-6">
+			<div class="col-md-6" data-ng-show="showCancelSave()">
 				<div class="pull-right">
 					<h2></h2>
 					<a class="btn btn-link" data-ng-click="cancel()">cancel</a> | 
@@ -31,7 +31,7 @@
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Please enter a valid name."></div>
                     <input class="form-control" id="locationName" data-ng-model="locationToEdit.name" name="locationName"
-                           type="text" maxlength="255" required data-auto-focus
+                           type="text" maxlength="255" required
                            data-ng-pattern="/^[\-\.a-zA-Z0-9 '=_;:@#&,\(\)!]*$/">
                 </div>
             </div>
@@ -94,8 +94,10 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label class="control-label" for="belongsTo">Belongs To:</label>
-                    <span data-ng-show="locationToEdit.belongsTo"> <em>({{locationToEdit.belongsTo.name}})</em></span>
-            		<span data-ng-show="!locationToEdit.belongsTo"> <em>(<span data-translate="client_edit_page.locations.no_client_owner"></span>)</em></span>
+                    <div>
+                    	<span data-ng-show="locationToEdit.belongsTo"> {{locationToEdit.belongsTo.name}}</span>
+            			<span data-ng-show="!locationToEdit.belongsTo"> <span data-translate="client_edit_page.locations.no_client_owner"></span></span>
+                    </div>
                 </div>
             </div>
         </div>

@@ -9,11 +9,15 @@ angular.module('emmiManager')
             restrict: 'EA',
             scope: {
                 onOk: '&onOk',
-                toRemove: '='
+                toRemove: '=',
+                isDeleting: '=',
+                onOpenPopover: '&onOpenPopover',
+                onClosePopover: '&onClosePopover'
             },
             link: function (scope, element) {
                 element.on('click', function (event) {
                     event.stopPropagation();
+                    scope.onOpenPopover();
                     ClientLocationService.findTeamsUsing(scope.toRemove).then(function(teams){
                         if (teams && teams.length > 0) {
                             scope.teamsBlocking = teams;
@@ -25,13 +29,20 @@ angular.module('emmiManager')
                                 scope: scope,
                                 trigger: 'manual',
                                 show: true,
+                                autoClose: true,
                                 placement: 'top',
                                 target: element,
                                 contentTemplate: 'partials/client/location/delete_popover.tpl.html'
                             });
+
+                            scope.$on('tooltip.hide', function() {
+                                scope.onClosePopover();
+                                scope.$apply();
+                            });
                         } else {
                             $timeout(function () {
                                 scope.onOk();
+                                scope.onClosePopover();
                             });
                         }
                     });

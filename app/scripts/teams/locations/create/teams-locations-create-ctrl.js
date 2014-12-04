@@ -10,7 +10,7 @@ angular.module('emmiManager')
         $controller('LocationCommon', {$scope: $scope});
 
         $scope.location = Location.newLocation();
-
+        $scope.location.providersSelected = angular.copy($scope.providersData);
         $scope.title = 'New Location';
 
         $scope.saveAndAddAnother = function (isValid) {
@@ -22,12 +22,19 @@ angular.module('emmiManager')
             if (isValid) {
                 var toBeSaved = $scope.location;
                 Location.create(Client.getClient(), toBeSaved).then(function (location) {
-                    var locationsToAdd = [];
-                    locationsToAdd.push(location.data.location.entity);
+                    var teamProviderTeamLocationSaveRequest = [];
+                    var req = {};
+                    req.location = location.data.location.entity;
+                    if ($scope.providersData.length === $scope.location.providersSelected.length) { 
+                        req.providers = [];
+                    } else {
+                        req.providers = $scope.location.providersSelected;
+                    }
+                    teamProviderTeamLocationSaveRequest.push(req);
 
-                    TeamSearchLocation.save($scope.teamClientResource.teamResource.link.teamLocations,locationsToAdd).then(function () {
+                    TeamSearchLocation.save($scope.teamClientResource.teamResource.link.teamLocations,teamProviderTeamLocationSaveRequest).then(function (page) {
+
                         $scope.$hide();
-
                         $scope.refresh();
                         var container = '#remove-container';
                         var locationResource = location.data.location;

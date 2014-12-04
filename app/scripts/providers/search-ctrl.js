@@ -31,11 +31,6 @@ angular.module('emmiManager')
                     $scope.currentPageSize);
             };
 
-            $scope.view = function(provider) {
-            	ProviderService.setSelectedProvider(provider);
-                $location.path('/providers/' + provider.entity.id);
-            };
-
             // Function declarations start here
             function init() {
                 // Inject CommonSearch

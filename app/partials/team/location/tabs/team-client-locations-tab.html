@@ -4,15 +4,15 @@
                cellspacing="0" data-ng-show="clientLocations" >
             <tr>
                 <th class="sort col-sm-0">&nbsp;</th>
-                <th class="sort col-sm-3" data-ng-click="sortClient('name')">
+                <th data-ng-class="sizeClass" data-ng-click="sortClient('name')">
                     Name
                     <span data-ng-show="sortProperty.property === 'name'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span>
                 </th>
-                <th class="sort col-sm-3" data-ng-click="sortClient('belongsTo.name')">
+                <th data-ng-class="sizeClass" data-ng-click="sortClient('belongsTo.name')">
                     Client Owner
                     <span data-ng-show="sortProperty.property === 'belongsTo.name'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span>
                 </th>
-                <th class="sort col-sm-s" data-ng-click="sortClient('city')">
+                <th class="sort col-sm-2" data-ng-click="sortClient('city')">
                     City/State
                     <span data-ng-show="sortProperty.property === 'city'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span>
                 </th>
@@ -20,13 +20,13 @@
                     Phone
                     <span data-ng-show="sortProperty.property === 'phone'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span>
                 </th>
-                <th class="sort col-sm-3" data-ng-show="teamResource.teamProviders">
+                <th class="sort col-sm-3" data-ng-show="providersData">
                     Use
-                </th>                  
+                </th>
             </tr>
             <tr data-ng-repeat="location in clientLocations" data-ng-class="location.location.entity.disabled ? 'text-muted' : ''">
                 <td><input type="checkbox" data-ng-model="location.location.entity.checked"  data-ng-disabled="location.location.entity.disabled"
-                           ng-change="onCheckboxChange(location)"></td>
+                           ng-change="onClientCheckboxChange(location)"></td>
                 <td>{{location.location.entity.name}}</td>
                 <td>
                     {{location.location.entity.belongsTo.name}}
@@ -35,14 +35,18 @@
                         data-ng-show="location.location.entity.city && location.location.entity.state">,&nbsp;</span>{{location.location.entity.state}}
                 </td>
                 <td>{{location.location.entity.phone}}</td>
-                <td data-ng-show="teamResource.teamProviders">
-                <div class="col-md-3">                
-                    <select data-chosen data-placeholder="Use: all providers " multiple data-ng-model="selectedProvider"
-                    data-ng-options="c.entity.provider.firstName for c in teamResource.teamProviders" data-ng-disabled="location.location.entity.disabled"
-                    class="form-control"  >
-                     </select>   
-                </div>
-                </td>                
+                <td data-ng-show="providersData">
+                    <div class="col-xs-12" data-ng-show="providersData && location.location.entity.checked && !location.location.entity.disabled">
+                           <div data-multi-select
+                            values="providersData"
+                            model="location.location.entity.providersSelected"
+                            show-filters="true"
+                            value-field="id"
+                            label-field="label"
+                            template-path = "partials/common/directives/multi-select/multi-select.html" >
+                            </div>
+                    </div>
+                </td>
             </tr>
         </table>
         <div data-ng-show="links">
@@ -53,6 +57,6 @@
                     <span data-ng-hide="link.name != currentPage">{{link.name}}</span>
                 </li>
             </ul>
-        </div>        
-    </div>  
+        </div>
+    </div>
 </div>
