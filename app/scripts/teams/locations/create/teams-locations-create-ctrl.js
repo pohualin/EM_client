@@ -33,9 +33,9 @@ angular.module('emmiManager')
                     teamProviderTeamLocationSaveRequest.push(req);
 
                     TeamSearchLocation.save($scope.teamClientResource.teamResource.link.teamLocations,teamProviderTeamLocationSaveRequest).then(function (page) {
-                        if (page.content) {
+                        /*if (page.content) {
                             TeamLocation.updateTPTL(page.content[0].teamLocation.content[0].link.tptls,req);
-                        }
+                        }*/
                         $scope.$hide();
                         $scope.refresh();
                         var container = '#remove-container';
