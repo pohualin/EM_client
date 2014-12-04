@@ -8,6 +8,15 @@ angular.module('emmiManager')
     .controller('ClientTagsController', function ($scope, focus, $filter, Tag, TeamTag, Client, $q) {
 
         $scope.tagInputMode = false;
+        $scope.alertTags = false;
+
+        $scope.openDeletePopover = function () {
+            $scope.alertTags = true;
+        };
+
+        $scope.closeDeletePopover = function () {
+            $scope.alertTags = false;
+        };
 
         // load the groups for this client as well as the tag libraries
         $q.all([Tag.loadGroups(Client.getClient()), Tag.loadReferenceData()]).then(function (response) {
@@ -163,23 +172,36 @@ angular.module('emmiManager')
     .directive('teamConflictPopover', ['$popover', '$timeout', '$translate', function ($popover, $timeout, $translate) {
         return {
             restrict: 'EA',
+            scope: {
+                onOpenPopover: '&onOpenPopover',
+                onClosePopover: '&onClosePopover'
+            },
             link: function (scope, element) {
                 scope.cancelConflictingTeamsPopover = function () {
+                    scope.onClosePopover();
                     scope.teamConflictWarning.hide();
                 };
                 scope.showPopover = function () {
+                    scope.onClosePopover();
                     scope.teamConflictWarning.show();
                 };
                 element.on('click', function () {
                     // pop a warning dialog
+                    scope.onOpenPopover();
                     if (!scope.teamConflictWarning) {
+                        
                         scope.teamConflictWarning = $popover(element, {
                             title: 'Are you sure?',
                             scope: scope,
                             show: true,
+                            autoClose: true,
                             placement: 'top',
                             contentTemplate: 'partials/client/tags/conflictingTeam_popover.tpl.html'
                         });
+                        scope.$on('tooltip.hide', function() {
+                            scope.cancelConflictingTeamsPopover();
+                            scope.$apply();
+                        });                        
                     }
                 });
             }
