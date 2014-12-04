@@ -17,10 +17,6 @@ angular.module('emmiManager')
         $scope.closeDeletePopover = function () {
             $scope.alertTags = false;
         };
-        
-        $scope.showPopover = function () {
-            $scope.teamConflictWarning.show();
-        };
 
         // load the groups for this client as well as the tag libraries
         $q.all([Tag.loadGroups(Client.getClient()), Tag.loadReferenceData()]).then(function (response) {
@@ -45,7 +41,6 @@ angular.module('emmiManager')
             Tag.checkForConflicts(Client.getClient()).then(function (conflictingTeamTags) {
                 if (conflictingTeamTags.length > 0) {
                     $scope.conflictingTeamTags = conflictingTeamTags;
-                    //$scope.showPopover();
                 } else {
                     $scope.saveTags(isValid);
                     if ($scope.hideClientTags) {
@@ -57,7 +52,6 @@ angular.module('emmiManager')
 
         $scope.overrideConflictingTeamTags = function (isValid) {
             $scope.saveTags(isValid);
-            //$scope.cancelConflictingTeamsPopover();
             $scope.hideClientTags();
         };
 
