@@ -9,12 +9,12 @@ angular.module('emmiManager')
                 return $http.post(UriTemplate.create(url).stringify(), locations).
                     then(function (response) {
                         var page = response.data;
-                        var teamLocation;
+                        /*var teamLocation;
                         angular.forEach(page.content, function(data) {
                             teamLocation = {'content':[data.teamLocation]};
                             CommonService.convertPageContentLinks(teamLocation);
                             data.teamLocation = teamLocation;
-                        });
+                        });*/
 
                         return page;
                     });
