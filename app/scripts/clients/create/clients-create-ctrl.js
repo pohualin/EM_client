@@ -5,7 +5,7 @@ angular.module('emmiManager')
 /**
  * Create new controller
  */
-.controller('ClientCreateController', function ($scope, Client, $controller, $window) {
+.controller('ClientCreateController', function ($scope, Client, $controller) {
 
     $controller('ViewEditCommon', {$scope: $scope});
 
@@ -24,7 +24,7 @@ angular.module('emmiManager')
             for (var errorType in formErrors) {
                 if (formErrors.hasOwnProperty(errorType)) {
                     for (var i = 0; i < formErrors[errorType].length; i++) {
-                        $window._paq.push(['trackEvent', 'Validation Error', 'Client Create', formErrors[errorType][i].$name+' '+errorType]);
+                        _paq.push(['trackEvent', 'Validation Error', 'Client Create', formErrors[errorType][i].$name+' '+errorType]);
                     }
                 }
             }

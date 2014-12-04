@@ -4,7 +4,7 @@ angular.module('emmiManager')
 /**
  * Create a Single Team
  */
-    .controller('ClientTeamCreateCtrl', function ($scope, $http, $routeParams, Session, UriTemplate, CreateTeam, ViewTeam, $controller, clientResource, Client, $window) {
+    .controller('ClientTeamCreateCtrl', function ($scope, $http, $routeParams, Session, UriTemplate, CreateTeam, ViewTeam, $controller, clientResource, Client) {
 
         $controller('TeamErrorController', {$scope: $scope});
 
@@ -34,7 +34,7 @@ angular.module('emmiManager')
                 for (var errorType in formErrors) {
                     if (formErrors.hasOwnProperty(errorType)) {
                         for (var i = 0; i < formErrors[errorType].length; i++) {
-                            $window._paq.push(['trackEvent', 'Validation Error', 'Team Create', formErrors[errorType][i].$name+' '+errorType]);
+                            _paq.push(['trackEvent', 'Validation Error', 'Team Create', formErrors[errorType][i].$name+' '+errorType]);
                         }
                     }
                 }

@@ -2,7 +2,7 @@
 
 angular.module('emmiManager')
 
-    .controller('TeamEditController', function ($scope, teamClientResource, EditTeam, ViewTeam, $controller, $window) {
+    .controller('TeamEditController', function ($scope, teamClientResource, EditTeam, ViewTeam, $controller) {
 
         $controller('TeamErrorController', {$scope: $scope});
 
@@ -56,7 +56,7 @@ angular.module('emmiManager')
                 for (var errorType in formErrors) {
                     if (formErrors.hasOwnProperty(errorType)) {
                         for (var i = 0; i < formErrors[errorType].length; i++) {
-                            $window._paq.push(['trackEvent', 'Validation Error', 'Team Edit', formErrors[errorType][i].$name+' '+errorType]);
+                            _paq.push(['trackEvent', 'Validation Error', 'Team Edit', formErrors[errorType][i].$name+' '+errorType]);
                         }
                     }
                 }

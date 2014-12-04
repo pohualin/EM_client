@@ -5,7 +5,7 @@ angular.module('emmiManager')
 /**
  *  Edit a single client
  */
-    .controller('ClientDetailCtrl', function ($scope, Client, $controller, Location, clientResource, Tag, $q, focus, $window) {
+    .controller('ClientDetailCtrl', function ($scope, Client, $controller, Location, clientResource, Tag, $q, focus) {
 
         $controller('ViewEditCommon', {$scope: $scope});
 
@@ -50,7 +50,7 @@ angular.module('emmiManager')
                 for (var errorType in formErrors) {
                     if (formErrors.hasOwnProperty(errorType)) {
                         for (var i = 0; i < formErrors[errorType].length; i++) {
-                            $window._paq.push(['trackEvent', 'Validation Error', 'Client Edit', formErrors[errorType][i].$name+' '+errorType]);
+                            _paq.push(['trackEvent', 'Validation Error', 'Client Edit', formErrors[errorType][i].$name+' '+errorType]);
                         }
                     }
                 }
