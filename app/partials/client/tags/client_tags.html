@@ -12,10 +12,12 @@
                     <button class="btn btn-link" data-ng-click="cancelTagChanges()" data-ng-hide="alertTags">cancel</button>
                     <span data-ng-hide="alertTags">| </span>
                     <button class="btn btn-link" type="button"
+                            data-conflicting-team-tags = "conflictingTeamTags"
                             data-ng-click="checkForConflicts(clientForm.$valid);"
                             data-ng-disabled="!clientForm.$valid"
                             data-on-open-popover="openDeletePopover()"
                             data-on-close-popover="closeDeletePopover()"
+                            data-on-ok="overrideConflictingTeamTags(clientForm.$valid)"
                             data-team-conflict-popover>
                         <span>save changes</span>
                     </button>
