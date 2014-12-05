@@ -54,12 +54,12 @@
 			<table class="table table-bordered table-striped table-hover"
 				border="0" cellpadding="0" cellspacing="0" data-ng-show="clientUsers">
 				<tr>
-					<th class="sort col-sm-3" data-ng-click="sort('lastName')">Last Name
+					<th class="sort col-sm-2" data-ng-click="sort('lastName')">Last Name
 						<span data-ng-show="sortProperty.property === 'lastName'"><span
 							class="glyphicon sort-icon"
 							data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
 					</th>
-					<th class="sort col-sm-3" data-ng-click="sort('firstName')">First Name
+					<th class="sort col-sm-2" data-ng-click="sort('firstName')">First Name
 						<span data-ng-show="sortProperty.property === 'firstName'"><span
 							class="glyphicon sort-icon"
 							data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
@@ -74,7 +74,7 @@
 							class="glyphicon sort-icon"
 							data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
 					</th>
-					<th class="col-sm-1">&nbsp;</th>
+					<th class="col-sm-2">&nbsp;</th>
 				</tr>
 				<tr
 					data-ng-repeat="clientUser in clientUsers">
@@ -82,7 +82,7 @@
 					<td>{{clientUser.entity.firstName}}</td>
 					<td>{{clientUser.entity.login}}</td>
 					<td>{{clientUser.entity.email}}</td>
-					<td><a href="#/">view</a></td>
+					<td><a href="#/">edit</a> | <a href="#/">deactivate</a></td>
 				</tr>
 			</table>
 			<div class="row" data-ng-show="clientUsers">
