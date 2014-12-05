@@ -23,7 +23,7 @@ angular.module('emmiManager').config(
                         function() {
                             ProviderService.getProviderById($route.current.params.id)
                                 .then(function(providerResource) {
-                                    deferred.resolve(providerResource);
+                                    providerResource ? deferred.resolve(providerResource) : deferred.reject();
                                 });
                         });
                     return deferred.promise;
