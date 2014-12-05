@@ -18,15 +18,14 @@
 	
 	                <div class="input-group">
 	                    <input class="form-control" id="query" name="query" data-ng-model="query" type="text"
-	                           placeholder="Search..." required data-auto-focus>
+	                           placeholder="First/last name, email, user ID" required data-auto-focus>
 	
 	                    <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
 	                </div>
 	            </div>
 				<div class="col-md-2 col-sm-3">
 	                <button class="btn btn-default pull-left" data-ng-click="search()"
-	                        data-ng-disabled="searchForm.query.$invalid || loading"
-	                        data-translate="global.buttons.search">
+	                        data-ng-disabled="searchForm.query.$invalid || loading">Go
 	                </button>
 	                <span data-ng-class="{'search-spinner' : loading}"></span>
 	            </div>
