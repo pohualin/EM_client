@@ -13,7 +13,11 @@ angular.module('emmiManager')
             var deferred = $q.defer();
             AuthSharedService.currentUser().then(function () {
                 Client.selectClient($route.current.params.clientId).then(function (clientResource) {
-                    deferred.resolve(clientResource);
+                    if (clientResource) {
+                        deferred.resolve(clientResource);
+                    } else {
+                        deferred.reject();
+                    }
                 });
             });
             return deferred.promise;
@@ -23,12 +27,20 @@ angular.module('emmiManager')
             var deferred = $q.defer();
             AuthSharedService.currentUser().then(function () {
                 Client.selectClient($route.current.params.clientId).then(function (clientResource) {
-                    ViewTeam.selectTeam(clientResource.link.teamByTeamId, $route.current.params.teamId).then(function (teamResource) {
-                        deferred.resolve({
-                            clientResource: clientResource,
-                            teamResource: teamResource
+                    if (clientResource) {
+                        ViewTeam.selectTeam(clientResource.link.teamByTeamId, $route.current.params.teamId).then(function (teamResource) {
+                            if (teamResource) {
+                                deferred.resolve({
+                                    clientResource: clientResource,
+                                    teamResource: teamResource
+                                });
+                            } else {
+                                deferred.reject();
+                            }
                         });
-                    });
+                    } else {
+                        deferred.reject();
+                    }
                 });
             });
             return deferred.promise;

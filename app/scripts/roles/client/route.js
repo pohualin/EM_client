@@ -12,7 +12,11 @@ angular.module('emmiManager')
                 var deferred = $q.defer();
                 AuthSharedService.currentUser().then(function () {
                     Client.selectClient($route.current.params.clientId).then(function (clientResource) {
-                        deferred.resolve(clientResource);
+                        if (clientResource) {
+                            deferred.resolve(clientResource);
+                        } else {
+                            deferred.reject();
+                        }
                     });
                 });
                 return deferred.promise;
