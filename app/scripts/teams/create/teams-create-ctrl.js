@@ -24,7 +24,7 @@ angular.module('emmiManager')
         $scope.save = function (isValid) {
             $scope.formSubmitted = true;
             if (isValid && $scope.teamToSave.salesForceAccount) {
-                CreateTeam.insertTeams($scope.teamToSave).then(function (team) {
+                CreateTeam.insertTeams(clientResource, $scope.teamToSave).then(function (team) {
                     ViewTeam.viewTeam(team.data.entity);
                 });
             } else {
