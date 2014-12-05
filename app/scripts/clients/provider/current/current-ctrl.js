@@ -14,6 +14,14 @@ angular.module('emmiManager')
 
             var contentProperty = 'clientProviders';
 
+            $scope.openDeletePopover = function (provider) {
+                provider.deleting = true;
+            };
+
+            $scope.closeDeletePopover = function (provider) {
+                provider.deleting = false;
+            };
+
             $scope.performSearch = function (pageSize) {
                 $scope.loading = true;
                 ClientProviderService.findForClient(Client.getClient(), pageSize).then(function (clientProviderPage) {
