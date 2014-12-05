@@ -16,7 +16,11 @@ angular.module('emmiManager').config(function($routeProvider, USER_ROLES) {
                     function() {
                         LocationService.getLocationById($route.current.params.id)
                             .then(function(locationResource) {
-                                locationResource ? deferred.resolve(locationResource) : deferred.reject();
+                                if (locationResource) {
+                                    deferred.resolve(locationResource);
+                                } else {
+                                    deferred.reject();
+                                }
                             });
                     });
                 return deferred.promise;
