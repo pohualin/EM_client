@@ -34,7 +34,7 @@ angular.module('emmiManager')
                 });                
     
                 // show the dialog box, to avoid display the popup without the providers
-                $modal({scope: $scope, template: 'partials/client/location/edit.html', animation: 'none', backdropAnimation: 'emmi-fade', show: true, backdrop: 'static'});
+                $modal({scope: $scope, template: 'partials/team/location/edit.html', animation: 'none', backdropAnimation: 'emmi-fade', show: true, backdrop: 'static'});
             });
 
 

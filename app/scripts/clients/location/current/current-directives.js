@@ -10,7 +10,6 @@ angular.module('emmiManager')
             scope: {
                 onOk: '&onOk',
                 toRemove: '=',
-                isDeleting: '=',
                 onOpenPopover: '&onOpenPopover',
                 onClosePopover: '&onClosePopover'
             },

@@ -62,20 +62,20 @@ angular.module('emmiManager', [
 
         var modals = [];
 
-        $rootScope.$on('modal.show',function(e, $modal){
+        $rootScope.$on('modal.show', function (e, $modal) {
             // if modal is not already in list
-            if(modals.indexOf($modal) === -1) {
+            if (modals.indexOf($modal) === -1) {
                 modals.push($modal);
             }
         });
 
-        $rootScope.$on('modal.hide',function(e, $modal){
+        $rootScope.$on('modal.hide', function (e, $modal) {
             var modalIndex = modals.indexOf($modal);
             modals.splice(modalIndex, 1);
         });
 
         $rootScope.page = {
-            setTitle: function(title) {
+            setTitle: function (title) {
                 this.title = title + ' | Emmi Manager';
             }
         };
@@ -89,13 +89,13 @@ angular.module('emmiManager', [
         $rootScope.$on('$routeChangeSuccess', function (e, current) {
             $rootScope.currentRouteQueryString = arrays.toQueryString(current.params);
             // hide all modals
-            if(modals.length) {
-                angular.forEach(modals, function($modal) {
+            if (modals.length) {
+                angular.forEach(modals, function ($modal) {
                     $modal.$promise.then($modal.hide);
                 });
                 modals = [];
             }
-            var pageTitle = current.$$route.title || 'Emmi Manager';
+            var pageTitle = current && current.$$route && current.$$route.title || 'Emmi Manager';
             var pageUrl = $location.path();
             $rootScope.page.setTitle(pageTitle);
             _paq.push(['setDocumentTitle', pageTitle]); // overide document title as document.title reports the previous page
@@ -107,13 +107,19 @@ angular.module('emmiManager', [
         $rootScope.$on('event:auth-loginConfirmed', function (data) {
             $rootScope.authenticated = true;
             if ($location.path() === '/login') {
-                $location.path('/').replace();
+                var priorRequestPath = $rootScope.locationBeforeLogin;
+                if (priorRequestPath) {
+                    $location.path(priorRequestPath.path()).replace();
+                } else {
+                    $location.path('/').replace();
+                }
             }
         });
 
         // Call when the 401 response is returned by the server
-        $rootScope.$on('event:auth-loginRequired', function (rejection) {
+        $rootScope.$on('event:auth-loginRequired', function (event, rejection) {
             Session.destroy();
+            $rootScope.locationBeforeLogin = rejection.location;
             $rootScope.authenticated = false;
             if ($location.path() !== '/' && $location.path() !== '' && $location.path() !== '/register' && $location.path() !== '/activate') {
                 $location.path('/login').replace();
@@ -136,11 +142,10 @@ angular.module('emmiManager', [
             $location.path('');
         });
 
-        $document.bind('keydown keypress', function(event) {
-            if(event.which === 8) {
+        $document.bind('keydown keypress', function (event) {
+            if (event.which === 8) {
                 var d = event.srcElement || event.target;
-                if (!(d.tagName.toUpperCase() === 'INPUT' && d.type.toUpperCase() === 'TEXT'))
-                {
+                if (!(d.tagName.toUpperCase() === 'INPUT' && d.type.toUpperCase() === 'TEXT')) {
                     event.preventDefault();
                 }
             }

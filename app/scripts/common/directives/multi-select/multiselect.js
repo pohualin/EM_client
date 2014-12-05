@@ -1,6 +1,6 @@
 (function (ng) {
   'use strict';
-  
+
   Function.prototype.method = function (name, func) {
     this.prototype[name] = func;
     return this;
@@ -84,11 +84,11 @@
                 var broadcastkey = 'multiSelectUpdate',
                     label = '';
 
-                if (scope.model.length === 1) {
+                if (scope.model && scope.model.length === 1) {
                   label = scope.model[0][scope.labelField];
                 } else if (scope.areAllSelected()) {
                   label = 'All Selected';
-                } else if (scope.model.length > 1) {
+                } else if (scope.model && scope.model.length > 1) {
                   label = scope.model.length + ' Selected';
                 } else {
                   label = 'None Selected';
@@ -97,7 +97,7 @@
                 if (attrs.name !== undefined) {
                   broadcastkey += '_' + attrs.name;
                 }
-                
+
                 // emit data
                 scope.$emit(broadcastkey, label);
 
@@ -284,7 +284,7 @@
 
           /**
            * Check if all values are selected
-           * @return {Boolean} 
+           * @return {Boolean}
            */
           scope.areAllSelected = function areAllSelected () {
             var values = angular.copy(scope.values),
@@ -292,27 +292,31 @@
                 allSelected = false,
                 $checkbox = $dropdown.find('.multi-select-select-all-checkbox');
 
-            for (var i=0;i<values.length;i++) {
-              if (isOther(values[i])) {
-                values.splice(i, 1);
-              }
+            if (values) {
+                for (var i = 0; i < values.length; i++) {
+                    if (isOther(values[i])) {
+                        values.splice(i, 1);
+                    }
+                }
             }
 
-            for (var j=0;j<model.length;j++) {
-              if (isOther(model[j])) {
-                model.splice(j, 1);
-              }
+            if (model) {
+                for (var j = 0; j < model.length; j++) {
+                    if (isOther(model[j])) {
+                        model.splice(j, 1);
+                    }
+                }
             }
 
-            allSelected = (values.length === model.length);
+            allSelected = (values && model && values.length === model.length);
 
             // if some are selected, put checkbox in indeterminate mode
-            if (! (allSelected) && model.length > 0) {
+            if (! (allSelected) && model && model.length > 0) {
               $checkbox.prop('indeterminate', true);
             } else {
               $checkbox.prop('indeterminate', false);
             }
-            
+
             return allSelected;
           };
 
@@ -449,7 +453,7 @@
             return item;
           };
 
-          if (scope.model.length > 0) {
+          if (scope.model && scope.model.length > 0) {
             scope.allSelected = scope.areAllSelected();
           }
 
