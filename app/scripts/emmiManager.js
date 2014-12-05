@@ -58,7 +58,7 @@ angular.module('emmiManager', [
         });
     })
 
-    .run(function ($rootScope, $window, $location, $http, AuthSharedService, Session, USER_ROLES, arrays, $document) {
+    .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, arrays, $document) {
 
         var modals = [];
 
@@ -100,10 +100,11 @@ angular.module('emmiManager', [
                 modals = [];
             }
             var pageTitle = current && current.$$route && current.$$route.title || 'Emmi Manager';
+            var pageUrl = $location.path();
             $rootScope.page.setTitle(pageTitle);
-            $window._paq.push(['setDocumentTitle', pageTitle]); // overide document title as document.title reports the previous page
-            //$window._paq.push(['setCustomUrl', current.$$route.originalPath]); // need to check and see if the hashes are tracking okay now with the setting from the Admin Panel changed
-            $window._paq.push(['trackPageView']);
+            _paq.push(['setDocumentTitle', pageTitle]); // overide document title as document.title reports the previous page
+            _paq.push(['setCustomUrl', pageUrl]); // need to check and see if the hashes are tracking okay now with the setting from the Admin Panel changed
+            _paq.push(['trackPageView']);
         });
 
         // Call when the the client is confirmed
