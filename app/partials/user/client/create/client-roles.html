@@ -1,0 +1,28 @@
+<form name="tagGroupLibraries" data-popover-toggle>
+    <div class="form-group">
+        <div class="checkbox" data-ng-repeat="clientRole in clientRoles">
+            <label>
+                <input type="checkbox" value="" data-ng-model="clientRole.checked" data-ng-disabled="clientRole.disabled">&nbsp;&nbsp;
+            </label>
+            <span class="toggle-trigger">
+                <span data-ng-show="library.entity.permission.length > 0" class="caret"></span>
+                <span data-ng-class="{'text-muted': library.disabled}">{{ clientRole.entity.name }}</span>
+            </span>
+            <div class="toggle-content">
+                <small class="text-muted">
+                    <span data-ng-repeat="aPermission in library.entity.permission | orderBy:'permission.rank'">
+                    {{aPermission.permission.name  | translate }}{{!$last ? ',' : ''}}&nbsp;
+                    </span>
+                </small>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <div class="form-actions">
+        <button type="button" class="btn btn-default btn-xs btn-close" data-ng-click="$hide()">
+            <span class="glyphicon glyphicon-remove"></span>
+        </button>
+        <button type="button" class="btn btn-primary pull-right" data-ng-click="addLibraries();$hide()">Add</button>
+        <small class="info">You'll be able to edit permissions after adding roles.</small>
+    </div>
+</form>

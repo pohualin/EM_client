@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  *   Manage Client Level users
  */
-    .controller('ClientUsersEditorCtrl', ['$alert', '$scope', 'Client', 'ClientUsersService',
-        function ($alert, $scope, Client, ClientUsersService) {
+    .controller('ClientUsersEditorCtrl', ['$alert', '$scope', 'Client', 'ClientUsersService', 'ManageUserRolesService',
+        function ($alert, $scope, Client, ClientUsersService, ManageUserRolesService) {
 	    	/**
 	         * Called when 'Create Another User' is clicked
 	         */
@@ -67,12 +67,20 @@ angular.module('emmiManager')
     			console.log('toggle ' + $scope.useEmail);
     			// $scope.useEmail = $scope.useEmail ? false : true;
     		};
+    		
+    		$scope.loadClientRoles = function(){
+    			ManageUserRolesService.loadClientRoles().then(function (clientRoles) {
+                    $scope.clientRoles = clientRoles;
+                    window.paul = $scope;
+                });
+    		}
             
             function init(){
             	$scope.client = Client.getClient();
             	$scope.useEmail = true;
                 $scope.page.setTitle('Create Users - ' + $scope.client.entity.name);
                 $scope.createNewClientUser();
+                $scope.loadClientRoles();
             }
             
             init();
