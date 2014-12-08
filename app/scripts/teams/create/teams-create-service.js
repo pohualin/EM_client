@@ -64,6 +64,7 @@ angular.module('emmiManager')
                         } else {
                             if ((scope.team.id !== scope.existsTeam.entity.id)) {
                                 ngModel.$setValidity('unique', false);
+                                _paq.push(['trackEvent', 'Validation Error', 'Team', 'teamName unique']);
                                 if (scope.uniquePopup) {
                                     scope.uniquePopup.show();
                                 }
