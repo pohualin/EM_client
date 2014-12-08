@@ -5,13 +5,13 @@
                 <input type="checkbox" value="" data-ng-model="clientRole.checked" data-ng-disabled="clientRole.disabled">&nbsp;&nbsp;
             </label>
             <span class="toggle-trigger">
-                <span data-ng-show="library.entity.permission.length > 0" class="caret"></span>
-                <span data-ng-class="{'text-muted': library.disabled}">{{ clientRole.entity.name }}</span>
+                <span data-ng-show="clientRole.entity.permissions.length > 0" class="caret"></span>
+                <span data-ng-class="{'text-muted': clientRole.disabled}">{{ clientRole.entity.name }}</span>
             </span>
             <div class="toggle-content">
                 <small class="text-muted">
-                    <span data-ng-repeat="aPermission in library.entity.permission | orderBy:'permission.rank'">
-                    {{aPermission.permission.name  | translate }}{{!$last ? ',' : ''}}&nbsp;
+                    <span data-ng-repeat="aPermission in clientRole.entity.permissions | orderBy:'permission.rank'">
+                    {{aPermission.name  | translate }}{{!$last ? ',' : ''}}&nbsp;
                     </span>
                 </small>
             </div>

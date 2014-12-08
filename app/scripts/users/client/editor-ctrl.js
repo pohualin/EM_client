@@ -69,11 +69,11 @@ angular.module('emmiManager')
     		};
     		
     		$scope.loadClientRoles = function(){
-    			ManageUserRolesService.loadClientRoles().then(function (clientRoles) {
-                    $scope.clientRoles = clientRoles;
+				ManageUserRolesService.loadClientRolesWithPermissions().then(function(clientRoles){
+					$scope.clientRoles = clientRoles;
                     window.paul = $scope;
-                });
-    		}
+				});
+    		};
             
             function init(){
             	$scope.client = Client.getClient();
