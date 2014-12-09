@@ -19,7 +19,7 @@ angular.module('emmiManager')
 			
 			$scope.search = function() {
 				if (!$scope.searchForm || !$scope.searchForm.query.$invalid) {
-					$scope.serializeToQueryString($scope.query, null, null, null);
+					$scope.serializeToQueryString($scope.query, 'u', null, null);
                     $scope.loading = true;
 					ClientUsersService.list($scope.client, $scope.query, null).then(
 						function(response) {
@@ -34,7 +34,7 @@ angular.module('emmiManager')
 			
 			$scope.sort = function(property) {
                 var sort = $scope.createSortProperty(property);
-                $scope.serializeToQueryString($scope.query, sort);
+                $scope.serializeToQueryString($scope.query, 'u', null, sort);
                 ClientUsersService.list($scope.client, $scope.query, sort).then(
 					function(response) {
                         $scope.handleResponse(response, 'clientUsers');
@@ -49,6 +49,19 @@ angular.module('emmiManager')
 				$scope.client = Client.getClient();
 				$scope.page.setTitle('Manage Users - ' + $scope.client.name);
 				$scope.searchPerformed = false;
+				
+				// Initiate a search when $scope.query is not empty
+                if ($scope.query) {
+                	$scope.serializeToQueryString($scope.query, 'u', null, null);
+                	ClientUsersService.list($scope.client, $scope.query, null).then(
+						function(response) {
+                            $scope.handleResponse(response, 'clientUsers');
+                            $scope.removeStatusFilterAndTotal = $scope.total <= 0;
+                        }, function() {
+                            $scope.loading = false;
+                        });
+					$scope.sortProperty = null;
+                }
 			}
 
 			init();

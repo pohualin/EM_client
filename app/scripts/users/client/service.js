@@ -30,7 +30,7 @@ angular.module('emmiManager')
                 
                 list: function(client, query, sort){
                 	return $http.get(UriTemplate.create(client.link.users).stringify(
-                			{name: query,
+                			{term: query,
                 			 sort: sort && sort.property ? sort.property + ',' + (sort.ascending ? 'asc' : 'desc') : ''}))
 	                    .then(function(response) {
 	                    	CommonService.convertPageContentLinks(response.data);
