@@ -1,19 +1,20 @@
 
-<form>
-    <div data-translate="">The following tags are in use and will be removed from teams:</div>
+<form class='conflictingTeamForm'>
+    <div>The following tags are in use and will be removed from teams:</div>
     <br>
-    <table border="0" cellpadding="0" cellspacing="0">
-        <tr style="font-size: 14px" data-ng-repeat="teamTag in conflictingTeamTags">
-            <td><span>{{teamTag.tag}}: </span></td>
-            <td>{{teamTag.numberOfTeams}} teams</td>
+    <table border="0" cellpadding="1px" cellspacing="0">
+        <tr class='conflictingTeamRow' data-ng-repeat="teamTag in conflictingTeamTags">
+            <td class="col-md-6">{{teamTag.tag}}: </td>
+            <td ng-if="teamTag.numberOfTeams == 1 " class="col-md-6">{{teamTag.numberOfTeams}} team</td>
+            <td ng-if="teamTag.numberOfTeams > 1 " class="col-md-6">{{teamTag.numberOfTeams}} teams</td>
         </tr>
     </table>
     <br>
     <div class="form-actions">
-        <button class="btn btn-primary" type="button" data-ng-click="cancelDeactivatePopover()"
+        <button class="btn btn-primary" type="button" data-ng-click="$hide();onClosePopover()"
                 data-translate="">No
         </button>
-        <button class="btn btn-danger" data-ng-click="overrideConflictingTeamTags(clientForm.$valid)"
+        <button class="btn btn-danger" data-ng-click="onOk();$hide()"
                 data-translate="">Yes
         </button>
     </div>

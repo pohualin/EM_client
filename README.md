@@ -66,6 +66,14 @@ File Structure
 - styleguide_assets/ : Hologram styleguide assets (HTML partials, docs-specific CSS) for the generated styleguide
 - test/ : Configuration and spec tests for our unit tests and end-to-end tests
 
+Coding Guidelines
+-----------------------------------
+
+- All 'page changes' should be made with `<a href="/#newPage"/>` tags rather than `<button data-ng-click="changePage()"/>`
+  This ensures that the browser buttons will work properly (e.g. open in new tab, reload, etc).
+- All pages which are navigable by routes must use `data-ng-cloak` on the wrapper element for the page. 
+
+
 Hologram Style Guide Generator
 -----------------------------------
 

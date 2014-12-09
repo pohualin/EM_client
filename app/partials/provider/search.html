@@ -1,7 +1,7 @@
-<div class="container">
-	<h1>
-		<a href="#/">Emmi Manager</a>: Search
-	</h1>
+<div class="container" data-ng-cloak>
+	<h2>
+		<a href="#/">Emmi Manager</a> : Search
+	</h2>
 	<h2>Manage Clients, Teams, Providers and Locations:</h2>
 	<form name="searchForm">
 		<div class="row">
@@ -58,7 +58,7 @@
 							class="glyphicon sort-icon"
 							data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
 					</th>
-					<th class="sort col-sm-3" data-ng-click="sort('specialty.name')">Specialty
+					<th class="sort col-sm-3" data-ng-click="sort('specialty.name')">Primary Specialty
 						<span data-ng-show="sortProperty.property === 'specialty.name'"><span
 							class="glyphicon sort-icon"
 							data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
@@ -75,7 +75,7 @@
 					<td>{{provider.entity.firstName}} {{provider.entity.lastName}}</td>
 					<td>{{provider.entity.specialty.name}}</td>
 					<td>{{provider.entity.email}}</td>
-					<td><a href data-ng-click="view(provider)">view</a></td>
+					<td><a href="#/providers/{{provider.entity.id}}">view</a></td>
 				</tr>
 			</table>
 			<div class="row" data-ng-show="providers">

@@ -18,8 +18,8 @@ angular.module('emmiManager')
                 };
                 return selectedTeam;
             },
-            insertTeams: function (team) {
-                return $http.post(UriTemplate.create(Session.link.teamsByClientId).stringify({clientId: team.client.id}), team).
+            insertTeams: function (clientResource, team) {
+                return $http.post(UriTemplate.create(clientResource.link.teams).stringify(), team).
                     then(function (response) {
                         return response;
                     });
@@ -64,6 +64,7 @@ angular.module('emmiManager')
                         } else {
                             if ((scope.team.id !== scope.existsTeam.entity.id)) {
                                 ngModel.$setValidity('unique', false);
+                                _paq.push(['trackEvent', 'Validation Error', 'Team', 'teamName unique']);
                                 if (scope.uniquePopup) {
                                     scope.uniquePopup.show();
                                 }

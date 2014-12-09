@@ -1,7 +1,7 @@
-<div class="container">
-	<h1>
-		<a href="#/">Emmi Manager</a>: Search
-	</h1>
+<div class="container" data-ng-cloak>
+	<h2>
+		<a href="#/">Emmi Manager</a> : Search
+	</h2>
 	<h2>Manage Clients, Teams, Providers and Locations:</h2>
 	<form name="searchForm" novalidate>
 		<div class="row">
@@ -87,7 +87,7 @@
 					<td>{{location.entity.phone}}</td>
 					<td>{{location.entity.city}}</td>
 					<td>{{location.entity.state}}</td>
-					<td><a href data-ng-click="view(location.entity)">view</a></td>
+					<td><a href="#/locations/{{location.entity.id}}">view</a></td>
 				</tr>
 			</table>
 			<div class="row" data-ng-show="locations">

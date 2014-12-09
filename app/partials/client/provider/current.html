@@ -13,9 +13,11 @@
             <td class="col-sm-2">{{clientProvider.provider.entity.specialty.name}}</td>
             <td class="col-sm-3">{{clientProvider.provider.entity.email}}</td>
             <td class="col-sm-3">
-                <a href data-ng-click="editProvider(clientProvider)">edit</a><span class="text-muted">&nbsp;|&nbsp;</span>
+                <a href data-ng-click="editProvider(clientProvider)" data-ng-hide="clientProvider.provider.entity.deleting">edit</a><span class="text-muted" data-ng-hide="clientProvider.provider.entity.deleting">&nbsp;|&nbsp;</span>
                 <a href data-to-remove="clientProvider"
                    data-on-ok="removeExistingProvider(clientProvider)"
+                   data-on-open-popover="openDeletePopover(clientProvider.provider.entity)"
+                   data-on-close-popover="closeDeletePopover(clientProvider.provider.entity)"                   
                    data-client-provider-delete-warning="">remove from client</a>
             </td>
         </tr>

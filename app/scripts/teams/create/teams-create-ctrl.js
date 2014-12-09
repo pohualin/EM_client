@@ -24,11 +24,20 @@ angular.module('emmiManager')
         $scope.save = function (isValid) {
             $scope.formSubmitted = true;
             if (isValid && $scope.teamToSave.salesForceAccount) {
-                CreateTeam.insertTeams($scope.teamToSave).then(function (team) {
+                CreateTeam.insertTeams(clientResource, $scope.teamToSave).then(function (team) {
                     ViewTeam.viewTeam(team.data.entity);
                 });
             } else {
                 $scope.showError();
+                // Loop through the form's validation errors and log to Piwik
+                var formErrors = $scope.teamForm.$error;
+                for (var errorType in formErrors) {
+                    if (formErrors.hasOwnProperty(errorType)) {
+                        for (var i = 0; i < formErrors[errorType].length; i++) {
+                            _paq.push(['trackEvent', 'Validation Error', 'Team Create', formErrors[errorType][i].$name+' '+errorType]);
+                        }
+                    }
+                }
             }
         };
 

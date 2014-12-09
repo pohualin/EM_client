@@ -7,9 +7,7 @@ angular.module('emmiManager').controller(
 
         $scope.cancel = function() {
             $scope.hideError();
-            $scope.editMode = false;
-            $scope.metadataSubmitted = false;
-            delete $scope.providerToEdit;
+            $scope.edit();
         };
         
         $scope.doNotDeactivateProvider = function(){
@@ -43,6 +41,10 @@ angular.module('emmiManager').controller(
                 }
             }
         };
+        
+        $scope.showCancelSave = function(){
+        	return !angular.equals($scope.provider, $scope.providerToEdit);
+        };
 
         function init() {
             $controller('ViewEditCommon', {
@@ -55,6 +57,7 @@ angular.module('emmiManager').controller(
                 });
                 $scope.providerResource = providerResource;
                 $scope.provider = providerResource.entity; // for the view state
+                $scope.edit();
             } else {
                 $location.path('/providers');
             }

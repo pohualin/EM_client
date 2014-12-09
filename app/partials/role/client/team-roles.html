@@ -1,0 +1,126 @@
+<div class="col-md-12" data-ng-controller="ClientTeamRoleAdminCtrl">
+    <h3>Team Roles:</h3>
+
+    <div class="row" data-ng-show="existingClientTeamRoles" data-ng-repeat="role in existingClientTeamRoles">
+        <div class="col-md-5">
+            <form name="existingClientTeamRoleForm_{{$index}}" class="form" novalidate>
+                <div class="panel-group" data-ng-model="role.activePanel"
+                     data-ng-change="panelStateChange(role)" data-start-collapsed="true"
+                     data-bs-collapse>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="row panel-title" data-ng-hide="role.activePanel === 0">
+                                <button type="button" class="btn-link" data-bs-collapse-toggle>
+                                    <span class="glyphicon sort-icon glyphicon-play glyphicon-small"></span>
+                                    {{ role.entity.name }}
+                                </button>
+                                <div class="pull-right">
+                                    <button type="button" class="btn-link"
+                                            data-placement="top"
+                                            data-content-template="partials/role/client/delete.tpl.html"
+                                            data-auto-close="1"
+                                            data-bs-popover>
+                                        <small>remove</small>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="row panel-title" data-ng-show="role.activePanel === 0">
+                                <button type="button" class="btn-link" data-ng-hide="role.editName" data-sglclick="collapseButDontCancel(role)" data-ng-dblclick="startEditName(role)">
+                                    <span class="glyphicon glyphicon-play glyphicon-small rotate-90"></span>
+                                    {{ role.entity.name }}
+                                </button>
+                                <div class="col-md-9" data-ng-show="role.editName">
+                                    <input class="form-control" data-ng-model="role.entity.name"
+                                           data-focus-on="focus-{{role.entity.id}}"
+                                           maxlength="50"
+                                           required>
+                                </div>
+                                <div class="pull-right">
+                                    <button type="button" class="btn-link"
+                                            data-placement="top"
+                                            data-content-template="partials/role/client/delete.tpl.html"
+                                            data-auto-close="1"
+                                            data-bs-popover>
+                                        <small>remove</small>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-collapse" data-bs-collapse-target>
+                            <div class="panel-body">
+                                <div class="checkbox"
+                                     data-ng-repeat="permission in role.entity.userClientTeamPermissions  | orderBy:'rank'">
+                                    <label for="{{role.entity.id}}_perm_{{permission.name}}">
+                                        <input id="{{role.entity.id}}_perm_{{permission.name}}" type="checkbox"
+                                               data-ng-model="permission.active"/>
+                                        {{permission.name | translate}}
+                                    </label>
+                                </div>
+                                <hr/>
+                                <div class="pull-right">
+                                    <button type="button" class="btn btn-link" data-ng-click="cancelExisting(role)"
+                                            data-bs-collapse-toggle>
+                                        cancel
+                                    </button>
+                                    <button class="btn btn-default" data-ng-click="update(role)"
+                                            data-bs-collapse-toggle
+                                            data-ng-show="existingClientTeamRoleForm_{{$index}}.$valid && existingHasChanged(role) && hasAPermissionChecked(role.entity)">
+                                        Save Changes
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5">
+            <form name="newClientTeamRoleForm" class="form"
+                  novalidate>
+                <div class="panel-group" data-ng-show="newClientTeamRole">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <input class="form-control" data-ng-model="newClientTeamRole.name"
+                                       data-focus-on="focus-new-role" maxlength="50" required>
+                            </h4>
+                        </div>
+                        <div class="panel-collapse">
+                            <div class="panel-body">
+                                <div class="checkbox"
+                                     data-ng-repeat="permission in newClientTeamRole.userClientTeamPermissions  | orderBy:'rank'">
+                                    <label for="perm_{{permission.name}}">
+                                        <input id="perm_{{permission.name}}" type="checkbox"
+                                               data-ng-model="permission.active"/>
+                                        {{permission.name | translate}}
+                                    </label>
+                                </div>
+                                <hr/>
+                                <div class="pull-right">
+                                    <button type="button" class="btn btn-link" data-ng-click="cancelNew()">cancel
+                                    </button>
+                                    <button class="btn btn-default" data-ng-click="saveNewRole(newClientTeamRole)"
+                                            data-ng-show="newClientTeamRoleForm.$valid && hasAPermissionChecked(newClientTeamRole)">
+                                        Save Role
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div data-ng-hide="newClientTeamRole">
+                    <button type="button" class="btn btn-default" data-ng-click="createNewClientTeamRole()">Create new
+                        team role
+                    </button>
+                    <button class="btn btn-link btn-tag-library" type="button" title="Select roles to add:"
+                            data-placement="top" data-content-template="partials/role/client/role-library.html"
+                            data-trigger="click" data-bs-popover data-popover-dismiss>Add role from library
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

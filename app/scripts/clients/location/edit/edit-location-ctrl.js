@@ -5,7 +5,7 @@ angular.module('emmiManager')
 /**
  *  Controls the edit location popup (partials/location/edit.html)
  */
-    .controller('LocationEditController', function ($scope, $controller, Location, Client) {
+    .controller('LocationEditController', function ($scope, $controller, Location, Client, TeamLocation) {
 
         $controller('LocationCommon', {$scope: $scope});
 

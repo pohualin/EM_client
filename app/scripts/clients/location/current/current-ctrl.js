@@ -29,6 +29,14 @@ angular.module('emmiManager')
             editLocationModal.$promise.then(editLocationModal.show);
         };
 
+        $scope.openDeletePopover = function (location) {
+            location.deleting = true;
+        };
+
+        $scope.closeDeletePopover = function (location) {
+            location.deleting = false;
+        };
+
         var contentProperty = 'clientLocations';
 
         $scope.performSearch = function(pageSize){
