@@ -26,6 +26,24 @@ angular.module('emmiManager')
 	                    .success(function(response) {
 	                        return response;
 	                    });
+                },
+                
+                list: function(client, query, sort){
+                	return $http.get(UriTemplate.create(client.link.users).stringify(
+                			{term: query,
+                			 sort: sort && sort.property ? sort.property + ',' + (sort.ascending ? 'asc' : 'desc') : ''}))
+	                    .then(function(response) {
+	                    	CommonService.convertPageContentLinks(response.data);
+	                        return response.data;
+	                    });
+                },
+                
+                fetchPage: function(href){
+                	return $http.get(UriTemplate.create(href).stringify())
+	                    .then(function(response) {
+	                    	CommonService.convertPageContentLinks(response.data);
+	                        return response.data;
+	                    });
                 }
             };
         }])
