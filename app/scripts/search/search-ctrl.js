@@ -11,6 +11,8 @@ angular.module('emmiManager')
                 $location.path('/providers');
             } else if (option === 'Locations') {
                 $location.path('/locations');
+            } else if (option === 'Users') {
+                $location.path('/users');
             }
         };
 
@@ -107,6 +109,8 @@ angular.module('emmiManager')
             $scope.option = 'Providers';
         } else if ($location.path() === '/locations'){
             $scope.option = 'Locations';
+        } else if ($location.path() === '/users'){
+            $scope.option = 'Users';
         }
 
         $scope.pageSizes = [5, 10, 15, 25];
@@ -152,6 +156,9 @@ angular.module('emmiManager')
             case 'l':
               $scope.pageWhereBuilt = 'location';
               break;
+            case 'u':
+                $scope.pageWhereBuilt = 'user';
+                break;
             default:
               break;
             }

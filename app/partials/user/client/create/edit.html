@@ -83,7 +83,7 @@
 		        You'll be able to add roles after saving this user.
 		        <div class="actions pull-right">
 		            <div class="form-group">
-		                <a class="btn btn-link" href="#/clients/{{client.entity.id}}/users">cancel</a>
+		                <a class="btn btn-link" href="#/clients/{{client.entity.id}}/users?{{currentRouteQueryString}}">cancel</a>
 		                <button class="btn btn-primary" type="button" data-ng-click="save(clientUserForm.$valid)">
 		                    <span>Save</span>
 		                </button>
