@@ -126,11 +126,11 @@ angular.module('emmiManager')
 	    	        		locationsArray.push(' '+ location.entity.location.name);
 	    	        	});
 	    	        	ProviderView.paginatedProvidersForTeam($scope.teamResource, locationsArray).then(function(response){
+	    	        		$scope.teamResource.teamProviders = response.content;
+	    	        		$scope.handleResponse(response, 'teamProviders');      
 	    	        		if (addAnother) {
 		        				$scope.addProviders();   
 			        		}
-	    	        		$scope.teamResource.teamProviders = response.content;
-	    	        		$scope.handleResponse(response, 'teamProviders');      
 	    	        	});
 	        		});
 	        	});
