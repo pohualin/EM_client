@@ -43,6 +43,7 @@ angular.module('emmiManager')
                     $scope.conflictingTeamTags = conflictingTeamTags;
                 } else {
                     $scope.saveTags(isValid);
+                    $scope.cancelConflictingTeamsPopover();
                     if ($scope.hideClientTags) {
                         $scope.hideClientTags();
                     }
@@ -177,6 +178,13 @@ angular.module('emmiManager')
                 onOk: '&onOk'
             },
             link: function (scope, element) {
+                scope.cancelConflictingTeamsPopover = function () {
+                    scope.teamConflictWarning.hide();
+                };
+                scope.showPopover = function () {
+                    scope.teamConflictWarning.show();
+                };
+
                 element.on('click', function () {
                     // pop a warning dialog
                     event.stopPropagation();
@@ -185,7 +193,7 @@ angular.module('emmiManager')
                         scope.teamConflictWarning = $popover(element, {
                             title: 'Are you sure?',
                             scope: scope,
-                            show: true,
+                            show: false,
                             autoClose: true,
                             placement: 'top',
                             contentTemplate: 'partials/client/tags/conflictingTeam_popover.tpl.html'
