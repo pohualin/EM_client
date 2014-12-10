@@ -11,10 +11,7 @@ angular.module('emmiManager')
         }
         $scope.allProvidersForTeam = function() {
         	ProviderView.allProvidersForTeam($scope.teamResource).then(function(response){
-        		$scope.teamResource.teamProviders = response;
-        		$scope.handleResponse(response, 'teamProviders');      //testing adding new provider
-
-
+        		$scope.handleResponse(response, 'listOfTeamProviders');      
         	});
         };
         
@@ -26,8 +23,8 @@ angular.module('emmiManager')
 	        		locationsArray.push(' '+ location.entity.location.name);
 	        	});
 	        	ProviderView.paginatedProvidersForTeam($scope.teamResource, locationsArray).then(function(response){
-	        		$scope.teamResource.teamProviders = response.content;
-	        		$scope.handleResponse(response, 'teamProviders');      
+	        		$scope.handleResponse(response, 'listOfTeamProviders');      
+
 	        	});      	
 			});
         };
@@ -83,8 +80,7 @@ angular.module('emmiManager')
             $scope.loading = true;
             ProviderView.fetchPageLink(href).then(function (page) {
             	ProviderSearch.assignLocationsForFetchedProviders(page, $scope.teamResource).then(function (response){
-             		$scope.teamResource.teamProviders = response.content;
-                    $scope.handleResponse(response, 'teamProviders');
+	        		$scope.handleResponse(response, 'listOfTeamProviders');      
             	});
             }, function () {
                 // error happened
@@ -93,6 +89,7 @@ angular.module('emmiManager')
         };
 
         $scope.removeProvider = function (provider) {
+        	console.log(provider);
         	ProviderView.removeProvider(provider, $scope.teamResource).then(function (){
                 $scope.refreshLocationsAndProviders();
         	});

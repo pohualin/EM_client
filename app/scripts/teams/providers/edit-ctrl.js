@@ -26,7 +26,7 @@ angular.module('emmiManager')
                 			$scope.teamProviderTeamLocationSaveRequest).then(function(){
                 		ProviderView.allProvidersForTeam($scope.teamResource).then(function(response){
                         	ProviderView.convertLinkObjects(response);	
-                    		$scope.teamResource.teamProviders = response;
+	    	        		$scope.handleResponse(response, 'listOfTeamProviders');      
                 		});
                 		$scope.$hide();
                 	});

@@ -126,8 +126,7 @@ angular.module('emmiManager')
 	    	        		locationsArray.push(' '+ location.entity.location.name);
 	    	        	});
 	    	        	ProviderView.paginatedProvidersForTeam($scope.teamResource, locationsArray).then(function(response){
-	    	        		$scope.teamResource.teamProviders = response.content;
-	    	        		$scope.handleResponse(response, 'teamProviders');      
+	    	        		$scope.handleResponse(response, 'listOfTeamProviders');      
 	    	        		if (addAnother) {
 		        				$scope.addProviders();   
 			        		}
