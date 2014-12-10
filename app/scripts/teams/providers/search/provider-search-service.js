@@ -2,7 +2,7 @@
 
 angular.module('emmiManager')
 
-	.service('ProviderSearch', function ($http, $q, Session, UriTemplate, CommonService) {
+	.service('ProviderSearch', function ($http, $q, Session, UriTemplate, CommonService, arrays) {
         var referenceData;
 		return {
 			search: function (teamResource, query, status, sort, pageSize) {
@@ -51,8 +51,24 @@ angular.module('emmiManager')
                 .success(function (response) {
                     return response;
                 });
-        	}
-
+        	},
+        	assignLocationsForFetchedProviders: function (page, teamResource) {
+            	return $http.get(UriTemplate.create(teamResource.link.teamLocations).stringify()).then(function(locations){
+         			var allLocationsForTeam = [];
+                 	angular.forEach(locations.data.content, function(location){
+                 		allLocationsForTeam.push(' '+ location.entity.location.name);
+                 	});
+                 	 angular.forEach(page.content, function(teamProvider){
+                 		 var existinglocations = [];
+                 		 angular.forEach(teamProvider.entity.teamProviderTeamLocations, function(tptl){
+                 			existinglocations.push(' '+ tptl.teamLocation.location.name);
+                 		 });
+                 		 teamProvider.entity.locations = existinglocations.length > 0 ? existinglocations.toString() : (allLocationsForTeam && allLocationsForTeam.length > 0 ) ? allLocationsForTeam.toString(): '';
+                 		 teamProvider.link = arrays.convertToObject('rel', 'href', teamProvider.link);
+                 	 });
+                 	 return page;
+            	});
+            },
 		};
 	})
 

@@ -12,6 +12,8 @@ angular.module('emmiManager')
         $scope.allProvidersForTeam = function() {
         	ProviderView.allProvidersForTeam($scope.teamResource).then(function(response){
         		$scope.teamResource.teamProviders = response;
+        		$scope.handleResponse(response, 'teamProviders');      //testing adding new provider
+
 
         	});
         };
@@ -80,22 +82,10 @@ angular.module('emmiManager')
         $scope.fetchPage = function (href) {
             $scope.loading = true;
             ProviderView.fetchPageLink(href).then(function (page) {
-                $scope.handleResponse(page, 'teamProviders');
-        		ProviderSearch.fetchLocationsForTeam($scope.teamResource).then( function (response){
-        			var allLocationsForTeam = [];
-                	angular.forEach(response.data.content, function(location){
-                		allLocationsForTeam.push(' '+ location.entity.location.name);
-                	});
-                	 angular.forEach(page.content, function(teamProvider){
-                		 var locations = [];
-                		 angular.forEach(teamProvider.entity.teamProviderTeamLocations, function(tptl){
-                			 locations.push(' '+ tptl.teamLocation.location.name);
-                		 });
-                		 teamProvider.entity.locations = locations.length > 0 ? locations.toString() : (allLocationsForTeam && allLocationsForTeam.length > 0 ) ? allLocationsForTeam.toString(): '';
-                		 teamProvider.link = arrays.convertToObject('rel', 'href', teamProvider.link);
-            		 });
-             		$scope.teamResource.teamProviders = page.content;
-        		});
+            	ProviderSearch.assignLocationsForFetchedProviders(page, $scope.teamResource).then(function (response){
+             		$scope.teamResource.teamProviders = response.content;
+                    $scope.handleResponse(response, 'teamProviders');
+            	});
             }, function () {
                 // error happened
                 $scope.loading = false;

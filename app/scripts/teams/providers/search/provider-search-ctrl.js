@@ -2,10 +2,11 @@
 angular.module('emmiManager')
 
 	.controller('ProviderSearchController', function($scope, $modal, $controller, ProviderSearch, ProviderView){
-		
-        $controller('TeamProviderCommon', {$scope: $scope});
         
 		$controller('CommonPagination', {$scope: $scope});
+		
+        $controller('TeamProviderCommon', {$scope: $scope});
+
 
         $scope.teamProviderTeamLocationSaveRequest = [];
 
@@ -125,11 +126,11 @@ angular.module('emmiManager')
 	    	        		locationsArray.push(' '+ location.entity.location.name);
 	    	        	});
 	    	        	ProviderView.paginatedProvidersForTeam($scope.teamResource, locationsArray).then(function(response){
-	    	        		$scope.teamResource.teamProviders = response.content;
-	    	        		$scope.handleResponse(response, 'teamProviders');      
-		    	        	if (addAnother) {
+	    	        		if (addAnother) {
 		        				$scope.addProviders();   
 			        		}
+	    	        		$scope.teamResource.teamProviders = response.content;
+	    	        		$scope.handleResponse(response, 'teamProviders');      
 	    	        	});
 	        		});
 	        	});

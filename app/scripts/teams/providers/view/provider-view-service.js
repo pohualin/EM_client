@@ -2,7 +2,7 @@
 
 angular.module('emmiManager')
 
-    .service('ProviderView', function ($http, $q, Session, UriTemplate, arrays) {
+    .service('ProviderView', function ($http, $q, Session, UriTemplate, arrays, ProviderSearch, CommonService) {
     	function convertPageContentLinks(page){
             if (page) {
                 angular.forEach(page, function (teamProvider) {
@@ -64,7 +64,7 @@ angular.module('emmiManager')
              fetchPageLink: function (href) {
                  return $http.get(href)
                      .then(function (response) {
-                         convertPageContentLinks(response.data.content);
+                    	 CommonService.convertPageContentLinks(response.data);
                          return response.data;
                      });
 
