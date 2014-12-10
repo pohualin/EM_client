@@ -10,17 +10,16 @@ angular.module('emmiManager')
             scope: {
                 onOk: '&onOk',
                 toRemove: '=',
-                isDeleting: '=',
                 onOpenPopover: '&onOpenPopover',
                 onClosePopover: '&onClosePopover'
             },
             link: function (scope, element) {
                 element.on('click', function (event) {
                     event.stopPropagation();
-                    scope.onOpenPopover();
                     ClientLocationService.findTeamsUsing(scope.toRemove).then(function(teams){
                         if (teams && teams.length > 0) {
                             scope.teamsBlocking = teams;
+                            scope.onOpenPopover();
                             if (popover){
                                 popover.hide();
                             }
