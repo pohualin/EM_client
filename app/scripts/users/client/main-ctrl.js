@@ -7,7 +7,10 @@ angular.module('emmiManager')
  */
 .controller('UsersClientMainCtrl',
 		[ '$scope', '$controller', 'Client', 'UsersClientService', function($scope, $controller, Client, UsersClientService) {
-
+			
+			/**
+	         * Called when fetching different pages
+	         */
 			$scope.fetchPage = function(href) {
                 $scope.loading = true;
                 UsersClientService.fetchPage(href).then(function(usersClient) {
@@ -17,6 +20,9 @@ angular.module('emmiManager')
                 });
             };
 			
+            /**
+	         * Called when GO button is clicked
+	         */
 			$scope.search = function() {
 				if (!$scope.searchForm || !$scope.searchForm.query.$invalid) {
 					$scope.serializeToQueryString($scope.query, 'u', null, null);
@@ -32,6 +38,9 @@ angular.module('emmiManager')
 				}
 			};
 			
+			/**
+	         * Called when column header is clicked to change sorting property
+	         */
 			$scope.sort = function(property) {
                 var sort = $scope.createSortProperty(property);
                 $scope.serializeToQueryString($scope.query, 'u', null, sort);
@@ -44,6 +53,9 @@ angular.module('emmiManager')
 				$scope.sortProperty = null;
             };
 
+            /**
+	         * init method called when page is loading
+	         */
 			function init() {
 				$controller('CommonSearch', {$scope: $scope});
 				$scope.client = Client.getClient();

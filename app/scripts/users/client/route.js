@@ -3,6 +3,9 @@
 angular.module('emmiManager')
     .config(function ($routeProvider, USER_ROLES) {
 
+    	// First call AuthSharedService to get current user
+    	// Second call ClientService to get current client
+    	// Third call UserClientService to get current UserClient if userClientId is passed in param
         var userClientEditorResources = 
     	['AuthSharedService','Client', 'UsersClientService', '$route', '$q', function (AuthSharedService, Client, UsersClientService, $route, $q){
             var deferred = $q.defer();

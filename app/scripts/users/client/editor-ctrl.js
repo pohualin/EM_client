@@ -8,7 +8,7 @@ angular.module('emmiManager')
     .controller('UsersClientEditorController', ['$alert', '$location', '$scope', 'Client', 'ManageUserRolesService', 'UsersClientService', 'UserClientUserClientRolesService',
         function ($alert, $location, $scope, Client, ManageUserRolesService, UsersClientService, UserClientUserClientRolesService) {
     	
-    		/*
+    		/**
     		 * Associate selected UserClientRole to selected UserClient
     		 */
     		$scope.associateClientRole = function (form) {
@@ -106,6 +106,9 @@ angular.module('emmiManager')
                 }
     		};
     		
+    		/**
+    		 * Called when UserClientUserClientRole panel is toggled
+    		 */
     		$scope.toggleUserClientUserClienRolePanel = function(userClientUserClientRole){
     			UserClientUserClientRolesService.loadPermissionsForExistingUserClientUserClientRole(userClientUserClientRole);
     		};
@@ -118,9 +121,11 @@ angular.module('emmiManager')
     			// $scope.useEmail = $scope.useEmail ? false : true;
     		};
     		
+    		/**
+	         * init method called when the page is loading
+	         */
             function init(){
             	$scope.client = Client.getClient();
-            	
             	if(UsersClientService.getUserClient()){
             		// In this case UserClient is already created
             		// Get the existing UserClient

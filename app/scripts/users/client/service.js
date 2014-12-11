@@ -6,7 +6,7 @@ angular.module('emmiManager')
             var referenceData;
             var selectedUserClient;
             return {
-            	/*
+            	/**
             	 * Create a new UserClient placeholder
             	 */
                 newUserClient: function () {
@@ -21,7 +21,7 @@ angular.module('emmiManager')
                     return newUserClient;
                 },
                 
-                /*
+                /**
                  * Call server to create UserClient
                  */
                 createUserClient: function(client, userClientToBeEdit){
@@ -35,7 +35,7 @@ angular.module('emmiManager')
                 },
                 
 
-                /*
+                /**
                  * Call server to get a list of UserClient
                  */
                 list: function(client, query, sort){
@@ -48,7 +48,7 @@ angular.module('emmiManager')
 	                    });
                 },
                 
-                /*
+                /**
                  * Call server to fetch next batch of UserClient
                  */
                 fetchPage: function(href){
@@ -59,14 +59,16 @@ angular.module('emmiManager')
 	                    });
                 },
                 
-                /*
+                /**
                  * Call when UserClientId is passed in as route param
                  * get UserClient by userClientId and set it to selectedUserClient
                  */
                 setUserClient: function(userClientId){
                 	if(userClientId === null){
+                		// Reset selectedUserClient
                 		selectedUserClient = null;
                 	} else {
+                		// Call server to get UserClient by userClientId
                 		return $http.get(UriTemplate.create(Session.link.userClientById).stringify({id: userClientId})).then(function(userClient){
                     		selectedUserClient = userClient.data;
                     		return selectedUserClient;
@@ -74,7 +76,7 @@ angular.module('emmiManager')
                 	}
                 },
                 
-                /*
+                /**
                  * Getter of selectedUserClient
                  */
                 getUserClient: function(){

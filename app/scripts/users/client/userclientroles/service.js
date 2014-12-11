@@ -4,7 +4,7 @@ angular.module('emmiManager')
     .service('UserClientUserClientRolesService', ['$filter', '$q', '$http', 'UriTemplate', 'CommonService', 'Client',
         function ($filter, $q, $http, UriTemplate, CommonService, Client) {
             return {
-            	/*
+            	/**
             	 * Associate selected UserClientRole to selected UserClient
             	 */
                 associateUserClientUserClientRole: function(userClient, selectedUserClientRole){
@@ -17,7 +17,7 @@ angular.module('emmiManager')
 	                    });
                 },
             	
-            	/*
+                /**
             	 * To remove UserClientUserClientRole
             	 */
             	deleteUserClientUserClientRole: function(existingUserClientUserClientRole){
@@ -26,8 +26,8 @@ angular.module('emmiManager')
             				});
             	},
             	
-            	/*
-            	 * Get existing UserClientUserClientRole relationship
+            	/**
+            	 * Get existing UserClientUserClientRoles relationship
             	 */
             	getUserClientUserClientRoles: function(userClient){
                 	return $http.get(UriTemplate.create(userClient.link.userClientRoles).stringify())
@@ -37,6 +37,9 @@ angular.module('emmiManager')
                     });
             	},
             	
+            	/**
+            	 * To load permissions for an existing UserClientRole
+            	 */
             	loadPermissionsForExistingUserClientUserClientRole: function(existingUserClientUserClientRole){
             		if(!existingUserClientUserClientRole.entity.permissions){
             			$http.get(UriTemplate.create(existingUserClientUserClientRole.link.userClientRolePermissions).stringify()).then(function(permissions){
