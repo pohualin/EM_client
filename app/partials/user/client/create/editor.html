@@ -9,18 +9,13 @@
     <hr/>
     <div class="row" data-ng-hide="editMode" data-ng-include="'partials/user/client/create/view.html'"></div>
     <div class="row" data-ng-show="editMode" data-ng-include="'partials/user/client/create/edit.html'"></div>
-    <hr data-ng-show="createdClientUser" />
-    <div data-ng-show="true">
+    <hr data-ng-show="selectedUserClient" />
+    <div data-ng-show="selectedUserClient">
     	<h2>Roles</h2>
-    	<div class="row">
-            <button class="btn btn-link btn-tag-library" type="button" title="Select roles to add:"
-                    data-placement="right" data-content-template="partials/user/client/create/client-roles.html"
-                    data-trigger="click" data-bs-popover data-popover-dismiss>Add client roles
-            </button>
-        </div>
+    	<div class="row" data-ng-include="'partials/user/client/userclientrole/client-role.html'"></div>
         <div class="row">
             <div class="col-md-6">
-                <a href="#/">Add team roles</a>
+                <a href="#/">Add team role</a>
             </div>
         </div>
     </div>

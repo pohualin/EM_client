@@ -44,8 +44,6 @@ angular.module('emmiManager')
                             var page = response.data;
                             CommonService.convertPageContentLinks(page);
                             angular.forEach(page.content, function (content) {
-                            	window.yuan = content;
-                                // content.entity.userClientPermissions = (referenceData) ? angular.copy(referenceData.permission) : [];
                             	$http.get(UriTemplate.create(content.link.permissions).stringify()).then(function(permissions){
                             		content.entity.permissions = permissions.data;
                             	});
