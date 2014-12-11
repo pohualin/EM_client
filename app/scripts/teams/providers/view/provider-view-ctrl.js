@@ -2,6 +2,7 @@
 angular.module('emmiManager')
 
 	.controller('TeamProviderCommon', function($scope, ProviderView, ProviderSearch){
+		
         $scope.noSearch = true;
 
         if($scope.teamResource){
@@ -16,15 +17,14 @@ angular.module('emmiManager')
         };
         
         $scope.refreshLocationsAndProviders = function() {
-        	ProviderSearch.fetchLocationsForTeam($scope.teamResource).then( function (locationResponse){
+        	ProviderSearch.fetchAllLocationsForTeam($scope.teamResource).then(function(locationResponse){
 				var locationsArray=[];
-	        	var allLocations = locationResponse.data.content;
-	        	angular.forEach(locationResponse.data.content, function(location){
-	        		locationsArray.push(' '+ location.entity.location.name);
+	        	angular.forEach(locationResponse, function(location){
+	        		locationsArray.push(' '+ location.name);
 	        	});
-	        	ProviderView.paginatedProvidersForTeam($scope.teamResource, locationsArray).then(function(response){
+	        	$scope.allLocationsForTeam = locationsArray.sort().toString();
+	        	ProviderView.paginatedProvidersForTeam($scope.teamResource).then(function(response){
 	        		$scope.handleResponse(response, 'listOfTeamProviders');      
-
 	        	});      	
 			});
         };
@@ -89,10 +89,10 @@ angular.module('emmiManager')
         };
 
         $scope.removeProvider = function (provider) {
-        	console.log(provider);
         	ProviderView.removeProvider(provider, $scope.teamResource).then(function (){
                 $scope.refreshLocationsAndProviders();
         	});
         };
+        
 	})
 ;

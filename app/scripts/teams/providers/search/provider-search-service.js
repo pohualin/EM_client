@@ -40,18 +40,33 @@ angular.module('emmiManager')
                         return response.data;
                     });
             },
+          	fetchLocationsForTeam : function (teamResource) {
+        		return $http.get(UriTemplate.create(teamResource.link.teamLocations).stringify())
+                .success(function (response) {
+                    return response;
+                });
+        	},
+        	fetchAllLocationsForTeam : function (teamResource) {
+        		var responseArray = [];
+        		return $http.get(UriTemplate.create(teamResource.link.teamLocations).stringify()).then(function addToLocations(response) {
+                	var page = response.data;
+                	 angular.forEach(response.data.content, function(location){
+            			 responseArray.push(location.entity.location);
+            		 });
+                	 if (page.link && page.link['page-next']) {
+                         $http.get(page.link['page-next']).then(function (response) {
+                        	 addToLocations(response);
+                         });
+                     } 
+                	 return responseArray;	 
+                });
+        	},
             updateProviderTeamAssociations: function (teamProviderTeamLocationSaveReq, teamResource) {
                 return $http.post(UriTemplate.create(teamResource.link.teamProviders).stringify(), teamProviderTeamLocationSaveReq)
                     .success(function (response) {
                         return response;
                     });
             },
-        	fetchLocationsForTeam : function (teamResource) {
-        		return $http.get(UriTemplate.create(teamResource.link.teamLocations).stringify())
-                .success(function (response) {
-                    return response;
-                });
-        	},
         	assignLocationsForFetchedProviders: function (page, teamResource) {
             	return $http.get(UriTemplate.create(teamResource.link.teamLocations).stringify()).then(function(locations){
          			var allLocationsForTeam = [];

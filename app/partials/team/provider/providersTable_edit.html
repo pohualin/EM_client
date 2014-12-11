@@ -15,8 +15,12 @@
 			    	<td>{{teamProvider.entity.provider.specialty.name}}</td>
 			    	<td>{{teamProvider.entity.provider.email}}</td>
 			    	<td>
-						<div data-placement="top" data-content="{{teamProvider.entity.locations}}" data-trigger="hover" data-delay="200" data-bs-popover data-popover-dismiss>
+						<div data-placement="top" data-ng-show="teamProvider.entity.locations" data-content="{{teamProvider.entity.locations}}" data-trigger="hover" data-delay="200" data-bs-popover data-popover-dismiss>
                         {{teamProvider.entity.locations | characters:25 }}
+						</div>
+						
+						<div data-placement="top" data-ng-hide="teamProvider.entity.locations" data-content="{{allLocationsForTeam}}" data-trigger="hover" data-delay="200" data-bs-popover data-popover-dismiss>
+                        {{allLocationsForTeam | characters:25 }}
 						</div>
             		</td>
 					<td>

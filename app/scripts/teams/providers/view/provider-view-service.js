@@ -29,18 +29,16 @@ angular.module('emmiManager')
             		 return null;
             	}
              },
-             paginatedProvidersForTeam: function (teamResource, allLocations) {
-            	 var providers = [];
+             paginatedProvidersForTeam: function (teamResource) {
                  return $http.get(UriTemplate.create(teamResource.link.teamProviders).stringify(), teamResource.entity).then(function addToProviders(response) {
                 	 var page = response.data;
+                	 CommonService.convertPageContentLinks(response.data);
                     	 angular.forEach(page.content, function(teamProvider){
                     		 var locations = [];
                     		 angular.forEach(teamProvider.entity.teamProviderTeamLocations, function(tptl){
                     			 locations.push(' '+ tptl.teamLocation.location.name);
                     		 });
-                    		 teamProvider.entity.locations = locations.length > 0 ? locations.toString() : (allLocations && allLocations.length > 0 ) ? allLocations.toString(): '';
-                    		 teamProvider.link = arrays.convertToObject('rel', 'href', teamProvider.link);
-                    		 providers.push(teamProvider);
+                    		 teamProvider.entity.locations = locations.length > 0 ? locations.sort().toString() : '';
 	            		 });
                     	 return page;
                  });
