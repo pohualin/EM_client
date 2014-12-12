@@ -51,8 +51,8 @@ angular.module('emmiManager')
     			UserClientUserClientRolesService.
     			getUserClientUserClientRoles($scope.selectedUserClient).then(function(response){
     				// Set existingUserClientUserClientRoles if it exists
-    				if(response.data.content.length > 0){
-    					$scope.existingUserClientUserClientRoles = response.data.content;	
+    				if(response.length > 0){
+    					$scope.existingUserClientUserClientRoles = response;	
     				} else {
     					// Load existing UserClientRoles for the Client
     					$scope.loadClientRoles();

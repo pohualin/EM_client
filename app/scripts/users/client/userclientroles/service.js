@@ -1,16 +1,16 @@
 'use strict';
 angular.module('emmiManager')
 
-    .service('UserClientUserClientRolesService', ['$filter', '$q', '$http', 'UriTemplate', 'CommonService', 'Client',
-        function ($filter, $q, $http, UriTemplate, CommonService, Client) {
+    .service('UserClientUserClientRolesService', ['$q', '$http', 'UriTemplate', 'CommonService', 'Client',
+        function ($q, $http, UriTemplate, CommonService, Client) {
             return {
             	/**
             	 * Associate selected UserClientRole to selected UserClient
             	 */
                 associateUserClientUserClientRole: function(userClient, selectedUserClientRole){
-                	var userClientUserClientRole = new Object({});
+                	var userClientUserClientRole = {};
                 	userClientUserClientRole.userClient = userClient.entity;
-                	userClientUserClientRole.userClientRole = new Object({id: selectedUserClientRole});
+                	userClientUserClientRole.userClientRole = {id: selectedUserClientRole};
                 	return $http.post(UriTemplate.create(userClient.link.userClientRoles).stringify(), userClientUserClientRole)
 	                    .success(function(response) {
 	                        return response;
@@ -30,11 +30,23 @@ angular.module('emmiManager')
             	 * Get existing UserClientUserClientRoles relationship
             	 */
             	getUserClientUserClientRoles: function(userClient){
-                	return $http.get(UriTemplate.create(userClient.link.userClientRoles).stringify())
-                    .success(function(page) {
-                    	CommonService.convertPageContentLinks(page);
-                        return page;
-                    });
+            		var deferred = $q.defer();
+                    var userClientUserClientRoles = [];
+                    $http.get(UriTemplate.create(userClient.link.userClientRoles).stringify())
+                        .then(function load(response) {
+                            var page = response.data;
+                            CommonService.convertPageContentLinks(page);
+                            angular.forEach(page.content, function (content) {
+                            	userClientUserClientRoles.push(content);
+                            });
+                            if (page.link && page.link['page-next']) {
+                                $http.get(page.link['page-next']).then(function (response) {
+                                    load(response);
+                                });
+                            }
+                            deferred.resolve(userClientUserClientRoles);
+                        });
+                    return deferred.promise;
             	},
             	
             	/**
