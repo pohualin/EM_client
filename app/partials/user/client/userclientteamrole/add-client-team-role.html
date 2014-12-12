@@ -1,6 +1,6 @@
-<form name="clientTeamRolesSelection" data-popover-toggle>
-    <div class="form-group">
-        <div class="checkbox" data-ng-repeat="clientTeamRole in clientTeamRoles | filter:disableLibrary()">
+<form name="clientTeamRolesSelection" data-popover-toggle data-ng-hide="selectedClientTeamRole" >
+    <div class="form-group" style="min-width: 200px; min-height: 50px">
+        <div class="checkbox" data-ng-repeat="clientTeamRole in clientTeamRoles | filter:disableClientTeamRoles()"  >
             <label>
                 <input type="checkbox" value="" data-ng-model="clientTeamRole.checked" data-ng-disabled="clientTeamRole.disabled">&nbsp;&nbsp;
             </label>
@@ -18,10 +18,40 @@
         </div>
     </div>
     <hr/>
-    <div class="form-actions">
+    <div class="form-actions" style="min-width: 200px; min-height: 35px">
         <button type="button" class="btn btn-default btn-xs btn-close" data-ng-click="$hide()">
             <span class="glyphicon glyphicon-remove"></span>
         </button>
-        <button type="button" class="btn btn-primary pull-right" data-ng-click="addLibraries();$hide()">Add</button>
+        <button type="button" class="btn btn-primary pull-right" data-ng-click="setSelectedClientTeamRole()">Add Teams for This Role</button>
     </div>
 </form>
+
+<div data-ng-show="selectedClientTeamRole" >
+	Role: {{selectedClientTeamRole.entity.name}}
+	<form name="searchForm" style="min-width: 300px">
+		<div>
+			<label>Search for teams:</label>
+        </div>
+	    <div class="row">
+	        <div class="col-md-12">
+	            <div class="col-md-6 col-sm-5">
+	                <label class="sr-only" for="query">Search</label>
+	
+	                <div class="input-group">
+	                    <input class="form-control" id="query" name="query" data-ng-model="query" type="text"
+	                           placeholder="Team" required data-auto-focus>
+	                </div>
+	            </div>
+				<div class="col-md-2 col-sm-3">
+	                <button class="btn btn-default pull-left" data-ng-click="search()"
+	                        data-ng-disabled="searchForm.query.$invalid || loading">Go
+	                </button>
+	                <span data-ng-class="{'search-spinner' : loading}"></span>
+	            </div>
+	        </div>
+	    </div>
+    </form>
+    <div class="row" data-ng-show="searchPerformed">
+		SEARCH PERFORMED
+	</div>
+</div>

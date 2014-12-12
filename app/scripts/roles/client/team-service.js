@@ -43,7 +43,6 @@ angular.module('emmiManager')
                 	}
                 	return $http.get(UriTemplate.create(clientTeamRoleResource.link.permissions).stringify())
 	                    .then(function (response) {
-	                    	window.paul = response;
 	                    	clientTeamRoleResource.entity.permissions = response.data;
 	                    });
                 },

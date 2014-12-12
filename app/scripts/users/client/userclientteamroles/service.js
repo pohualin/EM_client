@@ -3,7 +3,26 @@ angular.module('emmiManager')
 
     .service('UserClientUserClientTeamRolesService', ['$filter', '$q', '$http', 'UriTemplate', 'CommonService', 'Client',
         function ($filter, $q, $http, UriTemplate, CommonService, Client) {
+    		var selectedClientTeamRole;
             return {
+            	/**
+            	 *  TODO
+            	 */
+            	setSelectedClientTeamRole: function(clientTeamRoles){
+            		selectedClientTeamRole = $filter('filter')(clientTeamRoles, {checked: true, disabled: false});
+            		return selectedClientTeamRole[0];
+            	},
+            	
+            	/**
+            	 *  TODO
+            	 */
+            	disableClientTeamRoles: function(clientTeamRoles){
+            		angular.forEach(clientTeamRoles, function (clientTeamRole) {
+                        clientTeamRole.disabled = true;
+                    });
+            		clientTeamRoles[0].disabled = false;
+            	},
+            	
             	/*
             	 * Associate selected UserClientTeamRole to selected UserClient
             	 */
