@@ -58,9 +58,9 @@ angular.module('emmiManager')
                 link: function (scope, element) {
                     element.on('click', function (event) {
                         event.stopPropagation();
-                        scope.onOpenPopover();
                         ClientProviderService.findTeamsUsing(scope.toRemove).then(function(teams){
                             if (teams && teams.length > 0) {
+                                scope.onOpenPopover();
                                 scope.teamsBlocking = teams;
                                 if (popover){
                                     popover.hide();

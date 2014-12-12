@@ -95,6 +95,10 @@ angular.module('emmiManager', [
             AuthSharedService.authorizedRoute((next.access) ? next.access.authorizedRoles : [USER_ROLES.all]);
         });
 
+        $rootScope.$on('$routeChangeError', function (event, next) {
+            $location.path('/').replace();
+        });
+
         $rootScope.$on('$routeChangeSuccess', function (e, current) {
             $rootScope.currentRouteQueryString = arrays.toQueryString(current.params);
             // hide all modals

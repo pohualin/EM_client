@@ -18,8 +18,8 @@ angular.module('emmiManager')
                 };
                 return selectedTeam;
             },
-            insertTeams: function (team) {
-                return $http.post(UriTemplate.create(Session.link.teamsByClientId).stringify({clientId: team.client.id}), team).
+            insertTeams: function (clientResource, team) {
+                return $http.post(UriTemplate.create(clientResource.link.teams).stringify(), team).
                     then(function (response) {
                         return response;
                     });
