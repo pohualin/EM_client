@@ -30,6 +30,7 @@ angular.module('emmiManager')
                 		});
                 		$scope.$hide();
                 	});
+                    _paq.push(['trackEvent', 'Form Action', 'Team Provider Edit', 'Save']);
                 } else {
                     if (!$scope.providerErrorAlert) {
                         $scope.providerErrorAlert = $alert({

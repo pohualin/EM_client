@@ -48,7 +48,7 @@ angular.module('emmiManager')
             show: false,
             backdrop: 'static'
         });
-		
+
 		 $scope.editProvider = function (teamProvider) {
              // create a copy for editing
              $scope.teamProviderToBeEdit = angular.copy(teamProvider);
@@ -73,6 +73,7 @@ angular.module('emmiManager')
                      editProviderModal.$promise.then(editProviderModal.show);
             	 });
              });
+             _paq.push(['trackEvent', 'Form Action', 'Team Provider', 'Edit']);
          };
 		
 		// when a pagination link is used
@@ -92,6 +93,7 @@ angular.module('emmiManager')
         	ProviderView.removeProvider(provider, $scope.teamResource).then(function (){
                 $scope.refreshLocationsAndProviders();
         	});
+            _paq.push(['trackEvent', 'Form Action', 'Team Provider', 'Remove']);
         };
         
 	})
