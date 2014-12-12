@@ -22,6 +22,7 @@ angular.module('emmiManager')
                         angular.copy(clientProviderResource, $scope.originalClientProvider);
                         $scope.$hide();
                     });
+                    _paq.push(['trackEvent', 'Form Action', 'Client Provider Edit', 'Save']);
                 } else {
                     if (!$scope.providerErrorAlert) {
                         $scope.providerErrorAlert = $alert({

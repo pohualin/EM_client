@@ -25,6 +25,7 @@ angular.module('emmiManager')
                     angular.copy(locationResource.entity, $scope.originalLocation);
                     $scope.$hide();
                 });
+                _paq.push(['trackEvent', 'Form Action', 'Client Location Edit', 'Save']);
             } else {
                 $scope.showErrorBanner();
             }
