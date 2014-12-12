@@ -1,0 +1,27 @@
+<form name="clientTeamRolesSelection" data-popover-toggle>
+    <div class="form-group">
+        <div class="checkbox" data-ng-repeat="clientTeamRole in clientTeamRoles | filter:disableLibrary()">
+            <label>
+                <input type="checkbox" value="" data-ng-model="clientTeamRole.checked" data-ng-disabled="clientTeamRole.disabled">&nbsp;&nbsp;
+            </label>
+            <span class="toggle-trigger">
+                <span class="caret" data-ng-click="toggleClientTeamRoleCaret(clientTeamRole)"></span>
+                <span data-ng-class="{'text-muted': clientTeamRole.disabled}">{{ clientTeamRole.entity.name }}</span>
+            </span>
+            <div class="toggle-content">
+                <small class="text-muted">
+                    <span data-ng-repeat="permission in clientTeamRole.entity.permissions | orderBy:'permission.rank'">
+                    {{permission.name  | translate }}{{!$last ? ',' : ''}}&nbsp;
+                    </span>
+                </small>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <div class="form-actions">
+        <button type="button" class="btn btn-default btn-xs btn-close" data-ng-click="$hide()">
+            <span class="glyphicon glyphicon-remove"></span>
+        </button>
+        <button type="button" class="btn btn-primary pull-right" data-ng-click="addLibraries();$hide()">Add</button>
+    </div>
+</form>

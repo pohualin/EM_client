@@ -1,0 +1,38 @@
+<div class="row" data-ng-show="existingUserClientUserClientTeamRoles" data-ng-repeat="existingUserClientUserClientTeamRole in existingUserClientUserClientTeamRoles">
+	<div class="col-md-5">
+	    <form name="existingUserClientUserClientTeamRoleForm_{{existingUserClientUserClientTeamRole.entity.id}}" class="form" novalidate>
+	        <div class="panel-group" 
+	             data-start-collapsed="true"
+	             data-bs-collapse>
+	            <div class="panel panel-default" data-ng-click="toggleUserClientUserClienRolePanel(existingUserClientUserClientTeamRole)">
+	                <div class="panel-heading">
+	                    <div class="row panel-title">
+	                        <button type="button" class="btn-link" data-bs-collapse-toggle>
+	                            <span class="glyphicon sort-icon glyphicon-play glyphicon-small"></span>
+	                            {{ existingUserClientUserClientTeamRole.entity.userClientRole.name}}
+	                        </button>
+	                        <div class="pull-right">
+	                            <button type="button" class="btn-link" data-ng-click="removeUserClientTeamRole(existingUserClientUserClientTeamRole)">
+	                                <small>remove</small>
+	                            </button>
+	                        </div>
+	                    </div>
+	                </div>
+	                <div class="panel-collapse" data-bs-collapse-target>
+	                    <div class="panel-body">
+	                        <small class="text-muted">
+		                        <span data-ng-repeat="permission in existingUserClientUserClientTeamRole.entity.permissions | orderBy:'permission.rank'">
+	                    			{{permission.name  | translate }}{{!$last ? ',' : ''}}&nbsp;
+	                    		</span>
+	                        </small>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </form>
+	</div>
+</div>
+<button data-ng-hide="existingUserClientUserClientTeamRoles" class="btn btn-link btn-tag-library" type="button" title="Select a team role to add:"
+        data-placement="right" data-content-template="partials/user/client/userclientteamrole/add-client-team-role.html"
+        data-trigger="click" data-bs-popover data-popover-dismiss>Add team role
+</button>

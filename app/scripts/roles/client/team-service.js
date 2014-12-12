@@ -32,6 +32,22 @@ angular.module('emmiManager')
                     return deferred.promise;
                 },
                 /**
+                 * Loads ALL permissions for a client team role.
+                 *
+                 * @param clientTeamRoleResource used to load permissions
+                 * @returns a promise that resolves into the loaded permissions
+                 */
+                loadAllPermissions: function (clientTeamRoleResource) {
+                	if(clientTeamRoleResource.entity.permissions){
+                		return null;
+                	}
+                	return $http.get(UriTemplate.create(clientTeamRoleResource.link.permissions).stringify())
+	                    .then(function (response) {
+	                    	window.paul = response;
+	                    	clientTeamRoleResource.entity.permissions = response.data;
+	                    });
+                },
+                /**
                  * Loads ALL permissions for a client role. Once loaded, the possible role permissions
                  * on the role resource are changed to 'active' (if they come back). Also a copy of
                  * the current state of the database is pushed onto the clientTeamRoleResource.original
