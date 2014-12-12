@@ -8,18 +8,18 @@ angular.module('emmiManager')
 			   $modal({scope: $scope, template: 'partials/team/provider/search.html', animation: 'none', backdropAnimation: 'emmi-fade', show: true, backdrop: 'static'});
 	        };
 	})
-	
+
 	.controller('ProviderCreateController', function($scope, ProviderCreate, $controller, ProviderView){
         $controller('TeamProviderCommon', {$scope: $scope});
 
         $scope.title = 'New Provider';
-        
+
         $scope.provider = ProviderCreate.newProvider();
-        
+
         $scope.saveAndAddAnotherProvider = function (isValid) {
             $scope.saveProvider(isValid, true);
         };
-               
+
         $scope.saveProvider = function (isValid, addAnother) {
             $scope.providerFormSubmitted = true;
         	if (isValid) {
@@ -29,9 +29,10 @@ angular.module('emmiManager')
 	    	        	$scope.teamResource.teamProviders = response;
 	    	        	if (addAnother) {
 	                        $scope.addProviders();
-	                    } 
+	                    }
 	                });
 	        	});
+                _paq.push(['trackEvent', 'Form Action', 'Team Provider Create', 'Save']);
 	        }
         };
 	})

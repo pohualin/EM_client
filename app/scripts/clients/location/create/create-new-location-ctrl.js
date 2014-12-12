@@ -51,6 +51,7 @@ angular.module('emmiManager')
                         });
                     }
                 });
+                _paq.push(['trackEvent', 'Form Action', 'Client Location Create', 'Save']);
             } else {
                 $scope.showErrorBanner();
             }
