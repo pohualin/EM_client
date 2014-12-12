@@ -8,9 +8,8 @@ angular.module('emmiManager')
             	 * Associate selected UserClientRole to selected UserClient
             	 */
                 associateUserClientUserClientRole: function(userClient, selectedUserClientRole){
-                	var userClientUserClientRole = {};
+                	var userClientUserClientRole = {userClientRole: {id: selectedUserClientRole}};
                 	userClientUserClientRole.userClient = userClient.entity;
-                	userClientUserClientRole.userClientRole = {id: selectedUserClientRole};
                 	return $http.post(UriTemplate.create(userClient.link.userClientRoles).stringify(), userClientUserClientRole)
 	                    .success(function(response) {
 	                        return response;
