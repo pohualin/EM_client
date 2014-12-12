@@ -60,10 +60,8 @@ angular.module('emmiManager')
                  });
              },            
              fetchPageLink: function (href) {
-            	 console.log(href);
                  return $http.get(href)
                      .then(function (response) {
-                    	 console.log(response);
                     	 CommonService.convertPageContentLinks(response.data);
                          return response.data;
                      });
