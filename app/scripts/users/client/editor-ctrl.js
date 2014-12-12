@@ -70,7 +70,7 @@ angular.module('emmiManager')
     		};
     	
 	        /**
-	         * Called when 'edit' is clicked
+	         * Called when 'remove' is clicked
 	         */
 	        $scope.removeUserClientRole = function (userClientUserClientRole) {
 	        	UserClientUserClientRolesService.deleteUserClientUserClientRole(userClientUserClientRole)
