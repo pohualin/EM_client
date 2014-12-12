@@ -25,7 +25,7 @@ angular.module('emmiManager')
                     var teamProviderTeamLocationSaveRequest = [];
                     var req = {};
                     req.location = location.data.location.entity;
-                    if ($scope.providersData.length === $scope.location.providersSelected.length) { 
+                    if ($scope.providersData.length === $scope.location.providersSelected.length) {
                         req.providers = [];
                     } else {
                         req.providers = $scope.location.providersSelected;
@@ -38,11 +38,11 @@ angular.module('emmiManager')
                         $scope.refresh();
                         var container = '#remove-container';
                         var locationResource = location.data.location;
-                        
+
                         if (addAnother) {
                             $scope.addLocations();
                             container = '#message-container';
-                        }     
+                        }
 
                         $alert({
                             title: ' ',
@@ -52,10 +52,11 @@ angular.module('emmiManager')
                             show: true,
                             duration: 5,
                             dismissable: true
-                        });                
+                        });
                     });
 
                 });
+                _paq.push(['trackEvent', 'Form Action', 'Team Location Create', 'Save']);
             } else {
                 $scope.showErrorBanner();
             }

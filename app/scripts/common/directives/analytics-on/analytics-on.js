@@ -4,10 +4,8 @@ angular.module('emmiManager')
 
 /**
  * This directive is taken from the Angulartics project (http://luisfarzati.github.io/angulartics/)
- * allows for declarative event tracking on DOM elements.
- * It works by essentially delaying the single click action for 250ms in case another click occurs.
- * If at the end of the delay, only a single click has occurred then the single click action will
- * be performed.
+ * and allows for declarative event tracking on DOM elements. In Piwik, analytics-event = Event Action,
+ * analytics-category = Event Category, and analytics-label = Event Name.
  *
  *       <a href="file.pdf" analytics-on="click" analytics-event="Download">Download</a>
  *
