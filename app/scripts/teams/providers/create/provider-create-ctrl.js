@@ -8,9 +8,12 @@ angular.module('emmiManager')
 			   $modal({scope: $scope, template: 'partials/team/provider/search.html', animation: 'none', backdropAnimation: 'emmi-fade', show: true, backdrop: 'static'});
 	        };
 	})
+	
+	.controller('ProviderCreateController', function($scope, ProviderCreate, $controller, ProviderView, ProviderSearch){
 
-	.controller('ProviderCreateController', function($scope, ProviderCreate, $controller, ProviderView){
         $controller('TeamProviderCommon', {$scope: $scope});
+
+        $controller('CommonPagination', {$scope: $scope});
 
         $scope.title = 'New Provider';
 
@@ -25,12 +28,19 @@ angular.module('emmiManager')
         	if (isValid) {
 	        	ProviderCreate.create($scope.provider, $scope.teamResource).then(function(response){
 	                $scope.$hide();
-	                ProviderView.allProvidersForTeam($scope.teamResource).then(function(response){
-	    	        	$scope.teamResource.teamProviders = response;
-	    	        	if (addAnother) {
-	                        $scope.addProviders();
-	                    }
-	                });
+	                ProviderSearch.fetchLocationsForTeam($scope.teamResource).then( function (locationResponse){
+	    				var locationsArray=[];
+	    	        	var allLocations = locationResponse.data.content;
+	    	        	angular.forEach(locationResponse.data.content, function(location){
+	    	        		locationsArray.push(' '+ location.entity.location.name);
+	    	        	});
+	    	        	ProviderView.paginatedProvidersForTeam($scope.teamResource, locationsArray).then(function(response){
+	    	        		$scope.handleResponse(response, 'listOfTeamProviders');      
+		    	        	if (addAnother) {
+		        				$scope.addProviders();   
+			        		}
+	    	        	});
+	        		});
 	        	});
                 _paq.push(['trackEvent', 'Form Action', 'Team Provider Create', 'Save']);
 	        }

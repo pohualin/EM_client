@@ -80,15 +80,20 @@
                                     <th class="sort col-sm-3"> Locations
                                 </th>
                                 </tr>
-                                <tr data-ng-repeat="provider in searchedProvidersList" data-ng-class="provider.entity.disabled ? 'text-muted' : ''">
-									<td><input type="checkbox" data-ng-model="provider.entity.checked"  data-ng-disabled="provider.entity.disabled"  data-ng-change="onCheckboxChange(provider)"></td>
-									<td>{{provider.entity.firstName}} {{provider.entity.middleName}} {{provider.entity.lastName}}</td>
-                                    <td>{{provider.entity.specialty.name}}</td>
-                                    <td>{{provider.entity.email}}</td>
-                                    <td><div data-ng-show="provider.entity.showLocations">
-                                    		<select data-chosen data-placeholder="Use: all locations" multiple data-ng-model="provider.entity.teamLocations"
+                                <tr data-ng-repeat="teamProvider in searchedProvidersList"  data-ng-class="teamProvider.link.self ? 'text-muted' : ''">
+									<td data-ng-hide="teamProvider.link.self">
+										<input type="checkbox" data-ng-model="teamProvider.provider.entity.checked"  data-ng-disabled="teamProvider.provider.entity.disabled"  data-ng-change="onCheckboxChange(teamProvider.provider)">
+									</td>
+									<td data-ng-show="teamProvider.link.self">
+                                        <input type="checkbox" disabled="disabled" checked>
+                                    </td>
+									<td>{{teamProvider.provider.entity.firstName}} {{teamProvider.provider.entity.middleName}} {{teamProvider.provider.entity.lastName}}</td>
+                                    <td>{{teamProvider.provider.entity.specialty.name}}</td>
+                                    <td>{{teamProvider.provider.entity.email}}</td>
+                                    <td><div data-ng-show="teamProvider.provider.entity.showLocations">
+                                    		<select data-chosen data-placeholder="Use: all locations" multiple data-ng-model="teamProvider.provider.entity.teamLocations"
                 							data-ng-options="location.entity.location.name group by location.name for location in teamLocations | orderBy:'location.entity.location.name' track by location.entity.id" 
-               								class="form-control" data-ng-change="updateTeamLocationsForProvider(provider)" >
+               								class="form-control" data-ng-change="updateTeamLocationsForProvider(teamProvider.provider)" >
                								 </select>
                							</div>
                                 	</td>

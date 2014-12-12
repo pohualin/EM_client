@@ -1,7 +1,8 @@
 'use strict';
 angular.module('emmiManager')
 
-	.controller('TeamProviderCommon', function($scope, ProviderView){
+	.controller('TeamProviderCommon', function($scope, ProviderView, ProviderSearch){
+		
         $scope.noSearch = true;
 
         if($scope.teamResource){
@@ -11,21 +12,34 @@ angular.module('emmiManager')
         }
         $scope.allProvidersForTeam = function() {
         	ProviderView.allProvidersForTeam($scope.teamResource).then(function(response){
-        		$scope.teamResource.teamProviders = response;
-
+        		$scope.handleResponse(response, 'listOfTeamProviders');      
         	});
         };
+        
+        $scope.refreshLocationsAndProviders = function() {
+        	ProviderSearch.fetchAllLocationsForTeam($scope.teamResource).then(function(locationResponse){
+				var locationsArray=[];
+	        	angular.forEach(locationResponse, function(location){
+	        		locationsArray.push(' '+ location.name);
+	        	});
+	        	$scope.allLocationsForTeam = locationsArray.sort().toString();
+	        	ProviderView.paginatedProvidersForTeam($scope.teamResource).then(function(response){
+	        		$scope.handleResponse(response, 'listOfTeamProviders');      
+	        	});      	
+			});
+        };
 	})
+	
+	.controller('ProviderListController', function($scope, $modal, ProviderView, TeamLocation, TeamProviderService, ProviderSearch, $controller, arrays){
+        
+		$controller('CommonPagination', {$scope: $scope});
+		
+        $controller('TeamProviderCommon', {$scope: $scope});
 
-	.controller('ProviderListController', function($scope, $modal, ProviderView, TeamLocation, TeamProviderService){
-
-		if($scope.teamResource){
-        	ProviderView.allProvidersForTeam($scope.teamResource).then(function(response){
-	        	ProviderView.convertLinkObjects(response);
-	    		$scope.teamResource.teamProviders = response;
-        	});
-        }
-
+		if($scope.teamResource){     
+			$scope.refreshLocationsAndProviders();
+		}
+		
 		var editProviderModal = $modal({
             scope: $scope,
             template: 'partials/team/provider/edit.html',
@@ -61,14 +75,26 @@ angular.module('emmiManager')
              });
              _paq.push(['trackEvent', 'Form Action', 'Team Provider', 'Edit']);
          };
+		
+		// when a pagination link is used
+        $scope.fetchPage = function (href) {
+            $scope.loading = true;
+            ProviderView.fetchPageLink(href).then(function (page) {
+            	ProviderSearch.assignLocationsForFetchedProviders(page, $scope.teamResource).then(function (response){
+	        		$scope.handleResponse(response, 'listOfTeamProviders');      
+            	});
+            }, function () {
+                // error happened
+                $scope.loading = false;
+            });
+        };
 
         $scope.removeProvider = function (provider) {
-        	ProviderView.removeProvider(provider).then(function (){
-        		ProviderView.allProvidersForTeam($scope.teamResource).then(function(response){
-            		$scope.teamResource.teamProviders = response;
-            	});
+        	ProviderView.removeProvider(provider, $scope.teamResource).then(function (){
+                $scope.refreshLocationsAndProviders();
         	});
             _paq.push(['trackEvent', 'Form Action', 'Team Provider', 'Remove']);
         };
+        
 	})
 ;

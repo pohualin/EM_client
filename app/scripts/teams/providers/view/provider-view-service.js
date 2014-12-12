@@ -2,7 +2,14 @@
 
 angular.module('emmiManager')
 
-    .service('ProviderView', function ($http, $q, Session, UriTemplate, arrays) {
+    .service('ProviderView', function ($http, $q, Session, UriTemplate, arrays, ProviderSearch, CommonService) {
+    	function convertPageContentLinks(page){
+            if (page) {
+                angular.forEach(page, function (teamProvider) {
+                	teamProvider.link = arrays.convertToObject('rel', 'href', teamProvider.link);
+                });
+            }
+        }
         return {
         	specialtyRefData: function(teamResource) {
         		if(teamResource.link.providerReferenceData){
@@ -22,6 +29,20 @@ angular.module('emmiManager')
             		 return null;
             	}
              },
+             paginatedProvidersForTeam: function (teamResource) {
+                 return $http.get(UriTemplate.create(teamResource.link.teamProviders).stringify(), teamResource.entity).then(function addToProviders(response) {
+                	 var page = response.data;
+                	 CommonService.convertPageContentLinks(response.data);
+                    	 angular.forEach(page.content, function(teamProvider){
+                    		 var locations = [];
+                    		 angular.forEach(teamProvider.entity.teamProviderTeamLocations, function(tptl){
+                    			 locations.push(' '+ tptl.teamLocation.location.name);
+                    		 });
+                    		 teamProvider.entity.locations = locations.length > 0 ? locations.sort().toString() : '';
+	            		 });
+                    	 return page;
+                 });
+             },
              allProvidersForTeam: function (teamResource) {
             	 var providers = [];
                  return $http.get(UriTemplate.create(teamResource.link.teamProviders).stringify(), teamResource.entity).then(function addToProviders(response) {
@@ -37,9 +58,16 @@ angular.module('emmiManager')
 	                        }
 	            		 return providers;
                  });
+             },            
+             fetchPageLink: function (href) {
+                 return $http.get(href)
+                     .then(function (response) {
+                    	 CommonService.convertPageContentLinks(response.data);
+                         return response.data;
+                     });
+
              },
              removeProvider: function (provider, teamResource) {
-             	provider.link = arrays.convertToObject('rel', 'href', provider.link);
              	return $http.delete(UriTemplate.create(provider.link.findProviderById).stringify());
              },
              convertLinkObjects : function(response){
