@@ -22,6 +22,7 @@ angular.module('emmiManager')
 	         */
 	        $scope.createAnotherUserClient = function () {
 	        	$location.path('/clients/' + $scope.client.entity.id + '/users/new');
+	        	$scope.createNewUserClient();
 	        };
     	
 	    	/**
@@ -29,6 +30,7 @@ angular.module('emmiManager')
 	         */
 	        $scope.createNewUserClient = function () {
 	        	$scope.editMode = true;
+	        	$scope.userClientFormSubmitted = false;
 	        	$scope.useEmail = true;
 	        	$scope.selectedUserClient = null;
 	        	$scope.existingUserClientUserClientRoles = null;

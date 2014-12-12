@@ -72,7 +72,7 @@ angular.module('emmiManager')
                 		return $http.get(UriTemplate.create(Session.link.userClientById).stringify({id: userClientId})).then(function(userClient){
                     		selectedUserClient = userClient.data;
                     		return selectedUserClient;
-                    	})
+                    	});
                 	}
                 },
                 

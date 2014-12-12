@@ -37,7 +37,7 @@ angular.module('emmiManager')
 
         });
 
-        $scope.checkForConflicts = function (isValid) {
+       /* $scope.checkForConflicts = function (isValid) {
             Tag.checkForConflicts(Client.getClient()).then(function (conflictingTeamTags) {
                 if (conflictingTeamTags.length > 0) {
                     $scope.conflictingTeamTags = conflictingTeamTags;
@@ -48,7 +48,7 @@ angular.module('emmiManager')
                     }
                 }
             });
-        };
+        };*/
 
         $scope.overrideConflictingTeamTags = function (isValid) {
             $scope.saveTags(isValid);
@@ -167,7 +167,8 @@ angular.module('emmiManager')
         };
     }])
 
-    .directive('teamConflictPopover', ['$popover', '$timeout', '$translate', function ($popover, $timeout, $translate) {
+    .directive('teamConflictPopover', ['$popover', '$timeout', '$translate', 'Tag', 'Client', function ($popover, $timeout, $translate, Tag, Client) {
+        var popover;
         return {
             restrict: 'EA',
             scope: {
@@ -180,21 +181,38 @@ angular.module('emmiManager')
                 element.on('click', function () {
                     // pop a warning dialog
                     event.stopPropagation();
-                    scope.onOpenPopover();
-                    if (!scope.teamConflictWarning) {
-                        scope.teamConflictWarning = $popover(element, {
-                            title: 'Are you sure?',
-                            scope: scope,
-                            show: true,
-                            autoClose: true,
-                            placement: 'top',
-                            contentTemplate: 'partials/client/tags/conflictingTeam_popover.tpl.html'
-                        });
-                        scope.$on('tooltip.hide', function() {
-                            scope.onClosePopover();
-                            scope.$apply();
-                        });                       
-                    }
+                    Tag.checkForConflicts(Client.getClient()).then(function (conflictingTeamTags) {
+                        if (conflictingTeamTags && conflictingTeamTags.length > 0) {
+                            scope.onOpenPopover();
+                            scope.conflictingTeamTags = conflictingTeamTags;
+                            if (popover){
+                                popover.hide();
+                            }
+                            popover = $popover(element, {
+                                title: 'Are you sure?',
+                                scope: scope,
+                                trigger: 'manual',
+                                show: true,
+                                autoClose: true,
+                                placement: 'top',
+                                target: element,
+                                contentTemplate: 'partials/client/tags/conflictingTeam_popover.tpl.html'
+                            });
+                            
+                            scope.$on('tooltip.hide', function() {
+                                scope.onClosePopover();
+                                scope.$apply();
+                            });                       
+
+                        } else {
+                            $timeout(function () {
+                                scope.onOk();
+                                scope.onClosePopover();
+                            });
+                        }
+                    });
+
+                
                 });
             }
         };

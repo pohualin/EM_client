@@ -13,7 +13,7 @@
 				        <div class="error-circle glyphicon glyphicon-exclamation-sign"
 				             data-ng-show="userClientForm.firstName.$error.required && userClientFormSubmitted"
 				             data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-				             data-title="First Name can not be blank."></div>
+				             data-title="Required"></div>
 				        <div class="error-circle glyphicon glyphicon-exclamation-sign"
 				             data-ng-show="userClientForm.firstName.$error.pattern && userClientFormSubmitted"
 				             data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
@@ -33,7 +33,7 @@
 					    <div class="error-circle glyphicon glyphicon-exclamation-sign"
 					         data-ng-show="userClientForm.lastName.$error.required && userClientFormSubmitted"
 					         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-					         data-title="Last Name can not be blank."></div>
+					         data-title="Required"></div>
 					    <div class="error-circle glyphicon glyphicon-exclamation-sign"
 					         data-ng-show="userClientForm.lastName.$error.pattern && userClientFormSubmitted"
 					         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
@@ -66,12 +66,12 @@
 		    <div class="row">
 		    	<div class="col-md-4">
 					<div class="form-group">
-						<label class="control-label" for="useEmail">User Id:</label>
+						<label class="control-label" for="useEmail">User ID:</label>
 						<div>
 							<input class="form-control" id="userId" data-ng-model="userClientToBeEdit.entity.login" 
 		                       name="login" type="text" data-ng-hide="useEmail"
 		                       maxlength="255" data-ng-pattern="/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/"/>
-							<input id="useEmail" type="checkbox" checked /> Use Email
+							<input id="useEmail" type="checkbox" checked data-ng-click="toggleUseEmail(this)" />&nbsp;&nbsp;Use Email
 						</div>
 					</div>
 				</div>

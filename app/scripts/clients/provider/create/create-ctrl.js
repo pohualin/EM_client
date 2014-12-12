@@ -56,6 +56,7 @@ angular.module('emmiManager')
                             });
                         }
                     });
+                    _paq.push(['trackEvent', 'Form Action', 'Client Provider Create', 'Save']);
                 } else {
                     if (!$scope.providerErrorAlert) {
                         $scope.providerErrorAlert = $alert({

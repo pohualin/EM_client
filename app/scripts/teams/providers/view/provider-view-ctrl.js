@@ -16,16 +16,16 @@ angular.module('emmiManager')
         	});
         };
 	})
-	
+
 	.controller('ProviderListController', function($scope, $modal, ProviderView, TeamLocation, TeamProviderService){
-        
+
 		if($scope.teamResource){
         	ProviderView.allProvidersForTeam($scope.teamResource).then(function(response){
-	        	ProviderView.convertLinkObjects(response);	
+	        	ProviderView.convertLinkObjects(response);
 	    		$scope.teamResource.teamProviders = response;
         	});
         }
-		
+
 		var editProviderModal = $modal({
             scope: $scope,
             template: 'partials/team/provider/edit.html',
@@ -34,7 +34,7 @@ angular.module('emmiManager')
             show: false,
             backdrop: 'static'
         });
-		
+
 		 $scope.editProvider = function (teamProvider) {
              // create a copy for editing
              $scope.teamProviderToBeEdit = angular.copy(teamProvider);
@@ -59,14 +59,16 @@ angular.module('emmiManager')
                      editProviderModal.$promise.then(editProviderModal.show);
             	 });
              });
+             _paq.push(['trackEvent', 'Form Action', 'Team Provider', 'Edit']);
          };
 
         $scope.removeProvider = function (provider) {
         	ProviderView.removeProvider(provider).then(function (){
         		ProviderView.allProvidersForTeam($scope.teamResource).then(function(response){
             		$scope.teamResource.teamProviders = response;
-            	});        	
+            	});
         	});
+            _paq.push(['trackEvent', 'Form Action', 'Team Provider', 'Remove']);
         };
 	})
 ;

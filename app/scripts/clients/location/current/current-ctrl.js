@@ -68,6 +68,7 @@ angular.module('emmiManager')
                 $scope.showRemovalSuccess(locationResource);
                 $scope.performSearch();
             });
+            _paq.push(['trackEvent', 'Form Action', 'Client Location', 'Remove']);
         };
 
         // when a page size link is used

@@ -73,6 +73,7 @@ angular.module('emmiManager')
               // turn off the sort after the search request has been made, the
               // response will rebuild
               $scope.sortProperty = null;
+              _paq.push(['trackSiteSearch', q, 'Location Search']);
             }
           }
           // Function declarations end here
