@@ -6,8 +6,12 @@ angular.module('emmiManager')
         $scope.selectedGroup = '';
         $scope.filterTags = [];
         $scope.clientId = Client.getClient().entity.id;
-        TeamsFilter.getClientTeams().then(function (teamsForClient) {
-            $scope.clientTeams = teamsForClient;
+
+        TeamsFilter.getClientTeamTags($scope.filterTags).then(function (teamtags) {
+            $scope.clientTeamTags = teamtags;
+            TeamsFilter.getClientTeams(teamtags).then(function (teams) {
+                $scope.clientTeams = teams;
+            });
         });
 
         TeamsFilter.getClientGroups().then(function (groups) {
@@ -23,9 +27,9 @@ angular.module('emmiManager')
         $scope.showClientTeams();
 
         $scope.getTeamTagsForClientAndGroup = function () {
-            if ($scope.filterTags.length === 0 && ($scope.selectedGroup === null || $scope.selectedGroup === '')) {
+            if (($scope.filterTags.length === 0 || $scope.filterTags===[]) && ($scope.selectedGroup === null || $scope.selectedGroup === '')) {
                 $scope.showClientTeams();
-                $scope.listOfTeamLists = [];
+                $scope.listOfTeamsByTag = [];
             } else if ($scope.filterTags.length !== 0 && ($scope.selectedGroup === null || $scope.selectedGroup === '')) {
                 $scope.showFilteredTeams();
             } else if ($scope.filterTags.length > 0) {
@@ -36,9 +40,10 @@ angular.module('emmiManager')
                 $scope.useClientTeamsDisplay = false;
                 $scope.useGroupDisplay = true;
                 $scope.useFilteredDisplay = false;
+
                 TeamsFilter.getTagsForGroup($scope.selectedGroup).then(function (tags) {
                     $scope.tagsInSelectedGroup = tags;
-                    $scope.listOfTeamLists = TeamsFilter.getTeamsForTagsInGroup(tags);
+                    $scope.listOfTeamsByTag = TeamsFilter.getTeamsForTags($scope.clientTeamTags,tags);
                 });
             }
         };
@@ -59,13 +64,17 @@ angular.module('emmiManager')
                 $scope.useGroupDisplay = false;
                 $scope.useFilteredDisplay = true;
             }
-            $scope.filteredTeams = TeamsFilter.getFilteredTeams($scope.filterTags, $scope.clientTeams);
+            TeamsFilter.getFilteredTeams($scope.filterTags).then(function(filteredTeamTags){
+                $scope.filteredTeamTags = filteredTeamTags;
+            });
         };
 
         $scope.showFilteredAndGroupedTeams = function () {
-            TeamsFilter.getFilteredAndGroupedTeamsToShow($scope.selectedGroup, $scope.filterTags).then(function (tagsInSelectedGroupAndFilterTag) {
-                $scope.tagsInSelectedGroup = tagsInSelectedGroupAndFilterTag;
-                $scope.listOfTeamLists = TeamsFilter.getTeamsForTagsInSelectedGroupAndFilteredTag(tagsInSelectedGroupAndFilterTag);
+            TeamsFilter.getTagsForFilteredTagsAndGroup($scope.filterTags,$scope.selectedGroup.entity.tag).then(function (tags) {
+                $scope.tagsInSelectedGroup = tags;
+                TeamsFilter.getFilteredTeamTags($scope.filterTags).then(function(filteredTeamTags){
+                    $scope.listOfTeamsByTag = TeamsFilter.formatTeamTags(filteredTeamTags,tags);
+                });
             });
         };
     })

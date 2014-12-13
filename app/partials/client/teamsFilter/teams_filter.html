@@ -10,7 +10,7 @@
             <select class="col-md-6 teamFilterOrganizeBy" data-ng-model="selectedGroup"
                     data-ng-options="group.entity.name for group in clientGroups track by group.entity.id | orderBy:'name'"
                     data-ng-change="getTeamTagsForClientAndGroup()">
-                <option value="">All</option>
+                <option value="">All Active Teams</option>
             </select>
         </div>
         <div class="row">
@@ -18,22 +18,22 @@
             <select data-chosen data-placeholder="Choose some tags" multiple
                     data-ng-model="filterTags" data-ng-change="showFilteredTeams()"
                     data-ng-options="tag.text
-                group by tag.group.title
+                group by tag.group.name
                 for tag in clientTagGroupToDisplay | orderBy:'text'
                 track by tag.id" class="form-control">
             </select>
         </div>
         <hr>
         <div data-ng-show="useClientTeamsDisplay" data-ng-repeat="team in clientTeams">
-            <a ng-href="#/clients/{{clientId}}/teams/{{team.entity.id}}">{{team.entity.name}}</a>
+            <a data-ng-href="#/clients/{{clientId}}/teams/{{team.id}}">{{team.name}}</a>
         </div>
 
         <div data-ng-show="useGroupDisplay">
-            <div data-ng-repeat="teamList in listOfTeamLists">
-                <b>{{tagsInSelectedGroup[$index].entity.name}}</b>
+            <div data-ng-repeat="(tag,teamList) in listOfTeamsByTag">
+                <b>{{tag}}</b>
 
                 <div data-ng-repeat="team in teamList">
-                    <a ng-href="#/clients/{{clientId}}/teams/{{team.id}}">{{team.name}}</a>
+                    <a data-ng-href="#/clients/{{clientId}}/teams/{{team.id}}">{{team.name}}</a>
                 </div>
                 <div data-ng-show="teamList.length===0">No teams exist for this tag.</div>
             </div>
@@ -41,8 +41,8 @@
         </div>
 
         <div data-ng-show="useFilteredDisplay">
-            <div data-ng-repeat="team in filteredTeams">
-                <a ng-href="#/clients/{{clientId}}/teams/{{team.entity.id}}">{{team.entity.name}}</a>
+            <div data-ng-repeat="teamTag in filteredTeamTags">
+                <a data-ng-href="#/clients/{{clientId}}/teams/{{teamTag.team.id}}">{{teamTag.team.name}}</a>
             </div>
             <div data-ng-show="filteredTeams.length===0&&filteredTeams!==null"><br>No teams exist for this search.</div>
         </div>
