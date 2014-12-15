@@ -2,14 +2,14 @@
     <br>
     <b>Teams</b>
 
-    <div data-ng-show="clientTeams.length===0"><br>No teams exist for this client.</div>
+    <div data-ng-show="clientTagGroupToDisplay.length===0"><br>No teams exist for this client.</div>
 
-    <div data-ng-show="clientTeams">
+    <div data-ng-show="clientTagGroupToDisplay.length!==0">
         <div class="row">
             <div class="col-md-5">organize by:</div>
             <select class="col-md-6 teamFilterOrganizeBy" data-ng-model="selectedGroup"
                     data-ng-options="group.entity.name for group in clientGroups track by group.entity.id | orderBy:'name'"
-                    data-ng-change="getTeamTagsForClientAndGroup()">
+                    data-ng-change="getTeamTagsForGroup()">
                 <option value="">All Active Teams</option>
             </select>
         </div>
@@ -24,7 +24,7 @@
             </select>
         </div>
         <hr>
-        <div data-ng-show="useClientTeamsDisplay" data-ng-repeat="team in clientTeams">
+        <div data-ng-hide="useGroupDisplay" data-ng-repeat="team in clientTeams">
             <a data-ng-href="#/clients/{{clientId}}/teams/{{team.id}}">{{team.name}}</a>
         </div>
 
@@ -37,14 +37,7 @@
                 </div>
                 <div data-ng-show="teamList.length===0">No teams exist for this tag.</div>
             </div>
-            <div data-ng-show="listOfTeamLists.length===0||listOfTeamLists[0].length===0">No teams exist for this search.</div>
-        </div>
-
-        <div data-ng-show="useFilteredDisplay">
-            <div data-ng-repeat="teamTag in filteredTeamTags">
-                <a data-ng-href="#/clients/{{clientId}}/teams/{{teamTag.team.id}}">{{teamTag.team.name}}</a>
-            </div>
-            <div data-ng-show="filteredTeams.length===0&&filteredTeams!==null"><br>No teams exist for this search.</div>
+            <div data-ng-show="listOfTeamsByTag===null">No teams exist for this search.</div>
         </div>
     </div>
     <hr>
