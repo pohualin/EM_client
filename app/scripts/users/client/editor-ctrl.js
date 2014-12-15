@@ -5,24 +5,36 @@ angular.module('emmiManager')
 /**
  *   Manage Client Level users
  */
-    .controller('ClientUsersEditorCtrl', ['$alert', '$scope', 'Client', 'ClientUsersService', 'ManageUserTeamRolesService', 'UserClientUserClientTeamRolesService',
-        function ($alert, $scope, Client, ClientUsersService, ManageUserTeamRolesService, UserClientUserClientTeamRolesService) {
+.controller('UsersClientEditorController', ['$alert', '$location', '$scope', 'Client', 'ManageUserRolesService', 'UsersClientService', 'UserClientUserClientRolesService', 'UserClientUserClientTeamRolesService',
+        function ($alert, $location, $scope, Client, ManageUserRolesService, UsersClientService, UserClientUserClientRolesService UserClientUserClientTeamRolesService) {
+
+			/**
+    		 * Associate selected UserClientRole to selected UserClient
+    		 */
+    		$scope.associateClientRole = function (form) {
+    			UserClientUserClientRolesService.associateUserClientUserClientRole($scope.selectedUserClient, form.selectedClientRole).then(function(){
+    				$scope.loadExistingUserClientUserClientRoles();
+    			});
+    		};
+    	
 	    	/**
 	         * Called when 'Create Another User' is clicked
 	         */
-	        $scope.createAnotherClientUser = function () {
-	        	$scope.clientUserFormSubmitted = false;
-	        	$scope.createdClientUser = null;
-	        	$scope.createNewClientUser();
+	        $scope.createAnotherUserClient = function () {
+	        	$location.path('/clients/' + $scope.client.entity.id + '/users/new');
+	        	$scope.createNewUserClient();
 	        };
     	
 	    	/**
 	         * Called when 'Add New User' is clicked
 	         */
-	        $scope.createNewClientUser = function () {
+	        $scope.createNewUserClient = function () {
 	        	$scope.editMode = true;
-	            $scope.clientUserToBeEdit = ClientUsersService.newClientUser();
-	            focus('firstName');
+	        	$scope.userClientFormSubmitted = false;
+	        	$scope.useEmail = true;
+	        	$scope.selectedUserClient = null;
+	        	$scope.existingUserClientUserClientRoles = null;
+	            $scope.userClientToBeEdit = UsersClientService.newUserClient();
 	        };
 	        
 	        /**
@@ -30,21 +42,57 @@ angular.module('emmiManager')
 	         */
 	        $scope.edit = function () {
 	            $scope.editMode = true;
-	            $scope.clientUserFormSubmitted = false;
-	            focus('firstName');
+	            $scope.page.setTitle('Edit User - ' + $scope.client.entity.name);
+	            $scope.userClientFormSubmitted = false;
 	        };
+	        
+	        /**
+	         * Load existingUserClientUserClientRoles for the UserClient
+	         */
+	        $scope.loadExistingUserClientUserClientRoles = function(){
+    			UserClientUserClientRolesService.
+    			getUserClientUserClientRoles($scope.selectedUserClient).then(function(response){
+    				// Set existingUserClientUserClientRoles if it exists
+    				if(response.length > 0){
+    					$scope.existingUserClientUserClientRoles = response;	
+    				} else {
+    					// Load existing UserClientRoles for the Client
+    					$scope.loadClientRoles();
+    				}
+    			});
+    		};
+    		
+    		/**
+    		 * load all UserClientRoles for the client
+    		 */
+    		$scope.loadClientRoles = function(){
+				ManageUserRolesService.loadClientRolesWithPermissions().then(function(clientRoles){
+					$scope.clientRoles = clientRoles;
+				});
+    		};
     	
+	        /**
+	         * Called when 'remove' is clicked
+	         */
+	        $scope.removeUserClientRole = function (userClientUserClientRole) {
+	        	UserClientUserClientRolesService.deleteUserClientUserClientRole(userClientUserClientRole)
+	        	.then(function(response){
+	        		$scope.existingUserClientUserClientRoles = null;
+	        		$scope.loadClientRoles();
+	        	});
+	        };
+	        
 	        /**
 	         * Called when Save button is clicked
 	         */
     		$scope.save = function(isValid){
-    			$scope.clientUserFormSubmitted = true;
+    			$scope.userClientFormSubmitted = true;
     			if (isValid) {
-                    ClientUsersService.createClientUser($scope.client, $scope.clientUserToBeEdit.entity).then(function(response){
-                    	console.log('back from create');
-                    	$scope.createdClientUser = response.data;
-                    	$scope.clientUserToBeEdit = response.data;
+                    UsersClientService.createUserClient($scope.client, $scope.userClientToBeEdit.entity).then(function(response){
+                    	$scope.selectedUserClient = response.data;
+                    	$scope.userClientToBeEdit = response.data;
                     	$scope.editMode = false;
+                    	$scope.loadClientRoles();
                     });
                 } else {
                     if (!$scope.errorAlert) {
@@ -61,9 +109,16 @@ angular.module('emmiManager')
     		};
     		
     		/**
+    		 * Called when UserClientUserClientRole panel is toggled
+    		 */
+    		$scope.toggleUserClientUserClienRolePanel = function(userClientUserClientRole){
+    			UserClientUserClientRolesService.loadPermissionsForExistingUserClientUserClientRole(userClientUserClientRole);
+    		};
+    		
+    		/**
 	         * Called when Use Email checked box is toggled
 	         */
-    		$scope.toggleUseEmail = function(input){
+    		$scope.toggleUseEmail = function(){
     			console.log('toggle ' + $scope.useEmail);
     			// $scope.useEmail = $scope.useEmail ? false : true;
     		};
@@ -107,12 +162,27 @@ angular.module('emmiManager')
     			$scope.selectedClientTeamRole = null;
             });
             
+    		/**
+	         * init method called when the page is loading
+	         */
             function init(){
             	$scope.client = Client.getClient();
             	$scope.useEmail = true;
                 $scope.page.setTitle('Create Users - ' + $scope.client.entity.name);
                 $scope.createNewClientUser();
                 $scope.loadClientTeamRoles();
+            	if(UsersClientService.getUserClient()){
+            		// In this case UserClient is already created
+            		// Get the existing UserClient
+            		$scope.selectedUserClient = UsersClientService.getUserClient();
+            		$scope.page.setTitle('View User - ' + $scope.client.entity.name);
+            		// Check if there is an existed UserClientUserClientRole
+            		$scope.loadExistingUserClientUserClientRoles();
+            	} else {
+            		// In this case UserClient does not exist
+                    $scope.page.setTitle('Create User - ' + $scope.client.entity.name);
+                    $scope.createNewUserClient();
+            	}
             }
             
             init();

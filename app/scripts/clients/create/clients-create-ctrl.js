@@ -17,6 +17,7 @@ angular.module('emmiManager')
             Client.insertClient($scope.clientToEdit).then(function (response) {
                 Client.viewClient(response.data.entity);
             });
+            _paq.push(['trackEvent', 'Form Action', 'Client Create', 'Save']);
         } else {
             $scope.showError();
             // Loop through the form's validation errors and log to Piwik

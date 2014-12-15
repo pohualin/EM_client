@@ -52,7 +52,7 @@
 			</div>
 			<br>
 			<table class="table table-bordered table-striped table-hover"
-				border="0" cellpadding="0" cellspacing="0" data-ng-show="clientUsers">
+				border="0" cellpadding="0" cellspacing="0" data-ng-show="usersClient">
 				<tr>
 					<th class="sort col-sm-2" data-ng-click="sort('lastName')">Last Name
 						<span data-ng-show="sortProperty.property === 'lastName'"><span
@@ -77,15 +77,15 @@
 					<th class="col-sm-2">&nbsp;</th>
 				</tr>
 				<tr
-					data-ng-repeat="clientUser in clientUsers">
-					<td>{{clientUser.entity.lastName}}</td>
-					<td>{{clientUser.entity.firstName}}</td>
-					<td>{{clientUser.entity.login}}</td>
-					<td>{{clientUser.entity.email}}</td>
-					<td><a href="#/">edit</a> | <a href="#/">deactivate</a></td>
+					data-ng-repeat="userClient in usersClient">
+					<td>{{userClient.entity.lastName}}</td>
+					<td>{{userClient.entity.firstName}}</td>
+					<td>{{userClient.entity.login}}</td>
+					<td>{{userClient.entity.email}}</td>
+					<td><a href="#/clients/{{client.entity.id}}/users/{{userClient.entity.id}}">edit</a> | <a href="#/">deactivate</a></td>
 				</tr>
 			</table>
-			<div class="row" data-ng-show="clientUsers">
+			<div class="row" data-ng-show="usersClient">
 				<div data-ng-show="links" class="col-md-8 col-sm-8">
 					<ul class="pagination">
 						<li data-ng-repeat="link in links | orderBy:'order'"
@@ -96,7 +96,7 @@
 					</ul>
 				</div>
 			</div>
-			<div data-ng-hide="clientUsers">
+			<div data-ng-hide="usersClient">
 				<span>There are no existing users for {{client.entity.name}}</span>
 			</div>
 		</div>
