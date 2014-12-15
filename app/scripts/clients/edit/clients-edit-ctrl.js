@@ -27,6 +27,7 @@ angular.module('emmiManager')
             $scope.editMode = false;
             $scope.metadataSubmitted = false;
             delete $scope.clientToEdit;
+            _paq.push(['trackEvent', 'Form Action', 'Client Edit', 'Cancel']);
         };
 
         $scope.edit = function () {
@@ -34,6 +35,7 @@ angular.module('emmiManager')
             $scope.clientToEdit = angular.copy($scope.client);
             $scope.clientToEdit.origSalesForceAccount = $scope.clientToEdit.salesForceAccount.accountNumber;
             focus('clientName');
+            _paq.push(['trackEvent', 'Form Action', 'Client Edit', 'Edit']);
         };
 
         $scope.save = function (isValid) {
@@ -43,8 +45,18 @@ angular.module('emmiManager')
                     $scope.editMode = false;
                     setTitle();
                 });
+                _paq.push(['trackEvent', 'Form Action', 'Client Edit', 'Save']);
             } else {
                 $scope.showError();
+                // Loop through the form's validation errors and log to Piwik
+                var formErrors = $scope.metadataForm.$error;
+                for (var errorType in formErrors) {
+                    if (formErrors.hasOwnProperty(errorType)) {
+                        for (var i = 0; i < formErrors[errorType].length; i++) {
+                            _paq.push(['trackEvent', 'Validation Error', 'Client Edit', formErrors[errorType][i].$name+' '+errorType]);
+                        }
+                    }
+                }
             }
         };
 

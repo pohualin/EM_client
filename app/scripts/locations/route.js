@@ -7,7 +7,7 @@ angular.module('emmiManager').config(function($routeProvider, USER_ROLES) {
 			return AuthSharedService.currentUser();
 		} ]
 	};
-	
+
 	var locationRequiredResource = {
         'locationResource': ['AuthSharedService', 'LocationService', '$route', '$q',
             function(AuthSharedService, LocationService, $route, $q) {
@@ -16,7 +16,11 @@ angular.module('emmiManager').config(function($routeProvider, USER_ROLES) {
                     function() {
                         LocationService.getLocationById($route.current.params.id)
                             .then(function(locationResource) {
-                                deferred.resolve(locationResource);
+                                if (locationResource) {
+                                    deferred.resolve(locationResource);
+                                } else {
+                                    deferred.reject();
+                                }
                             });
                     });
                 return deferred.promise;

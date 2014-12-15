@@ -32,6 +32,33 @@ angular.module('emmiManager')
                     return deferred.promise;
                 },
                 /**
+                 * Loads ALL roles for a client with permissions
+                 *
+                 * @returns a promise that resolves into the array of Role objects
+                 */
+                loadClientRolesWithPermissions: function () {
+                    var deferred = $q.defer();
+                    var roles = [];
+                    $http.get(UriTemplate.create(Client.getClient().link.roles).stringify())
+                        .then(function load(response) {
+                            var page = response.data;
+                            CommonService.convertPageContentLinks(page);
+                            angular.forEach(page.content, function (content) {
+                            	$http.get(UriTemplate.create(content.link.permissions).stringify()).then(function(permissions){
+                            		content.entity.permissions = permissions.data;
+                            	});
+                            });
+                            roles.push.apply(roles, page.content);
+                            if (page.link && page.link['page-next']) {
+                                $http.get(page.link['page-next']).then(function (response) {
+                                    load(response);
+                                });
+                            }
+                            deferred.resolve(roles);
+                        });
+                    return deferred.promise;
+                },
+                /**
                  * Loads ALL permissions for a client role. Once loaded, the possible role permissions
                  * on the role resource are changed to 'active' (if they come back). Also a copy of
                  * the current state of the database is pushed onto the clientRoleResource.original

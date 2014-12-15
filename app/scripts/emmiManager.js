@@ -18,7 +18,8 @@ angular.module('emmiManager', [
     'mgcrea.ngStrap',
     'emmi.inputMask',
     'angularMoment',
-    'emmi-angular-multiselect'
+    'emmi-angular-multiselect',
+    'truncate'
 ])
 
     .constant('USER_ROLES', {
@@ -58,7 +59,7 @@ angular.module('emmiManager', [
         });
     })
 
-    .run(function ($rootScope, $window, $location, $http, AuthSharedService, Session, USER_ROLES, arrays, $document) {
+    .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, arrays, $document) {
 
         var modals = [];
 
@@ -76,7 +77,16 @@ angular.module('emmiManager', [
 
         $rootScope.page = {
             setTitle: function (title) {
-                this.title = title + ' | Emmi Manager';
+                if (title) {
+                    this.title = title + ' | Emmi Manager';
+                    // only call Piwik if we've gotten a page title; and after we've gotten the correct one (this funtion is called twice on some pages)
+                    _paq.push(['setDocumentTitle', title]); // overide document title as document.title reports the previous page
+                    _paq.push(['setCustomUrl', $location.path()]); // need to check and see if the hashes are tracking okay now with the setting from the Admin Panel changed
+                    _paq.push(['trackPageView']);
+                } else {
+                    title = 'Emmi Manager';
+                    this.title = title;
+                }
             }
         };
 
@@ -84,6 +94,10 @@ angular.module('emmiManager', [
             $rootScope.userRoles = USER_ROLES;
             $rootScope.isAuthorized = AuthSharedService.isAuthorized;
             AuthSharedService.authorizedRoute((next.access) ? next.access.authorizedRoles : [USER_ROLES.all]);
+        });
+
+        $rootScope.$on('$routeChangeError', function (event, next) {
+            $location.path('/').replace();
         });
 
         $rootScope.$on('$routeChangeSuccess', function (e, current) {
@@ -95,11 +109,8 @@ angular.module('emmiManager', [
                 });
                 modals = [];
             }
-            var pageTitle = current && current.$$route && current.$$route.title || 'Emmi Manager';
+            var pageTitle = current && current.$$route && current.$$route.title;
             $rootScope.page.setTitle(pageTitle);
-            $window._paq.push(['setDocumentTitle', pageTitle]); // overide document title as document.title reports the previous page
-            //$window._paq.push(['setCustomUrl', current.$$route.originalPath]); // need to check and see if the hashes are tracking okay now with the setting from the Admin Panel changed
-            $window._paq.push(['trackPageView']);
         });
 
         // Call when the the client is confirmed
