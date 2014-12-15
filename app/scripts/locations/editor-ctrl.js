@@ -8,12 +8,14 @@ angular.module('emmiManager').controller(
         $scope.cancel = function() {
             $scope.hideError();
             $scope.edit();
+            _paq.push(['trackEvent', 'Form Action', 'Location Edit', 'Cancel']);
         };
 
         $scope.edit = function() {
             $scope.editMode = true;
             $scope.locationToEdit = angular.copy($scope.location);
             focus('locationName');
+            _paq.push(['trackEvent', 'Form Action', 'Location Edit', 'Edit']);
         };
 
         $scope.saveLocation = function(isValid) {
@@ -24,6 +26,7 @@ angular.module('emmiManager').controller(
                     angular.copy(response.data.entity, $scope.location);
                     $scope.cancel();
                 });
+                _paq.push(['trackEvent', 'Form Action', 'Location Edit', 'Save']);
             } else {
                 if (!$scope.locationErrorAlert) {
                     $scope.locationErrorAlert = $alert({
@@ -37,11 +40,11 @@ angular.module('emmiManager').controller(
                 }
             }
         };
-        
+
         $scope.showCancelSave = function(){
         	return !angular.equals($scope.location, $scope.locationToEdit);
         };
-        
+
         function init() {
             $controller('ViewEditCommon', {
                 $scope: $scope
@@ -52,7 +55,7 @@ angular.module('emmiManager').controller(
                     $scope.statuses = refData.statusFilter;
                     $scope.states = refData.state;
                 });
-            	
+
                 $scope.locationResource = locationResource;
                 $scope.location = locationResource.entity; // for the view state
                 $scope.edit();

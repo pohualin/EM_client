@@ -27,9 +27,10 @@ angular.module('emmiManager')
                 });
                 // turn off the sort after the search request has been made, the response will rebuild
                 $scope.sortProperty = null;
+                _paq.push(['trackSiteSearch', q, 'Team Search']);
             }
         };
-        
+
         $scope.viewTeam = function (team) {
         	TeamSearch.viewTeam(team);
         };
@@ -55,12 +56,12 @@ angular.module('emmiManager')
             var sort = $scope.createSortProperty(property);
             performSearch($scope.query, $scope.status, sort, $scope.currentPageSize);
         };
-        
+
         // when a page size link is used
         $scope.changePageSize = function (pageSize) {
             performSearch($scope.query, $scope.status, $scope.sortProperty, pageSize);
         };
-        
+
         // when a pagination link is used
         $scope.fetchPage = function (href) {
             $scope.loading = true;

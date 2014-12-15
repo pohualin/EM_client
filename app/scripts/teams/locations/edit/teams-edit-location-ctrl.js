@@ -21,7 +21,7 @@ angular.module('emmiManager')
                     var req = {};
                     req.location = locationResource.entity;
                     //Select ALL no rows on database
-                    if ($scope.providersData.length === $scope.location.providersSelected.length) { 
+                    if ($scope.providersData.length === $scope.location.providersSelected.length) {
                         req.providers = [];
                     } else {
                         req.providers = $scope.location.providersSelected;
@@ -36,6 +36,7 @@ angular.module('emmiManager')
                     angular.copy(locationResource.entity, $scope.originalLocation);
                     $scope.$hide();
                 });
+                _paq.push(['trackEvent', 'Form Action', 'Team Location Edit', 'Save']);
             } else {
                 $scope.showErrorBanner();
             }
