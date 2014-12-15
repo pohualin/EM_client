@@ -68,12 +68,16 @@ angular.module('emmiManager')
                 TeamsFilter.getTeamTags($scope.filterTags).then(function (teamTags) {
                     TeamsFilter.getTeamsFromTeamTags(teamTags).then(function (teams) {
                         $scope.clientTeams = teams;
+                        if(Object.keys(teams).length === 0){
+                            $scope.clientTeams = null;
+                        }
                     });
                 });
             }
         };
 
         $scope.showFilteredAndGroupedTeams = function () {
+            //a group and tags have been selected
             $scope.useGroupDisplay = true;
             TeamsFilter.getTagsForFilteredTagsAndGroup($scope.filterTags, $scope.selectedGroup.entity.tag).then(function (tags) {
                 TeamsFilter.getFilteredTeamTags($scope.filterTags).then(function (filteredTeamTags) {

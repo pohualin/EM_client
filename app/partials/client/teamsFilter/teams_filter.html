@@ -24,8 +24,11 @@
             </select>
         </div>
         <hr>
-        <div data-ng-hide="useGroupDisplay" data-ng-repeat="team in clientTeams">
-            <a data-ng-href="#/clients/{{clientId}}/teams/{{team.id}}">{{team.name}}</a>
+        <div data-ng-hide="useGroupDisplay">
+            <div data-ng-repeat="team in clientTeams">
+                <a data-ng-href="#/clients/{{clientId}}/teams/{{team.id}}">{{team.name}}</a>
+            </div>
+            <div data-ng-show="clientTeams===null">No teams exist for this search.</div>
         </div>
 
         <div data-ng-show="useGroupDisplay">
