@@ -13,7 +13,7 @@
 				<div class="col-md-2 col-sm-2">
 					<label>Manage User</label>
 	            </div>
-	            <div class="col-md-6 col-sm-5">
+	            <div class="col-md-6 col-sm-5" data-ng-show="hasUsers">
 	                <label class="sr-only" for="query">Search</label>
 	
 	                <div class="input-group">
@@ -23,12 +23,15 @@
 	                    <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
 	                </div>
 	            </div>
-				<div class="col-md-2 col-sm-3">
+				<div class="col-md-2 col-sm-3" data-ng-show="hasUsers">
 	                <button class="btn btn-default pull-left" data-ng-click="search()"
 	                        data-ng-disabled="searchForm.query.$invalid || loading">Go
 	                </button>
 	                <span data-ng-class="{'search-spinner' : loading}"></span>
 	            </div>
+	            <div class="col-md-8 col-sm-8"  data-ng-hide="hasUsers">
+					<span>There are no existing users for {{client.entity.name}}</span>
+				</div>
 	            <div class="col-md-2 col-sm-2">
 	                <div class="pull-right">
 	                    <a class="btn btn-primary" data-ng-href="#clients/{{client.entity.id}}/users/new?{{currentRouteQueryString}}">Create New User</a>
@@ -97,7 +100,7 @@
 				</div>
 			</div>
 			<div data-ng-hide="clientUsers">
-				<span>There are no existing users for {{client.entity.name}}</span>
+				<span data-translate="global.messages.search.no_results_found"></span>
 			</div>
 		</div>
 	</div>

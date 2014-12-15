@@ -50,6 +50,12 @@ angular.module('emmiManager')
 				$scope.page.setTitle('Manage Users - ' + $scope.client.name);
 				$scope.searchPerformed = false;
 				
+				// See if client has any user
+				ClientUsersService.hasUsers($scope.client).then(function(response){
+					if(response)
+						$scope.hasUsers = true;
+				});
+				
 				// Initiate a search when $scope.query is not empty
                 if ($scope.query) {
                 	$scope.serializeToQueryString($scope.query, 'u', null, null);
