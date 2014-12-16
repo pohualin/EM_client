@@ -80,9 +80,7 @@ angular.module('emmiManager')
         $scope.fetchPage = function (href) {
             $scope.loading = true;
             ProviderView.fetchPageLink(href).then(function (page) {
-            	ProviderSearch.assignLocationsForFetchedProviders(page, $scope.teamResource).then(function (response){
-	        		$scope.handleResponse(response, 'listOfTeamProviders');      
-            	});
+        		$scope.handleResponse(page, 'listOfTeamProviders');      
             }, function () {
                 // error happened
                 $scope.loading = false;
