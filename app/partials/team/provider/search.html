@@ -82,7 +82,7 @@
                                 </tr>
                                 <tr data-ng-repeat="teamProvider in searchedProvidersList"  data-ng-class="teamProvider.link.self ? 'text-muted' : ''">
 									<td data-ng-hide="teamProvider.link.self">
-										<input type="checkbox" data-ng-model="teamProvider.provider.entity.checked"  data-ng-disabled="teamProvider.provider.entity.disabled"  data-ng-change="onCheckboxChange(teamProvider.provider)">
+										<input type="checkbox" data-ng-model="teamProvider.provider.entity.checked"  data-ng-change="onCheckboxChange(teamProvider.provider)">
 									</td>
 									<td data-ng-show="teamProvider.link.self">
                                         <input type="checkbox" disabled="disabled" checked>

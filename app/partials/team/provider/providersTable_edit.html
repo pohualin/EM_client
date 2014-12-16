@@ -2,7 +2,7 @@
 	<div class="row" data-ng-controller="ProviderListController">
 		<div class="col-md-12" >
 		    <h2>Providers</h2>
-						<table class="table table-bordered table-striped table-hover" border="0" cellpadding="0" data-ng-show="listOfTeamProviders.length > 0">
+						<table class="table table-bordered table-striped table-hover" border="0" cellpadding="0" data-ng-show="teamResource.teamProviders.length > 0">
 				<tr>
 					<th  class="col-md-2">Name </th>
 					<th  class="col-md-2">Primary Specialty </th>
@@ -10,7 +10,7 @@
 					<th  class="col-md-2">Locations</th>
 		            <th  class="col-md-3">&nbsp;</th>
 				</tr>
-					<tr data-ng-repeat="teamProvider in listOfTeamProviders">
+					<tr data-ng-repeat="teamProvider in teamResource.teamProviders">
 			    	<td>{{teamProvider.entity.provider.firstName}} {{teamProvider.entity.provider.lastName}}</td>
 			    	<td>{{teamProvider.entity.provider.specialty.name}}</td>
 			    	<td>{{teamProvider.entity.provider.email}}</td>
@@ -28,13 +28,13 @@
             		</td>
 			    </tr>
 			</table>
-            <div data-ng-hide="listOfTeamProviders.length > 0">
+            <div data-ng-hide="teamResource.teamProviders.length > 0">
                 <span>There are no existing providers<span data-ng-show="team.name">&nbsp;for {{team.name}}</span>.</span>
             </div>
-            <div class="row" data-ng-show="listOfTeamProviders.length > 0">
-		        <div data-ng-show="links" class="col-md-8 col-sm-8">
+            <div class="row" data-ng-show="teamResource.teamProviders.length > 0">
+		        <div data-ng-show="teamResource.teamProviders.links" class="col-md-8 col-sm-8">
 		            <ul class="pagination">
-		                <li data-ng-repeat="link in links | orderBy:'order'" data-ng-class="{'active': link.name == currentPage}">
+		                <li data-ng-repeat="link in teamResource.teamProviders.links | orderBy:'order'" data-ng-class="{'active': link.name == currentPage}">
 		                    <a data-ng-show="link.name != currentPage" href
 		                       data-ng-click="fetchPage(link.href)">{{link.name}}</a>
 		                    <span data-ng-hide="link.name != currentPage">{{link.name}}</span>
