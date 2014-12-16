@@ -9,8 +9,11 @@ angular.module('emmiManager')
                 angular.forEach(filterTags, function (filterTag) {
                     tagIds.push(filterTag.id);
                 });
-                $http.post(UriTemplate.create(Client.getClient().link.teamTagsWithTags).stringify({
-                }), tagIds).then(function load(response) {
+                $http.get(UriTemplate.create(Client.getClient().link.teamTagsWithTags).stringify(), {
+                    params: {
+                        'tagIds': tagIds
+                    }
+                }).then(function load(response) {
                     var page = response.data;
                     CommonService.convertPageContentLinks(page);
                     angular.forEach(page.content, function (teamTag) {
@@ -109,15 +112,15 @@ angular.module('emmiManager')
                     listOfTeamsByTag[tag.name] = teams;
                     teams = [];
                 });
-                if(Object.keys(listOfTeamsByTag).length === 0){
-                    listOfTeamsByTag=null;
+                if (Object.keys(listOfTeamsByTag).length === 0) {
+                    listOfTeamsByTag = null;
                 }
                 return listOfTeamsByTag;
             },
 
             getFilteredTeamTags: function (filterTags) {
                 var deferred = $q.defer();
-                this.getTeamTags(filterTags).then(function(teamTags){
+                this.getTeamTags(filterTags).then(function (teamTags) {
                     angular.forEach(teamTags, function (teamTag) {
                         teamTags[teamTag.team.name] = teamTag.entity;
                     });
@@ -126,12 +129,12 @@ angular.module('emmiManager')
                 return deferred.promise;
             },
 
-            getTagsForFilteredTagsAndGroup:function(filteredTags,groupTags){
+            getTagsForFilteredTagsAndGroup: function (filteredTags, groupTags) {
                 var deferred = $q.defer();
                 var tagsToReturn = [];
-                angular.forEach(groupTags,function(groupTag){
-                    angular.forEach(filteredTags,function(filteredTag){
-                        if(filteredTag.name===groupTag.name){
+                angular.forEach(groupTags, function (groupTag) {
+                    angular.forEach(filteredTags, function (filteredTag) {
+                        if (filteredTag.name === groupTag.name) {
                             tagsToReturn.push(groupTag);
                         }
                     });
