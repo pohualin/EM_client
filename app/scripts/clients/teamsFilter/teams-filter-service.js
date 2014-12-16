@@ -9,23 +9,22 @@ angular.module('emmiManager')
                 angular.forEach(filterTags, function (filterTag) {
                     tagIds.push(filterTag.id);
                 });
-                $http.get(UriTemplate.create(Client.getClient().link.teamTagsWithTags).stringify(), {
-                    params: {
-                        'tagIds': tagIds
-                    }
-                }).then(function load(response) {
-                    var page = response.data;
-                    CommonService.convertPageContentLinks(page);
-                    angular.forEach(page.content, function (teamTag) {
-                        teamTags.push(teamTag.entity);
-                    });
-                    if (page.link && page.link['page-next']) {
-                        $http.get(page.link['page-next']).then(function (response) {
-                            load(response);
+                $http.get(UriTemplate.create(Client.getClient().link.teamTagsWithTags).stringify({
+                        tagIds: tagIds
+                    })
+                ).then(function load(response) {
+                        var page = response.data;
+                        CommonService.convertPageContentLinks(page);
+                        angular.forEach(page.content, function (teamTag) {
+                            teamTags.push(teamTag.entity);
                         });
-                    }
-                    deferred.resolve(teamTags);
-                });
+                        if (page.link && page.link['page-next']) {
+                            $http.get(page.link['page-next']).then(function (response) {
+                                load(response);
+                            });
+                        }
+                        deferred.resolve(teamTags);
+                    });
                 return deferred.promise;
             },
 
