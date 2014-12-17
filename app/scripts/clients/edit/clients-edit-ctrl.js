@@ -5,13 +5,22 @@ angular.module('emmiManager')
 /**
  *  Edit a single client
  */
-    .controller('ClientDetailCtrl', function ($scope, Client, $controller, Location, clientResource, Tag, $q, focus) {
+    .controller('ClientDetailCtrl', function ($scope, Client, $controller, Location, clientResource, Tag, $q, focus, ManageUserRolesService, ManageUserTeamRolesService) {
 
         $controller('ViewEditCommon', {$scope: $scope});
 
         if (clientResource) {
             $scope.client = clientResource.entity; //for the view state
             Client.setClient(clientResource);
+            //need to have at this point if the client has roles in order to define the correct redirect for users links at the bottom page
+            ManageUserRolesService.loadClientRoles().then(function (rolesResources) {
+                $scope.existingClientRoles = rolesResources;
+            });
+
+            ManageUserTeamRolesService.loadClientTeamRoles().then(function (rolesResources) {
+                $scope.existingClientTeamRoles = rolesResources;
+            });                
+
         } else {
             Client.viewClientList();
         }
