@@ -4,10 +4,7 @@ angular.module('emmiManager')
 
     .controller('TeamsFilterController', function ($scope, Client, TeamsFilter, $controller, $q) {
         $controller('TeamsFilterCommon', {
-            $scope: $scope,
-            getUrl: {},
-            setGroupUrl: {},
-            setTagsUrl: {}
+            $scope: $scope
         });
 
         $scope.selectedGroup = '';
