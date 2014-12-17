@@ -2,11 +2,12 @@
 
 angular.module('emmiManager')
 
-    .controller('TeamsFilterController', function ($scope, Client, TeamsFilter, $controller, $location, URL_PARAMETERS, $q, arrays) {
+    .controller('TeamsFilterController', function ($scope, Client, TeamsFilter, $controller, $q) {
         $controller('TeamsFilterCommon', {
             $scope: $scope,
             getUrl: {},
-            setUrl: {}
+            setGroupUrl: {},
+            setTagsUrl: {}
         });
 
         $scope.selectedGroup = '';
@@ -14,9 +15,6 @@ angular.module('emmiManager')
         $scope.clientId = Client.getClient().entity.id;
         $scope.defaultTeams = [];
         $scope.defaultTeamTags = [];
-
-
-        var searchObject = $location.search();
 
         $q.all([
             TeamsFilter.getTeamTags($scope.filterTags).then(function (teamTags) {
@@ -30,35 +28,12 @@ angular.module('emmiManager')
             }),
 
             TeamsFilter.getClientGroups().then(function (groups) {
-                //all groups on client
-                $scope.clientGroups = groups;
-                $scope.clientTagGroupToDisplay = TeamsFilter.getClientTagsInGroups(groups);
-            })]).then(function () {
-
-
-            angular.forEach($scope.clientGroups, function (clientGroup) {
-                if (searchObject && clientGroup.entity.id === parseInt(searchObject.g)) {
-                    $scope.selectedGroup = clientGroup;
-                    $scope.getTeamTagsForGroup();
-                }
-            });
-            if(searchObject.st) {
-                var selectedTags = (searchObject.st).split(',');
-                angular.forEach(selectedTags, function (tagToLoadFromURLid) {
-                    var keepGoing = true;
-                    angular.forEach($scope.defaultTeamTags, function (teamTag) {
-                        if (keepGoing && searchObject && teamTag.tag.id === parseInt(tagToLoadFromURLid)) {
-                            $scope.filterTags.push(teamTag.tag);
-                            keepGoing = false;
-                        }
-                    });
-                });
-                $scope.showFilteredTeams();
-                $scope.urlParameters = arrays.toQueryString($location.search());
+                    //all groups on client
+                    $scope.clientGroups = groups;
+                    $scope.clientTagGroupToDisplay = TeamsFilter.getClientTagsInGroups(groups);
             }
-
-
-
+        )]).then(function () {
+            $scope.getUrl();
         });
 
         $scope.showClientTeams = function () {
@@ -70,17 +45,8 @@ angular.module('emmiManager')
         $scope.showClientTeams();
 
         $scope.getTeamTagsForGroup = function () {
+            $scope.setGroupUrl();
 
-
-
-            var groupIdForURL = '0';
-            if ($scope.selectedGroup && $scope.selectedGroup.entity && $scope.selectedGroup.entity.id) {
-                groupIdForURL = $scope.selectedGroup.entity.id;
-            }
-
-
-
-            $location.search(URL_PARAMETERS.SELECTED_GROUP, groupIdForURL).replace();
             if ($scope.filterTags.length === 0 && !$scope.selectedGroup) {
                 //if no tags are selected and no group is selected
                 $scope.showClientTeams();
@@ -101,18 +67,8 @@ angular.module('emmiManager')
         };
 
         $scope.showFilteredTeams = function () {
+            $scope.setTagsUrl();
 
-
-
-            var tagIds = [];
-            angular.forEach($scope.filterTags, function (filteredTag) {
-                tagIds.push(filteredTag.id);
-            });
-            tagIds =tagIds.join(',');
-
-
-
-            $location.search(URL_PARAMETERS.SELECTED_TAGS, tagIds).replace();
             if ($scope.filterTags.length === 0 && !$scope.selectedGroup) {
                 //if no tags are selected and no group is selected
                 $scope.showClientTeams();
