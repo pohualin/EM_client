@@ -31,11 +31,13 @@ angular.module('emmiManager')
             TeamLocationCreate.findTeamLocationTeamProviders(location).then(function(pageLocations) {
                 angular.forEach( pageLocations.content , function (location) {
                     $scope.location.providersSelected.push(location.teamProvider.entity);
-                });                
-    
+                });
+
                 // show the dialog box, to avoid display the popup without the providers
                 $modal({scope: $scope, template: 'partials/team/location/edit.html', animation: 'none', backdropAnimation: 'emmi-fade', show: true, backdrop: 'static'});
             });
+
+            _paq.push(['trackEvent', 'Form Action', 'Team Location', 'Edit']);
 
 
         };
@@ -113,6 +115,7 @@ angular.module('emmiManager')
                 $scope.refresh();
                 $scope.showRemovalSuccess(locationResource);
             });
+            _paq.push(['trackEvent', 'Form Action', 'Team Location', 'Remove']);
         };
 
         $scope.fetchPage = function (href) {
@@ -129,7 +132,7 @@ angular.module('emmiManager')
                         angular.forEach(response.data.content, function (teamLocation) {
                             $scope.locations.push(teamLocation);
                             $scope.teamLocations[teamLocation.entity.location.id] = angular.copy(teamLocation.entity.location);
-                        }); 
+                        });
                         $scope.fetchAllPages(response);
                     });
                 }

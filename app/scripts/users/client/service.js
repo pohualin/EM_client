@@ -97,9 +97,7 @@ angular.module('emmiManager')
                  */
                 getUserClient: function(){
                 	return selectedUserClient;
-                },
-                
-                
+                }
             };
         }])
 ;

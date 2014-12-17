@@ -8,8 +8,9 @@ angular.module('emmiManager').controller(
         $scope.cancel = function() {
             $scope.hideError();
             $scope.edit();
+            _paq.push(['trackEvent', 'Form Action', 'Provider Edit', 'Cancel']);
         };
-        
+
         $scope.doNotDeactivateProvider = function(){
             $scope.providerToEdit.active = true;
         };
@@ -18,6 +19,7 @@ angular.module('emmiManager').controller(
             $scope.editMode = true;
             $scope.providerToEdit = angular.copy($scope.provider);
             focus('providerFirstName');
+            _paq.push(['trackEvent', 'Form Action', 'Provider Edit', 'Edit']);
         };
 
         $scope.saveProvider = function(isValid) {
@@ -28,6 +30,7 @@ angular.module('emmiManager').controller(
                     angular.copy(response.data.entity, $scope.provider);
                     $scope.cancel();
                 });
+                _paq.push(['trackEvent', 'Form Action', 'Provider Edit', 'Save']);
             } else {
                 if (!$scope.providerErrorAlert) {
                     $scope.providerErrorAlert = $alert({
@@ -41,7 +44,7 @@ angular.module('emmiManager').controller(
                 }
             }
         };
-        
+
         $scope.showCancelSave = function(){
         	return !angular.equals($scope.provider, $scope.providerToEdit);
         };
