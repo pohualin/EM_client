@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  *   Manage Client Level users
  */
-.controller('UsersClientEditorController', ['$alert', '$location', '$scope', 'Client', 'ManageUserRolesService', 'UsersClientService', 'UserClientUserClientRolesService', 'UserClientUserClientTeamRolesService',
-        function ($alert, $location, $scope, Client, ManageUserRolesService, UsersClientService, UserClientUserClientRolesService UserClientUserClientTeamRolesService) {
+.controller('UsersClientEditorController', ['$alert', '$location', '$scope', 'Client', 'ManageUserRolesService', 'UsersClientService', 'UserClientUserClientRolesService',
+        function ($alert, $location, $scope, Client, ManageUserRolesService, UsersClientService, UserClientUserClientRolesService) {
 
 			/**
     		 * Associate selected UserClientRole to selected UserClient
@@ -124,53 +124,11 @@ angular.module('emmiManager')
     		};
     		
     		/**
-    		 * load all UserClientTeamRoles for the client
-    		 */
-    		$scope.loadClientTeamRoles = function(){
-    			ManageUserTeamRolesService.loadClientTeamRoles().then(function(clientTeamRoles){
-					$scope.clientTeamRoles = clientTeamRoles;
-				});
-    		};
-    		
-    		/**
-    		 * Load permissions for an existing ClientTeamRole
-    		 */
-    		$scope.toggleClientTeamRoleCaret = function(clientTeamRole){
-    			ManageUserTeamRolesService.loadAllPermissions(clientTeamRole);
-    		};
-    		
-    		/**
-    		 * Set selected ClientTeamRole to scope
-    		 */
-    		$scope.setSelectedClientTeamRole = function(){
-    			$scope.selectedClientTeamRole = UserClientUserClientTeamRolesService.setSelectedClientTeamRole($scope.clientTeamRoles);
-    			window.paul = $scope;
-    		};
-    		
-    		/**
-    		 * TODO: Disable client team roles if it's already existed
-    		 * 
-    		 */
-    		$scope.disableClientTeamRoles = function(){
-    			UserClientUserClientTeamRolesService.disableClientTeamRoles($scope.clientTeamRoles);
-    		};
-    		
-    		/**
-    		 * clear all state
-    		 */
-    		$scope.$on('tooltip.hide', function () {
-    			$scope.selectedClientTeamRole = null;
-            });
-            
-    		/**
 	         * init method called when the page is loading
 	         */
             function init(){
             	$scope.client = Client.getClient();
             	$scope.useEmail = true;
-                $scope.page.setTitle('Create Users - ' + $scope.client.entity.name);
-                $scope.createNewClientUser();
-                $scope.loadClientTeamRoles();
             	if(UsersClientService.getUserClient()){
             		// In this case UserClient is already created
             		// Get the existing UserClient

@@ -59,7 +59,7 @@ angular.module('emmiManager')
 			function init() {
 				$controller('CommonSearch', {$scope: $scope});
 				$scope.client = Client.getClient();
-				$scope.page.setTitle('Manage Users - ' + $scope.client.name);
+				$scope.page.setTitle('Manage Users - ' + $scope.client.entity.name);
 				$scope.searchPerformed = false;
 				
 				// Initiate a search when $scope.query is not empty

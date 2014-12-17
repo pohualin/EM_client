@@ -1,48 +1,81 @@
 'use strict';
 angular.module('emmiManager')
 
-    .service('UserClientUserClientTeamRolesService', ['$filter', '$q', '$http', 'UriTemplate', 'CommonService', 'Client',
-        function ($filter, $q, $http, UriTemplate, CommonService, Client) {
+    .service('UserClientUserClientTeamRolesService', ['$q', '$http', 'UriTemplate', 'Client','CommonService', 'UsersClientService',
+        function ($q, $http, UriTemplate, Client, CommonService, UsersClientService) {
     		var selectedClientTeamRole;
             return {
             	/**
-            	 *  TODO
+            	 * Call server to save all selected Teams
             	 */
-            	setSelectedClientTeamRole: function(clientTeamRoles){
-            		selectedClientTeamRole = $filter('filter')(clientTeamRoles, {checked: true, disabled: false});
-            		return selectedClientTeamRole[0];
+            	associateTeams: function(selectedTeams){
+            		var userClient = UsersClientService.getUserClient();
+            		var userClientUserClientTeamRoles = [];
+            		angular.forEach(selectedTeams, function(selectedTeam){
+            			var userClientUserClientTeamRole = {team: selectedTeam, userClientTeamRole: selectedClientTeamRole.entity, userClient: userClient.entity};
+            			userClientUserClientTeamRoles.push(userClientUserClientTeamRole);
+            		});
+            		return $http.post(UriTemplate.create(userClient.link.possibleTeams).stringify(), userClientUserClientTeamRoles).then(function(response){
+            			return response;
+            		});
+            	},
+            	
+            	deleteAllUserClientUserClientTeamRole: function(clientTeamRole){
+            		return $http.delete(UriTemplate.create(UsersClientService.getUserClient().link.existingTeams)
+            				.stringify({userClientTeamRoleId: clientTeamRole.entity.id}));
             	},
             	
             	/**
-            	 *  TODO
+            	 * Delete existing UserClientUserClientTeamRole
+            	 */
+            	deleteUserClientUserClientTeamRole: function(existing){
+            		return $http.delete(UriTemplate.create(existing.link.self).stringify({userClientUserClientTeamRoleId: existing.entity.id}));
+            	},
+            	
+            	/**
+            	 * Find all possible UserClientUserClientTeamRoles by clientId and term
+            	 */
+            	findPossible: function(query){
+            		return $http.get(UriTemplate.create(UsersClientService.getUserClient().link.possibleTeams).stringify({term: query}))
+            			.then(function(response){
+            			CommonService.convertPageContentLinks(response.data);
+            			return response.data;
+            		});
+            	},
+            	
+            	getExistingTeams: function(clientTeamRole){
+            		var userClient = UsersClientService.getUserClient();
+            		return $http.get(UriTemplate.create(userClient.link.existingTeams).stringify({userClientTeamRoleId: clientTeamRole.entity.id}))
+	            		.then(function(response){
+	            			CommonService.convertPageContentLinks(response.data);
+	            			clientTeamRole.existingTeams = response.data.content;
+	            			return response.data;
+	            		});
+            	},
+            	
+            	/**
+            	 * Set selectedClientTeamRole when user click on add team from selected UserClientTeamRole card
+            	 */
+            	setSelectedClientTeamRole: function(clientTeamRole){
+            		selectedClientTeamRole = clientTeamRole;
+            	},
+            	
+            	/**
+            	 * Return the selectedClientTeamRole
+            	 */
+            	getSelectedClientTeamRole: function(){
+            		return selectedClientTeamRole;
+            	},
+            	
+            	/**
+            	 * @Unused
+            	 * TODO
             	 */
             	disableClientTeamRoles: function(clientTeamRoles){
             		angular.forEach(clientTeamRoles, function (clientTeamRole) {
                         clientTeamRole.disabled = true;
                     });
             		clientTeamRoles[0].disabled = false;
-            	},
-            	
-            	/*
-            	 * Associate selected UserClientTeamRole to selected UserClient
-            	 */
-                associateUserClientUserClientTeamRole: function(userClient, selectedUserClientTeamRole){
-                	var userClientUserClientTeamRole = new Object({});
-                	userClientUserClientTeamRole.userClient = userClient.entity;
-                	userClientUserClientTeamRole.userClientTeamRole = new Object({id: selectedUserClientTeamRole});
-                	return $http.post(UriTemplate.create(userClient.link.userClientTeamRoles).stringify(), userClientUserClientTeamRole)
-	                    .success(function(response) {
-	                        return response;
-	                    });
-                },
-            	
-            	/*
-            	 * To remove UserClientUserClientTeamRole
-            	 */
-            	deleteUserClientUserClientTeamRole: function(existingUserClientUserClientTeamRole){
-            		return $http.delete(UriTemplate.create(existingUserClientUserClientTeamRole.link.userClientUserClientTeamRole)
-            				.stringify({userClientUserClientTeamRoleId: existingUserClientUserClientTeamRole.entity.id})).then(function(response){
-            				});
             	},
             	
             	/*
@@ -54,14 +87,6 @@ angular.module('emmiManager')
                     	CommonService.convertPageContentLinks(page);
                         return page;
                     });
-            	},
-            	
-            	loadPermissionsForExistingUserClientUserClientTeamRole: function(existingUserClientUserClientTeamRole){
-            		if(!existingUserClientUserClientTeamRole.entity.permissions){
-            			$http.get(UriTemplate.create(existingUserClientUserClientTeamRole.link.userClientTeamRolePermissions).stringify()).then(function(permissions){
-            				existingUserClientUserClientTeamRole.entity.permissions = permissions.data;
-                    	});
-            		}
             	}
             };
         }])

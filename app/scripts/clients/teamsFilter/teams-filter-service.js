@@ -1,7 +1,21 @@
 'use strict';
 angular.module('emmiManager')
-    .service('TeamsFilter', function ($http, $q, UriTemplate, Client) {
+    .service('TeamsFilter', function ($http, $q, CommonService, UriTemplate, Client) {
         return{
+        	/**
+        	 * Get a page of Teams for a Client
+        	 */
+        	getClientTeamsPage: function(client, query) {
+        		console.log(query);
+        		console.log(UriTemplate.create(client.link.findByClientAndTerm).stringify(
+                    	{term: query}));
+                return $http.get(UriTemplate.create(client.link.findByClientAndTerm).stringify(
+                	{term: query})).then(function (response) {
+                    CommonService.convertPageContentLinks(response.data);
+                    return response.data;
+                });
+            },
+            
             getClientTeams: function () {
                 var teams = [];
                 return $http.get(UriTemplate.create(Client.getClient().link.teams).stringify()).then(function load(response) {

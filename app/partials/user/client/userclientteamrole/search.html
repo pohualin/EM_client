@@ -1,0 +1,95 @@
+<div class="modal" tabindex="-1" role="dialog" data-ng-controller="UsersClientUserClientTeamRolesSearchController">
+    <div class="modal-dialog modal-dialog-large container-fluid">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10" id="message-container"></div>
+                    <div class="col-md-1"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-9 col-sm-9">
+                    	Role: {{selectedClientTeamRole.entity.name}}
+                    	<hr/>
+                        <form name="searchForm" ng-submit="search(searchForm.query.$valid)" novalidate>
+                            <div class="form-group">
+                                <label class="sr-only" for="locationQuery">Search locations:</label>
+
+                                <div class="input-group">
+                                    <input class="form-control" name="query" id="query" data-ng-model="query"
+                                           type="text"
+                                           placeholder="Teams..." required data-auto-focus data-focus-on="LocationSearchFocus">
+                                    <div class="input-group-addon btn" data-ng-click="search(searchForm.query.$valid)"
+                                         data-ng-disabled="searchForm.query.$invalid">Go</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body" data-ng-show="searchPerformed">
+	            <div>
+				<div class="row" data-ng-hide="removeStatusFilterAndTotal">
+					<div class="col-md-12">
+						<div class="pull-right">
+							{{total}} <span data-ng-show="total != 1"
+								data-translate="global.labels.total"> results</span> <span
+								data-ng-show="total === 1"
+								data-translate="global.labels.totalSingular"> result</span>
+						</div>
+						<form class="form-inline">
+							<div class="form-group">
+								<label for="status_filter"
+									data-translate="global.labels.statusFilter">Show:</label> <select
+									class="form-control" id="status_filter" data-ng-model="status"
+									data-ng-options="status | translate for status in statuses"
+									data-ng-change="statusChange()">
+								</select>
+							</div>
+						</form>
+					</div>
+				</div>
+				<br>
+				<table class="table table-bordered table-striped table-hover"
+					border="0" cellpadding="0" cellspacing="0" data-ng-show="userClientUserClientTeamRoles">
+					<tr>
+						<th class="sort col-sm-1">&nbsp;</th>
+						<th class="sort col-sm-3" data-ng-click="sort('name')">Name
+							<span data-ng-show="sortProperty.property === 'name'"><span
+								class="glyphicon sort-icon"
+								data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
+						</th>
+					</tr>
+					<tr data-ng-repeat="userClientUserClientTeamRole in userClientUserClientTeamRoles">
+						<td data-ng-hide="userClientUserClientTeamRole.link.self">
+                            <input type="checkbox" data-ng-model="userClientUserClientTeamRole.entity.team.selected"
+                                   data-ng-change="onCheckboxChange(userClientUserClientTeamRole.entity.team)">
+                        </td>
+						<td>{{userClientUserClientTeamRole.entity.team.name}}</td>
+					</tr>
+				</table>
+				<div class="row" data-ng-show="userClientUserClientTeamRoles">
+					<div data-ng-show="links" class="col-md-8 col-sm-8">
+						<ul class="pagination">
+							<li data-ng-repeat="link in links | orderBy:'order'"
+								data-ng-class="{'active': link.name == currentPage}"><a
+								data-ng-show="link.name != currentPage" href
+								data-ng-click="fetchPage(link.href)">{{link.name}}</a> <span
+								data-ng-hide="link.name != currentPage">{{link.name}}</span></li>
+						</ul>
+					</div>
+				</div>
+				<div data-ng-hide="userClientUserClientTeamRoles">
+					<span data-translate="global.messages.search.no_results_found"></span>
+				</div>
+				</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link" data-ng-click="cancel()">cancel</button>
+                <button type="button" class="btn btn-primary" data-ng-hide="isEmpty(selectedTeams)" data-ng-click="save()">Save
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
