@@ -2,7 +2,7 @@
 
 angular.module('emmiManager')
 
-    .controller('TeamsFilterCommon', function ($scope, getUrl, setGroupUrl, setTagsUrl, $location,URL_PARAMETERS, arrays) {
+    .controller('TeamsFilterCommon', function ($scope, $location,URL_PARAMETERS, arrays) {
         var searchObject = $location.search();
         $scope.getUrl = function () {
             angular.forEach($scope.clientGroups, function (clientGroup) {
