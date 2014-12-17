@@ -63,9 +63,10 @@ angular.module('emmiManager')
 				$scope.searchPerformed = false;
 				
 				// See if client has any user
-				ClientUsersService.hasUsers($scope.client).then(function(response){
-					if(response)
+				UsersClientService.hasUsers($scope.client).then(function(response){
+					if(response){
 						$scope.hasUsers = true;
+					}
 				});
 				
 				// Initiate a search when $scope.query is not empty

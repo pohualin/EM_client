@@ -15,6 +15,19 @@ angular.module('emmiManager')
 					return response.data;
 				});
 			},
+			/**
+			 * Search method called from home page provider search
+			 */
+			searchFromHomePage: function (query, status, sort, pageSize) {
+				return $http.get(UriTemplate.create(Session.link.providers).stringify({name: query,
+                        status: status,
+                        sort: sort && sort.property ? sort.property + ',' + (sort.ascending ? 'asc' : 'desc') : '',
+                        size: pageSize
+				})).then(function (response) {
+					CommonService.convertPageContentLinks(response.data);
+					return response.data;
+				});
+			},
 			getReferenceData: function () {
                 var deferred = $q.defer();
                 if (!referenceData) {
