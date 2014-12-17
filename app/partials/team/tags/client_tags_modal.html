@@ -29,13 +29,10 @@
                 <div class="col-md-12">
                     <div class="pull-right">
                         <div class="form-group">
-                            <button class="btn btn-link" data-ng-click="hideClientTags()" data-ng-hide="alertTags">cancel</button>
+                            <button class="btn btn-link" data-ng-click="hideClientTags()">cancel</button>
                             <button class="btn btn-primary" type="button"
+                                    data-ng-click="checkForConflicts(clientForm.$valid);"
                                     data-ng-disabled="!clientForm.$valid || !clientTagsHaveChanges"
-                                    data-conflicting-team-tags = "conflictingTeamTags"
-                                    data-on-open-popover="openDeletePopover()"
-                                    data-on-close-popover="closeDeletePopover()"
-                                    data-on-ok="overrideConflictingTeamTags(clientForm.$valid)"
                                     data-team-conflict-popover>Save
                             </button>
                         </div>

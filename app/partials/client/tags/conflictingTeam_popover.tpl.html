@@ -11,10 +11,10 @@
     </table>
     <br>
     <div class="form-actions">
-        <button class="btn btn-primary" type="button" data-ng-click="$hide();onClosePopover()"
+        <button class="btn btn-primary" type="button" data-ng-click="cancelConflictingTeamsPopover()"
                 data-translate="">No
         </button>
-        <button class="btn btn-danger" data-ng-click="onOk();$hide()"
+        <button class="btn btn-danger" data-ng-click="overrideConflictingTeamTags(clientForm.$valid)"
                 data-translate="">Yes
         </button>
     </div>
