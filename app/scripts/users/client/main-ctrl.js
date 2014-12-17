@@ -5,25 +5,31 @@ angular.module('emmiManager')
 /**
  * Manage Client Level users
  */
-.controller('ManageClientUsersMainCtrl',
-		[ '$scope', '$controller', 'Client', 'ClientUsersService', function($scope, $controller, Client, ClientUsersService) {
-
+.controller('UsersClientMainCtrl',
+		[ '$scope', '$controller', 'Client', 'UsersClientService', function($scope, $controller, Client, UsersClientService) {
+			
+			/**
+	         * Called when fetching different pages
+	         */
 			$scope.fetchPage = function(href) {
                 $scope.loading = true;
-                ClientUsersService.fetchPage(href).then(function(clientUsers) {
-                    $scope.handleResponse(clientUsers, 'clientUsers');
+                UsersClientService.fetchPage(href).then(function(usersClient) {
+                    $scope.handleResponse(usersClient, 'usersClient');
                 }, function() {
                     $scope.loading = false;
                 });
             };
 			
+            /**
+	         * Called when GO button is clicked
+	         */
 			$scope.search = function() {
 				if (!$scope.searchForm || !$scope.searchForm.query.$invalid) {
 					$scope.serializeToQueryString($scope.query, 'u', null, null);
                     $scope.loading = true;
-					ClientUsersService.list($scope.client, $scope.query, null).then(
+					UsersClientService.list($scope.client, $scope.query, null).then(
 						function(response) {
-                            $scope.handleResponse(response, 'clientUsers');
+                            $scope.handleResponse(response, 'usersClient');
                             $scope.removeStatusFilterAndTotal = $scope.total <= 0;
                         }, function() {
                             $scope.loading = false;
@@ -32,18 +38,24 @@ angular.module('emmiManager')
 				}
 			};
 			
+			/**
+	         * Called when column header is clicked to change sorting property
+	         */
 			$scope.sort = function(property) {
                 var sort = $scope.createSortProperty(property);
                 $scope.serializeToQueryString($scope.query, 'u', null, sort);
-                ClientUsersService.list($scope.client, $scope.query, sort).then(
+                UsersClientService.list($scope.client, $scope.query, sort).then(
 					function(response) {
-                        $scope.handleResponse(response, 'clientUsers');
+                        $scope.handleResponse(response, 'usersClient');
                     }, function() {
                         $scope.loading = false;
                     });
 				$scope.sortProperty = null;
             };
 
+            /**
+	         * init method called when page is loading
+	         */
 			function init() {
 				$controller('CommonSearch', {$scope: $scope});
 				$scope.client = Client.getClient();
@@ -59,9 +71,9 @@ angular.module('emmiManager')
 				// Initiate a search when $scope.query is not empty
                 if ($scope.query) {
                 	$scope.serializeToQueryString($scope.query, 'u', null, null);
-                	ClientUsersService.list($scope.client, $scope.query, null).then(
+                	UsersClientService.list($scope.client, $scope.query, null).then(
 						function(response) {
-                            $scope.handleResponse(response, 'clientUsers');
+                            $scope.handleResponse(response, 'usersClient');
                             $scope.removeStatusFilterAndTotal = $scope.total <= 0;
                         }, function() {
                             $scope.loading = false;

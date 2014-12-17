@@ -1,13 +1,16 @@
 'use strict';
 angular.module('emmiManager')
 
-    .service('ClientUsersService', ['$filter', '$q', '$http', 'UriTemplate', 'CommonService', 'Client',
-        function ($filter, $q, $http, UriTemplate, CommonService, Client) {
+    .service('UsersClientService', ['$filter', '$q', '$http', 'UriTemplate', 'CommonService', 'Client', 'Session',
+        function ($filter, $q, $http, UriTemplate, CommonService, Client, Session) {
             var referenceData;
-            var selectedClientUser;
+            var selectedUserClient;
             return {
-                newClientUser: function () {
-                	selectedClientUser = {
+            	/**
+            	 * Create a new UserClient placeholder
+            	 */
+                newUserClient: function () {
+                	var newUserClient = {
                         entity: {
                             'firstName': null,
                             'lastName': null,
@@ -15,19 +18,26 @@ angular.module('emmiManager')
                             'login': null
                         }
                     };
-                    return selectedClientUser;
+                    return newUserClient;
                 },
                 
-                createClientUser: function(client, clientUserToBeEdit){
+                /**
+                 * Call server to create UserClient
+                 */
+                createUserClient: function(client, userClientToBeEdit){
                 	console.log('create client user.');
-                	clientUserToBeEdit.login = clientUserToBeEdit.email;
-                	clientUserToBeEdit.client = client.entity;
-                	return $http.post(UriTemplate.create(client.link.users).stringify(), clientUserToBeEdit)
+                	userClientToBeEdit.login = userClientToBeEdit.email;
+                	userClientToBeEdit.client = client.entity;
+                	return $http.post(UriTemplate.create(client.link.users).stringify(), userClientToBeEdit)
 	                    .success(function(response) {
 	                        return response;
 	                    });
                 },
                 
+
+                /**
+                 * Call server to get a list of UserClient
+                 */
                 list: function(client, query, sort){
                 	return $http.get(UriTemplate.create(client.link.users).stringify(
                 			{term: query,
@@ -38,6 +48,9 @@ angular.module('emmiManager')
 	                    });
                 },
                 
+                /**
+                 * Call server to fetch next batch of UserClient
+                 */
                 fetchPage: function(href){
                 	return $http.get(UriTemplate.create(href).stringify())
 	                    .then(function(response) {
@@ -60,7 +73,33 @@ angular.module('emmiManager')
 	                    	}
 	                    });
                 	return deferred.promise;
-                }
+                },
+                
+                /**
+                 * Call when UserClientId is passed in as route param
+                 * get UserClient by userClientId and set it to selectedUserClient
+                 */
+                setUserClient: function(userClientId){
+                	if(userClientId === null){
+                		// Reset selectedUserClient
+                		selectedUserClient = null;
+                	} else {
+                		// Call server to get UserClient by userClientId
+                		return $http.get(UriTemplate.create(Session.link.userClientById).stringify({id: userClientId})).then(function(userClient){
+                    		selectedUserClient = userClient.data;
+                    		return selectedUserClient;
+                    	});
+                	}
+                },
+                
+                /**
+                 * Getter of selectedUserClient
+                 */
+                getUserClient: function(){
+                	return selectedUserClient;
+                },
+                
+                
             };
         }])
 ;
