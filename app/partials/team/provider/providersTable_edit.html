@@ -1,6 +1,4 @@
-<div class="container" >
-	<div class="row" data-ng-controller="ProviderListController">
-		<div class="col-md-12" >
+		<div class="col-md-12" data-ng-controller="ProviderListController">
 		    <h2>Providers</h2>
 						<table class="table table-bordered table-striped table-hover" border="0" cellpadding="0" data-ng-show="teamResource.teamProviders.length > 0">
 				<tr>
@@ -18,7 +16,7 @@
 						<div data-placement="top" data-ng-show="teamProvider.entity.locations" data-content="{{teamProvider.entity.locations}}" data-trigger="hover" data-delay="200" data-bs-popover data-popover-dismiss>
                         {{teamProvider.entity.locations | characters:25 }}
 						</div>
-						
+
 						<div data-placement="top" data-ng-hide="teamProvider.entity.locations" data-content="{{allLocationsForTeam}}" data-trigger="hover" data-delay="200" data-bs-popover data-popover-dismiss>
                         {{allLocationsForTeam | characters:25 }}
 						</div>
@@ -42,9 +40,6 @@
 		            </ul>
 		        </div>
     		</div>
-		</div>
-		<div class="col-md-12" >
-			<button type="button" class="btn btn-link" data-ng-click="addProviders()">add providers</button>
+            <button type="button" class="btn btn-link" data-ng-click="addProviders()">add providers</button>
 		</div>
 	</div>
-</div>
