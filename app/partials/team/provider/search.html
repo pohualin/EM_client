@@ -1,4 +1,4 @@
-<div class="modal" tabindex="-1" role="dialog" data-ng-controller="ProviderSearchController">
+<div class="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-large container-fluid">
         <div class="modal-content">
             <div class="modal-header">
@@ -16,9 +16,8 @@
 
                                 <div class="input-group">
                                     <input class="form-control" id="providerQuery" name="providerQuery" data-ng-model="providerQuery"
-                                           type="text"
+                                           type="text" data-reset-provider-search
                                            placeholder="Search..." required data-auto-focus>
-
                                     <div class="input-group-addon btn" data-ng-click="search(searchForm.providerQuery.$valid)" data-ng-disabled="searchForm.providerQuery.$invalid">Go</div>
                                 </div>
                             </div>

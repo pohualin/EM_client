@@ -81,4 +81,12 @@ angular.module('emmiManager')
         };
     })
 
+    .directive('resetProviderSearch', [function () {
+          return {
+            restrict: 'A',
+            link: function (scope, element, attrs, ngModel) {
+                scope.providerQuery=null;
+            }
+          };    
+    }]) 
     ;
