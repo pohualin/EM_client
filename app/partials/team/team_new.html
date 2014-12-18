@@ -1,10 +1,10 @@
-<div class="container">
+<div class="container" data-ng-cloak>
     <div class="row">
         <div class="col-md-12">
-            <h1>
-                <a href="#/">Emmi Manager</a>:&nbsp;
+            <h2>
+                <a href="#/">Emmi Manager</a> :&nbsp;
                 <span data-translate="team_edit_page.new.title">New</span> Team
-            </h1>
+            </h2>
         </div>
     </div>
     <div class="row">
@@ -16,7 +16,7 @@
                 <div data-ng-include="'partials/team/team_form.html'"></div>
             </form>
             <div class="pull-right">
-                <button class="btn btn-link" data-ng-click="cancel()" data-translate="team_edit_page.cancel_button" href data-cancel-click-team-edit>cancel</button>
+                <button class="btn btn-link" data-ng-click="cancel()" data-translate="team_edit_page.cancel_button" href data-cancel-click-team-edit analytics-on analytics-category="Form Action" analytics-event="Team Create" analytics-label="Cancel">cancel</button>
                 <button class="btn btn-primary" type="button"
                         data-on-ok="save(teamForm.$valid)" data-team-entity="teamToSave"
                         data-placement="top"

@@ -2,32 +2,55 @@
 angular.module('emmiManager')
     .service('TeamsFilter', function ($http, $q, UriTemplate, TeamTag, Tag, Client, CommonService) {
         return{
-            getClientTeams: function () {
-                var teams = [];
-                return $http.get(UriTemplate.create(Client.getClient().link.teams).stringify()).then(function load(response) {
-                    var page = response.data;
-                    CommonService.convertPageContentLinks(page);
-                    angular.forEach(page.content, function (team) {
-                        teams.push(team);
-                    });
-                    if (page.link && page.link['page-next']) {
-                        $http.get(page.link['page-next']).then(function (response) {
-                            load(response);
-                        });
-                    }
-                    return teams;
+            getTeamTags: function (filterTags) {
+                var deferred = $q.defer();
+                var teamTags = [];
+                var tagIds = [];
+                angular.forEach(filterTags, function (filterTag) {
+                    tagIds.push(filterTag.id);
                 });
+                $http.get(UriTemplate.create(Client.getClient().link.teamTagsWithTags).stringify({
+                        tagIds: tagIds
+                    })
+                ).then(function load(response) {
+                        var page = response.data;
+                        CommonService.convertPageContentLinks(page);
+                        angular.forEach(page.content, function (teamTag) {
+                            teamTags.push(teamTag.entity);
+                        });
+                        if (page.link && page.link['page-next']) {
+                            $http.get(page.link['page-next']).then(function (response) {
+                                load(response);
+                            });
+                        }
+                        deferred.resolve(teamTags);
+                    });
+                return deferred.promise;
+            },
+
+            getTeamsFromTeamTags: function (teamTags) {
+                var deferred = $q.defer();
+                var teams = {};
+                angular.forEach(teamTags, function (teamTag) {
+                    teams[teamTag.team.name] = teamTag.team;
+                });
+                deferred.resolve(teams);
+                return deferred.promise;
             },
 
             getClientGroups: function () {
+                var deferred = $q.defer();
                 var groups = [];
-                return $http.get(UriTemplate.create(Client.getClient().link.groups).stringify({
+                $http.get(UriTemplate.create(Client.getClient().link.groups).stringify({
                     sort: 'name,asc'
                 })).then(function load(response) {
                     var page = response.data;
                     CommonService.convertPageContentLinks(page);
 
                     angular.forEach(page.content, function (group) {
+                        group.entity.tag.sort(function (a, b) {
+                            a.name.localeCompare(b.name);
+                        });
                         groups.push(group);
                     });
                     if (page.link && page.link['page-next']) {
@@ -35,15 +58,16 @@ angular.module('emmiManager')
                             load(response);
                         });
                     }
-                    return groups;
+                    deferred.resolve(groups);
                 });
+                return deferred.promise;
             },
 
             getClientTagsInGroups: function (groups) {
                 var clientTagsInGroups = [];
                 angular.forEach(groups, function (group) {
                     var localGroup = angular.copy(group.entity);
-                    localGroup.title = localGroup.name;
+                    localGroup.title = group.name;
                     //rebuild groups on each tag
                     localGroup.tag = null;
                     angular.forEach(group.entity.tag, function (tag) {
@@ -55,121 +79,68 @@ angular.module('emmiManager')
                 return clientTagsInGroups;
             },
 
-            getFilteredTeams: function(filterTags, clientTeams){
-                var tags = [];
-                var tagAreInMultipleGroups = false;
-                var filteredTeams = [];
-                angular.forEach(filterTags, function (tag) {
-                    tags.push(tag);
-                    angular.forEach(tags, function (savedTag) {
-                        if (tag.group.id !== savedTag.group.id) {
-                            tagAreInMultipleGroups = true;
-                        }
-                    });
-                });
-
-                if (tagAreInMultipleGroups) {
-                    //teams that have *all* of those tags will be listed in alphabetical order
-                    angular.forEach(clientTeams, function (team) {
-                        //for each team on the client get all tags
-                        TeamTag.loadSelectedTags(team).then(function (tags) {
-                            var saveTeam = false;
-                            var skipTheRemainingFilteredTags = false;
-
-                            //find if any of the tags on a team matches a filtered tag
-                            angular.forEach(filterTags, function (filteredTag) {
-                                if (!skipTheRemainingFilteredTags) {
-                                    saveTeam = false;
-                                    angular.forEach(tags, function (tag) {
-                                        if (tag.id === filteredTag.id) {
-                                            saveTeam = true;
-                                        }
-                                    });
-                                    if (!saveTeam) {
-                                        skipTheRemainingFilteredTags = true;
-                                    }
-                                }
-                            });
-                            if (saveTeam) {
-                                filteredTeams.push(team);
-                            }
-                        });
-                    });
-                    filteredTeams.sort(function (a, b) {
-                        return a.name.localeCompare(b.name);
-                    });
-                    return filteredTeams;
-                } else {
-                    // teams that have *any* of those tags will be listed in alphabetical order
-                    angular.forEach(clientTeams, function (team) {
-                        TeamTag.loadSelectedTags(team).then(function (tags) {
-                            angular.forEach(tags, function (tag) {
-                                //check if a filtered tag matches a tag on the ClientTeams
-                                angular.forEach(filterTags, function (filteredTag) {
-                                    if (tag.id === filteredTag.id) {
-                                        var saveTeam = true;
-                                        angular.forEach(filteredTeams, function (filteredTeam) {
-                                            if (team.entity.id === filteredTeam.entity.id) {
-                                                //already saved this team
-                                                saveTeam = false;
-                                            }
-                                        });
-                                        if (saveTeam) {
-                                            filteredTeams.push(team);
-                                        }
-                                    }
-                                });
-                            });
-                        });
-                    });
-                    filteredTeams.sort(function (a, b) {
-                        return a.name.localeCompare(b.name);
-                    });
-                    return filteredTeams;
-                }
-            },
-
-            getTagsForGroup: function(selectedGroup){
-                return Tag.listTagsByGroupId(selectedGroup);
-            },
-            getTeamsForTagsInGroup: function(tagsInSelectedGroup){
-                    var listOfTeamLists = [];
-                    angular.forEach(tagsInSelectedGroup, function (tag) {
-                        Tag.listTeamsForTagId(tag).then(function (teams) {
-                            listOfTeamLists.push(teams);
-                        });
-                    });
-                    return listOfTeamLists;
-            },
-            getFilteredAndGroupedTeamsToShow:function(selectedGroup,filterTags){
+            getTagsForGroup: function (selectedGroup) {
                 var deferred = $q.defer();
-                Tag.listTagsByGroupId(selectedGroup).then(function (tags) {
-                    var tagsInSelectedGroupAndFilterTag = [];
-                    var saveTag = false;
+                var tagList = [];
+                if (selectedGroup === null) {
+                    deferred.resolve(tagList);
+                    return deferred.promise;
+                }
+                angular.forEach(selectedGroup.entity.tag, function (tag) {
+                    tagList.push(tag);
+                });
+                tagList.sort(function (a, b) {
+                    return a.name.localeCompare(b.name);
+                });
+                deferred.resolve(tagList);
+                return deferred.promise;
+            },
 
-                    angular.forEach(tags, function (groupTag) {
-                        saveTag = false;
-                        angular.forEach(filterTags, function (filteredTag) {
-                            if (filteredTag.id === groupTag.entity.id) {
-                                saveTag = true;
-                            }
-                        });
-                        if (saveTag === true) {
-                            tagsInSelectedGroupAndFilterTag.push(groupTag);
+            getTeamsForTags: function (clientTeamTags, tags) {
+                var listOfTeamsByTag = {};
+                var teams = [];
+                angular.forEach(tags, function (tag) {
+                    angular.forEach(clientTeamTags, function (teamTag) {
+                        if (teamTag.tag.id === tag.id) {
+                            teams.push(teamTag.team);
                         }
                     });
-                    deferred.resolve(tagsInSelectedGroupAndFilterTag);
+                    teams.sort(function (a, b) {
+                        return a.name.localeCompare(b.name);
+                    });
+                    listOfTeamsByTag[tag.name] = teams;
+                    teams = [];
+                });
+                if (Object.keys(listOfTeamsByTag).length === 0) {
+                    listOfTeamsByTag = null;
+                }
+                return listOfTeamsByTag;
+            },
+
+            getFilteredTeamTags: function (filterTags) {
+                var deferred = $q.defer();
+                this.getTeamTags(filterTags).then(function (teamTags) {
+                    angular.forEach(teamTags, function (teamTag) {
+                        teamTags[teamTag.team.name] = teamTag.entity;
+                    });
+                    deferred.resolve(teamTags);
                 });
                 return deferred.promise;
             },
-            getTeamsForTagsInSelectedGroupAndFilteredTag:function(groupTags){
-                var listOfTeamLists = [];
-                angular.forEach(groupTags,function(groupTag){
-                    Tag.listTeamsForTagId(groupTag).then(function (teams) {
-                        listOfTeamLists.push(teams);
+
+            getTagsForFilteredTagsAndGroup: function (filteredTags, groupTags) {
+                var deferred = $q.defer();
+                var tagsToReturn = [];
+                angular.forEach(groupTags, function (groupTag) {
+                    angular.forEach(filteredTags, function (filteredTag) {
+                        if (filteredTag.name === groupTag.name) {
+                            tagsToReturn.push(groupTag);
+                        }
                     });
                 });
-                return listOfTeamLists;
+                deferred.resolve(tagsToReturn);
+                return deferred.promise;
+
             }
         };
     })

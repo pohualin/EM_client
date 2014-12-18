@@ -26,10 +26,12 @@ angular.module('emmiManager')
                 			$scope.teamProviderTeamLocationSaveRequest).then(function(){
                 		ProviderView.allProvidersForTeam($scope.teamResource).then(function(response){
                         	ProviderView.convertLinkObjects(response);	
-                    		$scope.teamResource.teamProviders = response;
+                        	$scope.handleResponse(response, '$scope.teamResource.teamProviders');      
+	    	        		$scope.teamResource.teamProviders = response;      
                 		});
                 		$scope.$hide();
                 	});
+                    _paq.push(['trackEvent', 'Form Action', 'Team Provider Edit', 'Save']);
                 } else {
                     if (!$scope.providerErrorAlert) {
                         $scope.providerErrorAlert = $alert({

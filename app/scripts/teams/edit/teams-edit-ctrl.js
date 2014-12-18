@@ -28,6 +28,7 @@ angular.module('emmiManager')
             $scope.editMode = false;
             $scope.formSubmitted = false;
             delete $scope.teamToSave;
+            _paq.push(['trackEvent', 'Form Action', 'Team Edit', 'Cancel']);
         };
 
         $scope.edit = function () {
@@ -36,6 +37,7 @@ angular.module('emmiManager')
             $scope.teamToSave.origSalesForceAccount = $scope.teamToSave.salesForceAccount.accountNumber;
             if (!$scope.team.description) { $scope.teamToSave.description = ''; } // EM-517: TODO: this should be fixed with a larger refactor to that angular.extend is not necessary
             focus('teamName');
+            _paq.push(['trackEvent', 'Form Action', 'Team Edit', 'Edit']);
         };
 
         $scope.save = function (isValid) {
@@ -49,8 +51,18 @@ angular.module('emmiManager')
                     $scope.teamClientResource.teamResource = $scope.teamResource;
                     $scope.editMode = false;
                 });
+                _paq.push(['trackEvent', 'Form Action', 'Team Edit', 'Save']);
             } else {
                 $scope.showError();
+                // Loop through the form's validation errors and log to Piwik
+                var formErrors = $scope.teamForm.$error;
+                for (var errorType in formErrors) {
+                    if (formErrors.hasOwnProperty(errorType)) {
+                        for (var i = 0; i < formErrors[errorType].length; i++) {
+                            _paq.push(['trackEvent', 'Validation Error', 'Team Edit', formErrors[errorType][i].$name+' '+errorType]);
+                        }
+                    }
+                }
             }
         };
 

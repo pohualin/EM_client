@@ -6,8 +6,8 @@
 		<div class="col-md-6">
 			<div class="actions pull-right">
 	            <div class="form-group">
-					<a class="btn btn-link" href="#/">edit</a>
-					<button class="btn btn-primary" type="button" data-ng-click="createAnotherClientUser()">
+					<a class="btn btn-link" href>edit</a>
+					<button class="btn btn-primary" type="button" data-ng-click="createAnotherUserClient()">
 	                    <span>Create Another User</span>
 	                </button>
 	            </div>
@@ -19,19 +19,19 @@
 			<span>Name: </span>
 		</div>
 		<div class="col-md-4">
-			{{createdClientUser.entity.firstName}} {{createdClientUser.entity.lastName}} 
+			{{selectedUserClient.entity.firstName}} {{selectedUserClient.entity.lastName}}
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-md-4">
 			<span>Email: </span>
 		</div>
-		<div class="col-md-4">{{createdClientUser.entity.email}}</div>
+		<div class="col-md-4">{{selectedUserClient.entity.email}}</div>
 	</div>
 	<div class="row">
 		<div class="col-md-4">
 			<span>User ID: </span>
 		</div>
-		<div class="col-md-4">{{createdClientUser.entity.email}}</div>
+		<div class="col-md-4">{{selectedUserClient.entity.email}}</div>
 	</div>
 </div>

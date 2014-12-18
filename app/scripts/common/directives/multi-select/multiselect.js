@@ -84,11 +84,10 @@
                 var broadcastkey = 'multiSelectUpdate',
                     label = '';
 
-                if (scope.model && scope.model.length === 1) {
-                  label = scope.model[0][scope.labelField];
-                } else if (scope.areAllSelected()) {
-                  label = 'All Selected';
-                } else if (scope.model && scope.model.length > 1) {
+                if (scope.areAllSelected()) {
+                  var count = scope.model ? scope.model.length : 0;
+                  label = 'All ('+ count +')';
+                } else if (scope.model && scope.model.length > 0) {
                   label = scope.model.length + ' Selected';
                 } else {
                   label = 'None Selected';

@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" data-ng-cloak>
     <div class="row">
         <h1>Emmi Manager 2.0</h1>
         <span data-translate="main.welcome" data-ng-show="account" data-translate-value-username="{{ account.firstName + ' ' + account.lastName}}" data-translate-value-today="{{ today | date:'fullDate' }}"></span> <span data-ng-hide="account">The date is {{ today | date:'fullDate' }}.</span>
