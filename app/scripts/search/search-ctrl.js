@@ -36,7 +36,6 @@ angular.module('emmiManager')
                 }
                 // put the content in scope
                 $scope[contentProperty] = responsePage.content;
-
                 // set the total
                 $scope.total = responsePage.page.totalElements;
 
