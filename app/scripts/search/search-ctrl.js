@@ -36,7 +36,6 @@ angular.module('emmiManager')
                 }
                 // put the content in scope
                 $scope[contentProperty] = responsePage.content;
-
                 // set the total
                 $scope.total = responsePage.page.totalElements;
 
@@ -58,7 +57,7 @@ angular.module('emmiManager')
                         });
                     }
                 }
-
+                $scope[contentProperty].links = $scope.links;
                 // create current loading plus page
                 $scope.load = responsePage.link.self;
 

@@ -1,0 +1,31 @@
+<div class="popover">
+    <div class="arrow"></div>
+    <h3 class="popover-title" data-ng-show="conflictingUsers.length == 1">{{conflictingUsers[0].reason | translate}}</h3>
+
+    <div class="popover-content">
+        <div data-ng-repeat="conflictingUser in conflictingUsers">
+            <small>
+                <h3 data-ng-hide="conflictingUsers.length == 1">{{conflictingUser.reason | translate}}</h3>
+                <table border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td><span>USER ID:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td>{{conflictingUser.userClient.login}}</td>
+                    </tr>
+                    <tr>
+                        <td><span>CLIENT: </span></td>
+                        <td>{{conflictingUser.userClient.client.name}}</td>
+                    </tr>
+                </table>
+            </small>
+            <div class="clearfix pull-right">
+                <a href="#/clients/{{conflictingUser.userClient.client.id}}/users/{{conflictingUser.userClient.id}}">view</a>
+            </div>
+            <br/>
+            <div data-ng-hide="$last">
+                <hr/>
+            </div>
+        </div>
+    </div>
+</div>
+
+
