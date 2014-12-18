@@ -143,19 +143,19 @@ angular.module('emmiManager')
             }
             // Set $scope.pageWhereBuilt
             switch (searchObject.p) {
-            case 'URL_PARAMETERS.CLIENT':
+            case URL_PARAMETERS.CLIENT:
               $scope.pageWhereBuilt = 'client';
               break;
-            case 'URL_PARAMETERS.TEAM':
+            case URL_PARAMETERS.TEAM:
               $scope.pageWhereBuilt = 'team';
               break;
-            case 'URL_PARAMETERS.PROVIDER':
+            case URL_PARAMETERS.PROVIDER:
               $scope.pageWhereBuilt = 'provider';
               break;
-            case 'URL_PARAMETERS.LOCATION':
+            case URL_PARAMETERS.LOCATION:
               $scope.pageWhereBuilt = 'location';
               break;
-            case 'URL_PARAMETERS.USER':
+            case URL_PARAMETERS.USER:
                 $scope.pageWhereBuilt = 'user';
                 break;
             default:
