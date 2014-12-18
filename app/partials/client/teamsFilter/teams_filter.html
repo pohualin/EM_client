@@ -2,29 +2,45 @@
     <br>
     <b>Teams</b>
 
-    <div data-ng-hide="clientTeams"><br>No teams exist for this client.</div>
+    <div data-ng-show="clientTagGroupToDisplay.length===0"><br>No teams exist for this client.</div>
 
-    <div data-ng-show="clientTeams">
+    <div data-ng-show="clientTagGroupToDisplay.length!==0">
         <div class="row">
             <div class="col-md-5">organize by:</div>
-            <select class="col-md-6" data-ng-model="selectedGroup"
+            <select class="col-md-6 teamFilterOrganizeBy" data-ng-model="selectedGroup"
                     data-ng-options="group.entity.name for group in clientGroups track by group.entity.id | orderBy:'name'"
-                    data-ng-change="getTeamTagsForClientAndGroup()">
-                <option value="">Select...</option>
+                    data-ng-change="getTeamTagsForGroup()">
+                <option value="">All Active Teams</option>
+            </select>
+        </div>
+        <div class="row">
+            <div class="col-md-5">filter by:</div>
+            <select data-chosen data-placeholder="Choose some tags" multiple
+                    data-ng-model="filterTags" data-ng-change="showFilteredTeams()"
+                    data-ng-options="tag.text
+                group by tag.group.name
+                for tag in clientTagGroupToDisplay | orderBy:'text'
+                track by tag.id" class="form-control">
             </select>
         </div>
         <hr>
-        <div data-ng-hide="selectedGroup" data-ng-repeat="team in clientTeams">
-            <a ng-href="#/clients/{{clientId}}/teams/{{team.entity.id}}">{{team.entity.name}}</a>
+        <div data-ng-hide="useGroupDisplay">
+            <div data-ng-repeat="team in clientTeams">
+                <a data-ng-href="#/clients/{{clientId}}/teams/{{team.id}}?{{currentRouteQueryString}}">{{team.name}}</a>
+            </div>
+            <div data-ng-show="clientTeams===null">No teams exist for this search.</div>
         </div>
 
-        <div data-ng-show="selectedGroup" data-ng-repeat="teamList in listOfTeamLists">
-            <b>{{tagsInSelectedGroup[$index].entity.name}}</b>
+        <div data-ng-show="useGroupDisplay">
+            <div data-ng-repeat="(tag,teamList) in listOfTeamsByTag">
+                <b>{{tag}}</b>
 
-            <div data-ng-repeat="team in teamList">
-                <a ng-href="#/clients/{{clientId}}/teams/{{team.id}}">{{team.name}}</a>
-
+                <div data-ng-repeat="team in teamList">
+                    <a data-ng-href="#/clients/{{clientId}}/teams/{{team.id}}?{{currentRouteQueryString}}">{{team.name}}</a>
+                </div>
+                <div data-ng-show="teamList.length===0">No teams exist for this tag.</div>
             </div>
+            <div data-ng-show="listOfTeamsByTag===null">No teams exist for this search.</div>
         </div>
     </div>
     <hr>

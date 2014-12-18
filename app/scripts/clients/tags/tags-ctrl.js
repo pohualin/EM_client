@@ -37,18 +37,19 @@ angular.module('emmiManager')
 
         });
 
-       /* $scope.checkForConflicts = function (isValid) {
+        $scope.checkForConflicts = function (isValid) {
             Tag.checkForConflicts(Client.getClient()).then(function (conflictingTeamTags) {
                 if (conflictingTeamTags.length > 0) {
                     $scope.conflictingTeamTags = conflictingTeamTags;
                 } else {
                     $scope.saveTags(isValid);
+                    $scope.cancelConflictingTeamsPopover();
                     if ($scope.hideClientTags) {
                         $scope.hideClientTags();
                     }
                 }
             });
-        };*/
+        };
 
         $scope.overrideConflictingTeamTags = function (isValid) {
             $scope.saveTags(isValid);
@@ -167,8 +168,7 @@ angular.module('emmiManager')
         };
     }])
 
-    .directive('teamConflictPopover', ['$popover', '$timeout', '$translate', 'Tag', 'Client', function ($popover, $timeout, $translate, Tag, Client) {
-        var popover;
+    .directive('teamConflictPopover', ['$popover', '$timeout', '$translate', function ($popover, $timeout, $translate) {
         return {
             restrict: 'EA',
             scope: {
@@ -178,41 +178,31 @@ angular.module('emmiManager')
                 onOk: '&onOk'
             },
             link: function (scope, element) {
+                scope.cancelConflictingTeamsPopover = function () {
+                    scope.teamConflictWarning.hide();
+                };
+                scope.showPopover = function () {
+                    scope.teamConflictWarning.show();
+                };
+
                 element.on('click', function () {
                     // pop a warning dialog
                     event.stopPropagation();
-                    Tag.checkForConflicts(Client.getClient()).then(function (conflictingTeamTags) {
-                        if (conflictingTeamTags && conflictingTeamTags.length > 0) {
-                            scope.onOpenPopover();
-                            scope.conflictingTeamTags = conflictingTeamTags;
-                            if (popover){
-                                popover.hide();
-                            }
-                            popover = $popover(element, {
-                                title: 'Are you sure?',
-                                scope: scope,
-                                trigger: 'manual',
-                                show: true,
-                                autoClose: true,
-                                placement: 'top',
-                                target: element,
-                                contentTemplate: 'partials/client/tags/conflictingTeam_popover.tpl.html'
-                            });
-                            
-                            scope.$on('tooltip.hide', function() {
-                                scope.onClosePopover();
-                                scope.$apply();
-                            });                       
-
-                        } else {
-                            $timeout(function () {
-                                scope.onOk();
-                                scope.onClosePopover();
-                            });
-                        }
-                    });
-
-                
+                    scope.onOpenPopover();
+                    if (!scope.teamConflictWarning) {
+                        scope.teamConflictWarning = $popover(element, {
+                            title: 'Are you sure?',
+                            scope: scope,
+                            show: false,
+                            autoClose: true,
+                            placement: 'top',
+                            contentTemplate: 'partials/client/tags/conflictingTeam_popover.tpl.html'
+                        });
+                        scope.$on('tooltip.hide', function() {
+                            scope.onClosePopover();
+                            scope.$apply();
+                        });
+                    }
                 });
             }
         };
