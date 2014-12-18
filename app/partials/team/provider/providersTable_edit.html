@@ -36,12 +36,15 @@
 		            <ul class="pagination">
 		                <li data-ng-repeat="link in teamResource.teamProviders.links | orderBy:'order'" data-ng-class="{'active': link.name == currentPage}">
 		                    <a data-ng-show="link.name != currentPage" href
-		                       data-ng-click="fetchPage(link.href)">{{link.name}}</a>
+		                       data-ng-click="fetchPaginationLink(link.href)">{{link.name}}</a>
 		                    <span data-ng-hide="link.name != currentPage">{{link.name}}</span>
 		                </li>
 		            </ul>
 		        </div>
     		</div>
+		</div>
+		<div class="col-md-12" >
+			<button type="button" class="btn btn-link" data-ng-click="addProviders()">add providers</button>
 		</div>
 	</div>
 </div>
