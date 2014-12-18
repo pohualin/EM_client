@@ -23,7 +23,7 @@ angular.module('emmiManager')
         };
     })
 
-    .service('Tag', function ($http, $q, Session, UriTemplate, GroupSaveRequest) {
+    .service('Tag', function ($http, $q, Session, UriTemplate, GroupSaveRequest, CommonService) {
         return {
             insertGroups: function (clientResource) {
                 if (clientResource) {
@@ -104,10 +104,11 @@ angular.module('emmiManager')
                     var deferred = $q.defer();
                     var tags = [];
 
-                    $http.get(UriTemplate.create(groupResource.link[1].href).stringify({
+                    $http.get(UriTemplate.create(groupResource.link.tags).stringify({
                         sort:'name,asc'
                     })).then(function load(response) {
                         var page = response.data;
+                        CommonService.convertPageContentLinks(page);
 
                         angular.forEach(page.content, function (tag) {
                             tags.push(tag);
@@ -125,11 +126,15 @@ angular.module('emmiManager')
             },
             listTeamsForTagId: function (tagResource) {
                 if (tagResource) {
-                    return $http.get(UriTemplate.create(tagResource.link[1].href).stringify()).then(function load(response) {
-                        var page = response.data.content;
-                        var teams = [];
+                    var deferred = $q.defer();
+                    var teams = [];
 
-                        angular.forEach(page, function (teamTag) {
+                    $http.get(UriTemplate.create(tagResource.link.teamTags).stringify({
+                        sort:'name,asc'
+                    })).then(function load(response) {
+                        var page = response.data;
+
+                        angular.forEach(page.content, function (teamTag) {
                             teams.push(teamTag.entity.team);
                         });
 
@@ -138,11 +143,9 @@ angular.module('emmiManager')
                                 load(response);
                             });
                         }
-                        teams.sort(function(a,b){
-                           return  a.name.localeCompare(b.name);
-                        });
-                        return teams;
+                        deferred.resolve(teams);
                     });
+                    return deferred.promise;
                 }
             }
         };

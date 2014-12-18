@@ -1,12 +1,13 @@
 'use strict';
 angular.module('emmiManager')
-    .service('TeamTag', function ($http, $q, Session, UriTemplate) {
+    .service('TeamTag', function ($http, $q, Session, UriTemplate, CommonService) {
         return {
             loadSelectedTags: function (teamResource) {
                 if (teamResource.entity.id) {
                     teamResource.tags = [];
                     return $http.get(UriTemplate.create(teamResource.link.tags).stringify()).then(function load(response) {
                         var page = response.data;
+                        CommonService.convertPageContentLinks(page);
                         angular.forEach(page.content, function (teamTag) {
                             teamResource.tags.push(teamTag.entity.tag);
                         });
@@ -28,7 +29,7 @@ angular.module('emmiManager')
                     delete tag.text;
                     delete tag.group;
                 });
-                return $http.post(UriTemplate.create(teamResource.link.tags).stringify(), tagsCopy).
+                $http.post(UriTemplate.create(teamResource.link.tags).stringify(), tagsCopy).
                     then(function (response) {
                         return response;
                     });
