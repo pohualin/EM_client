@@ -6,16 +6,12 @@ angular.module('emmiManager')
         var referenceData;
 		return {
 			search: function (teamResource, query, status, sort, pageSize) {
-				console.log(query);
-				console.log(teamResource);
-
 				return $http.get(UriTemplate.create(teamResource.link.possibleProviders).stringify({name: query,
                         status: status,
                         sort: sort && sort.property ? sort.property + ',' + (sort.ascending ? 'asc' : 'desc') : '',
                         size: pageSize
 				})).then(function (response) {
 					CommonService.convertPageContentLinks(response.data);
-					console.log(response);
 					return response.data;
 				});
 			},

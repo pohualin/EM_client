@@ -24,9 +24,7 @@ angular.module('emmiManager')
 	        	$scope.allLocationsForTeam = locationsArray.sort().toString();
 	        	ProviderView.paginatedProvidersForTeam($scope.teamResource).then(function(response){
 	        		$scope.handleResponse(response, 'listOfTeamProviders');
-	        		console.log($scope.listOfTeamProviders);
 	        	});      	
-	        	
 			});
 		};
 		
@@ -116,15 +114,11 @@ angular.module('emmiManager')
         $scope.createNewProvider = function () {
         	$scope.hideaddprovidermodal();
         	newProviderModal.$promise.then(newProviderModal.show);
-
-//        	$modal({scope: $scope, template: 'partials/team/provider/new.html', animation: 'none', backdropAnimation: 'emmi-fade', backdrop: 'static'});
         };
         
         var newProviderModal = $modal({scope: $scope, template: 'partials/team/provider/new.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
 
-
         $scope.hideNewProviderModal = function () {
-//        	$scope.$hide();
         	newProviderModal.$promise.then(newProviderModal.hide);
         };
 	        
