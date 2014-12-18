@@ -23,7 +23,7 @@ angular.module('emmiManager')
                     });
                 });
                 $scope.showFilteredTeams();
-                $scope.urlParameters = arrays.toQueryString($location.search());
+                $scope.currentRouteQueryString = arrays.toQueryString($location.search());
             }
         };
 
@@ -33,7 +33,7 @@ angular.module('emmiManager')
                 groupIdForURL = $scope.selectedGroup.entity.id;
             }
             $location.search(URL_PARAMETERS.SELECTED_GROUP, groupIdForURL).replace();
-            $scope.urlParameters = arrays.toQueryString($location.search());
+            $scope.currentRouteQueryString = arrays.toQueryString($location.search());
         };
 
         $scope.setTagsUrl = function () {
@@ -43,7 +43,7 @@ angular.module('emmiManager')
             });
             tagIds = tagIds.join(',');
             $location.search(URL_PARAMETERS.SELECTED_TAGS, tagIds).replace();
-            $scope.urlParameters = arrays.toQueryString($location.search());
+            $scope.currentRouteQueryString = arrays.toQueryString($location.search());
         };
 
 

@@ -26,7 +26,7 @@
         <hr>
         <div data-ng-hide="useGroupDisplay">
             <div data-ng-repeat="team in clientTeams">
-                <a data-ng-href="#/clients/{{clientId}}/teams/{{team.id}}?{{urlParameters}}">{{team.name}}</a>
+                <a data-ng-href="#/clients/{{clientId}}/teams/{{team.id}}?{{currentRouteQueryString}}">{{team.name}}</a>
             </div>
             <div data-ng-show="clientTeams===null">No teams exist for this search.</div>
         </div>
@@ -36,7 +36,7 @@
                 <b>{{tag}}</b>
 
                 <div data-ng-repeat="team in teamList">
-                    <a data-ng-href="#/clients/{{clientId}}/teams/{{team.id}}?{{urlParameters}}">{{team.name}}</a>
+                    <a data-ng-href="#/clients/{{clientId}}/teams/{{team.id}}?{{currentRouteQueryString}}">{{team.name}}</a>
                 </div>
                 <div data-ng-show="teamList.length===0">No teams exist for this tag.</div>
             </div>

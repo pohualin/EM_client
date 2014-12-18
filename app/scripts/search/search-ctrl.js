@@ -95,8 +95,8 @@ angular.module('emmiManager')
  * 3. Handles tri-click sorting properties
  * 4. Handles response page pagination and sorting
  */
-    .controller('CommonSearch', ['$scope', '$location', '$rootScope', 'arrays', '$controller',
-            function ($scope, $location, $rootScope, arrays, $controller) {
+    .controller('CommonSearch', ['$scope', '$location', '$rootScope', 'arrays', '$controller','URL_PARAMETERS',
+            function ($scope, $location, $rootScope, arrays, $controller,URL_PARAMETERS) {
 
         $controller('CommonPagination', {$scope: $scope});
 
@@ -144,19 +144,19 @@ angular.module('emmiManager')
             }
             // Set $scope.pageWhereBuilt
             switch (searchObject.p) {
-            case 'c':
+            case 'URL_PARAMETERS.CLIENT':
               $scope.pageWhereBuilt = 'client';
               break;
-            case 't':
+            case 'URL_PARAMETERS.TEAM':
               $scope.pageWhereBuilt = 'team';
               break;
-            case 'p':
+            case 'URL_PARAMETERS.PROVIDER':
               $scope.pageWhereBuilt = 'provider';
               break;
-            case 'l':
+            case 'URL_PARAMETERS.LOCATION':
               $scope.pageWhereBuilt = 'location';
               break;
-            case 'u':
+            case 'URL_PARAMETERS.USER':
                 $scope.pageWhereBuilt = 'user';
                 break;
             default:

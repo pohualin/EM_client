@@ -29,8 +29,13 @@ angular.module('emmiManager', [
     })
 
     .constant('URL_PARAMETERS', {
-        'SELECTED_GROUP': 'g',
-        'SELECTED_TAGS': 'st'
+        SELECTED_GROUP: 'g',
+        SELECTED_TAGS: 'st',
+        CLIENT:'c',
+        TEAM:'t',
+        PROVIDER:'p',
+        LOCATION:'l',
+        USER:'u'
     })
     .config(function ($httpProvider, $translateProvider, tmhDynamicLocaleProvider, HateoasInterceptorProvider, $datepickerProvider, API) {
 
