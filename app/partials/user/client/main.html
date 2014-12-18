@@ -1,9 +1,14 @@
 <div class="container" data-ng-cloak>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-10">
             <h2>
                 <a href="#/">Emmi Manager</a> : <a href="#/clients/{{client.entity.id}}">{{client.entity.name}}</a>
             </h2>
+        </div>
+        <div class="col-md-2">
+        	<h4>
+        		<a href="#/clients/{{client.entity.id}}/roles">Manage Users roles</a>
+        	</h4>
         </div>
     </div>
     <hr/>
@@ -15,11 +20,11 @@
 	            </div>
 	            <div class="col-md-6 col-sm-5">
 	                <label class="sr-only" for="query">Search</label>
-	
+
 	                <div class="input-group">
 	                    <input class="form-control" id="query" name="query" data-ng-model="query" type="text"
 	                           placeholder="First/last name, email, user ID" required data-auto-focus>
-	
+
 	                    <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
 	                </div>
 	            </div>
@@ -82,7 +87,7 @@
 					<td>{{userClient.entity.firstName}}</td>
 					<td>{{userClient.entity.login}}</td>
 					<td>{{userClient.entity.email}}</td>
-					<td><a href="#/clients/{{client.entity.id}}/users/{{userClient.entity.id}}">edit</a> | <a href="#/">deactivate</a></td>
+					<td><a href="#/clients/{{client.entity.id}}/users/{{userClient.entity.id}}?{{currentRouteQueryString}}">edit</a> | <a href>deactivate</a></td>
 				</tr>
 			</table>
 			<div class="row" data-ng-show="usersClient">

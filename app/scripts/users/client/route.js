@@ -43,8 +43,8 @@ angular.module('emmiManager')
                 reloadOnSearch: false,
                 resolve: userClientEditorResources
             }).when('/clients/:clientId/users/new', {
-                templateUrl: 'partials/user/client/create/editor.html',
-                controller: 'UsersClientEditorController',
+                templateUrl: 'partials/user/client/create/new.html',
+                controller: 'UsersClientCreateController',
                 access: {
                     authorizedRoles: [USER_ROLES.admin]
                 },

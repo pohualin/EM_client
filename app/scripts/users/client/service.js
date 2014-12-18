@@ -16,24 +16,26 @@ angular.module('emmiManager')
                             'lastName': null,
                             'email': null,
                             'login': null
-                        }
+                        },
+                        useEmail: true
                     };
                     return newUserClient;
                 },
-                
+
                 /**
                  * Call server to create UserClient
                  */
                 createUserClient: function(client, userClientToBeEdit){
-                	console.log('create client user.');
-                	userClientToBeEdit.login = userClientToBeEdit.email;
-                	userClientToBeEdit.client = client.entity;
-                	return $http.post(UriTemplate.create(client.link.users).stringify(), userClientToBeEdit)
+                    if (userClientToBeEdit.useEmail) {
+                        userClientToBeEdit.entity.login = userClientToBeEdit.entity.email;
+                    }
+                	userClientToBeEdit.entity.client = client.entity;
+                	return $http.post(UriTemplate.create(client.link.users).stringify(), userClientToBeEdit.entity)
 	                    .success(function(response) {
 	                        return response;
 	                    });
                 },
-                
+
 
                 /**
                  * Call server to get a list of UserClient
@@ -47,7 +49,7 @@ angular.module('emmiManager')
 	                        return response.data;
 	                    });
                 },
-                
+
                 /**
                  * Call server to fetch next batch of UserClient
                  */
@@ -58,7 +60,7 @@ angular.module('emmiManager')
 	                        return response.data;
 	                    });
                 },
-                
+
                 /**
                  * Call when UserClientId is passed in as route param
                  * get UserClient by userClientId and set it to selectedUserClient
@@ -75,7 +77,7 @@ angular.module('emmiManager')
                     	});
                 	}
                 },
-                
+
                 /**
                  * Getter of selectedUserClient
                  */
