@@ -164,14 +164,15 @@ angular.module('emmiManager')
         }
 
         $scope.serializeToQueryString = function (query, page, status, sort, size){
-            $location.search({
-                q: query,
-                p: page,
-                status: status,
-                sort: sort ? sort.property : '',
-                dir: sort ? (sort.ascending ? 'asc' : 'desc') : '',
-                size: size
-            }).replace();
+            var queryObject={};
+            queryObject[URL_PARAMETERS.QUERY] = query;
+            queryObject[URL_PARAMETERS.PAGE] = page;
+            queryObject[URL_PARAMETERS.STATUS] = status;
+            queryObject[URL_PARAMETERS.SORT] = sort ? sort.property : '';
+            queryObject[URL_PARAMETERS.DIRECTION] = sort ? (sort.ascending ? 'asc' : 'desc') : '';
+            queryObject[URL_PARAMETERS.SIZE] = size;
+
+            $location.search(queryObject).replace();
             $rootScope.currentRouteQueryString = arrays.toQueryString($location.search());
         };
 

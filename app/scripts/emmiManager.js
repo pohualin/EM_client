@@ -35,7 +35,13 @@ angular.module('emmiManager', [
         TEAM:'t',
         PROVIDER:'p',
         LOCATION:'l',
-        USER:'u'
+        USER:'u',
+        QUERY:'q',
+        PAGE:'p',
+        STATUS:'status',
+        SORT:'sort',
+        DIRECTION:'dir',
+        SIZE:'size'
     })
     .config(function ($httpProvider, $translateProvider, tmhDynamicLocaleProvider, HateoasInterceptorProvider, $datepickerProvider, API) {
 

@@ -6,7 +6,7 @@ angular.module('emmiManager')
         var searchObject = $location.search();
         $scope.getUrl = function () {
             angular.forEach($scope.clientGroups, function (clientGroup) {
-                if (searchObject && clientGroup.entity.id === parseInt(searchObject.g)) {
+                if (searchObject && clientGroup.entity.id === parseInt(searchObject[URL_PARAMETERS.SELECTED_GROUP])) {
                     $scope.selectedGroup = clientGroup;
                     $scope.getTeamTagsForGroup();
                 }
