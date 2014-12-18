@@ -28,6 +28,21 @@ angular.module('emmiManager', [
         user: 'PERM_USER'
     })
 
+    .constant('URL_PARAMETERS', {
+        SELECTED_GROUP: 'g',
+        SELECTED_TAGS: 'st',
+        CLIENT:'c',
+        TEAM:'t',
+        PROVIDER:'p',
+        LOCATION:'l',
+        USER:'u',
+        QUERY:'q',
+        PAGE:'p',
+        STATUS:'status',
+        SORT:'sort',
+        DIRECTION:'dir',
+        SIZE:'size'
+    })
     .config(function ($httpProvider, $translateProvider, tmhDynamicLocaleProvider, HateoasInterceptorProvider, $datepickerProvider, API) {
 
         // Initialize angular-translate
