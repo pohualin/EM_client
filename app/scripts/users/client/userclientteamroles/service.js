@@ -8,18 +8,44 @@ angular.module('emmiManager')
             	/**
             	 * Call server to save all selected Teams
             	 */
-            	associateTeams: function(selectedTeams){
+            	associateTeams: function(selectedTeamRoles){
             		var userClient = UsersClientService.getUserClient();
             		var userClientUserClientTeamRoles = [];
-            		angular.forEach(selectedTeams, function(selectedTeam){
-            			var userClientUserClientTeamRole = {team: selectedTeam, userClientTeamRole: selectedClientTeamRole.entity, userClient: userClient.entity};
-            			userClientUserClientTeamRoles.push(userClientUserClientTeamRole);
+
+            		angular.forEach(selectedTeamRoles, function(selectedTeamRole){
+            			if(selectedTeamRole.id){
+            				selectedTeamRole.userClientTeamRole = selectedClientTeamRole.entity;
+            				userClientUserClientTeamRoles.push(selectedTeamRole);
+            			} else {
+            				var userClientUserClientTeamRole = 
+            					{team: selectedTeamRole.team, 
+            					 userClientTeamRole: selectedClientTeamRole.entity, 
+            					 userClient: userClient.entity};
+                			userClientUserClientTeamRoles.push(userClientUserClientTeamRole);	
+            			}
             		});
-            		return $http.post(UriTemplate.create(userClient.link.possibleTeams).stringify(), userClientUserClientTeamRoles).then(function(response){
-            			return response;
-            		});
+            		return $http.post(UriTemplate.create(userClient.link.possibleTeams).stringify(), userClientUserClientTeamRoles);
             	},
             	
+            	/**
+            	 * Check selected UserClientUserClientTeamRoles and see if confirmation modal is needed
+            	 */
+            	checkSelectedTeamRoles: function(selectedTeamRoles){
+            		var needed = false;
+            		angular.forEach(selectedTeamRoles, function(selectedTeamRole){
+            			if(selectedTeamRole.warning){
+            				needed = true;
+            			}
+            		});
+            		return needed;
+            	},
+            	
+            	/**
+            	 * Delete all UserClientUserClientTeamRole for selected clientTeamRole
+            	 * 
+            	 * @param clientTeamRole
+            	 * @returns
+            	 */
             	deleteAllUserClientUserClientTeamRole: function(clientTeamRole){
             		return $http.delete(UriTemplate.create(UsersClientService.getUserClient().link.existingTeams)
             				.stringify({userClientTeamRoleId: clientTeamRole.entity.id}));
@@ -39,18 +65,28 @@ angular.module('emmiManager')
             		return $http.get(UriTemplate.create(UsersClientService.getUserClient().link.possibleTeams).stringify({term: query}))
             			.then(function(response){
             			CommonService.convertPageContentLinks(response.data);
+            			angular.forEach(response.data.content, function(content){
+            				var entity = content.entity;
+            				if(entity.userClientTeamRole && entity.userClientTeamRole.id !== selectedClientTeamRole.entity.id){
+            					entity.warning = 'This user is an ' + entity.userClientTeamRole.name + ' at this team.';
+            				}
+            			});
             			return response.data;
             		});
             	},
             	
-            	getExistingTeams: function(clientTeamRole){
+            	/**
+            	 * Refresh team role cards
+            	 */
+            	refreshTeamRoleCards: function(clientTeamRoles){
             		var userClient = UsersClientService.getUserClient();
-            		return $http.get(UriTemplate.create(userClient.link.existingTeams).stringify({userClientTeamRoleId: clientTeamRole.entity.id}))
+            		angular.forEach(clientTeamRoles, function(clientTeamRole){
+            			$http.get(UriTemplate.create(userClient.link.existingTeams).stringify({userClientTeamRoleId: clientTeamRole.entity.id}))
 	            		.then(function(response){
 	            			CommonService.convertPageContentLinks(response.data);
 	            			clientTeamRole.existingTeams = response.data.content;
-	            			return response.data;
 	            		});
+    				});
             	},
             	
             	/**
@@ -78,7 +114,8 @@ angular.module('emmiManager')
             		clientTeamRoles[0].disabled = false;
             	},
             	
-            	/*
+            	/**
+            	 * @Unused
             	 * Get existing UserClientUserClientTeamRole relationship
             	 */
             	getUserClientUserClientTeamRoles: function(userClient){

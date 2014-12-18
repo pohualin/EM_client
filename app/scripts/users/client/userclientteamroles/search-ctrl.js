@@ -14,8 +14,10 @@ angular.module('emmiManager')
 			 */
 			$scope.search = function(isValid){
 				$scope.searchPerformed = true;
+				$scope.loading = true;
 				UserClientUserClientTeamRolesService.findPossible($scope.query).then(function (userClientUserClientTeamRolePage) {
                     $scope.handleResponse(userClientUserClientTeamRolePage, 'userClientUserClientTeamRoles');
+                    $scope.removeStatusFilterAndTotal = $scope.total <= 0;
                 }, function () {
                     // error happened
                     $scope.loading = false;

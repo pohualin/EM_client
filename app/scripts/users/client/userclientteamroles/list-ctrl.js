@@ -6,8 +6,8 @@ angular.module('emmiManager')
  * Controller for list of UserClientUserClientTeamRole
  */
 .controller('UsersClientUserClientTeamRolesListController', 
-		['$controller', '$scope', 'Client', 'ManageUserTeamRolesService', 'UsersClientService', 'UserClientUserClientTeamRolesService',
-        function ($controller, $scope, Client, ManageUserTeamRolesService, UsersClientService, UserClientUserClientTeamRolesService) {
+		['$controller', '$scope', 'Client', 'TeamsFilter', 'ManageUserTeamRolesService', 'UsersClientService', 'UserClientUserClientTeamRolesService',
+        function ($controller, $scope, Client, TeamsFilter, ManageUserTeamRolesService, UsersClientService, UserClientUserClientTeamRolesService) {
 			
 			/**
     		 * load all UserClientTeamRoles for the client
@@ -15,6 +15,7 @@ angular.module('emmiManager')
     		$scope.loadClientTeamRoles = function(){
     			ManageUserTeamRolesService.loadClientTeamRoles().then(function(clientTeamRoles){
 					$scope.clientTeamRoles = clientTeamRoles;
+					$scope.setHasMoreTeamRole();
 				});
     		};
 			
@@ -24,34 +25,42 @@ angular.module('emmiManager')
 			$scope.panelStateChange = function(clientTeamRole){
 				// Fetch all permissions tied to clientTeamRole
 				ManageUserTeamRolesService.loadAllPermissions(clientTeamRole);
-				// Fetch all teams tied to clientTeamRole
-				UserClientUserClientTeamRolesService.getExistingTeams(clientTeamRole);
+				$scope.setHasMoreTeamRole();
 			};
 			
+			/**
+			 * Remove all UserClientUserClientTeamRole
+			 */
 			$scope.removeAllUserClientUserClientTeamRole = function(clientTeamRole){
-				UserClientUserClientTeamRolesService.deleteAllUserClientUserClientTeamRole(clientTeamRole).then(function(response){
-					
-				});
+				UserClientUserClientTeamRolesService.deleteAllUserClientUserClientTeamRole(clientTeamRole);
 			};
 			
 			/**
 			 * Delete one UserClientUserClientTeamRole
 			 */
 			$scope.removeUserClientUserClientTeamRole = function(clientTeamRole, existingTeam){
-				UserClientUserClientTeamRolesService.deleteUserClientUserClientTeamRole(existingTeam).then(function(response){
-					UserClientUserClientTeamRolesService.getExistingTeams(clientTeamRole);
-				});
+				UserClientUserClientTeamRolesService.deleteUserClientUserClientTeamRole(existingTeam);
 			};
 			
-    		/**
-    		 * @Unused
-    		 * 
-    		 * TODO: Disable client team roles if it's already existed
-    		 * 
-    		 */
-    		$scope.disableClientTeamRoles = function(){
-    			UserClientUserClientTeamRolesService.disableClientTeamRoles($scope.clientTeamRoles);
+			/**
+			 * Call to refresh hasTeamRole flag and UserClientTeamRole cards
+			 */
+    		$scope.setHasMoreTeamRole = function(){
+    			UserClientUserClientTeamRolesService.refreshTeamRoleCards($scope.clientTeamRoles);
     		};
+    		
+    		/**
+			 * Set hasTeams to true is there is at least a teams for the client
+			 */
+			$scope.setHasTeams = function(){
+				TeamsFilter.getClientTeams().then(function(response){
+					if(response && response.length > 0){
+						$scope.hasTeams = true;
+					} else {
+						$scope.hasTeams = false;
+					}
+				});
+			};
             
     		/**
 	         * init method called when the page is loading
@@ -60,6 +69,7 @@ angular.module('emmiManager')
             	$controller('CommonSearch', {$scope: $scope});
             	$scope.client = Client.getClient();
                 $scope.loadClientTeamRoles();
+                $scope.setHasTeams();
             }
             
             init();

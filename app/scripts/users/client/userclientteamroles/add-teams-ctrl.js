@@ -17,28 +17,49 @@ angular.module('emmiManager')
 					 show: false, backdrop: 'static'});
 			
 			/**
-			 * Place to hold selected team from search results
-			 */
-			$scope.selectedTeams = {};
-			
-			/**
 			 * Call when "add teams" link clicked
 			 * clientTeamRole passed in as parameter
-			 * 
 			 */
 			$scope.addTeams = function(clientTeamRole){
 				UserClientUserClientTeamRolesService.setSelectedClientTeamRole(clientTeamRole);
+				$scope.searchPerformed = false;
+				$scope.selectedTeamRoles = {};
 				addTeamsModal.$promise.then(addTeamsModal.show);
 			};
 			
 			/**
+			 * Call when cancel button is clicked
+			 */
+			$scope.cancel = function(){
+				$scope.hideAddTeamsModal();
+			};
+			
+			/**
+			 * Check if warning is needed
+			 */
+			$scope.checkSelectedTeamRoles = function(){
+				if(UserClientUserClientTeamRolesService.checkSelectedTeamRoles($scope.selectedTeamRoles)){
+					$scope.needComfirmationModal = true;
+				} else {
+					$scope.needComfirmationModal = false;
+				}
+			};
+			
+			/**
+			 * Hide addTeamsModal
+			 */
+			$scope.hideAddTeamsModal = function () {
+				addTeamsModal.hide();
+	        };
+			
+			/**
     		 * Call this method when checkbox is checked/unchecked
     		 */
-    		$scope.onCheckboxChange = function (team) {
-                if (team.selected) {
-                    $scope.selectedTeams[team.id] = angular.copy(team);
+    		$scope.onCheckboxChange = function (userClientTeamRole) {
+                if (userClientTeamRole.selected) {
+                    $scope.selectedTeamRoles[userClientTeamRole.team.id] = angular.copy(userClientTeamRole);
                 } else {
-                    delete $scope.selectedTeams[team.id];
+                    delete $scope.selectedTeamRoles[userClientTeamRole.team.id];
                 }
             };
 	
@@ -46,9 +67,9 @@ angular.module('emmiManager')
              * Call this method when save is clicked
              */
             $scope.save = function(){
-            	window.paul = $scope.selectedTeams;
-            	UserClientUserClientTeamRolesService.associateTeams($scope.selectedTeams).then(function(response){
-            		console.log('back');
+            	UserClientUserClientTeamRolesService.associateTeams($scope.selectedTeamRoles).then(function(response){
+            		$scope.hideAddTeamsModal();
+            		$scope.setHasMoreTeamRole();
             	});
             };
         }
