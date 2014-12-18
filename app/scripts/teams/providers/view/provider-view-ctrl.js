@@ -12,10 +12,11 @@ angular.module('emmiManager')
         }
         $scope.allProvidersForTeam = function() {
         	ProviderView.allProvidersForTeam($scope.teamResource).then(function(response){
-        		$scope.handleResponse(response, 'listOfTeamProviders');      
+        		$scope.handleResponse(response, '$scope.teamResource.teamProviders');      
+        		$scope.teamResource.teamProviders = response;
         	});
         };
-        
+       
         $scope.refreshLocationsAndProviders = function() {
         	ProviderSearch.fetchAllLocationsForTeam($scope.teamResource).then(function(locationResponse){
 				var locationsArray=[];
@@ -24,10 +25,13 @@ angular.module('emmiManager')
 	        	});
 	        	$scope.allLocationsForTeam = locationsArray.sort().toString();
 	        	ProviderView.paginatedProvidersForTeam($scope.teamResource).then(function(response){
-	        		$scope.handleResponse(response, 'listOfTeamProviders');      
+	        		$scope.handleResponse(response, '$scope.teamResource.teamProviders');      
+	        		$scope.teamResource.teamProviders = response.content;      
 	        	});      	
 			});
         };
+        
+       
 	})
 	
 	.controller('ProviderListController', function($scope, $modal, ProviderView, TeamLocation, TeamProviderService, ProviderSearch, $controller, arrays){
@@ -80,7 +84,8 @@ angular.module('emmiManager')
         $scope.fetchPage = function (href) {
             $scope.loading = true;
             ProviderView.fetchPageLink(href).then(function (page) {
-        		$scope.handleResponse(page, 'listOfTeamProviders');      
+            	$scope.handleResponse(page, '$scope.teamResource.teamProviders');      
+        		$scope.teamResource.teamProviders = page.content;      
             }, function () {
                 // error happened
                 $scope.loading = false;

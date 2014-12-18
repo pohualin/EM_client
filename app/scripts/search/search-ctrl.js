@@ -58,7 +58,7 @@ angular.module('emmiManager')
                         });
                     }
                 }
-
+                $scope[contentProperty].links = $scope.links;
                 // create current loading plus page
                 $scope.load = responsePage.link.self;
 
