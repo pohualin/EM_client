@@ -6,8 +6,8 @@ angular.module('emmiManager')
     	// First call AuthSharedService to get current user
     	// Second call ClientService to get current client
     	// Third call UserClientService to get current UserClient if userClientId is passed in param
-        var userClientEditorResources = 
-    	['AuthSharedService','Client', 'UsersClientService', '$route', '$q', function (AuthSharedService, Client, UsersClientService, $route, $q){
+        var userClientEditorResources = {
+        	'clientEditorResource': ['AuthSharedService','Client', 'UsersClientService', '$route', '$q', function (AuthSharedService, Client, UsersClientService, $route, $q){
             var deferred = $q.defer();
             AuthSharedService.currentUser().then(function (){
                 Client.selectClient($route.current.params.clientId).then(function (clientResource){
@@ -30,7 +30,7 @@ angular.module('emmiManager')
                 });
             });
             return deferred.promise;
-        }];
+        }]};
 
         // Routes
         $routeProvider
@@ -43,8 +43,8 @@ angular.module('emmiManager')
                 reloadOnSearch: false,
                 resolve: userClientEditorResources
             }).when('/clients/:clientId/users/new', {
-                templateUrl: 'partials/user/client/create/editor.html',
-                controller: 'UsersClientEditorController',
+                templateUrl: 'partials/user/client/create/new.html',
+                controller: 'UsersClientCreateController',
                 access: {
                     authorizedRoles: [USER_ROLES.admin]
                 },
