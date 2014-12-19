@@ -1,26 +1,41 @@
 <div class="container" data-ng-cloak>
-    <div class="col-md-3" style="border-right:2px solid lightgrey"
-         data-ng-include="'partials/client/teamsFilter/teams_filter.html'"></div>
-    <div class="col-md-9">
-        <div class="row" data-ng-include="'partials/client/edit/metadata.html'"></div>
-        <hr>
-        <div class="row" data-ng-include="'partials/client/tags/client_tags.html'"
-             data-ng-class="{'masked': metadataForm.clientName.$error.unique || editMode}">
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb h3">
+                <li><a href="#/">Emmi Manager</a></li>
+                <li class="active"><a href="#/clients/{{client.id}}"><span data-bs-tooltip="'id: {{client.id}}'" data-placement="right">{{client.name}}</span></a></li>
+            </ol>
         </div>
-        <hr>
-        <div class="row" data-ng-include="'partials/client/location/client_current.html'"
-             data-ng-class="{'masked': metadataForm.clientName.$error.unique || editMode}"></div>
-        <hr>
-        <div class="row" data-ng-include="'partials/client/provider/current.html'"
-             data-ng-class="{'masked': metadataForm.clientName.$error.unique || editMode}"></div>
-        <hr>
-        <div class="row">
-            <div class="col-md-6">
-                <a data-ng-show="existingClientRoles || existingClientTeamRoles" href="#/clients/{{client.id}}/users">Manage Users</a>
-
-                <a data-ng-hide="existingClientRoles || existingClientTeamRoles" href="#/clients/{{client.id}}/roles">Manage Users</a>
+    </div>
+    <div class="row">
+        <div class="col-md-3" style="border-right:2px solid lightgrey"
+             data-ng-include="'partials/client/teamsFilter/teams_filter.html'"></div>
+        <div class="col-md-9">
+            <div class="row" data-ng-include="'partials/client/edit/metadata.html'"></div>
+            <hr>
+            <div class="row" data-ng-include="'partials/client/tags/client_tags.html'"
+                 data-ng-class="{'masked': metadataForm.clientName.$error.unique || editMode}">
             </div>
+            <hr>
+            <div class="row" data-ng-include="'partials/client/location/client_current.html'"
+                 data-ng-class="{'masked': metadataForm.clientName.$error.unique || editMode}"></div>
+            <hr>
+            <div class="row" data-ng-include="'partials/client/provider/current.html'"
+                 data-ng-class="{'masked': metadataForm.clientName.$error.unique || editMode}"></div>
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <a href="#/clients/{{client.id}}/roles">Manage Client Roles</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <a data-ng-show="existingClientRoles || existingClientTeamRoles" href="#/clients/{{client.id}}/users">Manage Users</a>
+
+                    <a data-ng-hide="existingClientRoles || existingClientTeamRoles" href="#/clients/{{client.id}}/roles">Manage Users</a>
+                </div>
+            </div>
+            <hr/>
         </div>
-        <hr/>
     </div>
 </div>

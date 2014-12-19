@@ -62,10 +62,24 @@ angular.module('emmiManager')
                 });
         	},
             updateProviderTeamAssociations: function (teamProviderTeamLocationSaveReq, teamResource) {
-                return $http.post(UriTemplate.create(teamResource.link.teamProviders).stringify(), teamProviderTeamLocationSaveReq)
-                    .success(function (response) {
-                        return response;
+            	var deferred = $q.defer();
+            	$http.post(UriTemplate.create(teamResource.link.teamProviders).stringify(), teamProviderTeamLocationSaveReq)
+                    .then(function (response) {
+                    	$http.get(UriTemplate.create(teamResource.link.teamProviders).stringify(), teamResource.entity).then(function addToProviders(response) {
+                            	 var page = response.data;
+                            	 CommonService.convertPageContentLinks(response.data);
+                                	 angular.forEach(page.content, function(teamProvider){
+                                		 var locations = [];
+                                		 angular.forEach(teamProvider.entity.teamProviderTeamLocations, function(tptl){
+                                			 locations.push(' '+ tptl.teamLocation.location.name);
+                                		 });
+                                		 teamProvider.entity.locations = locations.length > 0 ? locations.sort().toString() : '';
+            	            		 });
+//                                	 return page;
+                                	 deferred.resolve(page);
+                             });
                     });
+                return deferred.promise;
             },
         	assignLocationsForFetchedProviders: function (page, teamResource) {
             	return $http.get(UriTemplate.create(teamResource.link.teamLocations).stringify()).then(function(locations){

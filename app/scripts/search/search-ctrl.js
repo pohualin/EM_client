@@ -36,7 +36,6 @@ angular.module('emmiManager')
                 }
                 // put the content in scope
                 $scope[contentProperty] = responsePage.content;
-
                 // set the total
                 $scope.total = responsePage.page.totalElements;
 
@@ -95,8 +94,8 @@ angular.module('emmiManager')
  * 3. Handles tri-click sorting properties
  * 4. Handles response page pagination and sorting
  */
-    .controller('CommonSearch', ['$scope', '$location', '$rootScope', 'arrays', '$controller',
-            function ($scope, $location, $rootScope, arrays, $controller) {
+    .controller('CommonSearch', ['$scope', '$location', '$rootScope', 'arrays', '$controller','URL_PARAMETERS',
+            function ($scope, $location, $rootScope, arrays, $controller,URL_PARAMETERS) {
 
         $controller('CommonPagination', {$scope: $scope});
 
@@ -144,19 +143,19 @@ angular.module('emmiManager')
             }
             // Set $scope.pageWhereBuilt
             switch (searchObject.p) {
-            case 'c':
+            case URL_PARAMETERS.CLIENT:
               $scope.pageWhereBuilt = 'client';
               break;
-            case 't':
+            case URL_PARAMETERS.TEAM:
               $scope.pageWhereBuilt = 'team';
               break;
-            case 'p':
+            case URL_PARAMETERS.PROVIDER:
               $scope.pageWhereBuilt = 'provider';
               break;
-            case 'l':
+            case URL_PARAMETERS.LOCATION:
               $scope.pageWhereBuilt = 'location';
               break;
-            case 'u':
+            case URL_PARAMETERS.USER:
                 $scope.pageWhereBuilt = 'user';
                 break;
             default:
@@ -165,14 +164,15 @@ angular.module('emmiManager')
         }
 
         $scope.serializeToQueryString = function (query, page, status, sort, size){
-            $location.search({
-                q: query,
-                p: page,
-                status: status,
-                sort: sort ? sort.property : '',
-                dir: sort ? (sort.ascending ? 'asc' : 'desc') : '',
-                size: size
-            }).replace();
+            var queryObject={};
+            queryObject[URL_PARAMETERS.QUERY] = query;
+            queryObject[URL_PARAMETERS.PAGE] = page;
+            queryObject[URL_PARAMETERS.STATUS] = status;
+            queryObject[URL_PARAMETERS.SORT] = sort ? sort.property : '';
+            queryObject[URL_PARAMETERS.DIRECTION] = sort ? (sort.ascending ? 'asc' : 'desc') : '';
+            queryObject[URL_PARAMETERS.SIZE] = size;
+
+            $location.search(queryObject).replace();
             $rootScope.currentRouteQueryString = arrays.toQueryString($location.search());
         };
 

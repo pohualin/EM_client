@@ -2,26 +2,35 @@
 
 angular.module('emmiManager')
 
-    .controller('TeamsFilterController', function ($scope, Client, TeamsFilter) {
+    .controller('TeamsFilterController', function ($scope, Client, TeamsFilter, $controller, $q) {
+        $controller('TeamsFilterCommon', {
+            $scope: $scope
+        });
+
         $scope.selectedGroup = '';
         $scope.filterTags = [];
         $scope.clientId = Client.getClient().entity.id;
         $scope.defaultTeams = [];
         $scope.defaultTeamTags = [];
 
-        TeamsFilter.getTeamTags($scope.filterTags).then(function (teamTags) {
-            $scope.teamTags = teamTags;
-            $scope.defaultTeamTags = teamTags;
-            TeamsFilter.getTeamsFromTeamTags(teamTags).then(function (teams) {
-                $scope.defaultTeams = teams;
-                $scope.clientTeams = teams;
-            });
-        });
+        $q.all([
+            TeamsFilter.getTeamTags($scope.filterTags).then(function (teamTags) {
+                $scope.teamTags = teamTags;
+                $scope.defaultTeamTags = teamTags;
 
-        TeamsFilter.getClientGroups().then(function (groups) {
-            //all groups on client
-            $scope.clientGroups = groups;
-            $scope.clientTagGroupToDisplay = TeamsFilter.getClientTagsInGroups(groups);
+                TeamsFilter.getTeamsFromTeamTags(teamTags).then(function (teams) {
+                    $scope.defaultTeams = teams;
+                    $scope.clientTeams = teams;
+                });
+            }),
+
+            TeamsFilter.getClientGroups().then(function (groups) {
+                    //all groups on client
+                    $scope.clientGroups = groups;
+                    $scope.clientTagGroupToDisplay = TeamsFilter.getClientTagsInGroups(groups);
+            }
+        )]).then(function () {
+            $scope.getUrl();
         });
 
         $scope.showClientTeams = function () {
@@ -33,14 +42,16 @@ angular.module('emmiManager')
         $scope.showClientTeams();
 
         $scope.getTeamTagsForGroup = function () {
-            if ($scope.filterTags.length===0 && !$scope.selectedGroup) {
+            $scope.setGroupUrl();
+
+            if ($scope.filterTags.length === 0 && !$scope.selectedGroup) {
                 //if no tags are selected and no group is selected
                 $scope.showClientTeams();
                 $scope.listOfTeamsByTag = null;
-            } else if ($scope.filterTags.length!==0 && !$scope.selectedGroup) {
+            } else if ($scope.filterTags.length !== 0 && !$scope.selectedGroup) {
                 //if there are tags to filter and no group is selected
                 $scope.showFilteredTeams();
-            } else if ($scope.filterTags.length!==0 && $scope.selectedGroup) {
+            } else if ($scope.filterTags.length !== 0 && $scope.selectedGroup) {
                 //if there are tags to filter and a group is selected
                 $scope.showFilteredAndGroupedTeams();
             } else {
@@ -53,13 +64,15 @@ angular.module('emmiManager')
         };
 
         $scope.showFilteredTeams = function () {
-            if ($scope.filterTags.length===0 && !$scope.selectedGroup) {
+            $scope.setTagsUrl();
+
+            if ($scope.filterTags.length === 0 && !$scope.selectedGroup) {
                 //if no tags are selected and no group is selected
                 $scope.showClientTeams();
-            } else if ($scope.filterTags.length===0 && $scope.selectedGroup) {
+            } else if ($scope.filterTags.length === 0 && $scope.selectedGroup) {
                 //if there are no tags to filter and a group is selected
                 $scope.getTeamTagsForGroup();
-            } else if ($scope.filterTags.length!==0 && $scope.selectedGroup) {
+            } else if ($scope.filterTags.length !== 0 && $scope.selectedGroup) {
                 //if there are tags to filter and a group is selected
                 $scope.showFilteredAndGroupedTeams();
             } else {
@@ -68,7 +81,7 @@ angular.module('emmiManager')
                 TeamsFilter.getTeamTags($scope.filterTags).then(function (teamTags) {
                     TeamsFilter.getTeamsFromTeamTags(teamTags).then(function (teams) {
                         $scope.clientTeams = teams;
-                        if(Object.keys(teams).length === 0){
+                        if (Object.keys(teams).length === 0) {
                             $scope.clientTeams = null;
                         }
                     });
