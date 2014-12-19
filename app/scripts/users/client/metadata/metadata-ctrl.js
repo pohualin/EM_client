@@ -40,8 +40,8 @@ angular.module('emmiManager')
                         function success(response) {
                             $scope.userClientView = response.data;
                             $scope.editMode = false;
-                        }, function error(error) {
-                            $scope.handleSaveError(error, $scope.userClientEdit.currentTarget);
+                        }, function error(response) {
+                            $scope.handleSaveError(response, $scope.userClientEdit.currentTarget);
                         });
                 } else {
                     $scope.formValidationError();

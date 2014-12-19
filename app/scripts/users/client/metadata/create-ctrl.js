@@ -25,8 +25,8 @@ angular.module('emmiManager')
                             var savedUserClientResource = response.data;
                             // go to the view/edit page, if the save is successful
                             $location.path('/clients/' + savedUserClientResource.entity.client.id + '/users/' + savedUserClientResource.entity.id);
-                        }, function error(error) {
-                            $scope.handleSaveError(error, angular.element(event.currentTarget));
+                        }, function error(response) {
+                            $scope.handleSaveError(response, angular.element(event.currentTarget));
                         });
                 } else {
                     $scope.formValidationError();
