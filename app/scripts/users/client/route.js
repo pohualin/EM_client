@@ -58,7 +58,7 @@ angular.module('emmiManager')
                     'clientEditorResource': userClientEditorResources
                 }
             }).when('/clients/:clientId/users/new', {
-                templateUrl: 'partials/user/client/create/new.html',
+                templateUrl: 'partials/user/client/metadata/new.html',
                 controller: 'UsersClientCreateController',
                 access: {
                     authorizedRoles: [USER_ROLES.admin]
@@ -68,7 +68,7 @@ angular.module('emmiManager')
                     'clientEditorResource': userClientEditorResources
                 }
             }).when('/clients/:clientId/users/:userClientId', {
-                templateUrl: 'partials/user/client/create/editor.html',
+                templateUrl: 'partials/user/client/editor.html',
                 controller: 'UsersClientEditorController',
                 access: {
                     authorizedRoles: [USER_ROLES.admin]
