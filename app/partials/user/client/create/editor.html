@@ -6,8 +6,7 @@
             </h2>
         </div>
     </div>
-    <div class="row" data-ng-hide="editMode" data-ng-include="'partials/user/client/create/view.html'"></div>
-    <div class="row" data-ng-show="editMode" data-ng-include="'partials/user/client/create/edit.html'"></div>
+    <div class="row" data-ng-include="'partials/user/client/create/view.html'"></div>
     <hr data-ng-show="selectedUserClient" />
     <div data-ng-show="selectedUserClient">
     	<div class="row" data-ng-include="'partials/user/client/userclientrole/client-role.html'"></div>
