@@ -65,6 +65,7 @@ angular.module('emmiManager')
                 access: {
                     authorizedRoles: [USER_ROLES.admin]
                 },
+                reloadOnSearch: false,
                 resolve: {
                     'teamClientResource': teamClientResource
                 }
