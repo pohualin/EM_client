@@ -38,11 +38,10 @@ angular.module('emmiManager')
 			 * Check if warning is needed
 			 */
 			$scope.checkSelectedTeamRoles = function(){
-				if(UserClientUserClientTeamRolesService.checkSelectedTeamRoles($scope.selectedTeamRoles)){
-					$scope.needComfirmationModal = true;
-				} else {
-					$scope.needComfirmationModal = false;
-				}
+				$scope.cardsToRefresh = [];
+				UserClientUserClientTeamRolesService.checkSelectedTeamRoles($scope.selectedTeamRoles, $scope.clientTeamRoles).then(function(response){
+					$scope.cardsToRefresh = response;
+				});
 			};
 			
 			/**
@@ -69,7 +68,9 @@ angular.module('emmiManager')
             $scope.save = function(){
             	UserClientUserClientTeamRolesService.associateTeams($scope.selectedTeamRoles).then(function(response){
             		$scope.hideAddTeamsModal();
-            		$scope.setHasMoreTeamRole();
+            		UserClientUserClientTeamRolesService.refreshTeamRoleCard(UserClientUserClientTeamRolesService.getSelectedClientTeamRole());
+            		window.paul = $scope;
+            		UserClientUserClientTeamRolesService.refreshTeamRoleCards($scope.cardsToRefresh);
             	});
             };
         }

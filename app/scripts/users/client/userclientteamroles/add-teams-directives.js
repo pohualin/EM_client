@@ -5,34 +5,36 @@ angular.module('emmiManager')
 /**
  * This directive shows a warning dialog when a currently active ClientProvider is deactivated
  */
-    .directive('addTeamRolesWarning', ['$popover', '$timeout', function ($popover, $timeout) {
+    .directive('addTeamRolesWarning', ['$popover', '$timeout', 'UserClientUserClientTeamRolesService', function ($popover, $timeout, UserClientUserClientTeamRolesService) {
         return {
             restrict: 'EA',
             link: function (scope, element) {
                 element.on('click', function (event) {
                     event.stopPropagation();
-                    scope.checkSelectedTeamRoles();
-                    if (scope.needComfirmationModal) {
-                        // pop a warning dialog
-                        if (!scope.addTeamRolesWarning) {
-                            scope.addTeamRolesWarning = $popover(element, {
-                                title: '',
-                                scope: scope,
-                                trigger: 'manual',
-                                container: 'body',
-                                show: true,
-                                placement: 'top',
-                                target: element,
-                                contentTemplate: 'partials/user/client/userclientteamrole/add_team_popover.tpl.html'
-                            });
+                    UserClientUserClientTeamRolesService.checkSelectedTeamRoles(scope.selectedTeamRoles, scope.clientTeamRoles).then(function(response){
+                    	if (response.length > 0) {
+                            // pop a warning dialog
+                    		scope.$parent.$parent.cardsToRefresh = response;
+                            if (!scope.addTeamRolesWarning) {
+                                scope.addTeamRolesWarning = $popover(element, {
+                                    title: '',
+                                    scope: scope,
+                                    trigger: 'manual',
+                                    container: 'body',
+                                    show: true,
+                                    placement: 'top',
+                                    target: element,
+                                    contentTemplate: 'partials/user/client/userclientteamrole/add_team_popover.tpl.html'
+                                });
+                            } else {
+                                scope.addTeamRolesWarning.show();
+                            }
                         } else {
-                            scope.addTeamRolesWarning.show();
+                            $timeout(function () {
+                                scope.save();
+                            });
                         }
-                    } else {
-                        $timeout(function () {
-                            scope.save();
-                        });
-                    }
+    				});
                     
                     scope.cancel = function(){
         				if (scope.addTeamRolesWarning) {

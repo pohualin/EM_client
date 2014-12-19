@@ -30,14 +30,26 @@ angular.module('emmiManager')
             	/**
             	 * Check selected UserClientUserClientTeamRoles and see if confirmation modal is needed
             	 */
-            	checkSelectedTeamRoles: function(selectedTeamRoles){
-            		var needed = false;
+            	checkSelectedTeamRoles: function(selectedTeamRoles, clientTeamRoles){
+            		var cards = {};
+            		var cardsToRefresh = [];
+            		var deferred = $q.defer();
             		angular.forEach(selectedTeamRoles, function(selectedTeamRole){
             			if(selectedTeamRole.warning){
-            				needed = true;
+            				if(!cards[selectedTeamRole.userClientTeamRole.id]){
+            					angular.forEach(clientTeamRoles, function(clientTeamRole){
+            						if(clientTeamRole.entity.id === selectedTeamRole.userClientTeamRole.id){
+            							cards[selectedTeamRole.userClientTeamRole.id] = clientTeamRole;
+            						}
+            					});
+            				}
             			}
             		});
-            		return needed;
+            		angular.forEach(cards, function(cardToRefresh){
+						cardsToRefresh.push(cardToRefresh);
+					});
+            		deferred.resolve(cardsToRefresh);
+            		return deferred.promise;
             	},
             	
             	/**
@@ -76,7 +88,19 @@ angular.module('emmiManager')
             	},
             	
             	/**
-            	 * Refresh team role cards
+            	 * Refresh single team role card
+            	 */
+            	refreshTeamRoleCard: function(clientTeamRole){
+            		var userClient = UsersClientService.getUserClient();
+            		return $http.get(UriTemplate.create(userClient.link.existingTeams).stringify({userClientTeamRoleId: clientTeamRole.entity.id}))
+	            		.then(function(response){
+	            			CommonService.convertPageContentLinks(response.data);
+	            			clientTeamRole.existingTeams = response.data.content;
+	            		});
+            	},
+            	
+            	/**
+            	 * Refresh all team role cards
             	 */
             	refreshTeamRoleCards: function(clientTeamRoles){
             		var userClient = UsersClientService.getUserClient();
