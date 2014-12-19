@@ -16,11 +16,6 @@
         <hr>
         <div class="row">
             <div class="col-md-6">
-                <a href="#/clients/{{client.id}}/roles">Manage Client Roles</a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
                 <a data-ng-show="existingClientRoles || existingClientTeamRoles" href="#/clients/{{client.id}}/users">Manage Users</a>
 
                 <a data-ng-hide="existingClientRoles || existingClientTeamRoles" href="#/clients/{{client.id}}/roles">Manage Users</a>
