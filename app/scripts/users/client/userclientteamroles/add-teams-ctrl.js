@@ -35,7 +35,7 @@ angular.module('emmiManager')
 			};
 			
 			/**
-			 * Check if warning is needed
+			 * Check if warning is needed, collect all cards need to be refreshed
 			 */
 			$scope.checkSelectedTeamRoles = function(){
 				$scope.cardsToRefresh = [];
@@ -69,7 +69,6 @@ angular.module('emmiManager')
             	UserClientUserClientTeamRolesService.associateTeams($scope.selectedTeamRoles).then(function(response){
             		$scope.hideAddTeamsModal();
             		UserClientUserClientTeamRolesService.refreshTeamRoleCard(UserClientUserClientTeamRolesService.getSelectedClientTeamRole());
-            		window.paul = $scope;
             		UserClientUserClientTeamRolesService.refreshTeamRoleCards($scope.cardsToRefresh);
             	});
             };

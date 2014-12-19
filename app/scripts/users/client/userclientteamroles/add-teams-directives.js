@@ -11,6 +11,10 @@ angular.module('emmiManager')
             link: function (scope, element) {
                 element.on('click', function (event) {
                     event.stopPropagation();
+                    
+                    /**
+                     * Check and see if pop-over is needed
+                     */
                     UserClientUserClientTeamRolesService.checkSelectedTeamRoles(scope.selectedTeamRoles, scope.clientTeamRoles).then(function(response){
                     	if (response.length > 0) {
                             // pop a warning dialog
@@ -36,6 +40,9 @@ angular.module('emmiManager')
                         }
     				});
                     
+                    /**
+                     * Called when cancel button on modal is clicked
+                     */
                     scope.cancel = function(){
         				if (scope.addTeamRolesWarning) {
                             scope.addTeamRolesWarning.hide();
@@ -43,12 +50,18 @@ angular.module('emmiManager')
         				scope.hideAddTeamsModal();
         			};
         			
+        			/**
+        			 * Called when NO is clicked
+        			 */
         			scope.cancelAddTeamsPopover = function(){
         				if (scope.addTeamRolesWarning) {
                             scope.addTeamRolesWarning.hide();
                         }
         			};
         			
+        			/**
+        			 * Called when YES is clicked
+        			 */
         			scope.okAddTeamsPopover = function(){
         				scope.save();
         			};

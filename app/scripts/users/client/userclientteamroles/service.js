@@ -125,29 +125,6 @@ angular.module('emmiManager')
             	 */
             	getSelectedClientTeamRole: function(){
             		return selectedClientTeamRole;
-            	},
-            	
-            	/**
-            	 * @Unused
-            	 * TODO
-            	 */
-            	disableClientTeamRoles: function(clientTeamRoles){
-            		angular.forEach(clientTeamRoles, function (clientTeamRole) {
-                        clientTeamRole.disabled = true;
-                    });
-            		clientTeamRoles[0].disabled = false;
-            	},
-            	
-            	/**
-            	 * @Unused
-            	 * Get existing UserClientUserClientTeamRole relationship
-            	 */
-            	getUserClientUserClientTeamRoles: function(userClient){
-                	return $http.get(UriTemplate.create(userClient.link.userClientTeamRoles).stringify())
-                    .success(function(page) {
-                    	CommonService.convertPageContentLinks(page);
-                        return page;
-                    });
             	}
             };
         }])
