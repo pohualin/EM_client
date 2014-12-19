@@ -201,7 +201,7 @@ angular.module('emmiManager')
                         scope.$on('tooltip.hide', function() {
                             scope.onClosePopover();
                             scope.$apply();
-                        });                       
+                        });
                     }
                 });
             }

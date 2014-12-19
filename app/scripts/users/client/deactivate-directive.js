@@ -9,12 +9,17 @@ angular.module('emmiManager')
                     'okDeactivatePopover': '&onOk',
                     'cancelDeactivatePopover': '&onCancel',
                     'currentlyActive': '=isCurrentlyActive',
+                    'newStatus': '=newStatus',
+                    'ngModel': '=',
                     'placement': '@placement'
                 },
                 link: function (scope, element) {
                     scope.placement = scope.placement || 'top';
                     element.on('click', function () {
-                        if (scope.currentlyActive) {
+                        if (scope.ngModel) {
+                            scope.ngModel.currentTarget = element;
+                        }
+                        if (scope.currentlyActive && !scope.newStatus) {
                             // pop a warning dialog
                             $popover(element, {
                                 title: '',
