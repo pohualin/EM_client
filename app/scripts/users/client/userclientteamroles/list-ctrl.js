@@ -47,26 +47,12 @@ angular.module('emmiManager')
 			};
     		
     		/**
-			 * Set hasTeams to true is there is at least a teams for the client
-			 */
-			$scope.setHasTeams = function(){
-				TeamsFilter.getClientTeams().then(function(response){
-					if(response && response.length > 0){
-						$scope.hasTeams = true;
-					} else {
-						$scope.hasTeams = false;
-					}
-				});
-			};
-            
-    		/**
 	         * init method called when the page is loading
 	         */
             function init(){
             	$controller('CommonSearch', {$scope: $scope});
             	$scope.client = Client.getClient();
                 $scope.loadClientTeamRoles();
-                $scope.setHasTeams();
             }
             
             init();

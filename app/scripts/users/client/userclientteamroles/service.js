@@ -74,17 +74,29 @@ angular.module('emmiManager')
             	 * Find all possible UserClientUserClientTeamRoles by clientId and term
             	 */
             	findPossible: function(query){
+            		var external = this;
             		return $http.get(UriTemplate.create(UsersClientService.getUserClient().link.possibleTeams).stringify({term: query}))
             			.then(function(response){
             			CommonService.convertPageContentLinks(response.data);
-            			angular.forEach(response.data.content, function(content){
-            				var entity = content.entity;
-            				if(entity.userClientTeamRole && entity.userClientTeamRole.id !== selectedClientTeamRole.entity.id){
-            					entity.warning = 'This user is an ' + entity.userClientTeamRole.name + ' at this team.';
-            				}
-            			});
+            			external.postProcess(response.data, []);
             			return response.data;
             		});
+            	},
+            	
+            	/**
+            	 * Post process UserClientUserClientTeamRoles
+            	 * Check teams that are already selected.
+            	 * Compose warning messages.
+            	 */
+            	postProcess: function(response, selectedTeamRoles){
+            		angular.forEach(response.content, function(content){
+        				var entity = content.entity;
+        				if(entity.userClientTeamRole && entity.userClientTeamRole.id !== selectedClientTeamRole.entity.id){
+        					entity.warning = 'This user is an ' + entity.userClientTeamRole.name + ' at this team.';
+        				}
+        				content.entity.selected = 
+		            		selectedTeamRoles[content.entity.team.id] ? true : false;
+        			});
             	},
             	
             	/**
@@ -104,12 +116,9 @@ angular.module('emmiManager')
             	 */
             	refreshTeamRoleCards: function(clientTeamRoles){
             		var userClient = UsersClientService.getUserClient();
+            		var external = this;
             		angular.forEach(clientTeamRoles, function(clientTeamRole){
-            			$http.get(UriTemplate.create(userClient.link.existingTeams).stringify({userClientTeamRoleId: clientTeamRole.entity.id}))
-	            		.then(function(response){
-	            			CommonService.convertPageContentLinks(response.data);
-	            			clientTeamRole.existingTeams = response.data.content;
-	            		});
+            			external.refreshTeamRoleCard(clientTeamRole);
     				});
             	},
             	

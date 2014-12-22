@@ -38,13 +38,17 @@ angular.module('emmiManager')
                  * @returns a promise that resolves into the loaded permissions
                  */
                 loadAllPermissions: function (clientTeamRoleResource) {
-                	if(clientTeamRoleResource.entity.permissions){
-                		return null;
-                	}
-                	return $http.get(UriTemplate.create(clientTeamRoleResource.link.permissions).stringify())
+                	var deferred = $q.defer();
+                	if(!clientTeamRoleResource.entity.permissions){
+                		$http.get(UriTemplate.create(clientTeamRoleResource.link.permissions).stringify())
 	                    .then(function (response) {
 	                    	clientTeamRoleResource.entity.permissions = response.data;
 	                    });
+                		deferred.resolve(clientTeamRoleResource);
+                	} else {
+                		deferred.resolve(clientTeamRoleResource);
+                	}
+                	return deferred.promise;
                 },
                 /**
                  * Loads ALL permissions for a client role. Once loaded, the possible role permissions
