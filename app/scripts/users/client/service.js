@@ -72,22 +72,6 @@ angular.module('emmiManager')
                 },
 
                 /**
-                 * Call to see if client has any users
-                 */
-                hasUsers: function(client){
-                	var deferred = $q.defer();
-                	$http.get(UriTemplate.create(client.link.users).stringify({term: ''}))
-	                    .then(function(response) {
-	                    	if(response.status === 200){
-	                    		deferred.resolve(true);
-	                    	} else {
-	                    		deferred.resolve(false);
-	                    	}
-	                    });
-                	return deferred.promise;
-                },
-                
-                /**
                  * Call when UserClientId is passed in as route param
                  * get UserClient by userClientId and set it to selectedUserClient
                  */

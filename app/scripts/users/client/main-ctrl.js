@@ -72,8 +72,8 @@ angular.module('emmiManager')
 				$scope.searchPerformed = false;
 				
 				// See if client has any user
-				UsersClientService.hasUsers($scope.client).then(function(response){
-					if(response){
+				UsersClientService.list($scope.client, '', null).then(function(response){
+					if(response.content && response.content.length > 0){
 						$scope.hasUsers = true;
 					}
 				});
