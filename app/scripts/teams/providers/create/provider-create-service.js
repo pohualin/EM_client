@@ -17,7 +17,6 @@ angular.module('emmiManager')
              create: function (provider, teamResource) {
                  return $http.post(UriTemplate.create(teamResource.link.provider).stringify(), provider)
                      .success(function (response) {
-                    	 CommonService.convertPageContentLinks(response.data);
                          return response;
                      });
              },
