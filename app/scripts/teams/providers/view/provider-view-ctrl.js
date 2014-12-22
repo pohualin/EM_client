@@ -112,8 +112,13 @@ angular.module('emmiManager')
     	});
 
         $scope.createNewProvider = function () {
-        	$scope.hideaddprovidermodal();
-        	newProviderModal.$promise.then(newProviderModal.show);
+        	TeamLocation.getTeamLocations($scope.teamResource.link.teamLocations).then(function(response){
+				var potential = response;
+				$scope.selectedItems = TeamProviderService.buildMultiSelectData(potential);
+				$scope.multiSelectData = TeamProviderService.buildMultiSelectData(potential);
+				$scope.hideaddprovidermodal();
+	        	newProviderModal.$promise.then(newProviderModal.show);
+			});
         };
         
         var newProviderModal = $modal({scope: $scope, template: 'partials/team/provider/new.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
@@ -297,8 +302,9 @@ angular.module('emmiManager')
         $scope.saveProvider = function (isValid, addAnother) {
             $scope.providerFormSubmitted = true;
         	if (isValid) {
-	        	ProviderCreate.create($scope.provider, $scope.teamResource).then(function(response){
-	                $scope.hideNewProviderModal();
+	        	ProviderCreate.create($scope.provider, $scope.teamResource, $scope.selectedItems).then(function(response){
+	                ProviderCreate.associateTeamLocationsToProvider(response.data.entity, $scope.teamResource, $scope.selectedItems);
+	        		$scope.hideNewProviderModal();
 	                $scope.refreshLocationsAndProviders();
 	                if (addAnother) {
         				$scope.addProviders();   
