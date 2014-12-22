@@ -19,7 +19,8 @@ angular.module('emmiManager', [
     'emmi.inputMask',
     'angularMoment',
     'emmi-angular-multiselect',
-    'truncate'
+    'truncate',
+    'emmi.noDirtyCheck'
 ])
 
     .constant('USER_ROLES', {
