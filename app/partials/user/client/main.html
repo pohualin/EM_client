@@ -1,109 +1,123 @@
 <div class="container" data-ng-cloak>
-    <div class="row">
-        <div class="col-md-10">
-            <h2>
-                <a href="#/">Emmi Manager</a> : <a href="#/clients/{{client.entity.id}}">{{client.entity.name}}</a>
-            </h2>
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-9">
+                <h2>
+                    <a href="#/">Emmi Manager</a> : <a href="#/clients/{{client.entity.id}}">{{client.entity.name}}</a>
+                </h2>
+            </div>
+            <div class="col-md-3">
+                <h2 class="pull-right">
+                    <a class="btn btn-link" href="#/clients/{{client.entity.id}}/roles">manage user roles</a>
+                </h2>
+            </div>
         </div>
-        <div class="col-md-2">
-        	<h4>
-        		<a href="#/clients/{{client.entity.id}}/roles">Manage Users roles</a>
-        	</h4>
+        <form name="searchForm" novalidate>
+            <div class="row">
+                <div class="col-md-2 col-sm-2">
+                    <label>Manage Users</label>
+                </div>
+                <div class="col-md-6 col-sm-5" data-ng-show="hasUsers">
+                    <label class="sr-only" for="query">Search</label>
+
+                    <div class="input-group">
+                        <input class="form-control" id="query" name="query" data-ng-model="query" type="text"
+                               placeholder="First/last name, email, user ID" required data-auto-focus>
+
+                        <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-3" data-ng-show="hasUsers">
+                    <button class="btn btn-default pull-left" data-ng-click="search()"
+                            data-ng-disabled="searchForm.query.$invalid || loading">Go
+                    </button>
+                    <span data-ng-class="{'search-spinner' : loading}"></span>
+                </div>
+                <div class="col-md-8 col-sm-8"  data-ng-hide="hasUsers">
+					<span>There are no existing users for {{client.entity.name}}</span>
+				</div>
+                <div class="col-md-2 col-sm-2">
+                    <div class="pull-right">
+                        <a class="btn btn-primary"
+                           data-ng-href="#clients/{{client.entity.id}}/users/new?{{currentRouteQueryString}}">Create
+                            New
+                            User</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <hr>
+        <div class="row" data-ng-show="searchPerformed">
+            <div class="col-md-12">
+                <div class="row" data-ng-hide="removeStatusFilterAndTotal">
+                    <div class="col-md-12">
+                        <div class="pull-right">
+                            {{total}} <span data-ng-show="total != 1"
+                                            data-translate="global.labels.total"> results</span> <span
+                            data-ng-show="total === 1"
+                            data-translate="global.labels.totalSingular"> result</span>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <table class="table table-bordered table-striped table-hover"
+                       border="0" cellpadding="0" cellspacing="0" data-ng-show="usersClient">
+                    <tr>
+                        <th class="sort col-sm-2" data-ng-click="sort('lastName')">Last Name
+						<span data-ng-show="sortProperty.property === 'lastName'"><span
+                            class="glyphicon sort-icon"
+                            data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
+                        </th>
+                        <th class="sort col-sm-2" data-ng-click="sort('firstName')">First Name
+						<span data-ng-show="sortProperty.property === 'firstName'"><span
+                            class="glyphicon sort-icon"
+                            data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
+                        </th>
+                        <th class="sort col-sm-3" data-ng-click="sort('login')">User ID
+						<span data-ng-show="sortProperty.property === 'login'"><span
+                            class="glyphicon sort-icon"
+                            data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
+                        </th>
+                        <th class="sort col-sm-3" data-ng-click="sort('email')">Email
+						<span data-ng-show="sortProperty.property === 'email'"><span
+                            class="glyphicon sort-icon"
+                            data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
+                        </th>
+                        <th class="col-sm-2">&nbsp;</th>
+                    </tr>
+                    <tr
+                        data-ng-repeat="userClient in usersClient">
+                        <td>{{userClient.entity.lastName}}</td>
+                        <td>{{userClient.entity.firstName}}</td>
+                        <td>{{userClient.entity.login}}</td>
+                        <td>{{userClient.entity.email}}</td>
+                        <td><a class="btn-link"
+                            href="#/clients/{{client.entity.id}}/users/{{userClient.entity.id}}?{{currentRouteQueryString}}">edit</a>
+                            |
+                            <a href
+                               data-on-ok="toggleActivation(userClient)"
+                               data-is-currently-active="userClient.entity.active"
+                               data-placement="top"
+                               data-toggle-user-client-active>{{userClient.entity.active ? 'deactivate' : 'activate'}}
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+                <div class="row" data-ng-show="usersClient">
+                    <div data-ng-show="links" class="col-md-8 col-sm-8">
+                        <ul class="pagination">
+                            <li data-ng-repeat="link in links | orderBy:'order'"
+                                data-ng-class="{'active': link.name == currentPage}"><a
+                                data-ng-show="link.name != currentPage" href
+                                data-ng-click="fetchPage(link.href)">{{link.name}}</a> <span
+                                data-ng-hide="link.name != currentPage">{{link.name}}</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div data-ng-hide="usersClient">
+                    <span data-translate="global.messages.search.no_results_found"></span>
+                </div>
+            </div>
         </div>
     </div>
-    <hr/>
-    <form name="searchForm" novalidate>
-	    <div class="row">
-	        <div class="col-md-12">
-				<div class="col-md-2 col-sm-2">
-					<label>Manage User</label>
-	            </div>
-	            <div class="col-md-6 col-sm-5">
-	                <label class="sr-only" for="query">Search</label>
-
-	                <div class="input-group">
-	                    <input class="form-control" id="query" name="query" data-ng-model="query" type="text"
-	                           placeholder="First/last name, email, user ID" required data-auto-focus>
-
-	                    <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
-	                </div>
-	            </div>
-				<div class="col-md-2 col-sm-3">
-	                <button class="btn btn-default pull-left" data-ng-click="search()"
-	                        data-ng-disabled="searchForm.query.$invalid || loading">Go
-	                </button>
-	                <span data-ng-class="{'search-spinner' : loading}"></span>
-	            </div>
-	            <div class="col-md-2 col-sm-2">
-	                <div class="pull-right">
-	                    <a class="btn btn-primary" data-ng-href="#clients/{{client.entity.id}}/users/new?{{currentRouteQueryString}}">Create New User</a>
-	                </div>
-	            </div>
-	        </div>
-	    </div>
-    </form>
-    <hr>
-	<div class="row" data-ng-show="searchPerformed">
-		<div class="col-md-12">
-			<div class="row" data-ng-hide="removeStatusFilterAndTotal">
-				<div class="col-md-12">
-					<div class="pull-right">
-						{{total}} <span data-ng-show="total != 1"
-							data-translate="global.labels.total"> results</span> <span
-							data-ng-show="total === 1"
-							data-translate="global.labels.totalSingular"> result</span>
-					</div>
-				</div>
-			</div>
-			<br>
-			<table class="table table-bordered table-striped table-hover"
-				border="0" cellpadding="0" cellspacing="0" data-ng-show="usersClient">
-				<tr>
-					<th class="sort col-sm-2" data-ng-click="sort('lastName')">Last Name
-						<span data-ng-show="sortProperty.property === 'lastName'"><span
-							class="glyphicon sort-icon"
-							data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
-					</th>
-					<th class="sort col-sm-2" data-ng-click="sort('firstName')">First Name
-						<span data-ng-show="sortProperty.property === 'firstName'"><span
-							class="glyphicon sort-icon"
-							data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
-					</th>
-					<th class="sort col-sm-3" data-ng-click="sort('login')">User ID
-						<span data-ng-show="sortProperty.property === 'login'"><span
-							class="glyphicon sort-icon"
-							data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
-					</th>
-					<th class="sort col-sm-3" data-ng-click="sort('email')">Email
-						<span data-ng-show="sortProperty.property === 'email'"><span
-							class="glyphicon sort-icon"
-							data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
-					</th>
-					<th class="col-sm-2">&nbsp;</th>
-				</tr>
-				<tr
-					data-ng-repeat="userClient in usersClient">
-					<td>{{userClient.entity.lastName}}</td>
-					<td>{{userClient.entity.firstName}}</td>
-					<td>{{userClient.entity.login}}</td>
-					<td>{{userClient.entity.email}}</td>
-					<td><a href="#/clients/{{client.entity.id}}/users/{{userClient.entity.id}}?{{currentRouteQueryString}}">edit</a> | <a href>deactivate</a></td>
-				</tr>
-			</table>
-			<div class="row" data-ng-show="usersClient">
-				<div data-ng-show="links" class="col-md-8 col-sm-8">
-					<ul class="pagination">
-						<li data-ng-repeat="link in links | orderBy:'order'"
-							data-ng-class="{'active': link.name == currentPage}"><a
-							data-ng-show="link.name != currentPage" href
-							data-ng-click="fetchPage(link.href)">{{link.name}}</a> <span
-							data-ng-hide="link.name != currentPage">{{link.name}}</span></li>
-					</ul>
-				</div>
-			</div>
-			<div data-ng-hide="usersClient">
-				<span>There are no existing users for {{client.entity.name}}</span>
-			</div>
-		</div>
-	</div>
 </div>
