@@ -1,0 +1,37 @@
+<div class="col-md-12">
+	<div class="row">
+		<div class="col-md-6 pull-left">
+			<h2>User Information</h2>
+		</div>
+		<div class="col-md-6">
+			<div class="actions pull-right">
+	            <div class="form-group">
+					<a class="btn btn-link" href>edit</a>
+					<button class="btn btn-primary" type="button" data-ng-click="createAnotherUser()">
+	                    <span>Create Another User</span>
+	                </button>
+	            </div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-4">
+			<span>Name: </span>
+		</div>
+		<div class="col-md-4">
+			{{selectedUser.entity.firstName}} {{selectedUser.entity.lastName}}
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-4">
+			<span>Email: </span>
+		</div>
+		<div class="col-md-4">{{selectedUser.entity.email}}</div>
+	</div>
+	<div class="row">
+		<div class="col-md-4">
+			<span>User ID: </span>
+		</div>
+		<div class="col-md-4">{{selectedUser.entity.email}}</div>
+	</div>
+</div>
