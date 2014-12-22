@@ -16,7 +16,7 @@ angular.module('emmiManager')
                 var ret = null;
                 AuthSharedService.currentUser().then(function () {
                     UsersService.setUser($route.current.params.userId).then(function (userResource) {
-                        if (userClientResource) {
+                        if (userResource) {
                             ret = userResource;
                             deferred.resolve(ret);
                         } else {
@@ -35,21 +35,15 @@ angular.module('emmiManager')
                 access: {
                     authorizedRoles: [USER_ROLES.admin]
                 },
-                reloadOnSearch: false,
-                resolve: {
-                    'userEditorResource': userEditorResources
-                }
+                reloadOnSearch: false
             }).when('/users/new', {
                 templateUrl: 'partials/user/create/new.html',
                 controller: 'UsersCreateController',
                 access: {
                     authorizedRoles: [USER_ROLES.admin]
                 },
-                reloadOnSearch: false,
-                resolve: {
-                    'userEditorResource': userEditorResources
-                }
-            }).when('/users/:userClientId', {
+                reloadOnSearch: false
+            }).when('/users/:userId', {
                 templateUrl: 'partials/user/create/editor.html',
                 controller: 'UsersEditorController',
                 access: {

@@ -1,15 +1,15 @@
 'use strict';
 angular.module('emmiManager')
 
-    .service('UsersClientService', ['$filter', '$q', '$http', 'UriTemplate', 'CommonService', 'Client', 'Session',
-        function ($filter, $q, $http, UriTemplate, CommonService, Client, Session) {
-            var selectedUserClient;
+    .service('UsersService', ['$filter', '$q', '$http', 'UriTemplate', 'CommonService', 'Session',
+        function ($filter, $q, $http, UriTemplate, CommonService, Session) {
+            var selectedUser;
             return {
                 /**
-                 * Create a new UserClient placeholder
+                 * Create a new User placeholder
                  */
-                newUserClient: function () {
-                    var newUserClient = {
+                newUser: function () {
+                    var newUser = {
                         entity: {
                             firstName: null,
                             lastName: null,
@@ -19,18 +19,18 @@ angular.module('emmiManager')
                         },
                         useEmail: true
                     };
-                    return newUserClient;
+                    return newUser;
                 },
 
                 /**
-                 * Call server to create UserClient
+                 * Call server to create User
                  */
-                createUserClient: function (client, userClientToBeEdit) {
-                    if (userClientToBeEdit.useEmail) {
-                        userClientToBeEdit.entity.login = userClientToBeEdit.entity.email;
+                createUser: function (userToBeEdit) {
+                    if (userToBeEdit.useEmail) {
+                        userToBeEdit.entity.login = userToBeEdit.entity.email;
                     }
-                    userClientToBeEdit.entity.client = client.entity;
-                    return $http.post(UriTemplate.create(client.link.users).stringify(), userClientToBeEdit.entity)
+
+                    return $http.post(UriTemplate.create(Session.link.users).stringify(), userToBeEdit.entity)
                         .success(function (response) {
                             return response;
                         });
@@ -49,7 +49,7 @@ angular.module('emmiManager')
                  * Call server to get a list of UserClient
                  */
                 list: function (client, query, sort) {
-                    return $http.get(UriTemplate.create(client.link.users).stringify(
+                    return $http.get(UriTemplate.create(Session.link.users).stringify(
                         {
                             term: query,
                             sort: sort && sort.property ? sort.property + ',' + (sort.ascending ? 'asc' : 'desc') : ''
@@ -72,27 +72,27 @@ angular.module('emmiManager')
                 },
 
                 /**
-                 * Call when UserClientId is passed in as route param
-                 * get UserClient by userClientId and set it to selectedUserClient
+                 * Call when UserId is passed in as route param
+                 * get User by userId and set it to selectedUser
                  */
-                setUserClient: function (userClientId) {
-                    if (userClientId === null) {
-                        // Reset selectedUserClient
-                        selectedUserClient = null;
+                setUser: function (userId) {
+                    if (userId === null) {
+                        // Reset selectedUser
+                        selectedUser = null;
                     } else {
-                        // Call server to get UserClient by userClientId
-                        return $http.get(UriTemplate.create(Session.link.userClientById).stringify({id: userClientId})).then(function (userClient) {
-                            selectedUserClient = userClient.data;
-                            return selectedUserClient;
+                        // Call server to get User by userId
+                        return $http.get(UriTemplate.create(Session.link.userById).stringify({id: userId})).then(function (user) {
+                            selectedUser = user.data;
+                            return selectedUser;
                         });
                     }
                 },
 
                 /**
-                 * Getter of selectedUserClient
+                 * Getter of selectedUser
                  */
                 getUserClient: function () {
-                    return selectedUserClient;
+                    return selectedUser;
                 }
             };
         }])
