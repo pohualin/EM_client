@@ -1,43 +1,45 @@
 <div class="container" data-ng-cloak>
-    <div class="col-md-3" data-ng-include="'partials/client/teamsFilter/teams_filter.html'"></div>
-    <div class="col-md-9">
     <div class="row">
-        <div id="remove-container"></div>
         <div class="col-md-12">
-            <h2>
-                <a href="#/">Emmi Manager</a> :&nbsp;
-                <span data-bs-tooltip="'id: {{team.id}}'" data-placement="right">{{team.name}}</span>
-            </h2>
+            <ol class="breadcrumb h3">
+                <li><a href="#/">Emmi Manager</a></li>
+                <li><a href="#/clients/{{teamClientResource.clientResource.entity.id}}"><span data-bs-tooltip="'id: {{teamClientResource.clientResource.entity.id}}'" data-placement="right">{{teamClientResource.clientResource.entity.name}}</span></a></li>
+                <li class="active"><span data-bs-tooltip="'id: {{team.id}}'" data-placement="right">{{team.name}}</span></li>
+            </ol>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-3" data-ng-include="'partials/client/teamsFilter/teams_filter.html'"></div>
+        <div class="col-md-9">
+            <div id="remove-container"></div>
+            <div class="row" data-ng-hide="editMode" data-ng-include="'partials/team/team_view.html'"></div>
+            <div class="row" data-ng-show="editMode">
+                <div class="col-md-12">
+                    <div id="alerts-container" data-ng-show="teamForm.$invalid || !teamToSave.salesForceAccount"></div>
 
-    <div class="row" data-ng-hide="editMode" data-ng-include="'partials/team/team_view.html'"></div>
-    <div class="row" data-ng-show="editMode">
-        <div class="col-md-12">
-            <div id="alerts-container" data-ng-show="teamForm.$invalid || !teamToSave.salesForceAccount"></div>
-
-            <div class="pull-right">
-                <a class="btn btn-link" data-ng-click="cancel()">cancel</a>
-                |
-                <a class="btn btn-link" type="button"
-                    data-on-ok="save(teamForm.$valid)" data-team-entity="teamToSave"
-                    data-placement="bottom"
-                    data-ng-disabled="teamForm.teamName.$error.unique"
-                    data-team-edit-save>
-                    <span>save edits</span>
-                </a>
+                    <div class="pull-right">
+                        <a class="btn btn-link" data-ng-click="cancel()">cancel</a>
+                        |
+                        <a class="btn btn-link" type="button"
+                            data-on-ok="save(teamForm.$valid)" data-team-entity="teamToSave"
+                            data-placement="bottom"
+                            data-ng-disabled="teamForm.teamName.$error.unique"
+                            data-team-edit-save>
+                            <span>save edits</span>
+                        </a>
+                    </div>
+                    <h2 data-translate="team_edit_page.information.title">Team Information</h2>
+                    <form name="teamForm" class="form" novalidate>
+                        <div data-ng-include="'partials/team/team_form.html'"></div>
+                    </form>
+                </div>
             </div>
-            <h2 data-translate="team_edit_page.information.title">Team Information</h2>
-            <form name="teamForm" class="form" novalidate>
-                <div data-ng-include="'partials/team/team_form.html'"></div>
-            </form>
+            <hr>
+            <div class="row" data-ng-include="'partials/team/tags/team_tags.html'" data-ng-class="{'masked': teamForm.teamName.$error.unique || editMode}"></div>
+            <hr>
+            <div class="row" data-ng-include="'partials/team/location/team_current.html'" data-ng-class="{'masked': teamForm.teamName.$error.unique || editMode}" ></div>
+            <hr>
+            <div class="row" data-ng-include="'partials/team/provider/providersTable_edit.html'" data-ng-class="{'masked': teamForm.teamName.$error.unique || editMode}"></div>
         </div>
-    </div>
-    <hr>
-    <div class="row" data-ng-include="'partials/team/tags/team_tags.html'" data-ng-class="{'masked': teamForm.teamName.$error.unique || editMode}"></div>
-    <hr>
-    <div class="row" data-ng-include="'partials/team/location/team_current.html'" data-ng-class="{'masked': teamForm.teamName.$error.unique || editMode}" ></div>
-    <hr>
-    <div class="row" data-ng-include="'partials/team/provider/providersTable_edit.html'" data-ng-class="{'masked': teamForm.teamName.$error.unique || editMode}"></div>
     </div>
 </div>
