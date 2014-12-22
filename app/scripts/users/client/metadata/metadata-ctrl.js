@@ -43,7 +43,7 @@ angular.module('emmiManager')
                                 placement = 'top';
                             $scope.userClientView = savedUserClient;
                             $scope.editMode = false;
-                            if (savedUserClient.currentlyActive != beforeSaveStatus){
+                            if (savedUserClient.currentlyActive !== beforeSaveStatus){
                                 var message = 'User ' +  savedUserClient.entity.login;
                                  // status has changed
                                 if (savedUserClient.currentlyActive){
@@ -51,7 +51,7 @@ angular.module('emmiManager')
                                     message += ' is now active.';
                                 } else {
                                     // now deactivated
-                                    message += ' has been deactivated.'
+                                    message += ' has been deactivated.';
                                 }
                                 $alert({
                                     content: message,

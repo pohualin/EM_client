@@ -15,5 +15,5 @@ angular.module('emmi.noDirtyCheck', [])
             link: function (scope, elm, attrs, ctrl) {
                 ctrl.$pristine = false;
             }
-        }
+        };
     });
