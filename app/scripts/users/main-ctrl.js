@@ -5,7 +5,7 @@ angular.module('emmiManager')
 /**
  * Manage users
  */
-    .controller('UsersMainCtrl', ['$scope', '$controller', 'Client', 'UsersService',
+    .controller('UsersMainCtrl', ['$scope', '$controller', 'UsersService',
         function ($scope, $controller, UsersService) {
 
             /**
@@ -27,7 +27,7 @@ angular.module('emmiManager')
                 if (!$scope.searchForm || !$scope.searchForm.query.$invalid) {
                     $scope.serializeToQueryString($scope.query, 'u', null, null);
                     $scope.loading = true;
-                    UsersService.list($scope.client, $scope.query, null).then(
+                    UsersService.list($scope.query, null).then(
                         function (response) {
                             $scope.handleResponse(response, 'users');
                             $scope.removeStatusFilterAndTotal = $scope.total <= 0;
@@ -44,7 +44,7 @@ angular.module('emmiManager')
             $scope.sort = function (property) {
                 var sort = $scope.createSortProperty(property);
                 $scope.serializeToQueryString($scope.query, 'u', null, sort);
-                UsersService.list($scope.client, $scope.query, sort).then(
+                UsersService.list($scope.query, sort).then(
                     function (response) {
                         $scope.handleResponse(response, 'users');
                     }, function () {
@@ -72,7 +72,7 @@ angular.module('emmiManager')
                 // Initiate a search when $scope.query is not empty
                 if ($scope.query) {
                     $scope.serializeToQueryString($scope.query, 'u', null, null);
-                    UsersService.list($scope.client, $scope.query, null).then(
+                    UsersService.list($scope.query, null).then(
                         function (response) {
                             $scope.handleResponse(response, 'users');
                             $scope.removeStatusFilterAndTotal = $scope.total <= 0;

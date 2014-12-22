@@ -77,19 +77,12 @@
                     </tr>
                     <tr
                         data-ng-repeat="user in users">
-                        <td>{{user.entity.lastName}}</td>
-                        <td>{{user.entity.firstName}}</td>
-                        <td>{{user.entity.login}}</td>
-                        <td>{{user.entity.email}}</td>
+                        <td>{{user.lastName}}</td>
+                        <td>{{user.firstName}}</td>
+                        <td>{{user.login}}</td>
+                        <td>{{user.email}}</td>
                         <td><a class="btn-link"
-                            href="#/users/{{user.entity.id}}?{{currentRouteQueryString}}">edit</a>
-                            |
-                            <a href
-                               data-on-ok="toggleActivation(user)"
-                               data-is-currently-active="user.entity.active"
-                               data-placement="top"
-                               data-toggle-user-client-active>{{user.entity.active ? 'deactivate' : 'activate'}}
-                            </a>
+                            href="#/users/{{user.id}}?{{currentRouteQueryString}}">edit</a>
                         </td>
                     </tr>
                 </table>

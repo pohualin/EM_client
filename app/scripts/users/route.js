@@ -2,7 +2,6 @@
 
 angular.module('emmiManager')
     .config(function ($routeProvider, USER_ROLES) {
-
         /**
          * Loads the users
          * Resolves into an object:

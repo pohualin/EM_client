@@ -10,13 +10,10 @@ angular.module('emmiManager')
                  */
                 newUser: function () {
                     var newUser = {
-                        entity: {
-                            firstName: null,
-                            lastName: null,
-                            email: null,
-                            login: null,
-                            active: true
-                        },
+                        firstName: null,
+                        lastName: null,
+                        email: null,
+                        login: null,
                         useEmail: true
                     };
                     return newUser;
@@ -27,18 +24,24 @@ angular.module('emmiManager')
                  */
                 createUser: function (userToBeEdit) {
                     if (userToBeEdit.useEmail) {
-                        userToBeEdit.entity.login = userToBeEdit.entity.email;
+                        userToBeEdit.login = userToBeEdit.email;
                     }
 
-                    return $http.post(UriTemplate.create(Session.link.users).stringify(), userToBeEdit.entity)
+                    return $http.post(UriTemplate.create(Session.link.users).stringify(), {
+                        firstName: userToBeEdit.firstName,
+                        lastName: userToBeEdit.lastName,
+                        email: userToBeEdit.emai,
+                        login: userToBeEdit.login,
+                        id: userToBeEdit.id
+                        })
                         .success(function (response) {
                             return response;
                         });
                 },
 
                 toggleActivation: function (userClientResource) {
-                    userClientResource.entity.active = !userClientResource.entity.active;
-                    return $http.put(UriTemplate.create(userClientResource.link.self).stringify(), userClientResource.entity)
+                    userClientResource.active = !userClientResource.active;
+                    return $http.put(UriTemplate.create(userClientResource.link.self).stringify(), userClientResource)
                         .success(function (response) {
                             angular.extend(userClientResource, response);
                             return response;
@@ -46,9 +49,9 @@ angular.module('emmiManager')
                 },
 
                 /**
-                 * Call server to get a list of UserClient
+                 * Call server to get a list of User
                  */
-                list: function (client, query, sort) {
+                list: function (query, sort) {
                     return $http.get(UriTemplate.create(Session.link.users).stringify(
                         {
                             term: query,
@@ -61,7 +64,7 @@ angular.module('emmiManager')
                 },
 
                 /**
-                 * Call server to fetch next batch of UserClient
+                 * Call server to fetch next batch of User
                  */
                 fetchPage: function (href) {
                     return $http.get(UriTemplate.create(href).stringify())
@@ -91,7 +94,7 @@ angular.module('emmiManager')
                 /**
                  * Getter of selectedUser
                  */
-                getUserClient: function () {
+                getUser: function () {
                     return selectedUser;
                 }
             };

@@ -8,6 +8,7 @@ angular.module('emmiManager')
     .controller('UsersEditorController', ['$alert', '$location', '$scope', 'UsersService',
         function ($alert, $location, $scope, UsersService) {
     	
+            $scope.editMode = true;
 	    	/**
 	         * Called when 'Create Another User' is clicked
 	         */
@@ -41,7 +42,7 @@ angular.module('emmiManager')
     		$scope.save = function(isValid){
     			$scope.userFormSubmitted = true;
     			if (isValid) {
-                    UsersService.createUser($scope.userToBeEdit.entity).then(function(response){
+                    UsersService.createUser($scope.userToBeEdit).then(function(response){
                     	$scope.selectedUser = response.data;
                     	$scope.userToBeEdit = response.data;
                     	$scope.editMode = false;
@@ -75,8 +76,8 @@ angular.module('emmiManager')
             	if(UsersService.getUser()){
             		// In this case User is already created
             		// Get the existing User
-            		$scope.selectedUser = UsersService.getUser();
-            		$scope.page.setTitle('View User - ' + $scope.selectedUser.entity.firstName);
+            		$scope.userToBeEdit = UsersService.getUser();
+            		$scope.page.setTitle('View User - ' + $scope.userToBeEdit.firstName);
             	} else {
             		// In this case User does not exist
                     $scope.page.setTitle('Create User');

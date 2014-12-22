@@ -28,7 +28,7 @@ angular.module('emmiManager')
                     UsersService.createUser($scope.userToBeEdit).then(function (response) {
                         var savedUserResource = response.data;
                         // go to the view/edit page, if the save is successful
-                        $location.path('/users/' + savedUserResource.entity.id);
+                        $location.path('/users/' + savedUserResource.id);
                     }, function (error) {
                         if (error.status === 409) {
                             // 409 is http conflict, meaning save was prevented due to conflicts with other users
