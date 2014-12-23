@@ -63,6 +63,13 @@ angular.module('emmiManager')
                  return $http.get(href)
                      .then(function (response) {
                     	 CommonService.convertPageContentLinks(response.data);
+                    	 angular.forEach(response.data.content, function(teamProvider){
+                    		 var locations = [];
+                    		 angular.forEach(teamProvider.entity.teamProviderTeamLocations, function(tptl){
+                    			 locations.push(' '+ tptl.teamLocation.location.name);
+                    		 });
+                    		 teamProvider.entity.locations = locations.length > 0 ? locations.sort().toString() : '';
+	            		 });
                          return response.data;
                      });
 
