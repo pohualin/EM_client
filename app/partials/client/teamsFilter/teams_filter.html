@@ -23,7 +23,12 @@
                 track by tag.id" class="form-control">
             </select>
         </div>
+        <div class="row" data-ng-hide="inactiveTeams===null">
+            <a data-ng-hide="showInactiveTeams" data-ng-click="toggleInactiveTeams()">show inactive teams</a>
+            <a data-ng-show="showInactiveTeams" data-ng-click="toggleInactiveTeams()">hide inactive teams</a>
+        </div>
         <hr>
+
         <div data-ng-hide="useGroupDisplay">
             <div data-ng-repeat="team in clientTeams">
                 <a data-ng-href="#/clients/{{clientId}}/teams/{{team.id}}?{{currentRouteQueryString}}">{{team.name}}</a>
