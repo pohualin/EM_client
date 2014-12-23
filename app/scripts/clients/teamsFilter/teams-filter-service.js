@@ -203,6 +203,26 @@ angular.module('emmiManager')
                 deferred.resolve(tagsToReturn);
                 return deferred.promise;
 
+            },
+
+            getTeamsWithNoTeamTags: function(){
+                var deferred = $q.defer();
+                var teams = [];
+
+                $http.get(UriTemplate.create(Client.getClient().link.teamsWithNoTeamTags).stringify()).then(function load(response) {
+                        var page = response.data;
+                        CommonService.convertPageContentLinks(page);
+                        angular.forEach(page.content, function (team) {
+                            teams.push(team.entity);
+                        });
+                        if (page.link && page.link['page-next']) {
+                            $http.get(page.link['page-next']).then(function (response) {
+                                load(response);
+                            });
+                        }
+                        deferred.resolve(teams);
+                    });
+                return deferred.promise;
             }
         };
     })
