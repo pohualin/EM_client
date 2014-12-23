@@ -3,19 +3,21 @@
         <div class="col-md-12">
             <ol class="breadcrumb h3">
                 <li><a href="#/">Emmi Manager</a></li>
-                <li><a href="#/clients/{{client.entity.id}}">{{client.entity.name}}</a></li>
+                <li><a href="#" data-confirm-exit data-on-ok="confirmExit()" data-form="userClientForm">{{client.entity.name}}</a></li>
                 <li class="active">View User</li>
             </ol>
         </div>
     </div>
 
     <div data-ng-switch="editMode" data-ng-controller="UserClientMetaDataController">
-        <div class="row" data-ng-switch-default>
-            <div data-ng-include="'partials/user/client/metadata/view.html'"></div>
-        </div>
-        <div class="row" data-ng-switch-when="true">
-            <div data-ng-include="'partials/user/client/metadata/edit.html'"></div>
-        </div>
+        <form name="$parent.userClientForm" class="form" novalidate>
+            <div class="row" data-ng-switch-default>
+                <div data-ng-include="'partials/user/client/metadata/view.html'"></div>
+            </div>
+            <div class="row" data-ng-switch-when="true">
+                <div data-ng-include="'partials/user/client/metadata/edit.html'"></div>
+            </div>
+        </form>
     </div>
 
     <hr data-ng-show="selectedUserClient"/>
