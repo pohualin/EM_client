@@ -13,12 +13,17 @@
 			    	<td>{{teamProvider.entity.provider.specialty.name}}</td>
 			    	<td>{{teamProvider.entity.provider.email}}</td>
 			    	<td>
-						<div data-placement="top" data-ng-show="teamProvider.entity.locations" data-content="{{teamProvider.entity.locations}}" data-trigger="hover" data-delay="200" data-bs-popover data-popover-dismiss>
-                        {{teamProvider.entity.locations | characters:25 }}
+						<div data-placement="top" data-ng-show="teamProvider.entity.locations && teamProvider.entity.locations.length > locationsColumnCharLimit" data-content=" {{teamProvider.entity.locations}} " data-trigger="hover" data-delay="200" data-bs-popover data-popover-dismiss>
+                        	{{teamProvider.entity.locations | characters:locationsColumnCharLimit }}
 						</div>
-
-						<div data-placement="top" data-ng-hide="teamProvider.entity.locations" data-content="{{allLocationsForTeam}}" data-trigger="hover" data-delay="200" data-bs-popover data-popover-dismiss>
-                        {{allLocationsForTeam | characters:25 }}
+						<div data-placement="top" data-ng-show="teamProvider.entity.locations && teamProvider.entity.locations.length < locationsColumnCharLimit" >
+                        	{{teamProvider.entity.locations | characters:locationsColumnCharLimit }}
+						</div>
+						<div data-placement="top" data-ng-show="!teamProvider.entity.locations && allLocationsForTeam.length > locationsColumnCharLimit" data-content="{{allLocationsForTeam}}" data-trigger="hover" data-delay="200" data-bs-popover data-popover-dismiss>
+                        	{{allLocationsForTeam | characters:locationsColumnCharLimit }}
+						</div>
+						<div data-placement="top" data-ng-show="!teamProvider.entity.locations && allLocationsForTeam.length < locationsColumnCharLimit">
+                        	{{allLocationsForTeam | characters:locationsColumnCharLimit }}
 						</div>
             		</td>
 					<td>
