@@ -10,6 +10,12 @@ angular.module('emmiManager')
 
 	        $scope.edit = function () {
                 $scope.userToBeEdit = angular.copy(UsersService.getUser());
+                //because at this moment only one role can be selected
+                if ($scope.userToBeEdit.roles && $scope.userToBeEdit.roles.length > 0) {
+                     $scope.userToBeEdit.role = {};
+                    $scope.userToBeEdit.role.entity = $scope.userToBeEdit.roles[0];
+                }
+
                 $scope.editMode = true;
                 $scope.userFormSubmitted = false;
                 UsersService.listUserAdminRoles().then(function (response) {

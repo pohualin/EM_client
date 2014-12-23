@@ -81,10 +81,13 @@
             </div>
 
             <div class="col-md-4">
-                <div class="form-group">
-                        <input id="active" type="checkbox" checked data-ng-model="userToBeEdit.active"/>&nbsp;&nbsp;Active
-                    </div>
-                </div>
+                <label class="control-label">&nbsp;</label>
+                <div class="checkbox">
+                    <label for="active" >
+                        <input id="active" type="checkbox"
+                               data-ng-model="userToBeEdit.active" data-no-dirty-check/>&nbsp;&nbsp;Active
+                    </label>
+                </div>                
             </div>
         </div> 
         <!--div class="row">
