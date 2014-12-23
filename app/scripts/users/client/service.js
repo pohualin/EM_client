@@ -5,11 +5,12 @@ angular.module('emmiManager')
         function ($filter, $q, $http, UriTemplate, CommonService, Client, Session) {
             var selectedUserClient;
 
-            function setUseEmailToggle(userClientResource) {
+            function updateResourceForUi(userClientResource) {
                 if (angular.equals(userClientResource.entity.email,
                         userClientResource.entity.login)) {
                     userClientResource.useEmail = true;
                 }
+                userClientResource.currentlyActive = userClientResource.entity.active;
             }
 
             return {
@@ -59,7 +60,8 @@ angular.module('emmiManager')
                             angular.extend(userClientResource, response);
                             delete userClientResource.currentTarget; //this gets set via the deactivate directive
                             selectedUserClient = userClientResource;
-                            setUseEmailToggle(selectedUserClient);
+                            updateResourceForUi(selectedUserClient);
+                            updateResourceForUi(response);
                             return response;
                         });
                 },
@@ -113,7 +115,7 @@ angular.module('emmiManager')
                         // Call server to get UserClient by userClientId
                         return $http.get(UriTemplate.create(Session.link.userClientById).stringify({id: userClientId})).then(function (userClient) {
                             selectedUserClient = userClient.data;
-                            setUseEmailToggle(selectedUserClient);
+                            updateResourceForUi(selectedUserClient);
                             return selectedUserClient;
                         });
                     }

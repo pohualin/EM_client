@@ -1,23 +1,21 @@
 <div class="container" data-ng-cloak>
     <div class="col-md-12">
         <div class="row">
-            <div class="col-md-9">
-                <h2>
-                    <a href="#/">Emmi Manager</a> : <a href="#/clients/{{client.entity.id}}">{{client.entity.name}}</a>
-                </h2>
-            </div>
-            <div class="col-md-3">
-                <h2 class="pull-right">
-                    <a class="btn btn-link" href="#/clients/{{client.entity.id}}/roles">manage user roles</a>
-                </h2>
+            <div class="col-md-12">
+                <ol class="breadcrumb h3">
+                    <li><a href="#/">Emmi Manager</a></li>
+                    <li><a href="#/clients/{{client.entity.id}}">{{client.entity.name}}</a></li>
+                    <li class="active">Manager Users</li>
+                    <li class="pull-right"><a class="btn btn-link" href="#/clients/{{client.entity.id}}/roles">manage user roles</a></li>
+                </ol>
             </div>
         </div>
         <form name="searchForm" novalidate>
             <div class="row">
                 <div class="col-md-2 col-sm-2">
-                    <label>Manage User</label>
+                    <label>Manage Users</label>
                 </div>
-                <div class="col-md-6 col-sm-5">
+                <div class="col-md-6 col-sm-5" data-ng-show="hasUsers">
                     <label class="sr-only" for="query">Search</label>
 
                     <div class="input-group">
@@ -27,12 +25,15 @@
                         <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
                     </div>
                 </div>
-                <div class="col-md-2 col-sm-3">
+                <div class="col-md-2 col-sm-3" data-ng-show="hasUsers">
                     <button class="btn btn-default pull-left" data-ng-click="search()"
                             data-ng-disabled="searchForm.query.$invalid || loading">Go
                     </button>
                     <span data-ng-class="{'search-spinner' : loading}"></span>
                 </div>
+                <div class="col-md-8 col-sm-8"  data-ng-hide="hasUsers">
+					<span>There are no existing users for {{client.entity.name}}</span>
+				</div>
                 <div class="col-md-2 col-sm-2">
                     <div class="pull-right">
                         <a class="btn btn-primary"
@@ -112,7 +113,7 @@
                     </div>
                 </div>
                 <div data-ng-hide="usersClient">
-                    <span>There are no existing users for {{client.entity.name}}</span>
+                    <span data-translate="global.messages.search.no_results_found"></span>
                 </div>
             </div>
         </div>

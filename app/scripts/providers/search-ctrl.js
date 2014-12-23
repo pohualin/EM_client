@@ -60,7 +60,7 @@ angular.module('emmiManager')
                 if (!$scope.searchForm || !$scope.searchForm.query.$invalid) {
                     $scope.loading = true;
                     $scope.serializeToQueryString(q, 'p', status, sort, size);
-                    ProviderSearch.search(q, status, sort, size).then(
+                    ProviderSearch.searchFromHomePage(q, status, sort, size).then(
                         function(providerData) {
                             $scope.handleResponse(providerData, 'providers');
                             if (recalculateStatusFilterAndTotal) {
