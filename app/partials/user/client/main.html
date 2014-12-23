@@ -6,15 +6,27 @@
                     <li><a href="#/">Emmi Manager</a></li>
                     <li><a href="#/clients/{{client.entity.id}}">{{client.entity.name}}</a></li>
                     <li class="active">Manager Users</li>
-                    <li class="pull-right"><a class="btn btn-link" href="#/clients/{{client.entity.id}}/roles">manage user roles</a></li>
+                    <li class="pull-right"><a class="btn btn-link" href="#/clients/{{client.entity.id}}/roles">manage
+                        user roles</a></li>
                 </ol>
             </div>
         </div>
         <form name="searchForm" novalidate>
             <div class="row">
                 <div class="col-md-2 col-sm-2">
-                    <label>Manage Users</label>
+                    <h2>Manage Users</h2>
                 </div>
+                <div class="col-md-2 col-sm-2 pull-right" data-ng-show="searchPerformed || !hasUsers">
+                    <div class="pull-right">
+                        <h2></h2>
+                        <a class="btn btn-primary"
+                           data-ng-href="#clients/{{client.entity.id}}/users/new?{{currentRouteQueryString}}">Create
+                            New
+                            User</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-md-6 col-sm-5" data-ng-show="hasUsers">
                     <label class="sr-only" for="query">Search</label>
 
@@ -31,20 +43,14 @@
                     </button>
                     <span data-ng-class="{'search-spinner' : loading}"></span>
                 </div>
-                <div class="col-md-8 col-sm-8"  data-ng-hide="hasUsers">
-					<span>There are no existing users for {{client.entity.name}}</span>
-				</div>
-                <div class="col-md-2 col-sm-2">
-                    <div class="pull-right">
-                        <a class="btn btn-primary"
-                           data-ng-href="#clients/{{client.entity.id}}/users/new?{{currentRouteQueryString}}">Create
-                            New
-                            User</a>
-                    </div>
-                </div>
             </div>
         </form>
         <hr>
+        <div class="row" data-ng-hide="hasUsers">
+            <div class="col-md-12">
+                <span>There are no existing users for {{client.entity.name}}</span>
+            </div>
+        </div>
         <div class="row" data-ng-show="searchPerformed">
             <div class="col-md-12">
                 <div class="row" data-ng-hide="removeStatusFilterAndTotal">
@@ -54,6 +60,17 @@
                                             data-translate="global.labels.total"> results</span> <span
                             data-ng-show="total === 1"
                             data-translate="global.labels.totalSingular"> result</span>
+                        </div>
+                        <div class="pull-left">
+                            <form class="form-inline">
+                                <div class="form-group">
+                                    <label for="status_filter" data-translate="global.labels.statusFilter">Show:</label>
+                                    <select class="form-control" id="status_filter" data-ng-model="status"
+                                            data-ng-options="status | translate for status in statuses"
+                                            data-ng-change="statusChange()">
+                                    </select>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -90,7 +107,7 @@
                         <td>{{userClient.entity.login}}</td>
                         <td>{{userClient.entity.email}}</td>
                         <td><a class="btn-link"
-                            href="#/clients/{{client.entity.id}}/users/{{userClient.entity.id}}?{{currentRouteQueryString}}">edit</a>
+                               href="#/clients/{{client.entity.id}}/users/{{userClient.entity.id}}?{{currentRouteQueryString}}">edit</a>
                             |
                             <a href
                                data-on-ok="toggleActivation(userClient)"

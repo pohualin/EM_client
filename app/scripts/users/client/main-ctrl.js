@@ -8,13 +8,22 @@ angular.module('emmiManager')
     .controller('UsersClientMainCtrl', ['$scope', '$controller', 'Client', 'UsersClientService',
         function ($scope, $controller, Client, UsersClientService) {
 
+            var contentProperty = 'usersClient';
+
+            /**
+             * when the status select is changed
+             */
+            $scope.statusChange = function () {
+                performSearch($scope.query, $scope.status, $scope.sortProperty);
+            };
+
             /**
              * Called when fetching different pages
              */
             $scope.fetchPage = function (href) {
                 $scope.loading = true;
                 UsersClientService.fetchPage(href).then(function (usersClient) {
-                    $scope.handleResponse(usersClient, 'usersClient');
+                    $scope.handleResponse(usersClient, contentProperty);
                 }, function () {
                     $scope.loading = false;
                 });
@@ -24,18 +33,7 @@ angular.module('emmiManager')
              * Called when GO button is clicked
              */
             $scope.search = function () {
-                if (!$scope.searchForm || !$scope.searchForm.query.$invalid) {
-                    $scope.serializeToQueryString($scope.query, 'u', null, null);
-                    $scope.loading = true;
-                    UsersClientService.list($scope.client, $scope.query, null).then(
-                        function (response) {
-                            $scope.handleResponse(response, 'usersClient');
-                            $scope.removeStatusFilterAndTotal = $scope.total <= 0;
-                        }, function () {
-                            $scope.loading = false;
-                        });
-                    $scope.sortProperty = null;
-                }
+                performSearch($scope.query, null, null, true);
             };
 
             /**
@@ -43,14 +41,7 @@ angular.module('emmiManager')
              */
             $scope.sort = function (property) {
                 var sort = $scope.createSortProperty(property);
-                $scope.serializeToQueryString($scope.query, 'u', null, sort);
-                UsersClientService.list($scope.client, $scope.query, sort).then(
-                    function (response) {
-                        $scope.handleResponse(response, 'usersClient');
-                    }, function () {
-                        $scope.loading = false;
-                    });
-                $scope.sortProperty = null;
+                performSearch($scope.query, $scope.status, sort);
             };
 
             /**
@@ -63,31 +54,62 @@ angular.module('emmiManager')
             };
 
             /**
-   	         * init method called when page is loading
-	         */
-			function init() {
-				$controller('CommonSearch', {$scope: $scope});
-				$scope.client = Client.getClient();
-				$scope.page.setTitle('Manage Users - ' + $scope.client.name);
-				$scope.searchPerformed = false;
-				
-				// See if client has any user
-				UsersClientService.list($scope.client).then(function(response){
-					if(response && response.page.totalElements > 0){
-						$scope.hasUsers = true;
-					}
-				});
-				
+             * init method called when page is loading
+             */
+            function init() {
+                $controller('CommonSearch', {$scope: $scope});
+                $scope.client = Client.getClient();
+                $scope.page.setTitle('Manage Users - ' + $scope.client.entity.name);
+                $scope.searchPerformed = false;
+
+                // See if client has any users at all
+                UsersClientService.list($scope.client).then(function (response) {
+                    $scope.statuses = response.statusFilter;
+                    if (response.page.totalElements > 0) {
+                        $scope.hasUsers = true;
+                    }
+                });
+
+                // perform search if the query string has search arguments
                 if ($scope.query) {
-                    $scope.serializeToQueryString($scope.query, 'u', null, null);
-                    UsersClientService.list($scope.client, $scope.query, null).then(
-                        function (response) {
-                            $scope.handleResponse(response, 'usersClient');
-                            $scope.removeStatusFilterAndTotal = $scope.total <= 0;
-                        }, function () {
+                    if ($scope.pageWhereBuilt === 'user') {
+                        // search from the query string, don't blank out status and total for INACTIVE_ONLY searches
+                        performSearch($scope.query, $scope.status, $scope.sortProperty, $scope.status !== 'INACTIVE_ONLY');
+                    } else {
+                        // it was built by a different page, use the query only
+                        performSearch($scope.query, null, null, true);
+                    }
+                }
+            }
+
+            /**
+             * Performs a search via the service layer and handles persistence to
+             * the query string
+             *
+             * @param q the query
+             * @param status to filter by
+             * @param sort to sort by
+             * @param recalculateStatusFilterAndTotal boolean indicating whether the
+             *        status and filter line should be possibly blanked out or not
+             *        true means to possibly blank it out, false means leave it the
+             *        way it is
+             */
+            function performSearch(q, status, sort, recalculateStatusFilterAndTotal) {
+                if (!$scope.searchForm || !$scope.searchForm.query.$invalid) {
+                    $scope.loading = true;
+                    $scope.serializeToQueryString(q, 'u', status, sort);
+                    UsersClientService.list($scope.client, $scope.query, sort, status).then(
+                        function success(response) {
+                            $scope.handleResponse(response, contentProperty);
+                            if (recalculateStatusFilterAndTotal) {
+                                $scope.removeStatusFilterAndTotal = $scope.total <= 0;
+                            }
+                        }, function failure() {
                             $scope.loading = false;
                         });
+                    // turn off the sort after the search request has been made, the response will rebuild
                     $scope.sortProperty = null;
+                    _paq.push(['trackSiteSearch', q, 'Client User Search']);
                 }
             }
 
