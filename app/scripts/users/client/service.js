@@ -1,10 +1,19 @@
 'use strict';
 angular.module('emmiManager')
 
+/**
+ * This service is responsible LCRUD operations for UserClient resources
+ */
     .service('UsersClientService', ['$filter', '$q', '$http', 'UriTemplate', 'CommonService', 'Client', 'Session',
         function ($filter, $q, $http, UriTemplate, CommonService, Client, Session) {
             var selectedUserClient;
 
+            /**
+             * Sets attributes on the resource that are necessary for
+             * UI components
+             *
+             * @param userClientResource to modify
+             */
             function updateResourceForUi(userClientResource) {
                 if (angular.equals(userClientResource.entity.email,
                         userClientResource.entity.login)) {
@@ -80,16 +89,15 @@ angular.module('emmiManager')
                 /**
                  * Call server to get a list of UserClient
                  */
-                list: function (client, query, sort) {
-                    return $http.get(UriTemplate.create(client.link.users).stringify(
-                        {
-                            term: query,
-                            sort: sort && sort.property ? sort.property + ',' + (sort.ascending ? 'asc' : 'desc') : ''
-                        }))
-                        .then(function (response) {
-                            CommonService.convertPageContentLinks(response.data);
-                            return response.data;
-                        });
+                list: function (client, query, sort, status) {
+                    return $http.get(UriTemplate.create(client.link.users).stringify({
+                        term: query,
+                        status: status,
+                        sort: sort && sort.property ? sort.property + ',' + (sort.ascending ? 'asc' : 'desc') : ''
+                    })).then(function (response) {
+                        CommonService.convertPageContentLinks(response.data);
+                        return response.data;
+                    });
                 },
 
                 /**

@@ -8,24 +8,24 @@ angular.module('emmiManager')
 .controller('UsersClientEditorController', ['$alert', '$location', '$scope', 'Client', 'UsersClientService',
         function ($alert, $location, $scope, Client, UsersClientService) {
 
+            $scope.client = Client.getClient();
+            $scope.selectedUserClient = UsersClientService.getUserClient();
+            $scope.page.setTitle('View User - ' + $scope.client.entity.name);
+
 	    	/**
 	         * Called when 'Create Another User' is clicked
 	         */
 	        $scope.createAnotherUserClient = function () {
 	        	$location.path('/clients/' + $scope.client.entity.id + '/users/new');
 	        };
-    	
-    		
-    		/**
-	         * init method called when the page is loading
-	         */
-            function init(){
-            	$scope.client = Client.getClient();
-        		$scope.selectedUserClient = UsersClientService.getUserClient();
-        		$scope.page.setTitle('View User - ' + $scope.client.entity.name);
-            }
 
-            init();
+            /**
+             * Called if the user confirms they want to navigate away from the page when clicking the clink link-back
+             */
+            $scope.confirmExit = function() {
+                $location.path('/clients/'+$scope.client.entity.id);
+            };
+
         }
     ])
 ;
