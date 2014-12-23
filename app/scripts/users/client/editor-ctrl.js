@@ -24,7 +24,7 @@ angular.module('emmiManager')
         		$scope.selectedUserClient = UsersClientService.getUserClient();
         		$scope.page.setTitle('View User - ' + $scope.client.entity.name);
             }
-            
+
             init();
         }
     ])

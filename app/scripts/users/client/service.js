@@ -4,6 +4,15 @@ angular.module('emmiManager')
     .service('UsersClientService', ['$filter', '$q', '$http', 'UriTemplate', 'CommonService', 'Client', 'Session',
         function ($filter, $q, $http, UriTemplate, CommonService, Client, Session) {
             var selectedUserClient;
+
+            function updateResourceForUi(userClientResource) {
+                if (angular.equals(userClientResource.entity.email,
+                        userClientResource.entity.login)) {
+                    userClientResource.useEmail = true;
+                }
+                userClientResource.currentlyActive = userClientResource.entity.active;
+            }
+
             return {
                 /**
                  * Create a new UserClient placeholder
@@ -36,13 +45,36 @@ angular.module('emmiManager')
                         });
                 },
 
-                toggleActivation: function (userClientResource) {
-                    userClientResource.entity.active = !userClientResource.entity.active;
+                /**
+                 * Calls server side update of the user client
+                 *
+                 * @param userClientResource to save
+                 * @returns a promise
+                 */
+                update: function (userClientResource) {
+                    if (userClientResource.useEmail) {
+                        userClientResource.entity.login = userClientResource.entity.email;
+                    }
                     return $http.put(UriTemplate.create(userClientResource.link.self).stringify(), userClientResource.entity)
                         .success(function (response) {
                             angular.extend(userClientResource, response);
+                            delete userClientResource.currentTarget; //this gets set via the deactivate directive
+                            selectedUserClient = userClientResource;
+                            updateResourceForUi(selectedUserClient);
+                            updateResourceForUi(response);
                             return response;
                         });
+                },
+
+                /**
+                 * Switches the active boolean and then calls server side update
+                 *
+                 * @param userClientResource to toggle the active and save
+                 * @returns a promise
+                 */
+                toggleActivation: function (userClientResource) {
+                    userClientResource.entity.active = !userClientResource.entity.active;
+                    return this.update(userClientResource);
                 },
 
                 /**
@@ -83,6 +115,7 @@ angular.module('emmiManager')
                         // Call server to get UserClient by userClientId
                         return $http.get(UriTemplate.create(Session.link.userClientById).stringify({id: userClientId})).then(function (userClient) {
                             selectedUserClient = userClient.data;
+                            updateResourceForUi(selectedUserClient);
                             return selectedUserClient;
                         });
                     }

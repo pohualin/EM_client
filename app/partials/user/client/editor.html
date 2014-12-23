@@ -1,0 +1,24 @@
+<div class="container" data-ng-cloak>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>
+                <a href="#/">Emmi Manager</a> : <a href="#/clients/{{client.entity.id}}">{{client.entity.name}}</a>
+            </h2>
+        </div>
+    </div>
+
+    <div data-ng-switch="editMode" data-ng-controller="UserClientMetaDataController">
+        <div class="row" data-ng-switch-default>
+            <div data-ng-include="'partials/user/client/metadata/view.html'"></div>
+        </div>
+        <div class="row" data-ng-switch-when="true">
+            <div data-ng-include="'partials/user/client/metadata/edit.html'"></div>
+        </div>
+    </div>
+
+    <hr data-ng-show="selectedUserClient"/>
+    <div data-ng-show="selectedUserClient">
+        <div class="row" data-ng-include="'partials/user/client/userclientrole/client-role.html'"></div>
+        <div class="row" data-ng-include="'partials/user/client/userclientteamrole/client-team-role.html'"></div>
+    </div>
+</div>
