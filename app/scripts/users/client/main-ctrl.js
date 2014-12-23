@@ -63,15 +63,21 @@ angular.module('emmiManager')
             };
 
             /**
-             * init method called when page is loading
-             */
-            function init() {
-                $controller('CommonSearch', {$scope: $scope});
-                $scope.client = Client.getClient();
-                $scope.page.setTitle('Manage Users - ' + $scope.client.entity.name);
-                $scope.searchPerformed = false;
-
-                // Initiate a search when $scope.query is not empty
+   	         * init method called when page is loading
+	         */
+			function init() {
+				$controller('CommonSearch', {$scope: $scope});
+				$scope.client = Client.getClient();
+				$scope.page.setTitle('Manage Users - ' + $scope.client.name);
+				$scope.searchPerformed = false;
+				
+				// See if client has any user
+				UsersClientService.list($scope.client).then(function(response){
+					if(response && response.page.totalElements > 0){
+						$scope.hasUsers = true;
+					}
+				});
+				
                 if ($scope.query) {
                     $scope.serializeToQueryString($scope.query, 'u', null, null);
                     UsersClientService.list($scope.client, $scope.query, null).then(
