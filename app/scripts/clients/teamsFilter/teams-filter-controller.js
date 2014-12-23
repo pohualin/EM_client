@@ -47,7 +47,11 @@ angular.module('emmiManager')
                 //there are tags to filter by and a group is selected
                 $scope.useGroupDisplay = true;
                 TeamsFilter.getTagsForGroup($scope.selectedGroup).then(function (tags) {
-                    $scope.listOfTeamsByTag = TeamsFilter.getTeamsForTags($scope.teamTags, tags);
+                   TeamsFilter.getTeamsForTags($scope.teamTags, tags).then(function(listOfTeamsByTag){
+                        $scope.listOfTeamsByTag = listOfTeamsByTag;
+                        $scope.teamsNotInGroup = TeamsFilter.getTeamsNotInGroup($scope.teamTags, listOfTeamsByTag);
+                    });
+
                 });
             }
         };
@@ -81,7 +85,10 @@ angular.module('emmiManager')
             $scope.useGroupDisplay = true;
             TeamsFilter.getTagsForFilteredTagsAndGroup($scope.filterTags, $scope.selectedGroup.entity.tag).then(function (tags) {
                 TeamsFilter.getFilteredTeamTags($scope.filterTags).then(function (filteredTeamTags) {
-                    $scope.listOfTeamsByTag = TeamsFilter.getTeamsForTags(filteredTeamTags, tags);
+                    TeamsFilter.getTeamsForTags(filteredTeamTags, tags).then(function(listOfTeamsByTag) {
+                        $scope.listOfTeamsByTag = listOfTeamsByTag;
+                        $scope.teamsNotInGroup = TeamsFilter.getTeamsNotInGroup($scope.teamTags, listOfTeamsByTag);
+                    });
                 });
             });
         };

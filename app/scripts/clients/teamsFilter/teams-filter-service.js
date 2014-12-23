@@ -97,6 +97,7 @@ angular.module('emmiManager')
             },
 
             getTeamsForTags: function (clientTeamTags, tags) {
+                var deferred = $q.defer();
                 var listOfTeamsByTag = {};
                 var teams = [];
                 angular.forEach(tags, function (tag) {
@@ -114,7 +115,40 @@ angular.module('emmiManager')
                 if (Object.keys(listOfTeamsByTag).length === 0) {
                     listOfTeamsByTag = null;
                 }
-                return listOfTeamsByTag;
+
+                deferred.resolve(listOfTeamsByTag);
+                return deferred.promise;
+            },
+
+            getTeamsNotInGroup: function (clientTeamTags, groupTeamsByTag) {
+                var teamsWithTagNotInGroup = {};
+                var groupTeams = {};
+                //get all teams the will be displayed
+                angular.forEach(groupTeamsByTag, function (teams) {
+                    angular.forEach(teams, function (team) {
+                        groupTeams[team.name] = team;
+                    });
+                });
+
+                //get each team that is not in the list of teams that will be displayed
+                angular.forEach(clientTeamTags, function (clientTeamTag) {
+                    var skip = false;
+                    angular.forEach(groupTeams, function (groupTeam) {
+                        if (clientTeamTag.team.id === groupTeam.id) {
+                            skip = true;
+                        }
+                    });
+                    if (!skip) {
+                        teamsWithTagNotInGroup[clientTeamTag.team.name] = clientTeamTag.team;
+                    }
+                });
+
+                //check if object is empty
+                if (Object.keys(teamsWithTagNotInGroup).length === 0) {
+                    teamsWithTagNotInGroup = null;
+                }
+
+                return teamsWithTagNotInGroup;
             },
 
             getFilteredTeamTags: function (filterTags) {
