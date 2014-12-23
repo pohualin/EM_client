@@ -1,31 +1,29 @@
 <div class="col-md-12">
-    <form name="userClientForm" class="form" novalidate>
-        <div class="row" data-ng-show="userClientForm.$invalid">
-            <div class="col-md-12" id="message-container"></div>
+    <div class="row" data-ng-show="userClientForm.$invalid">
+        <div class="col-md-12" id="message-container"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 pull-left">
+            <h2>User Information</h2>
         </div>
-        <div class="row">
-            <div class="col-md-6 pull-left">
-                <h2>User Information</h2>
-            </div>
-            <div class="col-md-6">
-                <div class="pull-right">
-                    <h2></h2>
-                    <a class="btn btn-link" data-ng-click="cancel()">cancel</a>
-                    |
-                    <button class="btn btn-link" type="submit"
-                            data-user-client="userClientEdit"
-                            data-on-ok="save(userClientForm)"
-                            data-on-cancel="makeActive()"
-                            data-ng-model="userClientEdit"
-                            data-new-status="userClientEdit.entity.active"
-                            data-is-currently-active="userClientForm.$valid && userClientView.entity.active"
-                            data-placement="left"
-                            data-toggle-user-client-active>
-                        save edits
-                    </button>
-                </div>
+        <div class="col-md-6">
+            <div class="pull-right">
+                <h2></h2>
+                <a class="btn btn-link" data-ng-click="cancel()">cancel</a>
+                |
+                <button class="btn btn-link" type="submit"
+                        data-user-client="userClientEdit"
+                        data-on-ok="save(userClientForm)"
+                        data-on-cancel="makeActive()"
+                        data-ng-model="userClientEdit"
+                        data-new-status="userClientEdit.entity.active"
+                        data-is-currently-active="userClientForm.$valid && userClientView.entity.active"
+                        data-placement="left"
+                        data-toggle-user-client-active>
+                    save edits
+                </button>
             </div>
         </div>
-        <div class="row" data-ng-include="'partials/user/client/metadata/form.html'"></div>
-    </form>
+    </div>
+    <div class="row" data-ng-include="'partials/user/client/metadata/form.html'"></div>
 </div>
