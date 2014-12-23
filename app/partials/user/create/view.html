@@ -6,10 +6,11 @@
 		<div class="col-md-6">
 			<div class="actions pull-right">
 	            <div class="form-group">
-					<a class="btn btn-link" href>edit</a>
-					<button class="btn btn-primary" type="button" data-ng-click="createAnotherUser()">
-	                    <span>Create Another User</span>
-	                </button>
+					<button class="btn btn-link"  type="button" data-ng-click="edit()">edit</button>
+                    <div class="pull-right">
+                        <a class="btn btn-primary"
+                           data-ng-href="#/users/new?{{currentRouteQueryString}}">Create New User</a>
+                    </div>
 	            </div>
 			</div>
 		</div>
@@ -32,6 +33,20 @@
 		<div class="col-md-4">
 			<span>User ID: </span>
 		</div>
-		<div class="col-md-4">{{selectedUser.email}}</div>
+		<div class="col-md-4">{{selectedUser.login}}</div>
 	</div>
+
+	<div class="row">
+		<div class="col-md-6 pull-left">
+			<h2>Roles Information</h2>
+		</div>
+	</div>
+	<div class="row" data-ng-repeat="role in selectedUser.roles">>
+		<div class="col-md-4">
+			<span>Role: </span>
+		</div>
+		<div class="col-md-4">
+			{{role.userAdminRole.name}}
+		</div>
+	</div>	
 </div>

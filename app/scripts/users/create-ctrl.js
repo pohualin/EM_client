@@ -9,15 +9,10 @@ angular.module('emmiManager')
         function ($alert, $scope, UsersService, $location, $popover, $focus) {
 
             $scope.userToBeEdit = UsersService.newUser();
-
-            /**
-             * When the 'use email' box is changed set the focus when unchecked.
-             */
-            $scope.useEmailChange = function () {
-                if ($scope.userToBeEdit && !$scope.userToBeEdit.useEmail) {
-                    $focus('login');
-                }
-            };
+            
+            UsersService.listUserAdminRoles().then(function (response) {
+                $scope.roles = response.content;
+            });
 
             /**
              * Called when Save button is clicked
@@ -26,9 +21,9 @@ angular.module('emmiManager')
                 $scope.userFormSubmitted = true;
                 if (isValid) {
                     UsersService.createUser($scope.userToBeEdit).then(function (response) {
-                        var savedUserResource = response.data;
                         // go to the view/edit page, if the save is successful
-                        $location.path('/users/' + savedUserResource.id);
+                        $scope.editMode = false;
+                        $scope.selectedUser = response.data;
                     }, function (error) {
                         if (error.status === 409) {
                             // 409 is http conflict, meaning save was prevented due to conflicts with other users

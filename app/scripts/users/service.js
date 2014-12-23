@@ -14,26 +14,42 @@ angular.module('emmiManager')
                         lastName: null,
                         email: null,
                         login: null,
-                        useEmail: true
+                        useEmail: true,
+                        active:true,
                     };
                     return newUser;
+                },
+
+                userAssembler: function (user) {
+                    var userAdmin = {
+                        firstName: user.firstName,
+                        lastName: user.lastName,
+                        email: user.email,
+                        login: user.email,
+                        id: user.id,
+                        active:user.active,
+                        version: user.version
+                    };
+
+                    var request = {};
+                    request.userAdmin = userAdmin;
+                    request.roles = [user.role.entity];
+
+                    return request;
                 },
 
                 /**
                  * Call server to create User
                  */
                 createUser: function (userToBeEdit) {
-                    if (userToBeEdit.useEmail) {
-                        userToBeEdit.login = userToBeEdit.email;
-                    }
+                    return $http.post(UriTemplate.create(Session.link.users).stringify(), this.userAssembler(userToBeEdit))
+                        .success(function (response) {
+                            return response;
+                        });
+                },
 
-                    return $http.post(UriTemplate.create(Session.link.users).stringify(), {
-                        firstName: userToBeEdit.firstName,
-                        lastName: userToBeEdit.lastName,
-                        email: userToBeEdit.emai,
-                        login: userToBeEdit.login,
-                        id: userToBeEdit.id
-                        })
+                updateUser: function (userToBeEdit) {
+                    return $http.put(UriTemplate.create(Session.link.users).stringify(), this.userAssembler(userToBeEdit))
                         .success(function (response) {
                             return response;
                         });
@@ -91,6 +107,16 @@ angular.module('emmiManager')
                     }
                 },
 
+               /**
+                 * Call server to get a list of User admin roles
+                 */
+                listUserAdminRoles: function () {
+                    return $http.get(UriTemplate.create(Session.link.userAdminRoles).stringify())
+                        .then(function (response) {
+                            CommonService.convertPageContentLinks(response.data);
+                            return response.data;
+                        });
+                },
                 /**
                  * Getter of selectedUser
                  */

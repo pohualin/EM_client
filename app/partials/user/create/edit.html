@@ -65,6 +65,31 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group"
+                     data-ng-class="{ 'has-error' : userForm.role.$invalid && userFormSubmitted }">
+                    <label class="control-label" for="clientType">Role</label>
+                    <div  class="error-circle glyphicon glyphicon-exclamation-sign" data-ng-show="userForm.role.$invalid && userFormSubmitted"
+                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                         data-title="Required"></div>
+
+                    <select id="role" class="form-control" data-ng-model="userToBeEdit.role"
+                            data-ng-options="role.entity.name for role in roles track by role.entity.id"
+                            name="role" required
+                            data-ng-disabled="userForm.role.$error.unique">
+                        <option value="">Select...</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                        <input id="active" type="checkbox" checked data-ng-model="userToBeEdit.active"/>&nbsp;&nbsp;Active
+                    </div>
+                </div>
+            </div>
+        </div> 
+        <!--div class="row">
+            <div class="col-md-4">
+                <div class="form-group"
                      data-ng-class="{ 'has-error' : userForm.login.$invalid && userFormSubmitted && !userToBeEdit.useEmail}">
                     <label class="control-label" for="useEmail">User ID:</label>
 
@@ -83,7 +108,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div-->
         <div class="row">
             <div class="col-md-12">
                 <hr>
