@@ -71,6 +71,7 @@ angular.module('emmiManager')
 
                 // See if client has any users at all
                 UsersClientService.list($scope.client).then(function (response) {
+                    $scope.lookedForUsers = true;
                     $scope.statuses = response.statusFilter;
                     if (response.page.totalElements > 0) {
                         $scope.hasUsers = true;
