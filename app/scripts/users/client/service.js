@@ -27,7 +27,7 @@ angular.module('emmiManager')
                  * Create a new UserClient placeholder
                  */
                 newUserClient: function () {
-                    var newUserClient = {
+                    return {
                         entity: {
                             firstName: null,
                             lastName: null,
@@ -37,7 +37,6 @@ angular.module('emmiManager')
                         },
                         useEmail: true
                     };
-                    return newUserClient;
                 },
 
                 /**
@@ -89,11 +88,12 @@ angular.module('emmiManager')
                 /**
                  * Call server to get a list of UserClient
                  */
-                list: function (client, query, sort, status) {
+                list: function (client, query, sort, status, team) {
                     return $http.get(UriTemplate.create(client.link.users).stringify({
                         term: query,
                         status: status,
-                        sort: sort && sort.property ? sort.property + ',' + (sort.ascending ? 'asc' : 'desc') : ''
+                        sort: sort && sort.property ? sort.property + ',' + (sort.ascending ? 'asc' : 'desc') : '',
+                        teamId: team ? team.entity.id : ''
                     })).then(function (response) {
                         CommonService.convertPageContentLinks(response.data);
                         return response.data;
