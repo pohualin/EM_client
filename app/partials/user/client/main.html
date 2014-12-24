@@ -51,10 +51,11 @@
 
                     <div class="input-group col-md-8">
                         <select id="teamFilter" name="teamFilter" class="form-control"
-                                data-ng-disabled="searchForm.query.$invalid || loading"
+                                data-ng-disabled="searchForm.query.$invalid || loading || allTeams.length == 0"
                                 data-ng-model="teamTagFilter.team" data-ng-change="onTeamFilterChange()"
                                 data-ng-options="team.entity.name for team in allTeams | orderBy:'entity.name' track by team.entity.id"
                                 data-disable-search-threshold="10" data-allow-single-deselect="true"
+                                data-no-results-text="'All Teams'"
                                 data-placeholder="All Teams"
                                 data-chosen>
                             <option></option>
@@ -69,7 +70,7 @@
 
                     <div class="input-group col-md-8">
                         <select id="tagFilter" name="tagFilter" class="form-control"
-                                data-ng-disabled="teamTagFilter.team"
+                                data-ng-disabled="teamTagFilter.team || allTeams.length == 0"
                                 data-disable-search-threshold="10" data-allow-single-deselect="true"
                                 data-placeholder="All Tags"
                                 data-chosen>
