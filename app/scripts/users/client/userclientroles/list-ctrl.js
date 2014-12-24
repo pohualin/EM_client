@@ -25,7 +25,10 @@ angular.module('emmiManager')
     			getUserClientUserClientRoles($scope.selectedUserClient).then(function(response){
     				// Set existingUserClientUserClientRoles if it exists
     				if(response.length > 0){
-    					$scope.existingUserClientUserClientRoles = response;	
+    					UserClientUserClientRolesService.loadPermissionsForUserClientUserClientRoles(response).then(function(response){
+    						$scope.existingUserClientUserClientRoles = response;
+        					$scope.$parent.$parent.isSuperUser = UserClientUserClientRolesService.isSuperUser();
+    					});
     				} else {
     					// Load existing UserClientRoles for the Client
     					$scope.loadClientRoles();
@@ -49,6 +52,7 @@ angular.module('emmiManager')
 	        	UserClientUserClientRolesService.deleteUserClientUserClientRole(userClientUserClientRole)
 	        	.then(function(response){
 	        		$scope.existingUserClientUserClientRoles = null;
+	        		$scope.$parent.$parent.isSuperUser = false;
 	        		$scope.loadClientRoles();
 	        	});
 	        };
