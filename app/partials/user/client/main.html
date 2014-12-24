@@ -27,26 +27,61 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6 col-sm-5" data-ng-show="hasUsers">
-                    <label class="sr-only" for="query">Search</label>
+                <div class="col-md-6" data-ng-show="hasUsers">
+                    <div class="form-inline">
+                        <label class="control-label" for="query">Search:</label>
 
-                    <div class="input-group">
-                        <input class="form-control" id="query" name="query" data-ng-model="query" type="text"
-                               placeholder="First/last name, email, user ID" required data-auto-focus>
+                        <div class="input-group col-md-8">
+                            <input class="form-control" id="query" name="query" data-ng-model="query" type="text"
+                                   placeholder="First/last name, email, user ID" required data-auto-focus>
 
-                        <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
+                            <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
+
+                        </div>
+                        <button class="btn btn-default" data-ng-click="search()"
+                                data-ng-disabled="searchForm.query.$invalid || loading">Go
+                        </button>
+                        <div class="input-group" data-ng-class="{'search-spinner' : loading}"></div>
                     </div>
                 </div>
-                <div class="col-md-2 col-sm-3" data-ng-show="hasUsers">
-                    <button class="btn btn-default pull-left" data-ng-click="search()"
-                            data-ng-disabled="searchForm.query.$invalid || loading">Go
-                    </button>
-                    <span data-ng-class="{'search-spinner' : loading}"></span>
+
+                <div class="col-md-3" data-ng-show="hasUsers">
+                    <div class="form-inline">
+                        <label class="control-label" for="teamFilter">Team:</label>
+
+                        <div class="input-group col-md-8">
+                            <select id="teamFilter" name="teamFilter" class="form-control"
+                                    data-ng-disabled="searchForm.query.$invalid || loading"
+                                    data-ng-model="teamTagFilter.team" data-ng-change="onTeamFilterChange()"
+                                    data-ng-options="team.entity.name for team in allTeams | orderBy:'entity.name' track by team.entity.id"
+                                    data-disable-search-threshold="10" data-allow-single-deselect="true"
+                                    data-placeholder="All Teams"
+                                    data-chosen>
+                                <option></option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3" data-ng-show="hasUsers">
+                    <div class="form-inline">
+                        <label class="control-label" for="tagFilter">Tags:</label>
+
+                        <div class="input-group col-md-8">
+                            <select id="tagFilter" name="tagFilter" class="form-control"
+                                    data-ng-disabled="teamTagFilter.team"
+                                    data-disable-search-threshold="10" data-allow-single-deselect="true"
+                                    data-placeholder="All Tags"
+                                    data-chosen>
+                                <option></option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </div>
         </form>
         <hr>
-        <div class="row" data-ng-hide="hasUsers">
+        <div class="row" data-ng-show="searchPerformed && !hasUsers">
             <div class="col-md-12">
                 <span>There are no existing users for {{client.entity.name}}</span>
             </div>

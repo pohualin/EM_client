@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  * Manage Client Level users
  */
-    .controller('UsersClientMainCtrl', ['$scope', '$controller', 'Client', 'UsersClientService',
-        function ($scope, $controller, Client, UsersClientService) {
+    .controller('UsersClientMainCtrl', ['$scope', '$controller', 'Client', 'UsersClientService', 'TeamsFilter',
+        function ($scope, $controller, Client, UsersClientService, TeamService) {
 
             var contentProperty = 'usersClient';
 
@@ -54,6 +54,13 @@ angular.module('emmiManager')
             };
 
             /**
+             * Called when the team filter is changed
+             */
+            $scope.onTeamFilterChange = function () {
+                performSearch($scope.query, $scope.status, $scope.sortProperty);
+            };
+
+            /**
              * init method called when page is loading
              */
             function init() {
@@ -68,6 +75,17 @@ angular.module('emmiManager')
                     if (response.page.totalElements > 0) {
                         $scope.hasUsers = true;
                     }
+                });
+
+                // put the team and tag filter into scope
+                $scope.teamTagFilter = {
+                    team: null,
+                    tag: null
+                };
+
+                // load all of the teams for the client
+                TeamService.getClientTeams().then(function (teams) {
+                    $scope.allTeams = teams;
                 });
 
                 // perform search if the query string has search arguments
@@ -98,8 +116,11 @@ angular.module('emmiManager')
                 if (!$scope.searchForm || !$scope.searchForm.query.$invalid) {
                     $scope.loading = true;
                     $scope.serializeToQueryString(q, 'u', status, sort);
-                    UsersClientService.list($scope.client, $scope.query, sort, status).then(
+                    UsersClientService.list($scope.client, $scope.query, sort, status, $scope.teamTagFilter.team).then(
                         function success(response) {
+                            if (!response) {
+                                $scope.sortProperty = sort;
+                            }
                             $scope.handleResponse(response, contentProperty);
                             if (recalculateStatusFilterAndTotal) {
                                 $scope.removeStatusFilterAndTotal = $scope.total <= 0;
