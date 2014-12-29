@@ -237,7 +237,6 @@ angular.module('emmiManager')
 
     .directive('tagGroupsItem', function($timeout) {
         return {
-            require: '^tagGroups',
             link: function(scope) {
 
                 // when number of tags within a group changes
