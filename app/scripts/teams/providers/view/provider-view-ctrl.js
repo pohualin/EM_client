@@ -13,6 +13,8 @@ angular.module('emmiManager')
 
         var searchedProvidersList ='searchedProvidersList';
 
+        $scope.locationsColumnCharLimit = 25;
+        
         $scope.refreshLocationsAndProviders = function() {
 			ProviderSearch.fetchAllLocationsForTeam($scope.teamResource).then(function(locationResponse){
 				var locationsArray=[];
@@ -40,7 +42,6 @@ angular.module('emmiManager')
         });
 
 		$scope.editProvider = function (teamProvider) {
-
             $scope.title = '';
 
 			// create a copy for editing
@@ -58,6 +59,7 @@ angular.module('emmiManager')
 				var potential = response;
 				$scope.multiSelectData = TeamProviderService.buildMultiSelectData(potential);
 				// get a list of existing team locations by team provider
+
 				TeamProviderService.getTeamLocationsByTeamProvider($scope.teamProviderToBeEdit.link.findTeamLocationsByTeamProvider).then(function(response){
 					if(response.length > 0){
 						$scope.selectedItems = TeamProviderService.buildSelectedItem(response);
