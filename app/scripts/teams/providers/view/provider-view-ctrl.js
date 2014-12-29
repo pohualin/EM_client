@@ -1,7 +1,7 @@
 'use strict';
 angular.module('emmiManager')
 
-	.controller('ProviderListController', function($scope, $modal, ProviderView, TeamLocation, TeamProviderService, ProviderSearch, $controller, arrays, ProviderCreate){
+	.controller('ProviderListController', function($scope, $modal, ProviderView, TeamLocation, TeamProviderService, ProviderSearch, $controller, arrays, ProviderCreate,  $alert){
 
 		$controller('CommonPagination', {$scope: $scope});
 
@@ -231,24 +231,22 @@ angular.module('emmiManager')
         $scope.associateSelectedProvidersToTeam = function (addAnother) {
         	if ($scope.teamProviderTeamLocationSaveRequest.length > 0) {
 	        	ProviderSearch.updateProviderTeamAssociations($scope.teamProviderTeamLocationSaveRequest, $scope.teamResource).then(function (response) {
-	        		$scope.refreshLocationsAndProviders();
+	        		var message = $scope.teamProviderTeamLocationSaveRequest.length > 1 ? 'The selected providers have been successfully added.' : 'The provider '+ $scope.teamProviderTeamLocationSaveRequest[0].provider.firstName + ' ' + $scope.teamProviderTeamLocationSaveRequest[0].provider.lastName +' has been successfully added.';
 	        		$scope.hideaddprovidermodal();
+					$alert({
+						title: ' ',
+						content: message,
+						container: 'body',
+						type: 'success',
+						placement: 'top',
+					    show: true,
+					    duration: 5,
+					    dismissable: true
+					});
 	        		if (addAnother) {
         				$scope.addProviders();
 	        		}
-	        	});
-        	}
-        };
-
-        $scope.associateSelectedProvidersToTeam = function (addAnother) {
-        	if ($scope.teamProviderTeamLocationSaveRequest.length > 0) {
-	        	ProviderSearch.updateProviderTeamAssociations($scope.teamProviderTeamLocationSaveRequest, $scope.teamResource).then(function (response) {
-	        		$scope.hideaddprovidermodal();
-	        		if (addAnother) {
-        				$scope.addProviders();
-	        		}
 	        		$scope.refreshLocationsAndProviders();
-
 	        	});
         	}
         };
@@ -312,6 +310,16 @@ angular.module('emmiManager')
 	                ProviderCreate.associateTeamLocationsToProvider(response.data.entity, $scope.teamResource, $scope.selectedItems);
 	        		$scope.hideNewProviderModal();
 	                $scope.refreshLocationsAndProviders();
+	                $alert({
+						title: ' ',
+						content: 'The provider '+ response.data.entity.firstName + ' ' + response.data.entity.lastName +' has been successfully added.',
+						container: 'body',
+						type: 'success',
+						placement: 'top',
+					    show: true,
+					    duration: 5,
+					    dismissable: true
+					});
 	                if (addAnother) {
         				$scope.addProviders();
 	        		}
