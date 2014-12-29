@@ -2,7 +2,7 @@
 
 angular.module('emmiManager')
 
-    .controller('TeamsLocationsController', function ($scope, $http, Session, UriTemplate, $controller, $modal, $alert, Location, TeamLocation, ProviderView, TeamLocationCreate) {
+    .controller('TeamsLocationsController', ['$scope', '$http', 'Session', 'UriTemplate', '$controller', '$modal', '$alert', 'Location', 'TeamLocation', function ($scope, $http, Session, UriTemplate, $controller, $modal, $alert, Location, TeamLocation) {
 
         $controller('LocationCommon', {$scope: $scope});
 
@@ -14,13 +14,9 @@ angular.module('emmiManager')
 
         $scope.editLocation = function (location) {
 
-            $scope.fillProviders();
-
-            // create a copy for editing
+        	// create a copy for editing
             $scope.location = angular.copy(location.entity.location);
             $scope.locationResource = location;
-
-            $scope.location.providersSelected = [];
 
             // save the original for overlay if save is clicked
             $scope.originalLocation = location.entity.location;
@@ -28,17 +24,10 @@ angular.module('emmiManager')
             // set belongsTo property
             $scope.setBelongsToPropertiesFor($scope.location);
 
-            TeamLocationCreate.findTeamLocationTeamProviders(location).then(function(pageLocations) {
-                angular.forEach( pageLocations.content , function (location) {
-                    $scope.location.providersSelected.push(location.teamProvider.entity);
-                });
-
-                // show the dialog box, to avoid display the popup without the providers
-                $modal({scope: $scope, template: 'partials/team/location/edit.html', animation: 'none', backdropAnimation: 'emmi-fade', show: true, backdrop: 'static'});
-            });
+            // show the dialog box, to avoid display the popup without the providers
+            $modal({scope: $scope, template: 'partials/team/location/edit.html', animation: 'none', backdropAnimation: 'emmi-fade', show: true, backdrop: 'static'});
 
             _paq.push(['trackEvent', 'Form Action', 'Team Location', 'Edit']);
-
 
         };
 
@@ -95,7 +84,6 @@ angular.module('emmiManager')
                     $scope.teamLocations[teamLocation.entity.location.id] = angular.copy(teamLocation.entity.location);
                 });
                 $scope.handleResponse(pageLocations, managedLocationList);
-                $scope.fetchAllPages(pageLocations);
             });
         };
 
@@ -124,35 +112,10 @@ angular.module('emmiManager')
             });
         };
 
-        $scope.fetchAllPages = function (content) {
-            //fetch all pages in order to fill the dropdown with all clients locations, not only the first page.
-            //for (var i = 1; i<content.page.totalPages; i++) {
-               if (content.link && content.link['page-next']) {
-                    $http.get(content.link['page-next']).then(function (response) {
-                        angular.forEach(response.data.content, function (teamLocation) {
-                            $scope.locations.push(teamLocation);
-                            $scope.teamLocations[teamLocation.entity.location.id] = angular.copy(teamLocation.entity.location);
-                        });
-                        $scope.fetchAllPages(response);
-                    });
-                }
-            //}
-        };
-
-        $scope.fillProviders = function() {
-            ProviderView.allProvidersForTeam($scope.teamResource).then(function(response){
-                $scope.providersData = [];
-                angular.forEach( response , function (location) {
-                    $scope.providersData.push(location.entity);
-                });
-            });
-        };
-
         if ($scope.teamClientResource.teamResource.entity.id) { // to check is the team is created
             $scope.refresh();
-            $scope.fillProviders();
         }
 
-    })
+    }])
 
  ;
