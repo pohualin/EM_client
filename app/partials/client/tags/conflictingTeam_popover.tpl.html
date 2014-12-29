@@ -1,17 +1,16 @@
-
 <form class='conflictingTeamForm'>
     <div>The following tags are in use and will be removed from teams:</div>
     <br>
     <table border="0" cellpadding="1px" cellspacing="0">
         <tr class='conflictingTeamRow' data-ng-repeat="teamTag in conflictingTeamTags">
             <td class="col-md-6">{{teamTag.tag}}: </td>
-            <td ng-if="teamTag.numberOfTeams == 1 " class="col-md-6">{{teamTag.numberOfTeams}} team</td>
-            <td ng-if="teamTag.numberOfTeams > 1 " class="col-md-6">{{teamTag.numberOfTeams}} teams</td>
+            <td data-ng-if="teamTag.numberOfTeams == 1 " class="col-md-6">{{teamTag.numberOfTeams}} team</td>
+            <td data-ng-if="teamTag.numberOfTeams > 1 " class="col-md-6">{{teamTag.numberOfTeams}} teams</td>
         </tr>
     </table>
     <br>
     <div class="form-actions">
-        <button class="btn btn-primary" type="button" data-ng-click="cancelConflictingTeamsPopover()"
+        <button class="btn btn-primary" type="button" data-ng-click="hideConflictingTeamsPopover()"
                 data-translate="">No
         </button>
         <button class="btn btn-danger" data-ng-click="overrideConflictingTeamTags(clientForm.$valid)"

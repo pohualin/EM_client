@@ -9,11 +9,13 @@
             <div class="col-md-6" data-ng-show="clientTagsHaveChanges && !saving">
                 <h2></h2>
                 <div class="pull-right">
-                    <button class="btn btn-link" data-ng-click="cancelTagChanges()">cancel</button>
-                    |
+                    <button class="btn btn-link" data-ng-click="cancelTagChanges()" data-ng-hide="hideCancelButton">cancel</button>
+                    <span data-ng-hide="hideCancelButton">| </span>
                     <button class="btn btn-link" type="button"
+                            data-conflicting-team-tags = "conflictingTeamTags"
                             data-ng-click="checkForConflicts(clientForm.$valid);"
                             data-ng-disabled="!clientForm.$valid"
+                            data-popover-dismiss
                             data-team-conflict-popover>
                         <span>save changes</span>
                     </button>
