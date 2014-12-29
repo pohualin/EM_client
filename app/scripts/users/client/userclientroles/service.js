@@ -3,6 +3,7 @@ angular.module('emmiManager')
 
     .service('UserClientUserClientRolesService', ['$q', '$http', 'UriTemplate', 'CommonService', 'Client',
         function ($q, $http, UriTemplate, CommonService, Client) {
+    		var allPermissions = [];
             return {
             	/**
             	 * Associate selected UserClientRole to selected UserClient
@@ -21,8 +22,9 @@ angular.module('emmiManager')
             	 */
             	deleteUserClientUserClientRole: function(existingUserClientUserClientRole){
             		return $http.delete(UriTemplate.create(existingUserClientUserClientRole.link.userClientUserClientRole)
-            				.stringify({userClientUserClientRoleId: existingUserClientUserClientRole.entity.id})).then(function(response){
-            				});
+        				.stringify({userClientUserClientRoleId: existingUserClientUserClientRole.entity.id})).then(function(response){
+        				    allPermissions = [];
+        				});
             	},
             	
             	/**
@@ -52,11 +54,44 @@ angular.module('emmiManager')
             	 * To load permissions for an existing UserClientRole
             	 */
             	loadPermissionsForExistingUserClientUserClientRole: function(existingUserClientUserClientRole){
+            		var deferred = $q.defer();
             		if(!existingUserClientUserClientRole.entity.permissions){
             			$http.get(UriTemplate.create(existingUserClientUserClientRole.link.userClientRolePermissions).stringify()).then(function(permissions){
             				existingUserClientUserClientRole.entity.permissions = permissions.data;
+            				deferred.resolve(existingUserClientUserClientRole);
                     	});
+            		} else {
+            			deferred.resolve(existingUserClientUserClientRole);
             		}
+            		return deferred.promise;
+            	},
+            	
+            	/**
+            	 * To load permissions for all existing UserClientRole
+            	 */
+            	loadPermissionsForUserClientUserClientRoles: function(userClientUserClientRoles){
+            		allPermissions = [];
+            		var deferred = $q.defer();
+            		var external = this;
+            		angular.forEach(userClientUserClientRoles, function (userClientUserClientRole) {
+                    	if(!userClientUserClientRole.entity.permissions){
+                    		external.loadPermissionsForExistingUserClientUserClientRole(userClientUserClientRole).then(function(userClientUserClientRole){
+                    			angular.forEach(userClientUserClientRole.entity.permissions, function(permission){
+                					allPermissions.push(permission.name);
+                				});
+                    			deferred.resolve(userClientUserClientRoles);
+                    		});
+                    	}
+                    });
+            		return deferred.promise;
+            	},
+            	
+            	/**
+				 * Return true if allPermissions contain
+				 * "PERM_CLIENT_SUPER_USER"
+				 */
+            	isSuperUser: function(){
+            		return allPermissions.indexOf('PERM_CLIENT_SUPER_USER') !== -1;
             	}
             };
         }])
