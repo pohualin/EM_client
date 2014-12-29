@@ -49,7 +49,7 @@ angular.module('emmiManager')
 			};
 			
 			$scope.$watch('userClientUserClientRolesService.isSuperUser()', function(){
-                $scope.isSuperUser = UserClientUserClientRolesService.isSuperUser()
+                $scope.isSuperUser = UserClientUserClientRolesService.isSuperUser();
             });
 			
     		/**
