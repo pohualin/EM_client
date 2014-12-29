@@ -21,32 +21,35 @@ angular.module('emmiManager')
                 //save all the team tags on the client
                 $scope.teamTags = teamTags;
                 $scope.defaultTeamTags = teamTags;
-
-                TeamsFilter.getTeamsFromTeamTags(teamTags).then(function (teams) {
-                    //save all the teams on a client
-                    $scope.defaultTeams = teams;
-                    $scope.clientTeams = teams;
-                });
             }),
 
             TeamsFilter.getClientGroups().then(function (groups) {
                     //all groups on client
-                    TeamsFilter.getTeamsWithNoTeamTags().then(function(teams){
-                        if(teams.length>0){
-                            $scope.teamsWithNoTeamTags = teams;
-                        }
-                    });
                     $scope.clientGroups = groups;
                     $scope.clientTagGroupToDisplay = TeamsFilter.getClientTagsInGroups(groups);
                 }
             )
         ]).then(function () {
-            //get the url parameters
-            $scope.getUrl();
-            //check if there are inactive teams on the client
-            TeamsFilter.getInactiveTeamsFromTeamTags($scope.teamTags).then(function (teams) {
-                $scope.inactiveTeams = teams;
+            $q.all([
+                TeamsFilter.getTeamsFromTeamTags($scope.defaultTeamTags).then(function (teams) {
+                    //save all the teams on a client
+                    $scope.defaultTeams = teams;
+                    $scope.clientTeams = teams;
+                }),
+                TeamsFilter.getTeamsWithNoTeamTags().then(function(teams){
+                    if(teams.length>0){
+                        $scope.teamsWithNoTeamTags = teams;
+                    }
+                })
+            ]).then(function(){
+                //get the url parameters
+                $scope.getUrl();
+                //check if there are inactive teams on the client
+                TeamsFilter.getInactiveTeamsFromTeamTags($scope.teamTags).then(function (teams) {
+                    $scope.inactiveTeams = teams;
+                });
             });
+
         });
 
         $scope.showClientTeams = function () {
@@ -153,6 +156,8 @@ angular.module('emmiManager')
             if ($scope.showInactiveTeams) {
                 // show inactive teams
                 $scope.showInactiveTeams = false;
+                $scope.setInactiveTeamsURL();
+
                 if ($scope.useGroupDisplay) {
 
                     if ($scope.filterTags.length > 0) {
@@ -185,6 +190,7 @@ angular.module('emmiManager')
             } else {
                 //only show active teams
                 $scope.showInactiveTeams = true;
+                $scope.setInactiveTeamsURL();
                 if ($scope.useGroupDisplay) {
                     //group has been selected
                     if ($scope.filterTags.length > 0) {
@@ -213,17 +219,23 @@ angular.module('emmiManager')
         };
 
         $scope.toggleUntaggedTeams = function () {
-            $scope.showUntaggedTeams = !$scope.showUntaggedTeams;
-            if ($scope.showUntaggedTeams) {
+            if (!$scope.showUntaggedTeams) {
+                $scope.showUntaggedTeams = true;
                 $scope.useGroupDisplay = false;
                 $scope.showInactiveTeams = false;
                 $scope.clientTeams = $scope.teamsWithNoTeamTags;
-                $scope.filterTags = null;
-                $scope.selectedGroup = null;
+                $scope.filterTags = [];
+                $scope.selectedGroup = '';
                 $scope.setGroupUrl();
                 $scope.setTagsUrl();
+                $scope.setInactiveTeamsURL();
+                $scope.setUntaggedTeamsURL();
+
             } else {
+                $scope.showUntaggedTeams=false;
                 $scope.clientTeams = $scope.defaultTeams;
+                $scope.setUntaggedTeamsURL();
+
             }
         };
     }

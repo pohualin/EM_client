@@ -5,7 +5,7 @@
     <div data-ng-show="clientTagGroupToDisplay.length===0"><br>No teams exist for this client.</div>
 
     <div data-ng-show="clientTagGroupToDisplay.length!==0">
-        <div data-ng-class="{'masked': showUntaggedTeams}" class="row">
+        <div data-ng-class="{'masked': showUntaggedTeams!=='false'&& showUntaggedTeams!==false}" class="row">
             <div class="col-md-5">organize by:</div>
             <select class="col-md-6 teamFilterOrganizeBy" data-ng-model="selectedGroup"
                     data-ng-options="group.entity.name for group in clientGroups track by group.entity.id | orderBy:'name'"
@@ -13,7 +13,7 @@
                 <option value="">All Active Teams</option>
             </select>
         </div>
-        <div data-ng-class="{'masked': showUntaggedTeams}" class="row">
+        <div data-ng-class="{'masked': showUntaggedTeams!=='false' && showUntaggedTeams!==false}" class="row">
             <div class="col-md-5">filter by:</div>
             <div class="col-md-12">
                 <select data-chosen data-placeholder="Choose some tags" multiple
@@ -26,11 +26,11 @@
             </div>
         </div>
         <div class="col-md-12 row" data-ng-show="teamsWithNoTeamTags">
-            <input type="checkbox" data-ng-model="showUnTaggedTeams" data-ng-checked="showUnTaggedTeams"
+            <input type="checkbox" data-ng-model="showUnTaggedTeams" data-ng-checked="checkUnTaggedTeams"
                    data-ng-change="toggleUntaggedTeams()"> Show Untagged
             Teams
         </div>
-        <div class="col-md-12 row" data-ng-class="{'masked': showUntaggedTeams}" data-ng-hide="!inactiveTeams">
+        <div class="col-md-12 row" data-ng-class="{'masked': showUntaggedTeams!=='false'&& showUntaggedTeams!==false}" data-ng-hide="!inactiveTeams">
             <a data-ng-hide="showInactiveTeams" data-ng-click="toggleInactiveTeams()">show inactive teams</a>
             <a data-ng-show="showInactiveTeams" data-ng-click="toggleInactiveTeams()">hide inactive teams</a>
         </div>

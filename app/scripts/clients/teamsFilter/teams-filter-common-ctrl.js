@@ -11,8 +11,8 @@ angular.module('emmiManager')
                     $scope.getTeamTagsForGroup();
                 }
             });
-            if (searchObject.st) {
-                var selectedTags = (searchObject.st).split(',');
+            if (searchObject[URL_PARAMETERS.SELECTED_TAGS]&&searchObject[URL_PARAMETERS.SELECTED_TAGS]!=='') {
+                var selectedTags = (searchObject[URL_PARAMETERS.SELECTED_TAGS]).split(',');
                 angular.forEach(selectedTags, function (tagToLoadFromURLid) {
                     var keepGoing = true;
                     angular.forEach($scope.defaultTeamTags, function (teamTag) {
@@ -24,6 +24,25 @@ angular.module('emmiManager')
                 });
                 $scope.showFilteredTeams();
                 $scope.currentRouteQueryString = arrays.toQueryString($location.search());
+            }
+            if(searchObject[URL_PARAMETERS.INACTIVE_TEAMS]){
+                $scope.showInactiveTeams = searchObject[URL_PARAMETERS.INACTIVE_TEAMS];
+                if($scope.showInactiveTeams === 'false'){
+                    $scope.showInactiveTeams = false;
+                }else{
+                    $scope.showInactiveTeams = true;
+                }
+            }
+            if(searchObject[URL_PARAMETERS.UNTAGGED_TEAMS]){
+                $scope.showUntaggedTeams = searchObject[URL_PARAMETERS.UNTAGGED_TEAMS];
+                if($scope.showUntaggedTeams === 'false'){
+                    $scope.showUntaggedTeams = false;
+                    $scope.showClientTeams();
+                }else{
+                    $scope.clientTeams = $scope.teamsWithNoTeamTags;
+                    $scope.checkUnTaggedTeams = true;
+                    $scope.showUntaggedTeams = true;
+                }
             }
         };
 
@@ -43,6 +62,16 @@ angular.module('emmiManager')
             });
             tagIds = tagIds.join(',');
             $location.search(URL_PARAMETERS.SELECTED_TAGS, tagIds).replace();
+            $scope.currentRouteQueryString = arrays.toQueryString($location.search());
+        };
+
+        $scope.setInactiveTeamsURL = function(){
+            $location.search(URL_PARAMETERS.INACTIVE_TEAMS, $scope.showInactiveTeams).replace();
+            $scope.currentRouteQueryString = arrays.toQueryString($location.search());
+        };
+
+        $scope.setUntaggedTeamsURL = function(){
+            $location.search(URL_PARAMETERS.UNTAGGED_TEAMS, $scope.showUntaggedTeams).replace();
             $scope.currentRouteQueryString = arrays.toQueryString($location.search());
         };
 
