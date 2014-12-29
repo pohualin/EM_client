@@ -22,8 +22,9 @@ angular.module('emmiManager')
             	 */
             	deleteUserClientUserClientRole: function(existingUserClientUserClientRole){
             		return $http.delete(UriTemplate.create(existingUserClientUserClientRole.link.userClientUserClientRole)
-            				.stringify({userClientUserClientRoleId: existingUserClientUserClientRole.entity.id})).then(function(response){
-            				});
+        				.stringify({userClientUserClientRoleId: existingUserClientUserClientRole.entity.id})).then(function(response){
+        				    allPermissions = [];
+        				});
             	},
             	
             	/**
