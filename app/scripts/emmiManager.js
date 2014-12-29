@@ -42,7 +42,9 @@ angular.module('emmiManager', [
         STATUS:'status',
         SORT:'sort',
         DIRECTION:'dir',
-        SIZE:'size'
+        SIZE:'size',
+        INACTIVE_TEAMS:'i',
+        UNTAGGED_TEAMS:'ut'
     })
     .config(function ($httpProvider, $translateProvider, tmhDynamicLocaleProvider, HateoasInterceptorProvider, $datepickerProvider, API) {
 
