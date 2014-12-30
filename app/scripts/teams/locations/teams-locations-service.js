@@ -1,6 +1,6 @@
 'use strict';
 angular.module('emmiManager')
-    .service('TeamLocation', ['$http','UriTemplate', 'arrays','CommonService', function ($http, UriTemplate, arrays, CommonService) {
+    .service('TeamLocation', ['$http', '$q', 'UriTemplate', 'arrays','CommonService', function ($http, $q, UriTemplate, arrays, CommonService) {
         return {
             loadTeamLocationsSimple: function (url) {
                 return $http.get(UriTemplate.create(url).stringify()).then(function load(response) {
@@ -22,8 +22,9 @@ angular.module('emmiManager')
                     });
             },            
             getTeamLocations: function(url){
+                var deferred = $q.defer();
             	var teamLocations = [];
-            	return $http.get(UriTemplate.create(url).stringify())
+            	$http.get(UriTemplate.create(url).stringify())
             		.then(function addToResponseArray(response) {
                 		angular.forEach(response.data.content, function(teamLocation) {
                 			teamLocations.push(teamLocation);
@@ -32,9 +33,11 @@ angular.module('emmiManager')
 	                    	$http.get(response.data.link['page-next']).then(function (response) {
                                addToResponseArray(response);
                            });
+	                    } else {
+	                    	deferred.resolve(teamLocations);
 	                    }
-	                    return teamLocations;
                 	});
+            	return deferred.promise;
             }
         };
     }])
