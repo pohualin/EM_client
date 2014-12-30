@@ -178,13 +178,19 @@ angular.module('emmiManager')
                         //group and filter tags selected
                         TeamsFilter.getTagsForFilteredTagsAndGroup($scope.filterTags, $scope.selectedGroup.entity.tag).then(function (tags) {
                             TeamsFilter.getFilteredTeamTags($scope.filterTags).then(function (filteredTeamTags) {
-                                $scope.listOfTeamsByTag = TeamsFilter.getTeamsForTags(filteredTeamTags, tags);
+                                TeamsFilter.getTeamsForTags(filteredTeamTags, tags).then(function (listOfTeamsByTag) {
+                                    $scope.listOfTeamsByTag = listOfTeamsByTag;
+                                    $scope.teamsNotInGroup = TeamsFilter.getTeamsNotInGroup($scope.teamTags, listOfTeamsByTag);
+                                });
                             });
                         });
                     } else {
                         //only a group has been selected
                         TeamsFilter.getTagsForGroup($scope.selectedGroup).then(function (tags) {
-                            $scope.listOfTeamsByTag = TeamsFilter.getTeamsForTags($scope.teamTags, tags);
+                            TeamsFilter.getTeamsForTags($scope.teamTags, tags).then(function (listOfTeamsByTag) {
+                                $scope.listOfTeamsByTag = listOfTeamsByTag;
+                                $scope.teamsNotInGroup = TeamsFilter.getTeamsNotInGroup($scope.teamTags, listOfTeamsByTag);
+                            });
                         });
                     }
 
@@ -211,13 +217,19 @@ angular.module('emmiManager')
                         //group and filter tags selected
                         TeamsFilter.getTagsForFilteredTagsAndGroup($scope.filterTags, $scope.selectedGroup.entity.tag).then(function (tags) {
                             TeamsFilter.getFilteredTeamTags($scope.filterTags).then(function (filteredTeamTags) {
-                                $scope.listOfTeamsByTag = TeamsFilter.getActiveAndInactiveTeamsForTags(filteredTeamTags, tags);
+                                TeamsFilter.getActiveAndInactiveTeamsForTags(filteredTeamTags, tags).then(function (listOfTeamsByTag) {
+                                    $scope.listOfTeamsByTag = listOfTeamsByTag;
+                                    $scope.teamsNotInGroup = TeamsFilter.getTeamsNotInGroup($scope.teamTags, listOfTeamsByTag);
+                                });
                             });
                         });
                     } else {
                         //only group selected
                         TeamsFilter.getTagsForGroup($scope.selectedGroup).then(function (tags) {
-                            $scope.listOfTeamsByTag = TeamsFilter.getActiveAndInactiveTeamsForTags($scope.teamTags, tags);
+                            $scope.listOfTeamsByTag = TeamsFilter.getActiveAndInactiveTeamsForTags($scope.teamTags, tags).then(function (listOfTeamsByTag) {
+                                $scope.listOfTeamsByTag = listOfTeamsByTag;
+                                $scope.teamsNotInGroup = TeamsFilter.getTeamsNotInGroup($scope.teamTags, listOfTeamsByTag);
+                            });
                         });
                     }
                 } else {
