@@ -48,12 +48,14 @@
         <div data-ng-show="useGroupDisplay" class="col-md-12 row">
             <hr>
             <div data-ng-repeat="(tag,teamList) in listOfTeamsByTag">
-                <b>{{tag}}</b>
+                <b>{{tag}}</b><data-ng-pluralize count="teamList.length"
+                                                 when="{'1': ' ({{teamList.length}}) team',
+                                                        'other':' ({{teamList.length}}) teams'}">
+                              </data-ng-pluralize>
 
                 <div data-ng-repeat="team in teamList">
                     <a data-ng-href="#/clients/{{clientId}}/teams/{{team.id}}?{{currentRouteQueryString}}">{{team.name}}</a>
                 </div>
-                <div data-ng-show="teamList.length===0">No teams exist for this tag.</div>
             </div>
             <div data-ng-show="listOfTeamsByTag===null">No teams exist for this search.</div>
             <hr>
