@@ -49,8 +49,8 @@
             <hr>
             <div data-ng-repeat="(tag,teamList) in listOfTeamsByTag">
                 <b>{{tag}}</b><data-ng-pluralize count="teamList.length"
-                                                 when="{'1': ' ({{teamList.length}}) team',
-                                                        'other':' ({{teamList.length}}) teams'}">
+                                                 when="{'1': ' ({{teamList.length}} team)',
+                                                        'other':' ({{teamList.length}} teams)'}">
                               </data-ng-pluralize>
 
                 <div data-ng-repeat="team in teamList">

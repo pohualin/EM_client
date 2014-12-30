@@ -42,13 +42,13 @@ angular.module('emmiManager')
                     }
                 })
             ]).then(function () {
-                //get the url parameters
-                $scope.getUrl();
                 //check if there are inactive teams on the client
                 TeamsFilter.getInactiveTeamsFromTeamTags($scope.teamTags).then(function (teams) {
                     if (teams !== null) {
                         $scope.inactiveTeams = teams;
                     }
+                    //get the url parameters
+                    $scope.getUrl();
                 });
             });
 
