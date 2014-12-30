@@ -73,9 +73,12 @@ angular.module('emmiManager')
             	/**
             	 * Find all possible UserClientUserClientTeamRoles by clientId and term
             	 */
-            	findPossible: function(query){
+            	findPossible: function(query, tag, sort){
             		var external = this;
-            		return $http.get(UriTemplate.create(UsersClientService.getUserClient().link.possibleTeams).stringify({term: query}))
+            		return $http.get(UriTemplate.create(UsersClientService.getUserClient().link.possibleTeams)
+            		        .stringify({term: query,
+            		            sort: sort && sort.property ? sort.property + ',' + (sort.ascending ? 'asc' : 'desc') : '',
+            		            tagId: tag ? tag.id : null}))
             			.then(function(response){
             			CommonService.convertPageContentLinks(response.data);
             			external.postProcess(response.data, []);
