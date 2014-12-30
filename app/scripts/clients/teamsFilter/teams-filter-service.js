@@ -199,28 +199,30 @@ angular.module('emmiManager')
                 return deferred.promise;
             },
 
-            getTeamsNotInGroup: function (clientTeamTags, listOfGroupTeamsByTag) {
+            getTeamsNotInGroup: function (clientTeamTags, listOfGroupTeamsByTag, showInactiveTeams) {
                 //organize clientTeamTags by team
                 var listOfClientTagsGroupedByTeams = {};
                 var tags = [];
                 var teams = {};
                 angular.forEach(clientTeamTags, function (teamTag) {
-                    if (listOfClientTagsGroupedByTeams[teamTag.team.name]) {
-                        tags = listOfClientTagsGroupedByTeams[teamTag.team.name];
-                        tags.push(teamTag.tag);
-                    } else {
-                        tags.push(teamTag.tag);
+                    if (showInactiveTeams || teamTag.team.active === true) {
+                        if (listOfClientTagsGroupedByTeams[teamTag.team.name]) {
+                            tags = listOfClientTagsGroupedByTeams[teamTag.team.name];
+                            tags.push(teamTag.tag);
+                        } else {
+                            tags.push(teamTag.tag);
+                        }
+                        listOfClientTagsGroupedByTeams[teamTag.team.name] = tags;
+                        tags = [];
+                        teams[teamTag.team.name] = teamTag.team;
                     }
-                    listOfClientTagsGroupedByTeams[teamTag.team.name] = tags;
-                    tags = [];
-                    teams[teamTag.team.name] = teamTag.team;
                 });
 
                 //get teams that don't have tags in selected group
                 var teamsWithTagNotInGroup = [];
-                angular.forEach(Object.keys(listOfClientTagsGroupedByTeams), function (clientTeamName) {
+                angular.forEach(teams, function (team) {
                     var skip = false;
-                    angular.forEach(listOfClientTagsGroupedByTeams[clientTeamName], function (tag) {
+                    angular.forEach(listOfClientTagsGroupedByTeams[team.name], function (tag) {
                         angular.forEach(Object.keys(listOfGroupTeamsByTag), function (groupTagName) {
                             if (tag.name === groupTagName) {
                                 skip = true;
@@ -228,7 +230,7 @@ angular.module('emmiManager')
                         });
                     });
                     if (!skip) {
-                        teamsWithTagNotInGroup.push(clientTeamName);
+                        teamsWithTagNotInGroup.push(team.name);
                     }
                 });
 
