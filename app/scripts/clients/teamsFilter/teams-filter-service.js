@@ -283,6 +283,9 @@ angular.module('emmiManager')
                             load(response);
                         });
                     }
+                    if (teams.length === 0) {
+                        teams = null;
+                    }
                     deferred.resolve(teams);
                 });
                 return deferred.promise;
