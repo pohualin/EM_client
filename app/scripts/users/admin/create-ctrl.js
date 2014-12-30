@@ -12,8 +12,10 @@ angular.module('emmiManager')
             
             UsersService.listUserAdminRoles().then(function (response) {
                 $scope.roles = response.content;
+                $scope.userToBeEdit.role = {};
+                $scope.userToBeEdit.role.entity = UsersService.getDefaultRole($scope.roles);
             });
-
+           
             /**
              * Called when Save button is clicked
              */
