@@ -122,6 +122,18 @@ angular.module('emmiManager')
                  */
                 getUser: function () {
                     return selectedUser;
+                },
+                /**
+                 * Get the User role to default on the New user screen
+                 */
+                getDefaultRole: function(roles){
+                	var roleToDefault = {};
+                	angular.forEach(roles, function (role) {
+                		if(role.entity.name === 'User'){                			
+                			roleToDefault = role.entity;
+                		}                		
+                    });
+                	return roleToDefault;
                 }
             };
         }])
