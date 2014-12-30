@@ -51,6 +51,7 @@ angular.module('emmiManager')
                 updateUser: function (userToBeEdit) {
                     return $http.put(UriTemplate.create(Session.link.users).stringify(), this.userAssembler(userToBeEdit))
                         .success(function (response) {
+                        	selectedUser = response;
                             return response;
                         });
                 },
