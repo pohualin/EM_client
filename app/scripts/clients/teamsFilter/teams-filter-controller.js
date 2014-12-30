@@ -37,7 +37,9 @@ angular.module('emmiManager')
                     $scope.clientTeams = teams;
                 }),
                 TeamsFilter.getTeamsWithNoTeamTags().then(function (teams) {
-                    $scope.teamsWithNoTeamTags = teams;
+                    if(teams.length>0) {
+                        $scope.teamsWithNoTeamTags = teams;
+                    }
                 })
             ]).then(function () {
                 //get the url parameters
