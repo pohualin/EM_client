@@ -54,6 +54,10 @@ angular.module('emmiManager')
                     }
                 });
 
+                if (Object.keys(teams).length === 0) {
+                    teams = null;
+                }
+
                 deferred.resolve(teams);
                 return deferred.promise;
             },
@@ -283,9 +287,7 @@ angular.module('emmiManager')
                             load(response);
                         });
                     }
-                    if (teams.length === 0) {
-                        teams = null;
-                    }
+
                     deferred.resolve(teams);
                 });
                 return deferred.promise;
