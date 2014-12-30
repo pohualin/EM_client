@@ -85,15 +85,21 @@ angular.module('emmiManager')
                 //if there are tags to filter and a group is selected
                 $scope.showFilteredAndGroupedTeams();
             } else {
-                //there are tags to filter by and a group is selected
+                //a group is selected
                 $scope.useGroupDisplay = true;
                 TeamsFilter.getTagsForGroup($scope.selectedGroup).then(function (tags) {
                     if ($scope.showInactiveTeams) {
                         //show active and inactive teams in group
-                        $scope.listOfTeamsByTag = TeamsFilter.getActiveAndInactiveTeamsForTags($scope.teamTags, tags);
+                        $scope.listOfTeamsByTag = TeamsFilter.getActiveAndInactiveTeamsForTags($scope.teamTags, tags).then(function(listOfTeamsByTag){
+                            $scope.listOfTeamsByTag = listOfTeamsByTag;
+                            $scope.teamsNotInGroup = TeamsFilter.getTeamsNotInGroup($scope.teamTags, listOfTeamsByTag);
+                        });
                     } else {
                         //show active teams in group
-                        $scope.listOfTeamsByTag = TeamsFilter.getTeamsForTags($scope.teamTags, tags);
+                        $scope.listOfTeamsByTag = TeamsFilter.getTeamsForTags($scope.teamTags, tags).then(function(listOfTeamsByTag){
+                            $scope.listOfTeamsByTag = listOfTeamsByTag;
+                            $scope.teamsNotInGroup = TeamsFilter.getTeamsNotInGroup($scope.teamTags, listOfTeamsByTag);
+                        });
                     }
                 });
             }
@@ -143,10 +149,16 @@ angular.module('emmiManager')
                 TeamsFilter.getFilteredTeamTags($scope.filterTags).then(function (filteredTeamTags) {
                     if ($scope.showInactiveTeams) {
                         //show active and inactive teams in group and filtered tag
-                        $scope.listOfTeamsByTag = TeamsFilter.getActiveAndInactiveTeamsForTags(filteredTeamTags, tags);
+                        $scope.listOfTeamsByTag = TeamsFilter.getActiveAndInactiveTeamsForTags(filteredTeamTags, tags).then(function (listOfTeamsByTag) {
+                            $scope.listOfTeamsByTag = listOfTeamsByTag;
+                            $scope.teamsNotInGroup = TeamsFilter.getTeamsNotInGroup($scope.teamTags, listOfTeamsByTag);
+                        });
                     } else {
                         //show active teams in group and filtered tag
-                        $scope.listOfTeamsByTag = TeamsFilter.getTeamsForTags(filteredTeamTags, tags);
+                        TeamsFilter.getTeamsForTags(filteredTeamTags, tags).then(function(listOfTeamsByTag){
+                            $scope.listOfTeamsByTag = listOfTeamsByTag;
+                            $scope.teamsNotInGroup = TeamsFilter.getTeamsNotInGroup($scope.teamTags, listOfTeamsByTag);
+                        });
                     }
                 });
             });
