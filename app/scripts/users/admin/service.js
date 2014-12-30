@@ -51,6 +51,7 @@ angular.module('emmiManager')
                 updateUser: function (userToBeEdit) {
                     return $http.put(UriTemplate.create(Session.link.users).stringify(), this.userAssembler(userToBeEdit))
                         .success(function (response) {
+                        	selectedUser = response;
                             return response;
                         });
                 },
@@ -122,6 +123,18 @@ angular.module('emmiManager')
                  */
                 getUser: function () {
                     return selectedUser;
+                },
+                /**
+                 * Get the User role to default on the New user screen
+                 */
+                getDefaultRole: function(roles){
+                	var roleToDefault = {};
+                	angular.forEach(roles, function (role) {
+                		if(role.entity.name === 'User'){                			
+                			roleToDefault = role.entity;
+                		}                		
+                    });
+                	return roleToDefault;
                 }
             };
         }])
