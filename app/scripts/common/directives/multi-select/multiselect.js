@@ -85,12 +85,19 @@
                     label = '';
 
                 if (scope.areAllSelected()) {
-                  var count = scope.model ? scope.model.length : 0;
-                  label = 'All ('+ count +')';
+                	if (scope.model && scope.model.length > 1){
+                		label = 'All ('+ scope.model.length +')' ;
+                		scope.disableDropDown = false;
+					} else {
+						label = 'No options available';
+						scope.disableDropDown = true;
+					}
                 } else if (scope.model && scope.model.length > 0) {
                   label = scope.model.length + ' Selected';
+                  scope.disableDropDown = false;
                 } else {
                   label = 'None Selected';
+                  scope.disableDropDown = false;
                 }
 
                 if (attrs.name !== undefined) {
