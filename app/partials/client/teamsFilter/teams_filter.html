@@ -62,9 +62,9 @@
         <div data-ng-show="useGroupDisplay && teamsNotInGroup">
             <hr>
             Teams without a '{{selectedGroup.entity.name}}' tag
-            <div data-ng-repeat="team in teamsNotInGroup">
+            <div data-ng-repeat="teamName in teamsNotInGroup">
 
-                <a data-ng-href="#/clients/{{clientId}}/teams/{{team.id}}">{{team.name}}</a>
+                <a data-ng-href="#/clients/{{clientId}}/teams/{{team.id}}">{{teamName}}</a>
             </div>
         </div>
     </div>
