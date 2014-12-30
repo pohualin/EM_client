@@ -31,6 +31,7 @@ angular.module('emmiManager')
                     $scope.showInactiveTeams = false;
                 }else{
                     $scope.showInactiveTeams = true;
+                    $scope.showClientTeams();
                 }
             }
             if(searchObject[URL_PARAMETERS.UNTAGGED_TEAMS]){
