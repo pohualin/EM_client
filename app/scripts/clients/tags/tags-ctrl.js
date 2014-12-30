@@ -8,6 +8,18 @@ angular.module('emmiManager')
     .controller('ClientTagsController', function ($scope, focus, $filter, Tag, TeamTag, Client, $q) {
 
         $scope.tagInputMode = false;
+        $scope.hideCancelButton = false;
+
+        $scope.toggleHideCancelButton = function () {
+            $scope.hideCancelButton = !$scope.hideCancelButton;
+        };
+        $scope.hideConflictingTeamsPopover = function () {
+            $scope.teamConflictWarning.hide();
+        };
+        $scope.showPopover = function () {
+            $scope.teamConflictWarning.show();
+        };
+
 
         // load the groups for this client as well as the tag libraries
         $q.all([Tag.loadGroups(Client.getClient()), Tag.loadReferenceData()]).then(function (response) {
@@ -35,7 +47,7 @@ angular.module('emmiManager')
                     $scope.showPopover();
                 } else {
                     $scope.saveTags(isValid);
-                    $scope.cancelConflictingTeamsPopover();
+                    $scope.hideConflictingTeamsPopover();
                     if ($scope.hideClientTags) {
                         $scope.hideClientTags();
                     }
@@ -45,7 +57,7 @@ angular.module('emmiManager')
 
         $scope.overrideConflictingTeamTags = function (isValid) {
             $scope.saveTags(isValid);
-            $scope.cancelConflictingTeamsPopover();
+            $scope.hideConflictingTeamsPopover();
             $scope.hideClientTags();
         };
 
@@ -160,26 +172,28 @@ angular.module('emmiManager')
             }
         };
     }])
-
-    .directive('teamConflictPopover', ['$popover', '$timeout', '$translate', function ($popover, $timeout, $translate) {
+    .directive('teamConflictPopover', ['$popover', '$timeout', '$translate', function ($popover) {
         return {
             restrict: 'EA',
             link: function (scope, element) {
-                scope.cancelConflictingTeamsPopover = function () {
-                    scope.teamConflictWarning.hide();
-                };
-                scope.showPopover = function () {
-                    scope.teamConflictWarning.show();
-                };
+
                 element.on('click', function () {
                     // pop a warning dialog
+                    event.stopPropagation();
+                    scope.toggleHideCancelButton();
                     if (!scope.teamConflictWarning) {
                         scope.teamConflictWarning = $popover(element, {
                             title: 'Are you sure?',
                             scope: scope,
                             show: false,
+                            autoClose: true,
                             placement: 'top',
+//                            trigger:'manual',
                             contentTemplate: 'partials/client/tags/conflictingTeam_popover.tpl.html'
+                        });
+                        scope.$on('tooltip.hide', function() {
+                            scope.toggleHideCancelButton();
+                            scope.$apply();
                         });
                     }
                 });

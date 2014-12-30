@@ -3,34 +3,47 @@
 angular.module('emmiManager')
     .config(function ($routeProvider, USER_ROLES) {
 
-    	// First call AuthSharedService to get current user
-    	// Second call ClientService to get current client
-    	// Third call UserClientService to get current UserClient if userClientId is passed in param
-        var userClientEditorResources = {
-        	'clientEditorResource': ['AuthSharedService','Client', 'UsersClientService', '$route', '$q', function (AuthSharedService, Client, UsersClientService, $route, $q){
-            var deferred = $q.defer();
-            AuthSharedService.currentUser().then(function (){
-                Client.selectClient($route.current.params.clientId).then(function (clientResource){
-            		if (clientResource) {
-            			if($route.current.params.userClientId){
-            				UsersClientService.setUserClient($route.current.params.userClientId).then(function(userClientResource){
-            					if(userClientResource){
-            						deferred.resolve(userClientResource);
-            					} else {
-            						deferred.reject();
-            					}
-            				});
-            			} else{
-            				UsersClientService.setUserClient(null);
-            				deferred.resolve(clientResource);
-            			}
-                    } else {
-                        deferred.reject();
-                    }
+        /**
+         * Loads the Client and UserClient if the userClientId parameter is available
+         * Resolves into an object:
+         *  {
+         *      clientResource: null,
+         *      userClientResource: null
+         *  }
+         */
+        var userClientEditorResources = ['AuthSharedService', 'Client', 'UsersClientService', '$route', '$q',
+            function (AuthSharedService, Client, UsersClientService, $route, $q) {
+                var deferred = $q.defer();
+                var ret = {
+                    clientResource: null,
+                    userClientResource: null
+                };
+                AuthSharedService.currentUser().then(function () {
+                    Client.selectClient($route.current.params.clientId).then(function (clientResource) {
+                        if (clientResource) {
+                            if ($route.current.params.userClientId) {
+                                // load the UserClient if in params
+                                UsersClientService.setUserClient($route.current.params.userClientId).then(function (userClientResource) {
+                                    if (userClientResource) {
+                                        ret.userClientResource = userClientResource;
+                                        ret.clientResource = clientResource;
+                                        deferred.resolve(ret);
+                                    } else {
+                                        deferred.reject();
+                                    }
+                                });
+                            } else {
+                                UsersClientService.setUserClient(null);
+                                ret.clientResource = clientResource;
+                                deferred.resolve(ret);
+                            }
+                        } else {
+                            deferred.reject();
+                        }
+                    });
                 });
-            });
-            return deferred.promise;
-        }]};
+                return deferred.promise;
+            }];
 
         // Routes
         $routeProvider
@@ -41,23 +54,29 @@ angular.module('emmiManager')
                     authorizedRoles: [USER_ROLES.admin]
                 },
                 reloadOnSearch: false,
-                resolve: userClientEditorResources
+                resolve: {
+                    'clientEditorResource': userClientEditorResources
+                }
             }).when('/clients/:clientId/users/new', {
-                templateUrl: 'partials/user/client/create/new.html',
+                templateUrl: 'partials/user/client/metadata/new.html',
                 controller: 'UsersClientCreateController',
                 access: {
                     authorizedRoles: [USER_ROLES.admin]
                 },
                 reloadOnSearch: false,
-                resolve: userClientEditorResources
+                resolve: {
+                    'clientEditorResource': userClientEditorResources
+                }
             }).when('/clients/:clientId/users/:userClientId', {
-                templateUrl: 'partials/user/client/create/editor.html',
+                templateUrl: 'partials/user/client/editor.html',
                 controller: 'UsersClientEditorController',
                 access: {
                     authorizedRoles: [USER_ROLES.admin]
                 },
                 reloadOnSearch: false,
-                resolve: userClientEditorResources
+                resolve: {
+                    'clientEditorResource': userClientEditorResources
+                }
             });
     })
 

@@ -55,7 +55,7 @@ angular.module('emmiManager')
              },
              composeTeamProviderTeamLocationSaveRequest: function(selectedItems, multiSelectData, teamProvider, teamProviderToBeEdit, clientProvider){
             	// Compose teamProviderTeamLocationSaveRequest
-            	var teamProviderTeamLocationSaveRequest = new Object({});
+            	var teamProviderTeamLocationSaveRequest = {};
             	// Push all selectedItems to teamProviderTeamLocation only if selectedItems != select all
             	var teamLocations = [];
             	if(selectedItems.length > 0 && selectedItems.length !== multiSelectData.length){
@@ -69,6 +69,7 @@ angular.module('emmiManager')
             	teamProviderTeamLocationSaveRequest.teamLocations = teamLocations;
             	if(clientProvider){
             		teamProviderTeamLocationSaveRequest.clientProvider = clientProvider;
+                    teamProviderTeamLocationSaveRequest.provider.active = teamProviderTeamLocationSaveRequest.clientProvider.provider.entity.active;
             	}
             	return teamProviderTeamLocationSaveRequest;
              }

@@ -1,8 +1,6 @@
-<div class="container" >
-	<div class="row" data-ng-controller="ProviderListController">
-		<div class="col-md-12" >
+		<div class="col-md-12" data-ng-controller="ProviderListController">
 		    <h2>Providers</h2>
-						<table class="table table-bordered table-striped table-hover" border="0" cellpadding="0" data-ng-show="teamResource.teamProviders.length > 0">
+						<table class="table table-bordered table-striped table-hover" border="0" cellpadding="0" data-ng-show="listOfTeamProviders.length > 0">
 				<tr>
 					<th  class="col-md-2">Name </th>
 					<th  class="col-md-2">Primary Specialty </th>
@@ -10,17 +8,22 @@
 					<th  class="col-md-2">Locations</th>
 		            <th  class="col-md-3">&nbsp;</th>
 				</tr>
-					<tr data-ng-repeat="teamProvider in teamResource.teamProviders">
+					<tr data-ng-repeat="teamProvider in listOfTeamProviders">
 			    	<td>{{teamProvider.entity.provider.firstName}} {{teamProvider.entity.provider.lastName}}</td>
 			    	<td>{{teamProvider.entity.provider.specialty.name}}</td>
 			    	<td>{{teamProvider.entity.provider.email}}</td>
 			    	<td>
-						<div data-placement="top" data-ng-show="teamProvider.entity.locations" data-content="{{teamProvider.entity.locations}}" data-trigger="hover" data-delay="200" data-bs-popover data-popover-dismiss>
-                        {{teamProvider.entity.locations | characters:25 }}
+						<div data-placement="top" data-ng-show="teamProvider.entity.locations && teamProvider.entity.locations.length > locationsColumnCharLimit" data-content=" {{teamProvider.entity.locations}} " data-trigger="hover" data-delay="200" data-bs-popover data-popover-dismiss>
+                        	{{teamProvider.entity.locations | characters:locationsColumnCharLimit }}
 						</div>
-						
-						<div data-placement="top" data-ng-hide="teamProvider.entity.locations" data-content="{{allLocationsForTeam}}" data-trigger="hover" data-delay="200" data-bs-popover data-popover-dismiss>
-                        {{allLocationsForTeam | characters:25 }}
+						<div data-placement="top" data-ng-show="teamProvider.entity.locations && teamProvider.entity.locations.length < locationsColumnCharLimit" >
+                        	{{teamProvider.entity.locations | characters:locationsColumnCharLimit }}
+						</div>
+						<div data-placement="top" data-ng-show="!teamProvider.entity.locations && allLocationsForTeam.length > locationsColumnCharLimit" data-content="{{allLocationsForTeam}}" data-trigger="hover" data-delay="200" data-bs-popover data-popover-dismiss>
+                        	{{allLocationsForTeam | characters:locationsColumnCharLimit }}
+						</div>
+						<div data-placement="top" data-ng-show="!teamProvider.entity.locations && allLocationsForTeam.length < locationsColumnCharLimit">
+                        	{{allLocationsForTeam | characters:locationsColumnCharLimit }}
 						</div>
             		</td>
 					<td>
@@ -28,20 +31,20 @@
             		</td>
 			    </tr>
 			</table>
-            <div data-ng-hide="teamResource.teamProviders.length > 0">
+            <div data-ng-hide="listOfTeamProviders.length > 0">
                 <span>There are no existing providers<span data-ng-show="team.name">&nbsp;for {{team.name}}</span>.</span>
             </div>
-            <div class="row" data-ng-show="teamResource.teamProviders.length > 0">
-		        <div data-ng-show="teamResource.teamProviders.links" class="col-md-8 col-sm-8">
+            <div class="row" data-ng-show="listOfTeamProviders.length > 0">
+		        <div data-ng-show="links" class="col-md-8 col-sm-8">
 		            <ul class="pagination">
-		                <li data-ng-repeat="link in teamResource.teamProviders.links | orderBy:'order'" data-ng-class="{'active': link.name == currentPage}">
+		                <li data-ng-repeat="link in links | orderBy:'order'" data-ng-class="{'active': link.name == currentPage}">
 		                    <a data-ng-show="link.name != currentPage" href
-		                       data-ng-click="fetchPage(link.href)">{{link.name}}</a>
+		                       data-ng-click="fetchPaginationLink(link.href)">{{link.name}}</a>
 		                    <span data-ng-hide="link.name != currentPage">{{link.name}}</span>
 		                </li>
 		            </ul>
 		        </div>
     		</div>
+            <button type="button" class="btn btn-link" data-ng-click="addProviders()">add providers</button>
 		</div>
 	</div>
-</div>

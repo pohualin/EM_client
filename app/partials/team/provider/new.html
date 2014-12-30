@@ -1,4 +1,4 @@
-<div class="modal" tabindex="-1" role="dialog" data-ng-controller="ProviderCreateController">
+<div class="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg">
     <form name="providerForm" class="form" ng-submit="saveProvider(providerForm.$valid)" novalidate>
     <div class="modal-content">
@@ -87,6 +87,22 @@
                                maxlength="255" data-ng-pattern="/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/"/>
                     </div>
                 </div>
+            </div>
+            <div class="row">
+            	<div class="col-md-7">
+	                <div class="form-group" data-ng-class="{ 'has-error' : providerForm.locations.$invalid && providerFormSubmitted }">
+	                    <label class="control-label" for="locations">Locations:</label>
+				            <div data-multi-select
+				            values="multiSelectData"
+				            model="selectedItems"
+				            show-filters="true"
+				            value-field="id"
+				            label-field="label"
+				            template-path = "partials/common/directives/multi-select/multi-select.html">
+			          	</div>
+			          	
+	                </div>
+            	</div>
             </div>
         </div>
         <div class="modal-footer">

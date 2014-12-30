@@ -3,34 +3,26 @@
 angular.module('emmiManager')
 
 /**
- *   Manage Client Level users
+ *   Manage users
  */
-    .controller('UsersClientCreateController', ['$alert', '$scope', 'Client', 'UsersClientService', '$location', '$popover', 'focus',
-        function ($alert, $scope, Client, UsersClientService, $location, $popover, $focus) {
+    .controller('UsersCreateController', ['$alert', '$scope', 'UsersService', '$location', '$popover', 'focus',
+        function ($alert, $scope, UsersService, $location, $popover, $focus) {
 
-            $scope.userClientToBeEdit = UsersClientService.newUserClient();
-            $scope.client = Client.getClient();
-            $scope.page.setTitle('Create User - ' + $scope.client.entity.name);
-
-            /**
-             * When the 'use email' box is changed set the focus when unchecked.
-             */
-            $scope.useEmailChange = function () {
-                if ($scope.userClientToBeEdit && !$scope.userClientToBeEdit.useEmail) {
-                    $focus('login');
-                }
-            };
+            $scope.userToBeEdit = UsersService.newUser();
+            
+            UsersService.listUserAdminRoles().then(function (response) {
+                $scope.roles = response.content;
+            });
 
             /**
              * Called when Save button is clicked
              */
             $scope.save = function (isValid, event) {
-                $scope.userClientFormSubmitted = true;
+                $scope.userFormSubmitted = true;
                 if (isValid) {
-                    UsersClientService.createUserClient($scope.client, $scope.userClientToBeEdit).then(function (response) {
-                        var savedUserClientResource = response.data;
+                    UsersService.createUser($scope.userToBeEdit).then(function (response) {
                         // go to the view/edit page, if the save is successful
-                        $location.path('/clients/' + savedUserClientResource.entity.client.id + '/users/' + savedUserClientResource.entity.id);
+                        $location.path('/users/');
                     }, function (error) {
                         if (error.status === 409) {
                             // 409 is http conflict, meaning save was prevented due to conflicts with other users
@@ -42,7 +34,7 @@ angular.module('emmiManager')
                                 trigger: 'manual',
                                 autoClose: true,
                                 show: true,
-                                template: 'partials/user/client/create/user_already_exists_popover.tpl.html'
+                                template: 'partials/user/create/user_already_exists_popover.tpl.html'
                             });
                         }
                     });
