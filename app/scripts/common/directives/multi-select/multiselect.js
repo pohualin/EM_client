@@ -85,7 +85,7 @@
                     label = '';
 
                 if (scope.areAllSelected()) {
-                	if (scope.model && scope.model.length > 1){
+                	if (scope.model && scope.model.length > 0){
                 		label = 'All ('+ scope.model.length +')' ;
                 		scope.disableDropDown = false;
 					} else {
