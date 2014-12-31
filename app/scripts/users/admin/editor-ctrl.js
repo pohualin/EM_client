@@ -51,7 +51,8 @@ angular.module('emmiManager')
 	         * init method called when the page is loading
 	         */
             function init(){
-            	if(UsersService.getUser()){
+                $scope.selectedUser = UsersService.getUser();
+            	if($scope.selectedUser){
             		// In this case User is already created
             		// Get the existing User
             		$scope.edit();
