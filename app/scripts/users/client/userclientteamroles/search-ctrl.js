@@ -74,6 +74,9 @@ angular.module('emmiManager')
                 });
 			}
 			
+			/**
+			 * performSearch method takes search query, sort from scope then call service to get response data
+			 */
 			function performSearch(query, sort, recalculateStatusFilterAndTotal) {
                 if (!$scope.searchForm || !$scope.searchForm.query.$invalid) {
                     $scope.loading = true;
@@ -93,7 +96,7 @@ angular.module('emmiManager')
                         });
                     // turn off the sort after the search request has been made, the response will rebuild
                     $scope.sortProperty = null;
-                    _paq.push(['trackSiteSearch', query, 'Team Roles Add Teams Search']);
+                    _paq.push(['trackSiteSearch', query, 'User Client User Client Team Role Team Search']);
                 }
             }
 			
