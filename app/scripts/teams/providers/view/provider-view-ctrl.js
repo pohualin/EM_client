@@ -92,16 +92,14 @@ angular.module('emmiManager')
         };
 
         $scope.addProviders = function () {
-        	if($scope.addProvidersModalOnScope){
         		$scope.addProvidersModalOnScope = {};
-        	}
         	$scope.addProvidersModalOnScope =  $modal({
   			   scope: $scope,
   			   template: 'partials/team/provider/search.html', animation: 'none', backdropAnimation: 'emmi-fade', show: true, backdrop: 'static'});
         };
 
         $scope.hideaddprovidermodal = function () {
-        	$scope.addProvidersModalOnScope.$promise.then($scope.addProvidersModalOnScope.hide);
+        	$scope.addProvidersModalOnScope.hide();
     		$scope.resetState();
         };
 
@@ -246,9 +244,15 @@ angular.module('emmiManager')
         $scope.associateSelectedProvidersToTeam = function (addAnother) {
         	if ($scope.teamProviderTeamLocationSaveRequest.length > 0) {
 	        	ProviderSearch.updateProviderTeamAssociations($scope.teamProviderTeamLocationSaveRequest, $scope.teamResource).then(function (response) {
+	        		$scope.refreshLocationsAndProviders();
 	        		var message = $scope.teamProviderTeamLocationSaveRequest.length > 1 ? 'The selected providers have been successfully added.' : 'The provider '+ $scope.teamProviderTeamLocationSaveRequest[0].provider.firstName + ' ' + $scope.teamProviderTeamLocationSaveRequest[0].provider.lastName +' has been successfully added.';
+					
 	        		$scope.hideaddprovidermodal();
-					$alert({
+
+	        		if (addAnother) {
+        				$scope.addProviders();
+	        		}
+	        		$alert({
 						title: ' ',
 						content: message,
 						container: 'body',
@@ -258,10 +262,6 @@ angular.module('emmiManager')
 					    duration: 5,
 					    dismissable: true
 					});
-	        		if (addAnother) {
-        				$scope.addProviders();
-	        		}
-	        		$scope.refreshLocationsAndProviders();
 	        	});
         	}
         };
