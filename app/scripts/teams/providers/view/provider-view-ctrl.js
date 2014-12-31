@@ -122,6 +122,7 @@ angular.module('emmiManager')
 				$scope.multiSelectData = TeamProviderService.buildMultiSelectData(potential);
 				$scope.title = 'New Provider';
 				$scope.hideaddprovidermodal();
+				$scope.resetCreateNewProviderModalState();
 	        	newProviderModal.$promise.then(newProviderModal.show);
 			});
         };
@@ -131,7 +132,12 @@ angular.module('emmiManager')
         $scope.hideNewProviderModal = function () {
         	newProviderModal.$promise.then(newProviderModal.hide);
         };
-
+        
+        $scope.resetCreateNewProviderModalState = function () {
+			$scope.providerFormSubmitted = false;
+			$scope.provider = {};        	
+        };
+        
        $scope.search = function (isValid){
         	if(isValid){
 	            $scope.noSearch = false;
