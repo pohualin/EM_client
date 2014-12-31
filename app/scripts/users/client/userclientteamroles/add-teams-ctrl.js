@@ -32,6 +32,7 @@ angular.module('emmiManager')
 			 */
 			$scope.cancel = function(){
 				$scope.hideAddTeamsModal();
+				_paq.push(['trackEvent', 'Form Action', 'User Client User Client Team Role Team Search', 'Cancel']);
 			};
 			
 			/**
@@ -70,6 +71,7 @@ angular.module('emmiManager')
             		$scope.hideAddTeamsModal();
             		UserClientUserClientTeamRolesService.refreshTeamRoleCard(UserClientUserClientTeamRolesService.getSelectedClientTeamRole());
             		UserClientUserClientTeamRolesService.refreshTeamRoleCards($scope.cardsToRefresh);
+            		_paq.push(['trackEvent', 'Form Action', 'User Client User Client Team Role Team', 'Add']);
             	});
             };
         }
