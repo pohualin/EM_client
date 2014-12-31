@@ -92,15 +92,16 @@ angular.module('emmiManager')
         };
 
         $scope.addProviders = function () {
-        	addproviderModal.$promise.then(addproviderModal.show);
+        	if($scope.addProvidersModalOnScope){
+        		$scope.addProvidersModalOnScope = {};
+        	}
+        	$scope.addProvidersModalOnScope =  $modal({
+  			   scope: $scope,
+  			   template: 'partials/team/provider/search.html', animation: 'none', backdropAnimation: 'emmi-fade', show: true, backdrop: 'static'});
         };
 
-    	var addproviderModal =	   $modal({
-			   scope: $scope,
-			   template: 'partials/team/provider/search.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
-
         $scope.hideaddprovidermodal = function () {
-        	addproviderModal.$promise.then(addproviderModal.hide);
+        	$scope.addProvidersModalOnScope.$promise.then($scope.addProvidersModalOnScope.hide);
     		$scope.resetState();
         };
 
