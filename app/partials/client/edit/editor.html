@@ -3,7 +3,7 @@
         <div class="col-md-12">
             <ol class="breadcrumb h3">
                 <li><a href="#/">Emmi Manager</a></li>
-                <li class="active"><a href="#/clients/{{client.id}}"><span data-bs-tooltip="'id: {{client.id}}'" data-placement="right">{{client.name}}</span></a></li>
+                <li class="active"><a data-ng-href="#/clients/{{client.id}}?{{currentRouteQueryString}}"><span data-bs-tooltip="'id: {{client.id}}'" data-placement="right">{{client.name}}</span></a></li>
             </ol>
         </div>
     </div>
