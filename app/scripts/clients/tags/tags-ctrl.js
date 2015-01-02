@@ -188,7 +188,7 @@ angular.module('emmiManager')
                             show: false,
                             autoClose: true,
                             placement: 'top',
-//                            trigger:'manual',
+                            trigger:'manual',
                             contentTemplate: 'partials/client/tags/conflictingTeam_popover.tpl.html'
                         });
                         scope.$on('tooltip.hide', function() {
