@@ -2,7 +2,7 @@
 
 angular.module('emmiManager')
 
-    .controller('TeamsFilterCommon', function ($scope, $location,URL_PARAMETERS, arrays) {
+    .controller('TeamsFilterCommon', function ($scope, $location,URL_PARAMETERS, arrays, $rootScope) {
         var searchObject = $location.search();
         $scope.getUrl = function () {
             angular.forEach($scope.clientGroups, function (clientGroup) {
@@ -23,7 +23,7 @@ angular.module('emmiManager')
                     });
                 });
                 $scope.showFilteredTeams();
-                $scope.currentRouteQueryString = arrays.toQueryString($location.search());
+                $rootScope.currentRouteQueryString = arrays.toQueryString($location.search());
             }
             if(searchObject[URL_PARAMETERS.INACTIVE_TEAMS]){
                 $scope.showInactiveTeams = searchObject[URL_PARAMETERS.INACTIVE_TEAMS];
@@ -53,7 +53,7 @@ angular.module('emmiManager')
                 groupIdForURL = $scope.selectedGroup.entity.id;
             }
             $location.search(URL_PARAMETERS.SELECTED_GROUP, groupIdForURL).replace();
-            $scope.currentRouteQueryString = arrays.toQueryString($location.search());
+            $rootScope.currentRouteQueryString = arrays.toQueryString($location.search());
         };
 
         $scope.setTagsUrl = function () {
@@ -63,17 +63,17 @@ angular.module('emmiManager')
             });
             tagIds = tagIds.join(',');
             $location.search(URL_PARAMETERS.SELECTED_TAGS, tagIds).replace();
-            $scope.currentRouteQueryString = arrays.toQueryString($location.search());
+            $rootScope.currentRouteQueryString = arrays.toQueryString($location.search());
         };
 
         $scope.setInactiveTeamsURL = function(){
             $location.search(URL_PARAMETERS.INACTIVE_TEAMS, $scope.showInactiveTeams).replace();
-            $scope.currentRouteQueryString = arrays.toQueryString($location.search());
+            $rootScope.currentRouteQueryString = arrays.toQueryString($location.search());
         };
 
         $scope.setUntaggedTeamsURL = function(){
             $location.search(URL_PARAMETERS.UNTAGGED_TEAMS, $scope.showUntaggedTeams).replace();
-            $scope.currentRouteQueryString = arrays.toQueryString($location.search());
+            $rootScope.currentRouteQueryString = arrays.toQueryString($location.search());
         };
 
 

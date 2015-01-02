@@ -3,7 +3,7 @@
         <div class="col-md-12">
             <ol class="breadcrumb h3">
                 <li><a href="#/">Emmi Manager</a></li>
-                <li><a href="#/clients/{{teamClientResource.clientResource.entity.id}}"><span data-bs-tooltip="'id: {{teamClientResource.clientResource.entity.id}}'" data-placement="right">{{teamClientResource.clientResource.entity.name}}</span></a></li>
+                <li><a href="#/clients/{{teamClientResource.clientResource.entity.id}}?{{currentRouteQueryString}}"><span data-bs-tooltip="'id: {{teamClientResource.clientResource.entity.id}}'" data-placement="right">{{teamClientResource.clientResource.entity.name}}</span></a></li>
                 <li class="active"><span data-bs-tooltip="'id: {{team.id}}'" data-placement="right">{{team.name}}</span></li>
             </ol>
         </div>
