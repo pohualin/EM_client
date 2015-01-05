@@ -11,8 +11,9 @@ angular.module('emmiManager')
                  });
              },
              getTeamLocationsByTeamProvider: function(url){
+            	 var deferred = $q.defer();
             	 var teamLocations = [];
-                 return $http.get(UriTemplate.create(url).stringify())
+                 $http.get(UriTemplate.create(url).stringify())
                  	.then(function addToResponseArray(response) {
                  		angular.forEach(response.data.content, function(teamProviderTeamLocation) {
                  			teamLocations.push(teamProviderTeamLocation);
@@ -22,8 +23,11 @@ angular.module('emmiManager')
                                 addToResponseArray(response);
                             });
 	                    }
-	                    return teamLocations;
+	                    else {
+	                    	 deferred.resolve(teamLocations);
+	                     } 
                  	});
+                 return deferred.promise;
              },
              findClientProviderByClientIdAndProviderId: function(url){
             	 return $http.get(UriTemplate.create(url).stringify()).then(function load(response) {
