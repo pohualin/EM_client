@@ -41,9 +41,9 @@ angular.module('emmiManager')
             })
         ]).then(function () {
             //check if there are inactive teams on the client
-            TeamsFilter.getInactiveTeamsFromTeamTags($scope.teamTags).then(function (teams) {
-                if (teams !== null) {
-                    $scope.inactiveTeams = teams;
+            TeamsFilter.getInactiveTeamsForClient().then(function (inactiveTeams) {
+                if (inactiveTeams !== null) {
+                    $scope.inactiveTeams = inactiveTeams;
                 }
                 //get the url parameters
                 $scope.getUrl();
@@ -54,12 +54,8 @@ angular.module('emmiManager')
             $scope.useGroupDisplay = false;
             if ($scope.showInactiveTeams) {
                 //show all teams including inactive teams
-                TeamsFilter.getInactiveTeamsFromTeamTags($scope.teamTags, $scope.clientTeams).then(function (teams) {
-                    //append inactive teams to clientTeams
-                    angular.forEach(teams, function (team) {
-                        $scope.clientTeams[team.name] = team;
-                    });
-                });
+                $scope.clientTeams = $scope.defaultTeams;
+                $scope.clientTeams.push($scope.inactiveTeams);
             } else {
                 ///show all active teams on the client
                 $scope.clientTeams = $scope.defaultTeams;
