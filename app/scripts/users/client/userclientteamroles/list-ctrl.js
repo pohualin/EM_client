@@ -6,9 +6,11 @@ angular.module('emmiManager')
  * Controller for list of UserClientUserClientTeamRole
  */
 .controller('UsersClientUserClientTeamRolesListController', 
-		['$controller', '$scope', 'Client', 'TeamsFilter', 'ManageUserTeamRolesService', 'UsersClientService', 'UserClientUserClientTeamRolesService',
-        function ($controller, $scope, Client, TeamsFilter, ManageUserTeamRolesService, UsersClientService, UserClientUserClientTeamRolesService) {
-			
+		['$controller', '$scope', 'Client', 'TeamsFilter', 'ManageUserTeamRolesService', 'UsersClientService', 'UserClientUserClientRolesService', 'UserClientUserClientTeamRolesService',
+        function ($controller, $scope, Client, TeamsFilter, ManageUserTeamRolesService, UsersClientService, UserClientUserClientRolesService, UserClientUserClientTeamRolesService) {
+
+            $scope.userClientUserClientRolesService = UserClientUserClientRolesService;
+            
 			/**
     		 * load all UserClientTeamRoles for the client
     		 */
@@ -35,6 +37,7 @@ angular.module('emmiManager')
 				UserClientUserClientTeamRolesService.deleteAllUserClientUserClientTeamRole(clientTeamRole).then(function(response){
 					UserClientUserClientTeamRolesService.refreshTeamRoleCard(clientTeamRole);
 				});
+				_paq.push(['trackEvent', 'Form Action', 'User Client User Client Team Role Team', 'Remove All']);
 			};
 			
 			/**
@@ -44,8 +47,13 @@ angular.module('emmiManager')
 				UserClientUserClientTeamRolesService.deleteUserClientUserClientTeamRole(existingTeam).then(function(response){
 					UserClientUserClientTeamRolesService.refreshTeamRoleCard(clientTeamRole);
 				});
+				_paq.push(['trackEvent', 'Form Action', 'User Client User Client Team Role Team', 'Remove']);
 			};
-    		
+			
+			$scope.$watch('userClientUserClientRolesService.isSuperUser()', function(){
+                $scope.isSuperUser = UserClientUserClientRolesService.isSuperUser();
+            });
+			
     		/**
 	         * init method called when the page is loading
 	         */

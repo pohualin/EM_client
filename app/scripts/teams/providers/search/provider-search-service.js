@@ -60,8 +60,9 @@ angular.module('emmiManager')
                 });
         	},
         	fetchAllLocationsForTeam : function (teamResource) {
+        		var deferred = $q.defer();
         		var responseArray = [];
-        		return $http.get(UriTemplate.create(teamResource.link.teamLocations).stringify()).then(function addToLocations(response) {
+        		$http.get(UriTemplate.create(teamResource.link.teamLocations).stringify()).then(function addToLocations(response) {
                 	var page = response.data;
                 	 angular.forEach(response.data.content, function(location){
             			 responseArray.push(location.entity.location);
@@ -70,9 +71,11 @@ angular.module('emmiManager')
                          $http.get(page.link['page-next']).then(function (response) {
                         	 addToLocations(response);
                          });
+                     } else {
+                    	 deferred.resolve(responseArray);
                      } 
-                	 return responseArray;	 
                 });
+        		return deferred.promise;
         	},
             updateProviderTeamAssociations: function (teamProviderTeamLocationSaveReq, teamResource) {
             	var deferred = $q.defer();

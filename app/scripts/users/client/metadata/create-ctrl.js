@@ -33,6 +33,7 @@ angular.module('emmiManager')
                                 duration: 5,
                                 dismissable: true
                             });
+                            _paq.push(['trackEvent', 'Form Action', 'User Client Create', 'Save']);
                         }, function error(response) {
                             $scope.handleSaveError(response, angular.element(event.currentTarget));
                         });
