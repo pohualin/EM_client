@@ -28,30 +28,26 @@ angular.module('emmiManager')
                     $scope.clientGroups = groups;
                     $scope.clientTagGroupToDisplay = TeamsFilter.getClientTagsInGroups(groups);
                 }
-            )
+            ),
+            TeamsFilter.getClientTeams().then(function (teams) {
+                //save all the teams on a client
+                $scope.defaultTeams = teams;
+                $scope.clientTeams = teams;
+            }),
+            TeamsFilter.getTeamsWithNoTeamTags().then(function (teams) {
+                if (teams.length > 0) {
+                    $scope.teamsWithNoTeamTags = teams;
+                }
+            })
         ]).then(function () {
-            $q.all([
-                TeamsFilter.getTeamsFromTeamTags($scope.defaultTeamTags).then(function (teams) {
-                    //save all the teams on a client
-                    $scope.defaultTeams = teams;
-                    $scope.clientTeams = teams;
-                }),
-                TeamsFilter.getTeamsWithNoTeamTags().then(function (teams) {
-                    if(teams.length>0) {
-                        $scope.teamsWithNoTeamTags = teams;
-                    }
-                })
-            ]).then(function () {
-                //check if there are inactive teams on the client
-                TeamsFilter.getInactiveTeamsFromTeamTags($scope.teamTags).then(function (teams) {
-                    if (teams !== null) {
-                        $scope.inactiveTeams = teams;
-                    }
-                    //get the url parameters
-                    $scope.getUrl();
-                });
+            //check if there are inactive teams on the client
+            TeamsFilter.getInactiveTeamsFromTeamTags($scope.teamTags).then(function (teams) {
+                if (teams !== null) {
+                    $scope.inactiveTeams = teams;
+                }
+                //get the url parameters
+                $scope.getUrl();
             });
-
         });
 
         $scope.showClientTeams = function () {
@@ -180,7 +176,7 @@ angular.module('emmiManager')
                             TeamsFilter.getFilteredTeamTags($scope.filterTags).then(function (filteredTeamTags) {
                                 TeamsFilter.getTeamsForTags(filteredTeamTags, tags).then(function (listOfTeamsByTag) {
                                     $scope.listOfTeamsByTag = listOfTeamsByTag;
-                                    $scope.teamsNotInGroup = TeamsFilter.getTeamsNotInGroup(filteredTeamTags, listOfTeamsByTag,$scope.showInactiveTeams);
+                                    $scope.teamsNotInGroup = TeamsFilter.getTeamsNotInGroup(filteredTeamTags, listOfTeamsByTag, $scope.showInactiveTeams);
                                 });
                             });
                         });
@@ -189,7 +185,7 @@ angular.module('emmiManager')
                         TeamsFilter.getTagsForGroup($scope.selectedGroup).then(function (tags) {
                             TeamsFilter.getTeamsForTags($scope.teamTags, tags).then(function (listOfTeamsByTag) {
                                 $scope.listOfTeamsByTag = listOfTeamsByTag;
-                                $scope.teamsNotInGroup = TeamsFilter.getTeamsNotInGroup($scope.teamTags, listOfTeamsByTag,$scope.showInactiveTeams);
+                                $scope.teamsNotInGroup = TeamsFilter.getTeamsNotInGroup($scope.teamTags, listOfTeamsByTag, $scope.showInactiveTeams);
                             });
                         });
                     }

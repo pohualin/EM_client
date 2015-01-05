@@ -67,7 +67,7 @@ angular.module('emmiManager')
                 return $http.get(UriTemplate.create(Client.getClient().link.teams).stringify()).then(function load(response) {
                     var page = response.data;
                     angular.forEach(page.content, function (team) {
-                        teams.push(team);
+                        teams.push(team.entity);
                     });
                     if (page.link && page.link['page-next']) {
                         $http.get(page.link['page-next']).then(function (response) {
