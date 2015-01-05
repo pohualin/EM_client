@@ -76,6 +76,14 @@ angular.module('emmiManager')
                     if (response.page.totalElements > 0) {
                         $scope.hasUsers = true;
                     }
+                    // Process response to show user table with blank search
+                    if (!response) {
+                        $scope.sortProperty = sort;
+                    }
+                    $scope.handleResponse(response, contentProperty);
+                    if (recalculateStatusFilterAndTotal) {
+                        $scope.removeStatusFilterAndTotal = $scope.total <= 0;
+                    }
                 });
 
                 // put the team and tag filter into scope
