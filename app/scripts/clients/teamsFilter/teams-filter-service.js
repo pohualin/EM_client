@@ -64,7 +64,7 @@ angular.module('emmiManager')
 
             getInactiveTeamsForClient: function(){
                 var teams = [];
-                return $http.get(UriTemplate.create(Client.getClient().link.inactiveTeams).stringify()).then(function load(response) {
+                return $http.get(UriTemplate.create(Client.getClient().link.teams).stringify({status: 'INACTIVE_ONLY'})).then(function load(response) {
                     var page = response.data;
                     angular.forEach(page.content, function (team) {
                         teams.push(team.entity);
