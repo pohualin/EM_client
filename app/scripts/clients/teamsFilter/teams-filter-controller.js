@@ -61,14 +61,14 @@ angular.module('emmiManager')
             $scope.useGroupDisplay = false;
             if ($scope.showInactiveTeams) {
                 //show all teams including inactive teams
-                $scope.clientTeams = $scope.defaultTeams;
+                $scope.clientTeams = angular.copy($scope.defaultTeams);
                 angular.forEach($scope.inactiveTeams, function (inactiveTeams) {
                     $scope.clientTeams.push(inactiveTeams);
                 });
             } else {
                 ///show all active teams on the client
-                $scope.clientTeams = $scope.defaultTeams;
-                $scope.teamTags = $scope.defaultTeamTags;
+                $scope.clientTeams = angular.copy($scope.defaultTeams);
+                $scope.teamTags = angular.copy($scope.defaultTeamTags);
             }
         };
         $scope.showClientTeams();
@@ -174,7 +174,6 @@ angular.module('emmiManager')
                 $scope.setInactiveTeamsURL();
 
                 if ($scope.useGroupDisplay) {
-
                     if ($scope.filterTags.length > 0) {
                         //group and filter tags selected
                         TeamsFilter.getTagsForFilteredTagsAndGroup($scope.filterTags, $scope.selectedGroup.entity.tag).then(function (tags) {
@@ -197,6 +196,11 @@ angular.module('emmiManager')
 
                 } else {
                     //no group selected
+                    if($scope.filterTags.length===0){
+                        //no tag to filter by selected
+                        $scope.showClientTeams();
+                        return;
+                    }
                     TeamsFilter.getTeamTags($scope.filterTags).then(function (teamTags) {
                         TeamsFilter.getTeamsFromTeamTags(teamTags).then(function (teams) {
                             $scope.clientTeams = teams;
@@ -235,6 +239,11 @@ angular.module('emmiManager')
                     }
                 } else {
                     //group not selected
+                    if($scope.filterTags.length===0){
+                        //no tag to filter by selected
+                        $scope.showClientTeams();
+                        return;
+                    }
                     TeamsFilter.getInactiveTeamsFromTeamTags($scope.teamTags, $scope.clientTeams).then(function (teams) {
                         //append inactive teams to clientTeams
                         angular.forEach(teams, function (team) {
