@@ -24,18 +24,16 @@ angular.module('emmiManager')
              * Called when GO button is clicked
              */
             $scope.search = function () {
-                if (!$scope.searchForm || !$scope.searchForm.query.$invalid) {
-                    $scope.serializeToQueryString($scope.query, 'u', null, null);
-                    $scope.loading = true;
-                    UsersService.list($scope.query, null).then(
-                        function (response) {
-                            $scope.handleResponse(response, 'users');
-                            $scope.removeStatusFilterAndTotal = $scope.total <= 0;
-                        }, function () {
-                            $scope.loading = false;
-                        });
-                    $scope.sortProperty = null;
-                }
+                $scope.serializeToQueryString('', 'u', null, null);
+                $scope.loading = true;
+                UsersService.list($scope.query, null).then(
+                    function (response) {
+                        $scope.handleResponse(response, 'users');
+                        $scope.removeStatusFilterAndTotal = $scope.total <= 0;
+                    }, function () {
+                        $scope.loading = false;
+                    });
+                $scope.sortProperty = null;
             };
 
             /**
@@ -68,19 +66,7 @@ angular.module('emmiManager')
             function init() {
                 $controller('CommonSearch', {$scope: $scope});
                 $scope.searchPerformed = false;
-
-                // Initiate a search when $scope.query is not empty
-                if ($scope.query) {
-                    $scope.serializeToQueryString($scope.query, 'u', null, null);
-                    UsersService.list($scope.query, null).then(
-                        function (response) {
-                            $scope.handleResponse(response, 'users');
-                            $scope.removeStatusFilterAndTotal = $scope.total <= 0;
-                        }, function () {
-                            $scope.loading = false;
-                        });
-                    $scope.sortProperty = null;
-                }
+                $scope.search();
             }
 
             init();
