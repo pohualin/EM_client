@@ -52,11 +52,11 @@ angular.module('emmiManager')
             });
             
             /**
-             * Watch hasExistingClientRoles in manageUserRolesService
+             * Call this method from ClientRoleAdminCtrl to set hasExistingClientRoles
              */
-            $scope.$watch('manageUserRolesService.hasExistingClientRoles()', function(){
+            $scope.setHasExistingClientRoles = function(){
                 $scope.hasExistingClientRoles = ManageUserRolesService.hasExistingClientRoles();
-            });
+            };
         }
     ])
 
