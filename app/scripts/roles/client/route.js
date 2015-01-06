@@ -39,14 +39,23 @@ angular.module('emmiManager')
 /**
  * Controller for the route landing place
  */
-    .controller('ManageClientRolesMainCtrl', ['$scope', 'Client', 'UsersClientService',
-        function ($scope, Client, UsersClientService) {
+    .controller('ManageClientRolesMainCtrl', ['$scope', 'Client', 'ManageUserRolesService', 'UsersClientService',
+        function ($scope, Client, ManageUserRolesService, UsersClientService) {
+            $scope.manageUserRolesService = ManageUserRolesService;
             $scope.client = Client.getClient().entity;
             $scope.page.setTitle('Manage User Roles - ' + $scope.client.name);
+            
             UsersClientService.list(Client.getClient()).then(function (response) {
                 if (response && response.page && response.page.totalElements > 0) {
                     $scope.hasUsers = true;
                 }
+            });
+            
+            /**
+             * Watch hasExistingClientRoles in manageUserRolesService
+             */
+            $scope.$watch('manageUserRolesService.hasExistingClientRoles()', function(){
+                $scope.hasExistingClientRoles = ManageUserRolesService.hasExistingClientRoles();
             });
         }
     ])
