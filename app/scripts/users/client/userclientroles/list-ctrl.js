@@ -61,6 +61,11 @@ angular.module('emmiManager')
     		 * Called when UserClientUserClientRole panel is toggled
     		 */
     		$scope.toggleUserClientUserClienRolePanel = function(userClientUserClientRole){
+    		    if(!userClientUserClientRole.activePanel || userClientUserClientRole.activePanel === 0){
+    		        userClientUserClientRole.activePanel = 1;
+                } else {
+                    userClientUserClientRole.activePanel = 0;
+                }
     			UserClientUserClientRolesService.loadPermissionsForExistingUserClientUserClientRole(userClientUserClientRole);
     		};
     		
