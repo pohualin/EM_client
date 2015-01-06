@@ -14,8 +14,11 @@
 			            <div class="panel panel-default" >
 			                <div class="panel-heading">
 			                    <div class="row panel-title">
-			                        <button type="button" class="btn-link" data-bs-collapse-toggle>
-			                            <span class="glyphicon sort-icon glyphicon-play glyphicon-small"></span>
+			                        <button type="button" class="btn-link" data-ng-click="togglePanel(clientTeamRole)" data-bs-collapse-toggle>
+			                            <span class="glyphicon sort-icon glyphicon-play glyphicon-small" 
+                                            data-ng-hide="clientTeamRole.activePanel === 1"></span>
+                                        <span class="glyphicon sort-icon glyphicon-play glyphicon-small rotate-90" 
+                                            data-ng-show="clientTeamRole.activePanel === 1"></span>
 			                            {{ clientTeamRole.entity.name}} 
 			                            <span data-ng-show="clientTeamRole.existingTeams">({{clientTeamRole.existingTeams.length}}
 			                            	<span data-ng-show="clientTeamRole.existingTeams.length == 1">team)</span>
@@ -37,6 +40,7 @@
 			                </div>
 			                <div class="panel-collapse" data-bs-collapse-target>
 			                    <div class="panel-body">
+                                    Permissions:<br/>
 			                        <small class="text-muted">
 				                        <span data-ng-repeat="permission in clientTeamRole.entity.permissions | orderBy:'permission.rank'">
 			                    			{{permission.name  | translate }}{{!$last ? ',' : ''}}&nbsp;
@@ -44,6 +48,7 @@
 			                        </small>
 			                    </div>
 			                    <div class="panel-body" data-ng-show="clientTeamRole.existingTeams">
+                                    Teams:</br>
 			                        <table class="table table-bordered table-striped table-hover"
 										border="0" cellpadding="0" cellspacing="0" >
 										<tr data-ng-repeat="existingTeam in clientTeamRole.existingTeams">
