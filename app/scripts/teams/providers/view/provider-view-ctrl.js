@@ -84,7 +84,6 @@ angular.module('emmiManager')
             });
         };
 
-
         $scope.removeProvider = function (provider) {
         	ProviderView.removeProvider(provider, $scope.teamResource).then(function (){
         		$scope.refreshLocationsAndProviders();
