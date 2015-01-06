@@ -76,14 +76,6 @@ angular.module('emmiManager')
                     if (response.page.totalElements > 0) {
                         $scope.hasUsers = true;
                     }
-                    // Process response to show user table with blank search
-                    if (!response) {
-                        $scope.sortProperty = sort;
-                    }
-                    $scope.handleResponse(response, contentProperty);
-                    if (recalculateStatusFilterAndTotal) {
-                        $scope.removeStatusFilterAndTotal = $scope.total <= 0;
-                    }
                 });
 
                 // put the team and tag filter into scope
@@ -106,6 +98,8 @@ angular.module('emmiManager')
                         // it was built by a different page, use the query only
                         performSearch($scope.query, null, null, true);
                     }
+                } else {
+                    performSearch('', null, null, true);
                 }
             }
 
@@ -122,25 +116,23 @@ angular.module('emmiManager')
              *        way it is
              */
             function performSearch(q, status, sort, recalculateStatusFilterAndTotal) {
-                if (!$scope.searchForm || !$scope.searchForm.query.$invalid) {
-                    $scope.loading = true;
-                    $scope.serializeToQueryString(q, 'u', status, sort);
-                    UsersClientService.list($scope.client, $scope.query, sort, status, $scope.teamTagFilter.team).then(
-                        function success(response) {
-                            if (!response) {
-                                $scope.sortProperty = sort;
-                            }
-                            $scope.handleResponse(response, contentProperty);
-                            if (recalculateStatusFilterAndTotal) {
-                                $scope.removeStatusFilterAndTotal = $scope.total <= 0;
-                            }
-                        }, function failure() {
-                            $scope.loading = false;
-                        });
-                    // turn off the sort after the search request has been made, the response will rebuild
-                    $scope.sortProperty = null;
-                    _paq.push(['trackSiteSearch', q, 'Client User Search']);
-                }
+                $scope.loading = true;
+                $scope.serializeToQueryString(q, 'u', status, sort);
+                UsersClientService.list($scope.client, $scope.query, sort, status, $scope.teamTagFilter.team).then(
+                    function success(response) {
+                        if (!response) {
+                            $scope.sortProperty = sort;
+                        }
+                        $scope.handleResponse(response, contentProperty);
+                        if (recalculateStatusFilterAndTotal) {
+                            $scope.removeStatusFilterAndTotal = $scope.total <= 0;
+                        }
+                    }, function failure() {
+                        $scope.loading = false;
+                    });
+                // turn off the sort after the search request has been made, the response will rebuild
+                $scope.sortProperty = null;
+                _paq.push(['trackSiteSearch', q, 'Client User Search']);
             }
 
             init();
