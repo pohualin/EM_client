@@ -76,8 +76,6 @@ angular.module('emmiManager')
                 ///show all active teams on the client
                 $scope.clientTeams = angular.copy($scope.defaultTeams);
                 $scope.teamTags = angular.copy($scope.defaultTeamTags);
-
-
             }
         };
         $scope.showClientTeams();
