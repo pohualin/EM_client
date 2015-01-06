@@ -27,7 +27,6 @@ angular.module('emmiManager')
 			$scope.panelStateChange = function(clientTeamRole){
 				// Fetch all permissions tied to clientTeamRole
 				ManageUserTeamRolesService.loadAllPermissions(clientTeamRole);
-				// UserClientUserClientTeamRolesService.refreshTeamRoleCards(clientTeamRole);
 			};
 			
 			/**
@@ -49,6 +48,17 @@ angular.module('emmiManager')
 				});
 				_paq.push(['trackEvent', 'Form Action', 'User Client User Client Team Role Team', 'Remove']);
 			};
+			
+			/**
+			 * Toggle active/inactive panel
+			 */
+			$scope.togglePanel = function(clientTeamRole){
+                if(!clientTeamRole.activePanel || clientTeamRole.activePanel === 0){
+                    clientTeamRole.activePanel = 1;
+                } else{
+                    clientTeamRole.activePanel = 0;
+                }
+            };
 			
 			$scope.$watch('userClientUserClientRolesService.isSuperUser()', function(){
                 $scope.isSuperUser = UserClientUserClientRolesService.isSuperUser();

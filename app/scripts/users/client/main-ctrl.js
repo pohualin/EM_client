@@ -73,8 +73,9 @@ angular.module('emmiManager')
                 UsersClientService.list($scope.client).then(function (response) {
                     $scope.lookedForUsers = true;
                     $scope.statuses = response.statusFilter;
-                    if (response.page.totalElements > 0) {
+                    if (response && response.page && response.page.totalElements > 0) {
                         $scope.hasUsers = true;
+                        performSearch('', null, null, true);
                     }
                 });
 
@@ -114,25 +115,23 @@ angular.module('emmiManager')
              *        way it is
              */
             function performSearch(q, status, sort, recalculateStatusFilterAndTotal) {
-                if (!$scope.searchForm || !$scope.searchForm.query.$invalid) {
-                    $scope.loading = true;
-                    $scope.serializeToQueryString(q, 'u', status, sort);
-                    UsersClientService.list($scope.client, $scope.query, sort, status, $scope.teamTagFilter.team).then(
-                        function success(response) {
-                            if (!response) {
-                                $scope.sortProperty = sort;
-                            }
-                            $scope.handleResponse(response, contentProperty);
-                            if (recalculateStatusFilterAndTotal) {
-                                $scope.removeStatusFilterAndTotal = $scope.total <= 0;
-                            }
-                        }, function failure() {
-                            $scope.loading = false;
-                        });
-                    // turn off the sort after the search request has been made, the response will rebuild
-                    $scope.sortProperty = null;
-                    _paq.push(['trackSiteSearch', q, 'Client User Search']);
-                }
+                $scope.loading = true;
+                $scope.serializeToQueryString(q, 'u', status, sort);
+                UsersClientService.list($scope.client, $scope.query, sort, status, $scope.teamTagFilter.team).then(
+                    function success(response) {
+                        if (!response) {
+                            $scope.sortProperty = sort;
+                        }
+                        $scope.handleResponse(response, contentProperty);
+                        if (recalculateStatusFilterAndTotal) {
+                            $scope.removeStatusFilterAndTotal = $scope.total <= 0;
+                        }
+                    }, function failure() {
+                        $scope.loading = false;
+                    });
+                // turn off the sort after the search request has been made, the response will rebuild
+                $scope.sortProperty = null;
+                _paq.push(['trackSiteSearch', q, 'Client User Search']);
             }
 
             init();
