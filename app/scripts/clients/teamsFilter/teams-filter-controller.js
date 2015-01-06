@@ -33,21 +33,28 @@ angular.module('emmiManager')
                 //save all the teams on a client
                 $scope.defaultTeams = teams;
                 $scope.clientTeams = teams;
-            }),
-            TeamsFilter.getTeamsWithNoTeamTags().then(function (teams) {
-                if (teams.length > 0) {
-                    $scope.teamsWithNoTeamTags = teams;
-                }
             })
         ]).then(function () {
-            //check if there are inactive teams on the client
-            TeamsFilter.getInactiveTeamsForClient().then(function (inactiveTeams) {
-                if (inactiveTeams !== null) {
-                    $scope.inactiveTeams = inactiveTeams;
-                }
-                //get the url parameters
-                $scope.getUrl();
-            });
+            $q.all([
+                //check if there are inactive teams on the client
+                TeamsFilter.getInactiveTeamsForClient().then(function (inactiveTeams) {
+                    if (inactiveTeams.length > 0) {
+                        $scope.inactiveTeams = inactiveTeams;
+                    }
+                    //get the url parameters
+                    $scope.getUrl();
+                }),
+                TeamsFilter.getTeamsWithNoTeamTags().then(function (teams) {
+                        if (teams.length > 0) {
+                            $scope.teamsWithNoTeamTags = teams;
+                            angular.forEach(teams, function (team) {
+                                $scope.defaultTeams[team.name] = team;
+                                $scope.clientTeams[team.name] = team;
+                            });
+                        }
+                    }
+                )
+            ]);
         });
 
         $scope.showClientTeams = function () {
@@ -55,7 +62,9 @@ angular.module('emmiManager')
             if ($scope.showInactiveTeams) {
                 //show all teams including inactive teams
                 $scope.clientTeams = $scope.defaultTeams;
-                $scope.clientTeams.push($scope.inactiveTeams);
+                angular.forEach($scope.inactiveTeams, function (inactiveTeams) {
+                    $scope.clientTeams.push(inactiveTeams);
+                });
             } else {
                 ///show all active teams on the client
                 $scope.clientTeams = $scope.defaultTeams;
