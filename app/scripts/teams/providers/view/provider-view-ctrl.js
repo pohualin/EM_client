@@ -86,9 +86,19 @@ angular.module('emmiManager')
 
         $scope.removeProvider = function (provider) {
         	ProviderView.removeProvider(provider, $scope.teamResource).then(function (){
-                $scope.refreshLocationsAndProviders();
+        		$scope.refreshLocationsAndProviders();
+        		$alert({
+        			title: ' ',
+        			content: 'The provider '+ provider.entity.provider.firstName + ' ' + provider.entity.provider.lastName +' has been successfully removed.',
+        			container: 'body',
+        			type: 'success',
+        			placement: 'top',
+        			show: true,
+        			duration: 5,
+        			dismissable: true
+        		});
         	});
-            _paq.push(['trackEvent', 'Form Action', 'Team Provider', 'Remove']);
+        	_paq.push(['trackEvent', 'Form Action', 'Team Provider', 'Remove']);
         };
 
         $scope.addProviders = function () {
