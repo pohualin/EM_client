@@ -26,7 +26,7 @@ angular.module('emmiManager')
             $scope.search = function () {
                 $scope.serializeToQueryString('', 'u', null, null);
                 $scope.loading = true;
-                UsersService.list($scope.query, null).then(
+                UsersService.list('', null).then(
                     function (response) {
                         $scope.handleResponse(response, 'users');
                         $scope.removeStatusFilterAndTotal = $scope.total <= 0;
@@ -41,8 +41,8 @@ angular.module('emmiManager')
              */
             $scope.sort = function (property) {
                 var sort = $scope.createSortProperty(property);
-                $scope.serializeToQueryString($scope.query, 'u', null, sort);
-                UsersService.list($scope.query, sort).then(
+                $scope.serializeToQueryString('', 'u', null, sort);
+                UsersService.list('', sort).then(
                     function (response) {
                         $scope.handleResponse(response, 'users');
                     }, function () {
