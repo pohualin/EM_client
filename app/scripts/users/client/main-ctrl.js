@@ -73,8 +73,9 @@ angular.module('emmiManager')
                 UsersClientService.list($scope.client).then(function (response) {
                     $scope.lookedForUsers = true;
                     $scope.statuses = response.statusFilter;
-                    if (response.page.totalElements > 0) {
+                    if (response && response.page && response.page.totalElements > 0) {
                         $scope.hasUsers = true;
+                        performSearch('', null, null, true);
                     }
                 });
 
@@ -98,8 +99,6 @@ angular.module('emmiManager')
                         // it was built by a different page, use the query only
                         performSearch($scope.query, null, null, true);
                     }
-                } else {
-                    performSearch('', null, null, true);
                 }
             }
 
