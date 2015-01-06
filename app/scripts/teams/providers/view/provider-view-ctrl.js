@@ -56,15 +56,15 @@ angular.module('emmiManager')
 			});
 			// get a list of team locations by team
 			TeamLocation.getTeamLocations($scope.teamProvider.link.teamLocations).then(function(response){
-				var potential = response;
-				$scope.multiSelectData = TeamProviderService.buildMultiSelectData(potential);
+				$scope.potentialLocations = response;
+				$scope.multiSelectData = TeamProviderService.buildMultiSelectData($scope.potentialLocations);
 				// get a list of existing team locations by team provider
 
 				TeamProviderService.getTeamLocationsByTeamProvider($scope.teamProviderToBeEdit.link.findTeamLocationsByTeamProvider).then(function(response){
 					if(response.length > 0){
 						$scope.selectedItems = TeamProviderService.buildSelectedItem(response);
 					} else {
-						$scope.selectedItems = TeamProviderService.buildMultiSelectData(potential);
+						$scope.selectedItems = TeamProviderService.buildMultiSelectData($scope.potentialLocations);
 					}
 					// show the dialog box
 					editProviderModal.$promise.then(editProviderModal.show);
@@ -84,6 +84,7 @@ angular.module('emmiManager')
             });
         };
 
+
         $scope.removeProvider = function (provider) {
         	ProviderView.removeProvider(provider, $scope.teamResource).then(function (){
         		$scope.refreshLocationsAndProviders();
@@ -98,7 +99,7 @@ angular.module('emmiManager')
         			dismissable: true
         		});
         	});
-        	_paq.push(['trackEvent', 'Form Action', 'Team Provider', 'Remove']);
+            _paq.push(['trackEvent', 'Form Action', 'Team Provider', 'Remove']);
         };
 
         $scope.addProviders = function () {
@@ -127,14 +128,14 @@ angular.module('emmiManager')
 
         $scope.createNewProvider = function () {
         	TeamLocation.getTeamLocations($scope.teamResource.link.teamLocations).then(function(response){
-				var potential = response;
-				$scope.selectedItems = TeamProviderService.buildMultiSelectData(potential);
-				$scope.multiSelectData = TeamProviderService.buildMultiSelectData(potential);
-				$scope.title = 'New Provider';
-				$scope.hideaddprovidermodal();
-				$scope.resetCreateNewProviderModalState();
-	        	newProviderModal.$promise.then(newProviderModal.show);
-			});
+        		$scope.potentialLocations = response;
+        		$scope.selectedItems = TeamProviderService.buildMultiSelectData($scope.potentialLocations);
+        		$scope.multiSelectData = TeamProviderService.buildMultiSelectData($scope.potentialLocations);
+        		$scope.title = 'New Provider';
+        		$scope.hideaddprovidermodal();
+        		$scope.resetCreateNewProviderModalState();
+        		newProviderModal.$promise.then(newProviderModal.show);
+        	});
         };
 
         var newProviderModal = $modal({scope: $scope, template: 'partials/team/provider/new.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
