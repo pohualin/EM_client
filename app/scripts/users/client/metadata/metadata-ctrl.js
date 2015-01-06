@@ -76,6 +76,8 @@ angular.module('emmiManager')
                                 });
                             }
                             _paq.push(['trackEvent', 'Form Action', 'User Client Edit', 'Save']);
+                            // Reset the form to pristine for EM-522/EM-634
+                            form.$setPristine();
                         }, function error(response) {
                             $scope.handleSaveError(response, $scope.userClientEdit.currentTarget);
                         });
