@@ -44,6 +44,7 @@ angular.module('emmiManager')
 			    // include CommonSearch controller and reset searchPerformed to false
 			    $controller('CommonSearch', {$scope: $scope});
 			    $scope.searchPerformed = false;
+			    $scope.hasTeams = true;
 			    
 			    // set selectedClientTeamRole to scope
 				$scope.selectedClientTeamRole = UserClientUserClientTeamRolesService.getSelectedClientTeamRole();
@@ -55,7 +56,9 @@ angular.module('emmiManager')
 				 */
 				UserClientUserClientTeamRolesService.findPossible().then(function (userClientUserClientTeamRolePage) {
                     if(userClientUserClientTeamRolePage && userClientUserClientTeamRolePage.page.totalElements > 0){
-                    	$scope.hasTeams = true;
+                        performSearch('');
+                    } else {
+                        $scope.hasTeams = false;
                     }
                 });
 				

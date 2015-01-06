@@ -21,7 +21,7 @@ angular.module('emmiManager')
                     		scope.$parent.$parent.cardsToRefresh = response;
                             if (!scope.addTeamRolesWarning) {
                                 scope.addTeamRolesWarning = $popover(element, {
-                                    title: '',
+                                    title: 'Are you sure?',
                                     scope: scope,
                                     trigger: 'manual',
                                     container: 'body',
