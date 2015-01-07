@@ -46,7 +46,7 @@ angular.module('emmiManager')
                             $scope.userClientView = savedUserClient;
                             $scope.editMode = false;
                             if (savedUserClient.currentlyActive !== beforeSaveStatus){
-                                var message = 'User ' +  savedUserClient.entity.login;
+                                var message = 'User <b>' + savedUserClient.entity.login + '</b>';
                                  // status has changed
                                 if (savedUserClient.currentlyActive){
                                     // now activated
@@ -67,7 +67,7 @@ angular.module('emmiManager')
                             }
                             if (form.$dirty) {
                                 $alert({
-                                    content: 'User ' + savedUserClient.entity.login + ' has been successfully updated.',
+                                    content: 'User <b>' + savedUserClient.entity.login + '</b> has been successfully updated.',
                                     type: 'success',
                                     placement: placement,
                                     show: true,
