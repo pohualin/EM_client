@@ -4,8 +4,8 @@ angular.module('emmiManager')
 /**
  * This service is responsible LCRUD operations for UserClient resources
  */
-    .service('UsersClientService', ['$filter', '$q', '$http', 'UriTemplate', 'CommonService', 'Client', 'Session',
-        function ($filter, $q, $http, UriTemplate, CommonService, Client, Session) {
+    .service('UsersClientService', ['$filter', '$q', '$http', 'UriTemplate', 'CommonService', 'Client', 'Session', 'TeamsFilter',
+        function ($filter, $q, $http, UriTemplate, CommonService, Client, Session, TeamService) {
             var selectedUserClient;
 
             /**
@@ -88,12 +88,22 @@ angular.module('emmiManager')
                 /**
                  * Call server to get a list of UserClient
                  */
-                list: function (client, query, sort, status, team) {
+                list: function (client, query, sort, status, teamTagFilter) {
+                    var team, tag;
+                    if (teamTagFilter) {
+                        if (teamTagFilter.tag) {
+                            tag = teamTagFilter.tag;
+                            team = teamTagFilter.teamWithinTag;
+                        } else {
+                            team = teamTagFilter.team;
+                        }
+                    }
                     return $http.get(UriTemplate.create(client.link.users).stringify({
                         term: query,
                         status: status,
                         sort: sort && sort.property ? sort.property + ',' + (sort.ascending ? 'asc' : 'desc') : '',
-                        teamId: team ? team.entity.id : ''
+                        teamId: team && team.entity ? team.entity.id : '',
+                        tagId: tag ? tag.id : ''
                     })).then(function (response) {
                         CommonService.convertPageContentLinks(response.data);
                         return response.data;
@@ -134,6 +144,88 @@ angular.module('emmiManager')
                  */
                 getUserClient: function () {
                     return selectedUserClient;
+                },
+
+                /**
+                 * Creates a new team tag filter from scratch
+                 *
+                 * @returns {{team: null, teamWithinTag: null, tag: null, reset: Function}}
+                 */
+                createNewTeamTagFilter: function () {
+                    return {
+                        team: null,
+                        teamWithinTag: null,
+                        tag: null,
+                        reset: function () {
+                            this.tag = null;
+                            this.teamWithinTag = null;
+                            this.team = null;
+                        }
+                    };
+                },
+
+                /**
+                 * Creates an updated team tag filter from the response object (response of a search)
+                 *
+                 * @param teamTagFilter the starting point
+                 * @param response the paginated search response
+                 * @returns {*}
+                 */
+                updateTeamTagFilterFromResponse: function (teamTagFilter, response) {
+                    if (teamTagFilter) {
+                        if (response) {
+                            // already had a filter and we got a response with data
+                            teamTagFilter.reset();
+                            if (response.filter) {
+                                // update the passed filter with the response
+                                if (response.filter.tag && response.filter.tag.id) {
+                                    // a tag filter was on the response
+                                    if (response.filter.team && response.filter.team.id) {
+                                        teamTagFilter.teamWithinTag = {
+                                            entity: response.filter.team
+                                        };
+                                    }
+                                    teamTagFilter.tag = response.filter.tag;
+
+                                } else if (response.filter.team && response.filter.team.id) {
+                                    //a team filter was on the response (which means it can't have a tag)
+                                    teamTagFilter.team = {
+                                        entity: response.filter.team
+                                    };
+                                }
+                            }
+                        }
+                    } else {
+                        // no filter passed in, create a new shell
+                        teamTagFilter = this.createNewTeamTagFilter();
+                    }
+                    return teamTagFilter;
+                },
+
+                /**
+                 * Finds all valid teams for the passed teamTagFilter object
+                 *
+                 * @param teamTagFilter to inspect
+                 * @returns an array of team 'resources'
+                 */
+                findTeamsValidForFilter: function (teamTagFilter) {
+                    var deferred = $q.defer();
+                    if (teamTagFilter && teamTagFilter.tag) {
+                        teamTagFilter.teamWithinTag = null;   // reset any already selected team
+                        TeamService.getTeamTags([teamTagFilter.tag]).then(function (teamTags) {
+                            // find team tags for the selected filter tag
+                            TeamService.getTeamsFromTeamTags(teamTags).then(function (teams) {
+                                var teamsWithinTag = [];
+                                angular.forEach(teams, function (team) {
+                                    teamsWithinTag.push({
+                                        entity: team
+                                    });
+                                });
+                                deferred.resolve(teamsWithinTag);
+                            });
+                        });
+                    }
+                    return deferred.promise;
                 }
             };
         }])

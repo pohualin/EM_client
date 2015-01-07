@@ -46,7 +46,7 @@
             </div>
 
             <div class="col-md-3" data-ng-show="hasUsers">
-                <div class="form-inline">
+                <div class="form-inline" data-ng-hide="teamTagFilter.tag">
                     <label class="control-label" for="teamFilter">Team:</label>
 
                     <div class="input-group col-md-8">
@@ -62,20 +62,41 @@
                         </select>
                     </div>
                 </div>
+
+                <div class="form-inline" data-ng-show="teamTagFilter.tag">
+                    <label class="control-label" for="teamWithinTagFilter">Team:</label>
+
+                    <div class="input-group col-md-8">
+                        <select id="teamWithinTagFilter" name="teamWithinTagFilter" class="form-control"
+                                data-ng-disabled="searchForm.query.$invalid || loading || teamsWithinTag.length == 0"
+                                data-ng-model="teamTagFilter.teamWithinTag" data-ng-change="onTeamFilterChange()"
+                                data-ng-options="team.entity.name for team in teamsWithinTag | orderBy:'entity.name' track by team.entity.id"
+                                data-disable-search-threshold="10" data-allow-single-deselect="true"
+                                data-no-results-text="'Teams with Tag' + teamTagFilter.tag.name"
+                                data-placeholder="Teams with Tag  {{teamTagFilter.tag.name}}"
+                                data-chosen>
+                            <option></option>
+                        </select>
+                    </div>
+                </div>
             </div>
 
             <div class="col-md-3" data-ng-show="hasUsers">
                 <div class="form-inline">
                     <label class="control-label" for="tagFilter">Tags:</label>
-
                     <div class="input-group col-md-8">
                         <select id="tagFilter" name="tagFilter" class="form-control"
-                                data-ng-disabled="teamTagFilter.team || allTeams.length == 0"
+                                data-ng-disabled="searchForm.query.$invalid || loading || teamTagFilter.team || allTeams.length == 0 || clientTags.length == 0"
+                                data-ng-model="teamTagFilter.tag" data-ng-change="onTagFilterChange()"
+                                data-ng-options="tag.text group by tag.group.name for tag in clientTags | orderBy:'text'
+				                                   track by tag.id"
                                 data-disable-search-threshold="10" data-allow-single-deselect="true"
+                                data-no-results-text="'All Tags'"
                                 data-placeholder="All Tags"
                                 data-chosen>
                             <option></option>
                         </select>
+
                     </div>
                 </div>
             </div>
