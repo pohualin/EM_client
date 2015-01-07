@@ -62,12 +62,33 @@ angular.module('emmiManager')
                 return deferred.promise;
             },
 
+            getInactiveTeamsForClient: function () {
+                var deferred = $q.defer();
+                var teams = [];
+                $http.get(UriTemplate.create(Client.getClient().link.teams).stringify({
+                    status: 'INACTIVE_ONLY'
+                })).then(function load(response) {
+                    var page = response.data;
+                    angular.forEach(page.content, function (team) {
+                        teams.push(team.entity);
+                    });
+                    if (page.link && page.link['page-next']) {
+                        $http.get(page.link['page-next']).then(function (response) {
+                            load(response);
+                        });
+                    }
+                    deferred.resolve(teams);
+                });
+
+                return deferred.promise;
+            },
+
             getClientTeams: function () {
                 var teams = [];
                 return $http.get(UriTemplate.create(Client.getClient().link.teams).stringify()).then(function load(response) {
                     var page = response.data;
                     angular.forEach(page.content, function (team) {
-                        teams.push(team);
+                        teams.push(team.entity);
                     });
                     if (page.link && page.link['page-next']) {
                         $http.get(page.link['page-next']).then(function (response) {

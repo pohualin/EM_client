@@ -5,7 +5,7 @@ angular.module('emmiManager')
 /**
  *   Controls the tag group section
  */
-    .controller('ClientTagsController', function ($scope, focus, $filter, Tag, TeamTag, Client, $q) {
+    .controller('ClientTagsController', function ($scope, focus, $filter, Tag, TeamTag, Client, $q, $route) {
 
         $scope.tagInputMode = false;
         $scope.hideCancelButton = false;
@@ -40,17 +40,27 @@ angular.module('emmiManager')
 
         });
 
+        $scope.hideOpenModals = function() {
+            $scope.hideConflictingTeamsPopover();
+            if ($scope.hideClientTags) {
+                $scope.hideClientTags();
+            }
+        };
+
         $scope.checkForConflicts = function (isValid) {
             Tag.checkForConflicts(Client.getClient()).then(function (conflictingTeamTags) {
                 if (conflictingTeamTags.length > 0) {
+                    if (conflictingTeamTags.length === 1 && (conflictingTeamTags[0].conflictingTeamIds[0] === $route.current.params.teamId)) {
+                        //if the only team with this tag is the team we are currently on don't show popover
+                        $scope.saveTags(isValid);
+                        $scope.hideOpenModals();
+                        return;
+                    }
                     $scope.conflictingTeamTags = conflictingTeamTags;
                     $scope.showPopover();
                 } else {
                     $scope.saveTags(isValid);
-                    $scope.hideConflictingTeamsPopover();
-                    if ($scope.hideClientTags) {
-                        $scope.hideClientTags();
-                    }
+                    $scope.hideOpenModals();
                 }
             });
         };
@@ -188,10 +198,10 @@ angular.module('emmiManager')
                             show: false,
                             autoClose: true,
                             placement: 'top',
-                            trigger:'manual',
+                            trigger: 'manual',
                             contentTemplate: 'partials/client/tags/conflictingTeam_popover.tpl.html'
                         });
-                        scope.$on('tooltip.hide', function() {
+                        scope.$on('tooltip.hide', function () {
                             scope.toggleHideCancelButton();
                             scope.$apply();
                         });

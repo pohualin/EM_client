@@ -95,7 +95,7 @@ angular.module('emmiManager')
             		angular.forEach(response.content, function(content){
         				var entity = content.entity;
         				if(entity.userClientTeamRole && entity.userClientTeamRole.id !== selectedClientTeamRole.entity.id){
-        					entity.warning = 'This user is an ' + entity.userClientTeamRole.name + ' at this team.';
+        					entity.warning = 'This user has the role "' + entity.userClientTeamRole.name + '" at this team.';
         				}
         				content.entity.selected = 
 		            		selectedTeamRoles[content.entity.team.id] ? true : false;
