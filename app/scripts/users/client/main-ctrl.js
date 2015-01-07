@@ -54,6 +54,13 @@ angular.module('emmiManager')
             };
 
             /**
+             * This is called when the popover for is toggled
+             */
+            $scope.deactivationPopoverOpen = function (userClientResource, isOpen) {
+                UsersClientService.deactivatePopoverOpen(userClientResource, isOpen);
+            };
+
+            /**
              * Called when the team filter is changed
              */
             $scope.onTeamFilterChange = function () {
