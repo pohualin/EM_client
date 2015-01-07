@@ -5,8 +5,8 @@
                 <li><a href="#/">Emmi Manager</a></li>
                 <li><a href="#/clients/{{client.id}}">{{client.name}}</a></li>
                 <li class="active">Manage Roles</li>
-                <li class="pull-right"><a class="btn btn-link" href="#/clients/{{client.id}}/users">manage
-                    users</a></li>
+                <li class="pull-right" data-ng-show='hasExistingClientRoles'><a class="btn btn-link" 
+                    href="#/clients/{{client.id}}/users">manage users</a></li>
             </ol>
         </div>
     </div>
@@ -14,7 +14,8 @@
     <div class="row">
         <div class="col-md-12">
             <h3>Manage User Roles</h3>
-            <p>Please choose user roles for this client before adding users.</p>
+
+            <p data-ng-hide='hasExistingClientRoles'>Please choose user roles for this client before adding users.</p>
         </div>
     </div>
     <hr/>

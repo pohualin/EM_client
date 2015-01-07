@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  * Manage Client Level users
  */
-    .controller('UsersClientMainCtrl', ['$scope', '$controller', 'Client', 'UsersClientService', 'TeamsFilter',
-        function ($scope, $controller, Client, UsersClientService, TeamService) {
+    .controller('UsersClientMainCtrl', ['$scope', '$controller', 'Client', 'UsersClientService',
+        function ($scope, $controller, Client, UsersClientService) {
 
             var contentProperty = 'usersClient';
 
@@ -14,7 +14,7 @@ angular.module('emmiManager')
              * when the status select is changed
              */
             $scope.statusChange = function () {
-                performSearch($scope.query, $scope.status, $scope.sortProperty);
+                performSearch($scope.query, $scope.status, $scope.sortProperty, false, $scope.teamTagFilter);
             };
 
             /**
@@ -41,7 +41,7 @@ angular.module('emmiManager')
              */
             $scope.sort = function (property) {
                 var sort = $scope.createSortProperty(property);
-                performSearch($scope.query, $scope.status, sort);
+                performSearch($scope.query, $scope.status, sort, false, $scope.teamTagFilter);
             };
 
             /**
@@ -57,7 +57,18 @@ angular.module('emmiManager')
              * Called when the team filter is changed
              */
             $scope.onTeamFilterChange = function () {
-                performSearch($scope.query, $scope.status, $scope.sortProperty);
+                performSearch($scope.query, $scope.status, $scope.sortProperty, false, $scope.teamTagFilter);
+            };
+
+            /**
+             * Called when the tag filter is changed
+             */
+            $scope.onTagFilterChange = function () {
+                // update team filter options to be only teams valid for the currently selected tag
+                UsersClientService.findTeamsValidForFilter($scope.teamTagFilter).then(function (teams) {
+                    $scope.teamsWithinTag = teams;
+                });
+                performSearch($scope.query, $scope.status, $scope.sortProperty, false, $scope.teamTagFilter);
             };
 
             /**
@@ -73,20 +84,20 @@ angular.module('emmiManager')
                 UsersClientService.list($scope.client).then(function (response) {
                     $scope.lookedForUsers = true;
                     $scope.statuses = response.statusFilter;
-                    if (response.page.totalElements > 0) {
-                        $scope.hasUsers = true;
+                    $scope.hasUsers = response.page && response.page.totalElements > 0;
+                    if (!$scope.query) {
+                        $scope.handleResponse(response, contentProperty);
                     }
                 });
 
-                // put the team and tag filter into scope
-                $scope.teamTagFilter = {
-                    team: null,
-                    tag: null
-                };
-
                 // load all of the teams for the client
-                TeamService.getClientTeams().then(function (teams) {
+                UsersClientService.getClientTeams().then(function (teams) {
                     $scope.allTeams = teams;
+                });
+
+                // load all of the tags for the client
+                UsersClientService.getClientTagsWithGroups().then(function (tags) {
+                    $scope.clientTags = tags;
                 });
 
                 // perform search if the query string has search arguments
@@ -112,17 +123,27 @@ angular.module('emmiManager')
              *        status and filter line should be possibly blanked out or not
              *        true means to possibly blank it out, false means leave it the
              *        way it is
+             * @param teamTagFilter the team and or tag filter
              */
-            function performSearch(q, status, sort, recalculateStatusFilterAndTotal) {
+            function performSearch(q, status, sort, recalculateStatusFilterAndTotal, teamTagFilter) {
                 if (!$scope.searchForm || !$scope.searchForm.query.$invalid) {
                     $scope.loading = true;
                     $scope.serializeToQueryString(q, 'u', status, sort);
-                    UsersClientService.list($scope.client, $scope.query, sort, status, $scope.teamTagFilter.team).then(
+
+                    UsersClientService.list($scope.client,
+                        $scope.query, sort, status, teamTagFilter).then(
                         function success(response) {
                             if (!response) {
+                                // leave the existing sort, since one didn't come back
                                 $scope.sortProperty = sort;
                             }
+
+                            // common paginated response handling
                             $scope.handleResponse(response, contentProperty);
+
+                            // update team and tag filters with response
+                            $scope.teamTagFilter = UsersClientService.updateTeamTagFilterFromResponse(teamTagFilter, response);
+
                             if (recalculateStatusFilterAndTotal) {
                                 $scope.removeStatusFilterAndTotal = $scope.total <= 0;
                             }

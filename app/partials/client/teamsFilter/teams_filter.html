@@ -5,15 +5,22 @@
     <div data-ng-show="clientTagGroupToDisplay.length===0"><br>No teams exist for this client.</div>
 
     <div data-ng-show="clientTagGroupToDisplay.length!==0">
-        <div data-ng-class="{'masked': showUntaggedTeams}" class="row">
+        <div data-ng-class="{'masked': showUntaggedTeams!=='false'&& showUntaggedTeams!==false}" class="row">
             <div class="col-md-5">organize by:</div>
-            <select class="col-md-6 teamFilterOrganizeBy" data-ng-model="selectedGroup"
+            <select data-ng-hide="showInactiveTeams || !inactiveTeams" class="col-md-6 teamFilterOrganizeBy"
+                    data-ng-model="selectedGroup"
                     data-ng-options="group.entity.name for group in clientGroups track by group.entity.id | orderBy:'name'"
                     data-ng-change="getTeamTagsForGroup()">
                 <option value="">All Active Teams</option>
             </select>
+            <select data-ng-show="showInactiveTeams || !inactiveTeams" class="col-md-6 teamFilterOrganizeBy"
+                    data-ng-model="selectedGroup"
+                    data-ng-options="group.entity.name for group in clientGroups track by group.entity.id | orderBy:'name'"
+                    data-ng-change="getTeamTagsForGroup()">
+                <option value="">All Teams</option>
+            </select>
         </div>
-        <div data-ng-class="{'masked': showUntaggedTeams}" class="row">
+        <div data-ng-class="{'masked': showUntaggedTeams!=='false' && showUntaggedTeams!==false}" class="row">
             <div class="col-md-5">filter by:</div>
             <div class="col-md-12">
                 <select data-chosen data-placeholder="Choose some tags" multiple
@@ -26,13 +33,13 @@
             </div>
         </div>
         <div class="col-md-12 row" data-ng-show="teamsWithNoTeamTags">
-            <input type="checkbox" data-ng-model="showUnTaggedTeams" data-ng-checked="showUnTaggedTeams"
+            <input type="checkbox" data-ng-model="showUnTaggedTeams" data-ng-checked="checkUnTaggedTeams"
                    data-ng-change="toggleUntaggedTeams()"> Show Untagged
             Teams
         </div>
-        <div class="col-md-12 row" data-ng-class="{'masked': showUntaggedTeams}" data-ng-hide="!inactiveTeams">
-            <a data-ng-hide="showInactiveTeams" data-ng-click="toggleInactiveTeams()">show inactive teams</a>
-            <a data-ng-show="showInactiveTeams" data-ng-click="toggleInactiveTeams()">hide inactive teams</a>
+        <div class="col-md-12 row" data-ng-class="{'masked': showUntaggedTeams!=='false'&& showUntaggedTeams!==false}" data-ng-show="inactiveTeams">
+            <a href="" data-ng-hide="showInactiveTeams" data-ng-click="toggleInactiveTeams()">show inactive teams</a>
+            <a href="" data-ng-show="showInactiveTeams" data-ng-click="toggleInactiveTeams()">hide inactive teams</a>
         </div>
 
 
@@ -48,15 +55,26 @@
         <div data-ng-show="useGroupDisplay" class="col-md-12 row">
             <hr>
             <div data-ng-repeat="(tag,teamList) in listOfTeamsByTag">
-                <b>{{tag}}</b>
+                <b>{{tag}}</b><data-ng-pluralize count="teamList.length"
+                                                 when="{'1': ' ({{teamList.length}} team)',
+                                                        'other':' ({{teamList.length}} teams)'}">
+                              </data-ng-pluralize>
 
                 <div data-ng-repeat="team in teamList">
                     <a data-ng-href="#/clients/{{clientId}}/teams/{{team.id}}?{{currentRouteQueryString}}">{{team.name}}</a>
                 </div>
-                <div data-ng-show="teamList.length===0">No teams exist for this tag.</div>
             </div>
             <div data-ng-show="listOfTeamsByTag===null">No teams exist for this search.</div>
             <hr>
+        </div>
+
+        <div data-ng-show="useGroupDisplay && teamsNotInGroup">
+            <hr>
+            Teams without a '{{selectedGroup.entity.name}}' tag
+            <div data-ng-repeat="teamName in teamsNotInGroup">
+
+                <a data-ng-href="#/clients/{{clientId}}/teams/{{team.id}}">{{teamName}}</a>
+            </div>
         </div>
     </div>
 </div>

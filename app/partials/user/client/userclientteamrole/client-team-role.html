@@ -7,27 +7,33 @@
 		<div class="row" data-ng-repeat="clientTeamRole in clientTeamRoles">
 			<div class="col-md-5" >
 			    <form name="clientTeamRoleForm_{{clientTeamRole.entity.id}}" class="form" novalidate>
-			        <div class="panel-group" 
+                    <div class="panel-group"
 			        	 data-ng-click="panelStateChange(clientTeamRole)"
 			             data-start-collapsed="true"
 			             data-bs-collapse>
 			            <div class="panel panel-default" >
 			                <div class="panel-heading">
 			                    <div class="row panel-title">
-			                        <button type="button" class="btn-link" data-bs-collapse-toggle>
-			                            <span class="glyphicon sort-icon glyphicon-play glyphicon-small"></span>
-			                            {{ clientTeamRole.entity.name}} 
+                                    <button type="button" class="btn-link" data-ng-click="togglePanel(clientTeamRole)"
+                                            data-bs-collapse-toggle>
+			                            <span class="glyphicon sort-icon glyphicon-play glyphicon-small"
+                                              data-ng-hide="clientTeamRole.activePanel === 1"></span>
+                                        <span class="glyphicon sort-icon glyphicon-play glyphicon-small rotate-90"
+                                              data-ng-show="clientTeamRole.activePanel === 1"></span>
+                                        {{ clientTeamRole.entity.name}}
 			                            <span data-ng-show="clientTeamRole.existingTeams">({{clientTeamRole.existingTeams.length}}
 			                            	<span data-ng-show="clientTeamRole.existingTeams.length == 1">team)</span>
 			                            	<span data-ng-show="clientTeamRole.existingTeams.length > 1">teams)</span>
 			                            </span>
 			                        </button>
 			                        <div class="pull-right">
-			                            <button type="button" class="btn-link" data-ng-show="clientTeamRole.existingTeams" 
+                                        <button type="button" class="btn-link"
+                                                data-ng-show="clientTeamRole.existingTeams"
 			                            	data-ng-click="removeAllUserClientUserClientTeamRole(clientTeamRole)">
 			                                <small>remove</small>
 			                            </button>
-			                            <button type="button" class="btn-link" data-ng-hide="clientTeamRole.existingTeams" 
+                                        <button type="button" class="btn-link"
+                                                data-ng-hide="clientTeamRole.existingTeams"
 			                            	data-ng-controller="UsersClientUserClientTeamRolesAddTeamsController"
 			                            	data-ng-click="addTeams(clientTeamRole)">
 			                                <small>add teams</small>
@@ -37,6 +43,7 @@
 			                </div>
 			                <div class="panel-collapse" data-bs-collapse-target>
 			                    <div class="panel-body">
+                                    Permissions:<br/>
 			                        <small class="text-muted">
 				                        <span data-ng-repeat="permission in clientTeamRole.entity.permissions | orderBy:'permission.rank'">
 			                    			{{permission.name  | translate }}{{!$last ? ',' : ''}}&nbsp;
@@ -44,6 +51,7 @@
 			                        </small>
 			                    </div>
 			                    <div class="panel-body" data-ng-show="clientTeamRole.existingTeams">
+                                    Teams:</br>
 			                        <table class="table table-bordered table-striped table-hover"
 										border="0" cellpadding="0" cellspacing="0" >
 										<tr data-ng-repeat="existingTeam in clientTeamRole.existingTeams">
@@ -54,7 +62,7 @@
 										</tr>
 									</table>
 			                    </div>
-			                    <div class="row" data-ng-show="clientTeamRole.existingTeams" 
+                                <div class="row" data-ng-show="clientTeamRole.existingTeams"
 			                    	data-ng-include="'partials/user/client/userclientteamrole/add-teams.html'"></div>
 			                </div>
 			            </div>

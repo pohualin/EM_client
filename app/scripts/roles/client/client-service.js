@@ -4,7 +4,14 @@ angular.module('emmiManager')
     .service('ManageUserRolesService', ['$filter', '$q', '$http', 'UriTemplate', 'CommonService', 'Client',
         function ($filter, $q, $http, UriTemplate, CommonService, Client) {
             var referenceData;
+            var existingClientRoles = [];
             return {
+                /**
+                 * Return true when there are existing client roles for a client
+                 */
+                hasExistingClientRoles: function () {
+                    return existingClientRoles.length > 0;
+                },
                 /**
                  * Loads ALL roles for a client. It then copies over all possible
                  * role permissions on to that role shell.
@@ -27,6 +34,7 @@ angular.module('emmiManager')
                                     load(response);
                                 });
                             }
+                            existingClientRoles = roles;
                             deferred.resolve(roles);
                         });
                     return deferred.promise;

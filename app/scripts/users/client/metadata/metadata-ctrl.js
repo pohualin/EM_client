@@ -17,6 +17,7 @@ angular.module('emmiManager')
                 $scope.userClientEdit = angular.copy(UsersClientService.getUserClient());
                 $scope.editMode = true;
                 $scope.userClientFormSubmitted = false;
+                _paq.push(['trackEvent', 'Form Action', 'User Client Edit', 'Edit']);
             };
 
             $scope.makeActive = function(){
@@ -28,6 +29,7 @@ angular.module('emmiManager')
              */
             $scope.cancel = function () {
                 $scope.editMode = false;
+                _paq.push(['trackEvent', 'Form Action', 'User Client Edit', 'Cancel']);
             };
 
             /**
@@ -73,7 +75,9 @@ angular.module('emmiManager')
                                     dismissable: true
                                 });
                             }
-
+                            _paq.push(['trackEvent', 'Form Action', 'User Client Edit', 'Save']);
+                            // Reset the form to pristine for EM-522/EM-634
+                            form.$setPristine();
                         }, function error(response) {
                             $scope.handleSaveError(response, $scope.userClientEdit.currentTarget);
                         });

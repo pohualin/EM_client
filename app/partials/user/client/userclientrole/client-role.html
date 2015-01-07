@@ -4,14 +4,17 @@
 		<div class="row" data-ng-repeat="existingUserClientUserClientRole in existingUserClientUserClientRoles">
 			<div class="col-md-5">
 			    <form name="existingUserClientUserClientRoleForm_{{existingUserClientUserClientRole.entity.id}}" class="form" novalidate>
-			        <div class="panel-group" 
+                    <div class="panel-group"
 			             data-start-collapsed="true"
 			             data-bs-collapse>
 			            <div class="panel panel-default" data-ng-click="toggleUserClientUserClienRolePanel(existingUserClientUserClientRole)">
 			                <div class="panel-heading">
 			                    <div class="row panel-title">
 			                        <button type="button" class="btn-link" data-bs-collapse-toggle>
-			                            <span class="glyphicon sort-icon glyphicon-play glyphicon-small"></span>
+			                            <span class="glyphicon sort-icon glyphicon-play glyphicon-small"
+                                              data-ng-hide="existingUserClientUserClientRole.activePanel === 1"></span>
+                                        <span class="glyphicon sort-icon glyphicon-play glyphicon-small rotate-90"
+                                              data-ng-show="existingUserClientUserClientRole.activePanel === 1"></span>
 			                            {{ existingUserClientUserClientRole.entity.userClientRole.name}}
 			                        </button>
 			                        <div class="pull-right">
@@ -23,6 +26,7 @@
 			                </div>
 			                <div class="panel-collapse" data-bs-collapse-target>
 			                    <div class="panel-body">
+                                    Permissions:</br>
 			                        <small class="text-muted">
 				                        <span data-ng-repeat="permission in existingUserClientUserClientRole.entity.permissions | orderBy:'permission.rank'">
 			                    			{{permission.name  | translate }}{{!$last ? ',' : ''}}&nbsp;
