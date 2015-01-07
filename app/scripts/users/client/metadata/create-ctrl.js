@@ -17,16 +17,23 @@ angular.module('emmiManager')
             /**
              * Called when Save button is clicked
              */
-            $scope.save = function (isValid, event) {
+            $scope.save = function (isValid, event, addAnother) {
                 $scope.userClientFormSubmitted = true;
                 if (isValid) {
                     UsersClientService.createUserClient($scope.client, $scope.userClientEdit).then(
                         function success(response) {
                             var savedUserClientResource = response.data;
                             // go to the view/edit page, if the save is successful
-                            $location.path('/clients/' + savedUserClientResource.entity.client.id + '/users/' + savedUserClientResource.entity.id);
+                            if (!addAnother) {
+                                $location.path(
+                                    '/clients/' + savedUserClientResource.entity.client.id +
+                                    '/users/' + savedUserClientResource.entity.id
+                                );
+                            } else {
+                                $location.search('rnd', savedUserClientResource.entity.id);
+                            }
                             $alert({
-                                content: 'User '+  savedUserClientResource.entity.login + ' has been successfully created.',
+                                content: 'User <b>' + savedUserClientResource.entity.login + '</b> has been successfully created.',
                                 type: 'success',
                                 placement: 'top',
                                 show: true,
@@ -45,8 +52,8 @@ angular.module('emmiManager')
             /**
              * Called if the user confirms they want to navigate away from the page when clicking the clink link-back
              */
-            $scope.confirmExit = function() {
-                $location.path('/clients/'+$scope.client.entity.id);
+            $scope.confirmExit = function () {
+                $location.path('/clients/' + $scope.client.entity.id);
             };
 
         }
