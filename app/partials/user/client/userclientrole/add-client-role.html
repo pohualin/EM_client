@@ -1,6 +1,6 @@
-<form name="clientRolesSelection" data-popover-toggle>
+<form name="clientRolesSelection" data-popover-right-toggle>
     <div class="form-group" style="min-width: 200px; min-height: 50px">
-        <div class="checkbox" data-ng-repeat="clientRole in clientRoles">
+        <div class="radio" data-ng-repeat="clientRole in clientRoles">
             <label>
                 <input type="radio" data-ng-model="$parent.clientRolesSelection.selectedClientRole" value="{{clientRole.entity.id}}" />&nbsp;&nbsp;
             </label>
@@ -22,7 +22,10 @@
         <button type="button" class="btn btn-default btn-xs btn-close" data-ng-click="$hide()">
             <span class="glyphicon glyphicon-remove"></span>
         </button>
-        <button type="button" class="btn btn-primary pull-right" data-ng-click="associateClientRole(clientRolesSelection);$hide()">Add</button>
-        <br/>
+        <div class="row">
+            <div class="col-md-12">
+            	<button type="button" class="btn btn-primary pull-right" data-ng-click="associateClientRole(clientRolesSelection);$hide()">Add</button>
+            </div>
+        </div>
     </div>
 </form>
