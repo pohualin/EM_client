@@ -40,7 +40,7 @@ angular.module('emmiManager')
 
         });
 
-        $scope.hideOpenModals = function() {
+        $scope.hideOpenModals = function () {
             $scope.hideConflictingTeamsPopover();
             if ($scope.hideClientTags) {
                 $scope.hideClientTags();
