@@ -50,7 +50,7 @@ angular.module('emmiManager')
                             angular.forEach(teams, function (team) {
                                 $scope.defaultTeams[team.name] = team;
                             });
-                            $scope.defaultTeams.sort(function(a,b){
+                            $scope.defaultTeams.sort(function (a, b) {
                                 return a.name.localeCompare(b.name);
                             });
                             $scope.clientTeams = angular.copy($scope.defaultTeams);
@@ -69,8 +69,8 @@ angular.module('emmiManager')
                 angular.forEach($scope.inactiveTeams, function (inactiveTeams) {
                     $scope.clientTeams.push(inactiveTeams);
                 });
-                $scope.clientTeams.sort(function(a,b){
-                   return a.name.localeCompare(b.name);
+                $scope.clientTeams.sort(function (a, b) {
+                    return a.name.localeCompare(b.name);
                 });
             } else {
                 ///show all active teams on the client
@@ -203,7 +203,7 @@ angular.module('emmiManager')
 
                 } else {
                     //no group selected
-                    if($scope.filterTags.length===0){
+                    if ($scope.filterTags.length === 0) {
                         //no tag to filter by selected
                         $scope.showClientTeams();
                         return;
@@ -246,7 +246,7 @@ angular.module('emmiManager')
                     }
                 } else {
                     //group not selected
-                    if($scope.filterTags.length===0){
+                    if ($scope.filterTags.length === 0) {
                         //no tag to filter by selected
                         $scope.showClientTeams();
                         return;

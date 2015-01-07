@@ -11,7 +11,7 @@ angular.module('emmiManager')
                  });
              },
              getTeamLocationsByTeamProvider: function(url){
-            	 var deferred = $q.defer();
+                 var deferred = $q.defer();
             	 var teamLocations = [];
                  $http.get(UriTemplate.create(url).stringify())
                  	.then(function addToResponseArray(response) {
@@ -23,9 +23,9 @@ angular.module('emmiManager')
                                 addToResponseArray(response);
                             });
 	                    }
-	                    else {
-	                    	 deferred.resolve(teamLocations);
-	                     } 
+                        else {
+                            deferred.resolve(teamLocations);
+                        }
                  	});
                  return deferred.promise;
              },

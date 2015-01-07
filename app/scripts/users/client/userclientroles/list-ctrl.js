@@ -17,7 +17,7 @@ angular.module('emmiManager')
     			});
     			_paq.push(['trackEvent', 'Form Action', 'User Client User Client Role', 'Add']);
     		};
-    	
+
 	        /**
 	         * Load existingUserClientUserClientRoles for the UserClient
 	         */
@@ -35,8 +35,8 @@ angular.module('emmiManager')
     				}
     			});
     		};
-    		
-    		/**
+
+            /**
     		 * load all UserClientRoles for the client
     		 */
     		$scope.loadClientRoles = function(){
@@ -44,8 +44,8 @@ angular.module('emmiManager')
 					$scope.clientRoles = clientRoles;
 				});
     		};
-    	
-	        /**
+
+            /**
 	         * Called when 'remove' is clicked
 	         */
 	        $scope.removeUserClientRole = function (userClientUserClientRole) {
@@ -56,27 +56,27 @@ angular.module('emmiManager')
 	        	});
 	        	_paq.push(['trackEvent', 'Form Action', 'User Client User Client Role', 'Remove']);
 	        };
-    		
-    		/**
+
+            /**
     		 * Called when UserClientUserClientRole panel is toggled
     		 */
     		$scope.toggleUserClientUserClienRolePanel = function(userClientUserClientRole){
-    		    if(!userClientUserClientRole.activePanel || userClientUserClientRole.activePanel === 0){
-    		        userClientUserClientRole.activePanel = 1;
+                if (!userClientUserClientRole.activePanel || userClientUserClientRole.activePanel === 0) {
+                    userClientUserClientRole.activePanel = 1;
                 } else {
                     userClientUserClientRole.activePanel = 0;
                 }
     			UserClientUserClientRolesService.loadPermissionsForExistingUserClientUserClientRole(userClientUserClientRole);
     		};
-    		
-    		/**
+
+            /**
 	         * init method called when the page is loading
 	         */
             function init(){
         		// Check if there is an existed UserClientUserClientRole
         		$scope.loadExistingUserClientUserClientRoles();
             }
-            
+
             init();
         }
     ])

@@ -91,7 +91,7 @@
                                     <td>{{teamProvider.provider.entity.email}}</td>
                                     <td><div data-ng-show="teamProvider.provider.entity.showLocations">
                                     		<select data-chosen data-placeholder="Use: all locations" multiple data-ng-model="teamProvider.provider.entity.teamLocations"
-                							data-ng-options="location.entity.location.name group by location.name for location in teamLocations | orderBy:'location.entity.location.name' track by location.entity.id" 
+                                                    data-ng-options="location.entity.location.name group by location.name for location in teamLocations | orderBy:'location.entity.location.name' track by location.entity.id"
                								class="form-control" data-ng-change="updateTeamLocationsForProvider(teamProvider.provider)" >
                								 </select>
                							</div>
@@ -116,8 +116,14 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-link" data-ng-click="cancel()">cancel</button>
-                <button type="button" class="btn btn-default" data-ng-hide="teamProviderTeamLocationSaveRequest.length < 1" data-ng-click="saveAssociationAndAddAnotherProvider()">Save & Add Another</button>
-                <button type="button" class="btn btn-primary" data-ng-hide="teamProviderTeamLocationSaveRequest.length < 1" data-ng-click="associateSelectedProvidersToTeam()">Save</button>
+                <button type="button" class="btn btn-default"
+                        data-ng-hide="teamProviderTeamLocationSaveRequest.length < 1"
+                        data-ng-click="saveAssociationAndAddAnotherProvider()">Save & Add Another
+                </button>
+                <button type="button" class="btn btn-primary"
+                        data-ng-hide="teamProviderTeamLocationSaveRequest.length < 1"
+                        data-ng-click="associateSelectedProvidersToTeam()">Save
+                </button>
             </div>
         </div>
     </div>

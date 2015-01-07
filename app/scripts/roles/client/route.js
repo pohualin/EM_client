@@ -44,17 +44,17 @@ angular.module('emmiManager')
             $scope.manageUserRolesService = ManageUserRolesService;
             $scope.client = Client.getClient().entity;
             $scope.page.setTitle('Manage User Roles - ' + $scope.client.name);
-            
+
             UsersClientService.list(Client.getClient()).then(function (response) {
                 if (response && response.page && response.page.totalElements > 0) {
                     $scope.hasUsers = true;
                 }
             });
-            
+
             /**
              * Call this method from ClientRoleAdminCtrl to set hasExistingClientRoles
              */
-            $scope.setHasExistingClientRoles = function(){
+            $scope.setHasExistingClientRoles = function () {
                 $scope.hasExistingClientRoles = ManageUserRolesService.hasExistingClientRoles();
             };
         }
