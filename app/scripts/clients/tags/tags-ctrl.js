@@ -182,6 +182,28 @@ angular.module('emmiManager')
             }
         };
     }])
+    .directive('popoverRightToggle', ['$timeout', function ($timeout) {
+        return {
+            restrict: 'EA',
+            link: function (scope, element) {
+                $timeout(function () {
+                    var popover = element.closest('.popover');
+                    var triggers = element.find('.toggle-trigger');
+                    triggers.on('click', function () {
+                        var origHeight = popover.outerHeight();
+                        var origTop = popover.position().top;
+                        var trigger = angular.element(this);
+                        trigger.toggleClass('open');
+                        trigger.next('.toggle-content').toggleClass('open');
+                        var growth = 0.5*(popover.outerHeight() - origHeight);
+                        popover.css({
+                            top: (origTop - growth) + 'px'
+                        });
+                    });
+                });
+            }
+        };
+    }])
     .directive('teamConflictPopover', ['$popover', '$timeout', '$translate', function ($popover) {
         return {
             restrict: 'EA',
