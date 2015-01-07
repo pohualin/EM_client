@@ -1,15 +1,18 @@
 <form class='conflictingTeamForm'>
     <div data-ng-if="conflictingTeamTags.length > 1">The following tags are in use and will be removed from teams:</div>
-    <div data-ng-if="conflictingTeamTags.length === 1">The following tags are in use and will be removed from 1 team:</div>
+    <div data-ng-if="conflictingTeamTags.length === 1">The following tags are in use and will be removed from 1 team:
+    </div>
     <br>
     <table border="0" cellpadding="1px" cellspacing="0">
-        <tr data-ng-if="conflictingTeamTags.length > 1" class='conflictingTeamRow' data-ng-repeat="teamTag in conflictingTeamTags">
+        <tr data-ng-if="conflictingTeamTags.length > 1" class='conflictingTeamRow'
+            data-ng-repeat="teamTag in conflictingTeamTags">
             <td class="col-md-6">{{teamTag.tag}}: </td>
             <td data-ng-if="teamTag.numberOfTeams == 1" class="col-md-6">{{teamTag.numberOfTeams}} team</td>
             <td data-ng-if="teamTag.numberOfTeams > 1 " class="col-md-6">{{teamTag.numberOfTeams}} teams</td>
         </tr>
-        <tr data-ng-if="conflictingTeamTags.length === 1" class='conflictingTeamRow' data-ng-repeat="teamTag in conflictingTeamTags">
-            <td class="col-md-6">{{teamTag.tag}} </td>
+        <tr data-ng-if="conflictingTeamTags.length === 1" class='conflictingTeamRow'
+            data-ng-repeat="teamTag in conflictingTeamTags">
+            <td class="col-md-6">{{teamTag.tag}}</td>
         </tr>
     </table>
     <br>
