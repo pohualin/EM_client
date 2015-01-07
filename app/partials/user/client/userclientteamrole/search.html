@@ -11,41 +11,44 @@
                     <div class="col-md-12">
                     	<h3>Role: {{selectedClientTeamRole.entity.name}}</h3>
                     </div>
-                </div> 
+                </div>
                 <div class="row">
                     <form name="searchForm" novalidate data-ng-show="hasTeams">
                         <div class="col-md-6">
                             <div class="form-inline">
                                 <label class="control-label" for="query">Search teams:</label>
+
                                 <div class="input-group col-md-8">
                                     <input class="form-control" name="query" id="query" data-ng-model="teamQuery"
                                            type="text"
-                                           placeholder="Teams..." required data-auto-focus data-focus-on="LocationSearchFocus">
-                                </div> 
+                                           placeholder="Teams..." required data-auto-focus
+                                           data-focus-on="LocationSearchFocus">
+                                </div>
                                 <button class="btn btn-default" data-ng-click="search(searchForm.query.$valid)"
                                         data-ng-disabled="searchForm.query.$invalid || loading">Go
                                 </button>
                             </div>
                         </div>
-                        
+
                         <div class="col-md-6">
-			                <div class="form-inline">
-			                    <label class="control-label" for="tagFilter">Show teams by tag:</label>
-			                    <div class="input-group col-md-8">
-			                        <select id="tagFilter" name="tagFilter" class="form-control"
-			                                data-ng-disabled="searchForm.query.$invalid || loading"
-			                                data-ng-model="tagFilter.tag" data-ng-change="onTagFilterChange()"
-			                                data-ng-options="tag.text group by tag.group.name for tag in clientTagGroupToDisplay | orderBy:'text' 
+                            <div class="form-inline">
+                                <label class="control-label" for="tagFilter">Show teams by tag:</label>
+
+                                <div class="input-group col-md-8">
+                                    <select id="tagFilter" name="tagFilter" class="form-control"
+                                            data-ng-disabled="searchForm.query.$invalid || loading"
+                                            data-ng-model="tagFilter.tag" data-ng-change="onTagFilterChange()"
+                                            data-ng-options="tag.text group by tag.group.name for tag in clientTagGroupToDisplay | orderBy:'text'
 			                                   track by tag.id"
-			                                data-disable-search-threshold="10" data-allow-single-deselect="true"
-			                                data-no-results-text="'All Tags'"
-			                                data-placeholder="All Tags"
-			                                data-chosen>
-			                            <option></option>
-			                        </select>
-			                    </div>
-			                </div>
-			            </div>
+                                            data-disable-search-threshold="10" data-allow-single-deselect="true"
+                                            data-no-results-text="'All Tags'"
+                                            data-placeholder="All Tags"
+                                            data-chosen>
+                                        <option></option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                     </form>
                     <div class="col-md-12" data-ng-hide="hasTeams">No teams available.</div>
                 </div>

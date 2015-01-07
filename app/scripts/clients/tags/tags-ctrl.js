@@ -40,7 +40,7 @@ angular.module('emmiManager')
 
         });
 
-        $scope.hideOpenModals = function() {
+        $scope.hideOpenModals = function () {
             $scope.hideConflictingTeamsPopover();
             if ($scope.hideClientTags) {
                 $scope.hideClientTags();
@@ -50,7 +50,7 @@ angular.module('emmiManager')
         $scope.checkForConflicts = function (isValid) {
             Tag.checkForConflicts(Client.getClient()).then(function (conflictingTeamTags) {
                 if (conflictingTeamTags.length > 0) {
-                    if (conflictingTeamTags.length === 1 && (conflictingTeamTags[0].conflictingTeamIds[0] === $route.current.params.teamId)) {
+                    if (conflictingTeamTags.length === 1 && (conflictingTeamTags[0].conflictingTeamIds[0] === parseInt($route.current.params.teamId))) {
                         //if the only team with this tag is the team we are currently on don't show popover
                         $scope.saveTags(isValid);
                         $scope.hideOpenModals();
@@ -174,6 +174,28 @@ angular.module('emmiManager')
                         trigger.toggleClass('open');
                         trigger.next('.toggle-content').toggleClass('open');
                         var growth = popover.outerHeight() - origHeight;
+                        popover.css({
+                            top: (origTop - growth) + 'px'
+                        });
+                    });
+                });
+            }
+        };
+    }])
+    .directive('popoverRightToggle', ['$timeout', function ($timeout) {
+        return {
+            restrict: 'EA',
+            link: function (scope, element) {
+                $timeout(function () {
+                    var popover = element.closest('.popover');
+                    var triggers = element.find('.toggle-trigger');
+                    triggers.on('click', function () {
+                        var origHeight = popover.outerHeight();
+                        var origTop = popover.position().top;
+                        var trigger = angular.element(this);
+                        trigger.toggleClass('open');
+                        trigger.next('.toggle-content').toggleClass('open');
+                        var growth = 0.5*(popover.outerHeight() - origHeight);
                         popover.css({
                             top: (origTop - growth) + 'px'
                         });
