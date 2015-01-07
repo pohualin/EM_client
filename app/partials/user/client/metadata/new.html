@@ -33,11 +33,12 @@
                             <div class="form-group">
                                 <a class="btn btn-default"
                                    href="#/clients/{{client.entity.id}}/users?{{currentRouteQueryString}}">cancel</a>
-
+                                &nbsp;
                                 <button class="btn btn-default" type="button"
                                         data-ng-click="save(userClientForm.$valid, $event, true)">
                                     <span>Save & Add Another User</span>
                                 </button>
+                                &nbsp;
                                 <button class="btn btn-primary" type="submit"
                                         data-ng-click="save(userClientForm.$valid, $event, false)">
                                     <span>Save</span>
