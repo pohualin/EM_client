@@ -33,7 +33,7 @@
 
                     <div class="input-group col-md-8">
                         <input class="form-control" id="query" name="query" data-ng-model="query" type="text"
-                               placeholder="First/last name, email, user ID" required data-auto-focus>
+                               placeholder="First/last name, email, user ID" data-auto-focus>
 
                         <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
 
@@ -53,7 +53,7 @@
                         <select id="teamFilter" name="teamFilter" class="form-control"
                                 data-ng-disabled="searchForm.query.$invalid || loading || allTeams.length == 0"
                                 data-ng-model="teamTagFilter.team" data-ng-change="onTeamFilterChange()"
-                                data-ng-options="team.entity.name for team in allTeams | orderBy:'entity.name' track by team.entity.id"
+                                data-ng-options="team.name for team in allTeams | orderBy:'name' track by team.id"
                                 data-disable-search-threshold="10" data-allow-single-deselect="true"
                                 data-no-results-text="'All Teams'"
                                 data-placeholder="All Teams"
@@ -70,10 +70,10 @@
                         <select id="teamWithinTagFilter" name="teamWithinTagFilter" class="form-control"
                                 data-ng-disabled="searchForm.query.$invalid || loading || teamsWithinTag.length == 0"
                                 data-ng-model="teamTagFilter.teamWithinTag" data-ng-change="onTeamFilterChange()"
-                                data-ng-options="team.entity.name for team in teamsWithinTag | orderBy:'entity.name' track by team.entity.id"
+                                data-ng-options="team.name for team in teamsWithinTag | orderBy:'name' track by team.id"
                                 data-disable-search-threshold="10" data-allow-single-deselect="true"
-                                data-no-results-text="'Teams with Tag' + teamTagFilter.tag.name"
-                                data-placeholder="Teams with Tag  {{teamTagFilter.tag.name}}"
+                                data-no-results-text="'Teams with Tag'"
+                                data-placeholder="Teams with Tag"
                                 data-chosen>
                             <option></option>
                         </select>

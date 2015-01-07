@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  * Manage Client Level users
  */
-    .controller('UsersClientMainCtrl', ['$scope', '$controller', 'Client', 'UsersClientService', 'TeamsFilter',
-        function ($scope, $controller, Client, UsersClientService, TeamService) {
+    .controller('UsersClientMainCtrl', ['$scope', '$controller', 'Client', 'UsersClientService',
+        function ($scope, $controller, Client, UsersClientService) {
 
             var contentProperty = 'usersClient';
 
@@ -85,16 +85,19 @@ angular.module('emmiManager')
                     $scope.lookedForUsers = true;
                     $scope.statuses = response.statusFilter;
                     $scope.hasUsers = response.page && response.page.totalElements > 0;
+                    if (!$scope.query) {
+                        $scope.handleResponse(response, contentProperty);
+                    }
                 });
 
                 // load all of the teams for the client
-                TeamService.getClientTeams().then(function (teams) {
+                UsersClientService.getClientTeams().then(function (teams) {
                     $scope.allTeams = teams;
                 });
 
                 // load all of the tags for the client
-                TeamService.getClientGroups().then(function (groups) {
-                    $scope.clientTags = TeamService.getClientTagsInGroups(groups);
+                UsersClientService.getClientTagsWithGroups().then(function (tags) {
+                    $scope.clientTags = tags;
                 });
 
                 // perform search if the query string has search arguments
