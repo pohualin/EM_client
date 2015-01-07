@@ -63,7 +63,7 @@ angular.module('emmiManager')
                 access: {
                     authorizedRoles: [USER_ROLES.admin]
                 },
-                reloadOnSearch: false,
+                reloadOnSearch: true,
                 resolve: {
                     'clientEditorResource': userClientEditorResources
                 }

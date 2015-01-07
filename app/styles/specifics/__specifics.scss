@@ -130,6 +130,9 @@ th.sort {
   padding: 0px;
 }
 
+.pointer{
+  cursor:pointer;
+}
 
 // various example component implementations
 @include example();

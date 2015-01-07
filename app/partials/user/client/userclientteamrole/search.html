@@ -36,7 +36,7 @@
 
                                 <div class="input-group col-md-8">
                                     <select id="tagFilter" name="tagFilter" class="form-control"
-                                            data-ng-disabled="searchForm.query.$invalid || loading"
+                                            data-ng-disabled="loading"
                                             data-ng-model="tagFilter.tag" data-ng-change="onTagFilterChange()"
                                             data-ng-options="tag.text group by tag.group.name for tag in clientTagGroupToDisplay | orderBy:'text'
 			                                   track by tag.id"
