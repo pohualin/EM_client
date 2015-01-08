@@ -9,7 +9,7 @@ angular.module('emmiManager')
                 /**
                  * Return true when there are existing client roles for a client
                  */
-                hasExistingClientRoles: function(){
+                hasExistingClientRoles: function () {
                     return existingClientRoles.length > 0;
                 },
                 /**

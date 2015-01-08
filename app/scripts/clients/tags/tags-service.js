@@ -81,7 +81,7 @@ angular.module('emmiManager')
                 var groupSaveRequests = GroupSaveRequest.create(clientResource);
                 return $http.post(UriTemplate.create(clientResource.link.invalidTeams).stringify(), groupSaveRequests).then(function (response) {
                     var tagMap = {};
-                    var conflictingTeamIds =[];
+                    var conflictingTeamIds = [];
                     var tagNames = [];
                     angular.forEach(response.data, function (teamTag) {
                         if (!tagMap[teamTag.tag.name]) {
@@ -96,7 +96,7 @@ angular.module('emmiManager')
                     angular.forEach(tagNames, function (tagName) {
                         numberOfTeamForTagMap.push({
                             tag: tagName,
-                            conflictingTeamIds:conflictingTeamIds,
+                            conflictingTeamIds: conflictingTeamIds,
                             numberOfTeams: tagMap[tagName]
                         });
                     });

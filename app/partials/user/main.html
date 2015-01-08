@@ -3,33 +3,18 @@
         <div class="row">
             <div class="col-md-9">
                 <h2>
-                    <a href="#/">Emmi Manager</a> : Search
+                    <a href="#/">Emmi Manager</a> : Manage Emmi Users
                 </h2>
             </div>
         </div>
         <form name="searchForm" novalidate>
             <div class="row">
-                <div class="col-md-2 col-sm-2">
-                    <label>Manage User</label>
+                <div class="col-md-4 col-sm-4">
+                    <h2>Emmi Users</h2>
                 </div>
-                <div class="col-md-6 col-sm-5">
-                    <label class="sr-only" for="query">Search</label>
-
-                    <div class="input-group">
-                        <input class="form-control" id="query" name="query" data-ng-model="query" type="text"
-                               placeholder="First/last name, email, user ID" required data-auto-focus>
-
-                        <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
-                    </div>
-                </div>
-                <div class="col-md-2 col-sm-3">
-                    <button class="btn btn-default pull-left" data-ng-click="search()"
-                            data-ng-disabled="searchForm.query.$invalid || loading">Go
-                    </button>
-                    <span data-ng-class="{'search-spinner' : loading}"></span>
-                </div>
-                <div class="col-md-2 col-sm-2">
+                <div class="col-md-2 col-sm-2 pull-right">
                     <div class="pull-right">
+                        <h2></h2>
                         <a class="btn btn-primary"
                            data-ng-href="#/users/new?{{currentRouteQueryString}}">Create New User</a>
                     </div>

@@ -36,28 +36,19 @@ angular.module('emmiManager')
             });
     })
 
-/**
- * Controller for the route landing place
- */
-    .controller('ManageClientRolesMainCtrl', ['$scope', 'Client', 'ManageUserRolesService', 'UsersClientService',
-        function ($scope, Client, ManageUserRolesService, UsersClientService) {
-            $scope.manageUserRolesService = ManageUserRolesService;
+    /**
+     * Controller for the route landing place
+     */
+    .controller('ManageClientRolesMainCtrl', ['$scope', 'Client', 'ManageUserRolesService',
+        function ($scope, Client, ManageUserRolesService) {
             $scope.client = Client.getClient().entity;
             $scope.page.setTitle('Manage User Roles - ' + $scope.client.name);
-            
-            UsersClientService.list(Client.getClient()).then(function (response) {
-                if (response && response.page && response.page.totalElements > 0) {
-                    $scope.hasUsers = true;
-                }
-            });
-            
+
             /**
              * Call this method from ClientRoleAdminCtrl to set hasExistingClientRoles
              */
-            $scope.setHasExistingClientRoles = function(){
+            $scope.setHasExistingClientRoles = function () {
                 $scope.hasExistingClientRoles = ManageUserRolesService.hasExistingClientRoles();
             };
         }
-    ])
-
-;
+    ]);

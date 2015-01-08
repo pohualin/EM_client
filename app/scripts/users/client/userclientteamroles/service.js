@@ -17,16 +17,17 @@ angular.module('emmiManager')
             				selectedTeamRole.userClientTeamRole = selectedClientTeamRole.entity;
             				userClientUserClientTeamRoles.push(selectedTeamRole);
             			} else {
-            				var userClientUserClientTeamRole = 
-            					{team: selectedTeamRole.team, 
-            					 userClientTeamRole: selectedClientTeamRole.entity, 
+                            var userClientUserClientTeamRole =
+                            {
+                                team: selectedTeamRole.team,
+                                userClientTeamRole: selectedClientTeamRole.entity,
             					 userClient: userClient.entity};
-                			userClientUserClientTeamRoles.push(userClientUserClientTeamRole);	
+                            userClientUserClientTeamRoles.push(userClientUserClientTeamRole);
             			}
             		});
             		return $http.post(UriTemplate.create(userClient.link.possibleTeams).stringify(), userClientUserClientTeamRoles);
             	},
-            	
+
             	/**
             	 * Check selected UserClientUserClientTeamRoles and see if confirmation modal is needed
             	 */
@@ -51,10 +52,10 @@ angular.module('emmiManager')
             		deferred.resolve(cardsToRefresh);
             		return deferred.promise;
             	},
-            	
+
             	/**
             	 * Delete all UserClientUserClientTeamRole for selected clientTeamRole
-            	 * 
+                 *
             	 * @param clientTeamRole
             	 * @returns
             	 */
@@ -62,15 +63,15 @@ angular.module('emmiManager')
             		return $http.delete(UriTemplate.create(UsersClientService.getUserClient().link.existingTeams)
             				.stringify({userClientTeamRoleId: clientTeamRole.entity.id}));
             	},
-            	
-            	/**
+
+                /**
             	 * Delete existing UserClientUserClientTeamRole
             	 */
             	deleteUserClientUserClientTeamRole: function(existing){
             		return $http.delete(UriTemplate.create(existing.link.self).stringify({userClientUserClientTeamRoleId: existing.entity.id}));
             	},
-            	
-            	/**
+
+                /**
             	 * Find all possible UserClientUserClientTeamRoles by clientId and term
             	 */
             	findPossible: function(query, tag, sort){
@@ -85,8 +86,8 @@ angular.module('emmiManager')
             			return response.data;
             		});
             	},
-            	
-            	/**
+
+                /**
             	 * Post process UserClientUserClientTeamRoles
             	 * Check teams that are already selected.
             	 * Compose warning messages.
@@ -95,14 +96,14 @@ angular.module('emmiManager')
             		angular.forEach(response.content, function(content){
         				var entity = content.entity;
         				if(entity.userClientTeamRole && entity.userClientTeamRole.id !== selectedClientTeamRole.entity.id){
-        					entity.warning = 'This user is an ' + entity.userClientTeamRole.name + ' at this team.';
+                            entity.warning = 'This user has the role "' + entity.userClientTeamRole.name + '" at this team.';
         				}
-        				content.entity.selected = 
+                        content.entity.selected =
 		            		selectedTeamRoles[content.entity.team.id] ? true : false;
         			});
             	},
-            	
-            	/**
+
+                /**
             	 * Refresh single team role card
             	 */
             	refreshTeamRoleCard: function(clientTeamRole){
@@ -113,8 +114,8 @@ angular.module('emmiManager')
 	            			clientTeamRole.existingTeams = response.data.content;
 	            		});
             	},
-            	
-            	/**
+
+                /**
             	 * Refresh all team role cards
             	 */
             	refreshTeamRoleCards: function(clientTeamRoles){
@@ -124,15 +125,15 @@ angular.module('emmiManager')
             			external.refreshTeamRoleCard(clientTeamRole);
     				});
             	},
-            	
-            	/**
+
+                /**
             	 * Set selectedClientTeamRole when user click on add team from selected UserClientTeamRole card
             	 */
             	setSelectedClientTeamRole: function(clientTeamRole){
             		selectedClientTeamRole = clientTeamRole;
             	},
-            	
-            	/**
+
+                /**
             	 * Return the selectedClientTeamRole
             	 */
             	getSelectedClientTeamRole: function(){
