@@ -64,9 +64,9 @@ angular.module('emmiManager')
 				 */
 				TeamsFilter.getClientGroups().then(function (groups) {
                     //all groups on client
-                    TeamsFilter.getTeamsWithNoTeamTags().then(function(teams){
+                    TeamsFilter.getActiveTeamsWithNoTeamTags().then(function(teams){
                         if(teams.length>0){
-                            $scope.teamsWithNoTeamTags = teams;
+                            $scope.activeTeamsWithNoTeamTags = teams;
                         }
                     });
                     $scope.clientGroups = groups;

@@ -40,7 +40,7 @@ angular.module('emmiManager')
                     $scope.showUntaggedTeams = false;
                     $scope.showClientTeams();
                 }else{
-                    $scope.clientTeams = $scope.teamsWithNoTeamTags;
+                    $scope.clientTeams = angular.copy($scope.activeTeamsWithNoTeamTags);
                     $scope.checkUnTaggedTeams = true;
                     $scope.showUntaggedTeams = true;
                 }
