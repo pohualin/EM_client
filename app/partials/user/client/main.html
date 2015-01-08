@@ -84,6 +84,7 @@
             <div class="col-md-3" data-ng-show="hasUsers">
                 <div class="form-inline">
                     <label class="control-label" for="tagFilter">Tags:</label>
+
                     <div class="input-group col-md-8">
                         <select id="tagFilter" name="tagFilter" class="form-control"
                                 data-ng-disabled="searchForm.query.$invalid || loading || teamTagFilter.team || allTeams.length == 0 || clientTags.length == 0"
@@ -108,7 +109,7 @@
             <span>There are no existing users for {{client.entity.name}}.</span>
         </div>
     </div>
-    <div class="row" data-ng-show="searchPerformed">
+    <div class="row" data-ng-show="searchPerformed && hasUsers">
         <div class="col-md-12">
             <div class="row" data-ng-hide="removeStatusFilterAndTotal">
                 <div class="col-md-12">
@@ -163,13 +164,18 @@
                     <td>{{userClient.entity.firstName}}</td>
                     <td>{{userClient.entity.login}}</td>
                     <td>{{userClient.entity.email}}</td>
-                    <td><a class="btn-link"
-                           href="#/clients/{{client.entity.id}}/users/{{userClient.entity.id}}?{{currentRouteQueryString}}">edit</a>
-                        |
+                    <td>
+                        <span data-ng-hide="userClient.deactivationPopoverOpen">
+                            <a class="btn-link"
+                               href="#/clients/{{client.entity.id}}/users/{{userClient.entity.id}}?{{currentRouteQueryString}}">edit</a>
+                            |
+                        </span>
                         <a href
                            data-on-ok="toggleActivation(userClient)"
                            data-is-currently-active="userClient.entity.active"
                            data-placement="top"
+                           data-on-open-popover="deactivationPopoverOpen(userClient, true)"
+                           data-on-close-popover="deactivationPopoverOpen(userClient, false)"
                            data-toggle-user-client-active>{{userClient.entity.active ? 'deactivate' : 'activate'}}
                         </a>
                     </td>

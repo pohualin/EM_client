@@ -86,6 +86,17 @@ angular.module('emmiManager')
                 },
 
                 /**
+                 * Sets an attribute on userClientResource named deactivationPopoverOpen
+                 * to the value of isOpen
+                 *
+                 * @param userClientResource to set it on
+                 * @param isOpen the value
+                 */
+                deactivatePopoverOpen: function (userClientResource, isOpen) {
+                    userClientResource.deactivationPopoverOpen = isOpen;
+                },
+
+                /**
                  * Call server to get a list of UserClient
                  */
                 list: function (client, query, sort, status, teamTagFilter) {
