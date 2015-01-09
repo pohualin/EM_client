@@ -2,7 +2,7 @@
 	<div class="col-md-12" data-ng-show="isSuperUser">
         Team roles aren't required for users with Super User permissions.
     </div>
-	<div class="col-md-12" data-ng-show="clientTeamRoles && !isSuperUser">
+	<div class="col-md-12" data-ng-show="clientTeamRoles && clientTeamRoles.length > 0 && !isSuperUser">
 		<h3>Team Roles:</h3>
 		<div class="row" data-ng-repeat="clientTeamRole in clientTeamRoles">
 			<div class="col-md-5" >

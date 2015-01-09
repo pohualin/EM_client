@@ -13,7 +13,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <form name="searchForm" novalidate data-ng-show="hasTeams">
+                    <form name="searchForm" novalidate data-ng-show="hasTeams && !loading">
                         <div class="col-md-6">
                             <div class="form-inline">
                                 <label class="control-label" for="query">Search teams:</label>
@@ -50,7 +50,7 @@
                             </div>
                         </div>
                     </form>
-                    <div class="col-md-12" data-ng-hide="hasTeams">No teams available.</div>
+                    <div class="col-md-12" data-ng-show="!hasTeams && !loading">No teams available.</div>
                 </div>
             </div>
             <div class="modal-body" data-ng-show="searchPerformed">
