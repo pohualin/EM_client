@@ -40,7 +40,7 @@
 			</div>
 		</div>
 	</div>
-	<div data-ng-hide="existingUserClientUserClientRoles">
+	<div data-ng-show="!existingUserClientUserClientRoles && clientRoles">
 		<button class="btn-lg btn-link" type="button" title="Select a client role to add:"
 		        data-placement="right" data-content-template="partials/user/client/userclientrole/add-client-role.html"
 		        data-trigger="click" data-bs-popover data-popover-dismiss>Add client role
