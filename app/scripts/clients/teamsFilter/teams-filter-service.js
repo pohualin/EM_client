@@ -301,7 +301,7 @@ angular.module('emmiManager')
 
                 $http.get(UriTemplate.create(Client.getClient().link.teams).stringify({
                     status:'ACTIVE_ONLY',
-                    teamTagsType:'ALL'
+                    teamTagsType:'UNTAGGED'
                 })).then(function load(response) {
                     var page = response.data;
                     CommonService.convertPageContentLinks(page);
@@ -324,7 +324,7 @@ angular.module('emmiManager')
 
                 $http.get(UriTemplate.create(Client.getClient().link.teams).stringify({
                     status:'INACTIVE_ONLY',
-                    teamTagsType:'ALL'
+                    teamTagsType:'UNTAGGED'
                 })).then(function load(response) {
                     var page = response.data;
                     CommonService.convertPageContentLinks(page);
