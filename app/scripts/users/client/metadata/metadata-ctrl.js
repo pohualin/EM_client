@@ -28,6 +28,8 @@ angular.module('emmiManager')
              * When cancel is clicked in edit mode
              */
             $scope.cancel = function () {
+                delete $scope.loginError;
+                delete $scope.emailError;
                 $scope.editMode = false;
                 _paq.push(['trackEvent', 'Form Action', 'User Client Edit', 'Cancel']);
             };
@@ -78,8 +80,12 @@ angular.module('emmiManager')
                             _paq.push(['trackEvent', 'Form Action', 'User Client Edit', 'Save']);
                             // Reset the form to pristine for EM-522/EM-634
                             form.$setPristine();
+
+                            // reset the errors
+                            delete $scope.loginError;
+                            delete $scope.emailError;
                         }, function error(response) {
-                            $scope.handleSaveError(response, $scope.userClientEdit.currentTarget);
+                            $scope.handleSaveError(response);
                         });
                 } else {
                     $scope.formValidationError();
