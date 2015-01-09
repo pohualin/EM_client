@@ -7,12 +7,14 @@
     <div data-ng-show="clientTagGroupToDisplay.length!==0">
         <div data-ng-class="{'masked': showUntaggedTeams!=='false'&& showUntaggedTeams!==false}" class="row">
             <div class="col-md-5">organize by:</div>
-            <select data-ng-hide="showInactiveTeams || !inactiveTeams" class="col-md-6 teamFilterOrganizeBy" data-ng-model="selectedGroup"
+            <select data-ng-hide="showInactiveTeams || !inactiveTeams" class="col-md-6 teamFilterOrganizeBy"
+                    data-ng-model="selectedGroup"
                     data-ng-options="group.entity.name for group in clientGroups track by group.entity.id | orderBy:'name'"
                     data-ng-change="getTeamTagsForGroup()">
                 <option value="">All Active Teams</option>
             </select>
-            <select data-ng-show="showInactiveTeams || !inactiveTeams" class="col-md-6 teamFilterOrganizeBy" data-ng-model="selectedGroup"
+            <select data-ng-show="showInactiveTeams || !inactiveTeams" class="col-md-6 teamFilterOrganizeBy"
+                    data-ng-model="selectedGroup"
                     data-ng-options="group.entity.name for group in clientGroups track by group.entity.id | orderBy:'name'"
                     data-ng-change="getTeamTagsForGroup()">
                 <option value="">All Teams</option>

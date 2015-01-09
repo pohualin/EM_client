@@ -22,9 +22,6 @@ angular.module('emmiManager')
                         scope.$apply();
                     });
                     element.on('click', function () {
-                        if (scope.ngModel) {
-                            scope.ngModel.currentTarget = element;
-                        }
                         if (scope.currentlyActive && !scope.newStatus) {
                             scope.onOpenPopover();
 

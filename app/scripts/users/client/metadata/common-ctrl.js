@@ -14,28 +14,40 @@ angular.module('emmiManager')
             $scope.useEmailChange = function () {
                 if ($scope.userClientEdit && !$scope.userClientEdit.useEmail) {
                     $focus('login');
+                } else {
+                    // make sure login errors go away when use email is pressed
+                    delete $scope.loginError;
                 }
             };
 
             /**
-             * Common function that handles errors that happen on save
+             * Common function that handles errors that happen on save.
+             * Constructs an error object to be rendered by the directive.
              *
              * @param error the actual error
-             * @param currentTarget the button that triggered the error
              */
-            $scope.handleSaveError = function (error, currentTarget, placement) {
-                if (error.status === 406 && currentTarget) {
-                    // 406 is not acceptable, meaning save was prevented due collisions with other users
-                    $scope.conflictingUsers = error.data.conflicts;
-                    // save error because of already existing clients
-                    $popover(currentTarget, {
-                        placement: placement || 'left',
-                        scope: $scope,
-                        trigger: 'manual',
-                        autoClose: true,
-                        show: true,
-                        template: 'partials/user/client/metadata/user_already_exists_popover.tpl.html'
+            $scope.handleSaveError = function (error) {
+                if (error.status === 406 && error.data && error.data.conflicts) {
+                    var totalErrorCount = error.data.conflicts.length;
+                    angular.forEach(error.data.conflicts, function (conflict) {
+                        if ('LOGIN' === conflict.reason) {
+                            // login conflict
+                            if (!$scope.userClientEdit.useEmail) {
+                                // user did not check 'Use Email'
+                                $scope.loginError = conflict;
+                            } else {
+                                // user has checked 'Use Email'
+                                conflict.reason = 'EMAIL';
+                                $scope.emailError = conflict;
+                            }
+                        } else if ('EMAIL' === conflict.reason) {
+                            $scope.emailError = conflict;
+                            $scope.emailError.doNotFocus = totalErrorCount > 1;
+                        }
                     });
+                    if (totalErrorCount > 0) {
+                        $scope.formValidationError();
+                    }
                 }
             };
 
@@ -69,7 +81,7 @@ angular.module('emmiManager')
                     e.preventDefault();
                     if (scope.form.$pristine) {
                         // if form has not been modified
-                        scope.$apply(function(){
+                        scope.$apply(function () {
                             scope.ok();
                         });
                     } else {
