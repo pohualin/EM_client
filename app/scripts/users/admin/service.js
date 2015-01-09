@@ -130,7 +130,7 @@ angular.module('emmiManager')
                 getDefaultRole: function(roles){
                 	var roleToDefault = {};
                 	angular.forEach(roles, function (role) {
-                		if(role.entity.name === 'User'){                			
+                		if(role.entity.defaultRole){                			
                 			roleToDefault = role.entity;
                 		}                		
                     });
