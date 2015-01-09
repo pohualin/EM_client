@@ -1,5 +1,5 @@
 <div class="col-md-12">
-    <div class="row" data-ng-show="userClientForm.$invalid">
+    <div class="row" data-ng-show="!userClientForm.$valid">
         <div class="col-md-12" id="message-container"></div>
     </div>
     <div class="row">
@@ -12,6 +12,7 @@
                 <a class="btn btn-link" data-ng-click="cancel()">cancel</a>
                 |
                 <button class="btn btn-link" type="submit"
+                        data-ng-disabled="!userClientForm.$valid"
                         data-user-client="userClientEdit"
                         data-on-ok="save(userClientForm)"
                         data-on-cancel="makeActive()"
