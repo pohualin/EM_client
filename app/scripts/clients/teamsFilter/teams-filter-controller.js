@@ -213,6 +213,9 @@ angular.module('emmiManager')
                         TeamsFilter.getActiveTeamsWithNoTeamTags().then(function (teams) {
                                 if (teams.length > 0) {
                                     $scope.clientTeams = teams;
+                                    $scope.clientTeams.sort(function (a, b) {
+                                        return a.name.localeCompare(b.name);
+                                    });
                                 }
                             }
                         );
@@ -263,9 +266,13 @@ angular.module('emmiManager')
                         TeamsFilter.getInactiveTeamsWithNoTeamTags().then(function (teams) {
                                 if (teams.length > 0) {
                                     $scope.clientTeams = teams;
+                                    $scope.clientTeams.sort(function (a, b) {
+                                        return a.name.localeCompare(b.name);
+                                    });
                                 }
                             }
                         );
+
                     } else if ($scope.filterTags.length === 0) {
                         //no tag to filter by selected
                         $scope.showClientTeams();
@@ -292,8 +299,14 @@ angular.module('emmiManager')
                 $scope.setUntaggedTeamsURL();
                 if ($scope.showInactiveTeams) {
                     $scope.clientTeams = angular.copy($scope.inactiveTeamsWithNoTeamTags);
+                    $scope.clientTeams.sort(function (a, b) {
+                        return a.name.localeCompare(b.name);
+                    });
                 } else {
                     $scope.clientTeams = angular.copy($scope.activeTeamsWithNoTeamTags);
+                    $scope.clientTeams.sort(function (a, b) {
+                        return a.name.localeCompare(b.name);
+                    });
                 }
             } else {
                 $scope.showUntaggedTeams = false;

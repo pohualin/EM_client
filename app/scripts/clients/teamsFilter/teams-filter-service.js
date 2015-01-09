@@ -299,7 +299,10 @@ angular.module('emmiManager')
                 var deferred = $q.defer();
                 var teams = [];
 
-                $http.get(UriTemplate.create(Client.getClient().link.teamsWithNoTeamTags).stringify({status:'ACTIVE_ONLY'})).then(function load(response) {
+                $http.get(UriTemplate.create(Client.getClient().link.teams).stringify({
+                    status:'ACTIVE_ONLY',
+                    teamTagsType:'ALL'
+                })).then(function load(response) {
                     var page = response.data;
                     CommonService.convertPageContentLinks(page);
                     angular.forEach(page.content, function (team) {
@@ -319,7 +322,10 @@ angular.module('emmiManager')
                 var deferred = $q.defer();
                 var teams = [];
 
-                $http.get(UriTemplate.create(Client.getClient().link.teamsWithNoTeamTags).stringify({status:'INACTIVE_ONLY'})).then(function load(response) {
+                $http.get(UriTemplate.create(Client.getClient().link.teams).stringify({
+                    status:'INACTIVE_ONLY',
+                    teamTagsType:'ALL'
+                })).then(function load(response) {
                     var page = response.data;
                     CommonService.convertPageContentLinks(page);
                     angular.forEach(page.content, function (team) {
