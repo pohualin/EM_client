@@ -40,9 +40,9 @@ angular.module('emmiManager')
                                 conflict.reason = 'EMAIL';
                                 $scope.emailError = conflict;
                             }
-                        } else if ('EMAIL' === conflict.reason) {
+                        } else if ('EMAIL' === conflict.reason && totalErrorCount === 1) {
+                            // only show email error if there is not a login error
                             $scope.emailError = conflict;
-                            $scope.emailError.doNotFocus = totalErrorCount > 1;
                         }
                     });
                     if (totalErrorCount > 0) {
