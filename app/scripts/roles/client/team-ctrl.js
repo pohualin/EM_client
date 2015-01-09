@@ -19,7 +19,7 @@ angular.module('emmiManager')
             $scope.loadExisting = function () {
                 ManageUserTeamRolesService.loadClientTeamRoles().then(function (rolesResources) {
                     $scope.existingClientTeamRoles = rolesResources;
-                    $scope.setHasExistingClientTeamRoles();
+                    $scope.setHasExistingRoles();
                 });
             };
 
