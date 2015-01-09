@@ -66,7 +66,6 @@ angular.module('emmiManager')
                     return $http.put(UriTemplate.create(userClientResource.link.self).stringify(), userClientResource.entity)
                         .success(function (response) {
                             angular.extend(userClientResource, response);
-                            delete userClientResource.currentTarget; //this gets set via the deactivate directive
                             selectedUserClient = userClientResource;
                             updateResourceForUi(selectedUserClient);
                             updateResourceForUi(response);
