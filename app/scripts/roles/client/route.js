@@ -43,19 +43,19 @@ angular.module('emmiManager')
         function ($scope, Client, ManageUserRolesService, ManageUserTeamRolesService) {
             $scope.client = Client.getClient().entity;
             $scope.page.setTitle('Manage User Roles - ' + $scope.client.name);
+            $scope.loading = true;
 
             /**
-             * Call this method from ClientRoleAdminCtrl to set hasExistingClientRoles
+             * Call this method from ClientRoleAdminCtrl and ClientTeamRoleAdminCtrl to set hasExistingClientRoles and hasExistingClientTeamRoles
              */
-            $scope.setHasExistingClientRoles = function () {
-                $scope.hasExistingClientRoles = ManageUserRolesService.hasExistingClientRoles();
-            };
-            
-            /**
-             * Call this method from ClientTeamRoleAdminCtrl to set hasExistingClientTeamRoles
-             */
-            $scope.setHasExistingClientTeamRoles = function () {
-                $scope.hasExistingClientTeamRoles = ManageUserTeamRolesService.hasExistingClientTeamRoles();
+            $scope.setHasExistingRoles = function () {
+                ManageUserRolesService.hasExistingClientRoles().then(function(hasClientRoles){
+                    $scope.hasExistingClientRoles = hasClientRoles;
+                    ManageUserTeamRolesService.hasExistingClientTeamRoles().then(function(hasClientTeamRoles){
+                        $scope.hasExistingClientTeamRoles = hasClientTeamRoles;
+                        $scope.loading = false;
+                    });
+                });
             };
         }
     ]);

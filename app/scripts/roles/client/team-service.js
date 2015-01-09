@@ -10,7 +10,15 @@ angular.module('emmiManager')
                  * Return true when there are existing client team roles for a client
                  */
                 hasExistingClientTeamRoles: function () {
-                    return existingClientTeamRoles.length > 0;
+                    var deferred = $q.defer();
+                    var hasClientTeamRoles = false;
+                    this.loadClientTeamRoles().then(function(){
+                        if(existingClientTeamRoles.length > 0){
+                            hasClientTeamRoles = true;
+                        }
+                        deferred.resolve(hasClientTeamRoles);
+                    });
+                    return deferred.promise;
                 },
                 /**
                  * Loads ALL roles for a team. It then copies over all possible
