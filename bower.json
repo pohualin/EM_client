@@ -12,7 +12,7 @@
       "angular-animate": "1.2.*",
       "angular-route": "1.2.*",
       "angular-strap": "~2.1.5",
-      "angular-i18n": "~1.2.*",
+      "angular-i18n": "1.2.*",
     "angular-dynamic-locale": "~0.1.17",
     "bootstrap": "~3.2.0",
     "angular-motion": "~0.3.3",
