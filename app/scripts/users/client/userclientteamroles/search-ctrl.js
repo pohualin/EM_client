@@ -44,6 +44,7 @@ angular.module('emmiManager')
 			    // include CommonSearch controller and reset searchPerformed to false
 			    $controller('CommonSearch', {$scope: $scope});
 			    $scope.searchPerformed = false;
+			    $scope.loading = true;
                 $scope.hasTeams = true;
 
 			    // set selectedClientTeamRole to scope
@@ -60,6 +61,7 @@ angular.module('emmiManager')
                     } else {
                         $scope.hasTeams = false;
                     }
+                    $scope.loading = false;
                 });
 
                 /**
