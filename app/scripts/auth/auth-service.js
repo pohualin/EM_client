@@ -64,7 +64,6 @@ angular.module('emmiManager')
                         }
                         authorizedRoles = [authorizedRoles];
                     }
-
                     var isAuthorized = false;
                     angular.forEach(authorizedRoles, function (authorizedRole) {
 

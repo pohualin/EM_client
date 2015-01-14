@@ -52,6 +52,13 @@ angular.module('emmiManager')
                 resolve: {
                     'userEditorResource': userEditorResources
                 }
+            }).when('/admin', {
+            	templateUrl: 'partials/admin.html',
+                controller: 'MainCtrl',
+                title: 'Admin Functions',
+                access: {
+                    authorizedRoles: [USER_ROLES.admin]
+                }
             });
     })
 
