@@ -17,8 +17,8 @@ angular.module('emmiManager')
 							})).then(function(response){
 								possibleProviders = response.data;
 							}),
-						TeamLocation.getTeamLocations(teamResource.link.teamLocations).then(function(response1){
-						            allTeamLocations = TeamProviderService.buildMultiSelectData(response1);
+						TeamLocation.getTeamLocations(teamResource.link.teamLocations).then(function(locationsResponse){
+						            allTeamLocations = TeamProviderService.buildMultiSelectData(locationsResponse);
 						        })
 				        ]).then(function () {
 							angular.forEach(possibleProviders.content, function(provider){
