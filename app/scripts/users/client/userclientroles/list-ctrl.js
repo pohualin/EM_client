@@ -15,7 +15,7 @@ angular.module('emmiManager')
     			UserClientUserClientRolesService.associateUserClientUserClientRole($scope.selectedUserClient, form.selectedClientRole).then(function(){
     				$scope.loadExistingUserClientUserClientRoles();
     			});
-    			_paq.push(['trackEvent', 'Form Action', 'User Client User Client Role', 'Add']);
+    			_paq.push(['trackEvent', 'Form Action', 'User Client Role Edit', 'Add']);
     		};
 
 	        /**
@@ -54,7 +54,7 @@ angular.module('emmiManager')
 	        		$scope.existingUserClientUserClientRoles = null;
 	        		$scope.loadClientRoles();
 	        	});
-	        	_paq.push(['trackEvent', 'Form Action', 'User Client User Client Role', 'Remove']);
+	        	_paq.push(['trackEvent', 'Form Action', 'User Client Role Edit', 'Remove']);
 	        };
 
             /**
