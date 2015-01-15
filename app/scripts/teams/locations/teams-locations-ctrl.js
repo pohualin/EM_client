@@ -2,14 +2,23 @@
 
 angular.module('emmiManager')
 
-    .controller('TeamsLocationsController', ['$scope', '$http', 'Session', 'UriTemplate', '$controller', '$modal', '$alert', 'Location', 'TeamLocation', function ($scope, $http, Session, UriTemplate, $controller, $modal, $alert, Location, TeamLocation) {
+    .controller('TeamsLocationsController', ['$scope', '$http', 'Session', 'UriTemplate', '$controller', '$modal', '$alert', 'Location', 'TeamLocation', 'TeamProviderService', 'ProviderView', function ($scope, $http, Session, UriTemplate, $controller, $modal, $alert, Location, TeamLocation, TeamProviderService, ProviderView) {
 
         $controller('LocationCommon', {$scope: $scope});
 
         $controller('CommonPagination', {$scope: $scope});
 
         var managedLocationList = 'locations';
-        $scope.providersData = [];
+        console.log('in teamslocationcontroller');
+//        $scope.providersData = [{'id':'1', 'name':'provider1'},{'id':'2','name':'provider2'}];
+//        ProviderView.allProvidersForTeam($scope.teamResource).then(function(response){
+//        	$scope.providersData = TeamProviderService.buildMultiSelectData(response);
+//    	});
+        /*TeamLocation.getTeamLocations($scope.teamClientResource.teamResource.link.teamLocations).then(function(response){
+            $scope.providersData = TeamProviderService.buildMultiSelectData(response);
+            console.log($scope.providersData);
+        });*/
+//        $scope.providersData = [];
         $scope.teamLocations = {}; //used to hold the locations and manipulate internally
 
         $scope.editLocation = function (location) {

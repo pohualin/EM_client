@@ -2,15 +2,31 @@
 
 angular.module('emmiManager')
 
-    .controller('SearchTeamsLocationsController', function ($scope,$modal, $controller,TeamSearchLocation, Location, Client) {
+    .controller('SearchTeamsLocationsController', function ($scope,$modal, $controller,TeamSearchLocation, Location, Client, TeamLocation, TeamProviderService, ProviderView) {
 
         $controller('LocationCommon', {$scope: $scope});
 
         $controller('CommonPagination', {$scope: $scope});
+        
+        console.log($scope.teamClientResource.teamResource.link.teamLocations);
+        TeamLocation.getTeamLocations($scope.teamClientResource.teamResource.link.teamLocations).then(function(response){
+        	console.log(response);
+//            $scope.providersData = [{'id':'1', 'name':'provider1'},{'id':'2','name':'provider2'}];
+        });
+        
+        ProviderView.allProvidersForTeam($scope.teamResource).then(function(response){
+        	console.log(response);
+        	$scope.providersData = TeamProviderService.buildMultiSelectProvidersData(response);
+//        	$scope.providersData = TeamProviderService.buildSelectedProviderData(response);
 
+//        	$scope.providersData = response;
+            console.log($scope.providersData);
+
+
+    	});
         var managedLocationList = 'locations';
         var managedClientLocationList = 'clientLocations';
-        $scope.sizeClass =  $scope.providersData.length === 0 ? 'sort col-sm-4' : 'sort col-sm-3';
+//        $scope.sizeClass =  $scope.providersData.length === 0 ? 'sort col-sm-4' : 'sort col-sm-3';
         $scope.teamClientLocations = {};
 
         $scope.hasLocationsAdded = function() {
@@ -63,7 +79,13 @@ angular.module('emmiManager')
         };
 
         $scope.savePopupLocations = function(addAnother) {
+        	console.log($scope.teamClientLocations);
+        	console.log($scope.providersData);
+        	console.log($scope.teamLocations);
+
             var req = TeamSearchLocation.getTeamProviderTeamLocationSaveRequest($scope.teamClientLocations, $scope.teamLocations, $scope.providersData);
+            console.log('req');
+            console.log(req);
             TeamSearchLocation.save($scope.teamClientResource.teamResource.link.teamLocations,req).then(function () {
                 $scope.$hide();
                 $scope.save(req,addAnother);

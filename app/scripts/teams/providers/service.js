@@ -76,7 +76,32 @@ angular.module('emmiManager')
                     teamProviderTeamLocationSaveRequest.provider.active = teamProviderTeamLocationSaveRequest.clientProvider.provider.entity.active;
             	}
             	return teamProviderTeamLocationSaveRequest;
-             }
+             },
+             buildMultiSelectProvidersData: function(providers){
+              	var options = [];
+              	angular.forEach(providers, function(provider){
+              		console.log(provider);
+              		var option = new Object({});
+              		option.id = provider.entity.id;
+              		option.label = provider.entity.provider.firstName + ' ' + provider.entity.provider.lastName;
+              		option.provider = provider.entity.provider;
+              		options.push(option);
+              	});
+              	return options;
+              },
+              buildSelectedProviderData: function(teamProviders){
+               	var options = [];
+               	angular.forEach(teamProviders, function(teamProvider){
+               		var option = new Object({});
+               		console.log(teamProvider);
+//               		option.id = teamProviderTeamLocation.teamLocation.entity.id;
+//               		option.label = teamProviderTeamLocation.teamLocation.entity.location.name;
+//               		option.teamLocation = teamProviderTeamLocation.teamLocation;
+//               		option.teamProviderTeamLocation = teamProviderTeamLocation;
+               		options.push(option);
+               	});
+               	return options;
+               }
         };
     })
 
