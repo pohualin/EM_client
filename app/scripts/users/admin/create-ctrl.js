@@ -24,6 +24,7 @@ angular.module('emmiManager')
                 if (isValid) {
                     UsersService.createUser($scope.userToBeEdit).then(function (response) {
                         // go to the view/edit page, if the save is successful
+                        _paq.push(['trackEvent', 'Form Action', 'Create Emmi User', 'Save']);
                         $location.path('/users/');
                     }, function (error) {
                         if (error.status === 409) {
