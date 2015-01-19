@@ -1,0 +1,298 @@
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-8">
+            <label for="lowercaseLetters">Allow self-service password reset:</label>
+            <input id="selfServiceReset" type="checkbox" 
+                data-ng-model="clientPasswordConfiguration.entity.passwordConfiguration.passwordReset"
+                data-ng-show="defaultPasswordConfiguration.passwordResetChangeable" />
+            <input id="selfServiceReset" type="checkbox" disabled 
+                data-ng-model="clientPasswordConfiguration.entity.passwordConfiguration.passwordReset" 
+                data-ng-hide="defaultPasswordConfiguration.passwordResetChangeable"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group"
+                 data-ng-class="{ 'has-error' : clientPasswordConfigurationForm.passwordExpirationDays.$invalid && clientPasswordConfigurationFormSubmitted }">
+                <label class="control-label" for="passwordExpirationDays">Passwords will expire after X days (
+                    {{defaultPasswordConfiguration.passwordExpirationDaysMin}} ~ 
+                    {{defaultPasswordConfiguration.passwordExpirationDaysMax}}
+                ):</label>
+                <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                     data-ng-show="clientPasswordConfigurationForm.passwordExpirationDays.$error.required && clientPasswordConfigurationFormSubmitted"
+                     data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                     data-title="Required"></div>
+                <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                     data-ng-show="clientPasswordConfigurationForm.passwordExpirationDays.$error.ngMin && clientPasswordConfigurationFormSubmitted"
+                     data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                     data-title="Please enter a valid number."></div>
+                <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                     data-ng-show="clientPasswordConfigurationForm.passwordExpirationDays.$error.ngMax && clientPasswordConfigurationFormSubmitted"
+                     data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                     data-title="Please enter a valid number."></div>
+                <input class="form-control" id="passwordExpirationDays" 
+                       data-ng-model="clientPasswordConfiguration.entity.passwordConfiguration.passwordExpirationDays"
+                       name="passwordExpirationDays"
+                       type="number" 
+                       data-ng-min="defaultPasswordConfiguration.passwordExpirationDaysMin"
+                       data-ng-max="defaultPasswordConfiguration.passwordExpirationDaysMax"
+                       required data-auto-focus>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group"
+                 data-ng-class="{ 'has-error' : clientPasswordConfigurationForm.passwordRepetitions.$invalid && clientPasswordConfigurationFormSubmitted }">
+                <label class="control-label" for="passwordRepetitions">Users can not repeat any of the previous x passwords (
+                    {{defaultPasswordConfiguration.passwordRepetitionsMin}} ~ 
+                    {{defaultPasswordConfiguration.passwordRepetitionsMax}}
+                ):</label>
+                <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                     data-ng-show="clientPasswordConfigurationForm.passwordRepetitions.$error.required && clientPasswordConfigurationFormSubmitted"
+                     data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                     data-title="Required"></div>
+                <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                     data-ng-show="clientPasswordConfigurationForm.passwordRepetitions.$error.ngMin && clientPasswordConfigurationFormSubmitted"
+                     data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                     data-title="Please enter a valid number."></div>
+                <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                     data-ng-show="clientPasswordConfigurationForm.passwordRepetitions.$error.ngMax && clientPasswordConfigurationFormSubmitted"
+                     data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                     data-title="Please enter a valid number."></div>
+                <input class="form-control" id="passwordRepetitions" 
+                       data-ng-model="clientPasswordConfiguration.entity.passwordConfiguration.passwordRepetitions"
+                       name="passwordRepetitions"
+                       type="number" 
+                       data-ng-min="defaultPasswordConfiguration.passwordRepetitionsMin"
+                       data-ng-max="defaultPasswordConfiguration.passwordRepetitionsMax"
+                       required >
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group"
+                 data-ng-class="{ 'has-error' : clientPasswordConfigurationForm.daysBetweenPasswordChange.$invalid && clientPasswordConfigurationFormSubmitted }">
+                <label class="control-label" for="daysBetweenPasswordChange">Days allowed between password changes (
+                    {{defaultPasswordConfiguration.daysBetweenPasswordChangeMin}} ~ 
+                    {{defaultPasswordConfiguration.daysBetweenPasswordChangeMax}}
+                ):</label>
+                <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                     data-ng-show="clientPasswordConfigurationForm.daysBetweenPasswordChange.$error.required && clientPasswordConfigurationFormSubmitted"
+                     data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                     data-title="Required"></div>
+                <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                     data-ng-show="clientPasswordConfigurationForm.daysBetweenPasswordChange.$error.ngMin && clientPasswordConfigurationFormSubmitted"
+                     data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                     data-title="Please enter a valid number."></div>
+                <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                     data-ng-show="clientPasswordConfigurationForm.daysBetweenPasswordChange.$error.ngMax && clientPasswordConfigurationFormSubmitted"
+                     data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                     data-title="Please enter a valid number."></div>
+                <input class="form-control" id="daysBetweenPasswordChange" 
+                       data-ng-model="clientPasswordConfiguration.entity.passwordConfiguration.daysBetweenPasswordChange"
+                       name="daysBetweenPasswordChange"
+                       type="number" 
+                       data-ng-min="defaultPasswordConfiguration.daysBetweenPasswordChangeMin"
+                       data-ng-max="defaultPasswordConfiguration.daysBetweenPasswordChangeMax"
+                       required >
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group"
+                 data-ng-class="{ 'has-error' : clientPasswordConfigurationForm.passwordLength.$invalid && clientPasswordConfigurationFormSubmitted }">
+                <label class="control-label" for="passwordLength">Password must be at least X characters long (
+                    {{defaultPasswordConfiguration.passwordLengthMin}} ~ 
+                    {{defaultPasswordConfiguration.passwordLengthMax}}
+                ):</label>
+                <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                     data-ng-show="clientPasswordConfigurationForm.passwordLength.$error.required && clientPasswordConfigurationFormSubmitted"
+                     data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                     data-title="Required"></div>
+                <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                     data-ng-show="clientPasswordConfigurationForm.passwordLength.$error.ngMin && clientPasswordConfigurationFormSubmitted"
+                     data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                     data-title="Please enter a valid number."></div>
+                <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                     data-ng-show="clientPasswordConfigurationForm.passwordLength.$error.ngMax && clientPasswordConfigurationFormSubmitted"
+                     data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                     data-title="Please enter a valid number."></div>
+                <input class="form-control" id="passwordLength" 
+                       data-ng-model="clientPasswordConfiguration.entity.passwordConfiguration.passwordLength"
+                       name="passwordLength"
+                       type="number" 
+                       data-ng-min="defaultPasswordConfiguration.passwordLengthMin"
+                       data-ng-max="defaultPasswordConfiguration.passwordLengthMax"
+                       required >
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <label for="uppercaseLetters">Passwords must contain at least 1 uppercase letter:</label>
+            <input id="uppercaseLetters" type="checkbox" 
+                data-ng-model="clientPasswordConfiguration.entity.passwordConfiguration.uppercaseLetters"
+                data-ng-show="defaultPasswordConfiguration.uppercaseLettersChangeable" />
+            <input id="uppercaseLetters" type="checkbox" disabled 
+                data-ng-model="clientPasswordConfiguration.entity.passwordConfiguration.uppercaseLetters" 
+                data-ng-hide="defaultPasswordConfiguration.uppercaseLettersChangeable"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <label for="lowercaseLetters">Passwords must contain at least 1 lowercase letter:</label>
+            <input id="lowercaseLetters" type="checkbox" 
+                data-ng-model="clientPasswordConfiguration.entity.passwordConfiguration.lowercaseLetters"
+                data-ng-show="defaultPasswordConfiguration.lowercaseLettersChangeable" />
+            <input id="lowercaseLetters" type="checkbox" disabled 
+                data-ng-model="clientPasswordConfiguration.entity.passwordConfiguration.lowercaseLetters" 
+                data-ng-hide="defaultPasswordConfiguration.lowercaseLettersChangeable"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <label for="numbers">Passwords must contain at least 1 number:</label>
+            <input id="numbers" type="checkbox" 
+                data-ng-model="clientPasswordConfiguration.entity.passwordConfiguration.numbers"
+                data-ng-show="defaultPasswordConfiguration.numbersChangeable" />
+            <input id="numbers" type="checkbox" disabled 
+                data-ng-model="clientPasswordConfiguration.entity.passwordConfiguration.numbers" 
+                data-ng-hide="defaultPasswordConfiguration.numbersChangeable"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <label for="specialChars">Passwords must contain at least 1 special character:</label>
+            <input id="specialChars" type="checkbox" 
+                data-ng-model="clientPasswordConfiguration.entity.passwordConfiguration.specialChars"
+                data-ng-show="defaultPasswordConfiguration.specialCharsChangeable" />
+            <input id="specialChars" type="checkbox" disabled 
+                data-ng-model="clientPasswordConfiguration.entity.passwordConfiguration.specialChars" 
+                data-ng-hide="defaultPasswordConfiguration.specialCharsChangeable"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group"
+                 data-ng-class="{ 'has-error' : clientPasswordConfigurationForm.lockoutAttemps.$invalid && clientPasswordConfigurationFormSubmitted }">
+                <label class="control-label" for="lockoutAttemps">Users will be locked out after x failed login attempts (
+                    {{defaultPasswordConfiguration.lockoutAttempsMin}} ~ 
+                    {{defaultPasswordConfiguration.lockoutAttempsMax}}
+                ):</label>
+                <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                     data-ng-show="clientPasswordConfigurationForm.lockoutAttemps.$error.required && clientPasswordConfigurationFormSubmitted"
+                     data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                     data-title="Required"></div>
+                <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                     data-ng-show="clientPasswordConfigurationForm.lockoutAttemps.$error.ngMin && clientPasswordConfigurationFormSubmitted"
+                     data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                     data-title="Please enter a valid number."></div>
+                <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                     data-ng-show="clientPasswordConfigurationForm.lockoutAttemps.$error.ngMax && clientPasswordConfigurationFormSubmitted"
+                     data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                     data-title="Please enter a valid number."></div>
+                <input class="form-control" id="lockoutAttemps" 
+                       data-ng-model="clientPasswordConfiguration.entity.passwordConfiguration.lockoutAttemps"
+                       name="lockoutAttemps"
+                       type="number" 
+                       data-ng-min="defaultPasswordConfiguration.lockoutAttempsMin"
+                       data-ng-max="defaultPasswordConfiguration.lockoutAttempsMax"
+                       required >
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group"
+                 data-ng-class="{ 'has-error' : clientPasswordConfigurationForm.lockoutReset.$invalid && clientPasswordConfigurationFormSubmitted }">
+                <label class="control-label" for="lockoutReset">Lockouts are reset by your EmmiManager Administrator or automatically after X minutes (
+                    {{defaultPasswordConfiguration.lockoutResetMin}} ~ 
+                    {{defaultPasswordConfiguration.lockoutResetMax}}
+                ):</label>
+                <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                     data-ng-show="clientPasswordConfigurationForm.lockoutReset.$error.required && clientPasswordConfigurationFormSubmitted"
+                     data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                     data-title="Required"></div>
+                <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                     data-ng-show="clientPasswordConfigurationForm.lockoutReset.$error.ngMin && clientPasswordConfigurationFormSubmitted"
+                     data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                     data-title="Please enter a valid number."></div>
+                <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                     data-ng-show="clientPasswordConfigurationForm.lockoutReset.$error.ngMax && clientPasswordConfigurationFormSubmitted"
+                     data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                     data-title="Please enter a valid number."></div>
+                <input class="form-control" id="lockoutReset" 
+                       data-ng-model="clientPasswordConfiguration.entity.passwordConfiguration.lockoutReset"
+                       name="lockoutReset"
+                       type="number" 
+                       data-ng-min="defaultPasswordConfiguration.lockoutResetMin"
+                       data-ng-max="defaultPasswordConfiguration.lockoutResetMax"
+                       required >
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group"
+                 data-ng-class="{ 'has-error' : clientPasswordConfigurationForm.idleTime.$invalid && clientPasswordConfigurationFormSubmitted }">
+                <label class="control-label" for="idleTime">Set EmmiManager to time out and require login after X minutes of idle time (
+                    {{defaultPasswordConfiguration.idleTimeMin}} ~ 
+                    {{defaultPasswordConfiguration.idleTimeMax}}
+                ):</label>
+                <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                     data-ng-show="clientPasswordConfigurationForm.idleTime.$error.required && clientPasswordConfigurationFormSubmitted"
+                     data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                     data-title="Required"></div>
+                <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                     data-ng-show="clientPasswordConfigurationForm.idleTime.$error.ngMin && clientPasswordConfigurationFormSubmitted"
+                     data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                     data-title="Please enter a valid number."></div>
+                <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                     data-ng-show="clientPasswordConfigurationForm.idleTime.$error.ngMax && clientPasswordConfigurationFormSubmitted"
+                     data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                     data-title="Please enter a valid number."></div>
+                <input class="form-control" id="idleTime" 
+                       data-ng-model="clientPasswordConfiguration.entity.passwordConfiguration.idleTime"
+                       name="idleTime"
+                       type="number" 
+                       data-ng-min="defaultPasswordConfiguration.idleTimeMin"
+                       data-ng-max="defaultPasswordConfiguration.idleTimeMax"
+                       required >
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group"
+                 data-ng-class="{ 'has-error' : clientPasswordConfigurationForm.passwordExpirationDaysReminder.$invalid && clientPasswordConfigurationFormSubmitted }">
+                <label class="control-label" for="passwordExpirationDaysReminder">Remind user about password expiration X days before (
+                    {{defaultPasswordConfiguration.passwordExpirationDaysReminderMin}} ~ 
+                    {{defaultPasswordConfiguration.passwordExpirationDaysReminderMax}}
+                ):</label>
+                <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                     data-ng-show="clientPasswordConfigurationForm.passwordExpirationDaysReminder.$error.required && clientPasswordConfigurationFormSubmitted"
+                     data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                     data-title="Required"></div>
+                <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                     data-ng-show="clientPasswordConfigurationForm.passwordExpirationDaysReminder.$error.ngMin && clientPasswordConfigurationFormSubmitted"
+                     data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                     data-title="Please enter a valid number."></div>
+                <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                     data-ng-show="clientPasswordConfigurationForm.passwordExpirationDaysReminder.$error.ngMax && clientPasswordConfigurationFormSubmitted"
+                     data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                     data-title="Please enter a valid number."></div>
+                <input class="form-control" id="passwordExpirationDaysReminder" 
+                       data-ng-model="clientPasswordConfiguration.entity.passwordConfiguration.passwordExpirationDaysReminder"
+                       name="passwordExpirationDaysReminder"
+                       type="number" 
+                       data-ng-min="defaultPasswordConfiguration.passwordExpirationDaysReminderMin"
+                       data-ng-max="defaultPasswordConfiguration.passwordExpirationDaysReminderMax"
+                       required >
+            </div>
+        </div>
+    </div>
+</div>
+
