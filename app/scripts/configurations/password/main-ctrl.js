@@ -50,8 +50,6 @@ angular.module('emmiManager')
          * Show/hide cancel and save buttons
          */
         $scope.showButtons = function() {
-            console.log('dirty?' + $scope.clientPasswordConfigurationForm.$dirty);
-            window.paul = $scope.clientPasswordConfigurationForm;
             if (!$scope.originalClientPasswordConfiguration || !$scope.clientPasswordConfiguration) {
                 return false;
             }
