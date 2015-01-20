@@ -33,7 +33,7 @@ angular.module('emmiManager')
                             return response;
                         });
                 }
-            }
+            };
         }
     ])
 ;
