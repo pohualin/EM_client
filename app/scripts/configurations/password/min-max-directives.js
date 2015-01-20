@@ -8,7 +8,9 @@ angular.module('emmiManager')
             require: 'ngModel',
             link: function(scope, elem, attr, ctrl) {
                 scope.$watch(attr.ngMin, function(){
-                    if (ctrl.$isDirty) ctrl.$setViewValue(ctrl.$viewValue);
+                    if (ctrl.$isDirty) {
+                        ctrl.$setViewValue(ctrl.$viewValue);
+                    }
                 });
                 var minValidator = function(value) {
                   var min = scope.$eval(attr.ngMin) || 0;
@@ -33,7 +35,9 @@ angular.module('emmiManager')
             require: 'ngModel',
             link: function(scope, elem, attr, ctrl) {
                 scope.$watch(attr.ngMax, function(){
-                    if (ctrl.$isDirty) ctrl.$setViewValue(ctrl.$viewValue);
+                    if (ctrl.$isDirty) {
+                        ctrl.$setViewValue(ctrl.$viewValue);
+                    } 
                 });
                 var maxValidator = function(value) {
                   var max = scope.$eval(attr.ngMax) || Infinity;

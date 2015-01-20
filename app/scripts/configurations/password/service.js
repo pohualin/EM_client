@@ -15,11 +15,9 @@ angular.module('emmiManager')
                  * @returns a default ClientPasswordConfiguration
                  */
                 remove: function(clientPasswordConfiguration){
-                    window.paul = clientPasswordConfiguration
                     return $http.delete(UriTemplate.create(clientPasswordConfiguration.link.self).stringify({id: clientPasswordConfiguration.id}))
-                        .then(function (response) {
-                            CommonService.convertPageContentLinks(response.data);
-                            return response.data;
+                        .then(function(response){
+                            return response;
                         });
                 },
                 

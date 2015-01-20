@@ -21,11 +21,13 @@ angular.module('emmiManager')
          */
         $scope.reset = function(clientPasswordConfigurationForm){
             $scope.loading = true;
-            ClientPasswordConfigurationsService.remove($scope.clientPasswordConfiguration).then(function(response){
-                $scope.originalClientPasswordConfiguration = response;
-                $scope.clientPasswordConfiguration = angular.copy($scope.originalClientPasswordConfiguration);
-                $scope.defaultPasswordConfiguration = response.entity.defaultPasswordConfiguration;
-                $scope.loading = false;
+            ClientPasswordConfigurationsService.remove($scope.clientPasswordConfiguration).then(function(){
+                ClientPasswordConfigurationsService.getClientPasswordConfiguration().then(function(response){
+                    $scope.originalClientPasswordConfiguration = response;
+                    $scope.clientPasswordConfiguration = angular.copy($scope.originalClientPasswordConfiguration);
+                    $scope.defaultPasswordConfiguration = response.entity.defaultPasswordConfiguration;
+                    $scope.loading = false;
+                });
             });
         };
 
@@ -48,14 +50,15 @@ angular.module('emmiManager')
          * Show/hide cancel and save buttons
          */
         $scope.showButtons = function() {
-            if (!$scope.originalClientPasswordConfiguration
-                    || !$scope.clientPasswordConfiguration) {
+            console.log('dirty?' + $scope.clientPasswordConfigurationForm.$dirty);
+            window.paul = $scope.clientPasswordConfigurationForm;
+            if (!$scope.originalClientPasswordConfiguration || !$scope.clientPasswordConfiguration) {
                 return false;
             }
             return !angular
                     .equals(
-                            $scope.originalClientPasswordConfiguration.entity.passwordConfiguration,
-                            $scope.clientPasswordConfiguration.entity.passwordConfiguration);
+                            $scope.originalClientPasswordConfiguration.entity,
+                            $scope.clientPasswordConfiguration.entity);
         };
     
         /**

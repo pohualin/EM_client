@@ -3,10 +3,10 @@
         <div class="col-md-8">
             <label for="lowercaseLetters">Allow self-service password reset:</label>
             <input id="selfServiceReset" type="checkbox" 
-                data-ng-model="clientPasswordConfiguration.entity.passwordConfiguration.passwordReset"
+                data-ng-model="clientPasswordConfiguration.entity.passwordReset"
                 data-ng-show="defaultPasswordConfiguration.passwordResetChangeable" />
             <input id="selfServiceReset" type="checkbox" disabled 
-                data-ng-model="clientPasswordConfiguration.entity.passwordConfiguration.passwordReset" 
+                data-ng-model="clientPasswordConfiguration.entity.passwordReset" 
                 data-ng-hide="defaultPasswordConfiguration.passwordResetChangeable"/>
         </div>
     </div>
@@ -31,7 +31,7 @@
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                      data-title="Please enter a valid number."></div>
                 <input class="form-control" id="passwordExpirationDays" 
-                       data-ng-model="clientPasswordConfiguration.entity.passwordConfiguration.passwordExpirationDays"
+                       data-ng-model="clientPasswordConfiguration.entity.passwordExpirationDays"
                        name="passwordExpirationDays"
                        type="number" 
                        data-ng-min="defaultPasswordConfiguration.passwordExpirationDaysMin"
@@ -61,7 +61,7 @@
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                      data-title="Please enter a valid number."></div>
                 <input class="form-control" id="passwordRepetitions" 
-                       data-ng-model="clientPasswordConfiguration.entity.passwordConfiguration.passwordRepetitions"
+                       data-ng-model="clientPasswordConfiguration.entity.passwordRepetitions"
                        name="passwordRepetitions"
                        type="number" 
                        data-ng-min="defaultPasswordConfiguration.passwordRepetitionsMin"
@@ -91,7 +91,7 @@
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                      data-title="Please enter a valid number."></div>
                 <input class="form-control" id="daysBetweenPasswordChange" 
-                       data-ng-model="clientPasswordConfiguration.entity.passwordConfiguration.daysBetweenPasswordChange"
+                       data-ng-model="clientPasswordConfiguration.entity.daysBetweenPasswordChange"
                        name="daysBetweenPasswordChange"
                        type="number" 
                        data-ng-min="defaultPasswordConfiguration.daysBetweenPasswordChangeMin"
@@ -121,7 +121,7 @@
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                      data-title="Please enter a valid number."></div>
                 <input class="form-control" id="passwordLength" 
-                       data-ng-model="clientPasswordConfiguration.entity.passwordConfiguration.passwordLength"
+                       data-ng-model="clientPasswordConfiguration.entity.passwordLength"
                        name="passwordLength"
                        type="number" 
                        data-ng-min="defaultPasswordConfiguration.passwordLengthMin"
@@ -134,10 +134,10 @@
         <div class="col-md-8">
             <label for="uppercaseLetters">Passwords must contain at least 1 uppercase letter:</label>
             <input id="uppercaseLetters" type="checkbox" 
-                data-ng-model="clientPasswordConfiguration.entity.passwordConfiguration.uppercaseLetters"
+                data-ng-model="clientPasswordConfiguration.entity.uppercaseLetters"
                 data-ng-show="defaultPasswordConfiguration.uppercaseLettersChangeable" />
             <input id="uppercaseLetters" type="checkbox" disabled 
-                data-ng-model="clientPasswordConfiguration.entity.passwordConfiguration.uppercaseLetters" 
+                data-ng-model="clientPasswordConfiguration.entity.uppercaseLetters" 
                 data-ng-hide="defaultPasswordConfiguration.uppercaseLettersChangeable"/>
         </div>
     </div>
@@ -145,10 +145,10 @@
         <div class="col-md-8">
             <label for="lowercaseLetters">Passwords must contain at least 1 lowercase letter:</label>
             <input id="lowercaseLetters" type="checkbox" 
-                data-ng-model="clientPasswordConfiguration.entity.passwordConfiguration.lowercaseLetters"
+                data-ng-model="clientPasswordConfiguration.entity.lowercaseLetters"
                 data-ng-show="defaultPasswordConfiguration.lowercaseLettersChangeable" />
             <input id="lowercaseLetters" type="checkbox" disabled 
-                data-ng-model="clientPasswordConfiguration.entity.passwordConfiguration.lowercaseLetters" 
+                data-ng-model="clientPasswordConfiguration.entity.lowercaseLetters" 
                 data-ng-hide="defaultPasswordConfiguration.lowercaseLettersChangeable"/>
         </div>
     </div>
@@ -156,10 +156,10 @@
         <div class="col-md-8">
             <label for="numbers">Passwords must contain at least 1 number:</label>
             <input id="numbers" type="checkbox" 
-                data-ng-model="clientPasswordConfiguration.entity.passwordConfiguration.numbers"
+                data-ng-model="clientPasswordConfiguration.entity.numbers"
                 data-ng-show="defaultPasswordConfiguration.numbersChangeable" />
             <input id="numbers" type="checkbox" disabled 
-                data-ng-model="clientPasswordConfiguration.entity.passwordConfiguration.numbers" 
+                data-ng-model="clientPasswordConfiguration.entity.numbers" 
                 data-ng-hide="defaultPasswordConfiguration.numbersChangeable"/>
         </div>
     </div>
@@ -167,10 +167,10 @@
         <div class="col-md-8">
             <label for="specialChars">Passwords must contain at least 1 special character:</label>
             <input id="specialChars" type="checkbox" 
-                data-ng-model="clientPasswordConfiguration.entity.passwordConfiguration.specialChars"
+                data-ng-model="clientPasswordConfiguration.entity.specialChars"
                 data-ng-show="defaultPasswordConfiguration.specialCharsChangeable" />
             <input id="specialChars" type="checkbox" disabled 
-                data-ng-model="clientPasswordConfiguration.entity.passwordConfiguration.specialChars" 
+                data-ng-model="clientPasswordConfiguration.entity.specialChars" 
                 data-ng-hide="defaultPasswordConfiguration.specialCharsChangeable"/>
         </div>
     </div>
@@ -195,7 +195,7 @@
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                      data-title="Please enter a valid number."></div>
                 <input class="form-control" id="lockoutAttemps" 
-                       data-ng-model="clientPasswordConfiguration.entity.passwordConfiguration.lockoutAttemps"
+                       data-ng-model="clientPasswordConfiguration.entity.lockoutAttemps"
                        name="lockoutAttemps"
                        type="number" 
                        data-ng-min="defaultPasswordConfiguration.lockoutAttempsMin"
@@ -225,7 +225,7 @@
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                      data-title="Please enter a valid number."></div>
                 <input class="form-control" id="lockoutReset" 
-                       data-ng-model="clientPasswordConfiguration.entity.passwordConfiguration.lockoutReset"
+                       data-ng-model="clientPasswordConfiguration.entity.lockoutReset"
                        name="lockoutReset"
                        type="number" 
                        data-ng-min="defaultPasswordConfiguration.lockoutResetMin"
@@ -255,7 +255,7 @@
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                      data-title="Please enter a valid number."></div>
                 <input class="form-control" id="idleTime" 
-                       data-ng-model="clientPasswordConfiguration.entity.passwordConfiguration.idleTime"
+                       data-ng-model="clientPasswordConfiguration.entity.idleTime"
                        name="idleTime"
                        type="number" 
                        data-ng-min="defaultPasswordConfiguration.idleTimeMin"
@@ -285,7 +285,7 @@
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                      data-title="Please enter a valid number."></div>
                 <input class="form-control" id="passwordExpirationDaysReminder" 
-                       data-ng-model="clientPasswordConfiguration.entity.passwordConfiguration.passwordExpirationDaysReminder"
+                       data-ng-model="clientPasswordConfiguration.entity.passwordExpirationDaysReminder"
                        name="passwordExpirationDaysReminder"
                        type="number" 
                        data-ng-min="defaultPasswordConfiguration.passwordExpirationDaysReminderMin"
