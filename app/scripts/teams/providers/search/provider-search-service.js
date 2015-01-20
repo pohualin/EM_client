@@ -2,18 +2,31 @@
 
 angular.module('emmiManager')
 
-	.service('ProviderSearch', function ($http, $q, Session, UriTemplate, CommonService, arrays) {
+	.service('ProviderSearch', function ($http, $q, Session, UriTemplate, CommonService, arrays, TeamLocation, TeamProviderService) {
         var referenceData;
 		return {
-			search: function (teamResource, query, status, sort, pageSize) {
-				return $http.get(UriTemplate.create(teamResource.link.possibleProviders).stringify({name: query,
-                        status: status,
-                        sort: sort && sort.property ? sort.property + ',' + (sort.ascending ? 'asc' : 'desc') : '',
-                        size: pageSize
-				})).then(function (response) {
-					CommonService.convertPageContentLinks(response.data);
-					return response.data;
-				});
+			search: function(teamResource, query, status, sort, pageSize){
+				var possibleProviders;
+				var allTeamLocations;
+				var deferred = $q.defer();
+				$q.all([
+			            $http.get(UriTemplate.create(teamResource.link.possibleProviders).stringify({name: query,
+			                        status: status,
+			                        sort: sort && sort.property ? sort.property + ',' + (sort.ascending ? 'asc' : 'desc') : '',
+			                        size: pageSize
+							})).then(function(response){
+								possibleProviders = response.data;
+							}),
+						TeamLocation.getTeamLocations(teamResource.link.teamLocations).then(function(locationsResponse){
+						            allTeamLocations = TeamProviderService.buildMultiSelectData(locationsResponse);
+						        })
+				        ]).then(function () {
+							angular.forEach(possibleProviders.content, function(provider){
+				    			provider.provider.entity.selectedTeamLocations = angular.copy(allTeamLocations);
+				    		});
+							deferred.resolve(possibleProviders);
+							});
+				return deferred.promise;
 			},
 			/**
 			 * Search method called from home page provider search
@@ -113,7 +126,7 @@ angular.module('emmiManager')
                  	 });
                  	 return page;
             	});
-            },
+            }
 		};
 	})
 

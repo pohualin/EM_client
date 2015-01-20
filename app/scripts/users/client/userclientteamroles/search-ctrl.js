@@ -100,7 +100,7 @@ angular.module('emmiManager')
                     });
                 // turn off the sort after the search request has been made, the response will rebuild
                 $scope.sortProperty = null;
-                _paq.push(['trackSiteSearch', query, 'User Client User Client Team Role Team Search']);
+                _paq.push(['trackSiteSearch', query, 'User Team Role Search']);
             }
 
             init();
