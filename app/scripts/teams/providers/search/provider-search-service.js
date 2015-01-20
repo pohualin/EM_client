@@ -126,7 +126,7 @@ angular.module('emmiManager')
                  	 });
                  	 return page;
             	});
-            }
+            },
 		};
 	})
 
