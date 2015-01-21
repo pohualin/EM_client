@@ -5,7 +5,10 @@
     <div data-ng-show="!teamsExistForClient"><br>No teams exist for this client.</div>
 
     <div data-ng-show="teamsExistForClient">
+
+        <!--call updateState when groups is changed, disable this drop down if we are showing untagged teams-->
         <div data-ng-class="{'masked': showUntaggedTeams!=='false'&& showUntaggedTeams!==false}" class="row">
+            <!-- show this drop down if we are only showing active teams -->
             <div class="col-md-5">organize by:</div>
             <select data-ng-hide="showInactiveTeams || !inactiveTeams" class="col-md-6 teamFilterOrganizeBy"
                     data-ng-model="selectedGroup"
@@ -13,6 +16,7 @@
                     data-ng-change="updateState()">
                 <option value="">All Active Teams</option>
             </select>
+            <!-- show this drop down if we are showing active and inactive teams -->
             <select data-ng-show="showInactiveTeams || !inactiveTeams" class="col-md-6 teamFilterOrganizeBy"
                     data-ng-model="selectedGroup"
                     data-ng-options="group.entity.name for group in clientGroups track by group.entity.id | orderBy:'name'"
@@ -20,9 +24,12 @@
                 <option value="">All Teams</option>
             </select>
         </div>
+
+        <!--disable this drop down if we are showing untagged teams-->
         <div data-ng-class="{'masked': showUntaggedTeams!=='false' && showUntaggedTeams!==false}" class="row">
             <div class="col-md-5">filter by:</div>
             <div class="col-md-12">
+                <!--chosen widget controls selecting tags, calls updateState when changed, its populated by clientTagGroupToDisplay when the page first loads-->
                 <select data-chosen data-placeholder="Choose some tags" multiple
                         data-ng-model="filterTags" data-ng-change="updateState()"
                         data-ng-options="tag.text
@@ -32,35 +39,44 @@
                 </select>
             </div>
         </div>
+
+        <!--show only teams without tags assigned to them when this is checked-->
         <div class="col-md-12 row" data-ng-show="teamsWithNoTeamTags">
             <input type="checkbox" data-ng-model="showUnTaggedTeams" data-ng-checked="checkUnTaggedTeams"
-                   data-ng-change="toggleUntaggedTeams()"> Show Untagged
-            Teams
+                   data-ng-change="toggleUntaggedTeams()"> Show Untagged Teams
         </div>
+
+        <!--toggle what the show inactive teams link says and call toggleInactiveTeams-->
         <div class="col-md-12 row" data-ng-show="inactiveTeams">
             <a href="" data-ng-hide="showInactiveTeams" data-ng-click="toggleInactiveTeams()">show inactive teams</a>
             <a href="" data-ng-show="showInactiveTeams" data-ng-click="toggleInactiveTeams()">hide inactive teams</a>
         </div>
 
-
+        <!--there is a display template that shows ungrouped teams and a display template that shows groups of teams-->
+        <!-- show teams un-grouped -->
         <div data-ng-hide="useGroupDisplay" class="col-md-12 row">
             <hr>
             <div data-ng-repeat="team in clientTeams | orderBy:'name'">
+                <!--when a user clicks on a team they are taken to that team's page-->
                 <a data-ng-href="#/clients/{{clientId}}/teams/{{team.id}}?{{currentRouteQueryString}}">{{team.name}}</a>
             </div>
             <div data-ng-show="clientTeams===null">No teams exist for this search.</div>
             <hr>
         </div>
 
+        <!--show teams in groups-->
         <div data-ng-show="useGroupDisplay" class="col-md-12 row">
             <hr>
             <div data-ng-repeat="(tag,teamList) in listOfTeamsByTag">
+                <!--show the tag in bold with the number of teams in parentheses -->
                 <b>{{tag}}</b><data-ng-pluralize count="teamList.length"
                                                  when="{'1': ' ({{teamList.length}} team)',
                                                         'other':' ({{teamList.length}} teams)'}">
                               </data-ng-pluralize>
 
+                <!--show the teams that have the above tag-->
                 <div data-ng-repeat="team in teamList | orderBy:'name'">
+                    <!--take user to the team's page when the link is clicked-->
                     <a data-ng-href="#/clients/{{clientId}}/teams/{{team.id}}?{{currentRouteQueryString}}">{{team.name}}</a>
                 </div>
             </div>
@@ -72,7 +88,7 @@
             <hr>
             Teams without a '{{selectedGroup.entity.name}}' tag
             <div data-ng-repeat="team in teamsNotInGroup | orderBy:'name'">
-
+                <!--show all the teams that do not have a tag in the organize by group that was selected-->
                 <a data-ng-href="#/clients/{{clientId}}/teams/{{team.id}}?{{currentRouteQueryString}}">{{team.name}}</a>
             </div>
         </div>
