@@ -45,10 +45,7 @@ angular.module('emmiManager')
         };
 
         $scope.addLocations = function () {
-            ProviderView.allProvidersForTeam($scope.teamResource).then(function(response){
-            	$scope.providersData = TeamProviderService.buildMultiSelectProvidersData(response);
-                $modal({scope: $scope, template: 'partials/team/location/search.html', animation: 'none', backdropAnimation: 'emmi-fade', show: true, backdrop: 'static'});
-        	});
+        	$modal({scope: $scope, template: 'partials/team/location/search.html', animation: 'none', backdropAnimation: 'emmi-fade', show: true, backdrop: 'static'});
         };
 
         $scope.cancelPopup = function() {

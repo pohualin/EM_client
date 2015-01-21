@@ -2,17 +2,12 @@
 
 angular.module('emmiManager')
 
-    .controller('SearchTeamsLocationsController', function ($scope,$modal, $controller,TeamSearchLocation, Location, Client, ProviderView) {
+    .controller('SearchTeamsLocationsController', function ($rootScope, $scope, $modal, $controller,TeamSearchLocation, Location, Client, ProviderView, TeamProviderService) {
 
         $controller('LocationCommon', {$scope: $scope});
 
         $controller('CommonPagination', {$scope: $scope});
-
-        var managedLocationList = 'locations';
-        var managedClientLocationList = 'clientLocations';
-//        $scope.sizeClass =  $scope.providersData.length === 0 ? 'sort col-sm-4' : 'sort col-sm-3';
-        $scope.teamClientLocations = {};
-
+     
         $scope.hasLocationsAdded = function() {
             var resp = false;
             angular.forEach( $scope.teamLocations , function (location) {
@@ -67,6 +62,7 @@ angular.module('emmiManager')
             TeamSearchLocation.save($scope.teamClientResource.teamResource.link.teamLocations,req).then(function () {
                 $scope.$hide();
                 $scope.save(req,addAnother);
+                $rootScope.$broadcast('event:teamLocationSavedWithProvider');
             });
         };
 
@@ -205,12 +201,22 @@ angular.module('emmiManager')
             $modal({scope: $scope, template: 'partials/team/location/new.html', animation: 'none', backdropAnimation: 'emmi-fade', backdrop: 'static'});
         };
 
+        
+        var managedLocationList = 'locations';
+        var managedClientLocationList = 'clientLocations';
+        ProviderView.allProvidersForTeam($scope.teamResource).then(function(response){
+        	$scope.providersData = TeamProviderService.buildMultiSelectProvidersData(response);
+        	$scope.sizeClass =  $scope.providersData.length === 0 ? 'sort col-sm-4' : 'sort col-sm-3';
+            Location.findForClient(Client.getClient()).then(function (allLocations) {
+                $scope.handleResponse(allLocations, managedClientLocationList);
+                $scope.setClientLocationSelected($scope.clientLocations);
+            });
+    	});
+        
+        $scope.teamClientLocations = {};        
         $scope.cleanSearch();
 
-        Location.findForClient(Client.getClient()).then(function (allLocations) {
-            $scope.handleResponse(allLocations, managedClientLocationList);
-            $scope.setClientLocationSelected($scope.clientLocations);
-        });
+
 
     })
 
