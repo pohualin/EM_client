@@ -34,8 +34,6 @@ angular.module('emmiManager')
                 angular.forEach( teamClientLocations , function (location) {
                     var req = {};
                     req.location = location;
-                    console.log(providersList);
-                    console.log(location.providersSelected);
 
                     //Select ALL no rows on database
                     if (providersList.length === location.providersSelected.length) { 

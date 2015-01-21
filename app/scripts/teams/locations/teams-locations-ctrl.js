@@ -9,16 +9,7 @@ angular.module('emmiManager')
         $controller('CommonPagination', {$scope: $scope});
 
         var managedLocationList = 'locations';
-        console.log('in teamslocationcontroller');
-//        $scope.providersData = [{'id':'1', 'name':'provider1'},{'id':'2','name':'provider2'}];
-//        ProviderView.allProvidersForTeam($scope.teamResource).then(function(response){
-//        	$scope.providersData = TeamProviderService.buildMultiSelectData(response);
-//    	});
-        /*TeamLocation.getTeamLocations($scope.teamClientResource.teamResource.link.teamLocations).then(function(response){
-            $scope.providersData = TeamProviderService.buildMultiSelectData(response);
-            console.log($scope.providersData);
-        });*/
-//        $scope.providersData = [];
+
         $scope.teamLocations = {}; //used to hold the locations and manipulate internally
 
         $scope.editLocation = function (location) {
@@ -54,7 +45,10 @@ angular.module('emmiManager')
         };
 
         $scope.addLocations = function () {
-           $modal({scope: $scope, template: 'partials/team/location/search.html', animation: 'none', backdropAnimation: 'emmi-fade', show: true, backdrop: 'static'});
+            ProviderView.allProvidersForTeam($scope.teamResource).then(function(response){
+            	$scope.providersData = TeamProviderService.buildMultiSelectProvidersData(response);
+                $modal({scope: $scope, template: 'partials/team/location/search.html', animation: 'none', backdropAnimation: 'emmi-fade', show: true, backdrop: 'static'});
+        	});
         };
 
         $scope.cancelPopup = function() {
