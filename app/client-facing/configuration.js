@@ -32,19 +32,19 @@ angular.module('emmiManager', [
     .constant('URL_PARAMETERS', {
         SELECTED_GROUP: 'g',
         SELECTED_TAGS: 'st',
-        CLIENT:'c',
-        TEAM:'t',
-        PROVIDER:'p',
-        LOCATION:'l',
-        USER:'u',
-        QUERY:'q',
-        PAGE:'p',
-        STATUS:'status',
-        SORT:'sort',
-        DIRECTION:'dir',
-        SIZE:'size',
-        INACTIVE_TEAMS:'i',
-        UNTAGGED_TEAMS:'ut'
+        CLIENT: 'c',
+        TEAM: 't',
+        PROVIDER: 'p',
+        LOCATION: 'l',
+        USER: 'u',
+        QUERY: 'q',
+        PAGE: 'p',
+        STATUS: 'status',
+        SORT: 'sort',
+        DIRECTION: 'dir',
+        SIZE: 'size',
+        INACTIVE_TEAMS: 'i',
+        UNTAGGED_TEAMS: 'ut'
     })
     .config(function ($httpProvider, $translateProvider, tmhDynamicLocaleProvider, HateoasInterceptorProvider, $datepickerProvider, API) {
 

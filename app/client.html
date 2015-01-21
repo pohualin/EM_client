@@ -1,16 +1,16 @@
 <!doctype html>
-<html data-ng-app="emmiRouter" data-ng-csp class="no-js">
+<html data-ng-csp class="no-js">
 <head>
     <meta charset="utf-8">
-    <title data-ng-bind="page.title">Emmi Manager Router</title>
+    <title data-ng-bind="page.title">Emmi Manager</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="-1">
-    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="cache-control" content="no-cache"/>
 
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <link href="favicon.ico" rel="icon" type="image/x-icon" />
+    <link href="favicon.ico" rel="icon" type="image/x-icon"/>
 
     <!-- build:css({.tmp,app}) styles/main.css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
@@ -58,11 +58,31 @@
 <!-- endbower -->
 <!-- endbuild -->
 
-<!-- build:js({app,.tmp}) scripts/emmi-router.js -->
-<script src="app-router/configuration.js"></script>
-<script src="app-router/main-ctrl.js"></script>
-<script src="app-router/main-route.js"></script>
-<!-- inject:router-partials -->
+<!-- build:js({app,.tmp}) scripts/client-main.js -->
+<script src="scripts/vendor/http-auth-interceptor.js"></script>
+<script src="scripts/vendor/hateoas.js"></script>
+<script src="scripts/common/directives/multi-select/multiselect.js"></script>
+<script src="scripts/common/directives/typeahead/typeahead.js"></script>
+<script src="scripts/common/directives/tags-input/tags-input.js"></script>
+<script src="scripts/common/directives/truncate/truncate.js"></script>
+<script src="scripts/common/directives/input-mask/input-mask.js"></script>
+<script src="client-facing/configuration.js"></script>
+<script src="scripts/vendor/rfc6570.js"></script>
+<script src="scripts/common/directives/date/date.js"></script>
+<script src="scripts/common/directives/double-click/dbl-click.js"></script>
+<script src="scripts/common/directives/analytics-on/analytics-on.js"></script>
+<script src="scripts/common/directives/no-dirty/no-dirty.js"></script>
+<script src="scripts/auth/auth-ctrl.js"></script>
+<script src="scripts/auth/auth-service.js"></script>
+<script src="client-facing/auth/session-factory.js"></script>
+<script src="scripts/common/service.js"></script>
+
+<script src="client-facing/main/main-ctrl.js"></script>
+<script src="client-facing/main/main-service.js"></script>
+<script src="client-facing/main/main-route.js"></script>
+<script src="scripts/common/bootstrap-piwik.js"></script>
+<script src="scripts/common/bootstrap-client.js"></script>
+<!-- inject:client-partials -->
 <!-- endinject -->
 <!-- endbuild -->
 
