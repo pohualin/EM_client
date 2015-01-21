@@ -6,7 +6,10 @@ angular.module('emmiManager')
             rememberMe: true
         };
         $scope.login = function (credentials) {
-            AuthSharedService.login(credentials, API.authenticate);
+            $scope.loginForm.submitted = true;
+            if ($scope.loginForm.$valid) {
+                AuthSharedService.login(credentials, API.authenticate);
+            }
         };
     })
 
