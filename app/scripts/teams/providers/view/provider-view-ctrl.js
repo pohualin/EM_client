@@ -36,7 +36,6 @@ angular.module('emmiManager')
 
 		$scope.editProvider = function (teamProvider) {
             $scope.title = '';
-
 			// create a copy for editing
 			$scope.teamProviderToBeEdit = angular.copy(teamProvider);
 			// save the original for overlay if save is clicked
@@ -189,7 +188,7 @@ angular.module('emmiManager')
 
         $scope.saveProvider = function (isValid, addAnother) {
             $scope.providerFormSubmitted = true;
-        	if (isValid) {
+        	if (isValid && $scope.selectedItems.length > 0) {
 	        	ProviderCreate.create($scope.provider, $scope.teamResource, $scope.selectedItems).then(function(response){
 	                ProviderCreate.associateTeamLocationsToProvider(response.data.entity, $scope.teamResource, $scope.selectedItems);
 	        		$scope.hideNewProviderModal();
