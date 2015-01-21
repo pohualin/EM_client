@@ -2,31 +2,22 @@
 
 angular.module('emmiManager')
 
-	.service('ProviderSearch', function ($http, $q, Session, UriTemplate, CommonService, arrays, TeamLocation, TeamProviderService) {
+	.service('ProviderSearch', function ($http, $q, Session, UriTemplate, CommonService, arrays) {
         var referenceData;
 		return {
-			search: function(teamResource, query, status, sort, pageSize){
-				var possibleProviders;
-				var allTeamLocations;
-				var deferred = $q.defer();
-				$q.all([
-			            $http.get(UriTemplate.create(teamResource.link.possibleProviders).stringify({name: query,
-			                        status: status,
-			                        sort: sort && sort.property ? sort.property + ',' + (sort.ascending ? 'asc' : 'desc') : '',
-			                        size: pageSize
-							})).then(function(response){
-								possibleProviders = response.data;
-							}),
-						TeamLocation.getTeamLocations(teamResource.link.teamLocations).then(function(locationsResponse){
-						            allTeamLocations = TeamProviderService.buildMultiSelectData(locationsResponse);
-						        })
-				        ]).then(function () {
-							angular.forEach(possibleProviders.content, function(provider){
-				    			provider.provider.entity.selectedTeamLocations = angular.copy(allTeamLocations);
-				    		});
-							deferred.resolve(possibleProviders);
-							});
-				return deferred.promise;
+			search: function (allTeamLocations, teamResource, query, status, sort, pageSize) {
+				var teams = angular.copy(allTeamLocations);
+				return $http.get(UriTemplate.create(teamResource.link.possibleProviders).stringify({name: query,
+                        status: status,
+                        sort: sort && sort.property ? sort.property + ',' + (sort.ascending ? 'asc' : 'desc') : '',
+                        size: pageSize
+				})).then(function (response, allTeamLocations) {
+					CommonService.convertPageContentLinks(response.data);
+					angular.forEach(response.data.content, function(provider){
+		    			provider.provider.entity.selectedTeamLocations = angular.copy(teams);
+		    		});
+					return response.data;
+				});
 			},
 			/**
 			 * Search method called from home page provider search
@@ -104,7 +95,6 @@ angular.module('emmiManager')
                                 		 });
                                 		 teamProvider.entity.locations = locations.length > 0 ? locations.sort().toString() : '';
             	            		 });
-//                                	 return page;
                                 	 deferred.resolve(page);
                              });
                     });
