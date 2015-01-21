@@ -2,7 +2,7 @@
 
 angular.module('emmiManager')
 
-    .controller('TeamsLocationsController', ['$scope', '$http', 'Session', 'UriTemplate', '$controller', '$modal', '$alert', 'Location', 'TeamLocation', 'TeamProviderService', 'ProviderView', function ($scope, $http, Session, UriTemplate, $controller, $modal, $alert, Location, TeamLocation, TeamProviderService, ProviderView) {
+    .controller('TeamsLocationsController', ['$scope', '$http', 'Session', 'UriTemplate', '$controller', '$modal', '$alert', 'Location', 'TeamLocation', function ($scope, $http, Session, UriTemplate, $controller, $modal, $alert, Location, TeamLocation) {
 
         $controller('LocationCommon', {$scope: $scope});
 
