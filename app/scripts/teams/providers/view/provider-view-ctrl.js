@@ -6,6 +6,10 @@ angular.module('emmiManager')
 		$controller('CommonPagination', {$scope: $scope});
 
         $scope.provider = ProviderCreate.newProvider();
+        
+        $scope.invalidRequest = false;
+
+        $scope.associateRequestSubmitted = false;
 
         $scope.noSearch = true;
 
@@ -258,34 +262,37 @@ angular.module('emmiManager')
         };
 
         $scope.associateSelectedProvidersToTeam = function (addAnother) {
+        	$scope.associateRequestSubmitted = true;
         	if ($scope.teamProviderTeamLocationSaveRequest.length > 0) {
-        		
         		angular.forEach($scope.teamProviderTeamLocationSaveRequest, function(req){
-        			if (req.provider.selectedTeamLocations.length !== $scope.allTeamLocations.length) {
+        			if (req.provider.selectedTeamLocations.length < 1) {
+        				$scope.invalidRequest = true;
+        			} else if (req.provider.selectedTeamLocations.length !== $scope.allTeamLocations.length) {
         				req.teamLocations = angular.copy(req.provider.selectedTeamLocations);
         			}
         		});
-        		
-	        	ProviderSearch.updateProviderTeamAssociations($scope.teamProviderTeamLocationSaveRequest, $scope.teamResource).then(function (response) {
-	        		$scope.refreshLocationsAndProviders();
-	        		var message = $scope.teamProviderTeamLocationSaveRequest.length > 1 ? 'The selected providers have been successfully added.' : 'The provider <b>'+ $scope.teamProviderTeamLocationSaveRequest[0].provider.firstName + ' ' + $scope.teamProviderTeamLocationSaveRequest[0].provider.lastName +'</b> has been successfully added.';
-
-                    $scope.hideaddprovidermodal();
-
-	        		if (addAnother) {
-        				$scope.addProviders();
-	        		}
-	        		$alert({
-						title: ' ',
-						content: message,
-						container: 'body',
-						type: 'success',
-						placement: 'top',
-					    show: true,
-					    duration: 5,
-					    dismissable: true
-					});
-	        	});
+        		if (!$scope.invalidRequest) {
+		        	ProviderSearch.updateProviderTeamAssociations($scope.teamProviderTeamLocationSaveRequest, $scope.teamResource).then(function (response) {
+		        		$scope.refreshLocationsAndProviders();
+		        		var message = $scope.teamProviderTeamLocationSaveRequest.length > 1 ? 'The selected providers have been successfully added.' : 'The provider <b>'+ $scope.teamProviderTeamLocationSaveRequest[0].provider.firstName + ' ' + $scope.teamProviderTeamLocationSaveRequest[0].provider.lastName +'</b> has been successfully added.';
+	
+	                    $scope.hideaddprovidermodal();
+	
+		        		if (addAnother) {
+	        				$scope.addProviders();
+		        		}
+		        		$alert({
+							title: ' ',
+							content: message,
+							container: 'body',
+							type: 'success',
+							placement: 'top',
+						    show: true,
+						    duration: 5,
+						    dismissable: true
+						});
+		        	});
+        		}
         	}
         };
 
