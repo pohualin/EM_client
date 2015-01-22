@@ -179,7 +179,14 @@ angular.module('emmiManager')
             //toggle showing inactive teams, and update the url parameter
             $scope.showInactiveTeams = !$scope.showInactiveTeams;
             $scope.setInactiveTeamsURLParameter();
-            $scope.updateState();
+            if ($scope.showUntaggedTeams){
+                TeamsFilter.getActiveOrAllTeamsWithNoTeamTags($scope.showInactiveTeams).then(function (teams) {
+                    //get all of the active or inactive teams that do not have tags assigned to them
+                    $scope.clientTeams = teams;
+                });
+            }else {
+                $scope.updateState();
+            }
         };
 
         /**
