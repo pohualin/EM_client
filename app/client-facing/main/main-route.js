@@ -54,7 +54,7 @@ angular.module('emmiManager')
                 }
             })
             .when('/docs', {
-                templateUrl: 'partials/doc/docs.html',
+                templateUrl: 'client-facing/doc/docs.html',
                 title: 'Documentation',
                 access: {
                     authorizedRoles: [USER_ROLES.admin]
