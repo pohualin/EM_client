@@ -104,8 +104,8 @@ angular.module('emmiManager')
         	$scope.addProvidersModalOnScope =  $modal({
   			   scope: $scope,
   			   template: 'partials/team/provider/search.html', animation: 'none', backdropAnimation: 'emmi-fade', show: true, backdrop: 'static'});
-
-
+        	
+        	
         };
 
         $scope.hideaddprovidermodal = function () {
@@ -255,13 +255,13 @@ angular.module('emmiManager')
 
         $scope.associateSelectedProvidersToTeam = function (addAnother) {
         	if ($scope.teamProviderTeamLocationSaveRequest.length > 0) {
-
+        		
         		angular.forEach($scope.teamProviderTeamLocationSaveRequest, function(req){
         			if (req.provider.selectedTeamLocations.length !== $scope.allTeamLocations.length) {
         				req.teamLocations = angular.copy(req.provider.selectedTeamLocations);
         			}
         		});
-
+        		
 	        	ProviderSearch.updateProviderTeamAssociations($scope.teamProviderTeamLocationSaveRequest, $scope.teamResource).then(function (response) {
 	        		$scope.refreshLocationsAndProviders();
 	        		var message = $scope.teamProviderTeamLocationSaveRequest.length > 1 ? 'The selected providers have been successfully added.' : 'The provider <b>'+ $scope.teamProviderTeamLocationSaveRequest[0].provider.firstName + ' ' + $scope.teamProviderTeamLocationSaveRequest[0].provider.lastName +'</b> has been successfully added.';

@@ -4,7 +4,7 @@
     "dependencies": {
         "modernizr": "2.6.2",
         "angular": "1.2.*",
-        "jquery": "1.9.x",
+        "jquery": "1.*",
         "angular-cookies": "1.2.*",
         "angular-touch": "1.2.*",
         "angular-sanitize": "1.2.*",
