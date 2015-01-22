@@ -28,7 +28,7 @@ angular.module('emmiManager')
                         $http.get(API.authenticated, {
                             ignoreAuthModule: 'ignoreAuthModule'
                         }).success(function (user) {
-                            $rootScope.account = Session.create(user.login, user.firstName, user.lastName, user.email, user.permission, user.link);
+                            $rootScope.account = Session.create(user);
                             $rootScope.authenticated = true;
                             deferred.resolve($rootScope.account);
                         }).error(function () {

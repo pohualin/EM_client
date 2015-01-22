@@ -69,11 +69,6 @@ angular.module('emmiManager')
 				 */
 				TeamsFilter.getClientGroups().then(function (groups) {
                     //all groups on client
-                    TeamsFilter.getTeamsWithNoTeamTags().then(function(teams){
-                        if(teams.length>0){
-                            $scope.teamsWithNoTeamTags = teams;
-                        }
-                    });
                     $scope.clientGroups = groups;
                     $scope.clientTagGroupToDisplay = TeamsFilter.getClientTagsInGroups(groups);
                 });
@@ -100,7 +95,7 @@ angular.module('emmiManager')
                     });
                 // turn off the sort after the search request has been made, the response will rebuild
                 $scope.sortProperty = null;
-                _paq.push(['trackSiteSearch', query, 'User Client User Client Team Role Team Search']);
+                _paq.push(['trackSiteSearch', query, 'User Team Role Search']);
             }
 
             init();

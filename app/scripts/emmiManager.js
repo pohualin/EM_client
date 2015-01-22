@@ -173,7 +173,9 @@ angular.module('emmiManager', [
         $document.bind('keydown keypress', function (event) {
             if (event.which === 8) {
                 var d = event.srcElement || event.target;
-                if (!(d.tagName.toUpperCase() === 'INPUT' && d.type.toUpperCase() === 'TEXT')) {
+                if (!(d.tagName.toUpperCase() === 'INPUT' &&
+                    (d.type.toUpperCase() === 'TEXT' ||
+                    d.type.toUpperCase() === 'PASSWORD'))) {
                     event.preventDefault();
                 }
             }

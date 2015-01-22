@@ -14,7 +14,9 @@ var proxy = httpProxy.createProxyServer({
 });
 
 function proxyMiddleware(req, res, next) {
-    if (req.url.indexOf(proxyApiPrefix) !== -1 || req.url.indexOf('api-docs') !== -1) {
+    if (req.url.indexOf(proxyApiPrefix) !== -1 ||
+        req.url.indexOf('api-docs') !== -1 ||
+        req.url.indexOf('webapi-client') !== -1) {
         proxy.web(req, res);
     } else {
         next();
@@ -40,10 +42,9 @@ gulp.task('serve', ['watch'], function () {
         'app',
         '.tmp'
     ], [
-        'app/*.html',
         '.tmp/styles/**/*.css',
-        'app/scripts/**/*.js',
-        'app/partials/**/*.html',
+        'app/**/*.js',
+        'app/**/*.html',
         'app/images/**/*'
     ]);
 });

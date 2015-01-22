@@ -3,12 +3,13 @@
 angular.module('emmiManager')
     .controller('LoginCtrl', function ($scope, $location, AuthSharedService, API) {
         $scope.credentials = {
-            username: 'super_admin',
-            password: 'super_admin',
-            rememberMe: false
+            rememberMe: true
         };
         $scope.login = function (credentials) {
-            AuthSharedService.login(credentials, API.authenticate);
+            $scope.loginForm.submitted = true;
+            if ($scope.loginForm.$valid) {
+                AuthSharedService.login(credentials, API.authenticate);
+            }
         };
     })
 
