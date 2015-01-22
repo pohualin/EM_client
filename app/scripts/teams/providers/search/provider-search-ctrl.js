@@ -1,27 +1,27 @@
 'use strict';
 angular.module('emmiManager')
 
-	.controller('ProviderSearchController', function($scope, $modal, ProviderView, TeamLocation, TeamProviderService, ProviderSearch, $controller, arrays, ProviderCreate,  $alert){
+    .controller('ProviderSearchController', function ($scope, $modal, ProviderView, TeamLocation, TeamProviderService, ProviderSearch, $controller, arrays, ProviderCreate, $alert) {
 
-		$controller('CommonPagination', {$scope: $scope});
+        $controller('CommonPagination', {$scope: $scope});
 
-        var searchedProvidersList ='searchedProvidersList';
+        var searchedProvidersList = 'searchedProvidersList';
 
         $scope.search = function (isValid) {
-        	if(isValid){
-	            $scope.noSearch = false;
-	        	ProviderSearch.search($scope.allTeamLocations, $scope.teamResource, $scope.providerQuery, $scope.status).then( function (providerPage){
-	        		$scope.handleResponse(providerPage, 'searchedProvidersList');
-	        	});
-        	}
+            if (isValid) {
+                $scope.noSearch = false;
+                ProviderSearch.search($scope.allTeamLocations, $scope.teamResource, $scope.providerQuery, $scope.status).then(function (providerPage) {
+                    $scope.handleResponse(providerPage, 'searchedProvidersList');
+                });
+            }
         };
 
         $scope.statusChange = function () {
             $scope.loading = true;
-            ProviderSearch.search($scope.allTeamLocations, $scope.teamResource, $scope.providerQuery, $scope.status, $scope.sortProperty, $scope.currentPageSize).then( function (providerPage){
+            ProviderSearch.search($scope.allTeamLocations, $scope.teamResource, $scope.providerQuery, $scope.status, $scope.sortProperty, $scope.currentPageSize).then(function (providerPage) {
                 $scope.handleResponse(providerPage, 'searchedProvidersList');
                 $scope.setCheckboxesForChanged($scope[searchedProvidersList]);
-        	}, function () {
+            }, function () {
                 // error happened
                 $scope.loading = false;
             });
@@ -40,10 +40,10 @@ angular.module('emmiManager')
 
         $scope.changePageSize = function (pageSize) {
             $scope.loading = true;
-            ProviderSearch.search($scope.allTeamLocations, $scope.teamResource, $scope.providerQuery, $scope.status, $scope.sortProperty, pageSize).then( function (providerPage){
+            ProviderSearch.search($scope.allTeamLocations, $scope.teamResource, $scope.providerQuery, $scope.status, $scope.sortProperty, pageSize).then(function (providerPage) {
                 $scope.handleResponse(providerPage, 'searchedProvidersList');
                 $scope.setCheckboxesForChanged($scope[searchedProvidersList]);
-        	}, function () {
+            }, function () {
                 // error happened
                 $scope.loading = false;
             });
@@ -80,7 +80,7 @@ angular.module('emmiManager')
 
         // when a column header is clicked
         $scope.sort = function (property) {
-        	var sort = $scope.sortProperty || {};
+            var sort = $scope.sortProperty || {};
             if (sort && sort.property === property) {
                 // same property was clicked
                 if (!sort.ascending) {
@@ -96,45 +96,45 @@ angular.module('emmiManager')
                 sort.ascending = true;
             }
             $scope.loading = true;
-            ProviderSearch.search($scope.allTeamLocations, $scope.teamResource, $scope.providerQuery, $scope.status, sort, $scope.currentPageSize).then( function (providerPage){
+            ProviderSearch.search($scope.allTeamLocations, $scope.teamResource, $scope.providerQuery, $scope.status, sort, $scope.currentPageSize).then(function (providerPage) {
                 $scope.handleResponse(providerPage, 'searchedProvidersList');
                 $scope.setCheckboxesForChanged($scope[searchedProvidersList]);
-        	}, function () {
+            }, function () {
                 // error happened
                 $scope.loading = false;
             });
         };
 
         $scope.onCheckboxChange = function (provider) {
-   			 var request = {};
-    		 request.teamLocations = [];
-    		 provider.entity.teamLocations = [];
+            var request = {};
+            request.teamLocations = [];
+            provider.entity.teamLocations = [];
 
-        	 if (provider.entity.checked) {
-        		 provider.entity.selectedTeamLocations = angular.copy($scope.allTeamLocations);
-        		 console.log(provider.entity.selectedTeamLocations);
-        		 if(provider.entity.selectedTeamLocations.length > 0){
-            		 provider.entity.showLocations = true;
-        		 }
-        		 request.provider = provider.entity;
-        		 $scope.teamProviderTeamLocationSaveRequest.push(request);
-        	 }
-        	 else {
-        		 provider.entity.showLocations=false;
-        		 request.provider = provider.entity;
-             	 $scope.teamProviderTeamLocationSaveRequest.splice(request.provider.entity, 1);
-        	 }
+            if (provider.entity.checked) {
+                provider.entity.selectedTeamLocations = angular.copy($scope.allTeamLocations);
+                console.log(provider.entity.selectedTeamLocations);
+                if (provider.entity.selectedTeamLocations.length > 0) {
+                    provider.entity.showLocations = true;
+                }
+                request.provider = provider.entity;
+                $scope.teamProviderTeamLocationSaveRequest.push(request);
+            }
+            else {
+                provider.entity.showLocations = false;
+                request.provider = provider.entity;
+                $scope.teamProviderTeamLocationSaveRequest.splice(request.provider.entity, 1);
+            }
         };
 
-        $scope.setCheckboxesForChanged = function(providers) {
-        	angular.forEach(providers, function(searchedTeamProvider){
-            	angular.forEach($scope.teamProviderTeamLocationSaveRequest, function(teamProviderInRequest){
-                	if(teamProviderInRequest.provider.id === searchedTeamProvider.provider.entity.id) {
-                		searchedTeamProvider.provider.entity.checked = true;
-					}
-            	});
+        $scope.setCheckboxesForChanged = function (providers) {
+            angular.forEach(providers, function (searchedTeamProvider) {
+                angular.forEach($scope.teamProviderTeamLocationSaveRequest, function (teamProviderInRequest) {
+                    if (teamProviderInRequest.provider.id === searchedTeamProvider.provider.entity.id) {
+                        searchedTeamProvider.provider.entity.checked = true;
+                    }
+                });
             });
         };
 
-	})
+    })
 ;

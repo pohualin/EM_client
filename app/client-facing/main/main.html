@@ -1,0 +1,18 @@
+<div class="container" data-ng-cloak>
+    <div class="row">
+        <h1>Emmi Manager 2.0 - Client Facing</h1>
+        <span data-translate="main.welcome" data-ng-show="account"
+              data-translate-value-username="{{ account.firstName + ' ' + account.lastName}}"
+              data-translate-value-today="{{ today | date:'fullDate' }}"></span> <span data-ng-hide="account">The date is {{ today | date:'fullDate' }}.</span>
+
+        <div>
+            <ul data-ng-switch="authenticated">
+                <li data-ng-show="isAuthorized(userRoles.admin)"><a data-ng-href="#/docs">Documentation</a></li>
+                <li data-ng-switch-when="false"><a data-ng-href="#/login" data-translate="global.menu.login">Login</a>
+                </li>
+                <li data-ng-switch-when="true"><a data-ng-href="#/logout" data-translate="global.menu.logout">Log
+                    Out</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
