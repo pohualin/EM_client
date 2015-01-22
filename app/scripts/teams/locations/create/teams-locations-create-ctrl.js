@@ -5,13 +5,13 @@ angular.module('emmiManager')
 /**
  *  Controls the create new location popup (partials/location/new.html) from a Team search page
  */
-    .controller('TeamLocationCreateController', function ($scope, $controller, Location, TeamSearchLocation, $alert, Client, TeamLocation) {
+    .controller('TeamLocationCreateController', function ($rootScope, $scope, $controller, Location, TeamSearchLocation, $alert, Client, TeamLocation) {
 
         $controller('LocationCommon', {$scope: $scope});
 
         $scope.location = Location.newLocation();
         $scope.title = 'New Location';
-
+        $scope.location.providersSelected =  angular.copy($scope.providersData);
         $scope.saveAndAddAnother = function (isValid) {
             $scope.saveLocation(isValid, true);
         };
@@ -52,7 +52,7 @@ angular.module('emmiManager')
                             duration: 5,
                             dismissable: true
                         });
-                        //update?
+                        $rootScope.$broadcast('event:teamLocationSavedWithProvider');
                     });
 
                 });
