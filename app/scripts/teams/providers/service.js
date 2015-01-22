@@ -2,7 +2,7 @@
 
 angular.module('emmiManager')
 
-    .service('TeamProviderService', function ($http, $q, Session, UriTemplate) {
+    .service('TeamProviderService', function ($http, $q, Session, UriTemplate, ProviderView) {
         return {
         	 updateTeamProvider: function (url, teamProviderTeamLocationSaveRequest) {
         		 return $http.post(UriTemplate.create(url).stringify(), teamProviderTeamLocationSaveRequest)
@@ -77,17 +77,21 @@ angular.module('emmiManager')
             	}
             	return teamProviderTeamLocationSaveRequest;
              },
-             buildMultiSelectProvidersData: function(providers){
-              	var options = [];
-              	angular.forEach(providers, function(provider){
-              		var option = new Object({});
-              		option.id = provider.entity.id;
-              		option.label = provider.entity.provider.firstName + ' ' + provider.entity.provider.lastName;
-              		option.provider = provider.entity.provider;
-              		options.push(option);
-              	});
-              	return options;
-              }
+             buildMultiSelectProvidersData: function(teamResource){
+            	 var deferred = $q.defer();
+            	 ProviderView.allProvidersForTeam(teamResource).then(function(response){
+            		 var options = [];
+            		 angular.forEach(response, function(provider){
+            			 var option = {} ;
+            			 option.id = provider.entity.id;
+            			 option.label = provider.entity.provider.firstName + ' ' + provider.entity.provider.lastName;
+            			 option.provider = provider.entity.provider;
+            			 options.push(option);
+            		 });
+            		 deferred.resolve(options);
+            	 });
+            	 return deferred.promise;
+             }
         };
     })
 

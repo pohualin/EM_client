@@ -204,20 +204,15 @@ angular.module('emmiManager')
         
         var managedLocationList = 'locations';
         var managedClientLocationList = 'clientLocations';
-        ProviderView.allProvidersForTeam($scope.teamResource).then(function(response){
-        	$scope.providersData = TeamProviderService.buildMultiSelectProvidersData(response);
+        TeamProviderService.buildMultiSelectProvidersData($scope.teamResource).then(function(response){
+        	$scope.providersData = response;
         	$scope.sizeClass =  $scope.providersData.length === 0 ? 'sort col-sm-4' : 'sort col-sm-3';
             Location.findForClient(Client.getClient()).then(function (allLocations) {
                 $scope.handleResponse(allLocations, managedClientLocationList);
                 $scope.setClientLocationSelected($scope.clientLocations);
             });
     	});
-        
         $scope.teamClientLocations = {};        
         $scope.cleanSearch();
-
-
-
     })
-
 ;
