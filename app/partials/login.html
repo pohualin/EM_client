@@ -2,17 +2,33 @@
     <div class="row">
         <div class="col-md-4 col-md-offset-4">
             <h1 data-translate="login.title">Authentication</h1>
-            <div class="alert alert-danger" data-ng-show="authenticationError" data-translate="login.messages.error.authentication">
-                <strong>Authentication failed!</strong> Please check your credentials and try again.
+
+            <div class="alert alert-danger" data-ng-show="authenticationError">
+                <strong>&nbsp;</strong>Please check your username and password and try again.
             </div>
             <form class="form" name="loginForm" data-ng-submit="login(credentials)" novalidate>
-                <div class="form-group">
-                    <label for="username" data-translate="login.form.user">User:</label>
-                    <input id="username" type="text" class="form-control" data-ng-model="credentials.username">
+                <div class="form-group"
+                     data-ng-class="{ 'has-error' : loginForm.username.$invalid && loginForm.submitted}">
+                    <label class="control-label" for="username" data-translate="login.form.user">User:</label>
+
+                    <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                         data-ng-show="loginForm.username.$error.required && loginForm.submitted"
+                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                         data-title="Required"></div>
+                    <input id="username" name="username" type="text"
+                           class="form-control" data-ng-model="credentials.username" required
+                           data-auto-focus>
                 </div>
-                <div class="form-group">
-                    <label for="password" data-translate="login.form.password">Password:</label>
-                    <input id="password" type="password" class="form-control" data-ng-model="credentials.password">
+                <div class="form-group"
+                     data-ng-class="{ 'has-error' : loginForm.password.$invalid && loginForm.submitted}">
+                    <label class="control-label" for="password" data-translate="login.form.password">Password:</label>
+
+                    <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                         data-ng-show="loginForm.password.$error.required && loginForm.submitted"
+                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                         data-title="Required"></div>
+                    <input id="password" type="password" name="password" class="form-control" required
+                           data-ng-model="credentials.password">
                 </div>
                 <div class="checkbox">
                     <label>

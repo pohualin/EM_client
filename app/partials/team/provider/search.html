@@ -1,4 +1,4 @@
-<div class="modal" tabindex="-1" role="dialog">
+<div class="modal" tabindex="-1" role="dialog" data-ng-controller="ProviderSearchController">
     <div class="modal-dialog modal-dialog-large container-fluid">
         <div class="modal-content">
             <div class="modal-header">
@@ -89,13 +89,18 @@
 									<td>{{teamProvider.provider.entity.firstName}} {{teamProvider.provider.entity.middleName}} {{teamProvider.provider.entity.lastName}}</td>
                                     <td>{{teamProvider.provider.entity.specialty.name}}</td>
                                     <td>{{teamProvider.provider.entity.email}}</td>
-                                    <td><div data-ng-show="teamProvider.provider.entity.showLocations">
-                                    		<select data-chosen data-placeholder="Use: all locations" multiple data-ng-model="teamProvider.provider.entity.teamLocations"
-                                                    data-ng-options="location.entity.location.name group by location.name for location in teamLocations | orderBy:'location.entity.location.name' track by location.entity.id"
-               								class="form-control" data-ng-change="updateTeamLocationsForProvider(teamProvider.provider)" >
-               								 </select>
-               							</div>
-                                	</td>
+                                	<td>
+		                                <div class="col-xs-12" data-ng-show="teamProvider.provider.entity.showLocations">
+		                                       <div data-multi-select
+		                                        values="allTeamLocations"
+		                                        model="teamProvider.provider.entity.selectedTeamLocations"
+		                                        show-filters="true"
+		                                        value-field="id"
+		                                        label-field="label"
+		                                        template-path = "partials/common/directives/multi-select/multi-select.html" >
+		                                        </div>
+		                                </div>
+                            		</td>
                                 </tr>
                             </table>
                             <div class="row" data-ng-show="searchedProvidersList">
