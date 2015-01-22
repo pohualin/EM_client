@@ -54,7 +54,7 @@ To run the server on port 80, you'll need:
         Header add X-Content-Security-Policy "default-src 'none'; script-src 'self' *.emmisolutions.com; connect-src 'self'; img-src 'self' *.emmisolutions.com; style-src 'self' 'unsafe-inline'; font-src 'self'; frame-src 'self'"
         Header set X-Content-Type-Options "nosniff"
         Header set X-XSS-Protection "1; mode=block"
-        Header set X-Frame-Options "DENY"
+        Header set X-Frame-Options "SAMEORIGIN"
         Header set Strict-Transport-Security "max-age=631138519; includeSubDomains"
         
         ProxyPass /webapi http://localhost:8080/webapi
