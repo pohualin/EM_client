@@ -266,9 +266,10 @@ angular.module('emmiManager')
 
         $scope.associateSelectedProvidersToTeam = function (addAnother) {
         	$scope.associateRequestSubmitted = true;
+
         	if ($scope.teamProviderTeamLocationSaveRequest.length > 0) {
         		angular.forEach($scope.teamProviderTeamLocationSaveRequest, function(req){
-        			if (req.provider.selectedTeamLocations.length < 1) {
+        			if ($scope.allTeamLocations.length > 0 && req.provider.selectedTeamLocations.length < 1) {
         				$scope.invalidRequest = true;
         			} else if (req.provider.selectedTeamLocations.length !== $scope.allTeamLocations.length) {
         				req.teamLocations = angular.copy(req.provider.selectedTeamLocations);
