@@ -102,8 +102,8 @@ angular.module('emmiManager')
             TeamLocation.removeLocation(locationResource).then(function () {
                 $scope.refresh();
                 $scope.showRemovalSuccess(locationResource);
+                $rootScope.$broadcast('event:teamLocationSavedWithProvider');
             });
-            $rootScope.$broadcast('event:teamLocationSavedWithProvider');
             _paq.push(['trackEvent', 'Form Action', 'Team Location', 'Remove']);
         };
 
