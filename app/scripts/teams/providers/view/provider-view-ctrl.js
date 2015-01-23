@@ -272,6 +272,7 @@ angular.module('emmiManager')
         				$scope.invalidRequest = true;
         			} else if (req.provider.selectedTeamLocations.length !== $scope.allTeamLocations.length) {
         				req.teamLocations = angular.copy(req.provider.selectedTeamLocations);
+        				$scope.invalidRequest = false;
         			}
         		});
         		if (!$scope.invalidRequest) {
