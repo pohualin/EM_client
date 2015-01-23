@@ -15,12 +15,12 @@ angular.module('emmiManager')
 
         $scope.locationsColumnCharLimit = 25;
 
-        $scope.allLocationsForTeam = 'Default: All Locations';
-        
+        $scope.allLocationsForTeam = 'All Locations';
+
         $rootScope.$on('event:teamLocationSavedWithProvider', function () {
         	$scope.refreshLocationsAndProviders();
         });
-        
+
         $scope.refreshLocationsAndProviders = function() {
         	ProviderView.paginatedProvidersForTeam($scope.teamResource).then(function(response){
         		$scope.handleResponse(response, 'listOfTeamProviders');
