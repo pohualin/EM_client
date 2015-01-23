@@ -144,6 +144,11 @@ angular.module('emmiManager', [
             }
         });
 
+        $rootScope.$on('event:auth-credentialsExpired', function (event, rejection) {
+            $rootScope.expiredCredentials = rejection.credentials;
+            $location.path('/credentials/expired').replace();
+        });
+
         // Call when the 401 response is returned by the server
         $rootScope.$on('event:auth-loginRequired', function (event, rejection) {
             Session.destroy();

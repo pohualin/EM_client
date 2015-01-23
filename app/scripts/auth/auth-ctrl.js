@@ -1,20 +1,24 @@
 'use strict';
 
 angular.module('emmiManager')
-    .controller('LoginCtrl', function ($scope, $location, AuthSharedService, API) {
-        $scope.credentials = {
-            rememberMe: true
-        };
-        $scope.login = function (credentials) {
-            $scope.loginForm.submitted = true;
-            if ($scope.loginForm.$valid) {
-                AuthSharedService.login(credentials, API.authenticate);
-            }
-        };
-    })
+    .controller('LoginCtrl', ['$scope', '$location', 'AuthSharedService', 'API', '$rootScope',
+        function ($scope, $location, AuthSharedService, API, $rootScope) {
+            $scope.credentials = {
+                rememberMe: true
+            };
+            $rootScope.authenticationError = false;
 
-    .controller('LogoutCtrl', function ($location, AuthSharedService, API) {
-        AuthSharedService.logout(API.logout);
-    })
+            $scope.login = function (credentials) {
+                $scope.loginForm.submitted = true;
+                if ($scope.loginForm.$valid) {
+                    AuthSharedService.login(credentials, API.authenticate);
+                }
+            };
+        }])
+
+    .controller('LogoutCtrl', ['$location', 'AuthSharedService', 'API',
+        function ($location, AuthSharedService, API) {
+            AuthSharedService.logout(API.logout);
+        }])
 ;
 
