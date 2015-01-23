@@ -197,11 +197,11 @@ angular.module('emmiManager')
              * @param teamTags to parse
              * @returns teams
              */
-            getTeamsFromTeamTags: function(teamTags){
+            getTeamsFromTeamTags: function (teamTags) {
                 var teams = {};
                 angular.forEach(teamTags, function (teamTag) {
                     //teams to show as results, using the object notation (i.e clientTeams[teamName]) to remove duplicates
-                    teams[teamTag.team.name] =teamTag.team;
+                    teams[teamTag.team.name] = teamTag.team;
                 });
                 return teams;
             },
@@ -315,50 +315,58 @@ angular.module('emmiManager')
                 var listOfTagsByTeams = {};
                 var tags = [];
                 var teams = {};
-                angular.forEach(teamTags, function (teamTag) {
-                    //build the list of tags a team has
-                    if (listOfTagsByTeams[teamTag.team.name]) {
-                        //if this team is already in our list get its list of tags and add the current tag to the list
-                        tags = listOfTagsByTeams[teamTag.team.name];
-                        tags.push(teamTag.tag);
-                    } else {
-                        //this team will only have the current tag in its list
-                        tags.push(teamTag.tag);
-                    }
-                    //assign the current team its list of tags
-                    listOfTagsByTeams[teamTag.team.name] = tags;
-                    tags = [];
-                    //keep track of the teams
-                    teams[teamTag.team.name] = teamTag.team;
-                });
-
-                //get teams that don't have tags in selected group
                 var teamsWithTagNotInGroup = [];
-                angular.forEach(teams, function (team) {
-                    //for each team on the client
-                    var skip = false;
-                    angular.forEach(listOfTagsByTeams[team.name], function (tag) {
-                        //for each tag in this teams tag list
-                        angular.forEach(Object.keys(listOfTeamsByTagFromSelectedGroup), function (groupTagName) {
-                            //for each tag in the selected group
 
-                            if (tag.name === groupTagName) {
-                                //if the team has any tag in it's 'tag list' that is also in the tags of the selected group
-                                //don't add this team to the 'list of teams not in the selected group'
-                                skip = true;
-                            }
-                        });
+                if (listOfTeamsByTagFromSelectedGroup !== null && typeof listOfTeamsByTagFromSelectedGroup === 'object') {
+                    angular.forEach(teamTags, function (teamTag) {
+                        //build the list of tags a team has
+                        if (listOfTagsByTeams[teamTag.team.name]) {
+                            //if this team is already in our list get its list of tags and add the current tag to the list
+                            tags = listOfTagsByTeams[teamTag.team.name];
+                            tags.push(teamTag.tag);
+                        } else {
+                            //this team will only have the current tag in its list
+                            tags.push(teamTag.tag);
+                        }
+                        //assign the current team its list of tags
+                        listOfTagsByTeams[teamTag.team.name] = tags;
+                        tags = [];
+                        //keep track of the teams
+                        teams[teamTag.team.name] = teamTag.team;
                     });
-                    if (!skip) {
-                        //if we've made it this far then we wre not able to find any tags in this teams tag list that
-                        //were also in the tags of the selected group
-                        teamsWithTagNotInGroup.push(team);
-                    }
-                });
+
+                    //get teams that don't have tags in selected group
+                    angular.forEach(teams, function (team) {
+                        //for each team on the client
+                        var skip = false;
+                        angular.forEach(listOfTagsByTeams[team.name], function (tag) {
+                            //for each tag in this teams tag list
+                            angular.forEach(Object.keys(listOfTeamsByTagFromSelectedGroup), function (groupTagName) {
+                                //for each tag in the selected group
+
+                                if (tag.name === groupTagName) {
+                                    //if the team has any tag in it's 'tag list' that is also in the tags of the selected group
+                                    //don't add this team to the 'list of teams not in the selected group'
+                                    skip = true;
+                                }
+                            });
+                        });
+                        if (!skip) {
+                            //if we've made it this far then we wre not able to find any tags in this teams tag list that
+                            //were also in the tags of the selected group
+                            teamsWithTagNotInGroup.push(team);
+                        }
+                    });
+                }
 
                 //check if object is empty
-                if (Object.keys(teamsWithTagNotInGroup).length === 0) {
-                    teamsWithTagNotInGroup = null;
+                if (teamsWithTagNotInGroup.length === 0) {
+                    var allClientTeams = {};
+                    angular.forEach(teamTags, function (teamTag) {
+                        allClientTeams[teamTag.team.name] = teamTag.team;
+                    });
+
+                    teamsWithTagNotInGroup = allClientTeams;
                 }
 
                 deferred.resolve(teamsWithTagNotInGroup);

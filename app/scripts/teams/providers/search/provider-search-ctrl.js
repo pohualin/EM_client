@@ -112,7 +112,6 @@ angular.module('emmiManager')
 
             if (provider.entity.checked) {
                 provider.entity.selectedTeamLocations = angular.copy($scope.allTeamLocations);
-                console.log(provider.entity.selectedTeamLocations);
                 if (provider.entity.selectedTeamLocations.length > 0) {
                     provider.entity.showLocations = true;
                 }

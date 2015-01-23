@@ -67,7 +67,7 @@ angular.module('emmiManager')
         /**
          * check if there are teams without tags if not dont show the untagged teams checkbox
          */
-        TeamsFilter.doUntaggedTeamsExist($scope.showInactiveTeams).then(function (page) {
+        TeamsFilter.doUntaggedTeamsExist().then(function (page) {
             if (!page) {
                 $scope.teamsWithNoTeamTags = false;
             }
@@ -179,7 +179,14 @@ angular.module('emmiManager')
             //toggle showing inactive teams, and update the url parameter
             $scope.showInactiveTeams = !$scope.showInactiveTeams;
             $scope.setInactiveTeamsURLParameter();
-            $scope.updateState();
+            if ($scope.showUntaggedTeams){
+                TeamsFilter.getActiveOrAllTeamsWithNoTeamTags($scope.showInactiveTeams).then(function (teams) {
+                    //get all of the active or inactive teams that do not have tags assigned to them
+                    $scope.clientTeams = teams;
+                });
+            }else {
+                $scope.updateState();
+            }
         };
 
         /**

@@ -1,7 +1,7 @@
 'use strict';
 angular.module('emmiManager')
 
-	.controller('ProviderListController', function($scope, $modal, ProviderView, TeamLocation, TeamProviderService, ProviderSearch, $controller, arrays, ProviderCreate,  $alert){
+	.controller('ProviderListController', function($rootScope, $scope, $modal, ProviderView, TeamLocation, TeamProviderService, ProviderSearch, $controller, arrays, ProviderCreate,  $alert){
 
 		$controller('CommonPagination', {$scope: $scope});
 
@@ -16,7 +16,11 @@ angular.module('emmiManager')
         $scope.locationsColumnCharLimit = 25;
 
         $scope.allLocationsForTeam = 'All Locations';
-        
+
+        $rootScope.$on('event:teamLocationSavedWithProvider', function () {
+        	$scope.refreshLocationsAndProviders();
+        });
+
         $scope.refreshLocationsAndProviders = function() {
         	ProviderView.paginatedProvidersForTeam($scope.teamResource).then(function(response){
         		$scope.handleResponse(response, 'listOfTeamProviders');
