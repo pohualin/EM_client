@@ -33,7 +33,7 @@ angular.module('emmiManager').config(function($routeProvider, USER_ROLES) {
 		templateUrl: 'partials/location/search.html',
         controller: 'LocationsSearchController',
         access: {
-            authorizedRoles: [USER_ROLES.admin]
+            authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
         },
         title: 'Location Search',
         reloadOnSearch: false,
@@ -42,7 +42,7 @@ angular.module('emmiManager').config(function($routeProvider, USER_ROLES) {
         templateUrl: 'partials/location/editor/editor.html',
         controller: 'LocationEditorController',
         access: {
-            authorizedRoles: [USER_ROLES.admin]
+            authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
         },
         reloadOnSearch: false,
         resolve: locationRequiredResource

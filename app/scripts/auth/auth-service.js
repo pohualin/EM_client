@@ -74,7 +74,6 @@ angular.module('emmiManager')
                             isAuthorized = true;
                         }
                     });
-
                     return isAuthorized;
                 },
                 logout: function (logoutLink) {

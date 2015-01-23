@@ -51,7 +51,7 @@ angular.module('emmiManager')
                 templateUrl: 'partials/user/client/main.html',
                 controller: 'UsersClientMainCtrl',
                 access: {
-                    authorizedRoles: [USER_ROLES.admin]
+                    authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
                 },
                 reloadOnSearch: false,
                 resolve: {
@@ -61,7 +61,7 @@ angular.module('emmiManager')
                 templateUrl: 'partials/user/client/metadata/new.html',
                 controller: 'UsersClientCreateController',
                 access: {
-                    authorizedRoles: [USER_ROLES.admin]
+                    authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
                 },
                 reloadOnSearch: true,
                 resolve: {
@@ -71,7 +71,7 @@ angular.module('emmiManager')
                 templateUrl: 'partials/user/client/editor.html',
                 controller: 'UsersClientEditorController',
                 access: {
-                    authorizedRoles: [USER_ROLES.admin]
+                    authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
                 },
                 reloadOnSearch: false,
                 resolve: {
