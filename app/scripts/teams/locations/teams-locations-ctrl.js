@@ -9,7 +9,7 @@ angular.module('emmiManager')
         $controller('CommonPagination', {$scope: $scope});
 
         var managedLocationList = 'locations';
-        $scope.providersData = [];
+
         $scope.teamLocations = {}; //used to hold the locations and manipulate internally
 
         $scope.editLocation = function (location) {
@@ -45,7 +45,7 @@ angular.module('emmiManager')
         };
 
         $scope.addLocations = function () {
-           $modal({scope: $scope, template: 'partials/team/location/search.html', animation: 'none', backdropAnimation: 'emmi-fade', show: true, backdrop: 'static'});
+        	$modal({scope: $scope, template: 'partials/team/location/search.html', animation: 'none', backdropAnimation: 'emmi-fade', show: true, backdrop: 'static'});
         };
 
         $scope.cancelPopup = function() {
