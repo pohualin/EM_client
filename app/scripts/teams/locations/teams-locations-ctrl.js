@@ -2,7 +2,7 @@
 
 angular.module('emmiManager')
 
-    .controller('TeamsLocationsController', ['$scope', '$http', 'Session', 'UriTemplate', '$controller', '$modal', '$alert', 'Location', 'TeamLocation', function ($scope, $http, Session, UriTemplate, $controller, $modal, $alert, Location, TeamLocation) {
+    .controller('TeamsLocationsController', ['$rootScope', '$scope', '$http', 'Session', 'UriTemplate', '$controller', '$modal', '$alert', 'Location', 'TeamLocation', function ($rootScope, $scope, $http, Session, UriTemplate, $controller, $modal, $alert, Location, TeamLocation) {
 
         $controller('LocationCommon', {$scope: $scope});
 
@@ -103,6 +103,7 @@ angular.module('emmiManager')
                 $scope.refresh();
                 $scope.showRemovalSuccess(locationResource);
             });
+            $rootScope.$broadcast('event:teamLocationSavedWithProvider');
             _paq.push(['trackEvent', 'Form Action', 'Team Location', 'Remove']);
         };
 
