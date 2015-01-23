@@ -9,7 +9,7 @@
             <th>&nbsp;</th>
         </tr>
         <tr data-ng-repeat="clientProvider in clientProviders">
-            <td class="col-sm-4">{{clientProvider.provider.entity.firstName}} {{clientProvider.provider.entity.middleName}} {{clientProvider.provider.entity.lastName}}</td>
+            <td class="col-sm-4">{{clientProvider.provider.entity.firstName}} {{clientProvider.provider.entity.middleName}} {{clientProvider.provider.entity.lastName}} <em>{{clientProvider.provider.entity.active ? '' : "(inactive)"}}</em></td>
             <td class="col-sm-2">{{clientProvider.provider.entity.specialty.name}}</td>
             <td class="col-sm-3">{{clientProvider.provider.entity.email}}</td>
             <td class="col-sm-3">

@@ -25,7 +25,7 @@ angular.module('emmiManager')
                 templateUrl: 'partials/configurations/password/main.html',
                 controller: 'ClientPasswordConfigurationsMainController',
                 access: {
-                    authorizedRoles: [USER_ROLES.admin]
+                    authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
                 },
                 reloadOnSearch: false,
                 resolve: clientDetailRequiredResources

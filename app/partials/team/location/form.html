@@ -81,6 +81,21 @@
                     </div>
                 </div>
             </div>
+			<div class="row">
+	            <div data-ng-show="providersData">
+	                <div class="col-xs-12" data-ng-show="providersData">
+	                    <label class="control-label" for="providers">Add to Providers:</label>
+	                    <div data-multi-select
+	                     values="providersData"
+	                     model="location.providersSelected"
+	                     show-filters="true"
+	                     value-field="id"
+	                     label-field="label"
+	                     template-path = "partials/common/directives/multi-select/multi-select.html" >
+	                     </div>
+	                </div>
+	            </div>
+	        </div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
@@ -96,20 +111,6 @@
                     </div>
                 </div>
             </div>
-            <!-- not implemented yet EM-585
-            <div class="row" data-ng-show="providersData">
-                <div class="col-md-12">
-                       <div data-multi-select
-                        values="providersData"
-                        model="location.providersSelected"
-                        show-filters="true"
-                        value-field="id"
-                        label-field="label"
-                        template-path = "partials/common/directives/multi-select/multi-select.html" >
-                        </div>
-                </div>
-            </div>
-            -->
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-ng-click="$hide()">Cancel</button>

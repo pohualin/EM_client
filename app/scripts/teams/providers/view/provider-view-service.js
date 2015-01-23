@@ -44,8 +44,9 @@ angular.module('emmiManager')
                  });
              },
              allProvidersForTeam: function (teamResource) {
+            	 var deferred = $q.defer();
             	 var providers = [];
-                 return $http.get(UriTemplate.create(teamResource.link.teamProviders).stringify(), teamResource.entity).then(function addToProviders(response) {
+                 $http.get(UriTemplate.create(teamResource.link.teamProviders).stringify(), teamResource.entity).then(function addToProviders(response) {
                 	 var page = response.data;
                     	 angular.forEach(page.content, function(teamProvider){
                             teamProvider.entity.label = teamProvider.entity.provider.firstName + ' ' + teamProvider.entity.provider.lastName; //do this because the multiselet do not support nested prop
@@ -55,9 +56,11 @@ angular.module('emmiManager')
 	                            $http.get(page.link['page-next']).then(function (response) {
 	                            	addToProviders(response);
 	                            });
+	                        } else {
+	                        	deferred.resolve(providers);
 	                        }
-	            		 return providers;
                  });
+                 return deferred.promise;
              },            
              fetchPageLink: function (href) {
                  return $http.get(href)

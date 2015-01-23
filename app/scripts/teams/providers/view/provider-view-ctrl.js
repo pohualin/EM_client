@@ -1,11 +1,15 @@
 'use strict';
 angular.module('emmiManager')
 
-	.controller('ProviderListController', function($scope, $modal, ProviderView, TeamLocation, TeamProviderService, ProviderSearch, $controller, arrays, ProviderCreate,  $alert){
+	.controller('ProviderListController', function($rootScope, $scope, $modal, ProviderView, TeamLocation, TeamProviderService, ProviderSearch, $controller, arrays, ProviderCreate,  $alert){
 
 		$controller('CommonPagination', {$scope: $scope});
 
         $scope.provider = ProviderCreate.newProvider();
+        
+        $scope.invalidRequest = false;
+
+        $scope.associateRequestSubmitted = false;
 
         $scope.noSearch = true;
 
@@ -15,14 +19,21 @@ angular.module('emmiManager')
 
         $scope.locationsColumnCharLimit = 25;
 
-        $scope.allLocationsForTeam = 'Default: All Locations';
-        
+        $scope.allLocationsForTeam = 'All Locations';
+
+        $rootScope.$on('event:teamLocationSavedWithProvider', function () {
+        	$scope.refreshLocationsAndProviders();
+        });
+
         $scope.refreshLocationsAndProviders = function() {
         	ProviderView.paginatedProvidersForTeam($scope.teamResource).then(function(response){
         		$scope.handleResponse(response, 'listOfTeamProviders');
         	});
+        	TeamLocation.getTeamLocations($scope.teamResource.link.teamLocations).then(function(response){
+                $scope.allTeamLocations = TeamProviderService.buildMultiSelectData(response);
+            });
 		};
-
+		
 		if($scope.teamResource){
 			$scope.refreshLocationsAndProviders();
 		}
@@ -254,34 +265,37 @@ angular.module('emmiManager')
         };
 
         $scope.associateSelectedProvidersToTeam = function (addAnother) {
+        	$scope.associateRequestSubmitted = true;
         	if ($scope.teamProviderTeamLocationSaveRequest.length > 0) {
-        		
         		angular.forEach($scope.teamProviderTeamLocationSaveRequest, function(req){
-        			if (req.provider.selectedTeamLocations.length !== $scope.allTeamLocations.length) {
+        			if (req.provider.selectedTeamLocations.length < 1) {
+        				$scope.invalidRequest = true;
+        			} else if (req.provider.selectedTeamLocations.length !== $scope.allTeamLocations.length) {
         				req.teamLocations = angular.copy(req.provider.selectedTeamLocations);
         			}
         		});
-        		
-	        	ProviderSearch.updateProviderTeamAssociations($scope.teamProviderTeamLocationSaveRequest, $scope.teamResource).then(function (response) {
-	        		$scope.refreshLocationsAndProviders();
-	        		var message = $scope.teamProviderTeamLocationSaveRequest.length > 1 ? 'The selected providers have been successfully added.' : 'The provider <b>'+ $scope.teamProviderTeamLocationSaveRequest[0].provider.firstName + ' ' + $scope.teamProviderTeamLocationSaveRequest[0].provider.lastName +'</b> has been successfully added.';
-
-                    $scope.hideaddprovidermodal();
-
-	        		if (addAnother) {
-        				$scope.addProviders();
-	        		}
-	        		$alert({
-						title: ' ',
-						content: message,
-						container: 'body',
-						type: 'success',
-						placement: 'top',
-					    show: true,
-					    duration: 5,
-					    dismissable: true
-					});
-	        	});
+        		if (!$scope.invalidRequest) {
+		        	ProviderSearch.updateProviderTeamAssociations($scope.teamProviderTeamLocationSaveRequest, $scope.teamResource).then(function (response) {
+		        		$scope.refreshLocationsAndProviders();
+		        		var message = $scope.teamProviderTeamLocationSaveRequest.length > 1 ? 'The selected providers have been successfully added.' : 'The provider <b>'+ $scope.teamProviderTeamLocationSaveRequest[0].provider.firstName + ' ' + $scope.teamProviderTeamLocationSaveRequest[0].provider.lastName +'</b> has been successfully added.';
+	
+	                    $scope.hideaddprovidermodal();
+	
+		        		if (addAnother) {
+	        				$scope.addProviders();
+		        		}
+		        		$alert({
+							title: ' ',
+							content: message,
+							container: 'body',
+							type: 'success',
+							placement: 'top',
+						    show: true,
+						    duration: 5,
+						    dismissable: true
+						});
+		        	});
+        		}
         	}
         };
 
