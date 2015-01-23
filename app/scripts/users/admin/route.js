@@ -21,7 +21,7 @@ angular.module('emmiManager')
                         } else {
                             deferred.reject();
                         }
-                    });        
+                    });
                 });
                 return deferred.promise;
             }];
@@ -32,21 +32,21 @@ angular.module('emmiManager')
                 templateUrl: 'partials/user/main.html',
                 controller: 'UsersMainCtrl',
                 access: {
-                    authorizedRoles: [USER_ROLES.admin]
+                    authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
                 },
                 reloadOnSearch: false
             }).when('/users/new', {
                 templateUrl: 'partials/user/create/new.html',
                 controller: 'UsersCreateController',
                 access: {
-                    authorizedRoles: [USER_ROLES.admin]
+                    authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
                 },
                 reloadOnSearch: false
             }).when('/users/:userId', {
                 templateUrl: 'partials/user/create/editor.html',
                 controller: 'UsersEditorController',
                 access: {
-                    authorizedRoles: [USER_ROLES.admin]
+                    authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
                 },
                 reloadOnSearch: false,
                 resolve: {
@@ -57,7 +57,7 @@ angular.module('emmiManager')
                 controller: 'MainCtrl',
                 title: 'Admin Functions',
                 access: {
-                    authorizedRoles: [USER_ROLES.admin]
+                    authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
                 }
             });
     })

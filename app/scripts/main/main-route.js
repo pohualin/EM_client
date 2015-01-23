@@ -57,7 +57,7 @@ angular.module('emmiManager')
                 templateUrl: 'partials/doc/docs.html',
                 title: 'Documentation',
                 access: {
-                    authorizedRoles: [USER_ROLES.admin]
+                    authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
                 }
             })
             .otherwise({
