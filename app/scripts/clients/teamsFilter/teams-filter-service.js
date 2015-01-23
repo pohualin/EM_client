@@ -66,7 +66,8 @@ angular.module('emmiManager')
                 //check if there is at least one team on this client
                 var deferred = $q.defer();
                 $http.get(UriTemplate.create(Client.getClient().link.teams).stringify({
-                    size: 1
+                    size: 1,
+                    status: 'ALL'
                 })).then(function load(response) {
                     var page = response.data;
                     deferred.resolve(page);
@@ -102,6 +103,7 @@ angular.module('emmiManager')
                 var deferred = $q.defer();
                 $http.get(UriTemplate.create(Client.getClient().link.teams).stringify({
                     size: 1,
+                    status: 'ALL',
                     teamTagsType: 'UNTAGGED_ONLY'
                 })).then(function load(response) {
                     var page = response.data;
