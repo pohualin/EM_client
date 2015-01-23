@@ -76,7 +76,7 @@
                                         Email
                                         <span data-ng-show="sortProperty.property === 'email'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
                                     </th >
-                                    <th class="sort col-sm-3">Use Locations
+                                    <th data-ng-show="allTeamLocations.length > 0" class="sort col-sm-3">Use Locations
                                 </th>
                                 </tr>
                                 <tr data-ng-repeat="teamProvider in searchedProvidersList"  data-ng-class="teamProvider.link.self ? 'text-muted' : ''">
@@ -89,7 +89,7 @@
 									<td>{{teamProvider.provider.entity.firstName}} {{teamProvider.provider.entity.middleName}} {{teamProvider.provider.entity.lastName}} <em>{{teamProvider.provider.entity.active ? '' : "(inactive)"}}</em></td>
                                     <td>{{teamProvider.provider.entity.specialty.name}}</td>
                                     <td>{{teamProvider.provider.entity.email}}</td>
-                                	<td>
+                                	<td data-ng-show="allTeamLocations.length > 0" >
 		                                <div class="col-md-12" data-ng-show="teamProvider.provider.entity.showLocations">
 	                                        <div class="col-md-8" data-multi-select
 		                                        values="allTeamLocations"
