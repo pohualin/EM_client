@@ -25,8 +25,11 @@ angular.module('emmiManager')
         	ProviderView.paginatedProvidersForTeam($scope.teamResource).then(function(response){
         		$scope.handleResponse(response, 'listOfTeamProviders');
         	});
+        	TeamLocation.getTeamLocations($scope.teamResource.link.teamLocations).then(function(response){
+                $scope.allTeamLocations = TeamProviderService.buildMultiSelectData(response);
+            });
 		};
-
+		
 		if($scope.teamResource){
 			$scope.refreshLocationsAndProviders();
 		}
