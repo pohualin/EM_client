@@ -62,7 +62,7 @@ To run the server on port 80, you'll need:
         ProxyPass /webapi-client http://localhost:8080/webapi-client
         ProxyPassReverse /webapi-client http://localhost:8080/webapi-client
         ProxyPass /api-docs http://localhost:8080/api-docs
-        ProxyPassReverse /webapi http://localhost:8080/api-docs
+        ProxyPassReverse /api-docs http://localhost:8080/api-docs
                     
 - compile the main.scss file
     - In this directory run `sass app/styles/main.scss:app/styles/main.css`
