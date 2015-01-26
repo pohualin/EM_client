@@ -72,7 +72,7 @@
 				</tr>
 				<tr
 					data-ng-repeat="provider in providers | orderBy:'provider.sortIdx'">
-					<td>{{provider.entity.firstName}} {{provider.entity.lastName}}</td>
+					<td>{{provider.entity.firstName}} {{provider.entity.lastName}} <em>{{provider.entity.active ? '' : "(inactive)"}}</em></td>
 					<td>{{provider.entity.specialty.name}}</td>
 					<td>{{provider.entity.email}}</td>
 					<td><a href="#/providers/{{provider.entity.id}}">view</a></td>

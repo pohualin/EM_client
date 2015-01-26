@@ -20,15 +20,6 @@ angular.module('emmiManager')
                 },
                 resolve: requiredResources
             })
-            .when('/login', {
-                templateUrl: 'client-facing/main/login.html',
-                controller: 'LoginCtrl',
-                title: 'Login',
-                access: {
-                    authorizedRoles: [USER_ROLES.all]
-                },
-                resolve: requiredResources
-            })
             .when('/403', {
                 templateUrl: 'client-facing/main/403.html',
                 resolve: requiredResources,
@@ -45,16 +36,8 @@ angular.module('emmiManager')
                     authorizedRoles: [USER_ROLES.all]
                 }
             })
-            .when('/logout', {
-                templateUrl: 'client-facing/main/main.html',
-                controller: 'LogoutCtrl',
-                resolve: requiredResources,
-                access: {
-                    authorizedRoles: [USER_ROLES.all]
-                }
-            })
             .when('/docs', {
-                templateUrl: 'partials/doc/docs.html',
+                templateUrl: 'client-facing/doc/docs.html',
                 title: 'Documentation',
                 access: {
                     authorizedRoles: [USER_ROLES.admin]

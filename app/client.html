@@ -29,6 +29,7 @@
 <div data-ng-view></div>
 
 <!-- build:js scripts/vendor.js -->
+<!-- If you add something to the vendor.js build make sure to add it to all three html applications -->
 <!-- bower:js -->
 <script src="bower_components/jquery/dist/jquery.js"></script>
 <script src="bower_components/angular/angular.js"></script>
@@ -73,15 +74,20 @@
 <script src="scripts/common/directives/analytics-on/analytics-on.js"></script>
 <script src="scripts/common/directives/no-dirty/no-dirty.js"></script>
 <script src="scripts/auth/auth-ctrl.js"></script>
-<script src="scripts/auth/auth-service.js"></script>
-<script src="client-facing/auth/session-factory.js"></script>
 <script src="scripts/common/service.js"></script>
-
+<script src="client-facing/auth/auth-service.js"></script>
+<script src="client-facing/auth/auth-route.js"></script>
+<script src="client-facing/auth/session-factory.js"></script>
 <script src="client-facing/main/main-ctrl.js"></script>
 <script src="client-facing/main/main-service.js"></script>
 <script src="client-facing/main/main-route.js"></script>
 <script src="scripts/common/bootstrap-piwik.js"></script>
 <script src="scripts/common/bootstrap-client.js"></script>
+
+<script src="client-facing/credentials/credentials-route.js"></script>
+<script src="client-facing/credentials/expired/expired-ctrl.js"></script>
+<script src="client-facing/credentials/expired/expired-service.js"></script>
+
 <!-- inject:client-partials -->
 <!-- endinject -->
 <!-- endbuild -->

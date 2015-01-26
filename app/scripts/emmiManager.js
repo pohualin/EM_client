@@ -25,7 +25,8 @@ angular.module('emmiManager', [
 
     .constant('USER_ROLES', {
         all: '*',
-        admin: 'PERM_GOD',
+        god: 'PERM_GOD',
+        admin: 'PERM_ADMIN_USER',
         user: 'PERM_USER'
     })
 
@@ -114,7 +115,7 @@ angular.module('emmiManager', [
             AuthSharedService.authorizedRoute((next.access) ? next.access.authorizedRoles : [USER_ROLES.all]);
         });
 
-        $rootScope.$on('$routeChangeError', function (event, next) {
+        $rootScope.$on('$routeChangeError', function () {
             $location.path('/').replace();
         });
 
@@ -132,7 +133,7 @@ angular.module('emmiManager', [
         });
 
         // Call when the the client is confirmed
-        $rootScope.$on('event:auth-loginConfirmed', function (data) {
+        $rootScope.$on('event:auth-loginConfirmed', function () {
             $rootScope.authenticated = true;
             if ($location.path() === '/login') {
                 var priorRequestPath = $rootScope.locationBeforeLogin;
@@ -155,7 +156,7 @@ angular.module('emmiManager', [
         });
 
         // Call when the 403 response is returned by the server
-        $rootScope.$on('event:auth-notAuthorized', function (rejection) {
+        $rootScope.$on('event:auth-notAuthorized', function () {
             $location.path('/403').replace();
         });
 

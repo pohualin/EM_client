@@ -2,52 +2,78 @@
 
 angular.module('emmiManager')
 
-    .controller('TeamsFilterCommon', function ($scope, $location,URL_PARAMETERS, arrays, $rootScope) {
+    .controller('TeamsFilterCommon', function ($scope, $location, URL_PARAMETERS, arrays, $rootScope, TeamsFilter, $q) {
         var searchObject = $location.search();
-        $scope.getUrl = function () {
-            angular.forEach($scope.clientGroups, function (clientGroup) {
-                if (searchObject && clientGroup.entity.id === parseInt(searchObject[URL_PARAMETERS.SELECTED_GROUP])) {
-                    $scope.selectedGroup = clientGroup;
-                    $scope.getTeamTagsForGroup();
-                }
-            });
-            if (searchObject[URL_PARAMETERS.SELECTED_TAGS]&&searchObject[URL_PARAMETERS.SELECTED_TAGS]!=='') {
-                var selectedTags = (searchObject[URL_PARAMETERS.SELECTED_TAGS]).split(',');
-                angular.forEach(selectedTags, function (tagToLoadFromURLid) {
-                    var keepGoing = true;
-                    angular.forEach($scope.defaultTeamTags, function (teamTag) {
-                        if (keepGoing && searchObject && teamTag.tag.id === parseInt(tagToLoadFromURLid)) {
-                            $scope.filterTags.push(teamTag.tag);
-                            keepGoing = false;
+        $scope.getGroupUrlParameter = function () {
+            if (searchObject[URL_PARAMETERS.SELECTED_GROUP] && searchObject[URL_PARAMETERS.SELECTED_GROUP] !== '') {
+                var deferred = $q.defer();
+                TeamsFilter.getClientGroups().then(function (groups) {
+                    angular.forEach(groups, function (clientGroup) {
+                        //find the group entity for the group id in the URL
+                        if (searchObject && clientGroup.entity.id === parseInt(searchObject[URL_PARAMETERS.SELECTED_GROUP])) {
+                            $scope.selectedGroup = clientGroup;
                         }
                     });
+                    deferred.resolve($scope.selectedGroup);
                 });
-                $scope.showFilteredTeams();
-                $rootScope.currentRouteQueryString = arrays.toQueryString($location.search());
-            }
-            if(searchObject[URL_PARAMETERS.INACTIVE_TEAMS]){
-                $scope.showInactiveTeams = searchObject[URL_PARAMETERS.INACTIVE_TEAMS];
-                if($scope.showInactiveTeams === 'false'){
-                    $scope.showInactiveTeams = false;
-                }else{
-                    $scope.showInactiveTeams = true;
-                    $scope.showClientTeams();
-                }
-            }
-            if(searchObject[URL_PARAMETERS.UNTAGGED_TEAMS]){
-                $scope.showUntaggedTeams = searchObject[URL_PARAMETERS.UNTAGGED_TEAMS];
-                if($scope.showUntaggedTeams === 'false'){
-                    $scope.showUntaggedTeams = false;
-                    $scope.showClientTeams();
-                }else{
-                    $scope.clientTeams = $scope.teamsWithNoTeamTags;
-                    $scope.checkUnTaggedTeams = true;
-                    $scope.showUntaggedTeams = true;
-                }
+
+                return deferred.promise;
             }
         };
 
-        $scope.setGroupUrl = function () {
+        $scope.getTagsUrlParameter = function () {
+            if (searchObject && searchObject[URL_PARAMETERS.SELECTED_TAGS] && searchObject[URL_PARAMETERS.SELECTED_TAGS] !== '') {
+                var deferred = $q.defer();
+                var selectedTags = (searchObject[URL_PARAMETERS.SELECTED_TAGS]).split(',');
+                TeamsFilter.getActiveOrAllTeamTagsForFilteredTags({}, $scope.showInactiveTeams).then(function (teamTags) {
+                    angular.forEach(selectedTags, function (tagToLoadFromURLid) {
+                        //for each tag id in the url...
+
+                        var keepGoing = true;
+                        angular.forEach(teamTags, function (teamTag) {
+                            //check each team tag...
+                            if (keepGoing && teamTag.tag.id === parseInt(tagToLoadFromURLid)) {
+                                $scope.filterTags.push(teamTag.tag);
+                                keepGoing = false;
+                            }
+                        });
+                        deferred.resolve($scope.filterTags);
+                    });
+                });
+
+                return deferred.promise;
+            }
+        };
+
+        $scope.getInactiveAndUntaggedUrlParameters = function () {
+            var deferred = $q.defer();
+            if (searchObject[URL_PARAMETERS.INACTIVE_TEAMS]) {
+                $scope.showInactiveTeams = searchObject[URL_PARAMETERS.INACTIVE_TEAMS];
+                //change from String to boolean
+                $scope.showInactiveTeams = $scope.showInactiveTeams !== 'false';
+            }
+
+            if (searchObject[URL_PARAMETERS.UNTAGGED_TEAMS] && searchObject[URL_PARAMETERS.UNTAGGED_TEAMS] !== '') {
+                $scope.showUntaggedTeams = searchObject[URL_PARAMETERS.UNTAGGED_TEAMS];
+                if ($scope.showUntaggedTeams === 'false') {
+                    //change from String to boolean
+                    $scope.showUntaggedTeams = false;
+                } else {
+                    TeamsFilter.getActiveOrAllTeamsWithNoTeamTags($scope.showInactiveTeams).then(function (teams) {
+                        $scope.teamsWithNoTeamTags = true;
+                        $scope.checkUnTaggedTeams = true;
+                        $scope.showUntaggedTeams = true;
+                        $scope.clientTeams = teams;
+
+                    });
+
+                }
+            }
+            deferred.resolve($scope.clientTeams);
+            return deferred.promise;
+        };
+
+        $scope.setGroupUrlParameter = function () {
             var groupIdForURL = '0';
             if ($scope.selectedGroup && $scope.selectedGroup.entity && $scope.selectedGroup.entity.id) {
                 groupIdForURL = $scope.selectedGroup.entity.id;
@@ -56,7 +82,7 @@ angular.module('emmiManager')
             $rootScope.currentRouteQueryString = arrays.toQueryString($location.search());
         };
 
-        $scope.setTagsUrl = function () {
+        $scope.setTagsUrlParameter = function () {
             var tagIds = [];
             angular.forEach($scope.filterTags, function (filteredTag) {
                 tagIds.push(filteredTag.id);
@@ -66,15 +92,13 @@ angular.module('emmiManager')
             $rootScope.currentRouteQueryString = arrays.toQueryString($location.search());
         };
 
-        $scope.setInactiveTeamsURL = function(){
+        $scope.setInactiveTeamsURLParameter = function () {
             $location.search(URL_PARAMETERS.INACTIVE_TEAMS, $scope.showInactiveTeams).replace();
             $rootScope.currentRouteQueryString = arrays.toQueryString($location.search());
         };
 
-        $scope.setUntaggedTeamsURL = function(){
+        $scope.setUntaggedTeamsURLParameter = function () {
             $location.search(URL_PARAMETERS.UNTAGGED_TEAMS, $scope.showUntaggedTeams).replace();
             $rootScope.currentRouteQueryString = arrays.toQueryString($location.search());
         };
-
-
     });

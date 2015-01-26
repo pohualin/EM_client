@@ -17,8 +17,12 @@ angular.module('emmiManager')
                         self.currentUser().then(function (currentUser) {
                             authService.loginConfirmed(currentUser);
                         });
-                    }).error(function () {
-                        $rootScope.authenticationError = true;
+                    }).error(function (error) {
+                        if (error.indexOf("CredentialsExpiredException") != -1){
+                            $rootScope.$broadcast('event:auth-credentialsExpired', {credentials: creds});
+                        } else {
+                            $rootScope.authenticationError = true;
+                        }
                         Session.destroy();
                     });
                 },
@@ -74,6 +78,7 @@ angular.module('emmiManager')
                             isAuthorized = true;
                         }
                     });
+
                     return isAuthorized;
                 },
                 logout: function (logoutLink) {
