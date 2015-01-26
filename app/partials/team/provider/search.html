@@ -76,7 +76,7 @@
                                         Email
                                         <span data-ng-show="sortProperty.property === 'email'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
                                     </th >
-                                    <th class="sort col-sm-3"> Locations
+                                    <th data-ng-show="allTeamLocations.length > 0" class="sort col-sm-3">Use Locations
                                 </th>
                                 </tr>
                                 <tr data-ng-repeat="teamProvider in searchedProvidersList"  data-ng-class="teamProvider.link.self ? 'text-muted' : ''">
@@ -86,20 +86,25 @@
 									<td data-ng-show="teamProvider.link.self">
                                         <input type="checkbox" disabled="disabled" checked>
                                     </td>
-									<td>{{teamProvider.provider.entity.firstName}} {{teamProvider.provider.entity.middleName}} {{teamProvider.provider.entity.lastName}}</td>
+									<td>{{teamProvider.provider.entity.firstName}} {{teamProvider.provider.entity.middleName}} {{teamProvider.provider.entity.lastName}} <em>{{teamProvider.provider.entity.active ? '' : "(inactive)"}}</em></td>
                                     <td>{{teamProvider.provider.entity.specialty.name}}</td>
                                     <td>{{teamProvider.provider.entity.email}}</td>
-                                	<td>
-		                                <div class="col-xs-12" data-ng-show="teamProvider.provider.entity.showLocations">
-		                                       <div data-multi-select
+                                	<td data-ng-show="allTeamLocations.length > 0" >
+		                                <div class="col-md-12" data-ng-show="teamProvider.provider.entity.showLocations">
+	                                        <div class="col-md-8" data-multi-select
 		                                        values="allTeamLocations"
 		                                        model="teamProvider.provider.entity.selectedTeamLocations"
 		                                        show-filters="true"
 		                                        value-field="id"
 		                                        label-field="label"
 		                                        template-path = "partials/common/directives/multi-select/multi-select.html" >
-		                                        </div>
-		                                </div>
+		                                    </div>
+                                            <div class="col-md-3 error-circle glyphicon glyphicon-exclamation-sign"
+                             					data-ng-show="teamProvider.provider.entity.selectedTeamLocations < 1 && associateRequestSubmitted"
+                             					data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                             					data-title="At least one location is required">
+                             				</div> 
+			                             </div>
                             		</td>
                                 </tr>
                             </table>

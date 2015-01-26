@@ -5,14 +5,14 @@
 					<th  class="col-md-2">Name </th>
 					<th  class="col-md-2">Primary Specialty </th>
 					<th  class="col-md-3">Email </th>
-					<th  class="col-md-2">Locations</th>
+					<th data-ng-show="allTeamLocations.length > 0"  class="col-md-2">Locations</th>
 		            <th  class="col-md-3">&nbsp;</th>
 				</tr>
 					<tr data-ng-repeat="teamProvider in listOfTeamProviders">
-			    	<td>{{teamProvider.entity.provider.firstName}} {{teamProvider.entity.provider.lastName}}</td>
+			    	<td>{{teamProvider.entity.provider.firstName}} {{teamProvider.entity.provider.lastName}} <em>{{teamProvider.entity.provider.active ? '' : "(inactive)"}}</em></td>
 			    	<td>{{teamProvider.entity.provider.specialty.name}}</td>
 			    	<td>{{teamProvider.entity.provider.email}}</td>
-			    	<td>
+			    	<td data-ng-show="allTeamLocations.length > 0" >
 						<div data-placement="top" class="pointer" data-ng-show="teamProvider.entity.locations && teamProvider.entity.locations.length > locationsColumnCharLimit" data-content=" {{teamProvider.entity.locations}} " data-trigger="hover" data-delay="200" data-bs-popover data-popover-dismiss>
                         	{{teamProvider.entity.locations | characters:locationsColumnCharLimit }}
 						</div>

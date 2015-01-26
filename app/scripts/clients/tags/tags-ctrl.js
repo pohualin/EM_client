@@ -209,7 +209,7 @@ angular.module('emmiManager')
             restrict: 'EA',
             link: function (scope, element) {
 
-                element.on('click', function () {
+                element.on('click', function (event) {
                     // pop a warning dialog
                     event.stopPropagation();
                     scope.toggleHideCancelButton();

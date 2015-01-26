@@ -2,14 +2,14 @@
 
 angular.module('emmiManager')
 
-    .controller('TeamsLocationsController', ['$scope', '$http', 'Session', 'UriTemplate', '$controller', '$modal', '$alert', 'Location', 'TeamLocation', function ($scope, $http, Session, UriTemplate, $controller, $modal, $alert, Location, TeamLocation) {
+    .controller('TeamsLocationsController', ['$rootScope', '$scope', '$http', 'Session', 'UriTemplate', '$controller', '$modal', '$alert', 'Location', 'TeamLocation', function ($rootScope, $scope, $http, Session, UriTemplate, $controller, $modal, $alert, Location, TeamLocation) {
 
         $controller('LocationCommon', {$scope: $scope});
 
         $controller('CommonPagination', {$scope: $scope});
 
         var managedLocationList = 'locations';
-        $scope.providersData = [];
+
         $scope.teamLocations = {}; //used to hold the locations and manipulate internally
 
         $scope.editLocation = function (location) {
@@ -45,7 +45,7 @@ angular.module('emmiManager')
         };
 
         $scope.addLocations = function () {
-           $modal({scope: $scope, template: 'partials/team/location/search.html', animation: 'none', backdropAnimation: 'emmi-fade', show: true, backdrop: 'static'});
+        	$modal({scope: $scope, template: 'partials/team/location/search.html', animation: 'none', backdropAnimation: 'emmi-fade', show: true, backdrop: 'static'});
         };
 
         $scope.cancelPopup = function() {
@@ -102,6 +102,7 @@ angular.module('emmiManager')
             TeamLocation.removeLocation(locationResource).then(function () {
                 $scope.refresh();
                 $scope.showRemovalSuccess(locationResource);
+                $rootScope.$broadcast('event:teamLocationSavedWithProvider');
             });
             _paq.push(['trackEvent', 'Form Action', 'Team Location', 'Remove']);
         };

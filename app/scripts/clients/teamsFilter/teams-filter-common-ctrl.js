@@ -64,11 +64,12 @@ angular.module('emmiManager')
                         $scope.checkUnTaggedTeams = true;
                         $scope.showUntaggedTeams = true;
                         $scope.clientTeams = teams;
-                        deferred.resolve(teams);
+
                     });
 
                 }
             }
+            deferred.resolve($scope.clientTeams);
             return deferred.promise;
         };
 
