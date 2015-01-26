@@ -26,11 +26,16 @@ angular.module('emmiManager')
                 $location.path('/clients/'+$scope.client.entity.id);
             };
             
+            $scope.setLoading = function(){
+                $scope.loading = true;
+            };
+            
             /**
              * Call and check if user is assigned to Super user.
              */
             $scope.setIsSuperUser = function(){
                 $scope.isSuperUser = UserClientUserClientRolesService.isSuperUser();
+                $scope.loading = false;
             };
 
         }

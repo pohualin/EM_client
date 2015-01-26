@@ -22,6 +22,7 @@ angular.module('emmiManager')
 	         * Load existingUserClientUserClientRoles for the UserClient
 	         */
 	        $scope.loadExistingUserClientUserClientRoles = function(){
+	            $scope.setLoading();
     			UserClientUserClientRolesService.
     			getUserClientUserClientRoles($scope.selectedUserClient).then(function(response){
     				// Set existingUserClientUserClientRoles if it exists
@@ -51,6 +52,7 @@ angular.module('emmiManager')
 	         * Called when 'remove' is clicked
 	         */
 	        $scope.removeUserClientRole = function (userClientUserClientRole) {
+	            $scope.setLoading();
 	        	UserClientUserClientRolesService.deleteUserClientUserClientRole(userClientUserClientRole)
 	        	.then(function(response){
 	        		$scope.existingUserClientUserClientRoles = null;
