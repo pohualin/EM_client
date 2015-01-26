@@ -60,10 +60,6 @@ angular.module('emmiManager')
                 }
             };
 
-            $scope.$watch('userClientUserClientRolesService.isSuperUser()', function(){
-                $scope.isSuperUser = UserClientUserClientRolesService.isSuperUser();
-            });
-
             /**
 	         * init method called when the page is loading
 	         */

@@ -28,6 +28,7 @@ angular.module('emmiManager')
     				if(response.length > 0){
     					UserClientUserClientRolesService.loadPermissionsForUserClientUserClientRoles(response).then(function(response){
     						$scope.existingUserClientUserClientRoles = response;
+    						$scope.setIsSuperUser();
     					});
     				} else {
     					// Load existing UserClientRoles for the Client
@@ -42,6 +43,7 @@ angular.module('emmiManager')
     		$scope.loadClientRoles = function(){
 				ManageUserRolesService.loadClientRolesWithPermissions().then(function(clientRoles){
 					$scope.clientRoles = clientRoles;
+					$scope.setIsSuperUser();
 				});
     		};
 
