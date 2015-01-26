@@ -16,6 +16,7 @@ angular.module('emmiManager')
 	         * Called when 'Create Another User' is clicked
 	         */
 	        $scope.createAnotherUserClient = function () {
+	            UserClientUserClientRolesService.clearAllPermissions();
 	        	$location.path('/clients/' + $scope.client.entity.id + '/users/new');
 	        };
 
