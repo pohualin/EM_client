@@ -5,7 +5,7 @@ angular.module('emmiManager')
 /**
  * Controller for Configuration main page
  */
-    .controller('ClientPasswordConfigurationsMainController', ['$scope', '$controller', 'Client', 'ClientPasswordConfigurationsService',
+    .controller('ClientPasswordConfigurationMainController', ['$scope', '$controller', 'Client', 'ClientPasswordConfigurationsService',
         function ($scope, $controller, Client, ClientPasswordConfigurationsService) {
 
             /**
@@ -54,9 +54,9 @@ angular.module('emmiManager')
                     return false;
                 }
                 return !angular
-                    .equals(
-                    $scope.originalClientPasswordConfiguration.entity,
-                    $scope.clientPasswordConfiguration.entity);
+                        .equals(
+                                $scope.originalClientPasswordConfiguration.entity,
+                                $scope.clientPasswordConfiguration.entity);
             };
 
             /**
