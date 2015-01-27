@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  * Controller for EmailRestrictConfiguration
  */
-.controller('EmailRestrictConfigurationMainController', ['$scope', '$controller', 'Client', 'ClientRestrictConfigurationsService', 'EmailRestrictConfigurationsService',
-    function ($scope, $controller, Client, ClientRestrictConfigurationsService, EmailRestrictConfigurationsService) {
+.controller('EmailRestrictConfigurationMainController', ['$scope', '$controller', 'EmailRestrictConfigurationsService',
+    function ($scope, $controller, EmailRestrictConfigurationsService) {
         var contentProperty = 'emailRestrictConfigurations';
     
         /**
@@ -58,14 +58,12 @@ angular.module('emmiManager')
          */
         function getEmailRestrict(sort){
             $scope.loading = true;
-            ClientRestrictConfigurationsService.getClientRestrictConfiguration().then(function(response){
-                EmailRestrictConfigurationsService.getEmailRestrictConfiguration(response, sort)
-                    .then(function(emailRestrictResponse){
-                        if (!emailRestrictResponse) {
-                            $scope.sortProperty = sort;
-                        }
-                        $scope.handleResponse(emailRestrictResponse, contentProperty);
-                });
+            EmailRestrictConfigurationsService.getEmailRestrictConfiguration(sort)
+                .then(function(emailRestrictResponse){
+                    if (!emailRestrictResponse) {
+                        $scope.sortProperty = sort;
+                    }
+                    $scope.handleResponse(emailRestrictResponse, contentProperty);
             });
             $scope.sortProperty = null;
         }

@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  * Controller for IpRestrictConfiguration
  */
-.controller('IpRestrictConfigurationMainController', ['$scope', '$controller', 'Client', 'ClientRestrictConfigurationsService', 'IpRestrictConfigurationsService',
-    function ($scope, $controller, Client, ClientRestrictConfigurationsService, IpRestrictConfigurationsService) {
+.controller('IpRestrictConfigurationMainController', ['$scope', '$controller', 'IpRestrictConfigurationsService',
+    function ($scope, $controller, IpRestrictConfigurationsService) {
         var contentProperty = 'ipRestrictConfigurations';
     
         /**
@@ -58,14 +58,12 @@ angular.module('emmiManager')
          */
         function getIpRestrict(sort){
             $scope.loading = true;
-            ClientRestrictConfigurationsService.getClientRestrictConfiguration().then(function(response){
-                IpRestrictConfigurationsService.getIpRestrictConfiguration(response, sort)
-                    .then(function(ipRestrictResponse){
-                        if (!ipRestrictResponse) {
-                            $scope.sortProperty = sort;
-                        }
-                        $scope.handleResponse(ipRestrictResponse, contentProperty);
-                });
+            IpRestrictConfigurationsService.getIpRestrictConfiguration(sort)
+                .then(function(ipRestrictResponse){
+                    if (!ipRestrictResponse) {
+                        $scope.sortProperty = sort;
+                    }
+                    $scope.handleResponse(ipRestrictResponse, contentProperty);
             });
             $scope.sortProperty = null;
         }

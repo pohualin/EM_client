@@ -4,8 +4,8 @@ angular.module('emmiManager')
 /**
  * This service is responsible CRUD operations for EmailRestrictConfiguration resources
  */
-    .service('EmailRestrictConfigurationsService', ['$filter', '$q', '$http', 'UriTemplate', 'CommonService',
-        function ($filter, $q, $http, UriTemplate, CommonService) {
+    .service('EmailRestrictConfigurationsService', ['$filter', '$q', '$http', 'UriTemplate', 'CommonService', 'Client',
+        function ($filter, $q, $http, UriTemplate, CommonService, Client) {
             return {
                 
                 /**
@@ -20,16 +20,23 @@ angular.module('emmiManager')
                 },
                 
                 /**
-                 * Get EmailRestrictConfiguration by ClientRestrictConfiguration
+                 * Get EmailRestrictConfiguration by Client
                  */
-                getEmailRestrictConfiguration: function (clientRestrictConfiguration, sort) {
-                    return $http.get(UriTemplate.create(clientRestrictConfiguration.link.emailRestrictConfiguration).stringify({
+                getEmailRestrictConfiguration: function (sort) {
+                    return $http.get(UriTemplate.create(Client.getClient().link.emailRestrictConfigurations).stringify({
                         sort: sort && sort.property ? sort.property + ',' + (sort.ascending ? 'asc' : 'desc') : ''
                     }))
                         .then(function (response) {
                             CommonService.convertPageContentLinks(response.data);
                             return response.data;
                         });
+                },
+                
+                /**
+                 * Return an empty EmailRestrictConfiguration
+                 */
+                newEmailRestrictConfiguration: function(){
+                    return {};
                 },
                 
                 /**
@@ -45,8 +52,8 @@ angular.module('emmiManager')
                 /**
                  * Save EmailRestrictConfiguration
                  */ 
-                save: function(clientRestrictConfiguration, emailRestrictConfiguration){
-                    return $http.post(UriTemplate.create(clientRestrictConfiguration.link.emailRestrictConfiguration).stringify(), 
+                save: function(emailRestrictConfiguration){
+                    return $http.post(UriTemplate.create(Client.getClient().link.emailRestrictConfigurations).stringify(), 
                             emailRestrictConfiguration.entity)
                         .then(function (response) {
                             CommonService.convertPageContentLinks(response.data);

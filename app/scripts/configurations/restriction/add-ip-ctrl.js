@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  * Controller for IpRestrictConfiguration
  */
-.controller('AddIpRestrictConfigurationController', ['$scope', '$alert', '$controller', '$modal', 'Client', 'ClientRestrictConfigurationsService', 'IpRestrictConfigurationsService',
-    function ($scope, $alert, $controller, $modal, Client, ClientRestrictConfigurationsService, IpRestrictConfigurationsService) {
+.controller('AddIpRestrictConfigurationController', ['$scope', '$alert', '$controller', '$modal', 'IpRestrictConfigurationsService',
+    function ($scope, $alert, $controller, $modal, IpRestrictConfigurationsService) {
         
         var addIpRestrictModal = $modal(
             {scope: $scope, 
@@ -19,7 +19,7 @@ angular.module('emmiManager')
          *  Called when add another is clicked to add a new ipRestrictConfiguration
          */
         $scope.addAnotherIpRestrict = function(ipRestrictConfigurationForm){
-            $scope.ipRestrictConfiguration = {};
+            $scope.ipRestrictConfiguration = IpRestrictConfigurationsService.newIpRestrictConfiguration();
             addIpRestrictModal.$promise.then(addIpRestrictModal.show);
         };
         
@@ -29,9 +29,9 @@ angular.module('emmiManager')
         $scope.add = function(ipRestrictConfigurationForm){
             $scope.ipRestrictConfigurationFormSubmitted = true;
             if(ipRestrictConfigurationForm.$valid){
-                IpRestrictConfigurationsService.save($scope.clientRestrictConfiguration, $scope.ipRestrictConfiguration).then(function(response){
+                IpRestrictConfigurationsService.save($scope.ipRestrictConfiguration).then(function(response){
                     $scope.listExisting();
-                    $scope.ipRestrictConfiguration = {};
+                    $scope.ipRestrictConfiguration = IpRestrictConfigurationsService.newIpRestrictConfiguration();
                     $scope.ipRestrictConfigurationFormSubmitted = false;
                     $scope.$hide();
                 });

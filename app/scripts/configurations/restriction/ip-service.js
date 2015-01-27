@@ -4,8 +4,8 @@ angular.module('emmiManager')
 /**
  * This service is responsible CRUD operations for IpRestrictConfiguration resources
  */
-    .service('IpRestrictConfigurationsService', ['$filter', '$q', '$http', 'UriTemplate', 'CommonService',
-        function ($filter, $q, $http, UriTemplate, CommonService) {
+    .service('IpRestrictConfigurationsService', ['$filter', '$q', '$http', 'UriTemplate', 'CommonService', 'Client',
+        function ($filter, $q, $http, UriTemplate, CommonService, Client) {
             return {
                 
                 /**
@@ -20,16 +20,23 @@ angular.module('emmiManager')
                 },
                 
                 /**
-                 * Get IpRestrictConfiguration by ClientRestrictConfiguration
+                 * Get IpRestrictConfiguration by Client
                  */
-                getIpRestrictConfiguration: function (clientRestrictConfiguration, sort) {
-                    return $http.get(UriTemplate.create(clientRestrictConfiguration.link.ipRestrictConfiguration).stringify({
+                getIpRestrictConfiguration: function (sort) {
+                    return $http.get(UriTemplate.create(Client.getClient().link.ipRestrictConfigurations).stringify({
                         sort: sort && sort.property ? sort.property + ',' + (sort.ascending ? 'asc' : 'desc') : ''
                     }))
                         .then(function (response) {
                             CommonService.convertPageContentLinks(response.data);
                             return response.data;
                         });
+                },
+                
+                /**
+                 * Return an empty IpRestrictConfiguration
+                 */
+                newIpRestrictConfiguration: function(){
+                    return {};
                 },
                 
                 /**
@@ -45,8 +52,8 @@ angular.module('emmiManager')
                 /**
                  * Save IpRestrictConfiguration
                  */ 
-                save: function(clientRestrictConfiguration, ipRestrictConfiguration){
-                    return $http.post(UriTemplate.create(clientRestrictConfiguration.link.ipRestrictConfiguration).stringify(), 
+                save: function(ipRestrictConfiguration){
+                    return $http.post(UriTemplate.create(Client.getClient().link.ipRestrictConfigurations).stringify(), 
                             ipRestrictConfiguration.entity)
                         .then(function (response) {
                             CommonService.convertPageContentLinks(response.data);

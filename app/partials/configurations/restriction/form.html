@@ -3,21 +3,12 @@
         <h2>Security Settings</h2>
     </div>
     <form name="clientRestrictConfigurationForm" class="form-horizontal" novalidate>
-        <div class="pull-right">
-            <span data-ng-show="showButtons() && !loading">
-                <a class="btn btn-link" data-ng-click="cancel()">cancel</a>
-            </span>
-            <span data-ng-show="showButtons() && !loading">
-                <button class="btn btn-primary" type="submit"
-                        data-ng-click="save(clientRestrictConfigurationForm)">Save
-                </button>
-            </span>
-        </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
                     <div class="col-md-6">
                         <input id="emailConfigRestrict" type="checkbox" 
+                            data-ng-change="save()"
                             data-ng-model="clientRestrictConfiguration.entity.emailConfigRestrict" /> Restrict valid email addresses
                     </div>
                 </div>
@@ -29,6 +20,7 @@
                 <div class="form-group">
                     <div class="col-md-6">
                         <input id="ipConfigRestrict" type="checkbox" 
+                            data-ng-change="save()"
                             data-ng-model="clientRestrictConfiguration.entity.ipConfigRestrict" /> Restrict IP Range
                     </div>
                 </div>

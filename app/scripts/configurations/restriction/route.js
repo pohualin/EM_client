@@ -21,15 +21,7 @@ angular.module('emmiManager')
 
         // Routes
         $routeProvider
-            .when('/clients/:clientId/password_policy', {
-                templateUrl: 'partials/configurations/password/main.html',
-                controller: 'ClientPasswordConfigurationMainController',
-                access: {
-                    authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
-                },
-                reloadOnSearch: false,
-                resolve: clientDetailRequiredResources
-            }).when('/clients/:clientId/restriction', {
+            .when('/clients/:clientId/restriction', {
                 templateUrl: 'partials/configurations/restriction/main.html',
                 controller: 'ClientRestrictConfigurationMainController',
                 access: {

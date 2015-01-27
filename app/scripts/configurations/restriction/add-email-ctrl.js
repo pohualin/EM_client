@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  * Controller for EmailRestrictConfiguration
  */
-.controller('AddEmailRestrictConfigurationController', ['$scope', '$alert', '$controller', '$modal', 'Client', 'ClientRestrictConfigurationsService', 'EmailRestrictConfigurationsService',
-    function ($scope, $alert, $controller, $modal, Client, ClientRestrictConfigurationsService, EmailRestrictConfigurationsService) {
+.controller('AddEmailRestrictConfigurationController', ['$scope', '$alert', '$controller', '$modal', 'EmailRestrictConfigurationsService',
+    function ($scope, $alert, $controller, $modal, EmailRestrictConfigurationsService) {
         
         var addEmailRestrictModal = $modal(
                 {scope: $scope, 
@@ -19,7 +19,7 @@ angular.module('emmiManager')
          * Called when add another is clicked to add a new emailRestrictConfiguration
          */
         $scope.addAnotherEmailRestrict = function(emailRestrictConfigurationForm){
-            $scope.emailRestrictConfiguration = {};
+            $scope.emailRestrictConfiguration = EmailRestrictConfigurationsService.newEmailRestrictConfiguration();
             addEmailRestrictModal.$promise.then(addEmailRestrictModal.show);
         };
 
@@ -29,9 +29,9 @@ angular.module('emmiManager')
         $scope.add = function(emailRestrictConfigurationForm){
             $scope.emailRestrictConfigurationFormSubmitted = true;
             if(emailRestrictConfigurationForm.$valid){
-                EmailRestrictConfigurationsService.save($scope.clientRestrictConfiguration, $scope.emailRestrictConfiguration).then(function(response){
+                EmailRestrictConfigurationsService.save($scope.emailRestrictConfiguration).then(function(response){
                     $scope.listExisting();
-                    $scope.emailRestrictConfiguration = {};
+                    $scope.emailRestrictConfiguration = EmailRestrictConfigurationsService.newEmailRestrictConfiguration();
                     $scope.emailRestrictConfigurationFormSubmitted = false;
                     $scope.$hide();
                 });
