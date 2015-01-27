@@ -197,7 +197,7 @@ angular.module('emmiManager')
             /**
              * get the teams from the teamtags
              * @param teamTags to parse
-             * @returns teams
+             * @returns {} teams object
              */
             getTeamsFromTeamTags: function (teamTags) {
                 var teams = {};
@@ -215,7 +215,7 @@ angular.module('emmiManager')
              */
             getActiveOrAllTeamsWithNoTeamTags: function (getInactive) {
                 var deferred = $q.defer();
-                var teams = [];
+                var teams = {};
                 var status;
 
                 if (getInactive) {
@@ -231,7 +231,7 @@ angular.module('emmiManager')
                     var page = response.data;
                     CommonService.convertPageContentLinks(page);
                     angular.forEach(page.content, function (team) {
-                        teams.push(team.entity);
+                        teams[team.entity.name] = team.entity;
                     });
                     if (page.link && page.link['page-next']) {
                         $http.get(page.link['page-next']).then(function (response) {
@@ -289,7 +289,13 @@ angular.module('emmiManager')
                         }
                     });
                     teams.sort(function (a, b) {
-                        return a.name.localeCompare(b.name);
+                        if (a.name > b.name) {
+                            return 1;
+                        } else if (a.name < b.name) {
+                            return -1;
+                        } else {
+                            return 0;
+                        }
                     });
                     if (teams.length > 0) {
                         listOfTeamsByTag[tag.name] = teams;
