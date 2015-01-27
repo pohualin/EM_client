@@ -66,8 +66,20 @@
                         <td>{{user.firstName}}</td>
                         <td>{{user.login}}</td>
                         <td>{{user.email}}</td>
-                        <td><a class="btn-link"
-                            href="#/users/{{user.id}}?{{currentRouteQueryString}}">edit</a>
+                        <td>
+                            <span data-ng-hide="user.deactivationPopoverOpen">
+                                <a class="btn-link"
+                                   href="#/users/{{user.id}}?{{currentRouteQueryString}}">edit</a>
+                                |
+                            </span>
+                            <a href
+                               data-on-ok="toggleActivation(user)"
+                               data-is-currently-active="user.active"
+                               data-placement="top"
+                               data-on-open-popover="deactivationPopoverOpen(user, true)"
+                               data-on-close-popover="deactivationPopoverOpen(user, false)"
+                               data-toggle-user-client-active>{{user.active ? 'deactivate' : 'activate'}}
+                            </a>
                         </td>
                     </tr>
                 </table>
