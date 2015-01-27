@@ -32,7 +32,7 @@ angular.module('emmiManager')
                     	$scope.selectedUser = response.data;
                     	$scope.userToBeEdit = response.data;
                     	$scope.editMode = false;
-                    	_paq.push(['trackEvent', 'Form Action', 'Edit Emmi User', 'Save']);
+                    	_paq.push(['trackEvent', 'Form Action', 'Emmi User Edit', 'Save']);
                     });
                 } else {
                     if (!$scope.errorAlert) {
