@@ -40,7 +40,7 @@
                            type="number"
                            data-ng-min="defaultPasswordConfiguration.passwordLengthMin"
                            data-ng-max="defaultPasswordConfiguration.passwordLengthMax"
-                           required>
+                           required data-auto-focus />
                 </div>
                 <div class="col-md-4 text-align-left" style="text-align: left">
                     ({{defaultPasswordConfiguration.passwordLengthMin}} ~
@@ -92,7 +92,7 @@
                            data-ng-show="defaultPasswordConfiguration.numbersChangeable"/>
                     <input id="numbers" type="checkbox" disabled
                            data-ng-model="clientPasswordConfiguration.entity.numbers"
-                           data-ng-hide="defaultPasswordConfiguration.numbersChangeable"/> one special character
+                           data-ng-hide="defaultPasswordConfiguration.numbersChangeable"/> one number
                 </div>
             </div>
         </div>
@@ -108,7 +108,7 @@
                            data-ng-show="defaultPasswordConfiguration.specialCharsChangeable"/>
                     <input id="specialChars" type="checkbox" disabled
                            data-ng-model="clientPasswordConfiguration.entity.specialChars"
-                           data-ng-hide="defaultPasswordConfiguration.specialCharsChangeable"/> one lowercase letter
+                           data-ng-hide="defaultPasswordConfiguration.specialCharsChangeable"/> one special character
                 </div>
             </div>
         </div>
@@ -142,7 +142,7 @@
                            type="number"
                            data-ng-min="defaultPasswordConfiguration.passwordExpirationDaysMin"
                            data-ng-max="defaultPasswordConfiguration.passwordExpirationDaysMax"
-                           required data-auto-focus>
+                           required >
                 </div>
                 <div class="col-md-4 text-align-left">
                     days ({{defaultPasswordConfiguration.passwordExpirationDaysMin}} ~

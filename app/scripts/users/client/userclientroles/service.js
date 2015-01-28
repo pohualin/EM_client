@@ -16,6 +16,10 @@ angular.module('emmiManager')
 	                        return response;
 	                    });
                 },
+                
+                clearAllPermissions: function(){
+                    allPermissions = [];
+                },
             	
                 /**
             	 * To remove UserClientUserClientRole

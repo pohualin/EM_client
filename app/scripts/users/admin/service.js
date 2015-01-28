@@ -47,6 +47,13 @@ angular.module('emmiManager')
                             return response;
                         });
                 },
+                
+                /**
+                 * Set deactivationPopoverOpen to isOpen for the user
+                 */ 
+                deactivatePopoverOpen: function (user, isOpen) {
+                    user.deactivationPopoverOpen = isOpen;
+                },
 
                 updateUser: function (userToBeEdit) {
                     return $http.put(UriTemplate.create(Session.link.users).stringify(), this.userAssembler(userToBeEdit))

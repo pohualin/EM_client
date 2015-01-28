@@ -9,6 +9,13 @@ angular.module('emmiManager')
         function ($scope, $controller, UsersService) {
 
             /**
+             * Set deactivationPopoverOpen to isOpen for the user
+             */    
+            $scope.deactivationPopoverOpen = function (user, isOpen) {
+                UsersService.deactivatePopoverOpen(user, isOpen);
+            };
+        
+            /**
              * Called when fetching different pages
              */
             $scope.fetchPage = function (href) {
