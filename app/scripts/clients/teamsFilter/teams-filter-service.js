@@ -365,15 +365,16 @@ angular.module('emmiManager')
                             teamsWithTagNotInGroup.push(team);
                         }
                     });
-                }
 
-                //check if object is empty
-                if (teamsWithTagNotInGroup.length === 0) {
+                    //check if object is empty
+                    if (Object.keys(teamsWithTagNotInGroup).length === 0) {
+                        teamsWithTagNotInGroup = null;
+                    }
+                } else {
                     var allClientTeams = {};
                     angular.forEach(teamTags, function (teamTag) {
                         allClientTeams[teamTag.team.name] = teamTag.team;
                     });
-
                     teamsWithTagNotInGroup = allClientTeams;
                 }
 
