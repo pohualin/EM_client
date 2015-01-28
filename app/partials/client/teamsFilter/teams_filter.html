@@ -56,7 +56,7 @@
         <!-- show teams un-grouped -->
         <div data-ng-hide="useGroupDisplay" class="col-md-12 row">
             <hr>
-            <div data-ng-repeat="team in clientTeams | orderBy:'name'">
+            <div data-ng-repeat="team in clientTeams">
                 <!--when a user clicks on a team they are taken to that team's page-->
                 <a data-ng-href="#/clients/{{clientId}}/teams/{{team.id}}?{{currentRouteQueryString}}">{{team.name}}</a>
             </div>
@@ -75,7 +75,7 @@
                               </data-ng-pluralize>
 
                 <!--show the teams that have the above tag-->
-                <div data-ng-repeat="team in teamList | orderBy:'name'">
+                <div data-ng-repeat="team in teamList">
                     <!--take user to the team's page when the link is clicked-->
                     <a data-ng-href="#/clients/{{clientId}}/teams/{{team.id}}?{{currentRouteQueryString}}">{{team.name}}</a>
                 </div>
@@ -87,7 +87,7 @@
         <div data-ng-show="useGroupDisplay && teamsNotInGroup">
             <hr>
             Teams without a '{{selectedGroup.entity.name}}' tag
-            <div data-ng-repeat="team in teamsNotInGroup | orderBy:'name'">
+            <div data-ng-repeat="team in teamsNotInGroup">
                 <!--show all the teams that do not have a tag in the organize by group that was selected-->
                 <a data-ng-href="#/clients/{{clientId}}/teams/{{team.id}}?{{currentRouteQueryString}}">{{team.name}}</a>
             </div>
