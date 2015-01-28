@@ -15,12 +15,14 @@
             data-ng-include="'partials/configurations/main.html'">
         </div>
         <div class="col-md-9">
-            <div class="row" data-ng-include="'partials/configurations/restriction/form.html'" />
-            <hr data-ng-show="originalClientRestrictConfiguration.entity.emailConfigRestrict">
+            <div>
+                <div class="row" data-ng-include="'partials/configurations/restriction/form.html'" />
+            </div>
+            <hr data-ng-show="originalClientRestrictConfiguration.entity.emailConfigRestrict" />
             <div data-ng-show="originalClientRestrictConfiguration.entity.emailConfigRestrict">
                 <div class="row" data-ng-include="'partials/configurations/restriction/email.html'" />
             </div>
-            <hr data-ng-show="originalClientRestrictConfiguration.entity.ipConfigRestrict">
+            <hr data-ng-show="originalClientRestrictConfiguration.entity.ipConfigRestrict" />
             <div data-ng-show="originalClientRestrictConfiguration.entity.ipConfigRestrict">
                 <div class="row" data-ng-include="'partials/configurations/restriction/ip.html'" />
             </div>
