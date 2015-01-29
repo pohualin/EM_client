@@ -32,7 +32,7 @@ angular.module('emmiManager')
                 $scope.addIpRestrictErrorAlert = $alert({
                     title: ' ',
                     content: 'Please correct the below information.',
-                    container: '#message-container',
+                    container: '#ip-message-container',
                     type: 'danger',
                     show: true,
                     dismissable: false

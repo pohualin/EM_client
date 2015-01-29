@@ -32,7 +32,7 @@ angular.module('emmiManager')
                 $scope.addEmailRestrictErrorAlert = $alert({
                     title: ' ',
                     content: 'Please correct the below information.',
-                    container: '#message-container',
+                    container: '#email-message-container',
                     type: 'danger',
                     show: true,
                     dismissable: false
