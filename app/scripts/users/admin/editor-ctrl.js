@@ -25,7 +25,7 @@ angular.module('emmiManager')
 	        /**
 	         * Called when Save button is clicked
 	         */
-    		$scope.save = function(isValid){
+    		$scope.save = function(isValid, event, addAnother){
     			$scope.userFormSubmitted = true;
     			if (isValid) {
                     UsersService.updateUser($scope.userToBeEdit).then(function(response){
@@ -33,6 +33,9 @@ angular.module('emmiManager')
                     	$scope.userToBeEdit = response.data;
                     	$scope.editMode = false;
                     	_paq.push(['trackEvent', 'Form Action', 'Emmi User Edit', 'Save']);
+                    	if(addAnother){
+                    	    $location.path('/users/new');
+                    	}
                     });
                 } else {
                     if (!$scope.errorAlert) {
