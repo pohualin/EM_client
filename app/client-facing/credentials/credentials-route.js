@@ -26,5 +26,25 @@ angular.module('emmiManager')
                         }]
                 }
             })
+
+            .when('/activate/:activationKey', {
+                templateUrl: 'client-facing/credentials/activation/activate.html',
+                controller: 'ActivateClientUserController',
+                title: 'Client User Activation',
+                access: {
+                    authorizedRoles: [USER_ROLES.all]
+                },
+                resolve: {
+                    'activationCode': ['$route', '$q', function ($route, $q) {
+                        var deferred = $q.defer();
+                        if ($route.current.params.activationKey) {
+                            deferred.resolve($route.current.params.activationKey);
+                        } else {
+                            deferred.reject();
+                        }
+                        return deferred.promise;
+                    }]
+                }
+            })
     })
 ;

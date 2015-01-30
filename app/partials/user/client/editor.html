@@ -3,7 +3,8 @@
         <div class="col-md-12">
             <ol class="breadcrumb h3">
                 <li><a href="#/">Emmi Manager</a></li>
-                <li><a href="#" data-confirm-exit data-on-ok="confirmExit()" data-form="userClientForm">{{client.entity.name}}</a></li>
+                <li><a href="#" data-confirm-exit data-on-ok="confirmExit()" data-form="userClientForm">{{client.entity.name}}</a>
+                </li>
                 <li class="active">View User</li>
             </ol>
         </div>
@@ -19,6 +20,19 @@
             </div>
         </div>
     </form>
+    <!--
+        only show the activate button, if the selected user client has an email and at
+        least one role (either client or team)
+     -->
+    <hr data-ng-show="selectedUserClient && selectedUserClient.entity.email &&
+                        !selectedUserClient.entity.activated &&
+                        (clientRoles || (teamRoles | teamSetOnRole))">
+    <div class="row"
+         data-ng-show="selectedUserClient && selectedUserClient.entity.email &&
+                        !selectedUserClient.entity.activated &&
+                        (clientRoles || (teamRoles | teamSetOnRole))"
+         data-ng-include="'partials/user/client/activation/form.html'">
+    </div>
     <hr>
     <div class="row" data-ng-include="'partials/user/client/password/change.html'"></div>
     <hr data-ng-show="selectedUserClient"/>
