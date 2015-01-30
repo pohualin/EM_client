@@ -21,13 +21,6 @@ angular.module('emmiManager')
             $scope.setClientRoles = function (roles) {
                 $scope.clientRoles = roles;
             };
-	    	/**
-	         * Called when 'Create Another User' is clicked
-	         */
-	        $scope.createAnotherUserClient = function () {
-	            UserClientUserClientRolesService.clearAllPermissions();
-	        	$location.path('/clients/' + $scope.client.entity.id + '/users/new');
-	        };
 
             /**
              * Allows the top level editor to evaluate conditions
@@ -43,6 +36,7 @@ angular.module('emmiManager')
              * Called when 'Create Another User' is clicked
              */
             $scope.createAnotherUserClient = function () {
+                UserClientUserClientRolesService.clearAllPermissions();
                 $location.path('/clients/' + $scope.client.entity.id + '/users/new');
             };
 
