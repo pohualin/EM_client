@@ -38,7 +38,7 @@ angular.module('emmiManager')
                 UserClientUserClientTeamRolesService.deleteAllUserClientUserClientTeamRole(clientTeamRole).then(function () {
 					UserClientUserClientTeamRolesService.refreshTeamRoleCard(clientTeamRole);
 				});
-				_paq.push(['trackEvent', 'Form Action', 'User Client User Client Team Role Team', 'Remove All']);
+				_paq.push(['trackEvent', 'Form Action', 'User Team Role Team', 'Remove All']);
 			};
 
             /**
@@ -48,7 +48,7 @@ angular.module('emmiManager')
                 UserClientUserClientTeamRolesService.deleteUserClientUserClientTeamRole(existingTeam).then(function () {
 					UserClientUserClientTeamRolesService.refreshTeamRoleCard(clientTeamRole);
 				});
-				_paq.push(['trackEvent', 'Form Action', 'User Client User Client Team Role Team', 'Remove']);
+				_paq.push(['trackEvent', 'Form Action', 'User Team Role Team', 'Remove']);
 			};
 
             /**
@@ -61,10 +61,6 @@ angular.module('emmiManager')
                     clientTeamRole.activePanel = 0;
                 }
             };
-
-            $scope.$watch('userClientUserClientRolesService.isSuperUser()', function(){
-                $scope.isSuperUser = UserClientUserClientRolesService.isSuperUser();
-            });
 
             /**
 	         * init method called when the page is loading
