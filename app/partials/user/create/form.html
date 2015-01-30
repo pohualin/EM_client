@@ -1,6 +1,6 @@
 <div class="col-md-12">
     <form name="userForm" class="form" novalidate>
-        <div class="row" data-ng-show="userForm.$invalid">
+        <div class="row" data-ng-show="userForm.$invalid && userFormSubmitted">
             <div class="col-md-12" id="message-container"></div>
         </div>
         <h2 data-ng-show="selectedUser">Edit Emmi User</h2>
