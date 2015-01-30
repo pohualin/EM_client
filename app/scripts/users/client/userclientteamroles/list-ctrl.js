@@ -18,6 +18,8 @@ angular.module('emmiManager')
     			ManageUserTeamRolesService.loadClientTeamRoles().then(function(clientTeamRoles){
 					$scope.clientTeamRoles = clientTeamRoles;
 					UserClientUserClientTeamRolesService.refreshTeamRoleCards($scope.clientTeamRoles);
+                    // update parent controller with roles
+                    $scope.setTeamRoles(clientTeamRoles);
 				});
     		};
 
@@ -33,7 +35,7 @@ angular.module('emmiManager')
 			 * Remove all UserClientUserClientTeamRole
 			 */
 			$scope.removeAllUserClientUserClientTeamRole = function(clientTeamRole){
-				UserClientUserClientTeamRolesService.deleteAllUserClientUserClientTeamRole(clientTeamRole).then(function(response){
+                UserClientUserClientTeamRolesService.deleteAllUserClientUserClientTeamRole(clientTeamRole).then(function () {
 					UserClientUserClientTeamRolesService.refreshTeamRoleCard(clientTeamRole);
 				});
 				_paq.push(['trackEvent', 'Form Action', 'User Team Role Team', 'Remove All']);
@@ -43,7 +45,7 @@ angular.module('emmiManager')
 			 * Delete one UserClientUserClientTeamRole
 			 */
 			$scope.removeUserClientUserClientTeamRole = function(clientTeamRole, existingTeam){
-				UserClientUserClientTeamRolesService.deleteUserClientUserClientTeamRole(existingTeam).then(function(response){
+                UserClientUserClientTeamRolesService.deleteUserClientUserClientTeamRole(existingTeam).then(function () {
 					UserClientUserClientTeamRolesService.refreshTeamRoleCard(clientTeamRole);
 				});
 				_paq.push(['trackEvent', 'Form Action', 'User Team Role Team', 'Remove']);
