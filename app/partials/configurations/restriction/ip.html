@@ -2,47 +2,49 @@
     <div class="pull-left">
         <h2>Valid IP Ranges</h2>
     </div>
+    <div class="row" data-ng-include="'partials/configurations/restriction/add-ip.html'"></div>
     <div class="row">
-        <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0" cellspacing="0"
-               data-ng-show="ipRestrictConfigurations">
-            <tr>
-                <th class="sort col-sm-3" data-ng-click="sort('ipRangeStart')">Start 
-                    <span data-ng-show="sortProperty.property === 'ipRangeStart'">
-                        <span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}" />
-                    </span>
-                </th>
-                <th class="sort col-sm-3" data-ng-click="sort('ipRangeEnd')">End 
-                    <span data-ng-show="sortProperty.property === 'ipRangeEnd'">
-                        <span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}" />
-                    </span>
-                </th>
-                <th class="sort col-sm-3" data-ng-click="sort('description')">Description 
-                    <span data-ng-show="sortProperty.property === 'description'">
-                        <span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}" />
-                    </span>
-                </th>
-                <th class="col-sm-1">&nbsp;</th>
-            </tr>
-            <tr data-ng-repeat="ipRestrictConfig in ipRestrictConfigurations">
-                <td>{{ipRestrictConfig.entity.ipRangeStart}}</td>
-                <td>{{ipRestrictConfig.entity.ipRangeEnd}}</td>
-                <td>{{ipRestrictConfig.entity.description}}</td>
-                <td>
-                    <a href data-ng-click="remove(ipRestrictConfig)">Remove</a>
-                </td>
-            </tr>
-        </table>
-        <div class="row" data-ng-show="ipRestrictConfigurations">
-            <div data-ng-show="links" class="col-md-8 col-sm-8">
-                <ul class="pagination">
-                    <li data-ng-repeat="link in links | orderBy:'order'" data-ng-class="{'active': link.name == currentPage}">
-                        <a data-ng-show="link.name != currentPage" href
-                           data-ng-click="fetchPage(link.href)">{{link.name}}</a>
-                        <span data-ng-hide="link.name != currentPage">{{link.name}}</span>
-                    </li>
-                </ul>
+        <div class="col-md-12">
+            <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0" cellspacing="0"
+                   data-ng-show="ipRestrictConfigurations">
+                <tr>
+                    <th class="sort col-sm-3" data-ng-click="sort('ipRangeStart')">Start 
+                        <span data-ng-show="sortProperty.property === 'ipRangeStart'">
+                            <span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}" />
+                        </span>
+                    </th>
+                    <th class="sort col-sm-3" data-ng-click="sort('ipRangeEnd')">End 
+                        <span data-ng-show="sortProperty.property === 'ipRangeEnd'">
+                            <span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}" />
+                        </span>
+                    </th>
+                    <th class="sort col-sm-3" data-ng-click="sort('description')">Description 
+                        <span data-ng-show="sortProperty.property === 'description'">
+                            <span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}" />
+                        </span>
+                    </th>
+                    <th class="col-sm-1">&nbsp;</th>
+                </tr>
+                <tr data-ng-repeat="ipRestrictConfig in ipRestrictConfigurations">
+                    <td>{{ipRestrictConfig.entity.ipRangeStart}}</td>
+                    <td>{{ipRestrictConfig.entity.ipRangeEnd}}</td>
+                    <td>{{ipRestrictConfig.entity.description}}</td>
+                    <td>
+                        <a href data-ng-click="remove(ipRestrictConfig)">Remove</a>
+                    </td>
+                </tr>
+            </table>
+            <div class="row" data-ng-show="ipRestrictConfigurations">
+                <div data-ng-show="links" class="col-md-8 col-sm-8">
+                    <ul class="pagination">
+                        <li data-ng-repeat="link in links | orderBy:'order'" data-ng-class="{'active': link.name == currentPage}">
+                            <a data-ng-show="link.name != currentPage" href
+                               data-ng-click="fetchPage(link.href)">{{link.name}}</a>
+                            <span data-ng-hide="link.name != currentPage">{{link.name}}</span>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
-        <div class="row" data-ng-include="'partials/configurations/restriction/add-ip.html'"></div>
     </div>
 </div>

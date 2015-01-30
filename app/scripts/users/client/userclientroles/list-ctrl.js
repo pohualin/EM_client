@@ -31,6 +31,8 @@ angular.module('emmiManager')
     						$scope.existingUserClientUserClientRoles = response;
     						$scope.setIsSuperUser();
     					});
+                        // update parent controller with roles
+                        $scope.setClientRoles(response);
     				} else {
     					// Load existing UserClientRoles for the Client
     					$scope.loadClientRoles();
@@ -54,8 +56,10 @@ angular.module('emmiManager')
 	        $scope.removeUserClientRole = function (userClientUserClientRole) {
 	            $scope.setLoading();
 	        	UserClientUserClientRolesService.deleteUserClientUserClientRole(userClientUserClientRole)
-	        	.then(function(response){
+	        	.then(function(){
 	        		$scope.existingUserClientUserClientRoles = null;
+                    // update parent controller with roles
+                    $scope.setClientRoles(null);
 	        		$scope.loadClientRoles();
 	        	});
 	        	_paq.push(['trackEvent', 'Form Action', 'User Client Role Edit', 'Remove']);
