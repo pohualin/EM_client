@@ -152,7 +152,7 @@ angular.module('emmiManager')
 
         $scope.resetCreateNewProviderModalState = function () {
 			$scope.providerFormSubmitted = false;
-            $scope.provider = {};
+            $scope.provider = ProviderCreate.newProvider();
         };
 
         $scope.search = function (isValid) {

@@ -1,6 +1,6 @@
 <div class="col-md-12">
     <form name="userForm" class="form" novalidate>
-        <div class="row" data-ng-show="userForm.$invalid">
+        <div class="row" data-ng-show="userForm.$invalid && userFormSubmitted">
             <div class="col-md-12" id="message-container"></div>
         </div>
         <h2 data-ng-show="selectedUser">Edit Emmi User</h2>
@@ -101,8 +101,12 @@
                     <div class="form-group">
                         <a class="btn btn-link"
                            href="#/users?{{currentRouteQueryString}}">cancel</a>
+                        <button class="btn btn-default" type="button"
+                                data-ng-click="save(userForm.$valid, $event, true)">
+                            <span>Save & Add Another User</span>
+                        </button>
                         <button class="btn btn-primary" type="submit"
-                                data-ng-click="save(userForm.$valid, $event)">
+                                data-ng-click="save(userForm.$valid, $event, false)">
                             <span>Save</span>
                         </button>
                     </div>

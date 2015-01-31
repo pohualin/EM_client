@@ -47,6 +47,13 @@ angular.module('emmiManager')
                             return response;
                         });
                 },
+                
+                /**
+                 * Set deactivationPopoverOpen to isOpen for the user
+                 */ 
+                deactivatePopoverOpen: function (user, isOpen) {
+                    user.deactivationPopoverOpen = isOpen;
+                },
 
                 updateUser: function (userToBeEdit) {
                     return $http.put(UriTemplate.create(Session.link.users).stringify(), this.userAssembler(userToBeEdit))
@@ -56,13 +63,18 @@ angular.module('emmiManager')
                         });
                 },
 
-                toggleActivation: function (userClientResource) {
-                    userClientResource.active = !userClientResource.active;
-                    return $http.put(UriTemplate.create(userClientResource.link.self).stringify(), userClientResource)
-                        .success(function (response) {
-                            angular.extend(userClientResource, response);
-                            return response;
-                        });
+                /**
+                 * Toggle between active/inactive for an Emmi User
+                 */
+                toggleActivation: function (user) {
+                    var external = this;
+                    user.active = !user.active;
+                    this.setUser(user.id).then(function(response){
+                        user.role = {};
+                        user.role.entity = response.roles[0];
+                        user.version = response.version;
+                        external.updateUser(user);
+                    });
                 },
 
                 /**
