@@ -42,7 +42,7 @@ angular.module('emmiManager')
                         pattern = /[a-zA-Z0-9]/;
                     }
                     if (prefix === undefined || prefix === null) {
-                        prefix = "";
+                        prefix = '';
                     }
                     if (prefix.length >= length) {
                         return prefix;
@@ -62,7 +62,7 @@ angular.module('emmiManager')
                     if (!char.match(pattern)) {
                         return this.generatePassword(length, memorable, pattern, prefix);
                     }
-                    return this.generatePassword(length, memorable, pattern, "" + prefix + char);
+                    return this.generatePassword(length, memorable, pattern, '' + prefix + char);
                 },
 
                 /**
