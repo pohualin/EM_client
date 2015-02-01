@@ -46,6 +46,7 @@ angular.module('emmiManager')
                             var savedUserClient = response.data,
                                 placement = 'top';
                             $scope.userClientView = savedUserClient;
+                            $scope.metadataChanged(); // inform the parent controller that things have changed
                             $scope.editMode = false;
                             if (savedUserClient.currentlyActive !== beforeSaveStatus){
                                 var message = 'User <b>' + savedUserClient.entity.login + '</b>';
