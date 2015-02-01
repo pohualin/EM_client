@@ -1,10 +1,21 @@
 <form name="activationForm" class="form" data-ng-controller="ActivationController" novalidate>
-    <div class="col-md-12">
+    <hr data-ng-show="(selectedUserClient.entity.email && !selectedUserClient.entity.activated) ||
+                            !selectedUserClient.entity.email">
+    <div class="col-md-12" data-ng-show="(selectedUserClient.entity.email && !selectedUserClient.entity.activated) ||
+                            !selectedUserClient.entity.email">
+        <div id="generated-password"></div>
         <div class="row">
             <div class="col-md-12">
                 <button class="btn btn-default" type="submit"
+                        data-ng-show="selectedUserClient.entity.email && !selectedUserClient.entity.activated"
                         data-ng-click="sendActivationEmail()">
                     <span>Save & Send User Setup Email</span>
+                </button>
+                <button class="btn btn-default" type="button"
+                        data-ng-hide="selectedUserClient.entity.email"
+                        data-ng-controller="UsersClientPasswordController"
+                        data-ng-click="generatePassword()">
+                    <span>Save & Show/Generate User Credentials</span>
                 </button>
             </div>
         </div>
