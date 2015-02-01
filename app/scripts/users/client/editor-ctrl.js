@@ -33,6 +33,13 @@ angular.module('emmiManager')
             };
 
             /**
+             * Metadata has changed, reset the UserClient
+             */
+            $scope.metadataChanged = function(){
+                $scope.selectedUserClient = UsersClientService.getUserClient();
+            };
+
+            /**
              * Called when 'Create Another User' is clicked
              */
             $scope.createAnotherUserClient = function () {

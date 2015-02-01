@@ -21,20 +21,13 @@
         </div>
     </form>
     <!--
-        only show the activate button, if the selected user client has an email and at
+        only show the activate and reset choices when the selected user client has
         least one role (either client or team)
      -->
-    <hr data-ng-show="selectedUserClient && selectedUserClient.entity.email &&
-                        !selectedUserClient.entity.activated &&
-                        (clientRoles || (teamRoles | teamSetOnRole))">
     <div class="row"
-         data-ng-show="selectedUserClient && selectedUserClient.entity.email &&
-                        !selectedUserClient.entity.activated &&
-                        (clientRoles || (teamRoles | teamSetOnRole))"
+         data-ng-show="selectedUserClient && (clientRoles || (teamRoles | teamSetOnRole))"
          data-ng-include="'partials/user/client/activation/form.html'">
     </div>
-    <hr>
-    <div class="row" data-ng-include="'partials/user/client/password/change.html'"></div>
     <hr data-ng-show="selectedUserClient"/>
     <div data-ng-show="selectedUserClient">
         <div class="row" data-ng-include="'partials/user/client/userclientrole/client-role.html'"></div>
