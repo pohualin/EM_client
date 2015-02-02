@@ -20,8 +20,14 @@
             </div>
         </div>
     </form>
-    <hr>
-    <div class="row" data-ng-include="'partials/user/client/password/change.html'"></div>
+    <!--
+        only show the activate and reset choices when the selected user client has
+        least one role (either client or team)
+     -->
+    <div class="row"
+         data-ng-show="selectedUserClient && (clientRoles || (teamRoles | teamSetOnRole))"
+         data-ng-include="'partials/user/client/activation/form.html'">
+    </div>
     <hr data-ng-show="selectedUserClient"/>
     <div data-ng-show="selectedUserClient">
         <div class="row" data-ng-include="'partials/user/client/userclientrole/client-role.html'"></div>

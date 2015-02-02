@@ -8,24 +8,30 @@ angular.module('emmiManager')
     .controller('UsersCreateController', ['$alert', '$scope', 'UsersService', '$location', '$popover', 'focus',
         function ($alert, $scope, UsersService, $location, $popover, $focus) {
 
-            $scope.userToBeEdit = UsersService.newUser();
-            
-            UsersService.listUserAdminRoles().then(function (response) {
-                $scope.roles = response.content;
-                $scope.userToBeEdit.role = {};
-                $scope.userToBeEdit.role.entity = UsersService.getDefaultRole($scope.roles);
-            });
+            $scope.newEmmiUser = function(){
+                $scope.userToBeEdit = UsersService.newUser();
+                UsersService.listUserAdminRoles().then(function (response) {
+                    $scope.roles = response.content;
+                    $scope.userToBeEdit.role = {};
+                    $scope.userToBeEdit.role.entity = UsersService.getDefaultRole($scope.roles);
+                });
+            };
            
             /**
              * Called when Save button is clicked
              */
-            $scope.save = function (isValid, event) {
+            $scope.save = function (isValid, event, addAnother) {
                 $scope.userFormSubmitted = true;
                 if (isValid) {
                     UsersService.createUser($scope.userToBeEdit).then(function (response) {
                         // go to the view/edit page, if the save is successful
                         _paq.push(['trackEvent', 'Form Action', 'Create Emmi User', 'Save']);
-                        $location.path('/users/');
+                        if(!addAnother){
+                            $location.path('/users/');
+                        } else {
+                            $scope.userFormSubmitted = false;
+                            $scope.newEmmiUser();
+                        }
                     }, function (error) {
                         if (error.status === 409) {
                             // 409 is http conflict, meaning save was prevented due to conflicts with other users
@@ -54,7 +60,12 @@ angular.module('emmiManager')
                     }
                 }
             };
+            
+            function init() {
+                $scope.newEmmiUser();
+            }
 
+            init();
         }
     ])
 ;

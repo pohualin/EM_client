@@ -18,6 +18,8 @@ angular.module('emmiManager')
     			ManageUserTeamRolesService.loadClientTeamRoles().then(function(clientTeamRoles){
 					$scope.clientTeamRoles = clientTeamRoles;
 					UserClientUserClientTeamRolesService.refreshTeamRoleCards($scope.clientTeamRoles);
+                    // update parent controller with roles
+                    $scope.setTeamRoles(clientTeamRoles);
 				});
     		};
 
@@ -33,20 +35,20 @@ angular.module('emmiManager')
 			 * Remove all UserClientUserClientTeamRole
 			 */
 			$scope.removeAllUserClientUserClientTeamRole = function(clientTeamRole){
-				UserClientUserClientTeamRolesService.deleteAllUserClientUserClientTeamRole(clientTeamRole).then(function(response){
+                UserClientUserClientTeamRolesService.deleteAllUserClientUserClientTeamRole(clientTeamRole).then(function () {
 					UserClientUserClientTeamRolesService.refreshTeamRoleCard(clientTeamRole);
 				});
-				_paq.push(['trackEvent', 'Form Action', 'User Client User Client Team Role Team', 'Remove All']);
+				_paq.push(['trackEvent', 'Form Action', 'User Team Role Team', 'Remove All']);
 			};
 
             /**
 			 * Delete one UserClientUserClientTeamRole
 			 */
 			$scope.removeUserClientUserClientTeamRole = function(clientTeamRole, existingTeam){
-				UserClientUserClientTeamRolesService.deleteUserClientUserClientTeamRole(existingTeam).then(function(response){
+                UserClientUserClientTeamRolesService.deleteUserClientUserClientTeamRole(existingTeam).then(function () {
 					UserClientUserClientTeamRolesService.refreshTeamRoleCard(clientTeamRole);
 				});
-				_paq.push(['trackEvent', 'Form Action', 'User Client User Client Team Role Team', 'Remove']);
+				_paq.push(['trackEvent', 'Form Action', 'User Team Role Team', 'Remove']);
 			};
 
             /**
@@ -59,10 +61,6 @@ angular.module('emmiManager')
                     clientTeamRole.activePanel = 0;
                 }
             };
-
-            $scope.$watch('userClientUserClientRolesService.isSuperUser()', function(){
-                $scope.isSuperUser = UserClientUserClientRolesService.isSuperUser();
-            });
 
             /**
 	         * init method called when the page is loading
