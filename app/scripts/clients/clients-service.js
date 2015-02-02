@@ -85,14 +85,14 @@ angular.module('emmiManager')
                 return deferred.promise;
             },
             getOwnersReferenceDataList: function (href) {
-            	var owners = [];
+                var owners = [];
                 return $http.get(UriTemplate.create(href).stringify())
                     .then(function load(response) {
-                    	var page = response.data;
+                        var page = response.data;
                         owners.push.apply(owners, page.content);
                         if (page.link && page.link['page-next']) {
-                        	$http.get(page.link['page-next']).then(function(response){
-	             				load(response);
+                            $http.get(page.link['page-next']).then(function (response) {
+                                load(response);
                             });
                         }
                         return owners;
@@ -104,7 +104,7 @@ angular.module('emmiManager')
                         return response.data;
                     });
             },
-            findNormalizedName: function(href, searchString){
+            findNormalizedName: function (href, searchString) {
                 return $http.get(UriTemplate.create(href).stringify({normalizedName: searchString}))
                     .then(function (response) {
                         return response.data;
@@ -115,39 +115,40 @@ angular.module('emmiManager')
     })
 
     .directive('uniqueClient', ['$popover', 'Client', '$translate', function ($popover, Client, $translate) {
-          return {
+        return {
             restrict: 'A',
             require: 'ngModel',
             link: function (scope, element, attrs, ngModel) {
 
-                var reset = function (){
+                var reset = function () {
                     if (scope.uniquePopup) {
                         scope.uniquePopup.hide();
                         ngModel.$setValidity('unique', true);
                     }
                 };
 
-                element.on('keydown', function() {
+                element.on('keydown', function () {
                     reset();
                 });
 
-                scope.$watch('editMode', function(value) {
+                scope.$watch('editMode', function (value) {
                     if (!value) {
                         reset();
                     }
                 });
 
-                 element.on('blur', function() {
+                element.on('blur', function () {
+                    scope.checkingForDupes = true;
                     Client.findNormalizedName(scope.findNormalizedNameLink, element.val()).then(function (searchResults) {
                         scope.existsClient = searchResults;
-                          if (scope.existsClient.entity === undefined) {
+                        if (scope.existsClient.entity === undefined) {
                             ngModel.$setValidity('unique', true);
                             if (scope.uniquePopup) {
                                 scope.uniquePopup.hide();
                             }
-                          } else {
+                        } else {
                             var clientResource = Client.getClient();
-                            if (clientResource && clientResource.entity.id !== scope.existsClient.entity.id ) {
+                            if (clientResource && clientResource.entity.id !== scope.existsClient.entity.id) {
                                 ngModel.$setValidity('unique', false);
                                 _paq.push(['trackEvent', 'Validation Error', 'Client', 'clientName unique']);
                                 if (scope.uniquePopup) {
@@ -165,11 +166,12 @@ angular.module('emmiManager')
                                     });
                                 }
                             }
-                          }
+                        }
+                        scope.checkingForDupes = false;
                     });
-                 }) ;
+                });
             }
-          };
+        };
     }])
 
     .directive('saveClick', ['$popover', 'Client', '$timeout', '$translate', function ($popover, Client, $timeout, $translate) {
@@ -177,7 +179,8 @@ angular.module('emmiManager')
             restrict: 'EA',
             scope: {
                 'okDeactivatePopover': '&onOk',
-                'clientToEdit': '=clientToEdit'
+                'clientToEdit': '=clientToEdit',
+                'checkingForDupes': '=checkingForDupes'
             },
             link: function (scope, element) {
                 scope.cancelDeactivatePopover = function () {
@@ -203,8 +206,10 @@ angular.module('emmiManager')
                             scope.saveWarning.show();
                         }
                     } else {
-                        $timeout(function () {
-                            scope.okDeactivatePopover();
+                        scope.$watch(scope.checkingForDupes, function () {
+                            if (scope.checkingForDupes === false) {
+                                scope.okDeactivatePopover();
+                            }
                         });
                     }
                 });
@@ -212,18 +217,18 @@ angular.module('emmiManager')
         };
     }])
 
-    .filter('contractOwnerFilter', function() {
-        return function(contractOwner) {
+    .filter('contractOwnerFilter', function () {
+        return function (contractOwner) {
             var name = '';
-            if(contractOwner){
-                if(contractOwner.firstName && contractOwner.lastName){
-              	    name = contractOwner.firstName + ' '+ contractOwner.lastName;
+            if (contractOwner) {
+                if (contractOwner.firstName && contractOwner.lastName) {
+                    name = contractOwner.firstName + ' ' + contractOwner.lastName;
                 }
-                else if(contractOwner.firstName){
-            	    name = contractOwner.firstName;
+                else if (contractOwner.firstName) {
+                    name = contractOwner.firstName;
                 }
-                else if(contractOwner.lastName){
-                	name = contractOwner.lastName;
+                else if (contractOwner.lastName) {
+                    name = contractOwner.lastName;
                 }
             }
             return name;
