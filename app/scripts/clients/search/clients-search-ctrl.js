@@ -5,7 +5,7 @@ angular.module('emmiManager')
 /**
  *  Show list of clients
  */
-    .controller('ClientListCtrl', function ($scope, Client, $http, Session, UriTemplate, $controller, $location) {
+    .controller('ClientListCtrl', function ($scope, Client, $http, Session, UriTemplate, $controller) {
 
         $controller('ViewEditCommon', {$scope: $scope});
 
@@ -32,6 +32,7 @@ angular.module('emmiManager')
                 });
                 // turn off the sort after the search request has been made, the response will rebuild
                 $scope.sortProperty = null;
+                _paq.push(['trackSiteSearch', q, 'Client Search']);
             }
         };
 

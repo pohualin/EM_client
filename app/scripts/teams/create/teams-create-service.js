@@ -2,8 +2,24 @@
 angular.module('emmiManager')
     .service('CreateTeam', function ($http, $q, Session, UriTemplate) {
         return {
-            insertTeams: function (team) {
-                return $http.post(UriTemplate.create(Session.link.teamsByClientId).stringify({clientId: team.client.id}), team).
+            newTeam: function () {
+                var selectedTeam = {
+                    entity: {
+                        'name': null,
+                        'description': null,
+                        'active': true,
+                        'phone': null,
+                        'fax': null,
+                        'client': {
+                            'id': null
+                        },
+                        'normalizedTeamName': null
+                    }
+                };
+                return selectedTeam;
+            },
+            insertTeams: function (clientResource, team) {
+                return $http.post(UriTemplate.create(clientResource.link.teams).stringify(), team).
                     then(function (response) {
                         return response;
                     });
@@ -26,7 +42,7 @@ angular.module('emmiManager')
             require: 'ngModel',
             scope: {
                 url: '=uniqueUrl',
-                team: '=team'
+                team: '='
             },
             link: function (scope, element, attrs, ngModel) {
 
@@ -48,6 +64,7 @@ angular.module('emmiManager')
                         } else {
                             if ((scope.team.id !== scope.existsTeam.entity.id)) {
                                 ngModel.$setValidity('unique', false);
+                                _paq.push(['trackEvent', 'Validation Error', 'Team', 'teamName unique']);
                                 if (scope.uniquePopup) {
                                     scope.uniquePopup.show();
                                 }

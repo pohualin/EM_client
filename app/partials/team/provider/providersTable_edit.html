@@ -1,0 +1,50 @@
+		<div class="col-md-12" data-ng-controller="ProviderListController">
+		    <h2>Providers</h2>
+						<table class="table table-bordered table-striped table-hover" border="0" cellpadding="0" data-ng-show="listOfTeamProviders.length > 0">
+				<tr>
+					<th  class="col-md-2">Name </th>
+					<th  class="col-md-2">Primary Specialty </th>
+					<th  class="col-md-3">Email </th>
+					<th data-ng-show="allTeamLocations.length > 0"  class="col-md-2">Locations</th>
+		            <th  class="col-md-3">&nbsp;</th>
+				</tr>
+					<tr data-ng-repeat="teamProvider in listOfTeamProviders">
+			    	<td>{{teamProvider.entity.provider.firstName}} {{teamProvider.entity.provider.lastName}} <em>{{teamProvider.entity.provider.active ? '' : "(inactive)"}}</em></td>
+			    	<td>{{teamProvider.entity.provider.specialty.name}}</td>
+			    	<td>{{teamProvider.entity.provider.email}}</td>
+			    	<td data-ng-show="allTeamLocations.length > 0" >
+						<div data-placement="top" class="pointer" data-ng-show="teamProvider.entity.locations && teamProvider.entity.locations.length > locationsColumnCharLimit" data-content=" {{teamProvider.entity.locations}} " data-trigger="hover" data-delay="200" data-bs-popover data-popover-dismiss>
+                        	{{teamProvider.entity.locations | characters:locationsColumnCharLimit }}
+						</div>
+						<div data-placement="top" class="pointer" data-ng-show="teamProvider.entity.locations && teamProvider.entity.locations.length < locationsColumnCharLimit" >
+                        	{{teamProvider.entity.locations | characters:locationsColumnCharLimit }}
+						</div>
+						<div data-placement="top" class="pointer" data-ng-show="!teamProvider.entity.locations && allLocationsForTeam.length > locationsColumnCharLimit" data-content="{{allLocationsForTeam}}" data-trigger="hover" data-delay="200" data-bs-popover data-popover-dismiss>
+                        	{{allLocationsForTeam | characters:locationsColumnCharLimit }}
+						</div>
+						<div data-placement="top" class="pointer" data-ng-show="!teamProvider.entity.locations && allLocationsForTeam.length < locationsColumnCharLimit">
+                        	{{allLocationsForTeam | characters:locationsColumnCharLimit }}
+						</div>
+            		</td>
+					<td>
+                		<a href data-ng-click="editProvider(teamProvider)">edit</a><span class="text-muted">&nbsp;|&nbsp;</span><a href data-ng-click="removeProvider(teamProvider)">remove from team</a>
+            		</td>
+			    </tr>
+			</table>
+            <div data-ng-hide="listOfTeamProviders.length > 0">
+                <span>There are no existing providers<span data-ng-show="team.name">&nbsp;for {{team.name}}</span>.</span>
+            </div>
+            <div class="row" data-ng-show="listOfTeamProviders.length > 0">
+		        <div data-ng-show="links" class="col-md-8 col-sm-8">
+		            <ul class="pagination">
+		                <li data-ng-repeat="link in links | orderBy:'order'" data-ng-class="{'active': link.name == currentPage}">
+		                    <a data-ng-show="link.name != currentPage" href
+		                       data-ng-click="fetchPaginationLink(link.href)">{{link.name}}</a>
+		                    <span data-ng-hide="link.name != currentPage">{{link.name}}</span>
+		                </li>
+		            </ul>
+		        </div>
+    		</div>
+            <button type="button" class="btn btn-link" data-ng-click="addProviders()">add providers</button>
+		</div>
+	</div>

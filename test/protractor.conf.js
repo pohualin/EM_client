@@ -6,18 +6,16 @@ exports.config = {
 
   // Capabilities to be passed to the webdriver instance.
   capabilities: {
-    'browserName': 'phantomjs',
-
-    /*
-     * Can be used to specify the phantomjs binary path.
-     * This can generally be ommitted if you installed phantomjs globally.
-     */
-    'phantomjs.binary.path': './node_modules/phantomjs/bin/phantomjs',
+    'browserName': 'chrome'
   },
 
   // Spec patterns are relative to the current working directly when
   // protractor is called.
   specs: ['test/e2e/**/*.js'],
+
+  onPrepare: function() {
+
+  },
 
   // Options to be passed to Jasmine-node.
   jasmineNodeOpts: {

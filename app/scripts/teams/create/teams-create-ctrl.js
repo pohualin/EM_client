@@ -8,17 +8,7 @@ angular.module('emmiManager')
 
         $controller('TeamErrorController', {$scope: $scope});
 
-        $scope.team = {
-            'name': null,
-            'description': null,
-            'active': true,
-            'phone': null,
-            'fax': null,
-            'client': {
-                'id': null
-            },
-            'normalizedTeamName': null
-        };
+        $scope.teamToSave = CreateTeam.newTeam().entity;
 
         $scope.teamClientResource = {
             teamResource: {
@@ -27,26 +17,33 @@ angular.module('emmiManager')
             clientResource: clientResource
         };
 
-        $controller('SalesForceCtrl', {$scope: $scope, team: $scope.team});
+        $controller('SalesForceCtrl', {$scope: $scope, team: $scope.teamToSave});
 
-        $scope.team.client = clientResource.entity;
+        $scope.teamToSave.client = clientResource.entity;
         $scope.url = clientResource.link.findByNormalizedName;
         $scope.save = function (isValid) {
             $scope.formSubmitted = true;
-            if (isValid && $scope.team.salesForceAccount) {
-                CreateTeam.insertTeams($scope.team).then(function (team) {
-                    var teamResource = team.data;
-                    $scope.team = teamResource.entity;
-                    teamResource.tags = $scope.teamClientResource.teamResource.tags;
-                    ViewTeam.viewTeam($scope.team);
+            if (isValid && $scope.teamToSave.salesForceAccount) {
+                CreateTeam.insertTeams(clientResource, $scope.teamToSave).then(function (team) {
+                    ViewTeam.viewTeam(team.data.entity);
                 });
+                _paq.push(['trackEvent', 'Form Action', 'Team Create', 'Save']);
             } else {
                 $scope.showError();
+                // Loop through the form's validation errors and log to Piwik
+                var formErrors = $scope.teamForm.$error;
+                for (var errorType in formErrors) {
+                    if (formErrors.hasOwnProperty(errorType)) {
+                        for (var i = 0; i < formErrors[errorType].length; i++) {
+                            _paq.push(['trackEvent', 'Validation Error', 'Team Create', formErrors[errorType][i].$name+' '+errorType]);
+                        }
+                    }
+                }
             }
         };
 
         $scope.cancel = function () {
-            Client.viewClient($scope.team.client);
+            Client.viewClient($scope.teamToSave.client);
         };
 
     })

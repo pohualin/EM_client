@@ -1,0 +1,16 @@
+<form>
+    <div>Location will be removed from the following team<span data-ng-show="teamsBlocking.length > 1">s</span>:</div>
+    <br/>
+    <div data-ng-repeat="team in teamsBlocking">
+        <span class="text-muted">{{team.name}}</span>
+    </div>
+    <br/>
+    <div class="form-actions">
+        <button class="btn btn-primary" type="button" data-ng-click="$hide();onClosePopover(toRemove);">No</button>
+        <button class="btn btn-danger" data-ng-click="onOk();$hide()">Yes</button>
+    </div>
+</form>
+
+
+
+

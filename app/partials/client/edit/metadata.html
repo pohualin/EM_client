@@ -1,0 +1,8 @@
+<div class="col-md-12">
+    <div id="alerts-container" data-ng-show="metadataForm.$invalid || !clientToEdit.salesForceAccount"></div>
+    <div id="remove-container"></div>
+    <div class="row" data-ng-hide="editMode" data-ng-include="'partials/client/edit/client_view.html'"></div>
+    <form name="metadataForm" class="form" novalidate>
+        <div class="row" data-ng-show="editMode" data-ng-include="'partials/client/edit/client_edit.html'"></div>
+    </form>
+</div>

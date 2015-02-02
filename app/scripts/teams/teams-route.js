@@ -9,11 +9,15 @@ angular.module('emmiManager')
             }]
         };
 
-        var clientResource = ['AuthSharedService', 'Client', '$route', '$q', 'ViewTeam', function (AuthSharedService, Client, $route, $q, ViewTeam) {
+        var clientResource = ['AuthSharedService', 'Client', '$route', '$q', function (AuthSharedService, Client, $route, $q) {
             var deferred = $q.defer();
             AuthSharedService.currentUser().then(function () {
                 Client.selectClient($route.current.params.clientId).then(function (clientResource) {
-                    deferred.resolve(clientResource);
+                    if (clientResource) {
+                        deferred.resolve(clientResource);
+                    } else {
+                        deferred.reject();
+                    }
                 });
             });
             return deferred.promise;
@@ -23,12 +27,20 @@ angular.module('emmiManager')
             var deferred = $q.defer();
             AuthSharedService.currentUser().then(function () {
                 Client.selectClient($route.current.params.clientId).then(function (clientResource) {
-                    ViewTeam.selectTeam(clientResource.link.teamByTeamId, $route.current.params.teamId).then(function (teamResource) {
-                        deferred.resolve({
-                            clientResource: clientResource,
-                            teamResource: teamResource
+                    if (clientResource) {
+                        ViewTeam.selectTeam(clientResource.link.teamByTeamId, $route.current.params.teamId).then(function (teamResource) {
+                            if (teamResource) {
+                                deferred.resolve({
+                                    clientResource: clientResource,
+                                    teamResource: teamResource
+                                });
+                            } else {
+                                deferred.reject();
+                            }
                         });
-                    });
+                    } else {
+                        deferred.reject();
+                    }
                 });
             });
             return deferred.promise;
@@ -36,22 +48,24 @@ angular.module('emmiManager')
 
         // Routes
         $routeProvider
-            .when('/clients/:clientId/teams/:teamId/view', {
-                templateUrl: 'partials/team/team_view.html',
-                controller: 'ClientTeamViewCtrl',
+            .when('/clients/:clientId/teams/new', {
+                templateUrl: 'partials/team/team_new.html',
+                controller: 'ClientTeamCreateCtrl',
+                title: 'New Team',
                 access: {
-                    authorizedRoles: [USER_ROLES.admin]
+                    authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
                 },
                 resolve: {
-                    'teamClientResource': teamClientResource
+                    'clientResource': clientResource
                 }
             })
-            .when('/clients/:clientId/teams/:teamId/edit', {
+            .when('/clients/:clientId/teams/:teamId', {
                 templateUrl: 'partials/team/team_edit.html',
                 controller: 'TeamEditController',
                 access: {
-                    authorizedRoles: [USER_ROLES.admin]
+                    authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
                 },
+                reloadOnSearch: false,
                 resolve: {
                     'teamClientResource': teamClientResource
                 }
@@ -59,20 +73,11 @@ angular.module('emmiManager')
             .when('/teams', {
                 templateUrl: 'partials/team/team_search.html',
                 controller: 'TeamSearchController',
+                title: 'Team Search',
                 resolve: requiredResources,
                 reloadOnSearch: false,
                 access: {
                     authorizedRoles: [USER_ROLES.all]
-                }
-            })
-            .when('/clients/:clientId/teams/new', {
-                templateUrl: 'partials/team/team_edit.html',
-                controller: 'ClientTeamCreateCtrl',
-                access: {
-                    authorizedRoles: [USER_ROLES.admin]
-                },
-                resolve: {
-                    'clientResource': clientResource
                 }
             });
     })

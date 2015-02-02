@@ -4,7 +4,7 @@ Emmi Manager Client
 The client-side setup for this project will run on [AngularJS]
 (https://angularjs.org/). It was scaffolded using the AngularJS
 with [GulpJS Yeoman generator] (https://github.com/Swiip/generator-gulp-angular).
-Front-end dependency management is handled through Bower.
+Front-end dependency management is handled through Bower...
 
 Tools
 -----------------------------------
@@ -47,11 +47,23 @@ To run the server on port 80, you'll need:
     - I use [virtualhost.sh] (https://github.com/virtualhost/virtualhost.sh) 
 - proxy all requests from /webapi and /api-docs to the server WAR
     - My Apache configuration looks like this:
-    
-          ProxyPass /webapi http://localhost:8080/webapi
-          ProxyPassReverse /webapi http://localhost:8080/webapi
-          ProxyPass /api-docs http://localhost:8080/api-docs
-          ProxyPassReverse /webapi http://localhost:8080/api-docs
+
+        Header unset Content-Security-Policy
+        Header add Content-Security-Policy "default-src 'none'; script-src 'self' *.emmisolutions.com; connect-src 'self'; img-src 'self' *.emmisolutions.com; style-src 'self' 'unsafe-inline' *.googleapis.com; font-src 'self' fonts.gstatic.com; frame-src 'self'"
+        Header unset X-Content-Security-Policy
+        Header add X-Content-Security-Policy "default-src 'none'; script-src 'self' *.emmisolutions.com; connect-src 'self'; img-src 'self' *.emmisolutions.com; style-src 'self' 'unsafe-inline'; font-src 'self' fonts.gstatic.com; frame-src 'self'"
+        Header set X-Content-Type-Options "nosniff"
+        Header set X-XSS-Protection "1; mode=block"
+        Header set X-Frame-Options "SAMEORIGIN"
+        Header set Strict-Transport-Security "max-age=631138519; includeSubDomains"
+        
+        ProxyPass /webapi http://localhost:8080/webapi
+        ProxyPassReverse /webapi http://localhost:8080/webapi
+        ProxyPass /webapi-client http://localhost:8080/webapi-client
+        ProxyPassReverse /webapi-client http://localhost:8080/webapi-client
+        ProxyPass /api-docs http://localhost:8080/api-docs
+        ProxyPassReverse /api-docs http://localhost:8080/api-docs
+                    
 - compile the main.scss file
     - In this directory run `sass app/styles/main.scss:app/styles/main.css`
 
@@ -65,6 +77,14 @@ File Structure
 - styleguide/ : The Hologram-generated styleguide site
 - styleguide_assets/ : Hologram styleguide assets (HTML partials, docs-specific CSS) for the generated styleguide
 - test/ : Configuration and spec tests for our unit tests and end-to-end tests
+
+Coding Guidelines
+-----------------------------------
+
+- All 'page changes' should be made with `<a href="/#newPage"/>` tags rather than `<button data-ng-click="changePage()"/>`
+  This ensures that the browser buttons will work properly (e.g. open in new tab, reload, etc).
+- All pages which are navigable by routes must use `data-ng-cloak` on the wrapper element for the page. 
+
 
 Hologram Style Guide Generator
 -----------------------------------

@@ -1,0 +1,109 @@
+<div class="container" data-ng-cloak>
+	<h2>
+		<a href="#/">Emmi Manager</a> : Search
+	</h2>
+	<h2>Manage Clients, Teams, Providers and Locations:</h2>
+	<form name="searchForm" novalidate>
+		<div class="row">
+			<div class="col-md-2 col-sm-2">
+				<div data-ng-include="'partials/search/search_option_dropdown.html'"></div>
+			</div>
+			<div class="col-md-6 col-sm-5">
+				<div class="input-group">
+					<input class="form-control" id="query" name="query"
+						data-ng-model="query" type="text" placeholder="Search..." required
+						data-auto-focus>
+					<div class="input-group-addon">
+						<span class="glyphicon glyphicon-search"></span>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-2 col-sm-3">
+				<button class="btn btn-default pull-left" data-ng-click="search()"
+					data-ng-disabled="searchForm.query.$invalid || loading"
+					data-translate="global.buttons.search"></button>
+				<span data-ng-class="{'search-spinner' : loading}"></span>
+			</div>
+		</div>
+	</form>
+	<hr>
+	<div class="row" data-ng-show="searchPerformed">
+		<div class="col-md-12">
+			<div class="row" data-ng-hide="removeStatusFilterAndTotal">
+				<div class="col-md-12">
+					<div class="pull-right">
+						{{total}} <span data-ng-show="total != 1"
+							data-translate="global.labels.total"> results</span> <span
+							data-ng-show="total === 1"
+							data-translate="global.labels.totalSingular"> result</span>
+					</div>
+					<form class="form-inline">
+						<div class="form-group">
+							<label for="status_filter"
+								data-translate="global.labels.statusFilter">Show:</label> <select
+								class="form-control" id="status_filter" data-ng-model="status"
+								data-ng-options="status | translate for status in statuses"
+								data-ng-change="statusChange()">
+							</select>
+						</div>
+					</form>
+				</div>
+			</div>
+			<br>
+			<table class="table table-bordered table-striped table-hover"
+				border="0" cellpadding="0" cellspacing="0" data-ng-show="locations">
+				<tr>
+					<th class="sort col-sm-3" data-ng-click="sort('name')">Name <span
+						data-ng-show="sortProperty.property === 'name'"><span
+							class="glyphicon sort-icon"
+							data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
+					</th>
+					<th class="sort col-sm-3" data-ng-click="sort('belongsTo.name')">Client Owner <span
+						data-ng-show="sortProperty.property === 'belongsTo.name'"><span
+							class="glyphicon sort-icon"
+							data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
+					</th>
+					<th class="sort col-sm-3" data-ng-click="sort('phone')">Phone
+						<span data-ng-show="sortProperty.property === 'phone'"><span
+							class="glyphicon sort-icon"
+							data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
+					</th>
+					<th class="sort col-sm-3" data-ng-click="sort('city')">City <span
+						data-ng-show="sortProperty.property === 'city'"><span
+							class="glyphicon sort-icon"
+							data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
+					</th>
+					<th class="sort col-sm-3" data-ng-click="sort('state')">State
+						<span data-ng-show="sortProperty.property === 'state'"><span
+							class="glyphicon sort-icon"
+							data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
+					</th>
+					<th class="col-sm-1">&nbsp;</th>
+				</tr>
+				<tr
+					data-ng-repeat="location in locations | orderBy:'location.sortIdx'">
+					<td>{{location.entity.name}}</td>
+					<td>{{location.entity.belongsTo.name}}</td>
+					<td>{{location.entity.phone}}</td>
+					<td>{{location.entity.city}}</td>
+					<td>{{location.entity.state}}</td>
+					<td><a href="#/locations/{{location.entity.id}}">view</a></td>
+				</tr>
+			</table>
+			<div class="row" data-ng-show="locations">
+				<div data-ng-show="links" class="col-md-8 col-sm-8">
+					<ul class="pagination">
+						<li data-ng-repeat="link in links | orderBy:'order'"
+							data-ng-class="{'active': link.name == currentPage}"><a
+							data-ng-show="link.name != currentPage" href
+							data-ng-click="fetchPage(link.href)">{{link.name}}</a> <span
+							data-ng-hide="link.name != currentPage">{{link.name}}</span></li>
+					</ul>
+				</div>
+			</div>
+			<div data-ng-hide="locations">
+				<span data-translate="global.messages.search.no_results_found"></span>
+			</div>
+		</div>
+	</div>
+</div>

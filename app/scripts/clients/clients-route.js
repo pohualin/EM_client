@@ -14,7 +14,11 @@ angular.module('emmiManager')
                 var deferred = $q.defer();
                 AuthSharedService.currentUser().then(function (){
                     Client.selectClient($route.current.params.clientId).then(function (clientResource){
-                        deferred.resolve(clientResource);
+                        if (clientResource) {
+                            deferred.resolve(clientResource);
+                        } else {
+                            deferred.reject();
+                        }
                     });
                 });
                 return deferred.promise;
@@ -27,33 +31,28 @@ angular.module('emmiManager')
                 templateUrl: 'partials/client/clients.html',
                 controller: 'ClientListCtrl',
                 access: {
-                    authorizedRoles: [USER_ROLES.admin]
+                    authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
                 },
                 reloadOnSearch: false,
+                title: 'Client Search',
                 resolve: requiredResources
             })
             .when('/clients/new', {
-                templateUrl: 'partials/client/client_edit.html',
-                controller: 'ClientCtrl',
+                templateUrl: 'partials/client/create/editor.html',
+                controller: 'ClientCreateController',
+                title: 'New Client',
                 access: {
-                    authorizedRoles: [USER_ROLES.admin]
+                    authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
                 },
                 resolve: requiredResources
             })
-            .when('/clients/:clientId/edit', {
-                templateUrl: 'partials/client/client_edit.html',
+            .when('/clients/:clientId', {
+                templateUrl: 'partials/client/edit/editor.html',
                 controller: 'ClientDetailCtrl',
                 access: {
-                    authorizedRoles: [USER_ROLES.admin]
+                    authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
                 },
-                resolve: clientDetailRequiredResources
-            })
-            .when('/clients/:clientId/view', {
-                templateUrl: 'partials/client/client_view.html',
-                controller: 'ClientViewCtrl',
-                access: {
-                    authorizedRoles: [USER_ROLES.admin]
-                },
+                reloadOnSearch: false,
                 resolve: clientDetailRequiredResources
             });
     })

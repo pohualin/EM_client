@@ -1,0 +1,125 @@
+<div class="modal" tabindex="-1" role="dialog" data-ng-controller="ClientAssociateProviderSearchController">
+    <div class="modal-dialog modal-dialog-large container-fluid">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10" id="message-container"></div>
+                    <div class="col-md-1"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-9 col-sm-9">
+                        <form name="searchForm" ng-submit="search(searchForm.providerQuery.$valid)" novalidate>
+                            <div class="form-group">
+                                <label class="sr-only" for="providerQuery">Search providers:</label>
+
+                                <div class="input-group">
+                                    <input class="form-control" id="providerQuery" name="providerQuery" data-ng-model="providerQuery"
+                                           type="text"
+                                           placeholder="Search providers..." required data-auto-focus data-focus-on="ProviderSearchFocus">
+
+                                    <div class="input-group-addon btn" data-ng-click="search(searchForm.providerQuery.$valid)" data-ng-disabled="searchForm.providerQuery.$invalid">Go</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-3 col-sm-3" data-ng-show="searchPerformed">
+                        <button type="button" class="btn btn-link pull-right" data-ng-click="createNewProvider()"
+                                data-ng-controller="ClientAssociateNewProviderController">
+                            add new provider
+                        </button>
+                        <span data-ng-class="{'search-spinner' : loading}"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body" data-ng-show="searchPerformed">
+                <div>
+                    <div class="row" data-ng-hide="removeStatusFilterAndTotal">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="pull-right">
+                                {{total}}
+                                <span data-ng-show="total != 1" data-translate="global.labels.total"> results</span>
+                                <span data-ng-show="total === 1"
+                                      data-translate="global.labels.totalSingular"> result</span>
+                            </div>
+                            <form class="form-inline">
+                                <div class="form-group">
+                                    <label for="status_filter" data-translate="global.labels.statusFilter">Show:</label>
+                                    <select class="form-control" id="status_filter" data-ng-model="status"
+                                            data-ng-options="status | translate for status in statuses"
+                                            data-ng-change="statusChange()">
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                    <br/>
+
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0"
+                                   cellspacing="0"
+                                   data-ng-show="providers">
+                                <tr>
+                                    <th class="sort col-sm-1">&nbsp;</th>
+                                    <th class="sort col-sm-3" data-ng-click="sort('lastName')">
+                                        Name
+                                        <span data-ng-show="sortProperty.property === 'lastName'">
+                                            <span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span>
+                                        </span>
+                                    </th>
+                                    <th class="sort col-sm-3" data-ng-click="sort('specialty.name')">
+                                        Primary Specialty
+                                        <span data-ng-show="sortProperty.property === 'specialty.name'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
+                                    </th>
+                                    <th class="sort col-sm-3" data-ng-click="sort('email')">
+                                        Email
+                                        <span data-ng-show="sortProperty.property === 'email'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
+                                    </th>
+                                </tr>
+                                <tr data-ng-repeat="clientProvider in providers| orderBy:sortIdx" data-ng-class="clientProvider.link.self ? 'text-muted' : ''">
+                                    <td data-ng-hide="clientProvider.link.self">
+                                        <input type="checkbox" data-ng-model="clientProvider.provider.entity.newprovider"
+                                               ng-change="onCheckboxChange(clientProvider.provider)">
+                                    </td>
+                                    <td data-ng-show="clientProvider.link.self">
+                                        <input type="checkbox" disabled="disabled" checked>
+                                    </td>
+                                    <td>{{clientProvider.provider.entity.firstName}} {{clientProvider.provider.entity.middleName}} {{clientProvider.provider.entity.lastName}}</td>
+                                    <td>
+                                        {{clientProvider.provider.entity.specialty.name}}
+                                    </td>
+                                    <td>{{clientProvider.provider.entity.email}}</td>
+                                </tr>
+                            </table>
+                            <div data-ng-hide="providers">
+                                <span data-translate="global.messages.search.no_results_found"></span>
+                            </div>
+                            <div class="row" data-ng-show="providers">
+                                <div data-ng-show="links" class="col-md-8 col-sm-8">
+                                    <ul class="pagination">
+                                        <li data-ng-repeat="link in links | orderBy:'order'" data-ng-class="{'active': link.name == currentPage}">
+                                            <a data-ng-show="link.name != currentPage" href
+                                               data-ng-click="fetchPage(link.href)">{{link.name}}</a>
+                                            <span data-ng-hide="link.name != currentPage">{{link.name}}</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link" data-ng-click="cancel()">cancel</button>
+                <button type="button" class="btn btn-default" data-ng-hide="isEmpty(changedProviders)"
+                        data-ng-click="saveAndAddAnother()">Save & Add Another
+                </button>
+                <button type="button" class="btn btn-primary" data-ng-hide="isEmpty(changedProviders)" data-ng-click="save()">Save
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+

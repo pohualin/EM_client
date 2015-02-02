@@ -1,27 +1,17 @@
-<div class="container">
-    <div class="row">
-        <div class="col-md-6 pull-left">
-            <h1>
-                <a href="#/">Emmi Manager</a>: <span data-translate="team_view_page.title">View Team</span>
-            </h1>
-        </div>
-        <div class="col-md-6">
-            <div class="pull-right">
-                <h1>
-
-                    <a class="btn btn-primary" href="#/clients/{{team.client.id}}/teams/{{team.id}}/edit"
-                            data-translate="team_view_page.edit_button">
-                        Edit Team
-                    </a>
-                </h1>
-            </div>
-        </div>
-    </div>
-    <div class="row">
         <div class="col-md-12">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-6">
                     <h2 data-translate="team_view_page.information.title">Team Information</h2>
+                </div>
+                <div class="col-md-6">
+                    <div class="pull-right">
+                        <h2>
+                            <a class="btn btn-primary" data-ng-click="edit()"
+                                    data-translate="team_view_page.edit_button">
+                                Edit Team
+                            </a>
+                        </h2>
+                    </div>
                 </div>
             </div>
             <div class="row">
@@ -32,49 +22,36 @@
                     {{team.name}} <em>({{team.active ? "active" : "inactive"}})</em>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <span data-translate="team_view_page.information.description"></span>
+                </div>
+                <div class="col-md-8">
+                    {{team.description}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <span data-translate="team_view_page.information.salesforce"></span>
+                </div>
+                <div class="col-md-8">
+                    {{team.salesForceAccount.name}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <span data-translate="team_view_page.information.phone"></span>
+                </div>
+                <div class="col-md-8">
+                    {{team.salesForceAccount.phoneNumber}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <span data-translate="team_view_page.information.fax"></span>
+                </div>
+                <div class="col-md-8">
+                    {{team.salesForceAccount.fax}}
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4">
-            <span data-translate="team_view_page.information.description"></span>
-        </div>
-        <div class="col-md-4">
-            {{team.description}}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4">
-            <span data-translate="team_view_page.information.salesforce"></span>
-        </div>
-        <div class="col-md-4">
-            {{team.salesForceAccount.name}}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4">
-            <span data-translate="team_view_page.information.phone"></span>
-        </div>
-        <div class="col-md-4">
-            {{team.salesForceAccount.phoneNumber}}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4">
-            <span data-translate="team_view_page.information.fax"></span>
-        </div>
-        <div class="col-md-4">
-            {{team.salesForceAccount.fax}}
-        </div>
-    </div>
-    <div class="row">
-        <hr/>
-        <div class="col-md-12">
-            <div class="row" data-ng-include="'partials/team/tags/team_taggroups_view.html'"></div>
-        </div>
-    </div>
-    </div>   
-	<br>    
-    <div class="row">
-		<div data-ng-include="'partials/team/provider/providersTable.html'"></div>
-	</div> 
-</div>            

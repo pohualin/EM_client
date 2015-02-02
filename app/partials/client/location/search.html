@@ -8,23 +8,22 @@
                     <div class="col-md-1"></div>
                 </div>
                 <div class="row">
-
                     <div class="col-md-9 col-sm-9">
-                        <form ng-submit="search()">
+                        <form name="searchForm" ng-submit="search(searchForm.locationQuery.$valid)" novalidate>
                             <div class="form-group">
                                 <label class="sr-only" for="locationQuery">Search locations:</label>
 
                                 <div class="input-group">
-                                    <input class="form-control" id="locationQuery" data-ng-model="locationQuery"
+                                    <input class="form-control" name="locationQuery" id="locationQuery" data-ng-model="locationQuery"
                                            type="text"
-                                           placeholder="Search locations..." data-auto-focus data-focus-on="LocationSearchFocus">
-
-                                    <div class="input-group-addon btn" data-ng-click="search()">Go</div>
+                                           placeholder="Search locations..." required data-auto-focus data-focus-on="LocationSearchFocus">
+                                    <div class="input-group-addon btn" data-ng-click="search(searchForm.locationQuery.$valid)"
+                                         data-ng-disabled="searchForm.locationQuery.$invalid">Go</div>
                                 </div>
                             </div>
                         </form>
                     </div>
-                    <div class="col-md-3 col-sm-3" data-ng-hide="noSearch">
+                    <div class="col-md-3 col-sm-3" data-ng-show="searchPerformed">
                         <button type="button" class="btn btn-link pull-right" data-ng-click="createNewLocation()">
                             add new location
                         </button>
@@ -32,7 +31,7 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-body" data-ng-hide="noSearch">
+            <div class="modal-body" data-ng-show="searchPerformed">
                 <div>
                     <div class="row" data-ng-hide="removeStatusFilterAndTotal">
                         <div class="col-md-12 col-sm-12">
@@ -81,38 +80,34 @@
                                     </th>
 
                                 </tr>
-                                <tr data-ng-repeat="location in locations" data-ng-class="location.entity.currentNewLocationState ? 'text-muted' : ''">
-                                    <td><input type="checkbox" data-ng-model="location.entity.newlocation"  data-ng-disabled="location.entity.currentNewLocationState"
-                                               ng-change="onCheckboxChange(location)"></td>
-                                    <td>{{location.entity.name}}</td>
+                                <tr data-ng-repeat="clientLocation in locations| orderBy:sortIdx" data-ng-class="clientLocation.link.length > 0 ? 'text-muted' : ''">
+                                    <td data-ng-hide="clientLocation.link.self">
+                                        <input type="checkbox" data-ng-model="clientLocation.location.entity.newlocation"
+                                               ng-change="onCheckboxChange(clientLocation.location)">
+                                    </td>
+                                    <td data-ng-show="clientLocation.link.self">
+                                        <input type="checkbox" disabled="disabled" checked>
+                                    </td>
+                                    <td>{{clientLocation.location.entity.name}}</td>
                                     <td>
-                                        {{location.entity.belongsTo.name}}
+                                        {{clientLocation.location.entity.belongsTo.name}}
                                     </td>
-                                    <td> {{location.entity.city}}<span
-                                            data-ng-show="location.entity.city && location.entity.state">,&nbsp;</span>{{location.entity.state}}
+                                    <td> {{clientLocation.location.entity.city}}<span
+                                            data-ng-show="clientLocation.location.entity.city && clientLocation.location.entity.state">,&nbsp;</span>{{clientLocation.location.entity.state}}
                                     </td>
-                                    <td>{{location.entity.phone}}</td>
+                                    <td>{{clientLocation.location.entity.phone}}</td>
                                 </tr>
                             </table>
                             <div data-ng-hide="locations">
                                 <span data-translate="global.messages.search.no_results_found"></span>
                             </div>
                             <div class="row" data-ng-show="locations">
-                                <div class="col-md-4 col-sm-4 pull-right" data-ng-show="total > pageSizes[0] || links">
-                                    <ul class="pagination page-size pull-right">
-                                        <li data-ng-repeat="pageSize in pageSizes">
-                                            <a data-ng-if="pageSize != currentPageSize" href
-                                               data-ng-click="changePageSize(pageSize)">{{pageSize}}</a>
-                                            <span data-ng-if="pageSize === currentPageSize">[{{pageSize}}]</span>
-                                        </li>
-                                    </ul>
-                                </div>
                                 <div data-ng-show="links" class="col-md-8 col-sm-8">
                                     <ul class="pagination">
-                                        <li data-ng-repeat="link in links | orderBy:'order'">
-                                            <a data-ng-if="link.name != currentPage" href
+                                        <li data-ng-repeat="link in links | orderBy:'order'" data-ng-class="{'active': link.name == currentPage}">
+                                            <a data-ng-show="link.name != currentPage" href
                                                data-ng-click="fetchPage(link.href)">{{link.name}}</a>
-                                            <span data-ng-if="link.name == currentPage">[{{link.name}}]</span>
+                                            <span data-ng-hide="link.name != currentPage">{{link.name}}</span>
                                         </li>
                                     </ul>
                                 </div>
@@ -123,10 +118,10 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-link" data-ng-click="cancel()">cancel</button>
-                <button type="button" class="btn btn-default" data-ng-show="locations"
+                <button type="button" class="btn btn-default" data-ng-hide="isEmpty(changedLocations)"
                         data-ng-click="saveAndAddAnother()">Save & Add Another
                 </button>
-                <button type="button" class="btn btn-primary" data-ng-show="locations" data-ng-click="save()">Save
+                <button type="button" class="btn btn-primary" data-ng-hide="isEmpty(changedLocations)" data-ng-click="save()">Save
                 </button>
             </div>
         </div>

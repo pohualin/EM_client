@@ -1,16 +1,22 @@
 <!doctype html>
-<html class="no-js">
+<html data-ng-app="emmiRouter" data-ng-csp class="no-js">
 <head>
     <meta charset="utf-8">
-    <title>Emmi Manager</title>
+    <title data-ng-bind="page.title">Emmi Manager Router</title>
     <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="-1">
+    <meta http-equiv="cache-control" content="no-cache" />
+
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link href="favicon.ico" rel="icon" type="image/x-icon" />
 
     <!-- build:css({.tmp,app}) styles/main.css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.min.css">
     <link rel="stylesheet" href="bower_components/bootstrap-additions/dist/bootstrap-additions.css">
+    <link rel="stylesheet" href="bower_components/angular/angular-csp.css"/>
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
 
@@ -23,8 +29,9 @@
 <div data-ng-view></div>
 
 <!-- build:js scripts/vendor.js -->
+<!-- If you add something to the vendor.js build make sure to add it to all three html applications -->
 <!-- bower:js -->
-<script src="bower_components/jquery/jquery.js"></script>
+<script src="bower_components/jquery/dist/jquery.js"></script>
 <script src="bower_components/angular/angular.js"></script>
 <script src="bower_components/angular-cookies/angular-cookies.js"></script>
 <script src="bower_components/angular-touch/angular-touch.js"></script>
@@ -33,8 +40,8 @@
 <script src="bower_components/angular-animate/angular-animate.js"></script>
 <script src="bower_components/angular-route/angular-route.js"></script>
 <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-<script src="bower_components/angular-strap/dist/angular-strap.min.js"></script>
-<script src="bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
+<script src="bower_components/angular-strap/dist/angular-strap.js"></script>
+<script src="bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
 <script src="bower_components/angular-dynamic-locale/src/tmhDynamicLocale.js"></script>
 <script src="bower_components/chosen/chosen.jquery.js"></script>
 <script src="bower_components/angular-chosen-localytics/chosen.js"></script>
@@ -52,89 +59,13 @@
 <!-- endbower -->
 <!-- endbuild -->
 
-<!-- build:js({app,.tmp}) scripts/main.js -->
-<script src="scripts/vendor/http-auth-interceptor.js"></script>
-<script src="scripts/vendor/hateoas.js"></script>
-<script src="scripts/common/directives/typeahead/typeahead.js"></script>
-<script src="scripts/common/directives/tags-input/tags-input.js"></script>
-<script src="scripts/emmiManager.js"></script>
-<script src="scripts/main/main-ctrl.js"></script>
-<script src="scripts/main/main-service.js"></script>
-<script src="scripts/main/main-route.js"></script>
-<script src="scripts/vendor/rfc6570.js"></script>
-<script src="scripts/auth/auth-ctrl.js"></script>
-<script src="scripts/auth/auth-service.js"></script>
-<script src="scripts/auth/session-service.js"></script>
-<script src="scripts/common/directives/input-mask/input-mask.js"></script>
-<script src="scripts/clients/clients-ctrl.js"></script>
-<script src="scripts/clients/clients-service.js"></script>
-<script src="scripts/clients/search/clients-search-ctrl.js"></script>
-<script src="scripts/clients/clients-route.js"></script>
-<script src="scripts/teams/salesforce/salesforce-ctrl.js"></script>
-<script src="scripts/teams/salesforce/salesforce-service.js"></script>
-<script src="scripts/teams/create/teams-create-ctrl.js"></script>
-<script src="scripts/teams/create/teams-create-service.js"></script>
-<script src="scripts/teams/view/teams-view-ctrl.js"></script>
-<script src="scripts/teams/view/teams-view-service.js"></script>
-<script src="scripts/teams/teams-route.js"></script>
-<script src="scripts/clients/location/location-ctrl.js"></script>
-<script src="scripts/clients/location/location-service.js"></script>
-<script src="scripts/clients/tags/tags-ctrl.js"></script>
-<script src="scripts/clients/tags/tags-service.js"></script>
-<script src="scripts/search/search-ctrl.js"></script>
-<script src="scripts/teams/search/team-search-ctrl.js"></script>
-<script src="scripts/teams/search/team-search-service.js"></script>
-<script src="scripts/common/directives/date/date.js"></script>
-<script src="scripts/common/directives/tags-input/tag-groups.js"></script>
-<script src="scripts/teams/teams-error-ctrl.js"></script>
-<script src="scripts/teams/edit/teams-edit-ctrl.js"></script>
-<script src="scripts/teams/edit/teams-edit-service.js"></script>
-<script src="scripts/teams/locations/teams-locations-ctrl.js"></script>
-<script src="scripts/teams/locations/teams-locations-service.js"></script>
-<script src="scripts/teams/locations/search/teams-search-locations-service.js"></script>
-<script src="scripts/teams/locations/search/teams-search-locations-ctrl.js"></script>
-<script src="scripts/teams/providers/create/provider-create-ctrl.js"></script>
-<script src="scripts/teams/providers/create/provider-create-service.js"></script>
-<script src="scripts/teams/providers/search/provider-search-ctrl.js"></script>
-<script src="scripts/teams/providers/search/provider-search-service.js"></script>
-<script src="scripts/teams/providers/view/provider-view-service.js"></script>
-<script src="scripts/teams/providers/view/provider-view-ctrl.js"></script>
-<script src="scripts/teams/edit/team-tag-ctrl.js"></script>
-<script src="scripts/teams/edit/team-tag-service.js"></script>
-<script src="scripts/teams/view/team-tag-view-ctrl.js"></script>
-<!-- inject:partials -->
+<!-- build:js({app,.tmp}) scripts/emmi-router.js -->
+<script src="app-router/configuration.js"></script>
+<script src="app-router/main-ctrl.js"></script>
+<script src="app-router/main-route.js"></script>
+<!-- inject:router-partials -->
 <!-- endinject -->
 <!-- endbuild -->
- 
-<script>
-    (function () {
-        // load the initial web-api
-        var initInjector = angular.injector(['ng']);
-        var $http = initInjector.get('$http');
-        $http.get('/webapi')
-                .success(function (data) {
-                    var api = {};
-                    angular.forEach(data.link, function (item) {
-                        if (item.rel && item.href) {
-                            api[item.rel] = item.href;
-                        }
-                    });
-                    // save as a constant
-                    angular.module('emmiManager.api', [])
-                            .constant('API', api);
 
-                    // load the main application
-                    angular.element(document).ready(function () {
-                        angular.bootstrap(document, ['emmiManager']);
-                    });
-                })
-                .error(function (data, response) {
-                    window.location = '/404.html';
-                    console.log("Unknown error");
-                    console.log(data);
-                    console.log(response);
-                });
-    })();
-</script>
 </body>
 </html>

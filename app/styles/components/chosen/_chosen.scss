@@ -71,7 +71,7 @@
 }
 .chosen-container-single .chosen-single abbr {
   position: absolute;
-  top: 6px;
+    top: 10px;
   right: 26px;
   display: block;
   width: 12px;
@@ -424,7 +424,7 @@
   .chosen-container-multi .chosen-choices .search-choice .search-choice-close,
   .chosen-container .chosen-results-scroll-down span,
   .chosen-container .chosen-results-scroll-up span {
-    background-image: url('chosen-sprite@2x.png') !important;
+    background-image: url('../images/chosen-sprite@2x.png') !important;
     background-size: 52px 37px !important;
     background-repeat: no-repeat !important;
   }

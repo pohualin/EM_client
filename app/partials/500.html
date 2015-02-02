@@ -1,0 +1,17 @@
+<div class="container" data-ng-cloak>
+    <div class="row">
+        <div class="col-md-8">
+            <h1>Server Error</h1>
+
+            <div class="alert alert-danger">
+                There was a server error that prevented the previous action from successfully
+                completing. Please use your browser's back button to go back.
+            </div>
+        </div>
+    </div>
+    <div class="row" data-ng-show="error.detail">
+        <div class="col-md-12">
+            <pre class="pre-scrollable pre-x-scrollable">{{error.detail}}</pre>
+        </div>
+    </div>
+</div>

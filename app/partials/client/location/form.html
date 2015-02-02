@@ -13,11 +13,11 @@
                          data-ng-class="{ 'has-error' : locationForm.locationName.$invalid && locationFormSubmitted }">
                         <label class="control-label" for="locationName">Name:</label>
 
-                        <div class="error-circle"
+                        <div class="error-circle glyphicon glyphicon-exclamation-sign"
                              data-ng-show="locationForm.locationName.$error.required && locationFormSubmitted"
                              data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                              data-title="Required"></div>
-                        <div class="error-circle"
+                        <div class="error-circle glyphicon glyphicon-exclamation-sign"
                              data-ng-show="locationForm.locationName.$error.pattern && locationFormSubmitted"
                              data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                              data-title="Please enter a valid name."></div>
@@ -32,11 +32,11 @@
                     <div class="form-group"
                          data-ng-class="{ 'has-error' : locationForm.phone.$invalid && locationFormSubmitted }">
                         <label class="control-label" for="phone">Phone:</label>
-                        <div class="error-circle"
+                        <div class="error-circle glyphicon glyphicon-exclamation-sign"
                              data-ng-show="locationForm.phone.$error.required && locationFormSubmitted"
                              data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                              data-title="Required"></div>
-                        <div class="error-circle"
+                        <div class="error-circle glyphicon glyphicon-exclamation-sign"
                              data-ng-show="!locationForm.phone.$error.required && locationForm.phone.$error.pattern && locationFormSubmitted"
                              data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                              data-title="Please enter a valid phone number."></div>
@@ -52,11 +52,11 @@
                          data-ng-class="{ 'has-error' : locationForm.city.$invalid && locationFormSubmitted }">
                         <label class="control-label" for="city">City:</label>
 
-                        <div class="error-circle"
+                        <div class="error-circle glyphicon glyphicon-exclamation-sign"
                              data-ng-show="locationForm.city.$error.required && locationFormSubmitted"
                              data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                              data-title="Required"></div>
-                        <div class="error-circle"
+                        <div class="error-circle glyphicon glyphicon-exclamation-sign"
                              data-ng-show="locationForm.city.$error.pattern && locationFormSubmitted"
                              data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                              data-title="Please enter a valid city."></div>
@@ -71,7 +71,7 @@
                          data-ng-class="{ 'has-error' : locationForm.state.$invalid && locationFormSubmitted }">
                         <label class="control-label" for="state">State:</label>
 
-                        <div class="error-circle" data-ng-show="locationForm.state.$invalid && locationFormSubmitted"
+                        <div class="error-circle glyphicon glyphicon-exclamation-sign" data-ng-show="locationForm.state.$invalid && locationFormSubmitted"
                              data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                              data-title="Required"></div>
                         <select class="form-control" id="state" data-ng-model="location.state"
@@ -96,7 +96,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-ng-click="$hide()">Cancel</button>

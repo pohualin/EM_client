@@ -1,7 +1,7 @@
 <div class="col-md-12" data-ng-controller="ClientLocationsController" >
     <h2>Locations</h2>
     <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0"
-           cellspacing="0" data-ng-show="client.hasLocations()">
+           cellspacing="0" data-ng-show="clientLocations">
         <tr>
             <th>Name</th>
             <th>Phone</th>
@@ -9,36 +9,39 @@
             <th>State</th>
             <th>&nbsp;</th>
         </tr>
-        <tr data-ng-class="{highlight: location.highlight}"  data-ng-repeat="location in addedLocationsList() | orderBy:'sort'" data-ng-controller="ClientAddNewLocationsController">
-            <td>
-                {{location.name}}
-                <span data-ng-show="location.belongsTo && location.belongsTo.id !== client.entity.id"> <em>({{location.belongsTo.name}})</em></span>
-                <span data-ng-show="!location.belongsTo"> <em>(<span data-translate="client_edit_page.locations.no_client_owner"></span>)</em></span>
+        <tr data-ng-repeat="clientLocation in clientLocations">
+            <td class="col-sm-3">{{clientLocation.location.entity.name}}
+                <span data-ng-show="clientLocation.location.entity.belongsTo && clientLocation.location.entity.belongsTo.id !== client.entity.id"> <em>({{clientLocation.location.entity.belongsTo.name}})</em></span>
+                <span data-ng-show="!clientLocation.location.entity.belongsTo"> <em>(<span data-translate="client_edit_page.locations.no_client_owner"></span>)</em></span>
             </td>
-            <td>{{location.phone}}</td>
-            <td>{{location.city}}</td>
-            <td>{{location.state}}</td>
-            <td>
-                <a href data-ng-click="editLocation(location)">edit</a><span class="text-muted">&nbsp;|&nbsp;</span><a href data-ng-click="removeNewLocation(location)">remove from client</a>
-            </td>
-        </tr>
-        <tr data-ng-repeat="location in clientLocations | orderBy:'entity.name' ">
-            <td>{{location.entity.name}}
-                <span data-ng-show="location.entity.belongsTo && location.entity.belongsTo.id !== client.entity.id"> <em>({{location.entity.belongsTo.name}})</em></span>
-                <span data-ng-show="!location.entity.belongsTo"> <em>(<span data-translate="client_edit_page.locations.no_client_owner"></span>)</em></span>
-            </td>
-            <td>{{location.entity.phone}}</td>
-            <td>{{location.entity.city}}</td>
-            <td>{{location.entity.state}}</td>
-            <td>
-                <a href data-ng-click="editLocation(location.entity)">edit</a><span class="text-muted">&nbsp;|&nbsp;</span><a href data-ng-click="removeExistingLocation(location)">remove from client</a>
+            <td class="col-sm-2">{{clientLocation.location.entity.phone}}</td>
+            <td class="col-sm-2">{{clientLocation.location.entity.city}}</td>
+            <td class="col-sm-1">{{clientLocation.location.entity.state}}</td>
+            <td class="col-sm-3">
+                <a href data-ng-click="editLocation(clientLocation.location.entity)" data-ng-hide="clientLocation.location.entity.deleting">edit</a>
+                <span class="text-muted" data-ng-hide="clientLocation.location.entity.deleting">&nbsp;|&nbsp;</span>
+                <a href data-to-remove="clientLocation"
+                   data-on-ok="removeExistingLocation(clientLocation)"
+                   data-on-open-popover="openDeletePopover(clientLocation.location.entity)"
+                   data-on-close-popover="closeDeletePopover(clientLocation.location.entity)"
+                   data-client-location-delete-warning="">remove from client</a>
             </td>
         </tr>
     </table>
-    <div data-ng-hide="client.hasLocations()">
-        <span>There are no existing locations<span data-ng-show="client.name"> for {{client.name}}</span>.</span>
+    <div data-ng-hide="clientLocations">
+        <span>There are no existing locations<span data-ng-show="client.name">&nbsp;for {{client.name}}</span>.</span>
+    </div>
+    <div class="row" data-ng-show="clientLocations">
+        <div data-ng-show="links" class="col-md-8 col-sm-8">
+            <ul class="pagination">
+                <li data-ng-repeat="link in links | orderBy:'order'" data-ng-class="{'active': link.name == currentPage}">
+                    <a data-ng-show="link.name != currentPage" href
+                       data-ng-click="fetchPage(link.href)">{{link.name}}</a>
+                    <span data-ng-hide="link.name != currentPage">{{link.name}}</span>
+                </li>
+            </ul>
+        </div>
     </div>
     <div class="row" data-ng-include="'partials/client/location/client_new.html'"></div>
-    <div class="row" data-ng-include="'partials/client/location/client_belongsTo.html'"></div>
 </div>
 

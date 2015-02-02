@@ -35,7 +35,37 @@ gulp.task('partials', function () {
         .pipe($.size({title: 'partials', showFiles:true}));
 });
 
-gulp.task('html', ['styles', 'scripts', 'partials'], function () {
+gulp.task('client-partials', function () {
+    return gulp.src('app/client-facing/**/*.html')
+        .pipe($.minifyHtml({
+            empty: true,
+            spare: true,
+            quotes: true
+        }))
+        .pipe($.ngHtml2js({
+            moduleName: "emmiManager",
+            prefix: "client-facing/"
+        }))
+        .pipe(gulp.dest(".tmp/client-partials"))
+        .pipe($.size({title: 'client-partials', showFiles: true}));
+});
+
+gulp.task('router-partials', function () {
+    return gulp.src('app/app-router/**/*.html')
+        .pipe($.minifyHtml({
+            empty: true,
+            spare: true,
+            quotes: true
+        }))
+        .pipe($.ngHtml2js({
+            moduleName: "emmiRouter",
+            prefix: "app-router/"
+        }))
+        .pipe(gulp.dest(".tmp/router-partials"))
+        .pipe($.size({title: 'router-partials', showFiles: true}));
+});
+
+gulp.task('html', ['styles', 'scripts', 'partials', 'client-partials', 'router-partials'], function () {
     var jsFilter = $.filter('**/*.js');
     var cssFilter = $.filter('**/*.css');
 
@@ -43,6 +73,18 @@ gulp.task('html', ['styles', 'scripts', 'partials'], function () {
         .pipe($.inject(gulp.src('.tmp/partials/**/*.js'), {
             read: false,
             starttag: '<!-- inject:partials -->',
+            addRootSlash: false,
+            addPrefix: '../'
+        }))
+        .pipe($.inject(gulp.src('.tmp/client-partials/**/*.js'), {
+            read: false,
+            starttag: '<!-- inject:client-partials -->',
+            addRootSlash: false,
+            addPrefix: '../'
+        }))
+        .pipe($.inject(gulp.src('.tmp/router-partials/**/*.js'), {
+            read: false,
+            starttag: '<!-- inject:router-partials -->',
             addRootSlash: false,
             addPrefix: '../'
         }))
@@ -73,6 +115,11 @@ gulp.task('images', function () {
         .pipe($.size({title: 'images', showFiles:true}));
 });
 
+gulp.task('favicon', function () {
+    return gulp.src('app/favicon.ico')
+        .pipe(gulp.dest('dist'));
+});
+
 gulp.task('fonts', function () {
     return $.bowerFiles()
         .pipe($.filter('**/*.{eot,svg,ttf,woff}'))
@@ -99,4 +146,4 @@ gulp.task('clean', function () {
     return gulp.src(['.tmp', 'dist'], { read: false }).pipe($.clean());
 });
 
-gulp.task('build', ['html', 'partials', 'images', 'fonts', 'translations', 'api-docs']);
+gulp.task('build', ['html', 'partials', 'images', 'favicon', 'fonts', 'translations', 'api-docs']);

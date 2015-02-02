@@ -35,18 +35,43 @@
 }
 
 .error-circle {
-  background-image: url(/images/icon-alert.png);
-  display: inline-block;
+  font-size: 16px;
+  color: #d91a21;
   margin-left: 2px;
-  width: 13px;
-  height: 13px;
 }
 
 .alert-danger > strong {
   @extend .error-circle;
+  //@extend .glyphicon;
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  font-family: 'Glyphicons Halflings';
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
   margin-right:5px;
+
+  &:before {
+    content: "\e101";
+  }
+
+}
+
+.alert.top {
+    top: 0px;
+    &.second-line {
+        top: 65px;
+    }
 }
 
 .tooltip-inner {
   max-width: 600px;
+}
+
+.pre-x-scrollable {
+    overflow-x: auto;
+    word-wrap: normal;
+    white-space: pre;
 }

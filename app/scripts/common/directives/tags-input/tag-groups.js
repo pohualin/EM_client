@@ -9,6 +9,7 @@ angular.module('emmiManager')
             require: '^ngModel',
             scope: {
                 groups: '=ngModel',
+                onChange: '=ngChange',
                 formField: '=',
                 taggingMode: '=',
                 libraryGroups: '='
@@ -44,6 +45,7 @@ angular.module('emmiManager')
                             var tagGroup = {
                                 title: me.newTagGroupTitle,
                                 isValid: true,
+                                brandNew: true,
                                 tags: []
                             };
                             $scope.groups.push(tagGroup);
@@ -67,13 +69,16 @@ angular.module('emmiManager')
                     $scope.groups.splice(groupIndex, 1);
                     $scope.selectedTagGroupIndex = -1;
                     $scope.taggingMode = false;
+                    $scope.onChange('remove group');
                 };
 
                 $scope.changeTagGroupTitle = function (groupIndex) {
-                    $scope.validateForDuplicates();
+                    $scope.hasEmpties();
+
                     // Title already gets changed from data binding, so really just need to hide the edit form
                     $scope.groups[groupIndex].editMode = false;
                     $scope.selectedTagGroupIndex = -1;
+                    $scope.onChange('change group title');
                 };
 
                 $scope.tagExists = function (tag, groupIndex) {
@@ -89,7 +94,7 @@ angular.module('emmiManager')
 
                 $scope.pasteTags = function (event, groupIndex) {
                     event.preventDefault();
-                    var tags;
+                    var tags, createdTags;
                     if (event.originalEvent.clipboardData) {
                         tags = event.originalEvent.clipboardData.getData('text/plain').split('\n');
                     } else if (window.clipboardData) {
@@ -103,7 +108,11 @@ angular.module('emmiManager')
                         tag.text = tags[i];
                         if (tag.text.length > 0 && !$scope.tagExists(tag, groupIndex)) {
                             $scope.groups[groupIndex].tags.push(tag);
+                            createdTags = true;
                         }
+                    }
+                    if (createdTags){
+                        $scope.onChange('pasted tags');
                     }
                 };
 
@@ -119,14 +128,24 @@ angular.module('emmiManager')
                 };
 
                 $scope.hasEmpties = function () {
+                    $scope.validateGroupTitles();
+                    var ret = false;
                     if ($scope.groups) {
                         for (var l = 0; l < $scope.groups.length; l++) {
-                            if ($scope.groups[l].tags.length === 0) {
-                                return true;
+                            var tagGroup = $scope.groups[l];
+                            if (tagGroup.tags.length === 0 && !tagGroup.brandNew) {
+                                tagGroup.isValid = false;
+                                tagGroup.invalidDueToEmpty = true;
+                                if (!tagGroup.isValidMessage) {
+                                    tagGroup.isValidMessage = 'Tag groups must contain at least one tag';
+                                }
+                                ret = true;
+                            } else {
+                                tagGroup.invalidDueToEmpty = false;
                             }
                         }
                     }
-                    return false;
+                    return ret;
                 };
 
                 $scope.getDupes = function () {
@@ -145,16 +164,28 @@ angular.module('emmiManager')
                     return dupes;
                 };
 
-                $scope.validateForDuplicates = function () {
+                $scope.validateGroupTitles = function () {
                     var dupeIndices = $scope.getDupes();
+                    var blankIndices = [];
                     $scope.formField.$setValidity('unique', !dupeIndices.length);
                     angular.forEach($scope.groups, function (x, i) {
                         if (dupeIndices.indexOf(i) >= 0) {
                             $scope.groups[i].isValid = false;
+                            $scope.groups[i].invalidDueToDuplicate = true;
+                            $scope.groups[i].isValidMessage = 'This tag group already exists';
+                        } else if (!x.title || x.title.length === 0) {
+                            blankIndices.push(i);
+                            $scope.groups[i].isValid = false;
+                            $scope.groups[i].invalidDueToBlankTitle = true;
+                            $scope.groups[i].isValidMessage = 'Group titles cannot be blank.';
                         } else {
                             $scope.groups[i].isValid = true;
+                            delete $scope.groups[i].isValidMessage;
+                            $scope.groups[i].invalidDueToBlankTitle = false;
+                            $scope.groups[i].invalidDueToDuplicate = false;
                         }
                     });
+                    $scope.formField.$setValidity('blankTitle', !blankIndices.length);
                 };
 
             }],
@@ -164,11 +195,10 @@ angular.module('emmiManager')
                     origAddBtnText = addBtn.text();
 
                 // watch for removed tags and re-check for uniqueness
-                scope.$watch('groups.length', function (newVal, oldVal) {
+                scope.$watchCollection('groups', function (newVal, oldVal) {
                     // tag added or removed
-                    scope.validateForDuplicates();
                     scope.formField.$setValidity('empty', !scope.hasEmpties());
-                    if (newVal === 0) {
+                    if (newVal && newVal.length === 0) {
                         addBtn.text(origAddBtnText);
                     } else {
                         addBtn.text(addBtn.data('swapText'));
@@ -177,10 +207,12 @@ angular.module('emmiManager')
 
                 scope.$on('tag:add', function (event, tagGroup) {
                     $timeout(function () {
-                        if (tagGroup.isValid) {
+                        if (tagGroup.isValid ||
+                            (tagGroup.invalidDueToEmpty && !tagGroup.invalidDueToDuplicate)) {
                             var btnGroup = element.find('.btn-group').last();
                             btnGroup.find('.dropdown-toggle').trigger('click.bs.dropdown');
                             btnGroup.find('.tags-input .input').focus();
+                            tagGroup.brandNew = false;
                         }
                     });
                 });
@@ -194,6 +226,7 @@ angular.module('emmiManager')
                 element.on('hide.bs.dropdown', function () {
                     scope.$apply(function () {
                         scope.taggingMode = false;
+                        scope.hasEmpties();
                     });
                 });
 
@@ -204,15 +237,16 @@ angular.module('emmiManager')
 
     .directive('tagGroupsItem', function($timeout) {
         return {
-            require: '^tagGroups',
-            link: function(scope, element, attrs, ngModelCtrl) {
+            link: function(scope) {
 
                 // when number of tags within a group changes
-                scope.$watch('groups[$index].tags.length', function() {
-                    // check for empty tags
-                    $timeout(function() {
-                        scope.formField.$setValidity('empty', !scope.hasEmpties()); // shared scope with parent controller (scope.$parent)
-                    });
+                scope.$watchCollection('groups[$index].tags', function(newVal, oldVal) {
+                    // check for empty tags only when the number of tags has changed for the group
+                    if (newVal && oldVal && newVal.length !== oldVal.length) {
+                        $timeout(function () {
+                            scope.formField.$setValidity('empty', !scope.hasEmpties()); // shared scope with parent controller (scope.$parent)
+                        });
+                    }
                 });
 
             }

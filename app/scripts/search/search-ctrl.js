@@ -5,13 +5,86 @@ angular.module('emmiManager')
         $scope.changehref = function (option) {
             if (option === 'Clients') {
                 $location.path('/clients');
-            }
-            if (option === 'Teams') {
+            } else if (option === 'Teams') {
                 $location.path('/teams');
+            } else if (option === 'Providers') {
+                $location.path('/providers');
+            } else if (option === 'Locations') {
+                $location.path('/locations');
+            } else if (option === 'Users') {
+                $location.path('/users');
             }
         };
 
     })
+
+    .controller('CommonPagination', ['$scope', function($scope){
+
+        $scope.isEmpty = function (obj) {
+            if (!obj){
+                return true;
+            }
+            return angular.equals({}, obj);
+        };
+
+        $scope.handleResponse = function (responsePage, contentProperty) {
+            if (responsePage) {
+                // sort the rows the way they exist on the response page
+                for (var sort = 0, size = responsePage.content.length; sort < size; sort++ ){
+                    var content = responsePage.content[sort];
+                    content.sortIdx = sort;
+                }
+                // put the content in scope
+                $scope[contentProperty] = responsePage.content;
+                // set the total
+                $scope.total = responsePage.page.totalElements;
+
+                // create links in scope
+                $scope.links = [];
+                for (var i = 0, l = responsePage.linkList.length; i < l; i++) {
+                    var aLink = responsePage.linkList[i];
+                    if (aLink.rel.indexOf('self') === -1) {
+                        var linkValue = aLink.rel.substring(5);
+                        if (linkValue === 'next'){
+                            linkValue = '>';
+                        } else if (linkValue === 'prev'){
+                            linkValue = '<';
+                        }
+                        $scope.links.push({
+                            order: i,
+                            name: linkValue,
+                            href: aLink.href
+                        });
+                    }
+                }
+                $scope[contentProperty].links = $scope.links;
+                // create current loading plus page
+                $scope.load = responsePage.link.self;
+
+                // page numbers
+                $scope.currentPage = responsePage.page.number + 1;
+                $scope.currentPageSize = responsePage.page.size;
+
+                // status filter on response
+                if (responsePage.filter) {
+                    $scope.status = responsePage.filter.status;
+                }
+
+                // handle sort response object
+                if (responsePage.sort) {
+                    $scope.sortProperty = {
+                        property: responsePage.sort[0].property,
+                        ascending: responsePage.sort[0].direction === 'ASC'
+                    };
+                }
+            } else {
+                $scope.total = 0;
+                $scope[contentProperty] = null;
+            }
+            $scope.searchPerformed = true;
+            $scope.loading = false;
+        };
+    }])
 
 /**
  * Features of the common search controller are:
@@ -21,13 +94,22 @@ angular.module('emmiManager')
  * 3. Handles tri-click sorting properties
  * 4. Handles response page pagination and sorting
  */
-    .controller('CommonSearch', function ($scope, $location) {
+    .controller('CommonSearch', ['$scope', '$location', '$rootScope', 'arrays', '$controller','URL_PARAMETERS',
+            function ($scope, $location, $rootScope, arrays, $controller,URL_PARAMETERS) {
+
+        $controller('CommonPagination', {$scope: $scope});
 
         // set the proper value in the search chooser based upon the path
         if ($location.path() === '/clients'){
             $scope.option = 'Clients';
         } else if ($location.path() === '/teams'){
             $scope.option = 'Teams';
+        } else if ($location.path() === '/providers'){
+            $scope.option = 'Providers';
+        } else if ($location.path() === '/locations'){
+            $scope.option = 'Locations';
+        } else if ($location.path() === '/users'){
+            $scope.option = 'Users';
         }
 
         $scope.pageSizes = [5, 10, 15, 25];
@@ -59,18 +141,39 @@ angular.module('emmiManager')
                     }
                 }
             }
-            $scope.pageWhereBuilt = searchObject.p === 'c' ? 'client' : 'team';
+            // Set $scope.pageWhereBuilt
+            switch (searchObject.p) {
+            case URL_PARAMETERS.CLIENT:
+              $scope.pageWhereBuilt = 'client';
+              break;
+            case URL_PARAMETERS.TEAM:
+              $scope.pageWhereBuilt = 'team';
+              break;
+            case URL_PARAMETERS.PROVIDER:
+              $scope.pageWhereBuilt = 'provider';
+              break;
+            case URL_PARAMETERS.LOCATION:
+              $scope.pageWhereBuilt = 'location';
+              break;
+            case URL_PARAMETERS.USER:
+                $scope.pageWhereBuilt = 'user';
+                break;
+            default:
+              break;
+            }
         }
 
         $scope.serializeToQueryString = function (query, page, status, sort, size){
-            $location.search({
-                q: query,
-                p: page,
-                status: status,
-                sort: sort ? sort.property : '',
-                dir: sort ? (sort.ascending ? 'asc' : 'desc') : '',
-                size: size
-            }).replace();
+            var queryObject={};
+            queryObject[URL_PARAMETERS.QUERY] = query;
+            queryObject[URL_PARAMETERS.PAGE] = page;
+            queryObject[URL_PARAMETERS.STATUS] = status;
+            queryObject[URL_PARAMETERS.SORT] = sort ? sort.property : '';
+            queryObject[URL_PARAMETERS.DIRECTION] = sort ? (sort.ascending ? 'asc' : 'desc') : '';
+            queryObject[URL_PARAMETERS.SIZE] = size;
+
+            $location.search(queryObject).replace();
+            $rootScope.currentRouteQueryString = arrays.toQueryString($location.search());
         };
 
         $scope.createSortProperty = function (property){
@@ -92,43 +195,5 @@ angular.module('emmiManager')
             return sort;
         };
 
-        $scope.handleResponse = function (responsePage, contentProperty) {
-            if (responsePage) {
-                for (var sort = 0, size = responsePage.content.length; sort < size; sort++ ){
-                    var content = responsePage.content[sort];
-                    content.sortIdx = sort;
-                }
-
-                $scope[contentProperty] = responsePage.content;
-
-                $scope.total = responsePage.page.totalElements;
-                $scope.links = [];
-                for (var i = 0, l = responsePage.linkList.length; i < l; i++) {
-                    var aLink = responsePage.linkList[i];
-                    if (aLink.rel.indexOf('self') === -1) {
-                        $scope.links.push({
-                            order: i,
-                            name: aLink.rel.substring(5),
-                            href: aLink.href
-                        });
-                    }
-                }
-                $scope.load = responsePage.link.self;
-                $scope.currentPage = responsePage.page.number;
-                $scope.currentPageSize = responsePage.page.size;
-                $scope.status = responsePage.filter.status;
-                if (responsePage.sort) {
-                    $scope.sortProperty = {
-                        property: responsePage.sort[0].property,
-                        ascending: responsePage.sort[0].direction === 'ASC'
-                    };
-                }
-            } else {
-                $scope.total = 0;
-                $scope[contentProperty] = null;
-            }
-            $scope.searchPerformed = true;
-            $scope.loading = false;
-        };
-    })
+    }])
 ;

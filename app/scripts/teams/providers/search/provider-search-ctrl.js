@@ -1,41 +1,27 @@
 'use strict';
 angular.module('emmiManager')
 
-	.controller('ProviderSearchController', function($scope, $modal, $controller, ProviderSearch){
-        $controller('TeamProviderCommon', {$scope: $scope});
-        
-        ProviderSearch.getReferenceData().then(function (refData) {
-            $scope.statuses = refData.statusFilter;
-        });
-        
-        $scope.cancel = function () {
-            $scope.$hide();
-        };
-      
-        var newProviderModal = $modal({scope: $scope, template: 'partials/team/provider/new.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false});
+    .controller('ProviderSearchController', function ($scope, $modal, ProviderView, TeamLocation, TeamProviderService, ProviderSearch, $controller, arrays, ProviderCreate, $alert) {
 
-        $scope.createNewProvider = function () {
-            $scope.hideProviderSearchModal();
-        	newProviderModal.$promise.then(newProviderModal.show);
-        };
+        $controller('CommonPagination', {$scope: $scope});
 
-        $scope.hideNewProviderModal = function () {
-        	newProviderModal.$promise.then(newProviderModal.destroy);
-        };
-        
-        $scope.search = function (){
-            $scope.noSearch = false;
-        	ProviderSearch.search($scope.providerQuery).then( function (providerPage){
-                $scope.handleResponse(providerPage, 'searchedProvidersList');
-                $scope.removeStatusFilterAndTotal = $scope.total <= 0;
-        	});
+        var searchedProvidersList = 'searchedProvidersList';
+
+        $scope.search = function (isValid) {
+            if (isValid) {
+                $scope.noSearch = false;
+                ProviderSearch.search($scope.allTeamLocations, $scope.teamResource, $scope.providerQuery, $scope.status).then(function (providerPage) {
+                    $scope.handleResponse(providerPage, 'searchedProvidersList');
+                });
+            }
         };
 
         $scope.statusChange = function () {
             $scope.loading = true;
-            ProviderSearch.search($scope.providerQuery, $scope.status, $scope.sortProperty, $scope.currentPageSize).then( function (providerPage){
+            ProviderSearch.search($scope.allTeamLocations, $scope.teamResource, $scope.providerQuery, $scope.status, $scope.sortProperty, $scope.currentPageSize).then(function (providerPage) {
                 $scope.handleResponse(providerPage, 'searchedProvidersList');
-        	}, function () {
+                $scope.setCheckboxesForChanged($scope[searchedProvidersList]);
+            }, function () {
                 // error happened
                 $scope.loading = false;
             });
@@ -45,6 +31,7 @@ angular.module('emmiManager')
             $scope.loading = true;
             ProviderSearch.fetchPageLink(href).then(function (providerPage) {
                 $scope.handleResponse(providerPage, 'searchedProvidersList');
+                $scope.setCheckboxesForChanged($scope[searchedProvidersList]);
             }, function () {
                 // error happened
                 $scope.loading = false;
@@ -53,9 +40,10 @@ angular.module('emmiManager')
 
         $scope.changePageSize = function (pageSize) {
             $scope.loading = true;
-            ProviderSearch.search($scope.providerQuery, $scope.status, $scope.sortProperty, pageSize).then( function (providerPage){
+            ProviderSearch.search($scope.allTeamLocations, $scope.teamResource, $scope.providerQuery, $scope.status, $scope.sortProperty, pageSize).then(function (providerPage) {
                 $scope.handleResponse(providerPage, 'searchedProvidersList');
-        	}, function () {
+                $scope.setCheckboxesForChanged($scope[searchedProvidersList]);
+            }, function () {
                 // error happened
                 $scope.loading = false;
             });
@@ -92,54 +80,60 @@ angular.module('emmiManager')
 
         // when a column header is clicked
         $scope.sort = function (property) {
-            $scope.sortProperty.setProperty(property);
+            var sort = $scope.sortProperty || {};
+            if (sort && sort.property === property) {
+                // same property was clicked
+                if (!sort.ascending) {
+                    // third click removes sort
+                    sort = null;
+                } else {
+                    // switch to descending
+                    sort.ascending = false;
+                }
+            } else {
+                // change sort property
+                sort.property = property;
+                sort.ascending = true;
+            }
             $scope.loading = true;
-            ProviderSearch.search($scope.providerQuery, $scope.status, $scope.sortProperty, $scope.currentPageSize).then( function (providerPage){
+            ProviderSearch.search($scope.allTeamLocations, $scope.teamResource, $scope.providerQuery, $scope.status, sort, $scope.currentPageSize).then(function (providerPage) {
                 $scope.handleResponse(providerPage, 'searchedProvidersList');
-        	}, function () {
+                $scope.setCheckboxesForChanged($scope[searchedProvidersList]);
+            }, function () {
                 // error happened
                 $scope.loading = false;
             });
         };
-        
-        $scope.handleResponse = function (providerPage, providerPropertyName) {
-            if (providerPage) {
-                $scope.updateAlreadyAssociatedProviders(providerPage, $scope.teamResource);
-                this[providerPropertyName] = providerPage.content;
 
-                $scope.total = providerPage.page.totalElements;
-                $scope.links = [];
-                for (var i = 0, l = providerPage.linkList.length; i < l; i++) {
-                    var aLink = providerPage.linkList[i];
-                    if (aLink.rel.indexOf('self') === -1) {
-                        $scope.links.push({
-                            order: i,
-                            name: aLink.rel.substring(5),
-                            href: aLink.href
-                        });
-                    }
+        $scope.onCheckboxChange = function (provider) {
+            var request = {};
+            request.teamLocations = [];
+            provider.entity.teamLocations = [];
+
+            if (provider.entity.checked) {
+                provider.entity.selectedTeamLocations = angular.copy($scope.allTeamLocations);
+                if (provider.entity.selectedTeamLocations.length > 0) {
+                    provider.entity.showLocations = true;
                 }
-                $scope.load = providerPage.link.self;
-                $scope.currentPage = providerPage.page.number;
-                $scope.currentPageSize = providerPage.page.size;
-                $scope.pageSizes = [5, 10, 15, 25];
-                $scope.status = providerPage.filter.status;
-            } else {
-                $scope.total = 0;
-                $scope[providerPropertyName] = null;
+                request.provider = provider.entity;
+                $scope.teamProviderTeamLocationSaveRequest.push(request);
             }
-            $scope.noSearch = false;
-            $scope.loading = false;
+            else {
+                provider.entity.showLocations = false;
+                request.provider = provider.entity;
+                $scope.teamProviderTeamLocationSaveRequest.splice(request.provider.entity, 1);
+            }
         };
-        
-        $scope.updateAlreadyAssociatedProviders = function (providerPage, currentTeam) {
-            angular.forEach(providerPage.content, function (provider) {
-                angular.forEach(provider.entity.teams, function (team) {
-                	if(currentTeam.entity.id === team.id) {
-                		provider.entity.belongsToCurrentTeam = true;
-                	}
+
+        $scope.setCheckboxesForChanged = function (providers) {
+            angular.forEach(providers, function (searchedTeamProvider) {
+                angular.forEach($scope.teamProviderTeamLocationSaveRequest, function (teamProviderInRequest) {
+                    if (teamProviderInRequest.provider.id === searchedTeamProvider.provider.entity.id) {
+                        searchedTeamProvider.provider.entity.checked = true;
+                    }
                 });
             });
         };
-	})
-;	
+
+    })
+;

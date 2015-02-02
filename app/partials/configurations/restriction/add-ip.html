@@ -1,0 +1,68 @@
+<div class="col-md-12" data-ng-controller="AddIpRestrictConfigurationController">
+    <form name="ipRestrictConfigurationForm" class="form" data-ng-submit="add(ipRestrictConfigurationForm)" novalidate>
+        <div class="row" data-ng-show="ipRestrictConfigurationForm.$invalid  && ipRestrictConfigurationFormSubmitted">
+            <div class="col-md-12" id="ip-message-container"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group"
+                     data-ng-class="{ 'has-error' : ipRestrictConfigurationForm.ipRangeStart.$invalid && ipRestrictConfigurationFormSubmitted }">
+                    <label class="control-label" for="ipRangeStart">Start:</label>
+                    <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                         data-ng-show="ipRestrictConfigurationForm.ipRangeStart.$error.required && ipRestrictConfigurationFormSubmitted"
+                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                         data-title="Required"></div>
+                    <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                        data-ng-show="ipRestrictConfigurationForm.ipRangeStart.$error.pattern && ipRestrictConfigurationFormSubmitted"
+                        data-bs-tooltip data-placement="right" data-type="danger"
+                        data-container="body" data-title="Please enter a valid ip start."></div>
+                    <input class="form-control" id="ipRangeStart" 
+                           data-ng-model="ipRestrictConfiguration.entity.ipRangeStart"
+                           name="ipRangeStart"
+                           type="text" 
+                           data-ng-pattern="/^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/"
+                           required data-auto-focus>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group"
+                     data-ng-class="{ 'has-error' : ipRestrictConfigurationForm.ipRangeEnd.$invalid && ipRestrictConfigurationFormSubmitted }">
+                    <label class="control-label" for="ipRangeEnd">End:</label>
+                    <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                         data-ng-show="ipRestrictConfigurationForm.ipRangeEnd.$error.required && ipRestrictConfigurationFormSubmitted"
+                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                         data-title="Required"></div>
+                    <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                        data-ng-show="ipRestrictConfigurationForm.ipRangeEnd.$error.pattern && ipRestrictConfigurationFormSubmitted"
+                        data-bs-tooltip data-placement="right" data-type="danger"
+                        data-container="body" data-title="Please enter a valid ip end"></div>
+                    <input class="form-control" id="ipRangeEnd" 
+                           data-ng-model="ipRestrictConfiguration.entity.ipRangeEnd"
+                           name="ipRangeEnd"
+                           type="text" 
+                           data-ng-pattern="/^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/"
+                           required >
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group"
+                     data-ng-class="{ 'has-error' : ipRestrictConfigurationForm.description.$invalid && ipRestrictConfigurationFormSubmitted }">
+                    <label class="control-label" for="description">Description :</label>
+                    <input class="form-control" id="passwordLength" 
+                           data-ng-model="ipRestrictConfiguration.entity.description"
+                           name="description"
+                           type="text" >
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <input type="submit" id="submit" class="btn btn-link" value="add another"/>
+            </div>
+        </div>
+    </form>
+</div>

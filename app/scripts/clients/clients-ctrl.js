@@ -18,7 +18,7 @@ angular.module('emmiManager')
 
             Client.getOwnersReferenceDataList(refData.link.potentialOwners)
                 .then(function (owners) {
-                    $scope.contractOwners = owners;         	
+                    $scope.contractOwners = owners;
                 });
             $scope.findSalesForceAccount = function () {
                 Client.findSalesForceAccount(refData.link.findSalesForceAccount, $scope.sfSearch.searchQuery).then(function (searchResults) {
@@ -34,6 +34,16 @@ angular.module('emmiManager')
         $scope.findAccount = debounce(function (term) {
             Client.findSalesForceAccount($scope.findSalesForceAccountLink, term).then(function (searchResults) {
                 if (searchResults.entity) {
+                    if ($scope.clientToEdit) {
+                        angular.forEach(searchResults.entity.account, function (value, key) {
+                            if (value.clientName) {
+                                // Remove the client from the Account if it matches the id of the current client (so you can re-select the account when editing)
+                                if ($scope.clientToEdit.origSalesForceAccount === value.accountNumber) {
+                                    value.clientName = null;
+                                }
+                            }
+                        });
+                    }
                     $scope.sfResult = searchResults.entity;
                 } else {
                     // No results returned
@@ -41,11 +51,12 @@ angular.module('emmiManager')
                     $scope.sfResult.account = [];
                 }
             });
-        }, 333);
+        }, 500);
 
         $scope.chooseAccount = function (account) {
             if (account && !account.clientName) {
-                $scope.client.salesForceAccount = account;
+                $scope.clientToEdit.salesForceAccount = account;
+                $scope.updatingSalesForceAccount = false;
                 return true;
             } else {
                 return false;
@@ -57,13 +68,23 @@ angular.module('emmiManager')
         };
 
         $scope.changeSfAccount = function () {
-            $scope.sfSearch.searchQuery = $scope.client.salesForceAccount.name;
+            $scope.sfSearch.searchQuery = $scope.clientToEdit.salesForceAccount.name;
             $scope.sfResult.account = [];
-            $scope.client.salesForceAccount = null;
+            $scope.updatingSalesForceAccount = true;
             focus('SfSearch');
         };
 
-        $scope.showError = function(){
+        $scope.revertSfAccount = function () {
+            $scope.updatingSalesForceAccount = false;
+        };
+
+        $scope.hideError = function () {
+            if ($scope.errorAlert) {
+                $scope.errorAlert.hide();
+            }
+        };
+
+        $scope.showError = function () {
             if (!$scope.errorAlert) {
                 $scope.errorAlert = $alert({
                     title: ' ',
@@ -77,110 +98,4 @@ angular.module('emmiManager')
         };
     })
 
-/**
- * Create new controller
- */
-    .controller('ClientCtrl', function ($scope, Client, $controller, Location, Tag, $q) {
-
-        $controller('ViewEditCommon', {$scope: $scope});
-
-        $scope.client = Client.newClient().entity;
-
-        $scope.saveUpdate = function (isValid) {
-            // this will get called if the client form saves but any child calls fail
-            $scope.formSubmitted = true;
-            if (isValid && $scope.client.salesForceAccount) {
-                Client.updateClient($scope.client).then(function () {
-                    // update locations for the client
-                    Location.updateForClient(Client.getClient()).then(function () {
-                        Client.viewClient($scope.client);
-                    });
-                });
-            } else {
-                $scope.showError();
-            }
-        };
-
-        $scope.cancel = function () {
-            Client.viewClientList();
-        };
-
-        $scope.save = function (isValid) {
-            $scope.formSubmitted = true;
-            if (isValid && $scope.client.salesForceAccount) {
-                Client.insertClient($scope.client).then(function (client) {
-                    $scope.client = client.data.entity;
-                    $scope.save = $scope.saveUpdate;
-                    // saved client successfully, switch to saveUpdate if other updates fail
-                    $scope.client.tagGroups = client.config.data.tagGroups;
-
-                    var insertGroups = Tag.insertGroups(Client.getClient()),
-                    	updateLocation = Location.updateForClient(Client.getClient());
-                    $q.all([insertGroups, updateLocation]).then(function () {
-                    	Client.viewClient($scope.client);
-                    });
-
-                });
-            } else {
-                $scope.showError();
-            }
-        };
-
-    })
-
-
-/**
- *  Edit a single client
- */
-    .controller('ClientDetailCtrl', function ($scope, Client, $controller, Location, clientResource, Tag, $q) {
-
-        $controller('ViewEditCommon', {$scope: $scope});
-
-        if (clientResource) {
-            $scope.client = clientResource.entity;
-            clientResource.currentlyActive = clientResource.entity.active;
-        } else {
-            Client.viewClientList();
-        }
-
-        $scope.cancel = function () {
-            Client.viewClient($scope.client);
-        };
-
-        $scope.save = function (isValid) {
-            $scope.formSubmitted = true;
-            if (isValid && $scope.client.salesForceAccount) {
-                Client.updateClient($scope.client).then(function () {
-                    // update locations for the client
-                	
-                	var insertGroups = Tag.insertGroups(Client.getClient()),
-                	updateLocation = Location.updateForClient(Client.getClient());
-                	
-                	$q.all([insertGroups, updateLocation]).then(function() {
-                		Client.viewClient($scope.client);
-                	});
-
-                });
-            } else {
-                $scope.showError();
-            }
-        };
-    })
-
-/**
- * View a single client
- */
-    .controller('ClientViewCtrl', function ($scope, clientResource, Client, Location, $controller) {
-        $controller('ViewEditCommon', {$scope: $scope});
-
-        if (clientResource) {
-            $scope.client = clientResource.entity;
-            Client.setClient(clientResource);
-        } else {
-            Client.viewClientList();
-        }
-        $scope.edit = function () {
-            Client.editClient($scope.client);
-        };
-    })
 ;

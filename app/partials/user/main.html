@@ -1,0 +1,104 @@
+<div class="container" data-ng-cloak>
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-9">
+                <h2>
+                    <a href="#/">Emmi Manager</a> : Manage Emmi Users
+                </h2>
+            </div>
+        </div>
+        <form name="searchForm" novalidate>
+            <div class="row">
+                <div class="col-md-4 col-sm-4">
+                    <h2>Emmi Users</h2>
+                </div>
+                <div class="col-md-2 col-sm-2 pull-right">
+                    <div class="pull-right">
+                        <h2></h2>
+                        <a class="btn btn-primary"
+                           data-ng-href="#/users/new?{{currentRouteQueryString}}">Create New User</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <hr>
+        <div class="row" data-ng-show="searchPerformed">
+            <div class="col-md-12">
+                <div class="row" data-ng-hide="removeStatusFilterAndTotal">
+                    <div class="col-md-12">
+                        <div class="pull-right">
+                            {{total}} <span data-ng-show="total != 1"
+                                            data-translate="global.labels.total"> results</span> <span
+                            data-ng-show="total === 1"
+                            data-translate="global.labels.totalSingular"> result</span>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <table class="table table-bordered table-striped table-hover"
+                       border="0" cellpadding="0" cellspacing="0" data-ng-show="users">
+                    <tr>
+                        <th class="sort col-sm-2" data-ng-click="sort('lastName')">Last Name
+						<span data-ng-show="sortProperty.property === 'lastName'"><span
+                            class="glyphicon sort-icon"
+                            data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
+                        </th>
+                        <th class="sort col-sm-2" data-ng-click="sort('firstName')">First Name
+						<span data-ng-show="sortProperty.property === 'firstName'"><span
+                            class="glyphicon sort-icon"
+                            data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
+                        </th>
+                        <th class="sort col-sm-3" data-ng-click="sort('login')">User ID
+						<span data-ng-show="sortProperty.property === 'login'"><span
+                            class="glyphicon sort-icon"
+                            data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
+                        </th>
+                        <th class="sort col-sm-3" data-ng-click="sort('email')">Email
+						<span data-ng-show="sortProperty.property === 'email'"><span
+                            class="glyphicon sort-icon"
+                            data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
+                        </th>
+                        <th class="col-sm-2">&nbsp;</th>
+                    </tr>
+                    <tr
+                        data-ng-repeat="user in users">
+                        <td>{{user.lastName}}</td>
+                        <td>{{user.firstName}}</td>
+                        <td>{{user.login}}</td>
+                        <td>{{user.email}}</td>
+                        <td>
+                            <span data-ng-hide="userClient.deactivationPopoverOpen">
+                                <a class="btn-link"
+                                   href="#/users/{{user.id}}?{{currentRouteQueryString}}">edit</a>
+                                <span data-ng-hide="{{user.login === account.login}}">|</span>
+                            </span>
+                            <a data-ng-hide="{{user.login === account.login}}"
+                               href
+                               data-on-ok="toggleActivation(user)"
+                               data-is-currently-active="user.active"
+                               data-placement="top"
+                               data-on-open-popover="deactivationPopoverOpen(user, true)"
+                               data-on-close-popover="deactivationPopoverOpen(user, false)"
+                               data-toggle-user-client-active>{{user.active ? 'deactivate' : 'activate'}}
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+                <div class="row" data-ng-show="users">
+                    <div data-ng-show="links" class="col-md-8 col-sm-8">
+                        <ul class="pagination">
+                            <li data-ng-repeat="link in links | orderBy:'order'"
+                                data-ng-class="{'active': link.name == currentPage}"><a
+                                data-ng-show="link.name != currentPage" href
+                                data-ng-click="fetchPage(link.href)">{{link.name}}</a> <span
+                                data-ng-hide="link.name != currentPage">{{link.name}}</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div data-ng-hide="users">
+                    <span>There are no existing users </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

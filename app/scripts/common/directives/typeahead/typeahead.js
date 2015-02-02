@@ -15,6 +15,7 @@ angular.module('emmi.typeahead', [])
             scope: {
                 search: '&',
                 select: '&',
+                blur: '&',
                 items: '=',
                 term: '=',
                 placeholder: '@',
@@ -79,6 +80,14 @@ angular.module('emmi.typeahead', [])
                     }
                 };
 
+                this.blur = function () {
+                    $timeout(function(){
+                        $scope.hide = true;
+                        $scope.blur();
+                    }, 500);
+
+                };
+
             },
             //link: function($scope, iElm, iAttrs, controller) {
             link: function (scope, element, attrs, controller) {
@@ -94,6 +103,7 @@ angular.module('emmi.typeahead', [])
 
                 $input.bind('blur', function () {
                     scope.$apply(function () {
+                        controller.blur();
                         scope.focused = false;
                     });
                 });

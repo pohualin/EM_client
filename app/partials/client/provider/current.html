@@ -1,0 +1,46 @@
+<div class="col-md-12" data-ng-controller="ClientProvidersController">
+    <h2>Providers</h2>
+    <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0"
+           cellspacing="0" data-ng-show="clientProviders" data-ng-controller="ClientCurrentProvidersOperationController">
+        <tr>
+            <th>Name</th>
+            <th>Primary Specialty</th>
+            <th>Email</th>
+            <th>&nbsp;</th>
+        </tr>
+        <tr data-ng-repeat="clientProvider in clientProviders">
+            <td class="col-sm-4">{{clientProvider.provider.entity.firstName}} {{clientProvider.provider.entity.middleName}} {{clientProvider.provider.entity.lastName}} <em>{{clientProvider.provider.entity.active ? '' : "(inactive)"}}</em></td>
+            <td class="col-sm-2">{{clientProvider.provider.entity.specialty.name}}</td>
+            <td class="col-sm-3">{{clientProvider.provider.entity.email}}</td>
+            <td class="col-sm-3">
+                <a href data-ng-click="editProvider(clientProvider)" data-ng-hide="clientProvider.provider.entity.deleting">edit</a><span class="text-muted" data-ng-hide="clientProvider.provider.entity.deleting">&nbsp;|&nbsp;</span>
+                <a href data-to-remove="clientProvider"
+                   data-on-ok="removeExistingProvider(clientProvider)"
+                   data-on-open-popover="openDeletePopover(clientProvider.provider.entity)"
+                   data-on-close-popover="closeDeletePopover(clientProvider.provider.entity)"                   
+                   data-client-provider-delete-warning="">remove from client</a>
+            </td>
+        </tr>
+    </table>
+    <div data-ng-hide="clientProviders">
+        <span>There are no existing providers.</span>
+    </div>
+    <div class="row" data-ng-show="clientProviders">
+        <div data-ng-show="links" class="col-md-8 col-sm-8">
+            <ul class="pagination">
+                <li data-ng-repeat="link in links | orderBy:'order'" data-ng-class="{'active': link.name == currentPage}">
+                    <a data-ng-show="link.name != currentPage" href
+                       data-ng-click="fetchPage(link.href)">{{link.name}}</a>
+                    <span data-ng-hide="link.name != currentPage">{{link.name}}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" data-ng-controller="ClientOpenProviderAssociateOperationController">
+            <button type="button" class="btn btn-link" data-ng-click="associateProviders()">
+                add providers
+            </button>
+        </div>
+    </div>
+</div>

@@ -14,6 +14,7 @@ angular.module('emmiManager')
             .when('/', {
                 templateUrl: 'partials/main.html',
                 controller: 'MainCtrl',
+                title: 'Home',
                 access: {
                     authorizedRoles: [USER_ROLES.all]
                 },
@@ -22,6 +23,7 @@ angular.module('emmiManager')
             .when('/login', {
                 templateUrl: 'partials/login.html',
                 controller: 'LoginCtrl',
+                title: 'Login',
                 access: {
                     authorizedRoles: [USER_ROLES.all]
                 },
@@ -30,6 +32,15 @@ angular.module('emmiManager')
             .when('/403', {
                 templateUrl: 'partials/403.html',
                 resolve: requiredResources,
+                title: 'Access Denied',
+                access: {
+                    authorizedRoles: [USER_ROLES.all]
+                }
+            })
+            .when('/500', {
+                templateUrl: 'partials/500.html',
+                resolve: requiredResources,
+                title: 'Server Error',
                 access: {
                     authorizedRoles: [USER_ROLES.all]
                 }
@@ -44,8 +55,9 @@ angular.module('emmiManager')
             })
             .when('/docs', {
                 templateUrl: 'partials/doc/docs.html',
+                title: 'Documentation',
                 access: {
-                    authorizedRoles: [USER_ROLES.admin]
+                    authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
                 }
             })
             .otherwise({
