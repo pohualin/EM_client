@@ -209,19 +209,28 @@ angular.module('unsavedChanges', ['resettable'])
         function setup() {
             unsavedWarningsConfig.log('Setting up');
 
-            $window.onbeforeunload = _this.confirmExit;
+            // This event is used to catch the user closing the window or reloading the page,
+            // and is currently not in scope. Unfortunately, you cannot customize the alert to the
+            // user beyond the message string. It will be a standard confirm dialog.
+            //$window.onbeforeunload = _this.confirmExit;
 
             function routeChange(event, next, current) {
                 unsavedWarningsConfig.log('user is moving with ' + '$locationChangeStart');
                 if (!allFormsClean()) {
                     unsavedWarningsConfig.log('a form is dirty');
 
-                    var myModal = $modal({show: true, contentTemplate: 'partials/common/cancel.tpl.html', animation: 'none', backdropAnimation: 'emmi-fade', backdrop: 'static'});
+                    var myModal = $modal({
+                        show: true,
+                        content: 'Are you sure? Any unsaved changes will be lost.',
+                        template: 'partials/common/cancel.tpl.html',
+                        animation: 'none',
+                        backdropAnimation: 'emmi-fade',
+                        backdrop: 'static'});
 
                     $rootScope.ok = function() {
                         unsavedWarningsConfig.log('user doesn\'t care about loosing stuff');
-                        tearDown();
                         $rootScope.$broadcast('resetResettables');
+                        tearDown();
                         $window.location.href = next;
                         //$location.path($location.url(next).hash()); //Go to page they're interested in
                     };

@@ -1,7 +1,15 @@
-<form>
-    <p>Are you sure? Any unsaved changes will be lost.</p>
-    <div class="form-actions">
-        <button type="button" class="btn btn-primary" type="button" data-ng-click="$hide()">No</button>
-        <button class="btn btn-danger" data-ng-click="ok();$hide()">Yes</button>
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-confirm-exit">
+        <div class="modal-content">
+            <div class="modal-header" ng-show="title">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title" ng-bind="title"></h4>
+            </div>
+            <div class="modal-body" ng-bind="content"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-ng-click="$hide()">No</button>
+                <button type="button" class="btn btn-danger" data-ng-click="ok();$hide()">Yes</button>
+            </div>
+        </div>
     </div>
-</form>
+</div>
