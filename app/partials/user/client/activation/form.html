@@ -15,7 +15,9 @@
                         data-ng-hide="selectedUserClient.entity.email"
                         data-ng-controller="UsersClientPasswordController"
                         data-ng-click="generatePassword()">
-                    <span>Save & Show/Generate User Credentials</span>
+                    <span
+                        data-ng-show="selectedUserClient.entity.neverLoggedIn">Save & Show/Generate User Credentials</span>
+                    <span data-ng-hide="selectedUserClient.entity.neverLoggedIn">Reset Password</span>
                 </button>
             </div>
         </div>
