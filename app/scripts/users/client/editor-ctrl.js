@@ -19,13 +19,6 @@ angular.module('emmiManager')
 	        	$location.path('/clients/' + $scope.client.entity.id + '/users/new');
 	        };
 
-            /**
-             * Called if the user confirms they want to navigate away from the page when clicking the clink link-back
-             */
-            $scope.confirmExit = function() {
-                $location.path('/clients/'+$scope.client.entity.id);
-            };
-
         }
     ])
 ;
