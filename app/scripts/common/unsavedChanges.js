@@ -1,10 +1,8 @@
 'use strict';
-/*jshint globalstrict: true*/
 /*jshint undef:false */
-/*jshint ignore: start */
 
 /**
- * This directive is taken from the Angulartics unsavedChanges project (https://github.com/facultymatt/angular-unsavedChanges)
+ * This directive is taken from the Angular unsavedChanges project (https://github.com/facultymatt/angular-unsavedChanges)
  * and will alert users when they navigate away from a page where a form has unsaved changes. It provides 3 directives:
  *
  *       unsaved-warning-form:
@@ -66,7 +64,7 @@ angular.module('unsavedChanges', ['resettable'])
             return routeEvent;
         },
         set: function(value) {
-            if (typeof value === 'string') value = [value];
+            if (typeof value === 'string') { value = [value]; }
             routeEvent = value;
         }
     });
@@ -140,8 +138,8 @@ angular.module('unsavedChanges', ['resettable'])
     ];
 })
 
-.service('unsavedWarningSharedService', ['$rootScope', 'unsavedWarningsConfig', '$injector', '$window',
-    function($rootScope, unsavedWarningsConfig, $injector, $window) {
+.service('unsavedWarningSharedService', ['$rootScope', '$location', 'unsavedWarningsConfig', '$injector', '$window', '$modal',
+    function($rootScope, $location, unsavedWarningsConfig, $injector, $window, $modal) {
 
         // Controller scopped variables
         var _this = this;
@@ -171,8 +169,8 @@ angular.module('unsavedChanges', ['resettable'])
         // adds form controller to registered forms array
         // this array will be checked when user navigates away from page
         this.init = function(form) {
-            if (allForms.length === 0) setup();
-            unsavedWarningsConfig.log("Registering form", form);
+            if (allForms.length === 0) { setup(); }
+            unsavedWarningsConfig.log('Registering form', form);
             allForms.push(form);
         };
 
@@ -181,12 +179,12 @@ angular.module('unsavedChanges', ['resettable'])
 
             // this form is not present array
             // @todo needs test coverage
-            if (idx === -1) return;
+            if (idx === -1) { return; }
 
             allForms.splice(idx, 1);
-            unsavedWarningsConfig.log("Removing form from watch list", form);
+            unsavedWarningsConfig.log('Removing form from watch list', form);
 
-            if (allForms.length === 0) tearDown();
+            if (allForms.length === 0) { tearDown(); }
         };
 
         function tearDown() {
@@ -200,7 +198,7 @@ angular.module('unsavedChanges', ['resettable'])
 
         // Function called when user tries to close the window
         this.confirmExit = function() {
-            if (!allFormsClean()) return unsavedWarningsConfig.reloadMessage;
+            if (!allFormsClean()) { return unsavedWarningsConfig.reloadMessage; }
             $rootScope.$broadcast('resetResettables');
             tearDown();
         };
@@ -213,29 +211,39 @@ angular.module('unsavedChanges', ['resettable'])
 
             $window.onbeforeunload = _this.confirmExit;
 
+            function routeChange(event, next, current) {
+                unsavedWarningsConfig.log('user is moving with ' + '$locationChangeStart');
+                if (!allFormsClean()) {
+                    unsavedWarningsConfig.log('a form is dirty');
+
+                    var myModal = $modal({show: true, contentTemplate: 'partials/common/cancel.tpl.html', animation: 'none', backdropAnimation: 'emmi-fade', backdrop: 'static'});
+
+                    $rootScope.ok = function() {
+                        unsavedWarningsConfig.log('user doesn\'t care about loosing stuff');
+                        tearDown();
+                        $rootScope.$broadcast('resetResettables');
+                        $window.location.href = next;
+                        //$location.path($location.url(next).hash()); //Go to page they're interested in
+                    };
+
+                    //prevent navigation by default since we'll handle it
+                    //once the user selects a dialog option
+                    event.preventDefault();
+                    return;
+                } else {
+                    unsavedWarningsConfig.log('all forms are clean');
+                }
+            }
+
             var eventsToWatchFor = unsavedWarningsConfig.routeEvent;
 
             angular.forEach(eventsToWatchFor, function(aEvent) {
-                //calling this function later will unbind this, acting as $off()
-                var removeFn = $rootScope.$on(aEvent, function(event, next, current) {
-                    unsavedWarningsConfig.log("user is moving with " + aEvent);
-                    // @todo this could be written a lot cleaner!
-                    if (!allFormsClean()) {
-                        unsavedWarningsConfig.log("a form is dirty");
-                        if (!confirm(unsavedWarningsConfig.navigateMessage)) {
-                            unsavedWarningsConfig.log("user wants to cancel leaving");
-                            event.preventDefault(); // user clicks cancel, wants to stay on page
-                        } else {
-                            unsavedWarningsConfig.log("user doesn't care about loosing stuff");
-                            $rootScope.$broadcast('resetResettables');
-                        }
-                    } else {
-                        unsavedWarningsConfig.log("all forms are clean");
-                    }
-
-                });
-                removeFunctions.push(removeFn);
+                //Call to $on returns a "deregistration" function that can be called to
+                //remove the listener (see routeChange() for an example of using it)
+                var onRouteChangeOff = $rootScope.$on(aEvent, routeChange);
+                removeFunctions.push(onRouteChangeOff);
             });
+
         }
     }
 ])
