@@ -9,6 +9,14 @@ angular.module('emmiManager')
     function ($scope, $controller, Client, ClientRestrictConfigurationsService) {
 
         /**
+         * Cancel any changes
+         */
+        $scope.cancel = function(){
+            $scope.clientRestrictConfigurationForm = false;
+            $scope.clientRestrictConfiguration = angular.copy($scope.originalClientRestrictConfiguration);
+        };
+    
+        /**
          * Save restrict configuration for the client
          */
         $scope.save = function(){
@@ -16,6 +24,18 @@ angular.module('emmiManager')
                 $scope.originalClientRestrictConfiguration = response;
                 $scope.clientRestrictConfiguration = angular.copy($scope.originalClientRestrictConfiguration);
             });
+        };
+        
+        /**
+         * Show/hide cancel and save buttons
+         */
+        $scope.showButtons = function() {
+            if (!$scope.originalClientRestrictConfiguration || !$scope.clientRestrictConfiguration) {
+                return false;
+            }
+            return !angular.equals(
+                            $scope.originalClientRestrictConfiguration.entity,
+                            $scope.clientRestrictConfiguration.entity);
         };
 
         /**
