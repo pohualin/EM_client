@@ -57,14 +57,19 @@ angular.module('emmiManager')
                 }
             },
             loadReferenceData: function () {
-                var responseArray = [];
-                return $http.get(UriTemplate.create(Session.link.refDataGroups).stringify()).then(function iterateRefGroupPage(response) {
+                var deferred = $q.defer();
+            	var responseArray = [];
+                $http.get(UriTemplate.create(Session.link.refDataGroups).stringify()).then(function iterateRefGroupPage(response) {
+                    CommonService.convertPageContentLinks(response.data);
                     angular.forEach(response.data.content, function (group) {
+                    	$http.get(UriTemplate.create(group.link.refTagsForGroup).stringify()).then(function getTags(tagsResponse) {
+                    		group.tags = tagsResponse.data.content;
+                    		angular.forEach(tagsResponse.data.content, function (tag) {
+                                tag.text = tag.entity.name;
+                            });
+                    	});
                         group.title = group.entity.name;
                         group.tags = group.entity.tag;
-                        angular.forEach(group.entity.tag, function (tag) {
-                            tag.text = tag.name;
-                        });
                         responseArray.push(group);
                     });
 
@@ -73,8 +78,9 @@ angular.module('emmiManager')
                             iterateRefGroupPage(response);
                         });
                     }
-                    return responseArray;
+                    deferred.resolve(responseArray);
                 });
+                return deferred.promise;
             },
             checkForConflicts: function (clientResource) {
                 var deferred = $q.defer();
