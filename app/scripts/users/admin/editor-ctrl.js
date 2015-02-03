@@ -36,6 +36,14 @@ angular.module('emmiManager')
                     	if(addAnother){
                     	    $location.path('/users/new');
                     	}
+                    	$alert({
+                            content: 'User <b>' + response.data.login + '</b> has been successfully updated.',
+                            type: 'success',
+                            placement: 'top',
+                            show: true,
+                            duration: 5,
+                            dismissable: true
+                        });
                     });
                 } else {
                     if (!$scope.errorAlert) {
