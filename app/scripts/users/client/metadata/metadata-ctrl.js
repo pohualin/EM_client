@@ -28,6 +28,8 @@ angular.module('emmiManager')
              * When cancel is clicked in edit mode
              */
             $scope.cancel = function () {
+                // Reset form to pristine
+                $scope.userClientForm.$setPristine();
                 delete $scope.loginError;
                 delete $scope.emailError;
                 $scope.editMode = false;
