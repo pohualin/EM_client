@@ -9,7 +9,7 @@ angular.module('emmiManager')
             .when('/credentials/expired', {
                 templateUrl: 'client-facing/credentials/expired/expired.html',
                 controller: 'CredentialsExpiredController',
-                title: 'Credentials Expired',
+                title: 'Password Expired',
                 access: {
                     authorizedRoles: [USER_ROLES.all]
                 },
@@ -26,11 +26,10 @@ angular.module('emmiManager')
                         }]
                 }
             })
-
             .when('/activate/:activationKey', {
                 templateUrl: 'client-facing/credentials/activation/activate.html',
                 controller: 'ActivateClientUserController',
-                title: 'Client User Activation',
+                title: 'Activate User',
                 access: {
                     authorizedRoles: [USER_ROLES.all]
                 },
@@ -39,6 +38,25 @@ angular.module('emmiManager')
                         var deferred = $q.defer();
                         if ($route.current.params.activationKey) {
                             deferred.resolve($route.current.params.activationKey);
+                        } else {
+                            deferred.reject();
+                        }
+                        return deferred.promise;
+                    }]
+                }
+            })
+            .when('/reset_password/:resetToken', {
+                templateUrl: 'client-facing/credentials/reset/reset.html',
+                controller: 'ResetClientUserPasswordController',
+                title: 'Reset Password',
+                access: {
+                    authorizedRoles: [USER_ROLES.all]
+                },
+                resolve: {
+                    'resetToken': ['$route', '$q', function ($route, $q) {
+                        var deferred = $q.defer();
+                        if ($route.current.params.resetToken) {
+                            deferred.resolve($route.current.params.resetToken);
                         } else {
                             deferred.reject();
                         }

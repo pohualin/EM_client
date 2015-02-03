@@ -1,8 +1,7 @@
 <form name="activationForm" class="form" data-ng-controller="ActivationController" novalidate>
-    <hr data-ng-show="(selectedUserClient.entity.email && !selectedUserClient.entity.activated) ||
-                            !selectedUserClient.entity.email">
-    <div class="col-md-12" data-ng-show="(selectedUserClient.entity.email && !selectedUserClient.entity.activated) ||
-                            !selectedUserClient.entity.email">
+
+    <div class="col-md-12">
+        <hr>
         <div id="generated-password"></div>
         <div class="row">
             <div class="col-md-12">
@@ -11,12 +10,18 @@
                         data-ng-click="sendActivationEmail()">
                     <span>Save & Send User Setup Email</span>
                 </button>
+                <button class="btn btn-default" type="submit"
+                        data-ng-show="selectedUserClient.entity.email && selectedUserClient.entity.activated"
+                        data-ng-controller="UsersClientPasswordController"
+                        data-ng-click="passwordReset()">
+                    <span>Reset Password</span>
+                </button>
                 <button class="btn btn-default" type="button"
                         data-ng-hide="selectedUserClient.entity.email"
                         data-ng-controller="UsersClientPasswordController"
                         data-ng-click="generatePassword()">
                     <span
-                        data-ng-show="selectedUserClient.entity.neverLoggedIn">Save & Show/Generate User Credentials</span>
+                        data-ng-show="selectedUserClient.entity.neverLoggedIn">Save & Show User Credentials</span>
                     <span data-ng-hide="selectedUserClient.entity.neverLoggedIn">Reset Password</span>
                 </button>
             </div>
