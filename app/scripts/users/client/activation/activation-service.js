@@ -15,7 +15,7 @@ angular.module('emmiManager')
                  * @returns the promise
                  */
                 sendActivationEmail: function (userClient) {
-                    return $http.get(UriTemplate.create(userClient.link.sendActivationEmail).stringify())
+                    return $http.get(UriTemplate.create(userClient.link.activate).stringify())
                         .success(function (response) {
                             UsersClientService.setUserClient(userClient.entity.id);
                             return response;

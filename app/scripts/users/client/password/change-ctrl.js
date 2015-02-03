@@ -47,6 +47,24 @@ angular.module('emmiManager')
             };
 
             /**
+             * Generates a password for a user and saves it.
+             */
+            $scope.passwordReset = function () {
+                UsersClientPasswordService.sendReset(UsersClientService.getUserClient()).then(function () {
+                    $alert({
+                        content: 'User saved successfully. A password reset email has been sent to  <b>' + UsersClientService.getUserClient().entity.email +
+                        '</b>.',
+                        type: 'success',
+                        placement: 'top',
+                        show: true,
+                        duration: 5,
+                        dismissable: true
+                    });
+                });
+            };
+
+
+            /**
              * Saves a password change when the form is valid
              *
              * @param formValid true if the form is valid
