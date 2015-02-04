@@ -56,15 +56,32 @@ angular.module('emmiManager')
                     });
                 }
             },
-            loadReferenceData: function () {
-                var responseArray = [];
-                return $http.get(UriTemplate.create(Session.link.refDataGroups).stringify()).then(function iterateRefGroupPage(response) {
-                    angular.forEach(response.data.content, function (group) {
-                        group.title = group.entity.name;
-                        group.tags = group.entity.tag;
-                        angular.forEach(group.entity.tag, function (tag) {
-                            tag.text = tag.name;
+            loadReferenceTags: function (group) {
+            	var referenceTags = [];
+            	var deferred = $q.defer();
+            	$http.get(UriTemplate.create(group.link.refTagsForGroup).stringify()).then(function getTags(tagsResponse) {
+                    CommonService.convertPageContentLinks(tagsResponse.data);
+                    angular.forEach(tagsResponse.data.content, function (tag) {
+                        tag.text = tag.entity.name;
+                        referenceTags.push(tag);
+                    });
+            		if (tagsResponse.data.link && tagsResponse.data.link['page-next']) {
+                        $http.get(tagsResponse.data.link['page-next']).then(function (tagsResponsePage) {
+                        	getTags(tagsResponsePage);
                         });
+                    }
+            		deferred.resolve(referenceTags);
+            	});
+            	return deferred.promise;
+            },
+            loadReferenceData: function () {
+                var deferred = $q.defer();
+            	var responseArray = [];
+                $http.get(UriTemplate.create(Session.link.refDataGroups).stringify()).then(function iterateRefGroupPage(response) {
+                    CommonService.convertPageContentLinks(response.data);
+                    angular.forEach(response.data.content, function (group) {
+                    	var newArray = [];
+                        group.title = group.entity.name;
                         responseArray.push(group);
                     });
 
@@ -73,8 +90,9 @@ angular.module('emmiManager')
                             iterateRefGroupPage(response);
                         });
                     }
-                    return responseArray;
+                    deferred.resolve(responseArray);
                 });
+                return deferred.promise;
             },
             checkForConflicts: function (clientResource) {
                 var deferred = $q.defer();
