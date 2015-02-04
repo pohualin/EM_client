@@ -56,20 +56,32 @@ angular.module('emmiManager')
                     });
                 }
             },
+            loadReferenceTags: function (group) {
+            	var referenceTags = [];
+            	var deferred = $q.defer();
+            	$http.get(UriTemplate.create(group.link.refTagsForGroup).stringify()).then(function getTags(tagsResponse) {
+                    CommonService.convertPageContentLinks(tagsResponse.data);
+                    angular.forEach(tagsResponse.data.content, function (tag) {
+                        tag.text = tag.entity.name;
+                        referenceTags.push(tag);
+                    });
+            		if (tagsResponse.data.link && tagsResponse.data.link['page-next']) {
+                        $http.get(tagsResponse.data.link['page-next']).then(function (tagsResponse1) {
+                        	getTags(tagsResponse1);
+                        });
+                    }
+            		deferred.resolve(referenceTags);
+            	});
+            	return deferred.promise;
+            },
             loadReferenceData: function () {
                 var deferred = $q.defer();
             	var responseArray = [];
                 $http.get(UriTemplate.create(Session.link.refDataGroups).stringify()).then(function iterateRefGroupPage(response) {
                     CommonService.convertPageContentLinks(response.data);
                     angular.forEach(response.data.content, function (group) {
-                    	$http.get(UriTemplate.create(group.link.refTagsForGroup).stringify()).then(function getTags(tagsResponse) {
-                    		group.tags = tagsResponse.data.content;
-                    		angular.forEach(tagsResponse.data.content, function (tag) {
-                                tag.text = tag.entity.name;
-                            });
-                    	});
+                    	var newArray = [];
                         group.title = group.entity.name;
-                        group.tags = group.entity.tag;
                         responseArray.push(group);
                     });
 
