@@ -66,8 +66,8 @@ angular.module('emmiManager')
                         referenceTags.push(tag);
                     });
             		if (tagsResponse.data.link && tagsResponse.data.link['page-next']) {
-                        $http.get(tagsResponse.data.link['page-next']).then(function (tagsResponse1) {
-                        	getTags(tagsResponse1);
+                        $http.get(tagsResponse.data.link['page-next']).then(function (tagsResponsePage) {
+                        	getTags(tagsResponsePage);
                         });
                     }
             		deferred.resolve(referenceTags);
