@@ -66,6 +66,20 @@ angular.module('emmiManager')
                 },
 
                 /**
+                 * Sends an activation email to the UserClient
+                 *
+                 * @param userClient on which to send an email
+                 * @returns the promise
+                 */
+                sendReset: function (userClient) {
+                    return $http.get(UriTemplate.create(userClient.link.resetPassword).stringify())
+                        .success(function (response) {
+                            UsersClientService.setUserClient(userClient.entity.id);
+                            return response;
+                        });
+                },
+
+                /**
                  * Calls the backend changePassword link on the user client
                  *
                  * @param userClient on which to change the password
