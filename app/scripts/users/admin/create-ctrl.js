@@ -32,6 +32,14 @@ angular.module('emmiManager')
                             $scope.userFormSubmitted = false;
                             $scope.newEmmiUser();
                         }
+                        $alert({
+                            content: 'User <b>' + response.data.login + '</b> has been successfully created.',
+                            type: 'success',
+                            placement: 'top',
+                            show: true,
+                            duration: 5,
+                            dismissable: true
+                        });
                     }, function (error) {
                         if (error.status === 409) {
                             // 409 is http conflict, meaning save was prevented due to conflicts with other users

@@ -3,14 +3,14 @@
         <div class="col-md-12">
             <ol class="breadcrumb h3">
                 <li><a href="#/">Emmi Manager</a></li>
-                <li><a href="#" data-confirm-exit data-on-ok="confirmExit()" data-form="userClientForm">{{client.entity.name}}</a></li>
+                <li><a href="#/clients/{{client.entity.id}}">{{client.entity.name}}</a></li>
                 <li class="active">Create User</li>
             </ol>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12" data-ng-cloak>
-            <form name="userClientForm" class="form" novalidate>
+            <form name="userClientForm" class="form" novalidate unsaved-warning-form>
                 <div class="row" data-ng-show="userClientForm.$invalid">
                     <div class="col-md-12" id="message-container"></div>
                 </div>

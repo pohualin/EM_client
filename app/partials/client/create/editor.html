@@ -2,7 +2,7 @@
     <h2>
         <a href="#/">Emmi Manager</a> :&nbsp;New Client
     </h2>
-    <form name="clientForm" class="form" novalidate>
+    <form name="clientForm" data-ng-submit="save(clientForm.$valid)" class="form" novalidate unsaved-warning-form>
         <div id="alerts-container" data-ng-show="clientForm.$invalid || !clientToEdit.salesForceAccount"></div>
         <div id="remove-container"></div>
         <h2>Client Information</h2>
@@ -157,8 +157,7 @@
                 <div class="actions pull-right">
                     <div class="form-group">
                         <a class="btn btn-link" href="#/clients?{{currentRouteQueryString}}" analytics-on analytics-category="Form Action" analytics-event="Client Create" analytics-label="Cancel">cancel</a>
-                        <button class="btn btn-primary" type="button" data-ng-click="save(clientForm.$valid)"
-                                data-ng-disabled="clientForm.clientName.$error.unique">
+                        <button class="btn btn-primary" type="submit" data-ng-disabled="clientForm.clientName.$error.unique">
                             <span data-translate="client_edit_page.save_button">Continue...</span>
                         </button>
                     </div>
