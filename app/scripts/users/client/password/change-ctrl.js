@@ -36,7 +36,8 @@ angular.module('emmiManager')
                         }
                         $scope.login = UsersClientService.getUserClient().entity.login;
                         $scope.url = API.clientAppEntryUrl;
-                        $scope.urlDisplay = $scope.url.substring($scope.url.indexOf("://") + 3);
+                        var idx = $scope.url.indexOf('://') + 3;
+                        $scope.urlDisplay = idx > 2 ? $scope.url.substring(idx) : $scope.url;
                         $scope.passwordNotification = $popover(angular.element($event.currentTarget), {
                             scope: $scope,
                             placement: 'right',
