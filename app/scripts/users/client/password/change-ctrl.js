@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  * Change password controller
  */
-    .controller('UsersClientPasswordController', ['$scope', 'UsersClientService', 'UsersClientPasswordService', '$alert',
-        function ($scope, UsersClientService, UsersClientPasswordService, $alert) {
+    .controller('UsersClientPasswordController', ['$scope', 'UsersClientService', 'UsersClientPasswordService', '$alert', '$popover', 'API',
+        function ($scope, UsersClientService, UsersClientPasswordService, $alert, $popover, API) {
 
             /**
              * Set the component up in its initial state.
@@ -27,24 +27,44 @@ angular.module('emmiManager')
             /**
              * Generates a password for a user and saves it.
              */
-            $scope.generatePassword = function () {
+            $scope.generatePassword = function ($event) {
                 $scope.passwordChange.password = UsersClientPasswordService.generatePassword();
                 UsersClientPasswordService.changePassword(UsersClientService.getUserClient(), $scope.passwordChange)
                     .then(function success() {
                         if ($scope.passwordNotification) {
                             $scope.passwordNotification.hide();
                         }
-                        $scope.passwordNotification = $alert({
-                            content: 'Please direct the user to www.emmimanager.com with the user ID: <strong>' +
-                            UsersClientService.getUserClient().entity.login + '</strong> ' +
-                            'temporary password: <strong>' + $scope.passwordChange.password + '</strong>',
-                            type: 'success',
-                            show: true,
-                            container: '#generated-password',
-                            dismissable: true
+                        $scope.login = UsersClientService.getUserClient().entity.login;
+                        $scope.url = API.clientAppEntryUrl;
+                        var idx = $scope.url.indexOf('://') + 3;
+                        $scope.urlDisplay = idx > 2 ? $scope.url.substring(idx) : $scope.url;
+                        $scope.passwordNotification = $popover(angular.element($event.currentTarget), {
+                            scope: $scope,
+                            placement: 'right',
+                            trigger: 'manual',
+                            template: 'partials/user/client/password/generate_popover.tpl.html',
+                            show: true
                         });
                     });
             };
+
+            /**
+             * Generates a password for a user and saves it.
+             */
+            $scope.passwordReset = function () {
+                UsersClientPasswordService.sendReset(UsersClientService.getUserClient()).then(function () {
+                    $alert({
+                        content: 'User saved successfully. A password reset email has been sent to  <b>' + UsersClientService.getUserClient().entity.email +
+                        '</b>.',
+                        type: 'success',
+                        placement: 'top',
+                        show: true,
+                        duration: 5,
+                        dismissable: true
+                    });
+                });
+            };
+
 
             /**
              * Saves a password change when the form is valid

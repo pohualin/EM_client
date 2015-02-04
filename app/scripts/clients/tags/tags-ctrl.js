@@ -31,6 +31,13 @@ angular.module('emmiManager')
             angular.forEach(tagLibraries, function (tagLibrary) {
                 libraryMap[tagLibrary.title] = tagLibrary;
             });
+            
+            angular.forEach(tagLibraries, function(group){
+            	Tag.loadReferenceTags(group).then( function (response) {
+            		group.tags = response;
+            	});
+            });
+            
             $scope.tagLibraries = tagLibraries;
             $scope.tagLibraryMap = libraryMap;
 
