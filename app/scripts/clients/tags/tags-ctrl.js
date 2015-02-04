@@ -27,6 +27,7 @@ angular.module('emmiManager')
                 tagLibraries = response[1],
                 libraryMap = {};
 
+            // make a map object library tags keyed by title and put it in scope
             angular.forEach(tagLibraries, function (tagLibrary) {
                 libraryMap[tagLibrary.title] = tagLibrary;
             });
