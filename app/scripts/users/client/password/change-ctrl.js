@@ -35,7 +35,7 @@ angular.module('emmiManager')
                             $scope.passwordNotification.hide();
                         }
                         $scope.login = UsersClientService.getUserClient().entity.login;
-                        $scope.url = API.client_app_entry_url;
+                        $scope.url = API.clientAppEntryUrl;
                         $scope.passwordNotification = $popover(angular.element($event.currentTarget), {
                             scope: $scope,
                             placement: 'right',
