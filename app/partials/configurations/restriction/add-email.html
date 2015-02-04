@@ -1,46 +1,8 @@
 <div class="col-md-12" data-ng-controller="AddEmailRestrictConfigurationController">
-    <form name="emailRestrictConfigurationForm" class="form" data-ng-submit="add(emailRestrictConfigurationForm)" novalidate>
-        <div class="row" data-ng-show="emailRestrictConfigurationForm.$invalid && emailRestrictConfigurationFormSubmitted">
-            <div class="col-md-12" id="email-message-container"></div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group"
-                     data-ng-class="{ 'has-error' : emailRestrictConfigurationForm.emailEnding.$invalid && emailRestrictConfigurationFormSubmitted }">
-                    <label class="control-label" for="emailEnding">Email ending:</label>
-                    <div class="error-circle glyphicon glyphicon-exclamation-sign"
-                         data-ng-show="emailRestrictConfigurationForm.emailEnding.$error.required && emailRestrictConfigurationFormSubmitted"
-                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                         data-title="Required"></div>
-                    <div class="error-circle glyphicon glyphicon-exclamation-sign"
-                        data-ng-show="emailRestrictConfigurationForm.emailEnding.$error.pattern && emailRestrictConfigurationFormSubmitted"
-                        data-bs-tooltip data-placement="right" data-type="danger"
-                        data-container="body" data-title="Please enter a valid email ending."></div>
-                    <input class="form-control" id="emailEnding" 
-                           data-ng-model="emailRestrictConfiguration.entity.emailEnding"
-                           name="emailEnding"
-                           type="text"
-                           data-ng-pattern="/@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/"
-                           required >
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group"
-                     data-ng-class="{ 'has-error' : emailRestrictConfigurationForm.description.$invalid && emailRestrictConfigurationFormSubmitted }">
-                    <label class="control-label" for="description">Description :</label>
-                    <input class="form-control" id="passwordLength" 
-                           data-ng-model="emailRestrictConfiguration.entity.description"
-                           name="description"
-                           type="text" >
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <input type="submit" id="submit" class="btn btn-link" value="add another"/>
-            </div>
-        </div>
-    </form>
+    <button type="button" class="btn btn-link" data-ng-hide="emailRestrictConfigurations" data-ng-click="addAnotherEmailRestrict()">
+        add email ending
+    </button>
+    <button type="button" class="btn btn-link" data-ng-show="emailRestrictConfigurations" data-ng-click="addAnotherEmailRestrict()">
+        add another
+    </button>
 </div>

@@ -1,0 +1,22 @@
+<div class="popover">
+    <div class="arrow"></div>
+    <h3 class="popover-title">User Credentials:
+        <button type="button" class="btn btn-default btn-xs btn-close pull-right" data-ng-click="$hide()">
+            <span class="glyphicon glyphicon-remove"></span>
+        </button>
+    </h3>
+    <div class="popover-content popover-text">
+
+        <p id="directions">Please direct the user to <span data-title="{{url}}" data-placement="right" data-type="info" data-bs-tooltip><a href>{{urlDisplay|characters:35}}</a></span></p>
+        <table border="0" cellpadding="0" cellspacing="0">
+            <tr>
+                <td>User ID:</td>
+                <td><strong>{{login}}</strong></td>
+            </tr>
+            <tr>
+                <td>Temporary password:&nbsp;&nbsp;&nbsp;</td>
+                <td><strong>{{passwordChange.password}}</strong></td>
+            </tr>
+        </table>
+    </div>
+</div>
