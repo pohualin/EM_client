@@ -54,8 +54,8 @@ angular.module('emmiManager')
             $scope.passwordReset = function () {
                 UsersClientPasswordService.sendReset(UsersClientService.getUserClient()).then(function () {
                     $alert({
-                        content: 'User saved successfully. A password reset email has been sent to  <b>' + UsersClientService.getUserClient().entity.email +
-                        '</b>.',
+                        content: 'A password reset email has been sent to <strong>' + UsersClientService.getUserClient().entity.email +
+                        '</strong>.',
                         type: 'success',
                         placement: 'top',
                         show: true,

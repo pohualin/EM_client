@@ -1,4 +1,4 @@
-<div class="popover">
+<div class="popover popover-wide">
     <div class="arrow"></div>
     <h3 class="popover-title">User Credentials:
         <button type="button" class="btn btn-default btn-xs btn-close pull-right" data-ng-click="$hide()">
@@ -9,11 +9,16 @@
 
         <p>Please direct the user to <span data-title="{{url}}" data-placement="right" data-type="info" data-bs-tooltip><a href>{{urlDisplay|characters:35}}</a></span></p>
         <table border="0" cellpadding="0" cellspacing="0">
-            <tr>
+            <tr class="nowrap">
                 <td>User ID:</td>
-                <td><strong>{{login}}</strong></td>
+                <td data-ng-show="login.length > 10">
+                    <strong><span data-title="{{login}}" data-placement="right" data-type="info" data-bs-tooltip>{{login|characters:10}}</span></strong>
+                </td>
+                <td data-ng-hide="login.length > 10">
+                    <strong>{{login}}</strong>
+                </td>
             </tr>
-            <tr>
+            <tr class="nowrap">
                 <td>Temporary password:&nbsp;&nbsp;&nbsp;</td>
                 <td><strong>{{passwordChange.password}}</strong></td>
             </tr>
