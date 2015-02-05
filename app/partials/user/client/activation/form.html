@@ -8,7 +8,7 @@
                 <button class="btn btn-default" type="submit"
                         data-ng-show="selectedUserClient.entity.email && !selectedUserClient.entity.activated"
                         data-ng-click="sendActivationEmail()">
-                    <span>Save & Send User Setup Email</span>
+                    <span>Send User Setup Email</span>
                 </button>
                 <button class="btn btn-default" type="submit"
                         data-ng-show="selectedUserClient.entity.email && selectedUserClient.entity.activated"
@@ -19,9 +19,9 @@
                 <button class="btn btn-default" type="button"
                         data-ng-hide="selectedUserClient.entity.email"
                         data-ng-controller="UsersClientPasswordController"
-                        data-ng-click="generatePassword()">
+                        data-ng-click="generatePassword($event)">
                     <span
-                        data-ng-show="selectedUserClient.entity.neverLoggedIn">Save & Show User Credentials</span>
+                        data-ng-show="selectedUserClient.entity.neverLoggedIn">Show User Credentials</span>
                     <span data-ng-hide="selectedUserClient.entity.neverLoggedIn">Reset Password</span>
                 </button>
             </div>
