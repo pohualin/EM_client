@@ -11,8 +11,8 @@ angular.module('emmiManager')
             $scope.sendActivationEmail = function () {
                 ActivationService.sendActivationEmail(UsersClientService.getUserClient()).then(function () {
                     $alert({
-                        content: 'User saved successfully. A setup email has been sent to  <b>' + UsersClientService.getUserClient().entity.email +
-                        '</b>.',
+                        content: 'A setup email has been sent to <strong>' + UsersClientService.getUserClient().entity.email +
+                        '</strong>.',
                         type: 'success',
                         placement: 'top',
                         show: true,
