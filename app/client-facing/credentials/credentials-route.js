@@ -26,6 +26,14 @@ angular.module('emmiManager')
                         }]
                 }
             })
+            .when('/credentials/forgot', {
+                templateUrl: 'client-facing/credentials/forgot/forgot.html',
+                controller: 'CredentialsForgottenController',
+                title: 'Password Reset',
+                access: {
+                    authorizedRoles: '*'
+                }
+            })
             .when('/activate/:activationKey', {
                 templateUrl: 'client-facing/credentials/activation/activate.html',
                 controller: 'ActivateClientUserController',
