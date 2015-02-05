@@ -314,6 +314,7 @@ angular.module('emmiManager')
 
         return {
             create: function (uri) {
+                uri = uri || '/no_url_given/404';
                 return new UriTemplate(uri);
             }
         };
