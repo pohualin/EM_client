@@ -15,10 +15,10 @@
                                     <div class="row panel-title">
                                         <button type="button" class="btn-link" data-ng-hide="group.editMode" data-ng-click="startEditMode(group)">
                                             <span class="glyphicon sort-icon glyphicon-play glyphicon-small"></span>
-                                            {{ group.entity.name }}
+                                            {{ group.title }}
                                         </button>
                                         <div class="col-md-9" data-ng-show="group.editMode">
-                                            <input class="form-control" data-ng-model="group.entity.name"
+                                            <input class="form-control" data-ng-model="group.title"
                                                    data-focus-on="focus-{{group.entity.id}}"
                                                    maxlength="50"
                                                    required>
@@ -32,7 +32,7 @@
                                 </div>
                                 <div class="panel-collapse" data-ng-show="group.editMode">
                                     <div class="panel-body">
-                                        <div data-tags-input class="tags-input" data-ng-model="group.entity.tag" data-on-tag-added="onChange('tag added')" data-on-tag-removed="onChange('tag removed')" data-on-tag-edited="onChange('tag edited')" data-ng-click="$event.stopPropagation();" data-ng-paste="pasteTags($event, $index)" data-enable-editing-last-tag="true" data-add-on-space="false" data-replace-spaces-with-dashes="false" data-display-property="name"></div>
+                                        <div data-tags-input class="tags-input" data-ng-model="group.tags" data-on-tag-added="onChange('tag added')" data-on-tag-removed="onChange('tag removed')" data-on-tag-edited="onChange('tag edited')" data-ng-click="$event.stopPropagation();" data-ng-paste="pasteTags($event, $index)" data-enable-editing-last-tag="true" data-add-on-space="false" data-replace-spaces-with-dashes="false" data-display-property="text"></div>
                                         <hr/>
                                         <div class="pull-right">
                                             <button type="button" class="btn btn-link" data-ng-click="cancelEditMode(group)">
@@ -57,13 +57,13 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
-                                        <input class="form-control" data-ng-model="newTagGroup.name"
+                                        <input class="form-control" data-ng-model="newTagGroup.title"
                                                data-focus-on="focus-new-group" maxlength="50" required>
                                     </h4>
                                 </div>
                                 <div class="panel-collapse">
                                     <div class="panel-body">
-                                        <div data-tags-input class="tags-input" data-ng-model="newTagGroupTags" data-on-tag-added="onChange('tag added')" data-on-tag-removed="onChange('tag removed')" data-on-tag-edited="onChange('tag edited')" data-ng-click="$event.stopPropagation();" data-ng-paste="pasteTags($event, $index)" data-enable-editing-last-tag="true" data-add-on-space="false" data-replace-spaces-with-dashes="false" data-display-property="name"></div>
+                                        <div data-tags-input class="tags-input" data-ng-model="newTagGroupTags" data-on-tag-added="onChange('tag added')" data-on-tag-removed="onChange('tag removed')" data-on-tag-edited="onChange('tag edited')" data-ng-click="$event.stopPropagation();" data-ng-paste="pasteTags($event, $index)" data-enable-editing-last-tag="true" data-add-on-space="false" data-replace-spaces-with-dashes="false" data-display-property="text"></div>
                                         <hr/>
                                         <div class="pull-right">
                                             <button type="button" class="btn btn-link" data-ng-click="cancelNew()">cancel</button>
