@@ -11,10 +11,10 @@
         <table border="0" cellpadding="0" cellspacing="0">
             <tr class="nowrap">
                 <td>User ID:</td>
-                <td data-ng-show="login.length > 10">
-                    <strong><span data-title="{{login}}" data-placement="right" data-type="info" data-bs-tooltip>{{login|characters:10}}</span></strong>
+                <td data-ng-show="login.length > 19">
+                    <strong><span data-title="{{login}}" data-placement="top" data-type="info" data-bs-tooltip>{{login|characters:19}}</span></strong>
                 </td>
-                <td data-ng-hide="login.length > 10">
+                <td data-ng-hide="login.length > 19">
                     <strong>{{login}}</strong>
                 </td>
             </tr>
