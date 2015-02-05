@@ -35,10 +35,10 @@
                                         <div data-tags-input class="tags-input" data-ng-model="group.tags" data-on-tag-added="onChange('tag added')" data-on-tag-removed="onChange('tag removed')" data-on-tag-edited="onChange('tag edited')" data-ng-click="$event.stopPropagation();" data-ng-paste="pasteTags($event, $index)" data-enable-editing-last-tag="true" data-add-on-space="false" data-replace-spaces-with-dashes="false" data-display-property="text"></div>
                                         <hr/>
                                         <div class="pull-right">
-                                            <button type="button" class="btn btn-link" data-ng-click="cancelEditMode(group)">
+                                            <button type="button" class="btn btn-link" data-ng-click="cancelEditMode(group, true)">
                                                 cancel
                                             </button>
-                                            <button class="btn btn-default" data-ng-click="update(group)"
+                                            <button class="btn btn-default" data-ng-click="update(group, $index)"
                                                     data-ng-show="existingTagGroupForm_{{$index}}.$valid && group.changed">
                                                 Save
                                             </button>

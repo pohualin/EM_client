@@ -38,8 +38,10 @@ angular.module('emmiManager')
          *
          * @param tagGroup
          */
-        $scope.cancelEditMode = function (tagGroup) {
-            angular.extend(tagGroup, tagGroup.original);
+        $scope.cancelEditMode = function (tagGroup, restore) {
+            if (restore) {
+                angular.extend(tagGroup, tagGroup.original);
+            }
             tagGroup.editMode = false;
             tagGroup.watcher();
             delete tagGroup.original;
@@ -52,14 +54,16 @@ angular.module('emmiManager')
          *
          * @param tagGroup to be updated
          */
-        $scope.update = function (tagGroup) {
-            Tag.updateReferenceGroup(tagGroup);
+        $scope.update = function (tagGroup, groupIndex) {
+            Tag.updateReferenceGroup(tagGroup).then(function (editedGroup) {
+                $scope.cancelEditMode(tagGroup, false);
+            });
         };
 
         /**
          * Called when the save button is clicked on a new tag group
          *
-         * @param clientTeamRoleEntity to be saved
+         * @param tagGroup to be saved
          */
         $scope.saveNewGroup = function (tagGroup) {
             tagGroup.tags = $scope.newTagGroupTags;
@@ -81,7 +85,6 @@ angular.module('emmiManager')
          * Called when 'create new tag group' is clicked
          */
         $scope.createNewTagGroup = function () {
-            //$scope.newTagGroup = ManageUserTeamRolesService.newClientTeamRoleEntity();
             $scope.newTagGroup = {};
             focus('focus-new-group');
         };
