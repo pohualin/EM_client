@@ -21,7 +21,8 @@ angular.module('emmiManager', [
     'emmi-angular-multiselect',
     'truncate',
     'emmi.noDirtyCheck',
-    'unsavedChanges'
+    'unsavedChanges',
+    'ivh.treeview'
 ])
 
     .constant('USER_ROLES', {

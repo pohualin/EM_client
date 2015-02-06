@@ -89,9 +89,20 @@ angular.module('emmiManager')
                             angular.forEach(response.data, function (savedPermission) {
                                 // set 'active' on the template permission
                                 angular.forEach(clientRoleResource.entity.userClientPermissions, function (templatePerm) {
-                                    if (!templatePerm.active) {
-                                        templatePerm.active = templatePerm.name === savedPermission.name;
+                                    // if (!templatePerm.active) {
+                                    //     templatePerm.active = templatePerm.name === savedPermission.name;
+                                    // }
+                                	// Play Around
+                                    if (!templatePerm.selected) {
+                                        templatePerm.selected = templatePerm.name === savedPermission.name;
                                     }
+                                    
+                                    angular.forEach(templatePerm.children, function(child){
+                                        if(!child.selected){
+                                            child.selected = child.name === savedPermission.name;
+                                        }
+                                    });
+                                    // Play End
                                 });
                             });
                             clientRoleResource.original = angular.copy(clientRoleResource);
@@ -163,6 +174,25 @@ angular.module('emmiManager')
                         // load reference data
                         $http.get(UriTemplate.create(Client.getClient().link.rolesReferenceData).stringify()).then(function (response) {
                             referenceData = response.data;
+                            
+                            // Play around
+                            var permissions = [];
+                            angular.forEach(referenceData.permission, function(aPermission){
+                               if(aPermission.rank === 1 || aPermission.rank === 2){
+                                   aPermission.children = [];
+                                   permissions.push(aPermission);
+                               }
+                            });
+                            angular.forEach(referenceData.permission, function(aPermission){
+                                if(aPermission.rank === 3 || aPermission.rank === 5){
+                                    permissions[0].children.push(aPermission);
+                                } else if(aPermission.rank === 4 || aPermission.rank === 6){
+                                    permissions[1].children.push(aPermission);
+                                }
+                            });
+                            referenceData.permission = permissions;
+                            // Play around end
+                            
                             referenceData.roleLibrary = [];
                             // load library roles for reference data
                             $http.get(UriTemplate.create(referenceData.link.roles).stringify()).then(function load(roleResponse) {

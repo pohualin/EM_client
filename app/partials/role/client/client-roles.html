@@ -49,6 +49,9 @@
                         </div>
                         <div class="panel-collapse" data-bs-collapse-target>
                             <div class="panel-body">
+                                
+                                <div data-ivh-treeview="role.entity.userClientPermissions"></div>
+                            
                                 <div class="checkbox"
                                      data-ng-repeat="permission in role.entity.userClientPermissions  | orderBy:'rank'">
                                     <label for="{{role.entity.id}}_perm_{{permission.name}}">

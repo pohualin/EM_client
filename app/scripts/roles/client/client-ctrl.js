@@ -8,6 +8,18 @@ angular.module('emmiManager')
     .controller('ClientRoleAdminCtrl', ['$scope', 'ManageUserRolesService', '$filter', 'focus', '$q',
         function ($scope, ManageUserRolesService, $filter, focus, $q) {
 
+            $scope.bag = [{
+                label: 'Glasses',
+                value: 'glasses',
+                children: [{
+                  label: 'Top Hat',
+                  value: 'top_hat'
+                },{
+                  label: 'Curly Mustache',
+                  value: 'mustachio'
+                }]
+            }];
+            
             ManageUserRolesService.referenceData().then(function (referenceData) {
                 $scope.clientReferenceData = referenceData;
                 $scope.libraries = referenceData.roleLibrary;
@@ -173,5 +185,20 @@ angular.module('emmiManager')
             // start by loading the currently saved roles
             $scope.loadExisting();
         }
-    ])
+    ]).config(function(ivhTreeviewOptionsProvider) {
+        ivhTreeviewOptionsProvider.set({
+            idAttribute: 'name',
+            labelAttribute: 'name',
+            childrenAttribute: 'children',
+            selectedAttribute: 'selected',
+            useCheckboxes: true,
+            expandToDepth: 1,
+            indeterminateAttribute: '__ivhTreeviewIndeterminate',
+            defaultSelectedState: false,
+            validate: true,
+            twistieExpandedTpl: '',
+            twistieCollapsedTpl: '',
+            twistieLeafTpl: ''
+          });
+    });
 ;
