@@ -17,7 +17,7 @@
                     <div class="error-circle glyphicon glyphicon-exclamation-sign"
                          data-ng-show="userForm.firstName.$error.pattern && userFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                         data-title="Please enter a valid first name."></div>
+                         data-title="Please enter a valid first name"></div>
                     <input class="form-control" id="firstName" data-ng-model="userToBeEdit.firstName"
                            name="firstName"
                            type="text" maxlength="50" required data-auto-focus
@@ -37,7 +37,7 @@
                     <div class="error-circle glyphicon glyphicon-exclamation-sign"
                          data-ng-show="userForm.lastName.$error.pattern && userFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                         data-title="Please enter a valid last name."></div>
+                         data-title="Please enter a valid last name"></div>
                     <input class="form-control" id="lastName" data-ng-model="userToBeEdit.lastName"
                            name="lastName"
                            type="text" maxlength="50" required
@@ -56,11 +56,11 @@
                     <div class="error-circle glyphicon glyphicon-exclamation-sign"
                          data-ng-show="userForm.email.$error.pattern && userFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                         data-title="Please enter a valid email."></div>
+                         data-title="Please enter a valid email"></div>
                      <div class="error-circle glyphicon glyphicon-exclamation-sign"
                          data-ng-show="userForm.email.$error.unique && userFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                         data-title="This email is already in used."></div>
+                         data-title="This email is already in use"></div>
                     <input class="form-control" id="email" data-ng-model="userToBeEdit.email"
                            name="email" type="text" required
                            maxlength="255" data-ng-pattern="/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/"/>
