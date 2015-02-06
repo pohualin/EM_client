@@ -25,9 +25,10 @@ angular.module('emmiManager')
 	        /**
 	         * Called when Save button is clicked
 	         */
-    		$scope.save = function(isValid, event, addAnother){
+    		$scope.save = function(userForm, event, addAnother){
     			$scope.userFormSubmitted = true;
-    			if (isValid) {
+    			userForm.email.$setValidity('unique', true);
+    			if (userForm.$valid) {
                     UsersService.updateUser($scope.userToBeEdit).then(function(response){
                     	$scope.selectedUser = response.data;
                     	$scope.userToBeEdit = response.data;
@@ -44,6 +45,18 @@ angular.module('emmiManager')
                             duration: 5,
                             dismissable: true
                         });
+                    }, function (error) {
+                        userForm.email.$setValidity('unique', false);
+                        if (!$scope.errorAlert) {
+                            $scope.errorAlert = $alert({
+                                title: ' ',
+                                content: 'Please correct the below information.',
+                                container: '#message-container',
+                                type: 'danger',
+                                show: true,
+                                dismissable: false
+                            });
+                        }
                     });
                 } else {
                     if (!$scope.errorAlert) {
