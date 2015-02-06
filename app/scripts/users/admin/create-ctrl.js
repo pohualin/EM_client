@@ -20,9 +20,10 @@ angular.module('emmiManager')
             /**
              * Called when Save button is clicked
              */
-            $scope.save = function (isValid, event, addAnother) {
+            $scope.save = function (userForm, event, addAnother) {
                 $scope.userFormSubmitted = true;
-                if (isValid) {
+                userForm.email.$setValidity('unique', true);
+                if (userForm.$valid) {
                     UsersService.createUser($scope.userToBeEdit).then(function (response) {
                         // go to the view/edit page, if the save is successful
                         _paq.push(['trackEvent', 'Form Action', 'Create Emmi User', 'Save']);
@@ -41,17 +42,15 @@ angular.module('emmiManager')
                             dismissable: true
                         });
                     }, function (error) {
-                        if (error.status === 409) {
-                            // 409 is http conflict, meaning save was prevented due to conflicts with other users
-                            $scope.conflictingUsers = error.data.conflicts;
-                            $popover(angular.element(event.currentTarget), {
-                                title: '',
-                                placement: 'left',
-                                scope: $scope,
-                                trigger: 'manual',
-                                autoClose: true,
+                        userForm.email.$setValidity('unique', false);
+                        if (!$scope.errorAlert) {
+                            $scope.errorAlert = $alert({
+                                title: ' ',
+                                content: 'Please correct the below information.',
+                                container: '#message-container',
+                                type: 'danger',
                                 show: true,
-                                template: 'partials/user/create/user_already_exists_popover.tpl.html'
+                                dismissable: false
                             });
                         }
                     });
