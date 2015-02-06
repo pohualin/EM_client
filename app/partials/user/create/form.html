@@ -71,7 +71,7 @@
             <div class="col-md-4">
                 <div class="form-group"
                      data-ng-class="{ 'has-error' : userForm.role.$invalid && userFormSubmitted }">
-                    <label class="control-label" for="clientType">Role:</label>
+                    <label class="control-label" for="role">Role:</label>
                     <div  class="error-circle glyphicon glyphicon-exclamation-sign" data-ng-show="userForm.role.$invalid && userFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Please enter at least 1 permission"></div>
@@ -91,9 +91,9 @@
                         <input id="active" type="checkbox"
                                data-ng-model="userToBeEdit.active" data-no-dirty-check/>&nbsp;&nbsp;Active
                     </label>
-                </div>                
+                </div>
             </div>
-        </div> 
+        </div>
         <div class="row">
             <div class="col-md-12">
                 <hr>
@@ -106,11 +106,25 @@
                         <a class="btn btn-link"
                            href="#/users?{{currentRouteQueryString}}">cancel</a>
                         <button class="btn btn-default" type="button"
-                                data-ng-click="save(userForm, $event, true)">
+                                data-user-client="userToBeEdit"
+                                data-on-ok="save(userForm, true)"
+                                data-on-cancel="makeActive()"
+                                data-ng-model="userToBeEdit"
+                                data-new-status="userToBeEdit.active"
+                                data-is-currently-active="userForm.$valid && userToBeEdit.currentlyActive"
+                                data-placement="left"
+                                data-toggle-user-client-active>
                             <span>Save & Add Another User</span>
                         </button>
                         <button class="btn btn-primary" type="submit"
-                                data-ng-click="save(userForm, $event, false)">
+                                data-user-client="userToBeEdit"
+                                data-on-ok="save(userForm, false)"
+                                data-on-cancel="makeActive()"
+                                data-ng-model="userToBeEdit"
+                                data-new-status="userToBeEdit.active"
+                                data-is-currently-active="userForm.$valid && userToBeEdit.currentlyActive"
+                                data-placement="left"
+                                data-toggle-user-client-active>
                             <span>Save</span>
                         </button>
                     </div>

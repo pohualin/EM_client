@@ -2,6 +2,13 @@
 
 angular.module('emmiManager')
     .config(function ($routeProvider, USER_ROLES) {
+
+        var requiredResources = {
+            'account' : [ 'AuthSharedService', function(AuthSharedService) {
+                return AuthSharedService.currentUser();
+            } ]
+        };
+
         /**
          * Loads the users
          * Resolves into an object:
@@ -34,6 +41,7 @@ angular.module('emmiManager')
                 access: {
                     authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
                 },
+                resolve: requiredResources,
                 reloadOnSearch: false
             }).when('/users/new', {
                 templateUrl: 'partials/user/create/new.html',
@@ -41,6 +49,7 @@ angular.module('emmiManager')
                 access: {
                     authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
                 },
+                resolve: requiredResources,
                 reloadOnSearch: false
             }).when('/users/:userId', {
                 templateUrl: 'partials/user/create/editor.html',
@@ -56,6 +65,7 @@ angular.module('emmiManager')
                 templateUrl: 'partials/admin.html',
                 controller: 'MainCtrl',
                 title: 'Admin Functions',
+                resolve: requiredResources,
                 access: {
                     authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
                 }
@@ -63,6 +73,7 @@ angular.module('emmiManager')
             	templateUrl: 'partials/admin/tags/editor.html',
                 controller: 'MainCtrl',
                 title: 'Emmi Groups & Tags Library',
+                resolve: requiredResources,
                 access: {
                     authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
                 }
