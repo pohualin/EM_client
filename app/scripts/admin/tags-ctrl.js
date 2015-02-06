@@ -3,18 +3,23 @@
 angular.module('emmiManager')
     .controller('AdminTagsCtrl', function ($scope, $translate, $locale, tmhDynamicLocale, focus, Tag, $q) {
 
-        // load the groups for this client as well as the tag libraries
-        Tag.loadReferenceData().then(function (response) {
-            var tagLibraries = response;
+        /**
+         * Loads existing reference data for groups and tags
+         */
+        $scope.loadExisting = function () {
+            // load the groups for this client as well as the tag libraries
+            Tag.loadReferenceData().then(function (response) {
+                var tagLibraries = response;
 
-            angular.forEach(tagLibraries, function(group){
-                Tag.loadReferenceTags(group).then( function (response) {
-                    group.tags = response;
+                angular.forEach(tagLibraries, function(group){
+                    Tag.loadReferenceTags(group).then( function (response) {
+                        group.tags = response;
+                    });
                 });
-            });
 
-            $scope.tagGroups = tagLibraries;
-        });
+                $scope.tagGroups = tagLibraries;
+            });
+        };
 
         /**
          * Puts a group into a mode where the group name is editable
@@ -67,9 +72,9 @@ angular.module('emmiManager')
          */
         $scope.saveNewGroup = function (tagGroup) {
             tagGroup.tags = $scope.newTagGroupTags;
-            Tag.createReferenceGroup(tagGroup).then(function () {
+            Tag.createReferenceGroup(tagGroup).then(function (newGroup) {
                 delete $scope.newTagGroup;
-                //$scope.loadExisting();
+                $scope.loadExisting();
             });
         };
 
@@ -88,6 +93,9 @@ angular.module('emmiManager')
             $scope.newTagGroup = {};
             focus('focus-new-group');
         };
+
+        // start by loading the current tag libraries
+        $scope.loadExisting();
 
     })
 ;
