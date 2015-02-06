@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  * Manage Client Level users
  */
-    .controller('UsersClientMainCtrl', ['$scope', '$controller', 'Client', 'UsersClientService',
-        function ($scope, $controller, Client, UsersClientService) {
+    .controller('UsersClientMainCtrl', ['$scope', '$controller', 'Client', 'UsersClientService', '$alert',
+        function ($scope, $controller, Client, UsersClientService, $alert) {
 
             var contentProperty = 'usersClient';
 
@@ -50,7 +50,25 @@ angular.module('emmiManager')
              * @param userClientResource to be deactivated
              */
             $scope.toggleActivation = function (userClientResource) {
-                UsersClientService.toggleActivation(userClientResource);
+                UsersClientService.toggleActivation(userClientResource).then(function (){
+                    var message = 'User <strong>' + userClientResource.entity.login + '</strong>';
+                    // status has changed
+                    if (userClientResource.entity.active){
+                        // now activated
+                        message += ' is now active.';
+                    } else {
+                        // now deactivated
+                        message += ' has been deactivated.';
+                    }
+                    $alert({
+                        content: message,
+                        type: 'success',
+                        placement: 'top',
+                        show: true,
+                        duration: 5,
+                        dismissable: true
+                    });
+                });
             };
 
             /**

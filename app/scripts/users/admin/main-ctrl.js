@@ -5,16 +5,16 @@ angular.module('emmiManager')
 /**
  * Manage users
  */
-    .controller('UsersMainCtrl', ['$scope', '$controller', 'UsersService',
-        function ($scope, $controller, UsersService) {
+    .controller('UsersMainCtrl', ['$scope', '$controller', 'UsersService', '$alert',
+        function ($scope, $controller, UsersService, $alert) {
 
             /**
              * Set deactivationPopoverOpen to isOpen for the user
-             */    
+             */
             $scope.deactivationPopoverOpen = function (user, isOpen) {
                 UsersService.deactivatePopoverOpen(user, isOpen);
             };
-        
+
             /**
              * Called when fetching different pages
              */
@@ -64,7 +64,26 @@ angular.module('emmiManager')
              * @param userResource to be deactivated
              */
             $scope.toggleActivation = function (userResource) {
-                UsersService.toggleActivation(userResource);
+                UsersService.toggleActivation(userResource).then(function (response){
+                    var savedUser = response.data;
+                    var message = 'User <b>' + savedUser.login + '</b>';
+                    // status has changed
+                    if (savedUser.active){
+                        // now activated
+                        message += ' is now active.';
+                    } else {
+                        // now deactivated
+                        message += ' has been deactivated.';
+                    }
+                    $alert({
+                        content: message,
+                        type: 'success',
+                        placement: 'top',
+                        show: true,
+                        duration: 5,
+                        dismissable: true
+                    });
+                });
             };
 
             /**

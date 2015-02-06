@@ -43,6 +43,7 @@ angular.module('emmiManager')
                 $scope.userClientFormSubmitted = true;
                 if (form.$valid) {
                     var beforeSaveStatus = $scope.userClientEdit.currentlyActive;
+                    var formDirty = form.$dirty;
                     UsersClientService.update($scope.userClientEdit).then(
                         function success(response) {
                             var savedUserClient = response.data,
@@ -70,7 +71,7 @@ angular.module('emmiManager')
                                 });
                                 placement += ' second-line';
                             }
-                            if (form.$dirty) {
+                            if (formDirty) {
                                 $alert({
                                     content: 'User <b>' + savedUserClient.entity.login + '</b> has been successfully updated.',
                                     type: 'success',
