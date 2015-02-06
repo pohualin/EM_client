@@ -53,9 +53,16 @@ angular.module('emmiManager')
                     'userEditorResource': userEditorResources
                 }
             }).when('/admin', {
-            	templateUrl: 'partials/admin.html',
+                templateUrl: 'partials/admin.html',
                 controller: 'MainCtrl',
                 title: 'Admin Functions',
+                access: {
+                    authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
+                }
+            }).when('/admin/tags', {
+            	templateUrl: 'partials/admin/tags/editor.html',
+                controller: 'MainCtrl',
+                title: 'Emmi Groups & Tags Library',
                 access: {
                     authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
                 }

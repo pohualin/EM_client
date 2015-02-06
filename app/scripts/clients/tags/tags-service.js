@@ -94,6 +94,44 @@ angular.module('emmiManager')
                 });
                 return deferred.promise;
             },
+            createReferenceGroup: function (groupToSave) {
+                if (groupToSave) {
+                    angular.forEach(groupToSave.tags, function (t) {
+                        t.name = t.text;
+                    });
+                    var data = {
+                        referenceTags: groupToSave.tags,
+                        referenceGroup: {
+                            name: groupToSave.title
+                        }
+                    };
+                    return $http.post(
+                        UriTemplate.create(Session.link.refDataGroups).stringify(),
+                        data).then(function (response) {
+                            return response.data;
+                        });
+                }
+            },
+            updateReferenceGroup: function (groupToSave) {
+                if (groupToSave) {
+                    angular.forEach(groupToSave.tags, function (t) {
+                        //if (t.entity) { t.id = t.entity.id; }
+                        t.name = t.text;
+                    });
+                    var data = {
+                        referenceTags: groupToSave.tags,
+                        referenceGroup: {
+                            id: groupToSave.entity.id,
+                            name: groupToSave.title
+                        }
+                    };
+                    return $http.post(
+                        UriTemplate.create(Session.link.refDataGroups).stringify(),
+                        data).then(function (response) {
+                            return response.data;
+                        });
+                }
+            },
             checkForConflicts: function (clientResource) {
                 var deferred = $q.defer();
                 var groupSaveRequests = GroupSaveRequest.create(clientResource);
