@@ -57,6 +57,10 @@
                          data-ng-show="userForm.email.$error.pattern && userFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Please enter a valid email."></div>
+                     <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                         data-ng-show="userForm.email.$error.unique && userFormSubmitted"
+                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                         data-title="This email is already in used."></div>
                     <input class="form-control" id="email" data-ng-model="userToBeEdit.email"
                            name="email" type="text" required
                            maxlength="255" data-ng-pattern="/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/"/>
@@ -102,11 +106,11 @@
                         <a class="btn btn-link"
                            href="#/users?{{currentRouteQueryString}}">cancel</a>
                         <button class="btn btn-default" type="button"
-                                data-ng-click="save(userForm.$valid, $event, true)">
+                                data-ng-click="save(userForm, $event, true)">
                             <span>Save & Add Another User</span>
                         </button>
                         <button class="btn btn-primary" type="submit"
-                                data-ng-click="save(userForm.$valid, $event, false)">
+                                data-ng-click="save(userForm, $event, false)">
                             <span>Save</span>
                         </button>
                     </div>
