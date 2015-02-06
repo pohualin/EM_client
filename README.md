@@ -49,9 +49,10 @@ To run the server on port 80, you'll need:
     - My Apache configuration looks like this:
 
         Header unset Content-Security-Policy
-        Header add Content-Security-Policy "default-src 'none'; script-src 'self' *.emmisolutions.com; connect-src 'self'; img-src 'self' *.emmisolutions.com; style-src 'self' 'unsafe-inline' *.googleapis.com; font-src 'self' fonts.gstatic.com; frame-src 'self'"
+        Header add Content-Security-Policy "default-src 'none'; script-src 'self' *.emmisolutions.com; connect-src 'self'; img-src 'self' data: *.emmisolutions.com; style-src 'self' 'unsafe-inline' *.googleapis.com; font-src 'self' fonts.gstatic.com; frame-src 'self'"
+        # For IE 10+ browsers as they don't support the standard
         Header unset X-Content-Security-Policy
-        Header add X-Content-Security-Policy "default-src 'none'; script-src 'self' *.emmisolutions.com; connect-src 'self'; img-src 'self' *.emmisolutions.com; style-src 'self' 'unsafe-inline'; font-src 'self' fonts.gstatic.com; frame-src 'self'"
+        Header add X-Content-Security-Policy "default-src 'none'; script-src 'self' *.emmisolutions.com; connect-src 'self'; img-src 'self' data: *.emmisolutions.com; style-src 'self' 'unsafe-inline'; font-src 'self' fonts.gstatic.com; frame-src 'self'"
         Header set X-Content-Type-Options "nosniff"
         Header set X-XSS-Protection "1; mode=block"
         Header set X-Frame-Options "SAMEORIGIN"
