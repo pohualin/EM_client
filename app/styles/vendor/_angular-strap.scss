@@ -34,6 +34,14 @@
   }
 }
 
+.popover-wide {
+    min-width: 400px;
+}
+
+.popover-flex {
+    max-width: none;
+}
+
 .error-circle {
   font-size: 16px;
   color: #d91a21;
@@ -74,4 +82,9 @@
     overflow-x: auto;
     word-wrap: normal;
     white-space: pre;
+}
+
+.glyphicon-form-inline-right {
+    padding-top: .5em;
+    margin-left: 0;
 }

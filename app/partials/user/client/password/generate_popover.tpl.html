@@ -1,4 +1,4 @@
-<div class="popover">
+<div class="popover popover-flex">
     <div class="arrow"></div>
     <h3 class="popover-title">User Credentials:
         <button type="button" class="btn btn-default btn-xs btn-close pull-right" data-ng-click="$hide()">
@@ -7,14 +7,19 @@
     </h3>
     <div class="popover-content popover-text">
 
-        <p id="directions">Please direct the user to <span data-title="{{url}}" data-placement="right" data-type="info" data-bs-tooltip><a href>{{urlDisplay|characters:35}}</a></span></p>
+        <p>Please direct the user to <span data-title="{{url}}" data-placement="right" data-type="info" data-bs-tooltip><a href>{{urlDisplay}}</a></span></p>
         <table border="0" cellpadding="0" cellspacing="0">
-            <tr>
+            <tr class="nowrap">
                 <td>User ID:</td>
-                <td><strong>{{login}}</strong></td>
+                <!--<td data-ng-show="login.length > 23">-->
+                    <!--<strong><span data-title="{{login}}" data-placement="top" data-type="info" data-bs-tooltip>{{login|characters:23}}</span></strong>-->
+                <!--</td>-->
+                <td>
+                    <strong>{{login}}</strong>
+                </td>
             </tr>
-            <tr>
-                <td>Temporary password:&nbsp;&nbsp;&nbsp;</td>
+            <tr class="nowrap">
+                <td>Temp password:&nbsp;&nbsp;&nbsp;</td>
                 <td><strong>{{passwordChange.password}}</strong></td>
             </tr>
         </table>
