@@ -6,10 +6,8 @@ angular.module('emmiManager')
 		$controller('CommonPagination', {$scope: $scope});
 
         $scope.provider = ProviderCreate.newProvider();
-        
-        $scope.invalidRequest = false;
 
-        $scope.associateRequestSubmitted = false;
+        $scope.invalidRequest = false;
 
         $scope.noSearch = true;
 
@@ -33,7 +31,7 @@ angular.module('emmiManager')
                 $scope.allTeamLocations = TeamProviderService.buildMultiSelectData(response);
             });
 		};
-		
+
 		if($scope.teamResource){
 			$scope.refreshLocationsAndProviders();
 		}
@@ -108,6 +106,7 @@ angular.module('emmiManager')
         };
 
         $scope.addProviders = function () {
+            $scope.associateRequestSubmitted = false;
         	TeamLocation.getTeamLocations($scope.teamResource.link.teamLocations).then(function(response){
                 $scope.allTeamLocations = TeamProviderService.buildMultiSelectData(response);
             });
@@ -115,8 +114,8 @@ angular.module('emmiManager')
         	$scope.addProvidersModalOnScope =  $modal({
   			   scope: $scope,
   			   template: 'partials/team/provider/search.html', animation: 'none', backdropAnimation: 'emmi-fade', show: true, backdrop: 'static'});
-        	
-        	
+
+
         };
 
         $scope.hideaddprovidermodal = function () {
@@ -268,21 +267,30 @@ angular.module('emmiManager')
         	$scope.associateRequestSubmitted = true;
 
         	if ($scope.teamProviderTeamLocationSaveRequest.length > 0) {
+                $scope.invalidRequest = false;
         		angular.forEach($scope.teamProviderTeamLocationSaveRequest, function(req){
         			if ($scope.allTeamLocations.length > 0 && req.provider.selectedTeamLocations.length < 1) {
         				$scope.invalidRequest = true;
-        			} else if (req.provider.selectedTeamLocations.length !== $scope.allTeamLocations.length) {
-        				req.teamLocations = angular.copy(req.provider.selectedTeamLocations);
-        				$scope.invalidRequest = false;
         			}
         		});
         		if (!$scope.invalidRequest) {
+                    // copy the selected team locations when 'all' has not been chosen
+                    angular.forEach($scope.teamProviderTeamLocationSaveRequest, function(req){
+                        if (req.provider.selectedTeamLocations.length !== $scope.allTeamLocations.length) {
+                            // user didn't choose all team locations
+                            req.teamLocations = angular.copy(req.provider.selectedTeamLocations);
+                        } else {
+                            // user chose all, which is the same as not selecting any
+                            req.teamLocations = [];
+                        }
+                    });
+
 		        	ProviderSearch.updateProviderTeamAssociations($scope.teamProviderTeamLocationSaveRequest, $scope.teamResource).then(function (response) {
 		        		$scope.refreshLocationsAndProviders();
 		        		var message = $scope.teamProviderTeamLocationSaveRequest.length > 1 ? 'The selected providers have been successfully added.' : 'The provider <b>'+ $scope.teamProviderTeamLocationSaveRequest[0].provider.firstName + ' ' + $scope.teamProviderTeamLocationSaveRequest[0].provider.lastName +'</b> has been successfully added.';
-	
+
 	                    $scope.hideaddprovidermodal();
-	
+
 		        		if (addAnother) {
 	        				$scope.addProviders();
 		        		}
