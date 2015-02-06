@@ -17,7 +17,7 @@
                     <div class="error-circle glyphicon glyphicon-exclamation-sign"
                          data-ng-show="userForm.firstName.$error.pattern && userFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                         data-title="Please enter a valid first name."></div>
+                         data-title="Please enter a valid first name"></div>
                     <input class="form-control" id="firstName" data-ng-model="userToBeEdit.firstName"
                            name="firstName"
                            type="text" maxlength="50" required data-auto-focus
@@ -37,7 +37,7 @@
                     <div class="error-circle glyphicon glyphicon-exclamation-sign"
                          data-ng-show="userForm.lastName.$error.pattern && userFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                         data-title="Please enter a valid last name."></div>
+                         data-title="Please enter a valid last name"></div>
                     <input class="form-control" id="lastName" data-ng-model="userToBeEdit.lastName"
                            name="lastName"
                            type="text" maxlength="50" required
@@ -56,7 +56,11 @@
                     <div class="error-circle glyphicon glyphicon-exclamation-sign"
                          data-ng-show="userForm.email.$error.pattern && userFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                         data-title="Please enter a valid email."></div>
+                         data-title="Please enter a valid email"></div>
+                     <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                         data-ng-show="userForm.email.$error.unique && userFormSubmitted"
+                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                         data-title="This email is already in use"></div>
                     <input class="form-control" id="email" data-ng-model="userToBeEdit.email"
                            name="email" type="text" required
                            maxlength="255" data-ng-pattern="/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/"/>
@@ -67,7 +71,7 @@
             <div class="col-md-4">
                 <div class="form-group"
                      data-ng-class="{ 'has-error' : userForm.role.$invalid && userFormSubmitted }">
-                    <label class="control-label" for="clientType">Role:</label>
+                    <label class="control-label" for="role">Role:</label>
                     <div  class="error-circle glyphicon glyphicon-exclamation-sign" data-ng-show="userForm.role.$invalid && userFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Please enter at least 1 permission"></div>
@@ -87,9 +91,9 @@
                         <input id="active" type="checkbox"
                                data-ng-model="userToBeEdit.active" data-no-dirty-check/>&nbsp;&nbsp;Active
                     </label>
-                </div>                
+                </div>
             </div>
-        </div> 
+        </div>
         <div class="row">
             <div class="col-md-12">
                 <hr>
@@ -102,11 +106,25 @@
                         <a class="btn btn-link"
                            href="#/users?{{currentRouteQueryString}}">cancel</a>
                         <button class="btn btn-default" type="button"
-                                data-ng-click="save(userForm.$valid, $event, true)">
+                                data-user-client="userToBeEdit"
+                                data-on-ok="save(userForm, true)"
+                                data-on-cancel="makeActive()"
+                                data-ng-model="userToBeEdit"
+                                data-new-status="userToBeEdit.active"
+                                data-is-currently-active="userForm.$valid && userToBeEdit.currentlyActive"
+                                data-placement="left"
+                                data-toggle-user-client-active>
                             <span>Save & Add Another User</span>
                         </button>
                         <button class="btn btn-primary" type="submit"
-                                data-ng-click="save(userForm.$valid, $event, false)">
+                                data-user-client="userToBeEdit"
+                                data-on-ok="save(userForm, false)"
+                                data-on-cancel="makeActive()"
+                                data-ng-model="userToBeEdit"
+                                data-new-status="userToBeEdit.active"
+                                data-is-currently-active="userForm.$valid && userToBeEdit.currentlyActive"
+                                data-placement="left"
+                                data-toggle-user-client-active>
                             <span>Save</span>
                         </button>
                     </div>
