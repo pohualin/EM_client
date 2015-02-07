@@ -115,7 +115,7 @@ angular.module('emmiManager')
             updateReferenceGroup: function (groupToSave) {
                 if (groupToSave) {
                     angular.forEach(groupToSave.tags, function (t) {
-                        //if (t.entity) { t.id = t.entity.id; }
+                        if (t.entity) { t.id = t.entity.id; }
                         t.name = t.text;
                     });
                     var data = {
