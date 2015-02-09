@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  * Controller for Configuration main page
  */
-    .controller('ClientPasswordConfigurationMainController', ['$scope', '$controller', 'Client', 'ClientPasswordConfigurationsService',
-        function ($scope, $controller, Client, ClientPasswordConfigurationsService) {
+    .controller('ClientPasswordConfigurationMainController', ['$alert', '$scope', '$controller', 'Client', 'ClientPasswordConfigurationsService',
+        function ($alert, $scope, $controller, Client, ClientPasswordConfigurationsService) {
 
             /**
              * Cancel any changes
@@ -27,6 +27,14 @@ angular.module('emmiManager')
                         $scope.clientPasswordConfiguration = angular.copy($scope.originalClientPasswordConfiguration);
                         $scope.defaultPasswordConfiguration = response.entity.defaultPasswordConfiguration;
                         $scope.loading = false;
+                        $alert({
+                            content: '<b>' + $scope.client.name + '</b> has been successfully updated.',
+                            type: 'success',
+                            placement: 'top',
+                            show: true,
+                            duration: 5,
+                            dismissable: true
+                        });
                     });
                 });
             };
@@ -42,6 +50,14 @@ angular.module('emmiManager')
                         $scope.clientPasswordConfiguration = angular.copy($scope.originalClientPasswordConfiguration);
                         $scope.defaultPasswordConfiguration = response.entity.defaultPasswordConfiguration;
                         $scope.clientPasswordConfigurationFormSubmitted = false;
+                        $alert({
+                            content: '<b>' + $scope.client.name + '</b> has been successfully updated.',
+                            type: 'success',
+                            placement: 'top',
+                            show: true,
+                            duration: 5,
+                            dismissable: true
+                        });
                     });
                 }
             };
