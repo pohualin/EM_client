@@ -23,8 +23,9 @@ angular.module('emmiManager')
 
         $scope.url = teamClientResource.clientResource.link.findByNormalizedName;
 
-        $scope.cancel = function () {
+        $scope.cancel = function (teamForm) {
             $scope.hideError();
+            teamForm.$setPristine();
             $scope.editMode = false;
             $scope.formSubmitted = false;
             delete $scope.teamToSave;
@@ -40,9 +41,11 @@ angular.module('emmiManager')
             _paq.push(['trackEvent', 'Form Action', 'Team Edit', 'Edit']);
         };
 
-        $scope.save = function (isValid) {
+        $scope.save = function (teamForm) {
+            var isValid = teamForm.$valid;
             $scope.formSubmitted = true;
             if (isValid && $scope.teamToSave.salesForceAccount) {
+                teamForm.$setPristine();
                 EditTeam.save($scope.teamToSave, teamClientResource.teamResource.link.self).then(function (team) {
                     if (!team.data.entity.description) { team.data.entity.description = ''; } // EM-517: TODO: this should be fixed with a larger refactor to that angular.extend is not necessary
                     angular.extend($scope.team, team.data.entity);
