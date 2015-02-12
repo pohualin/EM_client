@@ -6,9 +6,9 @@
         <div class="col-md-6">
             <div class="pull-right">
                 <h2></h2>
-                <a class="btn btn-link" data-ng-click="cancel()">cancel</a>
+                <a class="btn btn-link" data-ng-click="cancel(metadataForm)">cancel</a>
                 |
-                <a class="btn btn-link" type="button" data-on-ok="save(metadataForm.$valid)"
+                <a class="btn btn-link" type="button" data-on-ok="save(metadataForm)"
                    data-save-click data-client-to-edit="clientToEdit" data-checking-for-dupes="checkingForDupes"
                    data-ng-disabled="metadataForm.clientName.$error.unique">
                     <span>save edits</span>

@@ -31,13 +31,13 @@ angular.module('emmiManager')
             angular.forEach(tagLibraries, function (tagLibrary) {
                 libraryMap[tagLibrary.title] = tagLibrary;
             });
-            
+
             angular.forEach(tagLibraries, function(group){
             	Tag.loadReferenceTags(group).then( function (response) {
             		group.tags = response;
             	});
             });
-            
+
             $scope.tagLibraries = tagLibraries;
             $scope.tagLibraryMap = libraryMap;
 
@@ -81,6 +81,7 @@ angular.module('emmiManager')
         $scope.saveTags = function (isValid) {
             $scope.formSubmitted = true;
             if (isValid) {
+                $scope.clientForm.$setPristine();
                 $scope.saving = true;
                 Tag.insertGroups(Client.getClient()).then(function () {
                     // eventually we'll have a save response that we need to deal with here
