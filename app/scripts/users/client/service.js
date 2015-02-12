@@ -136,17 +136,22 @@ angular.module('emmiManager')
                  * get UserClient by userClientId and set it to selectedUserClient
                  */
                 setUserClient: function (userClientId) {
+                    var deferred = $q.defer();
                     if (userClientId === null) {
                         // Reset selectedUserClient
                         selectedUserClient = null;
+                        deferred.resolve(selectedUserClient);
                     } else {
                         // Call server to get UserClient by userClientId
-                        return $http.get(UriTemplate.create(Session.link.userClientById).stringify({id: userClientId})).then(function (userClient) {
+                        $http.get(UriTemplate.create(Session.link.userClientById).stringify({id: userClientId})).then(function (userClient) {
                             selectedUserClient = userClient.data;
                             updateResourceForUi(selectedUserClient);
-                            return selectedUserClient;
+                            deferred.resolve(selectedUserClient);
+                        }, function error() {
+                            deferred.reject();
                         });
                     }
+                    return deferred.promise;
                 },
 
                 /**

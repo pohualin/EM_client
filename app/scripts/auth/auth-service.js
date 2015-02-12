@@ -7,10 +7,22 @@ angular.module('emmiManager')
             return {
                 login: function (creds, loginLink) {
                     var self = this;
-                    var data = 'j_username=' + creds.username + '&j_password=' + creds.password + '&remember-me=' + creds.rememberMe + '&submit=Login';
-                    $http.post(loginLink, data, {
+                    $http.post(loginLink, {
+                        'j_username': creds.username,
+                        'j_password': creds.password,
+                        'remember-me': creds.rememberMe
+                    }, {
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        transformRequest: function (obj) {
+                            var str = [];
+                            for (var p in obj) {
+                                if (obj.hasOwnProperty(p)) {
+                                    str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
+                                }
+                            }
+                            return str.join('&');
                         },
                         ignoreAuthModule: 'ignoreAuthModule'
                     }).success(function () {

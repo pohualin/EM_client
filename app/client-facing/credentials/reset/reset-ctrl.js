@@ -20,7 +20,7 @@ angular.module('emmiManager')
             };
 
             /**
-             * Completes the activation
+             * Completes the reset
              */
             $scope.save = function (formValid) {
                 $scope.changePasswordFormSubmitted = true;
@@ -35,11 +35,11 @@ angular.module('emmiManager')
                                 duration: 5,
                                 dismissable: true
                             });
-
-                        }
-                    ).finally(function () {
                             $location.path('/').replace();
-                        });
+                        }, function error() {
+                            $location.path('/credentials/reset/failure').replace();
+                        }
+                    );
                 }
             };
         }
