@@ -60,7 +60,13 @@ angular.module('emmiManager')
              */
             $scope.hasAPermissionChecked = function (clientRoleEntity) {
                 var ret = false;
-                var activePermissions = $filter('filter')(clientRoleEntity.userClientPermissions, {active: true}, true);
+                var perms = [];
+                angular.forEach(clientRoleEntity.userClientPermissions, function(group){
+                    angular.forEach(group.children, function(child){
+                        perms.push(child);
+                    });
+                });
+                var activePermissions = $filter('filter')(perms, {selected: true}, true);
                 if (activePermissions && activePermissions.length > 0) {
                     ret = true;
                 }
@@ -188,7 +194,7 @@ angular.module('emmiManager')
     ]).config(function(ivhTreeviewOptionsProvider) {
         ivhTreeviewOptionsProvider.set({
             idAttribute: 'name',
-            labelAttribute: 'name',
+            labelAttribute: 'displayName',
             childrenAttribute: 'children',
             selectedAttribute: 'selected',
             useCheckboxes: true,
@@ -201,4 +207,4 @@ angular.module('emmiManager')
             twistieLeafTpl: ''
           });
     });
-;
+
