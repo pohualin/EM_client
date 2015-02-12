@@ -8,18 +8,6 @@ angular.module('emmiManager')
     .controller('ClientRoleAdminCtrl', ['$scope', 'ManageUserRolesService', '$filter', 'focus', '$q',
         function ($scope, ManageUserRolesService, $filter, focus, $q) {
 
-            $scope.bag = [{
-                label: 'Glasses',
-                value: 'glasses',
-                children: [{
-                  label: 'Top Hat',
-                  value: 'top_hat'
-                },{
-                  label: 'Curly Mustache',
-                  value: 'mustachio'
-                }]
-            }];
-            
             ManageUserRolesService.referenceData().then(function (referenceData) {
                 $scope.clientReferenceData = referenceData;
                 $scope.libraries = referenceData.roleLibrary;
@@ -62,9 +50,13 @@ angular.module('emmiManager')
                 var ret = false;
                 var perms = [];
                 angular.forEach(clientRoleEntity.userClientPermissions, function(group){
-                    angular.forEach(group.children, function(child){
-                        perms.push(child);
-                    });
+                    if (!group.children){
+                        perms.push(group);
+                    } else {
+                        angular.forEach(group.children, function(child){
+                            perms.push(child);
+                        });
+                    }
                 });
                 var activePermissions = $filter('filter')(perms, {selected: true}, true);
                 if (activePermissions && activePermissions.length > 0) {

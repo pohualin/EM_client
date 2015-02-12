@@ -89,24 +89,33 @@ angular.module('emmiManager')
                             angular.forEach(response.data, function (savedPermission) {
                                 // set 'active' on the template permission
                                 angular.forEach(clientRoleResource.entity.userClientPermissions, function (templatePerm) {
-                                    angular.forEach(templatePerm.children, function(child){
-                                        if(!child.selected){
-                                            child.selected = child.name === savedPermission.name;
+                                    if(!templatePerm.children){
+                                        if(!templatePerm.selected){
+                                            templatePerm.selected = templatePerm.name === savedPermission.name;
                                         }
-                                    });
+                                    } else {
+                                        angular.forEach(templatePerm.children, function(child){
+                                            if(!child.selected){
+                                                child.selected = child.name === savedPermission.name;
+                                            }
+                                        });
+                                    }
                                 });
                             });
                             
                             angular.forEach(clientRoleResource.entity.userClientPermissions, function (group) {
-                                var keepGoing = true;
+                                var selectedChildren = 0;
                                 angular.forEach(group.children, function(child){
-                                    if(keepGoing){
-                                        if(child.selected){
-                                            group.selected = true;
-                                            keepGoing = false;
-                                        }
+                                    if(child.selected){
+                                        selectedChildren++;
                                     }
                                 });
+                                // Half check or check on group checkbox
+                                if(selectedChildren !== 0 && group.children.length !== selectedChildren){
+                                    group.__ivhTreeviewIndeterminate = true;
+                                } else if(selectedChildren !== 0 && group.children.length === selectedChildren) {
+                                    group.selected = true;
+                                }
                             });
                             
                             clientRoleResource.original = angular.copy(clientRoleResource);
@@ -122,9 +131,13 @@ angular.module('emmiManager')
                 saveNewClientRole: function (clientRoleEntity) {
                     var perms = [];
                     angular.forEach(clientRoleEntity.userClientPermissions, function(group){
-                        angular.forEach(group.children, function(child){
-                            perms.push(child);
-                        });
+                        if (!group.children){
+                            perms.push(group);
+                        } else {
+                            angular.forEach(group.children, function(child){
+                                perms.push(child);
+                            });
+                        } 
                     });
                     var active = $filter('filter')(perms, {selected: true}, true);
                     return $http.post(UriTemplate.create(Client.getClient().link.roles).stringify(), {
@@ -145,9 +158,13 @@ angular.module('emmiManager')
                 saveExistingClientRole: function (clientRoleResource) {
                     var perms = [];
                     angular.forEach(clientRoleResource.entity.userClientPermissions, function(group){
-                        angular.forEach(group.children, function(child){
-                            perms.push(child);
-                        });
+                        if (!group.children){
+                            perms.push(group);
+                        } else {
+                            angular.forEach(group.children, function(child){
+                                perms.push(child);
+                            });
+                        }
                     });
                     
                     var role = clientRoleResource.entity,
@@ -328,6 +345,9 @@ angular.module('emmiManager')
                     $q.all(promises).then(function(){
                         var perm = [];
                         angular.forEach(map, function(group){
+                            if(group.name === 'PERM_CLIENT_SUPER_USER'){
+                                delete group.children;
+                            }
                             perm.push(group);
                         });
                         deferred.resolve(perm);
