@@ -45,7 +45,7 @@ angular.module('emmiManager')
                             });
                             $location.path('/').replace();
                         }, function error() {
-                            $scope.reset();
+                            $location.path('/credentials/expired/failure').replace();
                         });
                 }
             };
