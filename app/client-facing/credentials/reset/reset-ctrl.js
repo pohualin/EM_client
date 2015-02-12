@@ -12,6 +12,13 @@ angular.module('emmiManager')
             $scope.changePasswordFormSubmitted = false;
 
             /**
+             * Load the password policy for display
+             */
+            ResetClientUserPasswordService.loadPolicy(resetToken).then(function (response){
+                $scope.policy = response.data;
+            });
+
+            /**
              * Compares the two password fields then sets a 'same' validity if the two passwords are identical
              */
             $scope.passwordChanged = function () {
