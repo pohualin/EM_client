@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  * Activation Controller
  */
-    .controller('ActivationController', ['$scope', 'ActivationService', 'UsersClientService', '$alert',
-        function ($scope, ActivationService, UsersClientService, $alert) {
+    .controller('ActivationController', ['$scope', 'ActivationService', 'UsersClientService', '$alert', 'moment',
+        function ($scope, ActivationService, UsersClientService, $alert, moment) {
 
             /**
              * Determines if the activation expiration date is before now
