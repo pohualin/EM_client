@@ -68,7 +68,7 @@
 }
 
 .alert.top {
-    top: 0px;
+    top: 0;
     &.second-line {
         top: 65px;
     }
@@ -87,4 +87,12 @@
 .glyphicon-form-inline-right {
     padding-top: .5em;
     margin-left: 0;
+}
+
+.green {
+    color: green;
+}
+
+.red {
+    color: #d91a21;
 }
