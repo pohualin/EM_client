@@ -257,15 +257,17 @@ angular.module('unsavedChanges', ['resettable'])
     }
 ])
 
-.directive('unsavedWarningClear', ['unsavedWarningSharedService',
-    function(unsavedWarningSharedService) {
+.directive('unsavedWarningClear', ['unsavedWarningSharedService', '$timeout',
+    function(unsavedWarningSharedService, $timeout) {
         return {
             scope: {},
             require: '^form',
             priority: 10,
             link: function(scope, element, attrs, formCtrl) {
                 element.bind('click', function(event) {
-                    formCtrl.$setPristine();
+                    $timeout(function (){
+                        formCtrl.$setPristine();
+                    });
                 });
 
             }
@@ -273,11 +275,12 @@ angular.module('unsavedChanges', ['resettable'])
     }
 ])
 
-.directive('unsavedWarningForm', ['unsavedWarningSharedService', '$rootScope',
-    function(unsavedWarningSharedService, $rootScope) {
+.directive('unsavedWarningForm', ['unsavedWarningSharedService', '$timeout',
+    function(unsavedWarningSharedService, $timeout) {
         return {
             scope: {},
             require: '^form',
+            priority: 10,
             link: function(scope, formElement, attrs, formCtrl) {
 
                 // @todo refactor, temp fix for issue #22
@@ -301,7 +304,10 @@ angular.module('unsavedChanges', ['resettable'])
                 // in addition to the ability to bind to a seperate button which clears warning
                 formElement.bind('submit', function(event) {
                     if (formCtrl.$valid) {
-                        formCtrl.$setPristine();
+                        $timeout(function (){
+                            formCtrl.$setPristine();
+                        });
+
                     }
                 });
 
@@ -318,7 +324,9 @@ angular.module('unsavedChanges', ['resettable'])
                     }
 
                     // sets for back to valid and pristine states
-                    formCtrl.$setPristine();
+                    $timeout(function (){
+                        formCtrl.$setPristine();
+                    });
                 });
 
                 // @todo check destroy on clear button too?

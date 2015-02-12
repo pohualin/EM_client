@@ -26,6 +26,14 @@ angular.module('emmiManager')
                         }]
                 }
             })
+            .when('/credentials/forgot', {
+                templateUrl: 'client-facing/credentials/forgot/forgot.html',
+                controller: 'CredentialsForgottenController',
+                title: 'Password Reset',
+                access: {
+                    authorizedRoles: '*'
+                }
+            })
             .when('/activate/:activationKey', {
                 templateUrl: 'client-facing/credentials/activation/activate.html',
                 controller: 'ActivateClientUserController',
@@ -62,6 +70,27 @@ angular.module('emmiManager')
                         }
                         return deferred.promise;
                     }]
+                }
+            })
+            .when('/credentials/activation/failure', {
+                templateUrl: 'client-facing/credentials/activation/activation_failure.html',
+                title: 'Please Contact Support',
+                access: {
+                    authorizedRoles: '*'
+                }
+            })
+            .when('/credentials/expired/failure', {
+                templateUrl: 'client-facing/credentials/expired/expired_failure.html',
+                title: 'Please Contact Support',
+                access: {
+                    authorizedRoles: '*'
+                }
+            })
+            .when('/credentials/reset/failure', {
+                templateUrl: 'client-facing/credentials/reset/reset_failure.html',
+                title: 'Please Contact Support',
+                access: {
+                    authorizedRoles: '*'
                 }
             })
     })

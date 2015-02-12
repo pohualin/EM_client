@@ -24,8 +24,8 @@
                                        data-ng-model="emailRestrictConfiguration.entity.emailEnding"
                                        name="emailEnding"
                                        type="text"
-                                       data-ng-pattern="/[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/"
-                                       placeholder="domain.com"
+                                       data-ng-pattern="/^[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/"
+                                       placeholder="domain.com (subdomains are allowed)"
                                        required data-auto-focus>
                             </div>
                         </div>
@@ -34,7 +34,7 @@
                         <div class="col-md-12">
                             <div class="form-group"
                                  data-ng-class="{ 'has-error' : emailRestrictConfigurationForm.description.$invalid && emailRestrictConfigurationFormSubmitted }">
-                                <label class="control-label" for="description">Description :</label>
+                                <label class="control-label" for="description">Description:</label>
                                 <input class="form-control" id="passwordLength" 
                                        data-ng-model="emailRestrictConfiguration.entity.description"
                                        name="description"

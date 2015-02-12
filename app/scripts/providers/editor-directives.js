@@ -33,7 +33,7 @@ angular.module('emmiManager')
                         }
                     } else {
                         $timeout(function () {
-                            scope.saveProvider(scope.providerForm.$valid);
+                            scope.saveProvider(scope.providerForm);
                         });
                     }
                 });

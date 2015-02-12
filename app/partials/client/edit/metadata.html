@@ -2,7 +2,7 @@
     <div id="alerts-container" data-ng-show="metadataForm.$invalid || !clientToEdit.salesForceAccount"></div>
     <div id="remove-container"></div>
     <div class="row" data-ng-hide="editMode" data-ng-include="'partials/client/edit/client_view.html'"></div>
-    <form name="metadataForm" class="form" novalidate>
+    <form name="metadataForm" class="form" novalidate unsaved-warning-form>
         <div class="row" data-ng-show="editMode" data-ng-include="'partials/client/edit/client_edit.html'"></div>
     </form>
 </div>

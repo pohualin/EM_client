@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  * Controller for IpRestrictConfiguration
  */
-.controller('IpRestrictConfigurationMainController', ['$scope', '$controller', 'IpRestrictConfigurationsService',
-    function ($scope, $controller, IpRestrictConfigurationsService) {
+.controller('IpRestrictConfigurationMainController', ['$alert', '$scope', '$controller', 'IpRestrictConfigurationsService',
+    function ($alert, $scope, $controller, IpRestrictConfigurationsService) {
         var contentProperty = 'ipRestrictConfigurations';
     
         /**
@@ -33,6 +33,14 @@ angular.module('emmiManager')
          */
         $scope.remove = function(ipRestrictToRemove){
             IpRestrictConfigurationsService.remove(ipRestrictToRemove).then(function(response){
+                $alert({
+                    content: '<b>' + $scope.client.name + '</b> has been successfully updated.',
+                    type: 'success',
+                    placement: 'top',
+                    show: true,
+                    duration: 1,
+                    dismissable: true
+                });
                 getIpRestrict();
             });
         };
