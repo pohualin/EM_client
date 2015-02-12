@@ -93,5 +93,6 @@ angular.module('emmiManager')
                     authorizedRoles: '*'
                 }
             })
+        ;
     })
 ;
