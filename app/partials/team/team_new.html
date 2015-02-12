@@ -13,13 +13,13 @@
             <div id="alerts-container" data-ng-show="teamForm.$invalid || !teamToSave.salesForceAccount"></div>
             <div id="remove-container"></div>
             <h2 data-translate="team_edit_page.information.title">Team Information</h2>
-            <form name="teamForm" class="form" novalidate>
+            <form name="teamForm" class="form" novalidate unsaved-warning-form>
                 <div data-ng-include="'partials/team/team_form.html'"></div>
             </form>
             <div class="pull-right">
                 <button class="btn btn-link" data-ng-click="cancel()" data-translate="team_edit_page.cancel_button" href data-cancel-click-team-edit analytics-on analytics-category="Form Action" analytics-event="Team Create" analytics-label="Cancel">cancel</button>
                 <button class="btn btn-primary" type="button"
-                        data-on-ok="save(teamForm.$valid)" data-team-entity="teamToSave"
+                        data-on-ok="save(teamForm)" data-team-entity="teamToSave"
                         data-placement="top"
                         data-ng-disabled="teamForm.teamName.$error.unique"
                         data-team-edit-save>

@@ -18,10 +18,10 @@
                     <div id="alerts-container" data-ng-show="teamForm.$invalid || !teamToSave.salesForceAccount"></div>
 
                     <div class="pull-right">
-                        <a class="btn btn-link" data-ng-click="cancel()">cancel</a>
+                        <a class="btn btn-link" data-ng-click="cancel(teamForm)">cancel</a>
                         |
                         <a class="btn btn-link" type="button"
-                            data-on-ok="save(teamForm.$valid)" data-team-entity="teamToSave"
+                            data-on-ok="save(teamForm)" data-team-entity="teamToSave"
                             data-placement="bottom"
                             data-ng-disabled="teamForm.teamName.$error.unique"
                             data-team-edit-save>
@@ -29,7 +29,7 @@
                         </a>
                     </div>
                     <h2 data-translate="team_edit_page.information.title">Team Information</h2>
-                    <form name="teamForm" class="form" novalidate>
+                    <form name="teamForm" class="form" novalidate unsaved-warning-form>
                         <div data-ng-include="'partials/team/team_form.html'"></div>
                     </form>
                 </div>
