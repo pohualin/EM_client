@@ -35,11 +35,11 @@ angular.module('emmiManager')
                                 duration: 5,
                                 dismissable: true
                             });
-
-                        }
-                    ).finally(function () {
                             $location.path('/').replace();
-                        });
+                        }, function error() {
+                            $location.path('/credentials/activation/failure').replace();
+                        }
+                    );
                 }
             };
         }

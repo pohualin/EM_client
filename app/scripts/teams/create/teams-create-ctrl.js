@@ -21,9 +21,11 @@ angular.module('emmiManager')
 
         $scope.teamToSave.client = clientResource.entity;
         $scope.url = clientResource.link.findByNormalizedName;
-        $scope.save = function (isValid) {
+        $scope.save = function (teamForm) {
+            var isValid = teamForm.$valid;
             $scope.formSubmitted = true;
             if (isValid && $scope.teamToSave.salesForceAccount) {
+                teamForm.$setPristine();
                 CreateTeam.insertTeams(clientResource, $scope.teamToSave).then(function (team) {
                     ViewTeam.viewTeam(team.data.entity);
                 });
