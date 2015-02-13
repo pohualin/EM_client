@@ -48,7 +48,7 @@ angular.module('emmiManager')
              */
             $scope.hasAPermissionChecked = function (clientRoleEntity) {
                 var ret = false;
-                var activePermissions = $filter('filter')(clientRoleEntity.userClientPermissions, {active: true}, true);
+                var activePermissions = ManageUserRolesService.selectedPermissions(clientRoleEntity.userClientPermissions);
                 if (activePermissions && activePermissions.length > 0) {
                     ret = true;
                 }
@@ -173,5 +173,20 @@ angular.module('emmiManager')
             // start by loading the currently saved roles
             $scope.loadExisting();
         }
-    ])
-;
+    ]).config(function(ivhTreeviewOptionsProvider) {
+        ivhTreeviewOptionsProvider.set({
+            idAttribute: 'name',
+            labelAttribute: 'displayName',
+            childrenAttribute: 'children',
+            selectedAttribute: 'selected',
+            useCheckboxes: true,
+            expandToDepth: 1,
+            indeterminateAttribute: '__ivhTreeviewIndeterminate',
+            defaultSelectedState: false,
+            validate: true,
+            twistieExpandedTpl: '',
+            twistieCollapsedTpl: '',
+            twistieLeafTpl: ''
+          });
+    });
+
