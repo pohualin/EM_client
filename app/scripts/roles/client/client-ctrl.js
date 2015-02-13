@@ -48,17 +48,7 @@ angular.module('emmiManager')
              */
             $scope.hasAPermissionChecked = function (clientRoleEntity) {
                 var ret = false;
-                var perms = [];
-                angular.forEach(clientRoleEntity.userClientPermissions, function(group){
-                    if (!group.children){
-                        perms.push(group);
-                    } else {
-                        angular.forEach(group.children, function(child){
-                            perms.push(child);
-                        });
-                    }
-                });
-                var activePermissions = $filter('filter')(perms, {selected: true}, true);
+                var activePermissions = ManageUserRolesService.selectedPermissions(clientRoleEntity.userClientPermissions);
                 if (activePermissions && activePermissions.length > 0) {
                     ret = true;
                 }

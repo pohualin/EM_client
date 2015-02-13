@@ -129,17 +129,7 @@ angular.module('emmiManager')
                  * @returns a promise that resolves into the saved role
                  */
                 saveNewClientRole: function (clientRoleEntity) {
-                    var perms = [];
-                    angular.forEach(clientRoleEntity.userClientPermissions, function(group){
-                        if (!group.children){
-                            perms.push(group);
-                        } else {
-                            angular.forEach(group.children, function(child){
-                                perms.push(child);
-                            });
-                        } 
-                    });
-                    var active = $filter('filter')(perms, {selected: true}, true);
+                    var active = this.selectedPermissions(clientRoleEntity.userClientPermissions);
                     return $http.post(UriTemplate.create(Client.getClient().link.roles).stringify(), {
                         name: clientRoleEntity.name,
                         userClientPermissions: active
@@ -156,19 +146,8 @@ angular.module('emmiManager')
                  * @returns a promise that resolves to the passed in clientRoleResource
                  */
                 saveExistingClientRole: function (clientRoleResource) {
-                    var perms = [];
-                    angular.forEach(clientRoleResource.entity.userClientPermissions, function(group){
-                        if (!group.children){
-                            perms.push(group);
-                        } else {
-                            angular.forEach(group.children, function(child){
-                                perms.push(child);
-                            });
-                        }
-                    });
-                    
                     var role = clientRoleResource.entity,
-                        active = $filter('filter')(perms, {selected: true}, true);
+                        active = this.selectedPermissions(clientRoleResource.entity.userClientPermissions);
                     return $http.put(UriTemplate.create(clientRoleResource.link.self).stringify(), {
                         id: role.id,
                         version: role.version,
@@ -307,6 +286,10 @@ angular.module('emmiManager')
                         library.checked = false;
                     });
                 },
+                /**
+                 * This method will compose permission tree from an array of permissions with group
+                 * It will translate permission name and sort the return array by group rank.
+                 */
                 composePermissionArray: function(permissions){
                     var deferred = $q.defer();
                     var promises = [];
@@ -345,15 +328,33 @@ angular.module('emmiManager')
                     $q.all(promises).then(function(){
                         var perm = [];
                         angular.forEach(map, function(group){
-                            if(group.name === 'PERM_CLIENT_SUPER_USER'){
-                                delete group.children;
+                            // Promote the only child to group
+                            if(group.children.length === 1){
+                                perm.push(group.children[0]);
+                            } else if(group.children.length > 1) {
+                                perm.push(group);
                             }
-                            perm.push(group);
                         });
                         deferred.resolve(perm);
                     });
                     
                     return deferred.promise;
+                },
+                /**
+                 * Collect all selected permissions
+                 */
+                selectedPermissions: function(userClientPermissions){
+                    var perms = [];
+                    angular.forEach(userClientPermissions, function(group){
+                        if (!group.children){
+                            perms.push(group);
+                        } else {
+                            angular.forEach(group.children, function(child){
+                                perms.push(child);
+                            });
+                        } 
+                    });
+                    return $filter('filter')(perms, {selected: true}, true);
                 }
             };
         }])
