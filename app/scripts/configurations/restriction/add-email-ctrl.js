@@ -37,11 +37,11 @@ angular.module('emmiManager')
                         $scope.$hide();
                     }
                     $alert({
-                        content: '<b>' + $scope.client.name + '</b> has been successfully updated.',
+                        content: '<b>' + $scope.client.name + '</b> has been updated successfully.',
                         type: 'success',
                         placement: 'top',
                         show: true,
-                        duration: 1,
+                        duration: 5,
                         dismissable: true
                     });
                 });

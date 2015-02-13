@@ -34,11 +34,11 @@ angular.module('emmiManager')
         $scope.remove = function(ipRestrictToRemove){
             IpRestrictConfigurationsService.remove(ipRestrictToRemove).then(function(response){
                 $alert({
-                    content: '<b>' + $scope.client.name + '</b> has been successfully updated.',
+                    content: '<b>' + $scope.client.name + '</b> has been updated successfully.',
                     type: 'success',
                     placement: 'top',
                     show: true,
-                    duration: 1,
+                    duration: 5,
                     dismissable: true
                 });
                 getIpRestrict();

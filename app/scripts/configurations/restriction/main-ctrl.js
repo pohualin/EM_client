@@ -16,7 +16,7 @@ angular.module('emmiManager')
                 $scope.originalClientRestrictConfiguration = response;
                 $scope.clientRestrictConfiguration = angular.copy($scope.originalClientRestrictConfiguration);
                 $alert({
-                    content: '<b>' + $scope.client.name + '</b> has been successfully updated.',
+                    content: '<b>' + $scope.client.name + '</b> has been updated successfully.',
                     type: 'success',
                     placement: 'top',
                     show: true,
