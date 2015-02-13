@@ -173,7 +173,7 @@ angular.module('emmiManager')
             // start by loading the currently saved roles
             $scope.loadExisting();
         }
-    ]).config(function(ivhTreeviewOptionsProvider) {
+    ]).config(['ivhTreeviewOptionsProvider', function(ivhTreeviewOptionsProvider) {
         ivhTreeviewOptionsProvider.set({
             idAttribute: 'name',
             labelAttribute: 'displayName',
@@ -188,5 +188,5 @@ angular.module('emmiManager')
             twistieCollapsedTpl: '',
             twistieLeafTpl: ''
           });
-    });
+    }]);
 
