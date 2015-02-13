@@ -14,11 +14,21 @@ angular.module('emmiManager')
                     authorizedRoles: [USER_ROLES.all]
                 },
                 resolve: {
-                    'credentials': ['$rootScope', '$q',
+                    credentials: ['$rootScope', '$q',
                         function ($rootScope, $q) {
                             var deferred = $q.defer();
                             if ($rootScope.expiredCredentials) {
-                                deferred.resolve($rootScope.expiredCredentials)
+                                deferred.resolve($rootScope.expiredCredentials);
+                            } else {
+                                deferred.reject();
+                            }
+                            return deferred.promise;
+                        }],
+                    client: ['$rootScope', '$q',
+                        function ($rootScope, $q) {
+                            var deferred = $q.defer();
+                            if ($rootScope.expiredClient) {
+                                deferred.resolve($rootScope.expiredClient);
                             } else {
                                 deferred.reject();
                             }
@@ -42,7 +52,7 @@ angular.module('emmiManager')
                     authorizedRoles: [USER_ROLES.all]
                 },
                 resolve: {
-                    'activationCode': ['$route', '$q', function ($route, $q) {
+                    activationCode: ['$route', '$q', function ($route, $q) {
                         var deferred = $q.defer();
                         if ($route.current.params.activationKey) {
                             deferred.resolve($route.current.params.activationKey);
@@ -61,7 +71,7 @@ angular.module('emmiManager')
                     authorizedRoles: [USER_ROLES.all]
                 },
                 resolve: {
-                    'resetToken': ['$route', '$q', function ($route, $q) {
+                    resetToken: ['$route', '$q', function ($route, $q) {
                         var deferred = $q.defer();
                         if ($route.current.params.resetToken) {
                             deferred.resolve($route.current.params.resetToken);
