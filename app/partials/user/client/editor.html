@@ -10,7 +10,7 @@
         </div>
     </div>
 
-    <form name="userClientForm" class="form" novalidate unsaved-warning-form>
+    <form name="userClientForm" class="form" novalidate data-unsaved-warning-form>
         <div data-ng-switch="editMode" data-ng-controller="UserClientMetaDataController">
             <div class="row" data-ng-switch-default>
                 <div data-ng-include="'partials/user/client/metadata/view.html'"></div>
@@ -20,17 +20,18 @@
             </div>
         </div>
     </form>
-    <!--
-        only show the activate and reset choices when the selected user client has
-        least one role (either client or team)
-     -->
-    <div class="row"
-         data-ng-show="selectedUserClient && (clientRoles || (teamRoles | teamSetOnRole))"
-         data-ng-include="'partials/user/client/activation/form.html'">
-    </div>
+
     <hr data-ng-show="selectedUserClient"/>
     <div data-ng-show="selectedUserClient">
         <div class="row" data-ng-include="'partials/user/client/userclientrole/client-role.html'"></div>
         <div class="row" data-ng-include="'partials/user/client/userclientteamrole/client-team-role.html'"></div>
     </div>
+
+    <!--
+        only show the activate and reset choices when the selected user client has
+        least one role (either client or team)
+    -->
+    <div data-ng-show="selectedUserClient && (clientRoles || (teamRoles | teamSetOnRole))"
+         class="row" data-ng-include="'partials/user/client/activation/form.html'"></div>
+
 </div>
