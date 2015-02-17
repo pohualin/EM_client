@@ -28,7 +28,7 @@ angular.module('emmiManager')
                         $scope.defaultPasswordConfiguration = response.entity.defaultPasswordConfiguration;
                         $scope.loading = false;
                         $alert({
-                            content: '<b>' + $scope.client.name + '</b> has been successfully updated.',
+                            content: '<b>' + $scope.client.name + '</b> has been updated successfully.',
                             type: 'success',
                             placement: 'top',
                             show: true,
@@ -51,7 +51,7 @@ angular.module('emmiManager')
                         $scope.defaultPasswordConfiguration = response.entity.defaultPasswordConfiguration;
                         $scope.clientPasswordConfigurationFormSubmitted = false;
                         $alert({
-                            content: '<b>' + $scope.client.name + '</b> has been successfully updated.',
+                            content: '<b>' + $scope.client.name + '</b> has been updated successfully.',
                             type: 'success',
                             placement: 'top',
                             show: true,
