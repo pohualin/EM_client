@@ -79,7 +79,7 @@ angular.module('emmiManager')
         };
 
         /**
-         * Called when 'cancel' is clicked on the create new tag group panel
+         * Called when 'cancel' is clicked on the Add new group panel
          */
         $scope.cancelNew = function () {
             delete $scope.newTagGroup;
@@ -87,7 +87,7 @@ angular.module('emmiManager')
         };
 
         /**
-         * Called when 'create new tag group' is clicked
+         * Called when 'Add new group' is clicked
          */
         $scope.createNewTagGroup = function () {
             $scope.newTagGroup = {};
