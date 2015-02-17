@@ -74,6 +74,7 @@ angular.module('emmiManager')
             tagGroup.tags = $scope.newTagGroupTags;
             Tag.createReferenceGroup(tagGroup).then(function (newGroup) {
                 delete $scope.newTagGroup;
+                delete $scope.newTagGroupTags;
                 $scope.loadExisting();
             });
         };
@@ -91,6 +92,7 @@ angular.module('emmiManager')
          */
         $scope.createNewTagGroup = function () {
             $scope.newTagGroup = {};
+            $scope.newTagGroupTags = [];
             focus('focus-new-group');
         };
 
