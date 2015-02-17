@@ -36,6 +36,14 @@ angular.module('emmiManager')
                     if(!addAnother){
                         $scope.$hide();
                     }
+                    $alert({
+                        content: '<b>' + $scope.client.name + '</b> has been updated successfully.',
+                        type: 'success',
+                        placement: 'top',
+                        show: true,
+                        duration: 5,
+                        dismissable: true
+                    });
                 });
             } else {
                 $scope.showErrorBanner();

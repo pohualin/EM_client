@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  * Controller for ClientRestrictConfiguration main page
  */
-.controller('ClientRestrictConfigurationMainController', ['$scope', '$controller', 'Client', 'ClientRestrictConfigurationsService',
-    function ($scope, $controller, Client, ClientRestrictConfigurationsService) {
+.controller('ClientRestrictConfigurationMainController', ['$scope', '$alert', '$controller', 'Client', 'ClientRestrictConfigurationsService',
+    function ($scope, $alert, $controller, Client, ClientRestrictConfigurationsService) {
 
         /**
          * Save restrict configuration for the client
@@ -15,6 +15,14 @@ angular.module('emmiManager')
             ClientRestrictConfigurationsService.saveOrUpdate($scope.clientRestrictConfiguration).then(function(response){
                 $scope.originalClientRestrictConfiguration = response;
                 $scope.clientRestrictConfiguration = angular.copy($scope.originalClientRestrictConfiguration);
+                $alert({
+                    content: '<b>' + $scope.client.name + '</b> has been updated successfully.',
+                    type: 'success',
+                    placement: 'top',
+                    show: true,
+                    duration: 5,
+                    dismissable: true
+                });
             });
         };
         
