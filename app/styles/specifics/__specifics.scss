@@ -38,6 +38,18 @@
     background: rgba(0, 0, 0, 0.5);
 }
 
+.modal-confirm-exit {
+    z-index: 1080;
+}
+
+.modal-confirm-exit + .modal-backdrop {
+    z-index: 1070;
+}
+
+.modal-confirm-exit .modal-dialog {
+    max-width: 400px;
+}
+
 .btn-today {
   color: #000000;
   background-color: transparent;
@@ -93,7 +105,9 @@ th.sort {
     }
 }
 
-
+TR.nowrap TD, TH {
+    white-space: nowrap;
+}
 
 .table-striped > tbody > tr.highlight > td, .highlight {
   background-color: yellow;

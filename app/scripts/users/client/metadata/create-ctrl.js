@@ -20,6 +20,7 @@ angular.module('emmiManager')
             $scope.save = function (isValid, event, addAnother) {
                 $scope.userClientFormSubmitted = true;
                 if (isValid) {
+                    $scope.userClientForm.$setPristine();
                     UsersClientService.createUserClient($scope.client, $scope.userClientEdit).then(
                         function success(response) {
                             var savedUserClientResource = response.data;
@@ -47,13 +48,6 @@ angular.module('emmiManager')
                 } else {
                     $scope.formValidationError();
                 }
-            };
-
-            /**
-             * Called if the user confirms they want to navigate away from the page when clicking the clink link-back
-             */
-            $scope.confirmExit = function () {
-                $location.path('/clients/' + $scope.client.entity.id);
             };
 
         }

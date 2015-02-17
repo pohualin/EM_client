@@ -35,6 +35,16 @@ angular.module('emmiManager')
                         .success(function (response) {
                             return response;
                         });
+                },
+
+                /**
+                 * Loads the password policy for the client
+                 */
+                loadPolicy: function (client) {
+                    return $http.get(UriTemplate.create(client.link.passwordPolicy).stringify())
+                        .success(function (response) {
+                            return response.data;
+                        });
                 }
             };
         }

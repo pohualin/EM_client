@@ -4,8 +4,8 @@ angular.module('emmiManager')
 /**
  * Service for activation.
  */
-    .service('ActivationService', ['$http', 'UriTemplate', 'UsersClientService',
-        function ($http, UriTemplate, UsersClientService) {
+    .service('ActivationService', ['$http', 'UriTemplate', 'UsersClientService', '$q',
+        function ($http, UriTemplate, UsersClientService, $q) {
             return {
 
                 /**
@@ -15,12 +15,41 @@ angular.module('emmiManager')
                  * @returns the promise
                  */
                 sendActivationEmail: function (userClient) {
-                    return $http.get(UriTemplate.create(userClient.link.sendActivationEmail).stringify())
+                    var deferred = $q.defer();
+                    $http.get(UriTemplate.create(userClient.link.activate).stringify())
                         .success(function (response) {
-                            UsersClientService.setUserClient(userClient.entity.id);
-                            return response;
+                            UsersClientService.setUserClient(userClient.entity.id).then(function reloaded() {
+                                deferred.resolve(response);
+                            }, function error() {
+                                deferred.reject();
+                            });
+                        }).error(function error() {
+                            deferred.reject();
                         });
+                    return deferred.promise;
+                },
+
+                /**
+                 * Expires an activation email
+                 *
+                 * @param userClient on which to expire
+                 * @returns {*}
+                 */
+                expireActivation: function (userClient) {
+                    var deferred = $q.defer();
+                    $http.delete(UriTemplate.create(userClient.link.activate).stringify())
+                        .success(function (response) {
+                            UsersClientService.setUserClient(userClient.entity.id).then(function reloaded() {
+                                deferred.resolve(response);
+                            }, function error() {
+                                deferred.reject();
+                            });
+                        }).error(function error() {
+                            deferred.reject();
+                        });
+                    return deferred.promise;
                 }
+
             };
         }
     ])

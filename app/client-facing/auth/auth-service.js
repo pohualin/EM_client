@@ -1,16 +1,28 @@
 'use strict';
 
 angular.module('emmiManager')
-    .factory('AuthSharedService', ['$rootScope', '$http', 'authService', 'Session', 'API', '$q', '$location',
-        function ($rootScope, $http, authService, Session, API, $q, $location) {
+    .factory('AuthSharedService', ['$rootScope', '$http', 'authService', 'Session', 'API', '$q', '$location', 'arrays',
+        function ($rootScope, $http, authService, Session, API, $q, $location, arrays) {
 
             return {
                 login: function (creds, loginLink) {
                     var self = this;
-                    var data = 'j_username=' + creds.username + '&j_password=' + creds.password + '&remember-me=' + creds.rememberMe + '&submit=Login';
-                    $http.post(loginLink, data, {
+                    $http.post(loginLink, {
+                        'j_username': creds.username,
+                        'j_password': creds.password,
+                        'remember-me': creds.rememberMe
+                    }, {
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        transformRequest: function (obj) {
+                            var str = [];
+                            for (var p in obj) {
+                                if (obj.hasOwnProperty(p)) {
+                                    str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
+                                }
+                            }
+                            return str.join('&');
                         },
                         ignoreAuthModule: 'ignoreAuthModule'
                     }).success(function () {
@@ -18,8 +30,13 @@ angular.module('emmiManager')
                             authService.loginConfirmed(currentUser);
                         });
                     }).error(function (error) {
-                        if (error.indexOf("CredentialsExpiredException") != -1){
-                            $rootScope.$broadcast('event:auth-credentialsExpired', {credentials: creds});
+                        if (angular.isObject(error)){
+                            // only possible object being returned is a client object
+                            error.link = arrays.convertToObject('rel', 'href', error.link);
+                            $rootScope.$broadcast('event:auth-credentialsExpired', {
+                                credentials: creds,
+                                client: error
+                            });
                         } else {
                             $rootScope.authenticationError = true;
                         }

@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  * Controller for EmailRestrictConfiguration
  */
-.controller('EmailRestrictConfigurationMainController', ['$scope', '$controller', 'EmailRestrictConfigurationsService',
-    function ($scope, $controller, EmailRestrictConfigurationsService) {
+.controller('EmailRestrictConfigurationMainController', ['$alert', '$scope', '$controller', 'EmailRestrictConfigurationsService',
+    function ($alert, $scope, $controller, EmailRestrictConfigurationsService) {
         var contentProperty = 'emailRestrictConfigurations';
     
         /**
@@ -33,6 +33,14 @@ angular.module('emmiManager')
          */
         $scope.remove = function(emailRestrictToRemove){
             EmailRestrictConfigurationsService.remove(emailRestrictToRemove).then(function(response){
+                $alert({
+                    content: '<b>' + $scope.client.name + '</b> has been updated successfully.',
+                    type: 'success',
+                    placement: 'top',
+                    show: true,
+                    duration: 5,
+                    dismissable: true
+                });
                 getEmailRestrict();
             });
         };

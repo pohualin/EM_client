@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  * Change password controller
  */
-    .controller('UsersClientPasswordController', ['$scope', 'UsersClientService', 'UsersClientPasswordService', '$alert',
-        function ($scope, UsersClientService, UsersClientPasswordService, $alert) {
+    .controller('UsersClientPasswordController', ['$scope', 'UsersClientService', 'UsersClientPasswordService', '$alert', '$popover', 'API', 'moment',
+        function ($scope, UsersClientService, UsersClientPasswordService, $alert, $popover, API, moment) {
 
             /**
              * Set the component up in its initial state.
@@ -25,26 +25,77 @@ angular.module('emmiManager')
             };
 
             /**
+             * Called when the x button is clicked in the popover
+             */
+            $scope.closePopover = function () {
+                $scope.passwordNotification.$promise.then($scope.passwordNotification.destroy);
+                delete $scope.passwordNotification;
+            };
+
+            /**
+             * checks if the password reset expiration is before now
+             * @returns {*}
+             */
+            $scope.inThePast = function () {
+                return moment($scope.selectedUserClient.entity.passwordResetExpirationDateTime + 'Z').isBefore();
+            };
+
+            /**
              * Generates a password for a user and saves it.
              */
-            $scope.generatePassword = function () {
+            $scope.generatePassword = function ($event) {
                 $scope.passwordChange.password = UsersClientPasswordService.generatePassword();
+
                 UsersClientPasswordService.changePassword(UsersClientService.getUserClient(), $scope.passwordChange)
                     .then(function success() {
                         if ($scope.passwordNotification) {
                             $scope.passwordNotification.hide();
                         }
-                        $scope.passwordNotification = $alert({
-                            content: 'Please direct the user to www.emmimanager.com with the user ID: <strong>' +
-                            UsersClientService.getUserClient().entity.login + '</strong> ' +
-                            'temporary password: <strong>' + $scope.passwordChange.password + '</strong>',
-                            type: 'success',
-                            show: true,
-                            container: '#generated-password',
-                            dismissable: true
+                        $scope.metadataChanged();
+                        $scope.login = UsersClientService.getUserClient().entity.login;
+                        $scope.url = API.clientAppEntryUrl;
+                        var idx = $scope.url.indexOf('://') + 3;
+                        $scope.urlDisplay = idx > 2 ? $scope.url.substring(idx) : $scope.url;
+
+                        $scope.passwordNotification = $popover(angular.element($event.currentTarget), {
+                            scope: $scope,
+                            placement: 'right',
+                            trigger: 'manual',
+                            template: 'partials/user/client/password/generate_popover.tpl.html',
+                            show: true
                         });
+
                     });
             };
+
+            /**
+             * Expire the password reset token
+             */
+            $scope.expireNow = function () {
+                UsersClientPasswordService.expireReset(UsersClientService.getUserClient())
+                    .then(function () {
+                        $scope.metadataChanged();
+                    });
+            };
+
+            /**
+             * Generates a password for a user and saves it.
+             */
+            $scope.passwordReset = function () {
+                UsersClientPasswordService.sendReset(UsersClientService.getUserClient()).then(function () {
+                    $scope.metadataChanged();
+                    $alert({
+                        content: 'A password reset email has been sent to <strong>' + UsersClientService.getUserClient().entity.email +
+                        '</strong>.',
+                        type: 'success',
+                        placement: 'top',
+                        show: true,
+                        duration: 5,
+                        dismissable: true
+                    });
+                });
+            };
+
 
             /**
              * Saves a password change when the form is valid

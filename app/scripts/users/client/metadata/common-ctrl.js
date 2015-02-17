@@ -69,36 +69,4 @@ angular.module('emmiManager')
 
         }])
 
-    .directive('confirmExit', ['$popover', '$location', function ($popover, $location) {
-        return {
-            restrict: 'EA',
-            scope: {
-                'ok': '&onOk',
-                'form': '='
-            },
-            link: function (scope, element) {
-                element.on('click', function (e) {
-                    e.preventDefault();
-                    if (scope.form.$pristine) {
-                        // if form has not been modified
-                        scope.$apply(function () {
-                            scope.ok();
-                        });
-                    } else {
-                        // show popover
-                        scope.exitPopup = $popover(element, {
-                            placement: 'bottom',
-                            container: 'body',
-                            scope: scope,
-                            trigger: 'manual',
-                            show: true,
-                            autoClose: true,
-                            contentTemplate: 'partials/common/cancel.tpl.html'
-                        });
-                    }
-                });
-            }
-        };
-    }])
-
 ;

@@ -5,17 +5,9 @@ angular.module('emmiManager')
 /**
  * Controller for ClientRestrictConfiguration main page
  */
-.controller('ClientRestrictConfigurationMainController', ['$scope', '$controller', 'Client', 'ClientRestrictConfigurationsService',
-    function ($scope, $controller, Client, ClientRestrictConfigurationsService) {
+.controller('ClientRestrictConfigurationMainController', ['$alert', '$scope', '$controller', 'Client', 'ClientRestrictConfigurationsService',
+    function ($alert, $scope, $controller, Client, ClientRestrictConfigurationsService) {
 
-        /**
-         * Cancel any changes
-         */
-        $scope.cancel = function(){
-            $scope.clientRestrictConfigurationForm = false;
-            $scope.clientRestrictConfiguration = angular.copy($scope.originalClientRestrictConfiguration);
-        };
-    
         /**
          * Save restrict configuration for the client
          */
@@ -23,21 +15,17 @@ angular.module('emmiManager')
             ClientRestrictConfigurationsService.saveOrUpdate($scope.clientRestrictConfiguration).then(function(response){
                 $scope.originalClientRestrictConfiguration = response;
                 $scope.clientRestrictConfiguration = angular.copy($scope.originalClientRestrictConfiguration);
+                $alert({
+                    content: '<b>' + $scope.client.name + '</b> has been updated successfully.',
+                    type: 'success',
+                    placement: 'top',
+                    show: true,
+                    duration: 5,
+                    dismissable: true
+                });
             });
         };
         
-        /**
-         * Show/hide cancel and save buttons
-         */
-        $scope.showButtons = function() {
-            if (!$scope.originalClientRestrictConfiguration || !$scope.clientRestrictConfiguration) {
-                return false;
-            }
-            return !angular.equals(
-                            $scope.originalClientRestrictConfiguration.entity,
-                            $scope.clientRestrictConfiguration.entity);
-        };
-
         /**
          * init method called when page is loading
          */

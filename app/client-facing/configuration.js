@@ -146,6 +146,7 @@ angular.module('emmiManager', [
 
         $rootScope.$on('event:auth-credentialsExpired', function (event, rejection) {
             $rootScope.expiredCredentials = rejection.credentials;
+            $rootScope.expiredClient = rejection.client;
             $location.path('/credentials/expired').replace();
         });
 

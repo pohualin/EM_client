@@ -47,10 +47,10 @@ angular.module('emmiManager')
                             return response;
                         });
                 },
-                
+
                 /**
                  * Set deactivationPopoverOpen to isOpen for the user
-                 */ 
+                 */
                 deactivatePopoverOpen: function (user, isOpen) {
                     user.deactivationPopoverOpen = isOpen;
                 },
@@ -59,6 +59,7 @@ angular.module('emmiManager')
                     return $http.put(UriTemplate.create(Session.link.users).stringify(), this.userAssembler(userToBeEdit))
                         .success(function (response) {
                         	selectedUser = response;
+                            selectedUser.currentlyActive = selectedUser.active;
                             return response;
                         });
                 },
@@ -69,11 +70,11 @@ angular.module('emmiManager')
                 toggleActivation: function (user) {
                     var external = this;
                     user.active = !user.active;
-                    this.setUser(user.id).then(function(response){
+                    return this.setUser(user.id).then(function(response){
                         user.role = {};
                         user.role.entity = response.roles[0];
                         user.version = response.version;
-                        external.updateUser(user);
+                        return external.updateUser(user);
                     });
                 },
 
@@ -115,6 +116,7 @@ angular.module('emmiManager')
                         // Call server to get User by userId
                         return $http.get(UriTemplate.create(Session.link.userById).stringify({id: userId})).then(function (user) {
                             selectedUser = user.data;
+                            selectedUser.currentlyActive = selectedUser.active;
                             return selectedUser;
                         });
                     }
@@ -142,9 +144,9 @@ angular.module('emmiManager')
                 getDefaultRole: function(roles){
                 	var roleToDefault = {};
                 	angular.forEach(roles, function (role) {
-                		if(role.entity.defaultRole){                			
+                		if(role.entity.defaultRole){
                 			roleToDefault = role.entity;
-                		}                		
+                		}
                     });
                 	return roleToDefault;
                 }

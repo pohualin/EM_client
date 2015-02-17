@@ -5,8 +5,9 @@ angular.module('emmiManager').controller(
     function($scope, $location, $alert, Client, $controller, providerResource, Tag, $q,
         focus, ProviderService) {
 
-        $scope.cancel = function() {
+        $scope.cancel = function(providerForm) {
             $scope.hideError();
+            providerForm.$setPristine();
             $scope.edit();
             _paq.push(['trackEvent', 'Form Action', 'Provider Edit', 'Cancel']);
         };
@@ -22,13 +23,15 @@ angular.module('emmiManager').controller(
             _paq.push(['trackEvent', 'Form Action', 'Provider Edit', 'Edit']);
         };
 
-        $scope.saveProvider = function(isValid) {
+        $scope.saveProvider = function(providerForm) {
+            var isValid = providerForm.$valid;
             $scope.providerFormSubmitted = true;
             if (isValid) {
+                providerForm.$setPristine();
                 ProviderService.updateProvider($scope.providerToEdit).then(function(response) {
                     angular.copy(response.data, $scope.providerResource);
                     angular.copy(response.data.entity, $scope.provider);
-                    $scope.cancel();
+                    $scope.cancel(providerForm);
                 });
                 _paq.push(['trackEvent', 'Form Action', 'Provider Edit', 'Save']);
             } else {

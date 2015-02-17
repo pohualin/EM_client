@@ -20,7 +20,9 @@ angular.module('emmiManager', [
     'angularMoment',
     'emmi-angular-multiselect',
     'truncate',
-    'emmi.noDirtyCheck'
+    'emmi.noDirtyCheck',
+    'unsavedChanges',
+    'ivh.treeview'
 ])
 
     .constant('USER_ROLES', {
@@ -47,7 +49,7 @@ angular.module('emmiManager', [
         INACTIVE_TEAMS:'i',
         UNTAGGED_TEAMS:'ut'
     })
-    .config(function ($httpProvider, $translateProvider, tmhDynamicLocaleProvider, HateoasInterceptorProvider, $datepickerProvider, API) {
+    .config(function ($httpProvider, $translateProvider, tmhDynamicLocaleProvider, HateoasInterceptorProvider, $datepickerProvider, API, unsavedWarningsConfigProvider) {
 
         // Initialize angular-translate
         $translateProvider.useUrlLoader(API.messages);
@@ -76,6 +78,10 @@ angular.module('emmiManager', [
             modelDateFormat: 'yyyy-MM-dd',
             dateType: 'string'
         });
+
+        unsavedWarningsConfigProvider.logEnabled = false;
+        unsavedWarningsConfigProvider.routeEvent = ['$locationChangeStart'];
+
     })
 
     .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, arrays, $document) {
