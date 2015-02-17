@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  * Controller for IpRestrictConfiguration
  */
-.controller('IpRestrictConfigurationMainController', ['$scope', '$alert', '$controller', 'IpRestrictConfigurationsService',
-    function ($scope, $alert, $controller, IpRestrictConfigurationsService) {
+.controller('IpRestrictConfigurationMainController', ['$alert', '$scope', '$controller', 'IpRestrictConfigurationsService',
+    function ($alert, $scope, $controller, IpRestrictConfigurationsService) {
         var contentProperty = 'ipRestrictConfigurations';
     
         /**

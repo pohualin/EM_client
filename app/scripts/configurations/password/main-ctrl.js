@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  * Controller for Configuration main page
  */
-    .controller('ClientPasswordConfigurationMainController', ['$scope', '$alert', '$controller', 'Client', 'ClientPasswordConfigurationsService',
-        function ($scope, $alert, $controller, Client, ClientPasswordConfigurationsService) {
+    .controller('ClientPasswordConfigurationMainController', ['$alert', '$scope', '$controller', 'Client', 'ClientPasswordConfigurationsService',
+        function ($alert, $scope, $controller, Client, ClientPasswordConfigurationsService) {
 
             /**
              * Cancel any changes
@@ -28,7 +28,7 @@ angular.module('emmiManager')
                         $scope.defaultPasswordConfiguration = response.entity.defaultPasswordConfiguration;
                         $scope.loading = false;
                         $alert({
-                            content: '<b>' + $scope.client.name + '</b> has been updated successfully.',
+                            content: '<b>' + $scope.client.name + '</b> has been successfully updated.',
                             type: 'success',
                             placement: 'top',
                             show: true,
@@ -51,7 +51,7 @@ angular.module('emmiManager')
                         $scope.defaultPasswordConfiguration = response.entity.defaultPasswordConfiguration;
                         $scope.clientPasswordConfigurationFormSubmitted = false;
                         $alert({
-                            content: '<b>' + $scope.client.name + '</b> has been updated successfully.',
+                            content: '<b>' + $scope.client.name + '</b> has been successfully updated.',
                             type: 'success',
                             placement: 'top',
                             show: true,

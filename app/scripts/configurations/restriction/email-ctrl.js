@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  * Controller for EmailRestrictConfiguration
  */
-.controller('EmailRestrictConfigurationMainController', ['$scope', '$alert', '$controller', 'EmailRestrictConfigurationsService',
-    function ($scope, $alert, $controller, EmailRestrictConfigurationsService) {
+.controller('EmailRestrictConfigurationMainController', ['$alert', '$scope', '$controller', 'EmailRestrictConfigurationsService',
+    function ($alert, $scope, $controller, EmailRestrictConfigurationsService) {
         var contentProperty = 'emailRestrictConfigurations';
     
         /**

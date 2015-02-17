@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  * Controller for ClientRestrictConfiguration main page
  */
-.controller('ClientRestrictConfigurationMainController', ['$scope', '$alert', '$controller', 'Client', 'ClientRestrictConfigurationsService',
-    function ($scope, $alert, $controller, Client, ClientRestrictConfigurationsService) {
+.controller('ClientRestrictConfigurationMainController', ['$alert', '$scope', '$controller', 'Client', 'ClientRestrictConfigurationsService',
+    function ($alert, $scope, $controller, Client, ClientRestrictConfigurationsService) {
 
         /**
          * Save restrict configuration for the client
