@@ -44,7 +44,20 @@ angular.module('emmiManager')
                         });
                     }, function (error) {
                         if (error.status === 406) {
+                            // trigger email already taken validation
                             userForm.email.$setValidity('unique', false);
+                            // store the taken email to compare against in our watcher
+                            var alreadyTakenEmail = $scope.userToBeEdit.email;
+                            // unwatch any previous email watcher
+                            if ($scope.emailWatcher) { $scope.emailWatcher(); }
+                            // setup a watch function on the email to monitor unique validation cases (EM-839)
+                            $scope.emailWatcher = $scope.$watch('userToBeEdit.email', function(newValue) {
+                                if (alreadyTakenEmail === newValue) {
+                                    userForm.email.$setValidity('unique', false);
+                                } else {
+                                    userForm.email.$setValidity('unique', true);
+                                }
+                            });
                             if (!$scope.errorAlert) {
                                 $scope.errorAlert = $alert({
                                     title: ' ',
