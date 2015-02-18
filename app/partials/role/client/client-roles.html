@@ -85,14 +85,7 @@
                         </div>
                         <div class="panel-collapse">
                             <div class="panel-body">
-                                <div class="checkbox"
-                                     data-ng-repeat="permission in newClientRole.userClientPermissions  | orderBy:'rank'">
-                                    <label for="perm_{{permission.name}}">
-                                        <input id="perm_{{permission.name}}" type="checkbox"
-                                               data-ng-model="permission.active"/>
-                                        {{permission.name | translate}}
-                                    </label>
-                                </div>
+                                <div data-ivh-treeview="newClientRole.userClientPermissions"></div>
                                 <hr/>
                                 <div class="pull-right">
                                     <button type="button" class="btn btn-link" data-ng-click="cancelNew()">cancel
