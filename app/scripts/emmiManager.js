@@ -49,7 +49,8 @@ angular.module('emmiManager', [
         INACTIVE_TEAMS:'i',
         UNTAGGED_TEAMS:'ut'
     })
-    .config(function ($httpProvider, $translateProvider, tmhDynamicLocaleProvider, HateoasInterceptorProvider, $datepickerProvider, API, unsavedWarningsConfigProvider) {
+    .config(
+        function ($httpProvider, $translateProvider, tmhDynamicLocaleProvider, HateoasInterceptorProvider, $datepickerProvider, API, unsavedWarningsConfigProvider) {
 
         // Initialize angular-translate
         $translateProvider.useUrlLoader(API.messages);
@@ -63,14 +64,14 @@ angular.module('emmiManager', [
         $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
         // push the current full url into the request headers
-        $httpProvider.interceptors.push(function ($location) {
+        $httpProvider.interceptors.push(['$location', function ($location) {
             return {
                 request: function (config) {
                     config.headers['X-Requested-Url'] = $location.absUrl();
                     return config;
                 }
             };
-        });
+        }]);
 
         // enable HATEOAS link array --> object parsing on $get
         HateoasInterceptorProvider.transformAllResponses();
