@@ -62,6 +62,16 @@ angular.module('emmiManager', [
         // make sure the server knows that an AJAX call is happening
         $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
+        // push the current full url into the request headers
+        $httpProvider.interceptors.push(function ($location) {
+            return {
+                request: function (config) {
+                    config.headers['X-Requested-Url'] = $location.absUrl();
+                    return config;
+                }
+            };
+        });
+
         // enable HATEOAS link array --> object parsing on $get
         HateoasInterceptorProvider.transformAllResponses();
 
@@ -118,7 +128,9 @@ angular.module('emmiManager', [
         $rootScope.$on('$routeChangeStart', function (event, next) {
             $rootScope.userRoles = USER_ROLES;
             $rootScope.isAuthorized = AuthSharedService.isAuthorized;
-            AuthSharedService.authorizedRoute((next.access) ? next.access.authorizedRoles : [USER_ROLES.all]);
+            if ($location.path() !== '/logout' && $location.path() !== '/login') {
+                AuthSharedService.authorizedRoute((next.access) ? next.access.authorizedRoles : [USER_ROLES.all]);
+            }
         });
 
         $rootScope.$on('$routeChangeError', function () {
