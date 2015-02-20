@@ -3,22 +3,21 @@
 angular.module('emmiManager')
     .config(function ($routeProvider, USER_ROLES) {
 
-        // Routes
+    	 var requiredResources = {
+    	            'account': ['AuthSharedService', function (AuthSharedService) {
+    	                return AuthSharedService.currentUser();
+    	            }]
+    	        };
+    	
+    	 // Routes
         $routeProvider
-        .when('/', {
-            templateUrl: 'client-facing/main/main.html',
-            controller: 'MainCtrl',
-            title: 'Home',
-            access: {
-                authorizedRoles: [USER_ROLES.all]
-            }
-        })
-         .when('/secretQuestions', {
+        .when('/secretQuestions', {
             templateUrl: 'client-facing/secretQuestions/secret-question.html',
             controller: 'SecretQuestionController',
              access: {
                  authorizedRoles: [USER_ROLES.all]
-             }
+             },
+             resolve: requiredResources
         })
       
     })

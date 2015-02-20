@@ -16,18 +16,12 @@ angular.module('emmiManager')
     	 */
         $scope.saveOrUpdateSecretQuestion = function(valid) {
         	$scope.secretQuestionFormSubmitted = true;
-        	console.log('save clicked');
-        	
-    		if(valid){
-        	    console.log('saving secret questions' + $scope.question1.entity.response);
-        		console.log('saving secret questions' + $scope.question1.entity.secretQuestion.id);
-	        	SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.question1.entity).then(function(response) {
-	                console.log('saving secret question 1');   
-	              });
+        	if(valid){
+        	    SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.question1.entity).then(function(response) {
+	            });
 	        	SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.question2.entity).then(function(response) {
-	                console.log('saving secret question 2');   
-	             });
-	        	 $location.path('/client-facing/main/main.html');
+	            });
+	        	$location.path('/client-facing/main/main.html');
     		}
     	};
         
@@ -42,8 +36,6 @@ angular.module('emmiManager')
        
         
         function init(){
-          	console.log('init');
-            console.log($scope);
             $scope.secretQuestionForm = 'valid';
             
           	SecretQuestionService.getSecretQuestions().then(function(response) {
