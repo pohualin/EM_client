@@ -169,9 +169,7 @@ angular.module('emmiManager', [
             Session.destroy();
             $rootScope.locationBeforeLogin = rejection.location;
             $rootScope.authenticated = false;
-            if ($location.path() !== '/' && $location.path() !== '' && $location.path() !== '/register' && $location.path() !== '/activate') {
-                $location.path('/login').replace();
-            }
+            $location.path('/login').replace();
         });
 
         // Call when the 403 response is returned by the server

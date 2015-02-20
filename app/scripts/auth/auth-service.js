@@ -84,10 +84,10 @@ angular.module('emmiManager')
                             deferred.resolve($rootScope.account);
                         }).error(function (data) {
                             $rootScope.authenticated = false;
-                            console.dir(data);
                             if (data.url) {
                                 $window.location.href = data.url;
                             } else {
+                                $rootScope.$broadcast('event:auth-loginRequired', {location: angular.copy($location)});
                                 deferred.resolve(data);
                             }
                         }).finally(function () {
