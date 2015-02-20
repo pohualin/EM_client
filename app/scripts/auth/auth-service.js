@@ -52,7 +52,7 @@ angular.module('emmiManager')
                     var deferred = $q.defer();
                     var me = this;
                     if (makingCurrentUserCall) {
-                        currentUserCallQueue.push(deferred, me);
+                        currentUserCallQueue.push(deferred);
                     } else {
                         me._requestUser(deferred, me);
                     }
