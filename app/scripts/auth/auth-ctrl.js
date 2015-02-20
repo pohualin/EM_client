@@ -22,8 +22,13 @@ angular.module('emmiManager')
             };
         }])
 
-    .controller('LogoutCtrl', ['AuthSharedService', '$scope',
-        function (AuthSharedService, $scope) {
+    .controller('LogoutCtrl', ['AuthSharedService', '$scope', 'API', '$sce',
+        function (AuthSharedService, $scope, API, $sce) {
+
+            // necessary for logout on the authentication server (e.g CAS)
+            $scope.showAuthenticationServerResponse = false;
+            $scope.authenticationServerUrl = $sce.trustAsResourceUrl(API.redirectOnLogout);
+
             AuthSharedService.logout().then(function (){
                 $scope.showLogoutPage = true;
             });

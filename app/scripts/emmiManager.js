@@ -169,9 +169,7 @@ angular.module('emmiManager', [
             Session.destroy();
             $rootScope.locationBeforeLogin = rejection.location;
             $rootScope.authenticated = false;
-            if ($location.path() !== '/' && $location.path() !== '' && $location.path() !== '/register' && $location.path() !== '/activate') {
-                $location.path('/login').replace();
-            }
+            $location.path('/login').replace();
         });
 
         // Call when the 403 response is returned by the server
@@ -187,7 +185,7 @@ angular.module('emmiManager', [
 
         // Call when the user logs out
         $rootScope.$on('event:auth-loginCancelled', function () {
-            $location.path('');
+            $location.path('/logout');
         });
 
         $document.bind('keydown keypress', function (event) {
