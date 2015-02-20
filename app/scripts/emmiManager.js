@@ -187,7 +187,7 @@ angular.module('emmiManager', [
 
         // Call when the user logs out
         $rootScope.$on('event:auth-loginCancelled', function () {
-            $location.path('');
+            $location.path('/logout');
         });
 
         $document.bind('keydown keypress', function (event) {

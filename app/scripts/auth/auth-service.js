@@ -166,12 +166,8 @@ angular.module('emmiManager')
                     var self = this;
                     if ($rootScope.authenticated) {
                         $http.get(API.logout);
-                        if (API.redirectOnLogout) {
-                            $window.location.href = API.redirectOnLogout;
-                        } else {
-                            self._localLogout();
-                            deferred.resolve('ok');
-                        }
+                        self._localLogout();
+                        deferred.resolve('ok');
                     } else {
                         deferred.resolve('ok');
                     }
