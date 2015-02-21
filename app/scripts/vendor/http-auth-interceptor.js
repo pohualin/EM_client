@@ -10,14 +10,15 @@
 
     angular.module('http-auth-interceptor', ['http-auth-interceptor-buffer'])
 
-        .factory('authService', ['$rootScope', 'httpBuffer', '$location',
-            function ($rootScope, httpBuffer, $location) {
+        .factory('authService', ['$rootScope', 'httpBuffer',
+            function ($rootScope, httpBuffer) {
                 return {
                     /**
                      * Call this function to indicate that authentication was successfull and trigger a
                      * retry of all deferred requests.
                      * @param data an optional argument to pass on to $broadcast which may be useful for
                      * example if you need to pass through details of the user that was logged in
+                     * @param configUpdater to update config
                      */
                     loginConfirmed: function (data, configUpdater) {
                         var updater = configUpdater || function (config) {
@@ -46,15 +47,21 @@
      * and broadcasts 'event:angular-auth-loginRequired'.
      */
         .config(['$httpProvider', function ($httpProvider) {
-            $httpProvider.interceptors.push(['$rootScope', '$q', 'httpBuffer', '$location',
-                function ($rootScope, $q, httpBuffer, $location) {
+            $httpProvider.interceptors.push(['$rootScope', '$q', 'httpBuffer', '$location', '$window',
+                function ($rootScope, $q, httpBuffer, $location, $window) {
                     return {
                         responseError: function (rejection) {
                             if (rejection.status === 401 && !rejection.config.ignoreAuthModule) {
+                                // this flow happens when requests fail 'in the middle' of the app
                                 var deferred = $q.defer();
                                 httpBuffer.append(rejection.config, deferred);
                                 rejection.location = angular.copy($location);
-                                $rootScope.$broadcast('event:auth-loginRequired', rejection);
+                                if (rejection.data && rejection.data.url) {
+                                    // CAS rejections have a url embedded to redirect to
+                                    $window.location.href = rejection.data.url;
+                                } else {
+                                    $rootScope.$broadcast('event:auth-loginRequired', rejection);
+                                }
                                 return deferred.promise;
                             } else if (rejection.status === 403 && !rejection.config.ignoreAuthModule) {
                                 $rootScope.$broadcast('event:auth-notAuthorized', rejection);

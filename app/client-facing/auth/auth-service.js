@@ -5,9 +5,9 @@ angular.module('emmiManager')
         function ($rootScope, $http, authService, Session, API, $q, $location, arrays) {
 
             return {
-                login: function (creds, loginLink) {
+                login: function (creds) {
                     var self = this;
-                    $http.post(loginLink, {
+                    $http.post(API.authenticate, {
                         'j_username': creds.username,
                         'j_password': creds.password,
                         'remember-me': creds.rememberMe
@@ -98,9 +98,9 @@ angular.module('emmiManager')
 
                     return isAuthorized;
                 },
-                logout: function (logoutLink) {
+                logout: function () {
                     var self = this;
-                    $http.get(logoutLink)
+                    return $http.get(API.logout)
                         .success(function () {
                             self.localLogout();
                         }).error(function () {
