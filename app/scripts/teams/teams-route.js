@@ -53,7 +53,7 @@ angular.module('emmiManager')
                 controller: 'ClientTeamCreateCtrl',
                 title: 'New Team',
                 access: {
-                    authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
+                    authorizedRoles: USER_ROLES.all
                 },
                 resolve: {
                     'clientResource': clientResource
@@ -63,7 +63,7 @@ angular.module('emmiManager')
                 templateUrl: 'partials/team/team_edit.html',
                 controller: 'TeamEditController',
                 access: {
-                    authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
+                    authorizedRoles: USER_ROLES.all
                 },
                 reloadOnSearch: false,
                 resolve: {
@@ -77,7 +77,7 @@ angular.module('emmiManager')
                 resolve: requiredResources,
                 reloadOnSearch: false,
                 access: {
-                    authorizedRoles: [USER_ROLES.all]
+                    authorizedRoles: USER_ROLES.all
                 }
             });
     })

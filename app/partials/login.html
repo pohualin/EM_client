@@ -15,7 +15,7 @@
                          data-ng-show="loginForm.username.$error.required && loginForm.submitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Required"></div>
-                    <input id="username" name="username" type="text"
+                    <input id="username" name="username" type="text" autocomplete="off"
                            class="form-control" data-ng-model="credentials.username" required
                            data-auto-focus>
                 </div>
@@ -28,7 +28,7 @@
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Required"></div>
                     <input id="password" type="password" name="password" class="form-control" required
-                           data-ng-model="credentials.password">
+                           autocomplete="off" data-ng-model="credentials.password">
                 </div>
                 <div class="checkbox">
                     <label>

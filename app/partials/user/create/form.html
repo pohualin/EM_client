@@ -71,7 +71,7 @@
             <div class="col-md-4">
                 <div class="form-group"
                      data-ng-class="{ 'has-error' : userForm.role.$invalid && userFormSubmitted }">
-                    <label class="control-label" for="role">Role:</label>
+                    <label class="control-label" for="role">Role: {{user}}</label>
                     <div  class="error-circle glyphicon glyphicon-exclamation-sign" data-ng-show="userForm.role.$invalid && userFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Please enter at least 1 permission"></div>
@@ -79,7 +79,7 @@
                     <select id="role" class="form-control" data-ng-model="userToBeEdit.role"
                             data-ng-options="role.entity.name for role in roles track by role.entity.id"
                             name="role" required
-                            data-ng-disabled="userForm.role.$error.unique">
+                            data-ng-disabled="userForm.role.$error.unique || userToBeEdit.id === account.id">
                     </select>
                 </div>
             </div>
@@ -88,7 +88,7 @@
                 <label class="control-label">&nbsp;</label>
                 <div class="checkbox">
                     <label for="active" >
-                        <input id="active" type="checkbox"
+                        <input id="active" type="checkbox" data-ng-disabled="userToBeEdit.id === account.id"
                                data-ng-model="userToBeEdit.active" data-no-dirty-check/>&nbsp;&nbsp;Active
                     </label>
                 </div>
