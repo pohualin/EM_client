@@ -1,23 +1,37 @@
 'use strict';
 
 angular.module('emmiManager')
-    .controller('LoginCtrl', function ($scope, $location, AuthSharedService, API, $rootScope) {
-        $scope.credentials = {
-            rememberMe: true
-        };
+    .controller('LoginCtrl', ['$scope', '$location', 'AuthSharedService', '$rootScope',
+        function ($scope, $location, AuthSharedService, $rootScope) {
+            $scope.credentials = {
+                rememberMe: true
+            };
 
-        $rootScope.authenticationError = false;
+            $rootScope.authenticationError = false;
 
-        $scope.login = function (credentials) {
-            $scope.loginForm.submitted = true;
-            if ($scope.loginForm.$valid) {
-                AuthSharedService.login(credentials, API.authenticate);
-            }
-        };
-    })
+            /**
+             * Called when login button is clicked
+             *
+             * @param credentials to authenticate
+             */
+            $scope.login = function (credentials) {
+                $scope.loginForm.submitted = true;
+                if ($scope.loginForm.$valid) {
+                    AuthSharedService.login(credentials);
+                }
+            };
+        }])
 
-    .controller('LogoutCtrl', function ($location, AuthSharedService, API) {
-        AuthSharedService.logout(API.logout);
-    })
+    .controller('LogoutCtrl', ['AuthSharedService', '$scope', 'API', '$sce',
+        function (AuthSharedService, $scope, API, $sce) {
+
+            // necessary for logout on the authentication server (e.g CAS)
+            $scope.showAuthenticationServerResponse = false;
+            $scope.authenticationServerUrl = $sce.trustAsResourceUrl(API.redirectOnLogout);
+
+            AuthSharedService.logout().then(function (){
+                $scope.showLogoutPage = true;
+            });
+        }])
 ;
 
