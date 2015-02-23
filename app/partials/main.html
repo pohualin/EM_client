@@ -15,7 +15,7 @@
                     data-ng-href="#/providers">Providers</a></li>
                 <li data-ng-show="isAuthorized(userRoles.all)"><a
                     data-ng-href="#/locations">Locations</a></li>
-                <li data-ng-show="isAuthorized(userRoles.all)"><a
+                <li data-ng-show="isAuthorized([userRoles.god, userRoles.admin])"><a
                     data-ng-href="#/users">Emmi Users</a></li>
                 <li data-ng-show="isAuthorized(userRoles.god)"><a data-ng-href="#/docs">Documentation</a></li>
                 <li data-ng-show="account.link.referenceTags"><a data-ng-href="#/admin">Admin Functions</a></li>
