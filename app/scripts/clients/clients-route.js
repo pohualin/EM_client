@@ -31,7 +31,7 @@ angular.module('emmiManager')
                 templateUrl: 'partials/client/clients.html',
                 controller: 'ClientListCtrl',
                 access: {
-                    authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
+                    authorizedRoles: USER_ROLES.all
                 },
                 reloadOnSearch: false,
                 title: 'Client Search',
@@ -42,7 +42,7 @@ angular.module('emmiManager')
                 controller: 'ClientCreateController',
                 title: 'New Client',
                 access: {
-                    authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
+                    authorizedRoles: USER_ROLES.all
                 },
                 resolve: requiredResources
             })
@@ -50,7 +50,7 @@ angular.module('emmiManager')
                 templateUrl: 'partials/client/edit/editor.html',
                 controller: 'ClientDetailCtrl',
                 access: {
-                    authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
+                    authorizedRoles: USER_ROLES.all
                 },
                 reloadOnSearch: false,
                 resolve: clientDetailRequiredResources

@@ -5,7 +5,7 @@
         </h2>
         <div>
             <ul>
-                <li data-ng-show="isAuthorized(userRoles.god) || isAuthorized(userRoles.admin)"><a
+                <li data-ng-show="isAuthorized([userRoles.god, userRoles.admin])"><a
                     data-ng-href="#/admin/tags">Manage Emmi Groups & Tags Library</a></li>
             </ul>
         </div>

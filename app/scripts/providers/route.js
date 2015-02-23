@@ -39,7 +39,7 @@ angular.module('emmiManager').config(
             templateUrl: 'partials/provider/search.html',
             controller: 'ProvidersSearchController',
             access: {
-                authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
+                authorizedRoles: USER_ROLES.all
             },
             title: 'Provider Search',
             reloadOnSearch: false,
@@ -48,7 +48,7 @@ angular.module('emmiManager').config(
             templateUrl: 'partials/provider/editor/editor.html',
             controller: 'ProviderEditorController',
             access: {
-                authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
+                authorizedRoles: USER_ROLES.all
             },
             reloadOnSearch: false,
             resolve: providerRequiredResource

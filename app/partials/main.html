@@ -7,15 +7,15 @@
         <span data-ng-hide="account">The date is {{ today | date:'fullDate' }}.</span>
         <div>
             <ul data-ng-switch="authenticated">
-                <li data-ng-show="isAuthorized(userRoles.god) || isAuthorized(userRoles.admin)"><a
+                <li data-ng-show="isAuthorized([userRoles.god, userRoles.admin, userRoles.user])"><a
                     data-ng-href="#/clients" data-translate="global.menu.clients">Clients</a></li>
-                <li data-ng-show="isAuthorized(userRoles.god) || isAuthorized(userRoles.admin)"><a
+                <li data-ng-show="isAuthorized(userRoles.all)"><a
                     data-ng-href="#/teams">Teams</a></li>
-                <li data-ng-show="isAuthorized(userRoles.god) || isAuthorized(userRoles.admin)"><a
+                <li data-ng-show="isAuthorized(userRoles.all)"><a
                     data-ng-href="#/providers">Providers</a></li>
-                <li data-ng-show="isAuthorized(userRoles.god) || isAuthorized(userRoles.admin)"><a
+                <li data-ng-show="isAuthorized(userRoles.all)"><a
                     data-ng-href="#/locations">Locations</a></li>
-                <li data-ng-show="isAuthorized(userRoles.god) || isAuthorized(userRoles.admin)"><a
+                <li data-ng-show="isAuthorized(userRoles.all)"><a
                     data-ng-href="#/users">Emmi Users</a></li>
                 <li data-ng-show="isAuthorized(userRoles.god)"><a data-ng-href="#/docs">Documentation</a></li>
                 <li data-ng-show="account.link.referenceTags"><a data-ng-href="#/admin">Admin Functions</a></li>
