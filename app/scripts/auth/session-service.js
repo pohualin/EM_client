@@ -3,6 +3,7 @@
 angular.module('emmiManager')
     .factory('Session', [ function () {
         this.create = function (user) {
+            this.id = user.id;
             this.login = user.login;
             this.firstName = user.firstName;
             this.lastName = user.lastName;
@@ -12,6 +13,7 @@ angular.module('emmiManager')
             return this;
         };
         this.destroy = function () {
+            this.id = null;
             this.login = null;
             this.firstName = null;
             this.lastName = null;

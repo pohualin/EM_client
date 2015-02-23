@@ -28,8 +28,8 @@ angular.module('emmiManager', [
     .constant('USER_ROLES', {
         all: '*',
         god: 'PERM_GOD',
-        admin: 'PERM_ADMIN_USER',
-        user: 'PERM_USER'
+        admin: 'PERM_ADMIN_SUPER_USER',
+        user: 'PERM_ADMIN_USER'
     })
 
     .constant('URL_PARAMETERS', {

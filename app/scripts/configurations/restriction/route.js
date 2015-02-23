@@ -25,7 +25,7 @@ angular.module('emmiManager')
                 templateUrl: 'partials/configurations/restriction/main.html',
                 controller: 'ClientRestrictConfigurationMainController',
                 access: {
-                    authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
+                    authorizedRoles: USER_ROLES.all
                 },
                 reloadOnSearch: false,
                 resolve: clientDetailRequiredResources

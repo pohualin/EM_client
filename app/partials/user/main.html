@@ -70,9 +70,9 @@
                             <span data-ng-hide="userClient.deactivationPopoverOpen">
                                 <a class="btn-link"
                                    href="#/users/{{user.id}}?{{currentRouteQueryString}}">edit</a>
-                                <span data-ng-hide="{{user.login === account.login}}">|</span>
+                                <span data-ng-hide="user.id === account.id">|</span>
                             </span>
-                            <a data-ng-hide="{{user.login === account.login}}"
+                            <a data-ng-hide="user.id === account.id"
                                href
                                data-on-ok="toggleActivation(user)"
                                data-is-currently-active="user.active"

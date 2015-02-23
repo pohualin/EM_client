@@ -29,7 +29,7 @@ angular.module('emmiManager')
                 templateUrl: 'partials/role/client/main.html',
                 controller: 'ManageClientRolesMainCtrl',
                 access: {
-                    authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
+                    authorizedRoles: USER_ROLES.all
                 },
                 reloadOnSearch: false,
                 resolve: clientDetailRequiredResources

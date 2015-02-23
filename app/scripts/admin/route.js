@@ -16,7 +16,7 @@ angular.module('emmiManager')
                 controller: 'AdminFuncsCtrl',
                 title: 'Admin Functions',
                 access: {
-                    authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
+                    authorizedRoles: USER_ROLES.all
                 }
             }).when('/admin/tags', {
             	templateUrl: 'partials/admin/tags/editor.html',
@@ -24,7 +24,7 @@ angular.module('emmiManager')
                 title: 'Emmi Groups & Tags Library',
                 resolve: requiredResources,
                 access: {
-                    authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
+                    authorizedRoles: USER_ROLES.all
                 }
             });
     })
