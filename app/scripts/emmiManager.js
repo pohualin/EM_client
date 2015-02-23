@@ -21,7 +21,8 @@ angular.module('emmiManager', [
     'emmi-angular-multiselect',
     'truncate',
     'emmi.noDirtyCheck',
-    'unsavedChanges'
+    'unsavedChanges',
+    'ivh.treeview'
 ])
 
     .constant('USER_ROLES', {
@@ -48,7 +49,8 @@ angular.module('emmiManager', [
         INACTIVE_TEAMS:'i',
         UNTAGGED_TEAMS:'ut'
     })
-    .config(function ($httpProvider, $translateProvider, tmhDynamicLocaleProvider, HateoasInterceptorProvider, $datepickerProvider, API, unsavedWarningsConfigProvider) {
+    .config(
+        function ($httpProvider, $translateProvider, tmhDynamicLocaleProvider, HateoasInterceptorProvider, $datepickerProvider, API, unsavedWarningsConfigProvider) {
 
         // Initialize angular-translate
         $translateProvider.useUrlLoader(API.messages);
@@ -60,6 +62,16 @@ angular.module('emmiManager', [
 
         // make sure the server knows that an AJAX call is happening
         $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+        // push the current full url into the request headers
+        $httpProvider.interceptors.push(['$location', function ($location) {
+            return {
+                request: function (config) {
+                    config.headers['X-Requested-Url'] = $location.absUrl();
+                    return config;
+                }
+            };
+        }]);
 
         // enable HATEOAS link array --> object parsing on $get
         HateoasInterceptorProvider.transformAllResponses();
@@ -117,7 +129,9 @@ angular.module('emmiManager', [
         $rootScope.$on('$routeChangeStart', function (event, next) {
             $rootScope.userRoles = USER_ROLES;
             $rootScope.isAuthorized = AuthSharedService.isAuthorized;
-            AuthSharedService.authorizedRoute((next.access) ? next.access.authorizedRoles : [USER_ROLES.all]);
+            if ($location.path() !== '/logout' && $location.path() !== '/login') {
+                AuthSharedService.authorizedRoute((next.access) ? next.access.authorizedRoles : [USER_ROLES.all]);
+            }
         });
 
         $rootScope.$on('$routeChangeError', function () {
@@ -155,9 +169,7 @@ angular.module('emmiManager', [
             Session.destroy();
             $rootScope.locationBeforeLogin = rejection.location;
             $rootScope.authenticated = false;
-            if ($location.path() !== '/' && $location.path() !== '' && $location.path() !== '/register' && $location.path() !== '/activate') {
-                $location.path('/login').replace();
-            }
+            $location.path('/login').replace();
         });
 
         // Call when the 403 response is returned by the server
@@ -173,7 +185,7 @@ angular.module('emmiManager', [
 
         // Call when the user logs out
         $rootScope.$on('event:auth-loginCancelled', function () {
-            $location.path('');
+            $location.path('/logout');
         });
 
         $document.bind('keydown keypress', function (event) {

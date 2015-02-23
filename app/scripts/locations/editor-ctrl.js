@@ -5,8 +5,9 @@ angular.module('emmiManager').controller(
     function($scope, $location, $alert, Client, $controller, locationResource, Tag, $q,
         focus, Location, LocationService) {
 
-        $scope.cancel = function() {
+        $scope.cancel = function(locationForm) {
             $scope.hideError();
+            locationForm.$setPristine();
             $scope.edit();
             _paq.push(['trackEvent', 'Form Action', 'Location Edit', 'Cancel']);
         };
@@ -18,9 +19,11 @@ angular.module('emmiManager').controller(
             _paq.push(['trackEvent', 'Form Action', 'Location Edit', 'Edit']);
         };
 
-        $scope.saveLocation = function(isValid) {
+        $scope.saveLocation = function(locationForm) {
+            var isValid = locationForm.$valid;
         	$scope.locationFormSubmitted = true;
         	if (isValid) {
+                locationForm.$setPristine();
                 LocationService.updateLocation($scope.locationToEdit).then(function(response) {
                     angular.copy(response.data, $scope.locationResource);
                     angular.copy(response.data.entity, $scope.location);

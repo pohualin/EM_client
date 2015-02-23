@@ -34,6 +34,17 @@ angular.module('emmiManager')
                         .success(function (response) {
                             return response;
                         });
+                },
+
+                /**
+                 * Loads the password policy for the token
+                 */
+                loadPolicy: function (activationToken) {
+                    return $http.get(UriTemplate.create(api.activationPasswordPolicy).stringify({
+                        token: activationToken
+                    })).success(function (response) {
+                        return response.data;
+                    });
                 }
             };
         }

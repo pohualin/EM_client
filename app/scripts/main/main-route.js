@@ -26,8 +26,7 @@ angular.module('emmiManager')
                 title: 'Login',
                 access: {
                     authorizedRoles: [USER_ROLES.all]
-                },
-                resolve: requiredResources
+                }
             })
             .when('/403', {
                 templateUrl: 'partials/403.html',
@@ -46,9 +45,9 @@ angular.module('emmiManager')
                 }
             })
             .when('/logout', {
-                templateUrl: 'partials/main.html',
+                templateUrl: 'partials/logout.html',
                 controller: 'LogoutCtrl',
-                resolve: requiredResources,
+                title: 'Logged Out',
                 access: {
                     authorizedRoles: [USER_ROLES.all]
                 }

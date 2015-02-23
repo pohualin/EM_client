@@ -12,6 +12,13 @@ angular.module('emmiManager')
             $scope.changePasswordFormSubmitted = false;
 
             /**
+             * Load the password policy for display
+             */
+            ResetClientUserPasswordService.loadPolicy(resetToken).then(function (response){
+                $scope.policy = response.data;
+            });
+
+            /**
              * Compares the two password fields then sets a 'same' validity if the two passwords are identical
              */
             $scope.passwordChanged = function () {
@@ -20,7 +27,7 @@ angular.module('emmiManager')
             };
 
             /**
-             * Completes the activation
+             * Completes the reset
              */
             $scope.save = function (formValid) {
                 $scope.changePasswordFormSubmitted = true;
@@ -35,11 +42,11 @@ angular.module('emmiManager')
                                 duration: 5,
                                 dismissable: true
                             });
-
-                        }
-                    ).finally(function () {
                             $location.path('/').replace();
-                        });
+                        }, function error() {
+                            $location.path('/credentials/reset/failure').replace();
+                        }
+                    );
                 }
             };
         }

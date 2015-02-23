@@ -19,7 +19,7 @@ angular.module('emmiManager')
 
             ManageUserTeamRolesService.loadClientTeamRoles().then(function (rolesResources) {
                 $scope.existingClientTeamRoles = rolesResources;
-            });                
+            });
 
         } else {
             Client.viewClientList();
@@ -31,8 +31,9 @@ angular.module('emmiManager')
 
         setTitle();
 
-        $scope.cancel = function () {
+        $scope.cancel = function (metadataForm) {
             $scope.hideError();
+            metadataForm.$setPristine();
             $scope.editMode = false;
             $scope.metadataSubmitted = false;
             delete $scope.clientToEdit;
@@ -47,9 +48,11 @@ angular.module('emmiManager')
             _paq.push(['trackEvent', 'Form Action', 'Client Edit', 'Edit']);
         };
 
-        $scope.save = function (isValid) {
+        $scope.save = function (metadataForm) {
+            var isValid = metadataForm.$valid;
             $scope.metadataSubmitted = true;
             if (isValid && $scope.clientToEdit.salesForceAccount) {
+                metadataForm.$setPristine();
                 Client.updateClient($scope.clientToEdit).then(function () {
                     $scope.editMode = false;
                     setTitle();
@@ -58,7 +61,7 @@ angular.module('emmiManager')
             } else {
                 $scope.showError();
                 // Loop through the form's validation errors and log to Piwik
-                var formErrors = $scope.metadataForm.$error;
+                var formErrors = metadataForm.$error;
                 for (var errorType in formErrors) {
                     if (formErrors.hasOwnProperty(errorType)) {
                         for (var i = 0; i < formErrors[errorType].length; i++) {

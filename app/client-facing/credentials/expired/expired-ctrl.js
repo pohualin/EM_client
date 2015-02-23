@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  * This manages interactions when a user's credentials have expired.
  */
-    .controller('CredentialsExpiredController', ['$scope', '$location', 'CredentialsExpiredService', 'credentials', '$alert',
-        function ($scope, $location, CredentialsExpiredService, credentials, $alert) {
+    .controller('CredentialsExpiredController', ['$scope', '$location', 'CredentialsExpiredService', 'credentials', 'client', '$alert',
+        function ($scope, $location, CredentialsExpiredService, credentials, client, $alert) {
 
             /**
              * Set the component up in its initial state.
@@ -23,6 +23,13 @@ angular.module('emmiManager')
                 var passwordChange = $scope.passwordChange;
                 $scope.changePasswordForm.confirmPassword.$setValidity('same', passwordChange.password === passwordChange.confirmPassword);
             };
+
+            /**
+             * Load the password policy for display
+             */
+            CredentialsExpiredService.loadPolicy(client).then(function (response){
+                $scope.policy = response.data;
+            });
 
             /**
              * Saves a password change when the form is valid
@@ -45,7 +52,7 @@ angular.module('emmiManager')
                             });
                             $location.path('/').replace();
                         }, function error() {
-                            $scope.reset();
+                            $location.path('/credentials/expired/failure').replace();
                         });
                 }
             };
