@@ -39,7 +39,7 @@ angular.module('emmiManager')
                 templateUrl: 'partials/user/main.html',
                 controller: 'UsersMainCtrl',
                 access: {
-                    authorizedRoles: USER_ROLES.all
+                    authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
                 },
                 resolve: requiredResources,
                 reloadOnSearch: false
@@ -47,7 +47,7 @@ angular.module('emmiManager')
                 templateUrl: 'partials/user/create/new.html',
                 controller: 'UsersCreateController',
                 access: {
-                    authorizedRoles: USER_ROLES.all
+                    authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
                 },
                 resolve: requiredResources,
                 reloadOnSearch: false
@@ -55,7 +55,7 @@ angular.module('emmiManager')
                 templateUrl: 'partials/user/create/editor.html',
                 controller: 'UsersEditorController',
                 access: {
-                    authorizedRoles: USER_ROLES.all
+                    authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
                 },
                 reloadOnSearch: false,
                 resolve: {
@@ -67,7 +67,7 @@ angular.module('emmiManager')
                 title: 'Admin Functions',
                 resolve: requiredResources,
                 access: {
-                    authorizedRoles: USER_ROLES.all
+                    authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
                 }
             }).when('/admin/tags', {
             	templateUrl: 'partials/admin/tags/editor.html',
@@ -75,7 +75,7 @@ angular.module('emmiManager')
                 title: 'Emmi Groups & Tags Library',
                 resolve: requiredResources,
                 access: {
-                    authorizedRoles: USER_ROLES.all
+                    authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
                 }
             });
     })
