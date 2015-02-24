@@ -7,14 +7,13 @@ var httpProxy = require('http-proxy');
 
 /* This configuration allow you to configure browser sync to proxy your backend */
 var proxyTarget = 'http://localhost:8080'; // The location of your backend
-var proxyApiPrefix = 'webapi'; // The element in the URL which differentiate between API request and static file request
 
 var proxy = httpProxy.createProxyServer({
     target: proxyTarget
 });
 
 function proxyMiddleware(req, res, next) {
-    if (req.url.indexOf(proxyApiPrefix) !== -1 ||
+    if (req.url.indexOf('webapi') !== -1 ||
         req.url.indexOf('api-docs') !== -1 ||
         req.url.indexOf('webapi-client') !== -1) {
         proxy.web(req, res);
@@ -26,8 +25,10 @@ function proxyMiddleware(req, res, next) {
 function browserSyncInit(baseDir, files, browser) {
     browser = browser === undefined ? 'default' : browser;
 
-    browserSync.init(files, {
+    browserSync({
+        files: files || '*',
         startPath: '/index.html',
+        ghostMode: false,
         server: {
             baseDir: baseDir,
             middleware: proxyMiddleware
@@ -49,7 +50,11 @@ gulp.task('serve', ['watch'], function () {
     ]);
 });
 
-gulp.task('serve:dist', ['build'], function () {
+gulp.task('serve:dist', function () {
+    browserSyncInit('dist');
+});
+
+gulp.task('serve:build-dist', ['build'], function () {
     browserSyncInit('dist');
 });
 

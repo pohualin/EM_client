@@ -1,0 +1,25 @@
+<div class="container" data-ng-cloak>
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb h3">
+                <li><a href="#/">Emmi Manager</a></li>
+                <li><a href="#/clients/{{client.id}}">{{client.name}}</a></li>
+                <li class="active">Manage Roles</li>
+                <li class="pull-right" data-ng-show="(hasExistingClientRoles || hasExistingClientTeamRoles) && !loading"><a class="btn btn-link"
+                    href="#/clients/{{client.id}}/users">manage users</a></li>
+            </ol>
+        </div>
+    </div>
+    <hr/>
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Manage User Roles</h3>
+
+            <p data-ng-show="!hasExistingClientRoles && !hasExistingClientTeamRoles && !loading">Please choose user roles for this client before adding users.</p>
+        </div>
+    </div>
+    <hr/>
+    <div class="row" data-ng-include="'admin-facing/partials/role/client/client-roles.html'"></div>
+    <hr/>
+    <div class="row" data-ng-include="'admin-facing/partials/role/client/team-roles.html'"></div>
+</div>
