@@ -1,7 +1,20 @@
-#docs .container {
+.container {
   max-width: 1128px;
   width: auto;
   margin: 0 auto;
+}
+
+.content {
+  margin-top: 5px;
+}
+
+
+.main > h1 {
+  margin-top: 30px;
+}
+
+.main > h1:first-child {
+  margin-top: 0;
 }
 
 footer {
@@ -28,7 +41,9 @@ blockquote {
   font-size:16px;
   margin: 10px 0;
   padding: 5px;
+
 }
+
 
 code {
   padding: 2px 4px;
@@ -50,8 +65,7 @@ div.jsExample {
 }
 
 div.codeExample:before, div.jsExample:before {
-  font-family: sans-serif;
-  font-size: 13px;
+  font-family: "OpenSans", sans-serif;
   color: #222;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -83,11 +97,16 @@ div.codeBlock, div.exampleOutput {
 }
 
 div.codeBlock {
-  font-size: 14px;
   background-color: #f9f9f9;
   border-top: 1px solid #ccc;
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
+}
+
+table div.codeBlock {
+  background-color: transparent;
+  border-top: none;
+  border-radius: 0;
 }
 
 .docSwatch {
@@ -99,14 +118,14 @@ div.codeBlock {
 }
 
 .codeExample .line > div:after {
-  content: attr(class);
-  display: block;
-  min-height: 40px;
-  line-height: 40px;
-  background-color: #EEE;
-  text-align: center;
-  border-radius: 3px;
-  font-size: 12px;
+content: attr(class);
+display: block;
+min-height: 40px;
+line-height: 40px;
+background-color: #EEE;
+text-align: center;
+border-radius: 3px;
+font-size: 12px;
 }
 
 table, table tr, table td, table th {
@@ -117,6 +136,7 @@ table, table tr, table td, table th {
 table th {
   font-weight: bold;
 }
+
 
 #docs pre {
   font-family: Menlo,Consolas,Monaco,"Lucida Console",monospace;
@@ -236,4 +256,148 @@ a:hover,a:focus {
 
 .typeEmphasize {
     font-weight: bold!important;
+}
+
+.line .lastCol {
+vertical-align:top;
+float:none;
+display:block;
+width:auto!important;
+zoom:1;
+}
+
+.line,.box,.box .boxHead,.box .boxFoot,.content>section,.container {
+zoom:1;
+}
+
+.line:before,.box:before,.box .boxHead:before,.box .boxFoot:before,.content>section:before,.container:before,.line:after,.box:after,.box .boxHead:after,.box .boxFoot:after,.content>section:after,.container:after {
+content:" ";
+display:table;
+}
+
+.line:after,.box:after,.box .boxHead:after,.box .boxFoot:after,.content>section:after,.container:after {
+clear:both;
+}
+
+.cols1 {
+width:2.30496%!important;
+}
+
+.cols2 {
+width:6.47163%!important;
+}
+
+.cols3 {
+width:10.6383%!important;
+}
+
+.cols4 {
+width:14.80496%!important;
+}
+
+.cols5 {
+width:18.97163%!important;
+}
+
+.cols6 {
+width:23.1383%!important;
+}
+
+.cols7 {
+width:27.30496%!important;
+}
+
+.cols8 {
+width:31.47163%!important;
+}
+
+.cols9 {
+width:35.6383%!important;
+}
+
+.cols10 {
+width:39.80496%!important;
+}
+
+.cols11 {
+width:43.97163%!important;
+}
+
+.cols12 {
+width:48.1383%!important;
+}
+
+.cols13 {
+width:52.30496%!important;
+}
+
+.cols14 {
+width:56.47163%!important;
+}
+
+.cols15 {
+width:60.6383%!important;
+}
+
+.cols16 {
+width:64.80496%!important;
+}
+
+.cols17 {
+width:68.97163%!important;
+}
+
+.cols18 {
+width:73.1383%!important;
+}
+
+.cols19 {
+width:77.30496%!important;
+}
+
+.cols20 {
+width:81.47163%!important;
+}
+
+.cols21 {
+width:85.6383%!important;
+}
+
+.cols22 {
+width:89.80496%!important;
+}
+
+.cols23 {
+width:93.97163%!important;
+}
+
+.cols24 {
+width:98.1383%!important;
+}
+
+.line {
+margin-left:-21px;
+}
+
+.line .col {
+min-height:1px;
+float:left;
+zoom:1;
+-webkit-box-sizing:border-box;
+-moz-box-sizing:border-box;
+box-sizing:border-box;
+padding-left:21px;
+}
+
+.line .colExt {
+float:right;
+zoom:1;
+padding:0 0 0 21px;
+}
+
+.line .col:last-child {
+display:table-cell;
+float:none;
+vertical-align:top;
+width:10000px!important;
 }

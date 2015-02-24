@@ -22,7 +22,7 @@
 
 </head>
 
-  <body id="docs">
+  <body>
     <header class="docsHeader" role="banner">
       <div class="backgroundHighlight typeReversed1">
         <div class="container">
@@ -31,34 +31,36 @@
       </div>
       <div class="backgroundLowlight typeReversed1">
         <div class="container">
-          <ul class="docNav">
-            <!-- Add your pages here -->
-            <% @categories.each do |category, file_name| %>
-            <li><a href="<%= file_name %>"><%= category %></a></li>
-            <% end %>
-            <!-- <li><a href="index.html">Intro</a></li> -->
-            <!-- <li><a href="base_css.html">Base CSS</a></li> -->
-            <!-- <li><a href="components.html">Components</a></li>
-            <li><a href="javascript.html">Javascript</a></li> -->
-          </ul>
+          <span>
+            <ul class="docNav listInline">
+              <!-- Add you pages here -->
+              <li><a href="index.html">Intro</a></li>
+              <li><a href="base_css.html">Base CSS</a></li>
+              <li><a href="components.html">Components</a></li>
+              <li><a href="javascript.html">Javascript</a></li>
+            </ul>
+          </span>
         </div>
       </div>
       <!-- //header/container -->
     </header>
 
-    <div class="docsContent">
-      <div class="container">
-        <div class="docsSidebar">
-          <div class="componentMenu">
-            <ul class="componentList listBorderedHover">
-              <% @blocks.each do |block| %>
-                <li><a href="#<%= block[:name] %>"><%= block[:title] %></a></li>
-              <% end %>
-            </ul>
+    <div class="content">
+      <section>
+        <div class="line">
+
+          <div class="col cols4">
+            <div class="componentMenu box boxBasic backgroundBasic">
+              <div class="boxBody pan">
+                <ul class="componentList listBorderedHover">
+                  <% @blocks.each do |block| %>
+                    <li><a href="#<%= block[:name] %>"><%= block[:title] %></a></li>
+                  <% end %>
+                </ul>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <div class="docsMain">
-
+          <div class="main col cols20 lastCol">
 
 
