@@ -1,0 +1,24 @@
+<div class="container" data-ng-cloak>
+	<div class='row'>
+		<div class="col-md-12">
+			<div class="row">
+				<div class="col-md-12">
+					<h2>
+						<a href="#/">Emmi Manager</a> :&nbsp;<span
+							data-bs-tooltip="'id: {{location.id}}'" data-placement="right">{{location.name}}</span>
+					</h2>
+				</div>
+			</div>
+			<div id="alerts-container" data-ng-show="locationForm.$invalid"></div>
+			<div class="row" data-ng-hide="editMode"
+				data-ng-include="'admin-facing/partials/location/editor/view.html'"></div>
+
+			<div class="row" data-ng-show="editMode"
+				data-ng-include="'admin-facing/partials/location/editor/edit.html'"></div>
+		</div>
+	</div>
+	<hr>
+	<div class="row"
+		data-ng-include="'admin-facing/partials/location/client/current.html'"></div>
+	<hr>
+</div>
