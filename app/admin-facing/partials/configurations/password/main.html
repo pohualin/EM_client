@@ -1,0 +1,39 @@
+<div class="container" data-ng-cloak>
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb h3">
+                <li><a href="#/">Emmi Manager</a></li>
+                <li class="active"><a data-ng-href="#/clients/{{client.id}}?{{currentRouteQueryString}}">
+                    <span data-bs-tooltip="'id: {{client.id}}'" data-placement="right">{{client.name}}</span></a>
+                </li>
+            </ol>
+        </div>
+    </div>
+    <form name="clientPasswordConfigurationForm" class="form-horizontal" novalidate>
+        <div class="row">
+            <div class="col-md-3"
+                 data-ng-include="'admin-facing/partials/configurations/main.html'">
+            </div>
+            <div class="col-md-9">
+                <div class="pull-left">
+                    <h2>Password Policies</h2>
+                </div>
+                <div class="pull-right">
+                <span data-ng-show="showButtons() && !loading">
+                    <a class="btn btn-link" data-ng-click="cancel()">cancel</a>
+                </span>
+                <span data-ng-show="clientPasswordConfiguration.link.self">
+                    <a class="btn btn-default" data-ng-click="reset()">Reset Defaults</a>
+                </span>
+                <span data-ng-show="showButtons() && !loading">
+                    <button class="btn btn-primary" type="submit"
+                            data-ng-click="save(clientPasswordConfigurationForm)">Save
+                    </button>
+                </span>
+                </div>
+                <div class="row" data-ng-include="'admin-facing/partials/configurations/password/form.html'"></div>
+            </div>
+        </div>
+
+    </form>
+</div>

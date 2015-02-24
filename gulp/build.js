@@ -4,6 +4,8 @@ var gulp = require('gulp');
 
 var $ = require('gulp-load-plugins')();
 
+var mainBowerFiles = require('main-bower-files');
+
 gulp.task('styles', function () {
     return gulp.src('app/styles/main.scss')
         .pipe($.rubySass({ style: 'expanded' }))
@@ -12,16 +14,32 @@ gulp.task('styles', function () {
         .pipe($.size({title: 'styles', showFiles:true}));
 });
 
-gulp.task('scripts', function () {
-    return gulp.src('app/scripts/**/*.js')
+gulp.task('admin-scripts', function () {
+    return gulp.src('app/admin-facing/scripts/**/*.js')
         .pipe($.jshint())
         .pipe($.jshint.reporter('jshint-stylish'))
         .pipe($.jshint.reporter('fail'))
-        .pipe($.size({title: 'scripts', showFiles:true}));
+        .pipe($.size({title: 'admin facing scripts', showFiles:true}));
 });
 
-gulp.task('partials', function () {
-    return gulp.src('app/partials/**/*.html')
+gulp.task('client-scripts', function () {
+    return gulp.src('app/client-facing/**/*.js')
+        .pipe($.jshint())
+        .pipe($.jshint.reporter('jshint-stylish'))
+        .pipe($.jshint.reporter('fail'))
+        .pipe($.size({title: 'client facing scripts', showFiles:true}));
+});
+
+gulp.task('router-scripts', function () {
+    return gulp.src('app/app-router/**/*.js')
+        .pipe($.jshint())
+        .pipe($.jshint.reporter('jshint-stylish'))
+        .pipe($.jshint.reporter('fail'))
+        .pipe($.size({title: 'app router scripts', showFiles:true}));
+});
+
+gulp.task('admin-partials', function () {
+    return gulp.src('app/admin-facing/partials/**/*.html')
         .pipe($.minifyHtml({
             empty: true,
             spare: true,
@@ -29,10 +47,10 @@ gulp.task('partials', function () {
         }))
         .pipe($.ngHtml2js({
             moduleName: "emmiManager",
-            prefix: "partials/"
+            prefix: "admin-facing/partials/"
         }))
         .pipe(gulp.dest(".tmp/partials"))
-        .pipe($.size({title: 'partials', showFiles:true}));
+        .pipe($.size({title: 'admin partials', showFiles:true}));
 });
 
 gulp.task('client-partials', function () {
@@ -65,7 +83,8 @@ gulp.task('router-partials', function () {
         .pipe($.size({title: 'router-partials', showFiles: true}));
 });
 
-gulp.task('html', ['styles', 'scripts', 'partials', 'client-partials', 'router-partials'], function () {
+gulp.task('html', ['styles', 'admin-scripts', 'client-scripts', 'router-scripts', 'admin-partials', 'client-partials', 'router-partials'],
+    function () {
     var jsFilter = $.filter('**/*.js');
     var cssFilter = $.filter('**/*.css');
 
@@ -121,7 +140,7 @@ gulp.task('favicon', function () {
 });
 
 gulp.task('fonts', function () {
-    return $.bowerFiles()
+    return gulp.src(mainBowerFiles())
         .pipe($.filter('**/*.{eot,svg,ttf,woff}'))
         .pipe($.flatten())
         .pipe(gulp.dest('dist/fonts'))
@@ -146,4 +165,4 @@ gulp.task('clean', function () {
     return gulp.src(['.tmp', 'dist'], { read: false }).pipe($.clean());
 });
 
-gulp.task('build', ['html', 'partials', 'images', 'favicon', 'fonts', 'translations', 'api-docs']);
+gulp.task('build', ['html', 'images', 'favicon', 'fonts', 'translations', 'api-docs']);
