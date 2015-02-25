@@ -29,9 +29,10 @@ angular.module('emmiManager')
             /**
              * Completes the activation
              */
-            $scope.save = function (formValid) {
+            $scope.save = function (changePasswordForm) {
                 $scope.changePasswordFormSubmitted = true;
-                if (formValid) {
+                changePasswordForm.password.$setValidity('policy', true);
+                if (changePasswordForm.$valid) {
                     ActivateClientUserService.activate(activationCode, $scope.passwordChange)
                         .then(function () {
                             $alert({
@@ -43,8 +44,12 @@ angular.module('emmiManager')
                                 dismissable: true
                             });
                             $location.path('/').replace();
-                        }, function error() {
-                            $location.path('/credentials/activation/failure').replace();
+                        }, function error(error) {
+                            if (error.status === 406) {
+                                changePasswordForm.password.$setValidity('policy', false);
+                            } else {
+                                $location.path('/credentials/expired/failure').replace();
+                            }
                         }
                     );
                 }
