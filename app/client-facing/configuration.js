@@ -134,7 +134,9 @@ angular.module('emmiManager', [
         // Call when the the client is confirmed
         $rootScope.$on('event:auth-loginConfirmed', function (data) {
             $rootScope.authenticated = true;
-            if ($location.path() === '/login') {
+            if (!$rootScope.account.clientResource.entity.contractOwner.emailValidated) {
+                $location.path('/validateEmail').replace();
+            } else if ($location.path() === '/login') {
                 var priorRequestPath = $rootScope.locationBeforeLogin;
                 if (priorRequestPath) {
                     $location.path(priorRequestPath.path()).replace();
@@ -181,7 +183,7 @@ angular.module('emmiManager', [
                 var d = event.srcElement || event.target;
                 if (!(d.tagName.toUpperCase() === 'INPUT' &&
                     (d.type.toUpperCase() === 'TEXT' ||
-                    d.type.toUpperCase() === 'PASSWORD'))) {
+                        d.type.toUpperCase() === 'PASSWORD'))) {
                     event.preventDefault();
                 }
             }
