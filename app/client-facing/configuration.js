@@ -25,7 +25,7 @@ angular.module('emmiManager', [
 
     .constant('USER_ROLES', {
         all: '*',
-        admin: 'PERM_GOD',
+        admin: 'PERM_CLIENT_SUPER_USER',
         user: 'PERM_USER'
     })
 

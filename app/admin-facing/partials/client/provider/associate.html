@@ -86,7 +86,7 @@
                                     <td data-ng-show="clientProvider.link.self">
                                         <input type="checkbox" disabled="disabled" checked>
                                     </td>
-                                    <td>{{clientProvider.provider.entity.firstName}} {{clientProvider.provider.entity.middleName}} {{clientProvider.provider.entity.lastName}}</td>
+                                    <td>{{clientProvider.provider.entity.firstName}} {{clientProvider.provider.entity.middleName}} {{clientProvider.provider.entity.lastName}} <em>{{clientProvider.provider.entity.active ? '' : "(inactive)"}}</em></td>
                                     <td>
                                         {{clientProvider.provider.entity.specialty.name}}
                                     </td>
