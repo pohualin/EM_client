@@ -25,7 +25,7 @@ angular.module('emmiManager', [
 
     .constant('USER_ROLES', {
         all: '*',
-        admin: 'PERM_GOD',
+        admin: 'PERM_CLIENT_SUPER_USER',
         user: 'PERM_USER'
     })
 
@@ -81,6 +81,8 @@ angular.module('emmiManager', [
 
         var modals = [];
 
+        $rootScope.authenticated = false;
+
         $rootScope.$on('modal.show', function (e, $modal) {
             // if modal is not already in list
             if (modals.indexOf($modal) === -1) {
@@ -114,7 +116,7 @@ angular.module('emmiManager', [
             AuthSharedService.authorizedRoute((next.access) ? next.access.authorizedRoles : [USER_ROLES.all]);
         });
 
-        $rootScope.$on('$routeChangeError', function (event, next) {
+        $rootScope.$on('$routeChangeError', function () {
             $location.path('/').replace();
         });
 
@@ -132,7 +134,7 @@ angular.module('emmiManager', [
         });
 
         // Call when the the client is confirmed
-        $rootScope.$on('event:auth-loginConfirmed', function (data) {
+        $rootScope.$on('event:auth-loginConfirmed', function () {
             $rootScope.authenticated = true;
             if (!$rootScope.account.clientResource.entity.contractOwner.emailValidated) {
                 $location.path('/validateEmail').replace();
@@ -156,14 +158,11 @@ angular.module('emmiManager', [
         $rootScope.$on('event:auth-loginRequired', function (event, rejection) {
             Session.destroy();
             $rootScope.locationBeforeLogin = rejection.location;
-            $rootScope.authenticated = false;
-            if ($location.path() !== '/' && $location.path() !== '' && $location.path() !== '/register' && $location.path() !== '/activate') {
-                $location.path('/login').replace();
-            }
+            $location.path('/login').replace();
         });
 
         // Call when the 403 response is returned by the server
-        $rootScope.$on('event:auth-notAuthorized', function (rejection) {
+        $rootScope.$on('event:auth-notAuthorized', function () {
             $location.path('/403').replace();
         });
 

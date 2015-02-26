@@ -1,0 +1,29 @@
+<div class="col-md-12">
+    <div class="pull-left">
+        <h2>Security Settings</h2>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <input id="emailConfigRestrict" type="checkbox"
+                    data-ng-model="clientRestrictConfiguration.entity.emailConfigRestrict"
+                    data-ng-change="save()" /> Restrict valid email addresses
+            </div>
+        </div>
+        <div class="col-md-12" data-ng-show="originalClientRestrictConfiguration.entity.emailConfigRestrict">
+            <div data-ng-include="'admin-facing/partials/configurations/restriction/email.html'"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <input id="ipConfigRestrict" type="checkbox"
+                    data-ng-model="clientRestrictConfiguration.entity.ipConfigRestrict"
+                    data-ng-change="save()" /> Restrict IP Range
+            </div>
+        </div>
+        <div class="col-md-12" data-ng-show="originalClientRestrictConfiguration.entity.ipConfigRestrict">
+            <div data-ng-include="'admin-facing/partials/configurations/restriction/ip.html'"></div>
+        </div>
+    </div>
+</div>
