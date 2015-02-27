@@ -82,6 +82,7 @@ angular.module('emmiManager')
                             $rootScope.account = Session.create(user);
                             $rootScope.authenticated = true;
                             deferred.resolve($rootScope.account);
+                            $rootScope.$broadcast('event:auth-loginConfirmed');
                         }).error(function (data) {
                             $rootScope.authenticated = false;
                             if (data.url) {
