@@ -30,6 +30,6 @@ angular.module('emmiManager')
                 access: {
                     authorizedRoles: [USER_ROLES.all]
                 }
-            })
+            });
     })
 ;
