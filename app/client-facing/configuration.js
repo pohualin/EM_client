@@ -136,9 +136,7 @@ angular.module('emmiManager', [
         // Call when the the client is confirmed
         $rootScope.$on('event:auth-loginConfirmed', function () {
             $rootScope.authenticated = true;
-            if (!$rootScope.account.clientResource.entity.contractOwner.emailValidated) {
-                $location.path('/validateEmail').replace();
-            } else if ($location.path() === '/login') {
+            if ($location.path() === '/login') {
                 var priorRequestPath = $rootScope.locationBeforeLogin;
                 if (priorRequestPath) {
                     $location.path(priorRequestPath.path()).replace();
