@@ -25,7 +25,7 @@ angular.module('emmiManager')
 
         $scope.notNow = function () {
             ValidationService.notNow();
-        }
+        };
     })
 ;
 
