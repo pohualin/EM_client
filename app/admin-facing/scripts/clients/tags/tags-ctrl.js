@@ -33,9 +33,9 @@ angular.module('emmiManager')
             });
 
             angular.forEach(tagLibraries, function(group){
-            	Tag.loadReferenceTags(group).then( function (response) {
-            		group.tags = response;
-            	});
+                Tag.loadReferenceTags(group).then( function (response) {
+                    group.tags = response;
+                });
             });
 
             $scope.tagLibraries = tagLibraries;
@@ -44,6 +44,8 @@ angular.module('emmiManager')
             // set the selected groups
             $scope.client.savedGroups = clientGroups || [];
             $scope.client.tagGroups = angular.copy($scope.client.savedGroups);
+
+            $scope.disableLibrary();
 
         });
 
@@ -119,6 +121,7 @@ angular.module('emmiManager')
 
         $scope.tagsChanged = function () {
             $scope.clientTagsHaveChanges = true;
+            $scope.disableLibrary();
         };
 
         $scope.cancelTagChanges = function () {
@@ -132,16 +135,13 @@ angular.module('emmiManager')
             var selected = $filter('filter')(this.tagLibraries, { checked: true, disabled: false });
             if (selected.length > 0) {
                 $scope.client.tagGroups = $scope.client.tagGroups.concat(angular.copy(selected));
-                $scope.clientTagsHaveChanges = true;
+                $scope.tagsChanged();
             }
-            angular.forEach(this.tagLibraries, function (value) {
-                value.checked = false;
-            });
         };
 
         // a filter to set the checked and disabled properties of a library group
         $scope.disableLibrary = function () {
-            return function (libraryGroup) {
+            angular.forEach($scope.tagLibraries, function(libraryGroup){
                 var match = false;
                 angular.forEach($scope.client.tagGroups, function (tagGroup) {
                     // exact match between tag group and library group titles
@@ -154,15 +154,18 @@ angular.module('emmiManager')
                 libraryGroup.disabled = match;
                 if (libraryGroup.disabled) {
                     libraryGroup.checked = true;
+                } else {
+                    libraryGroup.checked = false; // make sure to uncheck any previously checked libraries that may have been removed and are now enabled (EM-880)
                 }
-                return libraryGroup;
-            };
+            });
         };
 
         // currently have to hook these events into the tooltip for the popover, since AngularStrap popovers do not provide a correct prefixEvent hook to configure popovers
         $scope.$on('tooltip.hide', function () {
             angular.forEach($scope.tagLibraries, function (value) {
-                value.checked = false;
+                if (!value.disabled) {
+                    value.checked = false;
+                }
             });
         });
 
