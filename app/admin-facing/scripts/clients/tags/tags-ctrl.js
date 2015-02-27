@@ -10,14 +10,13 @@ angular.module('emmiManager')
         $scope.tagInputMode = false;
         $scope.hideCancelButton = false;
 
-        $scope.toggleHideCancelButton = function () {
-            $scope.hideCancelButton = !$scope.hideCancelButton;
-        };
         $scope.hideConflictingTeamsPopover = function () {
             $scope.teamConflictWarning.hide();
+            $scope.hideCancelButton = false;
         };
         $scope.showPopover = function () {
             $scope.teamConflictWarning.show();
+            $scope.hideCancelButton = true;
         };
 
 
@@ -219,11 +218,9 @@ angular.module('emmiManager')
         return {
             restrict: 'EA',
             link: function (scope, element) {
-
                 element.on('click', function (event) {
                     // pop a warning dialog
                     event.stopPropagation();
-                    scope.toggleHideCancelButton();
                     if (!scope.teamConflictWarning) {
                         scope.teamConflictWarning = $popover(element, {
                             title: 'Are you sure?',
@@ -233,10 +230,6 @@ angular.module('emmiManager')
                             placement: 'top',
                             trigger: 'manual',
                             contentTemplate: 'admin-facing/partials/client/tags/conflictingTeam_popover.tpl.html'
-                        });
-                        scope.$on('tooltip.hide', function () {
-                            scope.toggleHideCancelButton();
-                            scope.$apply();
                         });
                     }
                 });
