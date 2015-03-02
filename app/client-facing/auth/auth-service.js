@@ -39,6 +39,7 @@ angular.module('emmiManager')
                             });
                         } else {
                             $rootScope.authenticationError = true;
+                            $rootScope.errorMessage = error;
                         }
                         Session.destroy();
                     });

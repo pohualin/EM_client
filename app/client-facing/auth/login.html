@@ -4,7 +4,7 @@
             <h1 data-translate="login.title">Authentication</h1>
 
             <div class="alert alert-danger" data-ng-show="authenticationError">
-                <strong>&nbsp;</strong>Please check your username and password and try again.
+                <strong>&nbsp;</strong>{{errorMessage}}
             </div>
             <form class="form" name="loginForm" data-ng-submit="login(credentials)" novalidate>
                 <div class="form-group"
