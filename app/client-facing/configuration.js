@@ -77,7 +77,7 @@ angular.module('emmiManager', [
         });
     })
 
-    .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, arrays, $document) {
+    .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, arrays, $document, ConfigurationService) {
 
         var modals = [];
 
@@ -136,16 +136,7 @@ angular.module('emmiManager', [
         // Call when the the client is confirmed
         $rootScope.$on('event:auth-loginConfirmed', function () {
             $rootScope.authenticated = true;
-            if (!$rootScope.account.clientResource.entity.contractOwner.emailValidated) {
-                $location.path('/validateEmail').replace();
-            } else if ($location.path() === '/login') {
-                var priorRequestPath = $rootScope.locationBeforeLogin;
-                if (priorRequestPath) {
-                    $location.path(priorRequestPath.path()).replace();
-                } else {
-                    $location.path('/').replace();
-                }
-            }
+            ConfigurationService.routeUser();
         });
 
         $rootScope.$on('event:auth-credentialsExpired', function (event, rejection) {

@@ -16,7 +16,7 @@ angular.module('emmiManager')
                  */
                 sendValidationEmail: function (user) {
                     var deferred = $q.defer();
-                    $http.post(UriTemplate.create(user.link.validate).stringify({user:user}),user).then(function(response) {
+                    $http.post(UriTemplate.create(user.link.validate).stringify(),user).then(function(response) {
                         $location.path('#/');
                         deferred.resolve(response);
                     });
@@ -28,7 +28,7 @@ angular.module('emmiManager')
                  *
                  */
                 notNow: function () {
-                        $location.path('#/');
+                        $location.path('/');
                 }
 
 
