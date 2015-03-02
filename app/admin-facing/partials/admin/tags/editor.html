@@ -39,6 +39,7 @@
                                                 cancel
                                             </button>
                                             <button class="btn btn-default" data-ng-click="update(group, $index)"
+                                                    data-ng-disabled="!existingTagGroupForm_{{$index}}.$valid"
                                                     data-ng-show="existingTagGroupForm_{{$index}}.$valid && group.changed">
                                                 Save
                                             </button>
@@ -70,6 +71,7 @@
                                         <div class="pull-right">
                                             <button type="button" class="btn btn-link" data-ng-click="cancelNew()">cancel</button>
                                             <button class="btn btn-default" data-ng-click="saveNewGroup(newTagGroup)"
+                                                    data-ng-disabled="!newTagGroupForm.$valid"
                                                     data-ng-show="newTagGroupForm.$valid">
                                                 Save Group
                                             </button>
