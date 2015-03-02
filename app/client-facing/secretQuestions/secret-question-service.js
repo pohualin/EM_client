@@ -4,8 +4,8 @@ angular.module('emmiManager')
 /**
  * Service for Secret Question Responses
  */
-    .service('SecretQuestionService', ['$http', 'UriTemplate', 'Session', 
-        function ($http, UriTemplate, Session) {
+    .service('SecretQuestionService', ['$http', 'UriTemplate', 'Session', 'API',
+        function ($http, UriTemplate, Session, API) {
             return {
 
                 /**
@@ -14,10 +14,8 @@ angular.module('emmiManager')
                  * @returns All available secret question
                  */
                 getSecretQuestions: function () {
-                    return $http.get(UriTemplate.create(Session.link.secretQuestions).stringify())
-                    .then(function (response) {
-                            return response;
-                        });
+                	return $http.get(API.secretQuestions);
+         
                 },
                 
                        

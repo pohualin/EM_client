@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  * This manages interactions when a user needs to select secret questions and responses.
  */
-    .controller('SecretQuestionController', ['$scope', '$location', 'SecretQuestionService',
-        function ($scope, $location, SecretQuestionService) { 	
+    .controller('SecretQuestionController', ['$scope', '$location', 'SecretQuestionService', '$alert',
+        function ($scope, $location, SecretQuestionService, $alert) { 	
     	
     	$scope.secretQuestionFormSubmitted = false;
     	/**
@@ -17,12 +17,22 @@ angular.module('emmiManager')
         $scope.saveOrUpdateSecretQuestion = function(valid) {
         	$scope.secretQuestionFormSubmitted = true;
         	if(valid){
-        	    SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.question1.entity).then(function(response) {
-	            });
-	        	SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.question2.entity).then(function(response) {
-	            });
+        	    SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.question1.entity);
+	        	SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.question2.entity);
 	        	$location.path('/');
-    		}
+    		} else {
+                if (!$scope.errorAlert) {
+                    $scope.errorAlert = $alert({
+                        title: ' ',
+                        content: 'Please correct the below information.',
+                        container: '#message-container',
+                        type: 'danger',
+                        show: true,
+                        dismissable: false
+                    });
+                }
+            }
+        	
     	};
         
         /**
@@ -34,9 +44,9 @@ angular.module('emmiManager')
           
        };
        
-        
-        function init(){
-                       
+       function init(){
+           
+            
           	SecretQuestionService.getSecretQuestions().then(function(response) {
           		$scope.secretQuestions = response.data.content; 
        		});
