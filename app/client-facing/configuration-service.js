@@ -4,7 +4,7 @@ angular.module('emmiManager')
 /**
  * Service for configuration.
  */
-    .service('ConfigurationService', ['$rootScope','$location'],
+    .service('ConfigurationService', ['$rootScope','$location',
     function ($rootScope,$location) {
         return {
             routeUser:function(){
@@ -20,6 +20,6 @@ angular.module('emmiManager')
                 }
             }
         };
-    });
+    }]);
 
 
