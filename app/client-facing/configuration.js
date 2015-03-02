@@ -25,7 +25,7 @@ angular.module('emmiManager', [
 
     .constant('USER_ROLES', {
         all: '*',
-        admin: 'PERM_GOD',
+        admin: 'PERM_CLIENT_SUPER_USER',
         user: 'PERM_USER'
     })
 
@@ -180,7 +180,7 @@ angular.module('emmiManager', [
                 var d = event.srcElement || event.target;
                 if (!(d.tagName.toUpperCase() === 'INPUT' &&
                     (d.type.toUpperCase() === 'TEXT' ||
-                    d.type.toUpperCase() === 'PASSWORD'))) {
+                        d.type.toUpperCase() === 'PASSWORD'))) {
                     event.preventDefault();
                 }
             }
