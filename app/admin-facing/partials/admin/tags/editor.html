@@ -21,7 +21,7 @@
                                             <input class="form-control" data-ng-model="group.title"
                                                    data-focus-on="focus-{{group.entity.id}}"
                                                    maxlength="50"
-                                                   required>
+                                                   required data-group-title-unique>
                                         </div>
                                         <div class="pull-right">
                                             <button type="button" class="btn-link" data-ng-hide="group.editMode" data-ng-click="startEditMode(group)">
@@ -57,13 +57,15 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
-                                        <input class="form-control" data-ng-model="newTagGroup.title"
-                                               data-focus-on="focus-new-group" maxlength="50" required>
+                                        <div class="form-group" data-ng-class="{ 'has-error' : newTagGroupForm.newTagGroup.$error.unique}">
+                                            <input class="form-control" name="newTagGroup" data-ng-model="newTagGroup.title"
+                                               data-focus-on="focus-new-group" maxlength="50" required data-group-title-unique>
+                                        </div>
                                     </h4>
                                 </div>
                                 <div class="panel-collapse">
                                     <div class="panel-body">
-                                        <div data-tags-input class="tags-input" data-ng-model="newTagGroupTags" data-on-tag-added="onChange('tag added')" data-on-tag-removed="onChange('tag removed')" data-on-tag-edited="onChange('tag edited')" data-ng-click="$event.stopPropagation();" data-ng-paste="pasteTags($event, $index)" data-enable-editing-last-tag="true" data-add-on-space="false" data-replace-spaces-with-dashes="false" data-display-property="text" data-min-tags="1"></div>
+                                        <div data-tags-input class="tags-input" data-ng-model="newTagGroupTags" data-ng-click="$event.stopPropagation();" data-ng-paste="pasteTags($event, $index)" data-enable-editing-last-tag="true" data-add-on-space="false" data-replace-spaces-with-dashes="false" data-display-property="text" data-min-tags="1"></div>
                                         <hr/>
                                         <div class="pull-right">
                                             <button type="button" class="btn btn-link" data-ng-click="cancelNew()">cancel</button>
