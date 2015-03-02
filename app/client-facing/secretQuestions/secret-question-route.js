@@ -14,6 +14,7 @@ angular.module('emmiManager')
         .when('/secretQuestions', {
             templateUrl: 'client-facing/secretQuestions/secret-question.html',
             controller: 'SecretQuestionController',
+            title: 'Secret Question',
              access: {
                  authorizedRoles: [USER_ROLES.all]
              },

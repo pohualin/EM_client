@@ -21,7 +21,7 @@ angular.module('emmiManager')
 	            });
 	        	SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.question2.entity).then(function(response) {
 	            });
-	        	$location.path('/client-facing/main/main.html');
+	        	$location.path('/');
     		}
     	};
         
@@ -30,14 +30,13 @@ angular.module('emmiManager')
          * objects and copies them back into the bound objects.
          */
         $scope.cancel = function() {
-           $location.path('/client-facing/main/main.html');
+           $location.path('/');
           
        };
        
         
         function init(){
-            $scope.secretQuestionForm = 'valid';
-            
+                       
           	SecretQuestionService.getSecretQuestions().then(function(response) {
           		$scope.secretQuestions = response.data.content; 
        		});

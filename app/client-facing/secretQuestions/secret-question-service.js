@@ -20,33 +20,7 @@ angular.module('emmiManager')
                         });
                 },
                 
-                /**
-                 * Creates a new object for the response
-                 */
-                createNewResponse: function () {
-                	return {
-            		   	entity:{
-            		   		secretQuestion:null,
-					 		response:null
-					 	}
-                	}
-                },
-                
-                /**
-                 * Calls the back end to get the secret question response for a question id
-                 *
-                 * @param question id
-                 * @returns a secretQuestionsResponses for a question id
-                 */
-                getOneSecretQuestionResponse: function(id) {
-                    return $http.get(UriTemplate.create(Session.link.secretQuestionResponses)
-                    		.stringify({
-                                id: id
-                            })).then(function(response) {
-                            return response.data;
-                            });   
-                },
-                
+                       
                 /**
                  * Calls the back end to get all question and response for a client user
                  *
