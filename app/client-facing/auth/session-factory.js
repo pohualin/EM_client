@@ -10,6 +10,7 @@ angular.module('emmiManager')
             this.userRoles = user.permission;
             this.link = user.link;
             this.clientResource = user.clientResource;
+            this.passwordLastUpdateTime = user.passwordLastUpdateTime;
             return this;
         };
         this.destroy = function () {
@@ -20,6 +21,7 @@ angular.module('emmiManager')
             this.userRoles = null;
             this.link = null;
             this.clientResource = null;
+            this.passwordLastUpdateTime = null;
         };
         return this;
     }])

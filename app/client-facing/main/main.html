@@ -4,6 +4,10 @@
         <span data-translate="main.welcome" data-ng-show="account"
               data-translate-value-username="{{ account.firstName + ' ' + account.lastName}}"
               data-translate-value-today="{{ today | date:'fullDate' }}"></span> <span data-ng-hide="account">The date is {{ today | date:'fullDate' }}.</span>
+    
+        <div>
+            Dude! You're password is going to expire in {{policy.passwordExpirationDaysReminder}} days.
+        </div>
 
         <div>
             <ul >
