@@ -1,8 +1,10 @@
 <div class="row">
     <div class="col-md-12">
-        <h2>
-            <a href="#/">Emmi Manager</a> :&nbsp;View User
-        </h2>
+        <ol class="breadcrumb h3">
+            <li><a href="#/">Emmi Manager</a></li>
+            <li><a href="#/users">Manage Emmi Users</a></li>
+            <li class="active">View User</li>
+        </ol>
     </div>
 </div>
 <div class="row">
@@ -11,6 +13,7 @@
     </div>
     <div class="col-md-6">
         <h2></h2>
+
         <div class="actions pull-right">
             <button class="btn btn-link" type="button" data-ng-click="edit()">edit</button>
             <a class="btn btn-primary"
@@ -50,5 +53,16 @@
     </div>
     <div class="col-md-4">
         {{role.name}}
+    </div>
+</div>
+
+<div class="row" data-ng-show="selectedUser.webApiUser && selectedUser.link.password">
+    <div class="col-md-12">
+        <hr/>
+        <button class="btn btn-default" type="button"
+                data-ng-disabled="passwordNotification"
+                data-ng-click="generatePassword($event)">
+            <span>Generate API Credentials</span>
+        </button>
     </div>
 </div>
