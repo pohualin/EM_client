@@ -60,7 +60,7 @@ angular.module('emmiManager')
                             char = char.toLowerCase();
                         }
                         if (char.match(pattern)) {
-                            prefix = "" + prefix + char;
+                            prefix = '' + prefix + char;
                         }
                     }
                     return prefix;

@@ -171,12 +171,12 @@ angular.module('emmiManager')
                 },
 
                 generatePassword: function () {
-                    var char = "", n, length = 25, prefix = '' ;
+                    var char = '', n, length = 25, prefix = '' ;
                     while (prefix.length < length) {
                         n = Math.floor(Math.random() * 94) + 33;
                         char = String.fromCharCode(n);
                         if (char.match(pattern)) {
-                            prefix = "" + prefix + char;
+                            prefix = '' + prefix + char;
                         }
                     }
                     return prefix;
