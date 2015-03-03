@@ -1,6 +1,6 @@
 <form name="tagGroupLibraries" data-popover-toggle>
     <div class="form-group">
-        <div class="checkbox" data-ng-repeat="library in tagLibraries | filter:disableLibrary()">
+        <div class="checkbox" data-ng-repeat="library in tagLibraries">
             <label>
                 <input type="checkbox" value="" data-ng-model="library.checked" data-ng-disabled="library.disabled">&nbsp;&nbsp;
             </label>
