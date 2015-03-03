@@ -1,13 +1,13 @@
 <div class="container" data-ng-cloak>
-    <div class="row">
-        <h1>Emmi Manager 2.0 - Client Facing</h1>
+    <div class="row" data-ng-switch="authenticated">
+        <h1>Emmi Manager 2.0 <span data-ng-switch-when="true">- {{account.clientResource.entity.name}}</span></h1>
         <span data-translate="main.welcome" data-ng-show="account"
               data-translate-value-username="{{ account.firstName + ' ' + account.lastName}}"
               data-translate-value-today="{{ today | date:'fullDate' }}"></span> <span data-ng-hide="account">The date is {{ today | date:'fullDate' }}.</span>
 
         <div>
-            <ul data-ng-switch="authenticated">
-                <li data-ng-show="isAuthorized(userRoles.admin)">
+            <ul >
+                <li data-ng-switch-when="true" data-ng-show="isAuthorized(userRoles.admin)">
                     <a data-ng-href="#/docs">Documentation</a>
                 </li>
                 <li data-ng-switch-when="false">
@@ -18,9 +18,6 @@
                 </li>
                 <li data-ng-switch-when="true">
                     <a data-ng-href="#/logout" data-translate="global.menu.logout">Log Out</a>
-                </li>
-                <li data-ng-switch-when="true">
-                    <a data-ng-href="#/secretQuestions">My Secret Questions</a>
                 </li>
             </ul>
         </div>

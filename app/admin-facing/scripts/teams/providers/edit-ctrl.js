@@ -13,7 +13,7 @@ angular.module('emmiManager')
 
             $scope.saveProvider = function (isValid) {
             	$scope.providerFormSubmitted = true;
-                if (isValid && $scope.selectedItems.length > 0) {
+                if (isValid && (($scope.potentialLocations.length > 0 && $scope.selectedItems.length > 0) || $scope.potentialLocations.length < 1)) { 
                     // Compose save request
                 	$scope.teamProviderTeamLocationSaveRequest = TeamProviderService.composeTeamProviderTeamLocationSaveRequest(
                 			$scope.selectedItems,
