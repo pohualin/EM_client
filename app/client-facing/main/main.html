@@ -6,11 +6,11 @@
               data-translate-value-today="{{ today | date:'fullDate' }}"></span> <span data-ng-hide="account">The date is {{ today | date:'fullDate' }}.</span>
     
         <div>
-            Dude! You're password is going to expire in {{policy.passwordExpirationDaysReminder}} days.
+            Dude! You're password is going to expire in {{passwordExpiresInDays}} days. <a data-ng-href="#/credentials/reset">Reset Password</a>
         </div>
 
         <div>
-            <ul >
+            <ul>
                 <li data-ng-switch-when="true" data-ng-show="isAuthorized(userRoles.admin)">
                     <a data-ng-href="#/docs">Documentation</a>
                 </li>

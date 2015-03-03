@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('emmiManager')
-    .controller('MainCtrl', ['$scope', '$translate', '$locale', 'tmhDynamicLocale', 'account', 'arrays', 'CredentialsExpiredService',
-        function ($scope, $translate, $locale, tmhDynamicLocale, account, arrays, CredentialsExpiredService) {
+    .controller('MainCtrl', ['$scope', '$translate', '$locale', 'tmhDynamicLocale', 'account', 'arrays', 'moment', 'CredentialsExpiredService',
+        function ($scope, $translate, $locale, tmhDynamicLocale, account, arrays, moment, CredentialsExpiredService) {
         $scope.today = new Date();
         $scope.changeLanguage = function (langKey) {
             $translate.use(langKey);
@@ -14,12 +14,13 @@ angular.module('emmiManager')
                 $scope.page.setTitle(account.clientResource.entity.name + ' Home');
                 account.clientResource.link = arrays.convertToObject('rel', 'href',
                         account.clientResource.link);
+                CredentialsExpiredService.loadPolicy(account.clientResource).then(function (response){
+                    $scope.policy = response.data;
+                    var passwordExpirationMoment = moment(account.passwordExpirationTime);
+                    var now = moment(new Date());
+                    $scope.passwordExpiresInDays = passwordExpirationMoment.diff(now, 'days');
+                });
             }
-            
-            CredentialsExpiredService.loadPolicy(account.clientResource).then(function (response){
-                $scope.policy = response.data;
-            });
-            
             window.paul = $scope;
         }
 
