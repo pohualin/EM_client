@@ -19,7 +19,7 @@ angular.module('emmiManager')
                  authorizedRoles: [USER_ROLES.all]
              },
              resolve: requiredResources
-        })
+        });
       
     })
 ;

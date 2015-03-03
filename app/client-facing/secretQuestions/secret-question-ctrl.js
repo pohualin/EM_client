@@ -60,7 +60,7 @@ angular.module('emmiManager')
             $scope.question2Original =  existingResponse.length > 1 ? existingResponse[1] : SecretQuestionService.createNewResponse();
             $scope.question2 = angular.copy($scope.question2Original);
         	}); 
-        };
+        }
         
         init();
             
