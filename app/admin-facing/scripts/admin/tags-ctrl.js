@@ -105,7 +105,7 @@ angular.module('emmiManager')
     /**
      * Check for tag groups with the same name
      */
-    .directive("groupTitleUnique", function(){
+    .directive('groupTitleUnique', function(){
         return {
             restrict: 'A',
             require: 'ngModel',
@@ -130,9 +130,8 @@ angular.module('emmiManager')
 
                     return value;
                 });
-
             }
-        }
+        };
     })
 
 ;
