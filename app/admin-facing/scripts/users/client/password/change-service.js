@@ -24,61 +24,46 @@ angular.module('emmiManager')
                 },
 
                 /**
-                 * Generate a password for the user. Plus adds a number
-                 * and special
+                 * Generate a 6 character password for the user.
+                 * Plus adds a number and special.
                  *
-                 *
-                 * @param length of the password + 2 extra; defaults to 6 + 2
-                 * @param memorable password for humans; defaults to true
-                 * @param pattern used for recursion
-                 * @param prefix used for recursion
                  * @returns {*}
                  */
-                generatePassword: function (length, memorable, pattern, prefix) {
-                    var char, n;
-                    if (length === undefined || length === null) {
-                        length = 6;
-                    }
-                    if (memorable === undefined || memorable === null) {
-                        memorable = true;
-                    }
-                    if (pattern === undefined || pattern === null) {
-                        pattern = /[a-zA-Z0-9]/;
-                    }
-                    if (prefix === undefined || prefix === null) {
-                        prefix = '';
-                    }
-                    if (prefix.length >= length) {
-                        memorable = false;
-                        if (prefix.length - 2 !== length) {
-                            // add a special character and number to the end
-                            if (prefix.length - 1 === length) {
-                                // last char is a special
-                                pattern = special;
+                generatePassword: function () {
+                    var char, n, length = 6, memorable = true, pattern = consonant, prefix = '';
+                    while (prefix.length < length + 2) {
+                        if (prefix.length >= length) {
+                            memorable = false;
+                            if (prefix.length - 2 !== length) {
+                                // add a special character and number to the end
+                                if (prefix.length - 1 === length) {
+                                    // last char is a special
+                                    pattern = special;
+                                } else {
+                                    // second to last is number
+                                    pattern = number;
+                                }
                             } else {
-                                // second to last is number
-                                pattern = number;
+                                return prefix;
                             }
-                        } else {
-                            return prefix;
+                        }
+                        if (memorable) {
+                            if (prefix.match(consonant)) {
+                                pattern = vowel;
+                            } else {
+                                pattern = consonant;
+                            }
+                        }
+                        n = (Math.floor(Math.random() * 100) % 94) + 33;
+                        char = String.fromCharCode(n);
+                        if (memorable) {
+                            char = char.toLowerCase();
+                        }
+                        if (char.match(pattern)) {
+                            prefix = '' + prefix + char;
                         }
                     }
-                    if (memorable) {
-                        if (prefix.match(consonant)) {
-                            pattern = vowel;
-                        } else {
-                            pattern = consonant;
-                        }
-                    }
-                    n = (Math.floor(Math.random() * 100) % 94) + 33;
-                    char = String.fromCharCode(n);
-                    if (memorable) {
-                        char = char.toLowerCase();
-                    }
-                    if (!char.match(pattern)) {
-                        return this.generatePassword(length, memorable, pattern, prefix);
-                    }
-                    return this.generatePassword(length, memorable, pattern, '' + prefix + char);
+                    return prefix;
                 },
 
                 /**
