@@ -1,14 +1,14 @@
 'use strict';
 
 angular.module('emmiManager')
-    .controller('validateEmail', ['$rootScope','$scope', 'ValidationService', '$alert', '$location',
-        function ($rootScope, $scope, ValidationService, $alert, $location) {
+    .controller('validateEmail', ['$scope', 'ValidationService', '$alert', '$location','locationBeforeLogin',
+        function ($scope, ValidationService, $alert, $location, locationBeforeLogin) {
             /**
              * Send an activation email to the user
              */
             $scope.sendActivationEmail = function () {
                 ValidationService.sendValidationEmail($scope.account).then(function () {
-                    $scope.goToProperURL();
+                    $location.path(locationBeforeLogin).replace();
                     //show confirmation banner
                     $alert({
                         content: 'Please check your email. A link has been sent to <strong>' + $scope.account.email +
@@ -27,19 +27,9 @@ angular.module('emmiManager')
              */
             $scope.notNow = function () {
                 ValidationService.notNow();
-                $scope.goToProperURL();
+                $location.path(locationBeforeLogin).replace();
             };
 
-            $scope.goToProperURL = function(){
-                var priorRequestPath = $rootScope.locationBeforeLogin;
-                if (priorRequestPath) {
-                    //if user was trying to access a url
-                    $location.path(priorRequestPath.path()).replace();
-                } else {
-                    //if user is just logging in
-                    $location.path('/').replace();
-                }
-            };
         }])
 ;
 

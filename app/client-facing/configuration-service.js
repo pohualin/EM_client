@@ -4,11 +4,11 @@ angular.module('emmiManager')
 /**
  * Service for configuration.
  */
-    .service('ConfigurationService', ['$rootScope','$location',
-    function ($rootScope,$location) {
+    .service('ConfigurationService', ['$rootScope','$location','Session',
+    function ($rootScope,$location,Session) {
         return {
             routeUser:function(){
-                if (!$rootScope.account.emailValidated) {
+                if (!Session.emailValidated) {
                     //if email is not verified for user
                     $location.path('/validateEmail').replace();
                 } else if ($location.path() === '/login') {
