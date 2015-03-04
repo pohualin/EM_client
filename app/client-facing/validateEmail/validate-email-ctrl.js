@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('emmiManager')
-    .controller('validateEmail', ['$scope', 'ValidationService', '$alert', '$location','locationBeforeLogin',
+    .controller('validateEmail', ['$scope', 'ValidationService', '$alert', '$location', 'locationBeforeLogin',
         function ($scope, ValidationService, $alert, $location, locationBeforeLogin) {
             /**
              * Send an activation email to the user
@@ -20,13 +20,12 @@ angular.module('emmiManager')
                         dismissable: true
                     });
                 });
-            }
+            };
 
-        };
 
-        $scope.notNow = function () {
-            ValidationService.notNow();
-        };
-    })
+            $scope.notNow = function () {
+                ValidationService.notNow();
+            };
+        }])
 ;
 
