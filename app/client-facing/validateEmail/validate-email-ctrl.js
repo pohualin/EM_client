@@ -1,14 +1,15 @@
 'use strict';
 
 angular.module('emmiManager')
-    .controller('validateEmail', function ($scope, ValidationService, $alert) {
-        /**
-         * Send an activation email to the user
-         */
-        $scope.sendActivationEmail = function (isValid) {
-            $scope.emailFormSubmitted = true;
-            if(isValid) {
+    .controller('validateEmail', ['$scope', 'ValidationService', '$alert', '$location', 'locationBeforeLogin',
+        function ($scope, ValidationService, $alert, $location, locationBeforeLogin) {
+            /**
+             * Send an activation email to the user
+             */
+            $scope.sendActivationEmail = function () {
                 ValidationService.sendValidationEmail($scope.account).then(function () {
+                    $location.path(locationBeforeLogin).replace();
+                    //show confirmation banner
                     $alert({
                         content: 'Please check your email. A link has been sent to <strong>' + $scope.account.email +
                             '</strong> to finish setting up your account.',
@@ -19,13 +20,12 @@ angular.module('emmiManager')
                         dismissable: true
                     });
                 });
-            }
+            };
 
-        };
 
-        $scope.notNow = function () {
-            ValidationService.notNow();
-        };
-    })
+            $scope.notNow = function () {
+                ValidationService.notNow();
+            };
+        }])
 ;
 
