@@ -49,6 +49,7 @@ angular.module('emmiManager')
                                 tags: []
                             };
                             $scope.groups.push(tagGroup);
+                            $scope.onChange('add group');
                             $scope.$broadcast('tag:add', tagGroup);
                         }
                         return true;
@@ -73,7 +74,7 @@ angular.module('emmiManager')
                 };
 
                 $scope.changeTagGroupTitle = function (groupIndex) {
-                    $scope.hasEmpties();
+                    $scope.formField.$setValidity('empty', !$scope.hasEmpties());
 
                     // Title already gets changed from data binding, so really just need to hide the edit form
                     $scope.groups[groupIndex].editMode = false;
@@ -226,7 +227,7 @@ angular.module('emmiManager')
                 element.on('hide.bs.dropdown', function () {
                     scope.$apply(function () {
                         scope.taggingMode = false;
-                        scope.hasEmpties();
+                        scope.formField.$setValidity('empty', !scope.hasEmpties());
                     });
                 });
 

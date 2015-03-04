@@ -161,6 +161,9 @@ angular.module('emmiManager', [
                 } else {
                     $location.path('/').replace();
                 }
+            } else if ($location.path() === '/') {
+                // special reload is required here because the path wasn't changed
+                $location.path('reload...').replace();
             }
         });
 

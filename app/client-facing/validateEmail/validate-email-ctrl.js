@@ -20,16 +20,13 @@ angular.module('emmiManager')
                         dismissable: true
                     });
                 });
-            };
+            }
 
-            /**
-             * not now functionality to delay having to validate email
-             */
-            $scope.notNow = function () {
-                ValidationService.notNow();
-                $location.path(locationBeforeLogin).replace();
-            };
+        };
 
-        }])
+        $scope.notNow = function () {
+            ValidationService.notNow();
+        };
+    })
 ;
 
