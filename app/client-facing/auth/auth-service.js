@@ -30,17 +30,7 @@ angular.module('emmiManager')
                             authService.loginConfirmed(currentUser);
                         });
                     }).error(function (error) {
-                        if (angular.isObject(error)){
-                            // only possible object being returned is a client object
-                            error.link = arrays.convertToObject('rel', 'href', error.link);
-                            $rootScope.$broadcast('event:auth-credentialsExpired', {
-                                credentials: creds,
-                                client: error
-                            });
-                        } else {
-                            $rootScope.authenticationError = true;
-                            $rootScope.errorMessage = error;
-                        }
+                        self.processLoginFailureError(error);
                         Session.destroy();
                     });
                 },
@@ -114,6 +104,32 @@ angular.module('emmiManager')
                     $rootScope.account = null;
                     Session.destroy();
                     authService.loginCancelled();
+                },
+                processLoginFailureError: function(error){
+                    window.paul = error;
+                    $rootScope.authenticationError = false;
+                    $rootScope.infiniteLock = false;
+                    $rootScope.temporaryLock = false;
+                    if (angular.isObject(error)){
+                        if(error.entity.reason === 'BAD_CREDENTIAL' && error.entity.userClient.accountNonLocked){
+                            $rootScope.authenticationError = true;
+                        } else if (error.entity.reason === 'LOCK' || (error.entity.reason === 'BAD_CREDENTIAL' && !error.entity.userClient.accountNonLocked)) {
+                            if (error.entity.clientPasswordConfiguration.lockoutReset === 0){
+                                $rootScope.infiniteLock = true;
+                            } else {
+                                $rootScope.temporaryLock = true;
+                                $rootScope.lockExpirationDateTime = error.entity.userClient.lockExpirationDateTime;
+                            }
+                        } else {
+                            error.link = arrays.convertToObject('rel', 'href', error.link);
+                            $rootScope.$broadcast('event:auth-credentialsExpired', {
+                                credentials: creds,
+                                client: error
+                            });
+                        }
+                    } else {
+                        $rootScope.authenticationError = true;
+                    }
                 }
 
             };
