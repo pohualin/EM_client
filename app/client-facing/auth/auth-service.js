@@ -120,19 +120,15 @@ angular.module('emmiManager')
                                 $rootScope.lockExpirationDateTime = error.entity.userClient.lockExpirationDateTime;
                             }
                         } else if (error.entity.reason === 'EXPIRED')  {
-                            error.entity.client.link = arrays.convertToObject('rel', 'href', error.entity.client.link);
+                            error.clientResource.link = arrays.convertToObject('rel', 'href', error.clientResource.link);
                             $rootScope.$broadcast('event:auth-credentialsExpired', {
                                 credentials: creds,
-                                client: error.entity.client
+                                client: error.clientResource
                             });
                         }
                     } else {
                         $rootScope.authenticationError = true;
                     }
-                },
-                inThePast: function(){
-                    console.log('hey');
-                    return moment($rootScope.lockExpirationDateTime + 'Z').isBefore();
                 }
 
             };
