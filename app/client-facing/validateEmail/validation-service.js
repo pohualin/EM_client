@@ -4,8 +4,8 @@ angular.module('emmiManager')
 /**
  * Service for activation.
  */
-    .service('ValidationService', ['$http', 'UriTemplate', '$q', '$location',
-        function ($http, UriTemplate, $q, $location) {
+    .service('ValidationService', ['$http', 'UriTemplate', '$q',
+        function ($http, UriTemplate, $q) {
             return {
 
                 /**
@@ -17,7 +17,6 @@ angular.module('emmiManager')
                 sendValidationEmail: function (user) {
                     var deferred = $q.defer();
                     $http.post(UriTemplate.create(user.link.validate).stringify(),user).then(function(response) {
-                        $location.path('#/');
                         deferred.resolve(response);
                     });
                     return deferred.promise;
@@ -28,10 +27,8 @@ angular.module('emmiManager')
                  *
                  */
                 notNow: function () {
-                        $location.path('/');
+
                 }
-
-
             };
         }
     ])
