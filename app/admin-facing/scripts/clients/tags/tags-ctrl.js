@@ -126,6 +126,7 @@ angular.module('emmiManager')
         $scope.cancelTagChanges = function () {
             $scope.client.tagGroups = angular.copy($scope.client.savedGroups);
             $scope.clientTagsHaveChanges = false;
+            $scope.disableLibrary();
         };
 
         // called on click of the 'Add' button on the group library popup
