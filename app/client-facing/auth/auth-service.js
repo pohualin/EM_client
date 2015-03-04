@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('emmiManager')
-    .factory('AuthSharedService', ['$rootScope', '$http', 'authService', 'Session', 'API', '$q', '$location', 'arrays',
-        function ($rootScope, $http, authService, Session, API, $q, $location, arrays) {
+    .factory('AuthSharedService', ['$rootScope', '$http', 'authService', 'Session', 'API', '$q', '$location', 'arrays', 'moment',
+        function ($rootScope, $http, authService, Session, API, $q, $location, arrays, moment) {
 
             return {
                 login: function (creds) {
@@ -30,7 +30,7 @@ angular.module('emmiManager')
                             authService.loginConfirmed(currentUser);
                         });
                     }).error(function (error) {
-                        self.processLoginFailureError(error);
+                        self.processLoginFailureError(error, creds);
                         Session.destroy();
                     });
                 },
@@ -105,31 +105,34 @@ angular.module('emmiManager')
                     Session.destroy();
                     authService.loginCancelled();
                 },
-                processLoginFailureError: function(error){
-                    window.paul = error;
+                processLoginFailureError: function(error, creds){
                     $rootScope.authenticationError = false;
                     $rootScope.infiniteLock = false;
                     $rootScope.temporaryLock = false;
                     if (angular.isObject(error)){
-                        if(error.entity.reason === 'BAD_CREDENTIAL' && error.entity.userClient.accountNonLocked){
+                        if(error.entity.reason === 'BAD'){
                             $rootScope.authenticationError = true;
-                        } else if (error.entity.reason === 'LOCK' || (error.entity.reason === 'BAD_CREDENTIAL' && !error.entity.userClient.accountNonLocked)) {
+                        } else if (error.entity.reason === 'LOCK') {
                             if (error.entity.clientPasswordConfiguration.lockoutReset === 0){
                                 $rootScope.infiniteLock = true;
                             } else {
                                 $rootScope.temporaryLock = true;
                                 $rootScope.lockExpirationDateTime = error.entity.userClient.lockExpirationDateTime;
                             }
-                        } else {
-                            error.link = arrays.convertToObject('rel', 'href', error.link);
+                        } else if (error.entity.reason === 'EXPIRED')  {
+                            error.entity.client.link = arrays.convertToObject('rel', 'href', error.entity.client.link);
                             $rootScope.$broadcast('event:auth-credentialsExpired', {
                                 credentials: creds,
-                                client: error
+                                client: error.entity.client
                             });
                         }
                     } else {
                         $rootScope.authenticationError = true;
                     }
+                },
+                inThePast: function(){
+                    console.log('hey');
+                    return moment($rootScope.lockExpirationDateTime + 'Z').isBefore();
                 }
 
             };
