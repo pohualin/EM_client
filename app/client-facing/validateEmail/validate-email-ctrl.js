@@ -24,7 +24,7 @@ angular.module('emmiManager')
 
 
             $scope.notNow = function () {
-                ValidationService.notNow();
+                $location.path(locationBeforeLogin).replace();
             };
         }])
 ;
