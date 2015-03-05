@@ -83,6 +83,7 @@ angular.module('emmiManager')
          * Called when 'cancel' is clicked on the Add new group panel
          */
         $scope.cancelNew = function () {
+            $scope.newTagGroupForm.newTagGroup.$setValidity('unique', true);
             delete $scope.newTagGroup;
             delete $scope.newTagGroupTags;
         };
@@ -100,4 +101,37 @@ angular.module('emmiManager')
         $scope.loadExisting();
 
     })
+
+    /**
+     * Check for tag groups with the same name
+     */
+    .directive('groupTitleUnique', function(){
+        return {
+            restrict: 'A',
+            require: 'ngModel',
+            scope: false,
+            link: function(scope, ele, attrs, ctrl){
+                // add a parser that will process each time the value is
+                // parsed into the model when the user updates it.
+                ctrl.$parsers.unshift(function(value) {
+                    if (value) {
+                        var newGroupTitle = value.toLowerCase().replace(/[^a-z0-9]+/g, '');
+                        var found = false;
+                        angular.forEach(scope.tagGroups, function(group, key){
+                            var normalizedTitle = group.entity.name.toLowerCase().replace(/[^a-z0-9]+/g, '');
+                            if (newGroupTitle === normalizedTitle) {
+                                found = true;
+                            }
+                        });
+                        ctrl.$setValidity('unique', !found);
+                    } else {
+                        ctrl.$setValidity('unique', true);
+                    }
+
+                    return value;
+                });
+            }
+        };
+    })
+
 ;

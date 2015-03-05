@@ -4,31 +4,18 @@
             <h2>
                 Please Confirm Your Email Address
             </h2>
-            Verifying Your email address will make your account more secure, and allow you to reset your password if you forget it in the future.
-            <form name="emailForm" class="form" novalidate>
-                <div class="form-group"
-                     data-ng-class="{ 'has-error' : emailForm.email.$error && emailFormSubmitted }">
-                    <div class="error-circle glyphicon glyphicon-exclamation-sign"
-                         data-ng-show="emailForm.email.$error.pattern && emailFormSubmitted"
-                         data-bs-tooltip data-placement="right" data-type="danger"
-                         data-container="body" data-title="Please enter a valid email."></div>
-                    <div class="error-circle glyphicon glyphicon-exclamation-sign"
-                         data-ng-show="emailForm.email.$error.required && emailFormSubmitted"
-                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                         data-title="Required"></div>
-                    <input class="form-control" required
-                           data-ng-model="account.email" name="email"
-                           type="text" maxlength="255"
-                           data-ng-pattern="/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/" />
-                </div>
-            </form>
+            Verifying Your email address will make your account more secure, and allow you to reset your password if you
+            forget it in the future.
+
+            <div class="well well-sm col-md-12" data-ng-model="account.email">{{account.email}}</div>
         </div>
 
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group pull-right">
                     <a type="button" class="btn" data-ng-click="notNow()">Not Now</a>
-                    <button type="button" class="btn btn-primary" data-ng-click="sendActivationEmail(emailForm.$valid)">Confirm Email
+                    <button type="button" class="btn btn-primary" data-ng-click="sendActivationEmail()">
+                        Confirm Email
                     </button>
                 </div>
             </div>

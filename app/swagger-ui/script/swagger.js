@@ -4,7 +4,7 @@ $(function () {
     if (window.location.pathname.indexOf('/swagger-ui/index.html') > 0) {
         apiUrl += window.location.pathname.substring(0, window.location.pathname.indexOf('/swagger-ui/index.html'));
     }
-    apiUrl += '/api-docs';
+    apiUrl += '/api-docs' + window.location.search;
     window.swaggerUi = new SwaggerUi({
         url: apiUrl,
         'dom_id': 'swagger-ui-container',

@@ -17,6 +17,10 @@ angular.module('emmiManager')
                 });
             };
 
+            $scope.cancel = function() {
+                $location.path('/users');
+            };
+
             /**
              * Called when Save button is clicked
              */
