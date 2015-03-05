@@ -15,7 +15,7 @@ angular.module('emmiManager')
 		ProfileService.get(userClientReqdResource).then(function(response){
 			angular.extend($scope.userClient, response);
 		});
-	}
+	};
 	
 	$scope.saveProfileUpdates = function (uC, isValid) {
 		$scope.formSubmitted = true;
@@ -25,6 +25,6 @@ angular.module('emmiManager')
 				angular.extend($scope.userClient, response);
 			});
 		}
-	}
+	};
 }])
 ;
