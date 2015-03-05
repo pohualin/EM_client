@@ -6,10 +6,10 @@
             <div class="alert alert-danger" data-ng-show="authenticationError">
                 <strong>&nbsp;</strong>Please check your username and password and try again.
             </div>
-            <div class="alert alert-danger" data-ng-show="infiniteLock">
+            <div class="alert alert-danger" data-ng-show="lockError && !lockExpirationDateTime">
                 <strong>&nbsp;</strong>To continue, please contact Emmi Support at 866-294-3664 or support@emmisolutions.com.
             </div>
-            <div class="alert alert-danger" data-ng-show="temporaryLock">
+            <div class="alert alert-danger" data-ng-show="lockError && lockExpirationDateTime">
                 <strong>&nbsp;</strong>Your account has been temporarily locked due to too many login attempts. You can try again 
                             <span data-am-time-ago="lockExpirationDateTime + 'Z'">
                                 in time
