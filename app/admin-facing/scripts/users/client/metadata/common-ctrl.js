@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  *  Shared metadata functions
  */
-    .controller('UserClientMetaDataCommon', ['$scope', 'focus', '$popover', '$alert',
-        function ($scope, $focus, $popover, $alert) {
+    .controller('UserClientMetaDataCommon', ['$scope', 'focus', '$popover', '$alert', 'EmailRestrictConfigurationsService',
+        function ($scope, $focus, $popover, $alert, EmailRestrictConfigurationsService) {
 
             /**
              * When the 'use email' box is changed set the focus when unchecked.
@@ -48,6 +48,14 @@ angular.module('emmiManager')
                     if (totalErrorCount > 0) {
                         $scope.formValidationError();
                     }
+                }
+                
+                if (error.status === 406 && error.data && error.data.validationError) {
+                    EmailRestrictConfigurationsService.allValidEmailEndings().then(function(response){
+                        error.data.validationError.validEmailEndings = response;
+                        $scope.emailError = error.data.validationError;
+                    });
+                    $scope.formValidationError();
                 }
             };
 
