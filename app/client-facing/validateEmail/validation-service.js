@@ -20,14 +20,6 @@ angular.module('emmiManager')
                         deferred.resolve(response);
                     });
                     return deferred.promise;
-                },
-
-                /**
-                 * not now functionality
-                 *
-                 */
-                notNow: function () {
-
                 }
             };
         }
