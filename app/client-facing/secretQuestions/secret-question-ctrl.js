@@ -19,6 +19,18 @@ angular.module('emmiManager')
         	if(valid){
         	    SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.question1.entity);
 	        	SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.question2.entity);
+	        	var message = 'The secret questions and responses have been successfully save.';
+      
+        		$alert({
+					title: ' ',
+					content: 'The secret questions and responses have been successfully save.',
+					container: 'body',
+					type: 'success',
+					placement: 'top',
+				    show: true,
+				    duration: 5,
+				    dismissable: true
+				});
 	        	$location.path('/');
     		} else {
                 if (!$scope.errorAlert) {
