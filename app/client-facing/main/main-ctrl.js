@@ -11,6 +11,7 @@ angular.module('emmiManager')
 
         if (account && account.clientResource) {
             $scope.page.setTitle(account.clientResource.entity.name + ' Home');
+			angular.extend($scope.account, account);
         }
     }])
 ;
