@@ -5,13 +5,13 @@ angular.module('emmiManager')
 /**
  * This manages interactions when a user needs to select secret questions and responses.
  */
-    .controller('SecretQuestionController', ['$scope', '$location', 'SecretQuestionService', '$alert',
-        function ($scope, $location, SecretQuestionService, $alert) { 	
+    .controller('SecretQuestionEditController', ['$scope', '$location', 'SecretQuestionService', '$alert', '$modal',
+        function ($scope, $location, SecretQuestionService, $alert, $modal) { 	
     	
     	$scope.secretQuestionFormSubmitted = false;
     	/**
     	 * When the save button is clicked. Sends all updates
-    	 * to the back, then rebinds the form objects with the
+    	 * to the back, then rebinds the form objects with dthe
     	 * results
     	 */
         $scope.saveOrUpdateSecretQuestion = function(valid) {
@@ -34,15 +34,29 @@ angular.module('emmiManager')
             }
         	
     	};
+    	
+    	$scope.validatePassword = function() {
+       	 var promptPasswordModal = $modal({scope: $scope, template: '/client-facing/secretQuestions/edit/promptPassword.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
+            promptPasswordModal.$promise.then(promptPasswordModal.show);
+       	};
         
         /**
          * Called when cancel is clicked.. takes the original
          * objects and copies them back into the bound objects.
          */
-        $scope.cancel = function() {
+    	$scope.cancel = function () {
            $location.path('/');
           
        };
+       
+       if($scope.authenticated){
+       	SecretQuestionService.getAllUserSecretQuestionResponse().then(function(response) {
+       		if(response.data.content.length === 2){
+       			$scope.isSecretQuestion = true;
+       		}
+       		console.log($scope);
+       	}); 
+       }
        
        function init(){
            
@@ -51,7 +65,7 @@ angular.module('emmiManager')
           		$scope.secretQuestions = response.data.content; 
        		});
           	
-        	SecretQuestionService.getAllUserSecretQuestionResponse().then(function(response) {
+        	SecretQuestionService.getAllUserSecretQuestionAsteriskResponse($scope.account).then(function(response) {
             
         	var existingResponse = response.data.content;
             $scope.question1Original = existingResponse.length > 0 ? existingResponse[0] : SecretQuestionService.createNewResponse();

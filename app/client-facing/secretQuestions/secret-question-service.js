@@ -17,8 +17,20 @@ angular.module('emmiManager')
                 	return $http.get(API.secretQuestions);
          
                 },
-                
-                       
+              
+                              
+                /**
+                 * Calls the back end to get all question and responses with asterisks                 *
+                 * @param client user id
+                 * @returns all questions and the responses with asterisks
+                 */
+                getAllUserSecretQuestionAsteriskResponse: function(user) {
+                	return $http.get(UriTemplate.create(Session.link.secretQuestionAsteriskResponses).stringify({size: 2}),user)
+                    		.then(function(response) {
+                            return response;
+                        });
+                },
+                		       
                 /**
                  * Calls the back end to get all question and response for a client user
                  *

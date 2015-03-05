@@ -16,8 +16,11 @@
                 <li data-ng-switch-when="false">
                     <a data-ng-href="#/login" data-translate="global.menu.login">Login</a>
                 </li>
-                <li data-ng-switch-when="true" data-ng-show="account.link.secretQuestionResponses">
-                    <a data-ng-href="#/secretQuestions">My Secret Questions</a>
+                <li data-ng-switch-when="true" data-ng-hide="isSecretQuestion">
+                    <a data-ng-href="#/editSecretQuestions">My Secret Questions</a>
+                </li>
+                <li data-ng-switch-when="true" data-ng-show="isSecretQuestion">
+                    <a data-ng-href="#/viewSecretQuestions">My Secret Questions</a>
                 </li>
                 <li data-ng-switch-when="true">
                     <a data-ng-href="#/logout" data-translate="global.menu.logout">Log Out</a>
