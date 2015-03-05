@@ -107,18 +107,14 @@ angular.module('emmiManager')
                 },
                 processLoginFailureError: function(error, creds){
                     $rootScope.authenticationError = false;
-                    $rootScope.infiniteLock = false;
-                    $rootScope.temporaryLock = false;
+                    $rootScope.lockError = false;
+                    $rootScope.lockExpirationDateTime = null;
                     if (angular.isObject(error)){
                         if(error.entity.reason === 'BAD'){
                             $rootScope.authenticationError = true;
                         } else if (error.entity.reason === 'LOCK') {
-                            if (error.entity.clientPasswordConfiguration.lockoutReset === 0){
-                                $rootScope.infiniteLock = true;
-                            } else {
-                                $rootScope.temporaryLock = true;
-                                $rootScope.lockExpirationDateTime = error.entity.userClient.lockExpirationDateTime;
-                            }
+                            $rootScope.lockError = true;
+                            $rootScope.lockExpirationDateTime = error.entity.userClient.lockExpirationDateTime;
                         } else if (error.entity.reason === 'EXPIRED')  {
                             error.clientResource.link = arrays.convertToObject('rel', 'href', error.clientResource.link);
                             $rootScope.$broadcast('event:auth-credentialsExpired', {
