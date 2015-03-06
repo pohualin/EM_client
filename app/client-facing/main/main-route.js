@@ -4,8 +4,8 @@ angular.module('emmiManager')
     .config(function ($routeProvider, USER_ROLES) {
 
         var requiredResources = {
-            'account': ['AuthSharedService', function (AuthSharedService) {
-                return AuthSharedService.currentUser();
+        		'account': ['AuthSharedService', function (AuthSharedService) {
+        			return AuthSharedService.currentUser();
             }]
         };
 
