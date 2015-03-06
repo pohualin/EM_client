@@ -5,14 +5,14 @@ angular.module('emmiManager')
 /**
  * This manages interactions when a user's credentials have expired.
  */
-    .controller('CredentialsResetController', ['$scope', '$location', '$alert', 'account', 'arrays', 'CredentialsResetService',
-        function ($scope, $location, $alert, account, arrays, CredentialsResetService) {
+    .controller('ChangePasswordController', ['$scope', '$location', '$alert', 'account', 'arrays', 'ChangePasswordService',
+        function ($scope, $location, $alert, account, arrays, ChangePasswordService) {
 
             /**
              * Set the component up in its initial state.
              */
             $scope.reset = function () {
-                $scope.passwordChange = CredentialsResetService.createChangeHolder();
+                $scope.passwordChange = ChangePasswordService.createChangeHolder();
                 $scope.changePasswordFormSubmitted = false;
             };
 
@@ -57,9 +57,7 @@ angular.module('emmiManager')
 
             function init(){
                 $scope.reset();
-                account.clientResource.link = arrays.convertToObject('rel', 'href',
-                        account.clientResource.link);
-                CredentialsResetService.loadPolicy(account.clientResource).then(function (response){
+                ChangePasswordService.loadPolicy($scope.account.clientResource).then(function (response){
                     $scope.policy = response.data;
                 });
             }

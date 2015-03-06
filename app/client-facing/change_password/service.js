@@ -4,7 +4,7 @@ angular.module('emmiManager')
 /**
  * Service for change password
  */
-    .service('CredentialsResetService', ['$http', 'UriTemplate', 'API',
+    .service('ChangePasswordService', ['$http', 'UriTemplate', 'API',
         function ($http, UriTemplate, api) {
             return {
 

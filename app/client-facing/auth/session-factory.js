@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('emmiManager')
-    .factory('Session', [function () {
+    .factory('Session', ['arrays', function (arrays) {
         this.create = function (user) {
             this.login = user.login;
             this.firstName = user.firstName;
@@ -12,6 +12,8 @@ angular.module('emmiManager')
             this.link = user.link;
             this.clientResource = user.clientResource;
             this.passwordExpirationTime = user.passwordExpirationTime;
+            this.clientResource.link = arrays.convertToObject('rel', 'href',
+                    this.clientResource.link);
             return this;
         };
         this.destroy = function () {

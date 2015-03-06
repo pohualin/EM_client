@@ -108,5 +108,20 @@ angular.module('emmiManager')
         };
     })
 
-
+    .factory('MainService',['$http', 'UriTemplate', 'moment',
+     function ($http, UriTemplate, moment) {
+        return {
+            loadPolicy: function (client) {
+                return $http.get(UriTemplate.create(client.link.passwordPolicy).stringify())
+                    .success(function (response) {
+                        return response.data;
+                    });
+            },
+            getPasswordExpiresInDays: function(passwordExpirationTime){
+                var passwordExpirationMoment = moment(passwordExpirationTime + 'Z');
+                var now = moment(new Date());
+                return passwordExpirationMoment.diff(now, 'days') + 1;
+            }
+        };
+    }])
 ;
