@@ -21,7 +21,7 @@ angular.module('emmiManager')
 	        	SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.question2.entity);
 	        	$alert({
 					title: ' ',
-					content: 'The secret questions and responses have been successfully save.',
+					content: 'The secret questions and responses have been saved successfully.',
 					container: 'body',
 					type: 'success',
 					placement: 'top',
