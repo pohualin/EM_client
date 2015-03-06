@@ -31,6 +31,7 @@ angular.module('emmiManager')
 
                     scope.reset = function () {
                         ngModelController.$setValidity('unique', true);
+                        ngModelController.$setValidity('restricted', true);
                     };
 
                     element.on('change', function () {
@@ -41,24 +42,42 @@ angular.module('emmiManager')
                         if (ngModelController.$error.unique && scope.conflictingUserPopover) {
                             scope.conflictingUserPopover.show();
                         }
+                        if (ngModelController.$error.restricted && scope.restrictedEmailPopover) {
+                            scope.restrictedEmailPopover.show();
+                        }
                     });
 
                     element.on('blur', function () {
                         if (scope.conflictingUserPopover) {
                             scope.conflictingUserPopover.hide();
                         }
+                        if (scope.restrictedEmailPopover) {
+                            scope.restrictedEmailPopover.hide();
+                        }
                     });
 
                     scope.$watch('saveError', function (value) {
                         if (value) {
-                            ngModelController.$setValidity('unique', false);
-                            if (!scope.conflictingUserPopover) {
-                                scope.conflictingUserPopover = $popover(element, {
-                                    placement: 'top',
-                                    scope: scope,
-                                    trigger: 'manual',
-                                    template: 'admin-facing/partials/user/client/metadata/user_already_exists_popover.tpl.html'
-                                });
+                            if (value.reason === 'EMAIL' || value.reason === 'LOGIN'){
+                                ngModelController.$setValidity('unique', false);
+                                if (!scope.conflictingUserPopover) {
+                                    scope.conflictingUserPopover = $popover(element, {
+                                        placement: 'top',
+                                        scope: scope,
+                                        trigger: 'manual',
+                                        template: 'admin-facing/partials/user/client/metadata/user_already_exists_popover.tpl.html'
+                                    });
+                                }
+                            } else if (value.reason === 'EMAIL_RESTRICTION'){
+                                ngModelController.$setValidity('restricted', false);
+                                if(!scope.restrictedEmailPopover) {
+                                    scope.restrictedEmailPopover = $popover(element, {
+                                        placement: 'top',
+                                        scope: scope,
+                                        trigger: 'manual',
+                                        template: 'admin-facing/partials/user/client/metadata/restricted_email_popover.tpl.html'
+                                    });
+                                }
                             }
                             element.blur();
                             if (!value.doNotFocus) {
