@@ -3,6 +3,8 @@
 angular.module('emmiManager')
     .factory('Session', ['arrays', function (arrays) {
         this.create = function (user) {
+        	this.id = user.id;
+        	this.version = user.version;
             this.login = user.login;
             this.firstName = user.firstName;
             this.lastName = user.lastName;

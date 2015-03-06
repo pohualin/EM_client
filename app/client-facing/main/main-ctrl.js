@@ -12,6 +12,7 @@ angular.module('emmiManager')
         function init(){
             if (account && account.clientResource) {
                 $scope.page.setTitle(account.clientResource.entity.name + ' Home');
+                angular.extend($scope.account, account);
                 $scope.passwordExpiresInDays = 
                     MainService.getPasswordExpiresInDays(account.passwordExpirationTime);
                 MainService.loadPolicy(account.clientResource).then(function (response){
