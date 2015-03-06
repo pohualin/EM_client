@@ -161,8 +161,13 @@ gulp.task('api-docs', function () {
             .pipe(gulp.dest('dist/bower_components/swagger-ui/dist'));
 });
 
+gulp.task('styleguide', function () {
+    return gulp.src('app/styleguide/**/*')
+        .pipe(gulp.dest('dist/styleguide'));
+});
+
 gulp.task('clean', function () {
     return gulp.src(['.tmp', 'dist'], { read: false }).pipe($.clean());
 });
 
-gulp.task('build', ['html', 'images', 'favicon', 'fonts', 'translations', 'api-docs']);
+gulp.task('build', ['html', 'images', 'favicon', 'fonts', 'translations', 'api-docs', 'styleguide']);
