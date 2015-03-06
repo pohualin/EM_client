@@ -32,6 +32,7 @@ angular.module('emmiManager')
                 $scope.userClientForm.$setPristine();
                 delete $scope.loginError;
                 delete $scope.emailError;
+                delete $scope.errorAlert;
                 $scope.editMode = false;
                 _paq.push(['trackEvent', 'Form Action', 'Client User Edit', 'Cancel']);
             };

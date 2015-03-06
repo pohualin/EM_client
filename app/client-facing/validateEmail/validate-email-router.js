@@ -2,20 +2,16 @@
 
 angular.module('emmiManager')
     .config(function ($routeProvider, USER_ROLES) {
-
-        var requiredResources = {
-            'account': ['AuthSharedService', function (AuthSharedService) {
-                return AuthSharedService.currentUser();
-            }]
-        };
-
         // Routes
         $routeProvider
             .when('/validateEmail', {
                 templateUrl: 'client-facing/validateEmail/validate_email.html',
                 controller: 'validateEmail',
+                title:'Validate Email',
                 resolve: {
-                    account: requiredResources.account,
+                    account: ['AuthSharedService', function (AuthSharedService) {
+                        return AuthSharedService.currentUser();
+                    }],
                     locationBeforeLogin: ['$rootScope', '$q',
                         function ($rootScope, $q) {
                             var deferred = $q.defer();
