@@ -5,8 +5,6 @@
               data-translate-value-username="{{ account.firstName + ' ' + account.lastName}}"
               data-translate-value-today="{{ today | date:'fullDate' }}"></span> <span data-ng-hide="account">The date is {{ today | date:'fullDate' }}.</span>
     
-        <a onclick='dismiss()'>Change Password</a>
-        
         <div>
             <ul>
                 <li data-ng-switch-when="true" data-ng-show="isAuthorized(userRoles.admin)">

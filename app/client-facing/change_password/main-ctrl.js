@@ -57,6 +57,9 @@ angular.module('emmiManager')
 
             function init(){
                 $scope.reset();
+                if($scope.alert){
+                    $scope.alert.destroy();
+                }
                 ChangePasswordService.loadPolicy($scope.account.clientResource).then(function (response){
                     $scope.policy = response.data;
                 });
