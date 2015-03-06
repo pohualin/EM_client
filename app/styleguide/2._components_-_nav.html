@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>1. Layout - Icons</title>
+    <title>2. Components - Nav</title>
 
     <!-- Styleguide CSS -->
     <link rel="stylesheet" href="./theme-build/css/vendors.css">
@@ -14,7 +14,7 @@
     <!-- Source CSS -->
     
       
-        <link rel="stylesheet" href="../.tmp/styles/main.css">
+        <link rel="stylesheet" href="../../.tmp/styles/main.css">
       
     
 </head>
@@ -152,7 +152,7 @@
             
               
               
-                <li><a class="active" href="1._layout_-_icons.html">Icons</a></li>
+                <li><a href="1._layout_-_icons.html">Icons</a></li>
               
             
           
@@ -300,7 +300,7 @@
             
               
               
-                <li><a href="2._components_-_nav.html">Nav</a></li>
+                <li><a class="active" href="2._components_-_nav.html">Nav</a></li>
               
             
           
@@ -367,7 +367,7 @@
 
     <header class="cortana-header sb-slide">
       
-        <h1>Emmi Manager Style Guide: Icons</h1>
+        <h1>Emmi Manager Style Guide: Nav</h1>
       
       <div id="open-left" class="cortana-menu-btn">
         <span></span>
@@ -387,7 +387,11 @@
           <ul data-offset="-30">
             
               
-                <li><a href="#a-icons">Icons</a></li>
+                <li><a href="#a-tabs">Tabs</a></li>
+              
+            
+              
+                <li><a href="#b-pills">Pills</a></li>
               
             
           </ul>
@@ -398,824 +402,66 @@
 
 
 
-<h1 id="a-icons" class="styleguide">Icons</h1>
-
-<p>Just use the <code>glyphicon</code> class followed by the specific icon class.</p>
-</div><div class="codeExample"><div class="exampleOutput"><a href="#">
-  <span class="glyphicon glyphicon-map-marker"></span> Check on the map
-</a>
-</div><div class="codeBlock"><div class="highlight"><pre><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"glyphicon glyphicon-map-marker"</span><span class="nt">&gt;&lt;/span&gt;</span> Check on the map
-<span class="nt">&lt;/a&gt;</span>
+<h1 id="a-tabs" class="styleguide">Tabs</h1>
+</div><div class="codeExample"><div class="exampleOutput"><ul class="nav nav-tabs">
+  <li class="active"><a href="#">Home</a></li>
+  <li><a href="#">Profile</a></li>
+  <li><a href="#">Messages</a></li>
+</ul>
+</div><div class="codeBlock"><div class="highlight"><pre><span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"nav nav-tabs"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"active"</span><span class="nt">&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Home<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+  <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Profile<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+  <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Messages<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
 </pre></div></div></div><div class="cortana-content">
-<table><thead>
-<tr>
-<th>Icon</th>
-<th>Class</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><span class="glyphicon glyphicon-asterisk"></span></td>
-<td><pre>glyphicon glyphicon-asterisk</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-plus"></span></td>
-<td><pre>glyphicon glyphicon-plus</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-euro"></span></td>
-<td><pre>glyphicon glyphicon-euro</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-minus"></span></td>
-<td><pre>glyphicon glyphicon-minus</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-cloud"></span></td>
-<td><pre>glyphicon glyphicon-cloud</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-envelope"></span></td>
-<td><pre>glyphicon glyphicon-envelope</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-pencil"></span></td>
-<td><pre>glyphicon glyphicon-pencil</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-glass"></span></td>
-<td><pre>glyphicon glyphicon-glass</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-music"></span></td>
-<td><pre>glyphicon glyphicon-music</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-search"></span></td>
-<td><pre>glyphicon glyphicon-search</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-heart"></span></td>
-<td><pre>glyphicon glyphicon-heart</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-star"></span></td>
-<td><pre>glyphicon glyphicon-star</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-star-empty"></span></td>
-<td><pre>glyphicon glyphicon-star-empty</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-user"></span></td>
-<td><pre>glyphicon glyphicon-user</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-film"></span></td>
-<td><pre>glyphicon glyphicon-film</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-th-large"></span></td>
-<td><pre>glyphicon glyphicon-th-large</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-th"></span></td>
-<td><pre>glyphicon glyphicon-th</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-th-list"></span></td>
-<td><pre>glyphicon glyphicon-th-list</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-ok"></span></td>
-<td><pre>glyphicon glyphicon-ok</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-remove"></span></td>
-<td><pre>glyphicon glyphicon-remove</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-zoom-in"></span></td>
-<td><pre>glyphicon glyphicon-zoom-in</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-zoom-out"></span></td>
-<td><pre>glyphicon glyphicon-zoom-out</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-off"></span></td>
-<td><pre>glyphicon glyphicon-off</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-signal"></span></td>
-<td><pre>glyphicon glyphicon-signal</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-cog"></span></td>
-<td><pre>glyphicon glyphicon-cog</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-trash"></span></td>
-<td><pre>glyphicon glyphicon-trash</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-home"></span></td>
-<td><pre>glyphicon glyphicon-home</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-file"></span></td>
-<td><pre>glyphicon glyphicon-file</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-time"></span></td>
-<td><pre>glyphicon glyphicon-time</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-road"></span></td>
-<td><pre>glyphicon glyphicon-road</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-download-alt"></span></td>
-<td><pre>glyphicon glyphicon-download-alt</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-download"></span></td>
-<td><pre>glyphicon glyphicon-download</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-upload"></span></td>
-<td><pre>glyphicon glyphicon-upload</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-inbox"></span></td>
-<td><pre>glyphicon glyphicon-inbox</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-play-circle"></span></td>
-<td><pre>glyphicon glyphicon-play-circle</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-repeat"></span></td>
-<td><pre>glyphicon glyphicon-repeat</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-refresh"></span></td>
-<td><pre>glyphicon glyphicon-refresh</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-list-alt"></span></td>
-<td><pre>glyphicon glyphicon-list-alt</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-lock"></span></td>
-<td><pre>glyphicon glyphicon-lock</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-flag"></span></td>
-<td><pre>glyphicon glyphicon-flag</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-headphones"></span></td>
-<td><pre>glyphicon glyphicon-headphones</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-volume-off"></span></td>
-<td><pre>glyphicon glyphicon-volume-off</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-volume-down"></span></td>
-<td><pre>glyphicon glyphicon-volume-down</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-volume-up"></span></td>
-<td><pre>glyphicon glyphicon-volume-up</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-qrcode"></span></td>
-<td><pre>glyphicon glyphicon-qrcode</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-barcode"></span></td>
-<td><pre>glyphicon glyphicon-barcode</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-tag"></span></td>
-<td><pre>glyphicon glyphicon-tag</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-tags"></span></td>
-<td><pre>glyphicon glyphicon-tags</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-book"></span></td>
-<td><pre>glyphicon glyphicon-book</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-bookmark"></span></td>
-<td><pre>glyphicon glyphicon-bookmark</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-print"></span></td>
-<td><pre>glyphicon glyphicon-print</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-camera"></span></td>
-<td><pre>glyphicon glyphicon-camera</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-font"></span></td>
-<td><pre>glyphicon glyphicon-font</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-bold"></span></td>
-<td><pre>glyphicon glyphicon-bold</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-italic"></span></td>
-<td><pre>glyphicon glyphicon-italic</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-text-height"></span></td>
-<td><pre>glyphicon glyphicon-text-height</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-text-width"></span></td>
-<td><pre>glyphicon glyphicon-text-width</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-align-left"></span></td>
-<td><pre>glyphicon glyphicon-align-left</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-align-center"></span></td>
-<td><pre>glyphicon glyphicon-align-center</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-align-right"></span></td>
-<td><pre>glyphicon glyphicon-align-right</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-align-justify"></span></td>
-<td><pre>glyphicon glyphicon-align-justify</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-list"></span></td>
-<td><pre>glyphicon glyphicon-list</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-indent-left"></span></td>
-<td><pre>glyphicon glyphicon-indent-left</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-indent-right"></span></td>
-<td><pre>glyphicon glyphicon-indent-right</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-facetime-video"></span></td>
-<td><pre>glyphicon glyphicon-facetime-video</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-picture"></span></td>
-<td><pre>glyphicon glyphicon-picture</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-map-marker"></span></td>
-<td><pre>glyphicon glyphicon-map-marker</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-adjust"></span></td>
-<td><pre>glyphicon glyphicon-adjust</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-tint"></span></td>
-<td><pre>glyphicon glyphicon-tint</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-edit"></span></td>
-<td><pre>glyphicon glyphicon-edit</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-share"></span></td>
-<td><pre>glyphicon glyphicon-share</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-check"></span></td>
-<td><pre>glyphicon glyphicon-check</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-move"></span></td>
-<td><pre>glyphicon glyphicon-move</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-step-backward"></span></td>
-<td><pre>glyphicon glyphicon-step-backward</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-fast-backward"></span></td>
-<td><pre>glyphicon glyphicon-fast-backward</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-backward"></span></td>
-<td><pre>glyphicon glyphicon-backward</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-play"></span></td>
-<td><pre>glyphicon glyphicon-play</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-pause"></span></td>
-<td><pre>glyphicon glyphicon-pause</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-stop"></span></td>
-<td><pre>glyphicon glyphicon-stop</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-forward"></span></td>
-<td><pre>glyphicon glyphicon-forward</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-fast-forward"></span></td>
-<td><pre>glyphicon glyphicon-fast-forward</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-step-forward"></span></td>
-<td><pre>glyphicon glyphicon-step-forward</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-eject"></span></td>
-<td><pre>glyphicon glyphicon-eject</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-chevron-left"></span></td>
-<td><pre>glyphicon glyphicon-chevron-left</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-chevron-right"></span></td>
-<td><pre>glyphicon glyphicon-chevron-right</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-plus-sign"></span></td>
-<td><pre>glyphicon glyphicon-plus-sign</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-minus-sign"></span></td>
-<td><pre>glyphicon glyphicon-minus-sign</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-remove-sign"></span></td>
-<td><pre>glyphicon glyphicon-remove-sign</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-ok-sign"></span></td>
-<td><pre>glyphicon glyphicon-ok-sign</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-question-sign"></span></td>
-<td><pre>glyphicon glyphicon-question-sign</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-info-sign"></span></td>
-<td><pre>glyphicon glyphicon-info-sign</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-screenshot"></span></td>
-<td><pre>glyphicon glyphicon-screenshot</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-remove-circle"></span></td>
-<td><pre>glyphicon glyphicon-remove-circle</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-ok-circle"></span></td>
-<td><pre>glyphicon glyphicon-ok-circle</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-ban-circle"></span></td>
-<td><pre>glyphicon glyphicon-ban-circle</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-arrow-left"></span></td>
-<td><pre>glyphicon glyphicon-arrow-left</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-arrow-right"></span></td>
-<td><pre>glyphicon glyphicon-arrow-right</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-arrow-up"></span></td>
-<td><pre>glyphicon glyphicon-arrow-up</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-arrow-down"></span></td>
-<td><pre>glyphicon glyphicon-arrow-down</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-share-alt"></span></td>
-<td><pre>glyphicon glyphicon-share-alt</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-resize-full"></span></td>
-<td><pre>glyphicon glyphicon-resize-full</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-resize-small"></span></td>
-<td><pre>glyphicon glyphicon-resize-small</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-exclamation-sign"></span></td>
-<td><pre>glyphicon glyphicon-exclamation-sign</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-gift"></span></td>
-<td><pre>glyphicon glyphicon-gift</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-leaf"></span></td>
-<td><pre>glyphicon glyphicon-leaf</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-fire"></span></td>
-<td><pre>glyphicon glyphicon-fire</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-eye-open"></span></td>
-<td><pre>glyphicon glyphicon-eye-open</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-eye-close"></span></td>
-<td><pre>glyphicon glyphicon-eye-close</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-warning-sign"></span></td>
-<td><pre>glyphicon glyphicon-warning-sign</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-plane"></span></td>
-<td><pre>glyphicon glyphicon-plane</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-calendar"></span></td>
-<td><pre>glyphicon glyphicon-calendar</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-random"></span></td>
-<td><pre>glyphicon glyphicon-random</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-comment"></span></td>
-<td><pre>glyphicon glyphicon-comment</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-magnet"></span></td>
-<td><pre>glyphicon glyphicon-magnet</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-chevron-up"></span></td>
-<td><pre>glyphicon glyphicon-chevron-up</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-chevron-down"></span></td>
-<td><pre>glyphicon glyphicon-chevron-down</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-retweet"></span></td>
-<td><pre>glyphicon glyphicon-retweet</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-shopping-cart"></span></td>
-<td><pre>glyphicon glyphicon-shopping-cart</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-folder-close"></span></td>
-<td><pre>glyphicon glyphicon-folder-close</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-folder-open"></span></td>
-<td><pre>glyphicon glyphicon-folder-open</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-resize-vertical"></span></td>
-<td><pre>glyphicon glyphicon-resize-vertical</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-resize-horizontal"></span></td>
-<td><pre>glyphicon glyphicon-resize-horizontal</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-hdd"></span></td>
-<td><pre>glyphicon glyphicon-hdd</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-bullhorn"></span></td>
-<td><pre>glyphicon glyphicon-bullhorn</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-bell"></span></td>
-<td><pre>glyphicon glyphicon-bell</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-certificate"></span></td>
-<td><pre>glyphicon glyphicon-certificate</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-thumbs-up"></span></td>
-<td><pre>glyphicon glyphicon-thumbs-up</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-thumbs-down"></span></td>
-<td><pre>glyphicon glyphicon-thumbs-down</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-hand-right"></span></td>
-<td><pre>glyphicon glyphicon-hand-right</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-hand-left"></span></td>
-<td><pre>glyphicon glyphicon-hand-left</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-hand-up"></span></td>
-<td><pre>glyphicon glyphicon-hand-up</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-hand-down"></span></td>
-<td><pre>glyphicon glyphicon-hand-down</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-circle-arrow-right"></span></td>
-<td><pre>glyphicon glyphicon-circle-arrow-right</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-circle-arrow-left"></span></td>
-<td><pre>glyphicon glyphicon-circle-arrow-left</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-circle-arrow-up"></span></td>
-<td><pre>glyphicon glyphicon-circle-arrow-up</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-circle-arrow-down"></span></td>
-<td><pre>glyphicon glyphicon-circle-arrow-down</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-globe"></span></td>
-<td><pre>glyphicon glyphicon-globe</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-wrench"></span></td>
-<td><pre>glyphicon glyphicon-wrench</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-tasks"></span></td>
-<td><pre>glyphicon glyphicon-tasks</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-filter"></span></td>
-<td><pre>glyphicon glyphicon-filter</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-briefcase"></span></td>
-<td><pre>glyphicon glyphicon-briefcase</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-fullscreen"></span></td>
-<td><pre>glyphicon glyphicon-fullscreen</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-dashboard"></span></td>
-<td><pre>glyphicon glyphicon-dashboard</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-paperclip"></span></td>
-<td><pre>glyphicon glyphicon-paperclip</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-heart-empty"></span></td>
-<td><pre>glyphicon glyphicon-heart-empty</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-link"></span></td>
-<td><pre>glyphicon glyphicon-link</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-phone"></span></td>
-<td><pre>glyphicon glyphicon-phone</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-pushpin"></span></td>
-<td><pre>glyphicon glyphicon-pushpin</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-usd"></span></td>
-<td><pre>glyphicon glyphicon-usd</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-gbp"></span></td>
-<td><pre>glyphicon glyphicon-gbp</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-sort"></span></td>
-<td><pre>glyphicon glyphicon-sort</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-sort-by-alphabet"></span></td>
-<td><pre>glyphicon glyphicon-sort-by-alphabet</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-sort-by-alphabet-alt"></span></td>
-<td><pre>glyphicon glyphicon-sort-by-alphabet-alt</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-sort-by-order"></span></td>
-<td><pre>glyphicon glyphicon-sort-by-order</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-sort-by-order-alt"></span></td>
-<td><pre>glyphicon glyphicon-sort-by-order-alt</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-sort-by-attributes"></span></td>
-<td><pre>glyphicon glyphicon-sort-by-attributes</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-sort-by-attributes-alt"></span></td>
-<td><pre>glyphicon glyphicon-sort-by-attributes-alt</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-unchecked"></span></td>
-<td><pre>glyphicon glyphicon-unchecked</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-expand"></span></td>
-<td><pre>glyphicon glyphicon-expand</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-collapse-down"></span></td>
-<td><pre>glyphicon glyphicon-collapse-down</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-collapse-up"></span></td>
-<td><pre>glyphicon glyphicon-collapse-up</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-log-in"></span></td>
-<td><pre>glyphicon glyphicon-log-in</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-flash"></span></td>
-<td><pre>glyphicon glyphicon-flash</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-log-out"></span></td>
-<td><pre>glyphicon glyphicon-log-out</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-new-window"></span></td>
-<td><pre>glyphicon glyphicon-new-window</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-record"></span></td>
-<td><pre>glyphicon glyphicon-record</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-save"></span></td>
-<td><pre>glyphicon glyphicon-save</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-open"></span></td>
-<td><pre>glyphicon glyphicon-open</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-saved"></span></td>
-<td><pre>glyphicon glyphicon-saved</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-import"></span></td>
-<td><pre>glyphicon glyphicon-import</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-export"></span></td>
-<td><pre>glyphicon glyphicon-export</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-send"></span></td>
-<td><pre>glyphicon glyphicon-send</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-floppy-disk"></span></td>
-<td><pre>glyphicon glyphicon-floppy-disk</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-floppy-saved"></span></td>
-<td><pre>glyphicon glyphicon-floppy-saved</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-floppy-remove"></span></td>
-<td><pre>glyphicon glyphicon-floppy-remove</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-floppy-save"></span></td>
-<td><pre>glyphicon glyphicon-floppy-save</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-floppy-open"></span></td>
-<td><pre>glyphicon glyphicon-floppy-open</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-credit-card"></span></td>
-<td><pre>glyphicon glyphicon-credit-card</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-transfer"></span></td>
-<td><pre>glyphicon glyphicon-transfer</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-cutlery"></span></td>
-<td><pre>glyphicon glyphicon-cutlery</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-header"></span></td>
-<td><pre>glyphicon glyphicon-header</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-compressed"></span></td>
-<td><pre>glyphicon glyphicon-compressed</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-earphone"></span></td>
-<td><pre>glyphicon glyphicon-earphone</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-phone-alt"></span></td>
-<td><pre>glyphicon glyphicon-phone-alt</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-tower"></span></td>
-<td><pre>glyphicon glyphicon-tower</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-stats"></span></td>
-<td><pre>glyphicon glyphicon-stats</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-sd-video"></span></td>
-<td><pre>glyphicon glyphicon-sd-video</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-hd-video"></span></td>
-<td><pre>glyphicon glyphicon-hd-video</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-subtitles"></span></td>
-<td><pre>glyphicon glyphicon-subtitles</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-sound-stereo"></span></td>
-<td><pre>glyphicon glyphicon-sound-stereo</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-sound-dolby"></span></td>
-<td><pre>glyphicon glyphicon-sound-dolby</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-sound-5-1"></span></td>
-<td><pre>glyphicon glyphicon-sound-5-1</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-sound-6-1"></span></td>
-<td><pre>glyphicon glyphicon-sound-6-1</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-sound-7-1"></span></td>
-<td><pre>glyphicon glyphicon-sound-7-1</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-copyright-mark"></span></td>
-<td><pre>glyphicon glyphicon-copyright-mark</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-registration-mark"></span></td>
-<td><pre>glyphicon glyphicon-registration-mark</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-cloud-download"></span></td>
-<td><pre>glyphicon glyphicon-cloud-download</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-cloud-upload"></span></td>
-<td><pre>glyphicon glyphicon-cloud-upload</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-tree-conifer"></span></td>
-<td><pre>glyphicon glyphicon-tree-conifer</pre></td>
-</tr>
-<tr>
-<td><span class="glyphicon glyphicon-tree-deciduous"></span></td>
-<td><pre>glyphicon glyphicon-tree-deciduous</pre></td>
-</tr>
-</tbody></table>
-
+<h2>Justified</h2>
+</div><div class="codeExample"><div class="exampleOutput"><ul class="nav nav-tabs nav-justified">
+  <li class="active"><a href="#">Home</a></li>
+  <li><a href="#">Profile</a></li>
+  <li><a href="#">Messages</a></li>
+</ul>
+</div><div class="codeBlock"><div class="highlight"><pre><span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"nav nav-tabs nav-justified"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"active"</span><span class="nt">&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Home<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+  <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Profile<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+  <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Messages<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+</pre></div></div></div><div class="cortana-content">
+<h1 id="b-pills" class="styleguide">Pills</h1>
+</div><div class="codeExample"><div class="exampleOutput"><ul class="nav nav-pills">
+  <li class="active"><a href="#">Home</a></li>
+  <li><a href="#">Profile</a></li>
+  <li class="disabled"><a href="#">Messages</a></li>
+</ul>
+</div><div class="codeBlock"><div class="highlight"><pre><span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"nav nav-pills"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"active"</span><span class="nt">&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Home<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+  <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Profile<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+  <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"disabled"</span><span class="nt">&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Messages<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+</pre></div></div></div><div class="cortana-content">
+<h2>Staked</h2>
+</div><div class="codeExample"><div class="exampleOutput"><ul class="nav nav-pills nav-stacked">
+  <li class="active"><a href="#">Home</a></li>
+  <li><a href="#">Profile</a></li>
+  <li><a href="#">Messages</a></li>
+</ul>
+</div><div class="codeBlock"><div class="highlight"><pre><span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"nav nav-pills nav-stacked"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"active"</span><span class="nt">&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Home<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+  <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Profile<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+  <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Messages<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+</pre></div></div></div><div class="cortana-content">
+<h2>Justified</h2>
+</div><div class="codeExample"><div class="exampleOutput"><ul class="nav nav-pills nav-justified">
+  <li class="active"><a href="#">Home</a></li>
+  <li><a href="#">Profile</a></li>
+  <li><a href="#">Messages</a></li>
+</ul>
+</div><div class="codeBlock"><div class="highlight"><pre><span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"nav nav-pills nav-justified"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"active"</span><span class="nt">&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Home<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+  <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Profile<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+  <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Messages<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+</pre></div></div></div><div class="cortana-content">
         </div>
       </div>
     </div>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>1. Layout - Tables</title>
+    <title>2. Components - Widget</title>
 
     <!-- Styleguide CSS -->
     <link rel="stylesheet" href="./theme-build/css/vendors.css">
@@ -14,7 +14,7 @@
     <!-- Source CSS -->
     
       
-        <link rel="stylesheet" href="../.tmp/styles/main.css">
+        <link rel="stylesheet" href="../../.tmp/styles/main.css">
       
     
 </head>
@@ -166,7 +166,7 @@
             
               
               
-                <li><a class="active" href="1._layout_-_tables.html">Tables</a></li>
+                <li><a href="1._layout_-_tables.html">Tables</a></li>
               
             
           
@@ -356,7 +356,7 @@
             
               
               
-                <li><a href="2._components_-_widget.html">Widget</a></li>
+                <li><a class="active" href="2._components_-_widget.html">Widget</a></li>
               
             
           
@@ -367,7 +367,7 @@
 
     <header class="cortana-header sb-slide">
       
-        <h1>Emmi Manager Style Guide: Tables</h1>
+        <h1>Emmi Manager Style Guide: Widget</h1>
       
       <div id="open-left" class="cortana-menu-btn">
         <span></span>
@@ -387,27 +387,7 @@
           <ul data-offset="-30">
             
               
-                <li><a href="#a-basic-table">Basic table</a></li>
-              
-            
-              
-                <li><a href="#b-striped-table">Striped table</a></li>
-              
-            
-              
-                <li><a href="#c-bordered-table">Bordered table</a></li>
-              
-            
-              
-                <li><a href="#d-hover-table">Hover table</a></li>
-              
-            
-              
-                <li><a href="#e-condensed-table">Condensed table</a></li>
-              
-            
-              
-                <li><a href="#f-highlight-table">Highlight table</a></li>
+                <li><a href="#widget">Widgets</a></li>
               
             
           </ul>
@@ -418,402 +398,24 @@
 
 
 
-<h1 id="a-basic-table" class="styleguide">Basic table</h1>
-</div><div class="codeExample"><div class="exampleOutput"><table class="table">
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Username</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>1</td>
-      <td>John</td>
-      <td>Doe</td>
-      <td>@jdo</td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>Walter</td>
-      <td>Smith</td>
-      <td>@wsm</td>
-    </tr>
-  </tbody>
-</table>
-</div><div class="codeBlock"><div class="highlight"><pre><span class="nt">&lt;table</span> <span class="na">class=</span><span class="s">"table"</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;thead&gt;</span>
-    <span class="nt">&lt;tr&gt;</span>
-      <span class="nt">&lt;th&gt;</span>#<span class="nt">&lt;/th&gt;</span>
-      <span class="nt">&lt;th&gt;</span>First Name<span class="nt">&lt;/th&gt;</span>
-      <span class="nt">&lt;th&gt;</span>Last Name<span class="nt">&lt;/th&gt;</span>
-      <span class="nt">&lt;th&gt;</span>Username<span class="nt">&lt;/th&gt;</span>
-    <span class="nt">&lt;/tr&gt;</span>
-  <span class="nt">&lt;/thead&gt;</span>
-  <span class="nt">&lt;tbody&gt;</span>
-    <span class="nt">&lt;tr&gt;</span>
-      <span class="nt">&lt;td&gt;</span>1<span class="nt">&lt;/td&gt;</span>
-      <span class="nt">&lt;td&gt;</span>John<span class="nt">&lt;/td&gt;</span>
-      <span class="nt">&lt;td&gt;</span>Doe<span class="nt">&lt;/td&gt;</span>
-      <span class="nt">&lt;td&gt;</span>@jdo<span class="nt">&lt;/td&gt;</span>
-    <span class="nt">&lt;/tr&gt;</span>
-    <span class="nt">&lt;tr&gt;</span>
-      <span class="nt">&lt;td&gt;</span>2<span class="nt">&lt;/td&gt;</span>
-      <span class="nt">&lt;td&gt;</span>Walter<span class="nt">&lt;/td&gt;</span>
-      <span class="nt">&lt;td&gt;</span>Smith<span class="nt">&lt;/td&gt;</span>
-      <span class="nt">&lt;td&gt;</span>@wsm<span class="nt">&lt;/td&gt;</span>
-    <span class="nt">&lt;/tr&gt;</span>
-  <span class="nt">&lt;/tbody&gt;</span>
-<span class="nt">&lt;/table&gt;</span>
+<h1 id="widget" class="styleguide">Widgets</h1>
+
+<p>Button styles can be applied to any element. Typically you&#39;ll want
+to use either a <code>&lt;button&gt;</code> or an <code>&lt;a&gt;</code> element:</p>
+</div><div class="codeExample"><div class="exampleOutput"><div class="widget">
+  <h3 class="widget_title">Widget Title</h3>
+  <p>Widget content would go here.</p>
+</div>
+</div><div class="codeBlock"><div class="highlight"><pre><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"widget"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;h3</span> <span class="na">class=</span><span class="s">"widget_title"</span><span class="nt">&gt;</span>Widget Title<span class="nt">&lt;/h3&gt;</span>
+  <span class="nt">&lt;p&gt;</span>Widget content would go here.<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
 </pre></div></div></div><div class="cortana-content">
-<h1 id="b-striped-table" class="styleguide">Striped table</h1>
-</div><div class="codeExample"><div class="exampleOutput"><table class="table table-striped">
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Username</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>1</td>
-      <td>John</td>
-      <td>Doe</td>
-      <td>@jdo</td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>Walter</td>
-      <td>Smith</td>
-      <td>@wsm</td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td>Edmure</td>
-      <td>Fish</td>
-      <td>@tul</td>
-    </tr>
-  </tbody>
-</table>
-</div><div class="codeBlock"><div class="highlight"><pre><span class="nt">&lt;table</span> <span class="na">class=</span><span class="s">"table table-striped"</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;thead&gt;</span>
-    <span class="nt">&lt;tr&gt;</span>
-      <span class="nt">&lt;th&gt;</span>#<span class="nt">&lt;/th&gt;</span>
-      <span class="nt">&lt;th&gt;</span>First Name<span class="nt">&lt;/th&gt;</span>
-      <span class="nt">&lt;th&gt;</span>Last Name<span class="nt">&lt;/th&gt;</span>
-      <span class="nt">&lt;th&gt;</span>Username<span class="nt">&lt;/th&gt;</span>
-    <span class="nt">&lt;/tr&gt;</span>
-  <span class="nt">&lt;/thead&gt;</span>
-  <span class="nt">&lt;tbody&gt;</span>
-    <span class="nt">&lt;tr&gt;</span>
-      <span class="nt">&lt;td&gt;</span>1<span class="nt">&lt;/td&gt;</span>
-      <span class="nt">&lt;td&gt;</span>John<span class="nt">&lt;/td&gt;</span>
-      <span class="nt">&lt;td&gt;</span>Doe<span class="nt">&lt;/td&gt;</span>
-      <span class="nt">&lt;td&gt;</span>@jdo<span class="nt">&lt;/td&gt;</span>
-    <span class="nt">&lt;/tr&gt;</span>
-    <span class="nt">&lt;tr&gt;</span>
-      <span class="nt">&lt;td&gt;</span>2<span class="nt">&lt;/td&gt;</span>
-      <span class="nt">&lt;td&gt;</span>Walter<span class="nt">&lt;/td&gt;</span>
-      <span class="nt">&lt;td&gt;</span>Smith<span class="nt">&lt;/td&gt;</span>
-      <span class="nt">&lt;td&gt;</span>@wsm<span class="nt">&lt;/td&gt;</span>
-    <span class="nt">&lt;/tr&gt;</span>
-    <span class="nt">&lt;tr&gt;</span>
-      <span class="nt">&lt;td&gt;</span>3<span class="nt">&lt;/td&gt;</span>
-      <span class="nt">&lt;td&gt;</span>Edmure<span class="nt">&lt;/td&gt;</span>
-      <span class="nt">&lt;td&gt;</span>Fish<span class="nt">&lt;/td&gt;</span>
-      <span class="nt">&lt;td&gt;</span>@tul<span class="nt">&lt;/td&gt;</span>
-    <span class="nt">&lt;/tr&gt;</span>
-  <span class="nt">&lt;/tbody&gt;</span>
-<span class="nt">&lt;/table&gt;</span>
-</pre></div></div></div><div class="cortana-content">
-<h1 id="c-bordered-table" class="styleguide">Bordered table</h1>
-</div><div class="codeExample"><div class="exampleOutput"><table class="table table-bordered">
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Username</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>1</td>
-      <td>John</td>
-      <td>Doe</td>
-      <td>@jdo</td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>Walter</td>
-      <td>Smith</td>
-      <td>@wsm</td>
-    </tr>
-  </tbody>
-</table>
-</div><div class="codeBlock"><div class="highlight"><pre><span class="nt">&lt;table</span> <span class="na">class=</span><span class="s">"table table-bordered"</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;thead&gt;</span>
-    <span class="nt">&lt;tr&gt;</span>
-      <span class="nt">&lt;th&gt;</span>#<span class="nt">&lt;/th&gt;</span>
-      <span class="nt">&lt;th&gt;</span>First Name<span class="nt">&lt;/th&gt;</span>
-      <span class="nt">&lt;th&gt;</span>Last Name<span class="nt">&lt;/th&gt;</span>
-      <span class="nt">&lt;th&gt;</span>Username<span class="nt">&lt;/th&gt;</span>
-    <span class="nt">&lt;/tr&gt;</span>
-  <span class="nt">&lt;/thead&gt;</span>
-  <span class="nt">&lt;tbody&gt;</span>
-    <span class="nt">&lt;tr&gt;</span>
-      <span class="nt">&lt;td&gt;</span>1<span class="nt">&lt;/td&gt;</span>
-      <span class="nt">&lt;td&gt;</span>John<span class="nt">&lt;/td&gt;</span>
-      <span class="nt">&lt;td&gt;</span>Doe<span class="nt">&lt;/td&gt;</span>
-      <span class="nt">&lt;td&gt;</span>@jdo<span class="nt">&lt;/td&gt;</span>
-    <span class="nt">&lt;/tr&gt;</span>
-    <span class="nt">&lt;tr&gt;</span>
-      <span class="nt">&lt;td&gt;</span>2<span class="nt">&lt;/td&gt;</span>
-      <span class="nt">&lt;td&gt;</span>Walter<span class="nt">&lt;/td&gt;</span>
-      <span class="nt">&lt;td&gt;</span>Smith<span class="nt">&lt;/td&gt;</span>
-      <span class="nt">&lt;td&gt;</span>@wsm<span class="nt">&lt;/td&gt;</span>
-    <span class="nt">&lt;/tr&gt;</span>
-  <span class="nt">&lt;/tbody&gt;</span>
-<span class="nt">&lt;/table&gt;</span>
-</pre></div></div></div><div class="cortana-content">
-<h1 id="d-hover-table" class="styleguide">Hover table</h1>
-</div><div class="codeExample"><div class="exampleOutput"><table class="table table-hover">
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Username</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>1</td>
-      <td>John</td>
-      <td>Doe</td>
-      <td>@jdo</td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>Walter</td>
-      <td>Smith</td>
-      <td>@wsm</td>
-    </tr>
-  </tbody>
-</table>
-</div><div class="codeBlock"><div class="highlight"><pre><span class="nt">&lt;table</span> <span class="na">class=</span><span class="s">"table table-hover"</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;thead&gt;</span>
-    <span class="nt">&lt;tr&gt;</span>
-      <span class="nt">&lt;th&gt;</span>#<span class="nt">&lt;/th&gt;</span>
-      <span class="nt">&lt;th&gt;</span>First Name<span class="nt">&lt;/th&gt;</span>
-      <span class="nt">&lt;th&gt;</span>Last Name<span class="nt">&lt;/th&gt;</span>
-      <span class="nt">&lt;th&gt;</span>Username<span class="nt">&lt;/th&gt;</span>
-    <span class="nt">&lt;/tr&gt;</span>
-  <span class="nt">&lt;/thead&gt;</span>
-  <span class="nt">&lt;tbody&gt;</span>
-    <span class="nt">&lt;tr&gt;</span>
-      <span class="nt">&lt;td&gt;</span>1<span class="nt">&lt;/td&gt;</span>
-      <span class="nt">&lt;td&gt;</span>John<span class="nt">&lt;/td&gt;</span>
-      <span class="nt">&lt;td&gt;</span>Doe<span class="nt">&lt;/td&gt;</span>
-      <span class="nt">&lt;td&gt;</span>@jdo<span class="nt">&lt;/td&gt;</span>
-    <span class="nt">&lt;/tr&gt;</span>
-    <span class="nt">&lt;tr&gt;</span>
-      <span class="nt">&lt;td&gt;</span>2<span class="nt">&lt;/td&gt;</span>
-      <span class="nt">&lt;td&gt;</span>Walter<span class="nt">&lt;/td&gt;</span>
-      <span class="nt">&lt;td&gt;</span>Smith<span class="nt">&lt;/td&gt;</span>
-      <span class="nt">&lt;td&gt;</span>@wsm<span class="nt">&lt;/td&gt;</span>
-    <span class="nt">&lt;/tr&gt;</span>
-  <span class="nt">&lt;/tbody&gt;</span>
-<span class="nt">&lt;/table&gt;</span>
-</pre></div></div></div><div class="cortana-content">
-<h1 id="e-condensed-table" class="styleguide">Condensed table</h1>
-</div><div class="codeExample"><div class="exampleOutput"><table class="table table-condensed">
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Username</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>1</td>
-      <td>John</td>
-      <td>Doe</td>
-      <td>@jdo</td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>Walter</td>
-      <td>Smith</td>
-      <td>@wsm</td>
-    </tr>
-  </tbody>
-</table>
-</div><div class="codeBlock"><div class="highlight"><pre><span class="nt">&lt;table</span> <span class="na">class=</span><span class="s">"table table-condensed"</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;thead&gt;</span>
-    <span class="nt">&lt;tr&gt;</span>
-      <span class="nt">&lt;th&gt;</span>#<span class="nt">&lt;/th&gt;</span>
-      <span class="nt">&lt;th&gt;</span>First Name<span class="nt">&lt;/th&gt;</span>
-      <span class="nt">&lt;th&gt;</span>Last Name<span class="nt">&lt;/th&gt;</span>
-      <span class="nt">&lt;th&gt;</span>Username<span class="nt">&lt;/th&gt;</span>
-    <span class="nt">&lt;/tr&gt;</span>
-  <span class="nt">&lt;/thead&gt;</span>
-  <span class="nt">&lt;tbody&gt;</span>
-    <span class="nt">&lt;tr&gt;</span>
-      <span class="nt">&lt;td&gt;</span>1<span class="nt">&lt;/td&gt;</span>
-      <span class="nt">&lt;td&gt;</span>John<span class="nt">&lt;/td&gt;</span>
-      <span class="nt">&lt;td&gt;</span>Doe<span class="nt">&lt;/td&gt;</span>
-      <span class="nt">&lt;td&gt;</span>@jdo<span class="nt">&lt;/td&gt;</span>
-    <span class="nt">&lt;/tr&gt;</span>
-    <span class="nt">&lt;tr&gt;</span>
-      <span class="nt">&lt;td&gt;</span>2<span class="nt">&lt;/td&gt;</span>
-      <span class="nt">&lt;td&gt;</span>Walter<span class="nt">&lt;/td&gt;</span>
-      <span class="nt">&lt;td&gt;</span>Smith<span class="nt">&lt;/td&gt;</span>
-      <span class="nt">&lt;td&gt;</span>@wsm<span class="nt">&lt;/td&gt;</span>
-    <span class="nt">&lt;/tr&gt;</span>
-  <span class="nt">&lt;/tbody&gt;</span>
-<span class="nt">&lt;/table&gt;</span>
-</pre></div></div></div><div class="cortana-content">
-<h1 id="f-highlight-table" class="styleguide">Highlight table</h1>
-</div><div class="codeExample"><div class="exampleOutput"><table class="table">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Column heading</th>
-          <th>Column heading</th>
-          <th>Column heading</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="active">
-          <td>1</td>
-          <td>Column content</td>
-          <td>Column content</td>
-          <td>Column content</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Column content</td>
-          <td>Column content</td>
-          <td>Column content</td>
-        </tr>
-        <tr class="success">
-          <td>3</td>
-          <td>Column content</td>
-          <td>Column content</td>
-          <td>Column content</td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td>Column content</td>
-          <td>Column content</td>
-          <td>Column content</td>
-        </tr>
-        <tr class="info">
-          <td>5</td>
-          <td>Column content</td>
-          <td>Column content</td>
-          <td>Column content</td>
-        </tr>
-        <tr>
-          <td>6</td>
-          <td>Column content</td>
-          <td>Column content</td>
-          <td>Column content</td>
-        </tr>
-        <tr class="warning">
-          <td>7</td>
-          <td>Column content</td>
-          <td>Column content</td>
-          <td>Column content</td>
-        </tr>
-        <tr>
-          <td>8</td>
-          <td>Column content</td>
-          <td>Column content</td>
-          <td>Column content</td>
-        </tr>
-        <tr class="danger">
-          <td>9</td>
-          <td>Column content</td>
-          <td>Column content</td>
-          <td>Column content</td>
-        </tr>
-      </tbody>
-    </table>
-</div><div class="codeBlock"><div class="highlight"><pre><span class="nt">&lt;table</span> <span class="na">class=</span><span class="s">"table"</span><span class="nt">&gt;</span>
-      <span class="nt">&lt;thead&gt;</span>
-        <span class="nt">&lt;tr&gt;</span>
-          <span class="nt">&lt;th&gt;</span>#<span class="nt">&lt;/th&gt;</span>
-          <span class="nt">&lt;th&gt;</span>Column heading<span class="nt">&lt;/th&gt;</span>
-          <span class="nt">&lt;th&gt;</span>Column heading<span class="nt">&lt;/th&gt;</span>
-          <span class="nt">&lt;th&gt;</span>Column heading<span class="nt">&lt;/th&gt;</span>
-        <span class="nt">&lt;/tr&gt;</span>
-      <span class="nt">&lt;/thead&gt;</span>
-      <span class="nt">&lt;tbody&gt;</span>
-        <span class="nt">&lt;tr</span> <span class="na">class=</span><span class="s">"active"</span><span class="nt">&gt;</span>
-          <span class="nt">&lt;td&gt;</span>1<span class="nt">&lt;/td&gt;</span>
-          <span class="nt">&lt;td&gt;</span>Column content<span class="nt">&lt;/td&gt;</span>
-          <span class="nt">&lt;td&gt;</span>Column content<span class="nt">&lt;/td&gt;</span>
-          <span class="nt">&lt;td&gt;</span>Column content<span class="nt">&lt;/td&gt;</span>
-        <span class="nt">&lt;/tr&gt;</span>
-        <span class="nt">&lt;tr&gt;</span>
-          <span class="nt">&lt;td&gt;</span>2<span class="nt">&lt;/td&gt;</span>
-          <span class="nt">&lt;td&gt;</span>Column content<span class="nt">&lt;/td&gt;</span>
-          <span class="nt">&lt;td&gt;</span>Column content<span class="nt">&lt;/td&gt;</span>
-          <span class="nt">&lt;td&gt;</span>Column content<span class="nt">&lt;/td&gt;</span>
-        <span class="nt">&lt;/tr&gt;</span>
-        <span class="nt">&lt;tr</span> <span class="na">class=</span><span class="s">"success"</span><span class="nt">&gt;</span>
-          <span class="nt">&lt;td&gt;</span>3<span class="nt">&lt;/td&gt;</span>
-          <span class="nt">&lt;td&gt;</span>Column content<span class="nt">&lt;/td&gt;</span>
-          <span class="nt">&lt;td&gt;</span>Column content<span class="nt">&lt;/td&gt;</span>
-          <span class="nt">&lt;td&gt;</span>Column content<span class="nt">&lt;/td&gt;</span>
-        <span class="nt">&lt;/tr&gt;</span>
-        <span class="nt">&lt;tr&gt;</span>
-          <span class="nt">&lt;td&gt;</span>4<span class="nt">&lt;/td&gt;</span>
-          <span class="nt">&lt;td&gt;</span>Column content<span class="nt">&lt;/td&gt;</span>
-          <span class="nt">&lt;td&gt;</span>Column content<span class="nt">&lt;/td&gt;</span>
-          <span class="nt">&lt;td&gt;</span>Column content<span class="nt">&lt;/td&gt;</span>
-        <span class="nt">&lt;/tr&gt;</span>
-        <span class="nt">&lt;tr</span> <span class="na">class=</span><span class="s">"info"</span><span class="nt">&gt;</span>
-          <span class="nt">&lt;td&gt;</span>5<span class="nt">&lt;/td&gt;</span>
-          <span class="nt">&lt;td&gt;</span>Column content<span class="nt">&lt;/td&gt;</span>
-          <span class="nt">&lt;td&gt;</span>Column content<span class="nt">&lt;/td&gt;</span>
-          <span class="nt">&lt;td&gt;</span>Column content<span class="nt">&lt;/td&gt;</span>
-        <span class="nt">&lt;/tr&gt;</span>
-        <span class="nt">&lt;tr&gt;</span>
-          <span class="nt">&lt;td&gt;</span>6<span class="nt">&lt;/td&gt;</span>
-          <span class="nt">&lt;td&gt;</span>Column content<span class="nt">&lt;/td&gt;</span>
-          <span class="nt">&lt;td&gt;</span>Column content<span class="nt">&lt;/td&gt;</span>
-          <span class="nt">&lt;td&gt;</span>Column content<span class="nt">&lt;/td&gt;</span>
-        <span class="nt">&lt;/tr&gt;</span>
-        <span class="nt">&lt;tr</span> <span class="na">class=</span><span class="s">"warning"</span><span class="nt">&gt;</span>
-          <span class="nt">&lt;td&gt;</span>7<span class="nt">&lt;/td&gt;</span>
-          <span class="nt">&lt;td&gt;</span>Column content<span class="nt">&lt;/td&gt;</span>
-          <span class="nt">&lt;td&gt;</span>Column content<span class="nt">&lt;/td&gt;</span>
-          <span class="nt">&lt;td&gt;</span>Column content<span class="nt">&lt;/td&gt;</span>
-        <span class="nt">&lt;/tr&gt;</span>
-        <span class="nt">&lt;tr&gt;</span>
-          <span class="nt">&lt;td&gt;</span>8<span class="nt">&lt;/td&gt;</span>
-          <span class="nt">&lt;td&gt;</span>Column content<span class="nt">&lt;/td&gt;</span>
-          <span class="nt">&lt;td&gt;</span>Column content<span class="nt">&lt;/td&gt;</span>
-          <span class="nt">&lt;td&gt;</span>Column content<span class="nt">&lt;/td&gt;</span>
-        <span class="nt">&lt;/tr&gt;</span>
-        <span class="nt">&lt;tr</span> <span class="na">class=</span><span class="s">"danger"</span><span class="nt">&gt;</span>
-          <span class="nt">&lt;td&gt;</span>9<span class="nt">&lt;/td&gt;</span>
-          <span class="nt">&lt;td&gt;</span>Column content<span class="nt">&lt;/td&gt;</span>
-          <span class="nt">&lt;td&gt;</span>Column content<span class="nt">&lt;/td&gt;</span>
-          <span class="nt">&lt;td&gt;</span>Column content<span class="nt">&lt;/td&gt;</span>
-        <span class="nt">&lt;/tr&gt;</span>
-      <span class="nt">&lt;/tbody&gt;</span>
-    <span class="nt">&lt;/table&gt;</span>
-</pre></div></div></div><div class="cortana-content">
+<p>If your button is actually a link to another page, please use the
+<code>&lt;a&gt;</code> element, while if your button performs an action, such as
+submitting a form or triggering some javascript event, then use a
+<code>&lt;button&gt;</code> element.</p>
+
         </div>
       </div>
     </div>

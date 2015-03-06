@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>1. Layout - Images</title>
+    <title>2. Components - Button Groups</title>
 
     <!-- Styleguide CSS -->
     <link rel="stylesheet" href="./theme-build/css/vendors.css">
@@ -14,7 +14,7 @@
     <!-- Source CSS -->
     
       
-        <link rel="stylesheet" href="../.tmp/styles/main.css">
+        <link rel="stylesheet" href="../../.tmp/styles/main.css">
       
     
 </head>
@@ -159,7 +159,7 @@
             
               
               
-                <li><a class="active" href="1._layout_-_images.html">Images</a></li>
+                <li><a href="1._layout_-_images.html">Images</a></li>
               
             
           
@@ -258,7 +258,7 @@
             
               
               
-                <li><a href="2._components_-_button_groups.html">Button Groups</a></li>
+                <li><a class="active" href="2._components_-_button_groups.html">Button Groups</a></li>
               
             
           
@@ -367,7 +367,7 @@
 
     <header class="cortana-header sb-slide">
       
-        <h1>Emmi Manager Style Guide: Images</h1>
+        <h1>Emmi Manager Style Guide: Button Groups</h1>
       
       <div id="open-left" class="cortana-menu-btn">
         <span></span>
@@ -387,15 +387,15 @@
           <ul data-offset="-30">
             
               
-                <li><a href="#a-images">Images</a></li>
+                <li><a href="#a-group">Group</a></li>
               
             
               
-                <li><a href="#b-figure">Figure</a></li>
+                <li><a href="#b-sizes">Sizes</a></li>
               
             
               
-                <li><a href="#c-images-shape">Images shapes</a></li>
+                <li><a href="#c-with-dropdown">With dropdown</a></li>
               
             
           </ul>
@@ -406,27 +406,137 @@
 
 
 
-<h1 id="a-images" class="styleguide">Images</h1>
-</div><div class="codeExample"><div class="exampleOutput"><img src="http://lorempixel.com/700/400/cats" alt="Some cats image">
-</div><div class="codeBlock"><div class="highlight"><pre><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"http://lorempixel.com/700/400/cats"</span> <span class="na">alt=</span><span class="s">"Some cats image"</span><span class="nt">&gt;</span>
+<h1 id="a-group" class="styleguide">Group</h1>
+</div><div class="codeExample"><div class="exampleOutput"><div class="btn-group">
+  <button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-align-left"></i></button>
+  <button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-align-center"></i></button>
+  <button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-align-right"></i></button>
+</div>
+</div><div class="codeBlock"><div class="highlight"><pre><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"btn-group"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn btn-primary"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"glyphicon glyphicon-align-left"</span><span class="nt">&gt;&lt;/i&gt;&lt;/button&gt;</span>
+  <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn btn-primary"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"glyphicon glyphicon-align-center"</span><span class="nt">&gt;&lt;/i&gt;&lt;/button&gt;</span>
+  <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn btn-primary"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"glyphicon glyphicon-align-right"</span><span class="nt">&gt;&lt;/i&gt;&lt;/button&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
 </pre></div></div></div><div class="cortana-content">
-<h1 id="b-figure" class="styleguide">Figure</h1>
-</div><div class="codeExample"><div class="exampleOutput"><figure>
-  <img src="http://lorempixel.com/700/400/cats" alt="Some cats image">
-  <figcaption>Note : Lorem ipsum dolor sit amet, consectetur adipiscing elit.</figcaption>
-</figure>
-</div><div class="codeBlock"><div class="highlight"><pre><span class="nt">&lt;figure&gt;</span>
-  <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"http://lorempixel.com/700/400/cats"</span> <span class="na">alt=</span><span class="s">"Some cats image"</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;figcaption&gt;</span>Note : Lorem ipsum dolor sit amet, consectetur adipiscing elit.<span class="nt">&lt;/figcaption&gt;</span>
-<span class="nt">&lt;/figure&gt;</span>
+<h2>Vertical group</h2>
+</div><div class="codeExample"><div class="exampleOutput"><div class="btn-group-vertical">
+  <button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-home"></i></button>
+  <button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-user"></i></button>
+  <button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-comment"></i></button>
+  <button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-cog"></i></button>
+</div>
+</div><div class="codeBlock"><div class="highlight"><pre><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"btn-group-vertical"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn btn-primary"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"glyphicon glyphicon-home"</span><span class="nt">&gt;&lt;/i&gt;&lt;/button&gt;</span>
+  <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn btn-primary"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"glyphicon glyphicon-user"</span><span class="nt">&gt;&lt;/i&gt;&lt;/button&gt;</span>
+  <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn btn-primary"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"glyphicon glyphicon-comment"</span><span class="nt">&gt;&lt;/i&gt;&lt;/button&gt;</span>
+  <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn btn-primary"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"glyphicon glyphicon-cog"</span><span class="nt">&gt;&lt;/i&gt;&lt;/button&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
 </pre></div></div></div><div class="cortana-content">
-<h1 id="c-images-shape" class="styleguide">Images shapes</h1>
-</div><div class="codeExample"><div class="exampleOutput"><img src="http://lorempixel.com/150/150/cats" alt="Some cats image" class="img-rounded">
-<img src="http://lorempixel.com/150/150/cats" alt="Some cats image" class="img-circle">
-<img src="http://lorempixel.com/150/150/cats" alt="Some cats image" class="img-thumbnail">
-</div><div class="codeBlock"><div class="highlight"><pre><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"http://lorempixel.com/150/150/cats"</span> <span class="na">alt=</span><span class="s">"Some cats image"</span> <span class="na">class=</span><span class="s">"img-rounded"</span><span class="nt">&gt;</span>
-<span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"http://lorempixel.com/150/150/cats"</span> <span class="na">alt=</span><span class="s">"Some cats image"</span> <span class="na">class=</span><span class="s">"img-circle"</span><span class="nt">&gt;</span>
-<span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"http://lorempixel.com/150/150/cats"</span> <span class="na">alt=</span><span class="s">"Some cats image"</span> <span class="na">class=</span><span class="s">"img-thumbnail"</span><span class="nt">&gt;</span>
+<h2>Justified group</h2>
+</div><div class="codeExample"><div class="exampleOutput"><div class="btn-group btn-group-justified">
+  <a href="#" class="btn btn-primary"><i class="glyphicon glyphicon-align-left"></i></a>
+  <a href="#" class="btn btn-primary"><i class="glyphicon glyphicon-align-center"></i></a>
+  <a href="#" class="btn btn-primary"><i class="glyphicon glyphicon-align-right"></i></a>
+</div>
+</div><div class="codeBlock"><div class="highlight"><pre><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"btn-group btn-group-justified"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">class=</span><span class="s">"btn btn-primary"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"glyphicon glyphicon-align-left"</span><span class="nt">&gt;&lt;/i&gt;&lt;/a&gt;</span>
+  <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">class=</span><span class="s">"btn btn-primary"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"glyphicon glyphicon-align-center"</span><span class="nt">&gt;&lt;/i&gt;&lt;/a&gt;</span>
+  <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">class=</span><span class="s">"btn btn-primary"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"glyphicon glyphicon-align-right"</span><span class="nt">&gt;&lt;/i&gt;&lt;/a&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</pre></div></div></div><div class="cortana-content">
+<h1 id="b-sizes" class="styleguide">Sizes</h1>
+</div><div class="codeExample"><div class="exampleOutput"><!-- Horizontal group -->
+<div class="btn-group btn-group-lg">
+  <button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-align-left"></i></button>
+  <button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-align-center"></i></button>
+  <button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-align-right"></i></button>
+</div>
+
+<br><br>
+
+<div class="btn-group">
+  <button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-align-left"></i></button>
+  <button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-align-center"></i></button>
+  <button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-align-right"></i></button>
+</div>
+
+<br><br>
+
+<div class="btn-group btn-group-sm">
+  <button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-align-left"></i></button>
+  <button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-align-center"></i></button>
+  <button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-align-right"></i></button>
+</div>
+
+<br><br>
+
+<div class="btn-group btn-group-xs">
+  <button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-align-left"></i></button>
+  <button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-align-center"></i></button>
+  <button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-align-right"></i></button>
+</div>
+</div><div class="codeBlock"><div class="highlight"><pre><span class="c">&lt;!-- Horizontal group --&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"btn-group btn-group-lg"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn btn-primary"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"glyphicon glyphicon-align-left"</span><span class="nt">&gt;&lt;/i&gt;&lt;/button&gt;</span>
+  <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn btn-primary"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"glyphicon glyphicon-align-center"</span><span class="nt">&gt;&lt;/i&gt;&lt;/button&gt;</span>
+  <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn btn-primary"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"glyphicon glyphicon-align-right"</span><span class="nt">&gt;&lt;/i&gt;&lt;/button&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+
+<span class="nt">&lt;br&gt;&lt;br&gt;</span>
+
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"btn-group"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn btn-primary"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"glyphicon glyphicon-align-left"</span><span class="nt">&gt;&lt;/i&gt;&lt;/button&gt;</span>
+  <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn btn-primary"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"glyphicon glyphicon-align-center"</span><span class="nt">&gt;&lt;/i&gt;&lt;/button&gt;</span>
+  <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn btn-primary"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"glyphicon glyphicon-align-right"</span><span class="nt">&gt;&lt;/i&gt;&lt;/button&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+
+<span class="nt">&lt;br&gt;&lt;br&gt;</span>
+
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"btn-group btn-group-sm"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn btn-primary"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"glyphicon glyphicon-align-left"</span><span class="nt">&gt;&lt;/i&gt;&lt;/button&gt;</span>
+  <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn btn-primary"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"glyphicon glyphicon-align-center"</span><span class="nt">&gt;&lt;/i&gt;&lt;/button&gt;</span>
+  <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn btn-primary"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"glyphicon glyphicon-align-right"</span><span class="nt">&gt;&lt;/i&gt;&lt;/button&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+
+<span class="nt">&lt;br&gt;&lt;br&gt;</span>
+
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"btn-group btn-group-xs"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn btn-primary"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"glyphicon glyphicon-align-left"</span><span class="nt">&gt;&lt;/i&gt;&lt;/button&gt;</span>
+  <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn btn-primary"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"glyphicon glyphicon-align-center"</span><span class="nt">&gt;&lt;/i&gt;&lt;/button&gt;</span>
+  <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn btn-primary"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"glyphicon glyphicon-align-right"</span><span class="nt">&gt;&lt;/i&gt;&lt;/button&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</pre></div></div></div><div class="cortana-content">
+<h1 id="c-with-dropdown" class="styleguide">With dropdown</h1>
+</div><div class="codeExample"><div class="exampleOutput"><div class="btn-group">
+  <button type="button" class="btn btn-primary">1</button>
+  <button type="button" class="btn btn-primary">2</button>
+
+  <div class="btn-group">
+    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+      Dropdown
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+      <li><a href="#">Dropdown link</a></li>
+      <li><a href="#">Dropdown link</a></li>
+    </ul>
+  </div>
+</div>
+</div><div class="codeBlock"><div class="highlight"><pre><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"btn-group"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn btn-primary"</span><span class="nt">&gt;</span>1<span class="nt">&lt;/button&gt;</span>
+  <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn btn-primary"</span><span class="nt">&gt;</span>2<span class="nt">&lt;/button&gt;</span>
+
+  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"btn-group"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn btn-primary dropdown-toggle"</span> <span class="na">data-toggle=</span><span class="s">"dropdown"</span><span class="nt">&gt;</span>
+      Dropdown
+      <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"caret"</span><span class="nt">&gt;&lt;/span&gt;</span>
+    <span class="nt">&lt;/button&gt;</span>
+    <span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"dropdown-menu"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Dropdown link<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+      <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Dropdown link<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+    <span class="nt">&lt;/ul&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
 </pre></div></div></div><div class="cortana-content">
         </div>
       </div>

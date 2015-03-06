@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>2. Components - Widget</title>
+    <title>2. Components - Pager</title>
 
     <!-- Styleguide CSS -->
     <link rel="stylesheet" href="./theme-build/css/vendors.css">
@@ -14,7 +14,7 @@
     <!-- Source CSS -->
     
       
-        <link rel="stylesheet" href="../.tmp/styles/main.css">
+        <link rel="stylesheet" href="../../.tmp/styles/main.css">
       
     
 </head>
@@ -314,7 +314,7 @@
             
               
               
-                <li><a href="2._components_-_pager.html">Pager</a></li>
+                <li><a class="active" href="2._components_-_pager.html">Pager</a></li>
               
             
           
@@ -356,7 +356,7 @@
             
               
               
-                <li><a class="active" href="2._components_-_widget.html">Widget</a></li>
+                <li><a href="2._components_-_widget.html">Widget</a></li>
               
             
           
@@ -367,7 +367,7 @@
 
     <header class="cortana-header sb-slide">
       
-        <h1>Emmi Manager Style Guide: Widget</h1>
+        <h1>Emmi Manager Style Guide: Pager</h1>
       
       <div id="open-left" class="cortana-menu-btn">
         <span></span>
@@ -387,7 +387,15 @@
           <ul data-offset="-30">
             
               
-                <li><a href="#widget">Widgets</a></li>
+                <li><a href="#a-default-pager">Default pager</a></li>
+              
+            
+              
+                <li><a href="#b-align-link">Align links</a></li>
+              
+            
+              
+                <li><a href="#c-disabled">Disabled</a></li>
               
             
           </ul>
@@ -398,24 +406,36 @@
 
 
 
-<h1 id="widget" class="styleguide">Widgets</h1>
-
-<p>Button styles can be applied to any element. Typically you&#39;ll want
-to use either a <code>&lt;button&gt;</code> or an <code>&lt;a&gt;</code> element:</p>
-</div><div class="codeExample"><div class="exampleOutput"><div class="widget">
-  <h3 class="widget_title">Widget Title</h3>
-  <p>Widget content would go here.</p>
-</div>
-</div><div class="codeBlock"><div class="highlight"><pre><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"widget"</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;h3</span> <span class="na">class=</span><span class="s">"widget_title"</span><span class="nt">&gt;</span>Widget Title<span class="nt">&lt;/h3&gt;</span>
-  <span class="nt">&lt;p&gt;</span>Widget content would go here.<span class="nt">&lt;/p&gt;</span>
-<span class="nt">&lt;/div&gt;</span>
+<h1 id="a-default-pager" class="styleguide">Default pager</h1>
+</div><div class="codeExample"><div class="exampleOutput"><ul class="pager">
+  <li><a href="#">Previous</a></li>
+  <li><a href="#">Next</a></li>
+</ul>
+</div><div class="codeBlock"><div class="highlight"><pre><span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"pager"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Previous<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+  <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Next<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
 </pre></div></div></div><div class="cortana-content">
-<p>If your button is actually a link to another page, please use the
-<code>&lt;a&gt;</code> element, while if your button performs an action, such as
-submitting a form or triggering some javascript event, then use a
-<code>&lt;button&gt;</code> element.</p>
-
+<h1 id="b-align-link" class="styleguide">Align links</h1>
+</div><div class="codeExample"><div class="exampleOutput"><ul class="pager">
+  <li class="previous"><a href="#">&larr; Older</a></li>
+  <li class="next"><a href="#">Newer &rarr;</a></li>
+</ul>
+</div><div class="codeBlock"><div class="highlight"><pre><span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"pager"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"previous"</span><span class="nt">&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span><span class="ni">&amp;larr;</span> Older<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+  <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"next"</span><span class="nt">&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Newer <span class="ni">&amp;rarr;</span><span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+</pre></div></div></div><div class="cortana-content">
+<h1 id="c-disabled" class="styleguide">Disabled</h1>
+</div><div class="codeExample"><div class="exampleOutput"><ul class="pager">
+  <li class="previous disabled"><a href="#">&larr; Older</a></li>
+  <li class="next"><a href="#">Newer &rarr;</a></li>
+</ul>
+</div><div class="codeBlock"><div class="highlight"><pre><span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"pager"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"previous disabled"</span><span class="nt">&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span><span class="ni">&amp;larr;</span> Older<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+  <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"next"</span><span class="nt">&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Newer <span class="ni">&amp;rarr;</span><span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+</pre></div></div></div><div class="cortana-content">
         </div>
       </div>
     </div>

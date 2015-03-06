@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>2. Components - Input groups</title>
+    <title>1. Layout - Code</title>
 
     <!-- Styleguide CSS -->
     <link rel="stylesheet" href="./theme-build/css/vendors.css">
@@ -14,7 +14,7 @@
     <!-- Source CSS -->
     
       
-        <link rel="stylesheet" href="../.tmp/styles/main.css">
+        <link rel="stylesheet" href="../../.tmp/styles/main.css">
       
     
 </head>
@@ -131,7 +131,7 @@
             
               
               
-                <li><a href="1._layout_-_code.html">Code</a></li>
+                <li><a class="active" href="1._layout_-_code.html">Code</a></li>
               
             
           
@@ -265,7 +265,7 @@
             
               
               
-                <li><a class="active" href="2._components_-_input_groups.html">Input groups</a></li>
+                <li><a href="2._components_-_input_groups.html">Input groups</a></li>
               
             
           
@@ -367,7 +367,7 @@
 
     <header class="cortana-header sb-slide">
       
-        <h1>Emmi Manager Style Guide: Input groups</h1>
+        <h1>Emmi Manager Style Guide: Code</h1>
       
       <div id="open-left" class="cortana-menu-btn">
         <span></span>
@@ -387,23 +387,15 @@
           <ul data-offset="-30">
             
               
-                <li><a href="#a-input-groups">Input groups</a></li>
+                <li><a href="#a-inline-code">Inline code</a></li>
               
             
               
-                <li><a href="#c-sizes">Sizes</a></li>
+                <li><a href="#b-user-input">User input</a></li>
               
             
               
-                <li><a href="#d-checkbox-addon">Checkbox-Radio addon</a></li>
-              
-            
-              
-                <li><a href="#e-button-addon">Button addon</a></li>
-              
-            
-              
-                <li><a href="#f-dropdown-addon">Dropdown addon</a></li>
+                <li><a href="#c-code-block">Code block</a></li>
               
             
           </ul>
@@ -414,139 +406,17 @@
 
 
 
-<h1 id="a-input-groups" class="styleguide">Input groups</h1>
-</div><div class="codeExample"><div class="exampleOutput"><div class="input-group">
-  <span class="input-group-addon">@</span>
-  <input type="text" class="form-control" placeholder="Username">
-</div>
-
-<br>
-
-<div class="input-group">
-  <input type="text" class="form-control">
-  <span class="input-group-addon">.00</span>
-</div>
-
-<br>
-
-<div class="input-group">
-  <span class="input-group-addon">$</span>
-  <input type="text" class="form-control">
-  <span class="input-group-addon">.00</span>
-</div>
-</div><div class="codeBlock"><div class="highlight"><pre><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"input-group"</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"input-group-addon"</span><span class="nt">&gt;</span>@<span class="nt">&lt;/span&gt;</span>
-  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">class=</span><span class="s">"form-control"</span> <span class="na">placeholder=</span><span class="s">"Username"</span><span class="nt">&gt;</span>
-<span class="nt">&lt;/div&gt;</span>
-
-<span class="nt">&lt;br&gt;</span>
-
-<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"input-group"</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">class=</span><span class="s">"form-control"</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"input-group-addon"</span><span class="nt">&gt;</span>.00<span class="nt">&lt;/span&gt;</span>
-<span class="nt">&lt;/div&gt;</span>
-
-<span class="nt">&lt;br&gt;</span>
-
-<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"input-group"</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"input-group-addon"</span><span class="nt">&gt;</span>$<span class="nt">&lt;/span&gt;</span>
-  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">class=</span><span class="s">"form-control"</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"input-group-addon"</span><span class="nt">&gt;</span>.00<span class="nt">&lt;/span&gt;</span>
-<span class="nt">&lt;/div&gt;</span>
+<h1 id="a-inline-code" class="styleguide">Inline code</h1>
+</div><div class="codeExample"><div class="exampleOutput">For example, <code>&lt;section&gt;</code> should be wrapped as inline.
+</div><div class="codeBlock"><div class="highlight"><pre>For example, <span class="nt">&lt;code&gt;</span><span class="ni">&amp;lt;</span>section<span class="ni">&amp;gt;</span><span class="nt">&lt;/code&gt;</span> should be wrapped as inline.
 </pre></div></div></div><div class="cortana-content">
-<h1 id="c-sizes" class="styleguide">Sizes</h1>
-</div><div class="codeExample"><div class="exampleOutput"><div class="input-group input-group-lg">
-  <span class="input-group-addon">@</span>
-  <input type="text" class="form-control" placeholder="Username">
-</div>
-
-<br>
-
-<div class="input-group">
-  <span class="input-group-addon">@</span>
-  <input type="text" class="form-control" placeholder="Username">
-</div>
-
-<br>
-
-<div class="input-group input-group-sm">
-  <span class="input-group-addon">@</span>
-  <input type="text" class="form-control" placeholder="Username">
-</div>
-</div><div class="codeBlock"><div class="highlight"><pre><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"input-group input-group-lg"</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"input-group-addon"</span><span class="nt">&gt;</span>@<span class="nt">&lt;/span&gt;</span>
-  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">class=</span><span class="s">"form-control"</span> <span class="na">placeholder=</span><span class="s">"Username"</span><span class="nt">&gt;</span>
-<span class="nt">&lt;/div&gt;</span>
-
-<span class="nt">&lt;br&gt;</span>
-
-<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"input-group"</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"input-group-addon"</span><span class="nt">&gt;</span>@<span class="nt">&lt;/span&gt;</span>
-  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">class=</span><span class="s">"form-control"</span> <span class="na">placeholder=</span><span class="s">"Username"</span><span class="nt">&gt;</span>
-<span class="nt">&lt;/div&gt;</span>
-
-<span class="nt">&lt;br&gt;</span>
-
-<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"input-group input-group-sm"</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"input-group-addon"</span><span class="nt">&gt;</span>@<span class="nt">&lt;/span&gt;</span>
-  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">class=</span><span class="s">"form-control"</span> <span class="na">placeholder=</span><span class="s">"Username"</span><span class="nt">&gt;</span>
-<span class="nt">&lt;/div&gt;</span>
+<h1 id="b-user-input" class="styleguide">User input</h1>
+</div><div class="codeExample"><div class="exampleOutput">To switch directories, type <kbd>cd</kbd> followed by the name of the directory.
+</div><div class="codeBlock"><div class="highlight"><pre>To switch directories, type <span class="nt">&lt;kbd&gt;</span>cd<span class="nt">&lt;/kbd&gt;</span> followed by the name of the directory.
 </pre></div></div></div><div class="cortana-content">
-<h1 id="d-checkbox-addon" class="styleguide">Checkbox-Radio addon</h1>
-</div><div class="codeExample"><div class="exampleOutput"><div class="input-group">
-  <span class="input-group-addon">
-    <input type="checkbox">
-  </span>
-  <input type="text" class="form-control">
-</div>
-</div><div class="codeBlock"><div class="highlight"><pre><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"input-group"</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"input-group-addon"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;/span&gt;</span>
-  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">class=</span><span class="s">"form-control"</span><span class="nt">&gt;</span>
-<span class="nt">&lt;/div&gt;</span>
-</pre></div></div></div><div class="cortana-content">
-<h1 id="e-button-addon" class="styleguide">Button addon</h1>
-</div><div class="codeExample"><div class="exampleOutput"><div class="input-group">
-  <span class="input-group-btn">
-    <button class="btn btn-primary" type="button">Go</button>
-  </span>
-  <input type="text" class="form-control">
-</div>
-</div><div class="codeBlock"><div class="highlight"><pre><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"input-group"</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"input-group-btn"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">"btn btn-primary"</span> <span class="na">type=</span><span class="s">"button"</span><span class="nt">&gt;</span>Go<span class="nt">&lt;/button&gt;</span>
-  <span class="nt">&lt;/span&gt;</span>
-  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">class=</span><span class="s">"form-control"</span><span class="nt">&gt;</span>
-<span class="nt">&lt;/div&gt;</span>
-</pre></div></div></div><div class="cortana-content">
-<h1 id="f-dropdown-addon" class="styleguide">Dropdown addon</h1>
-</div><div class="codeExample"><div class="exampleOutput"><div class="input-group">
-  <input type="text" class="form-control">
-  <div class="input-group-btn">
-    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Action <span class="caret"></span></button>
-    <ul class="dropdown-menu pull-right">
-      <li><a href="#">Action</a></li>
-      <li><a href="#">Another action</a></li>
-      <li><a href="#">Something else here</a></li>
-      <li class="divider"></li>
-      <li><a href="#">Separated link</a></li>
-    </ul>
-  </div>
-</div>
-</div><div class="codeBlock"><div class="highlight"><pre><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"input-group"</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">class=</span><span class="s">"form-control"</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"input-group-btn"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn btn-primary dropdown-toggle"</span> <span class="na">data-toggle=</span><span class="s">"dropdown"</span><span class="nt">&gt;</span>Action <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"caret"</span><span class="nt">&gt;&lt;/span&gt;&lt;/button&gt;</span>
-    <span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"dropdown-menu pull-right"</span><span class="nt">&gt;</span>
-      <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Action<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
-      <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Another action<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
-      <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Something else here<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
-      <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"divider"</span><span class="nt">&gt;&lt;/li&gt;</span>
-      <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Separated link<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
-    <span class="nt">&lt;/ul&gt;</span>
-  <span class="nt">&lt;/div&gt;</span>
-<span class="nt">&lt;/div&gt;</span>
+<h1 id="c-code-block" class="styleguide">Code block</h1>
+</div><div class="codeExample"><div class="exampleOutput"><pre>&lt;p&gt;Paragraph content...&lt;/p&gt;</pre>
+</div><div class="codeBlock"><div class="highlight"><pre><span class="nt">&lt;pre&gt;</span><span class="ni">&amp;lt;</span>p<span class="ni">&amp;gt;</span>Paragraph content...<span class="ni">&amp;lt;</span>/p<span class="ni">&amp;gt;</span><span class="nt">&lt;/pre&gt;</span>
 </pre></div></div></div><div class="cortana-content">
         </div>
       </div>
