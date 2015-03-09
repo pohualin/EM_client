@@ -57,7 +57,7 @@ angular.module('emmiManager')
        		console.log('passowrd'+password);
        		$scope.passowrd = password;
        		         
-       		$location.url('/client-facing/secretQuestions/edit/secret-question-edit.html');
+       		$location.path('/client-facing/secretQuestions/edit/secret-question-edit.html');
        	};
         /**
          * Called when cancel is clicked.. takes the original
