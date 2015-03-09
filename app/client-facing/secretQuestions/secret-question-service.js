@@ -18,6 +18,18 @@ angular.module('emmiManager')
          
                 },
                 
+                /**
+                 * Creates a new object for the response
+                 */
+                createNewResponse: function () {
+                	return {
+            		   	entity:{
+            		   		secretQuestion:null,
+					 		response:null
+					 	}
+                	};
+                },
+                
                        
                 /**
                  * Calls the back end to get all question and response for a client user
