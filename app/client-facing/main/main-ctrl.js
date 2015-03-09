@@ -20,7 +20,6 @@ angular.module('emmiManager')
         		if(response.data.content.length === 2){
         			$scope.isSecretQuestion = true;
         		}
-        		console.log($scope);
         	}); 
         }
     }])

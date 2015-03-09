@@ -19,6 +19,16 @@ angular.module('emmiManager')
         	if(valid){
         	    SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.question1.entity);
 	        	SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.question2.entity);
+	        	$alert({
+					title: ' ',
+					content: 'The secret questions and responses have been saved successfully.',
+					container: 'body',
+					type: 'success',
+					placement: 'top',
+				    show: true,
+				    duration: 5,
+				    dismissable: true
+				});
 	        	$location.path('/');
     		} else {
                 if (!$scope.errorAlert) {
@@ -35,11 +45,7 @@ angular.module('emmiManager')
         	
     	};
     	
-    	$scope.validatePassword = function() {
-       	 var promptPasswordModal = $modal({scope: $scope, template: '/client-facing/secretQuestions/edit/promptPassword.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
-            promptPasswordModal.$promise.then(promptPasswordModal.show);
-       	};
-        
+    	
         /**
          * Called when cancel is clicked.. takes the original
          * objects and copies them back into the bound objects.
@@ -49,23 +55,15 @@ angular.module('emmiManager')
           
        };
        
-       if($scope.authenticated){
-       	SecretQuestionService.getAllUserSecretQuestionResponse().then(function(response) {
-       		if(response.data.content.length === 2){
-       			$scope.isSecretQuestion = true;
-       		}
-       		console.log($scope);
-       	}); 
-       }
+      
        
        function init(){
-           
-            
+          console.log('edieweweew');
           	SecretQuestionService.getSecretQuestions().then(function(response) {
           		$scope.secretQuestions = response.data.content; 
        		});
           	
-        	SecretQuestionService.getAllUserSecretQuestionAsteriskResponse($scope.account).then(function(response) {
+        	SecretQuestionService.getAllUserSecretQuestionResponse($scope.account).then(function(response) {
             
         	var existingResponse = response.data.content;
             $scope.question1Original = existingResponse.length > 0 ? existingResponse[0] : SecretQuestionService.createNewResponse();

@@ -14,8 +14,19 @@ angular.module('emmiManager')
                  * @returns All available secret question
                  */
                 getSecretQuestions: function () {
-                	return $http.get(API.secretQuestions);
-         
+                   return $http.get(API.secretQuestions);
+                },
+                
+                /**
+                 * Creates a new object for the response
+                 */
+                createNewResponse: function () {
+                	return {
+            		   	entity:{
+            		   		secretQuestion:null,
+					 		response:null
+					 	}
+                	};
                 },
               
                               
