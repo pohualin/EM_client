@@ -13,7 +13,7 @@ angular.module('emmiManager')
             this.userRoles = user.permission;
             this.link = user.link;
             this.clientResource = user.clientResource;
-            this.passwordExpirationTime = user.passwordExpirationTime;
+            this.passwordExpirationTime = user.passwordExpirationTime +'Z';
             this.clientResource.link = arrays.convertToObject('rel', 'href',
                     this.clientResource.link);
             return this;

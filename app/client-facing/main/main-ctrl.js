@@ -17,8 +17,9 @@ angular.module('emmiManager')
                     MainService.getPasswordExpiresInDays(account.passwordExpirationTime);
                 MainService.loadPolicy(account.clientResource).then(function (response){
                     if ($scope.passwordExpiresInDays <= response.data.passwordExpirationDaysReminder) {
-                        $rootScope.alert = $alert({
-                            content: 'Your password will expire in ' +$scope.passwordExpiresInDays+ ' day(s). <a href="#/change_password">change password</a>',
+                        $alert({
+                            content: 'Your password will expire in ' +$scope.passwordExpiresInDays+ ' days.',
+                            template: 'client-facing/main/password-reminder-alert.tpl.html',
                             type: 'warning',
                             placement: 'top',
                             show: true,

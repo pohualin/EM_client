@@ -118,9 +118,7 @@ angular.module('emmiManager')
                     });
             },
             getPasswordExpiresInDays: function(passwordExpirationTime){
-                var passwordExpirationMoment = moment(passwordExpirationTime + 'Z');
-                var now = moment(new Date());
-                return passwordExpirationMoment.diff(now, 'days') + 1;
+                return moment(passwordExpirationTime).diff(moment(), 'days') + 1;
             }
         };
     }])
