@@ -9,6 +9,7 @@ angular.module('emmiManager')
             this.firstName = user.firstName;
             this.lastName = user.lastName;
             this.email = user.email;
+            this.emailValidated = user.emailValidated;
             this.userRoles = user.permission;
             this.link = user.link;
             this.clientResource = user.clientResource;
@@ -19,6 +20,7 @@ angular.module('emmiManager')
             this.firstName = null;
             this.lastName = null;
             this.email = null;
+            this.emailValidated = null;
             this.userRoles = null;
             this.link = null;
             this.clientResource = null;

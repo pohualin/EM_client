@@ -21,6 +21,7 @@ angular.module('emmiManager')
              */
             $scope.passwordChanged = function () {
                 var passwordChange = $scope.passwordChange;
+                $scope.changePasswordForm.password.$setValidity('policy', true);
                 $scope.changePasswordForm.confirmPassword.$setValidity('same', passwordChange.password === passwordChange.confirmPassword);
             };
 

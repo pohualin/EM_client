@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('emmiManager')
-    .factory('AuthSharedService', ['$rootScope', '$http', 'authService', 'Session', 'API', '$q', '$location', 'arrays',
-        function ($rootScope, $http, authService, Session, API, $q, $location, arrays) {
+    .factory('AuthSharedService', ['$rootScope', '$http', 'authService', 'Session', 'API', '$q', '$location', 'arrays', 'moment',
+        function ($rootScope, $http, authService, Session, API, $q, $location, arrays, moment) {
 
             return {
                 login: function (creds) {
@@ -30,16 +30,7 @@ angular.module('emmiManager')
                             authService.loginConfirmed(currentUser);
                         });
                     }).error(function (error) {
-                        if (angular.isObject(error)){
-                            // only possible object being returned is a client object
-                            error.link = arrays.convertToObject('rel', 'href', error.link);
-                            $rootScope.$broadcast('event:auth-credentialsExpired', {
-                                credentials: creds,
-                                client: error
-                            });
-                        } else {
-                            $rootScope.authenticationError = true;
-                        }
+                        self.processLoginFailureError(error, creds);
                         Session.destroy();
                     });
                 },
@@ -113,6 +104,27 @@ angular.module('emmiManager')
                     $rootScope.account = null;
                     Session.destroy();
                     authService.loginCancelled();
+                },
+                processLoginFailureError: function(error, creds){
+                    $rootScope.authenticationError = false;
+                    $rootScope.lockError = false;
+                    $rootScope.lockExpirationDateTime = null;
+                    if (angular.isObject(error)){
+                        if(error.entity.reason === 'BAD'){
+                            $rootScope.authenticationError = true;
+                        } else if (error.entity.reason === 'LOCK') {
+                            $rootScope.lockError = true;
+                            $rootScope.lockExpirationDateTime = error.entity.userClient.lockExpirationDateTime;
+                        } else if (error.entity.reason === 'EXPIRED')  {
+                            error.clientResource.link = arrays.convertToObject('rel', 'href', error.clientResource.link);
+                            $rootScope.$broadcast('event:auth-credentialsExpired', {
+                                credentials: creds,
+                                client: error.clientResource
+                            });
+                        }
+                    } else {
+                        $rootScope.authenticationError = true;
+                    }
                 }
 
             };

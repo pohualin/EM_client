@@ -147,6 +147,12 @@ gulp.task('fonts', function () {
         .pipe($.size({title: 'fonts', showFiles:true}));
 });
 
+gulp.task('font-paths', ['html'], function () {
+    return gulp.src('dist/styles/*.css')
+        .pipe($.replace('../../bower_components/bootstrap-sass/assets/fonts/bootstrap/', '../fonts/'))
+        .pipe(gulp.dest('dist/styles'));
+});
+
 gulp.task('translations', function () {
     return gulp.src('app/i18n/**/*')
         .pipe(gulp.dest('dist/i18n')),
@@ -161,8 +167,13 @@ gulp.task('api-docs', function () {
             .pipe(gulp.dest('dist/bower_components/swagger-ui/dist'));
 });
 
+gulp.task('styleguide', function () {
+    return gulp.src('app/styleguide/**/*')
+        .pipe(gulp.dest('dist/styleguide'));
+});
+
 gulp.task('clean', function () {
     return gulp.src(['.tmp', 'dist'], { read: false }).pipe($.clean());
 });
 
-gulp.task('build', ['html', 'images', 'favicon', 'fonts', 'translations', 'api-docs']);
+gulp.task('build', ['html', 'images', 'favicon', 'fonts', 'font-paths', 'translations', 'api-docs', 'styleguide']);
