@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html ng-app="cortana">
+<html ng-app="cortana" ng-csp>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
@@ -11,11 +11,14 @@
     <link rel="stylesheet" href="./theme-build/css/cortana.css">
     <link rel="stylesheet" href="./theme-build/css/github.css">
 
+    <!-- build:css({.tmp,app}) /styles/main.css -->
+    <link rel="stylesheet" href="/bower_components/angular-motion/dist/angular-motion.min.css">
+    <link rel="stylesheet" href="/bower_components/bootstrap-additions/dist/bootstrap-additions.css">
+    <link rel="stylesheet" href="/bower_components/angular/angular-csp.css"/>
+    <link rel="stylesheet" href="/styles/main.css">
+    <!-- endbuild -->
+
     <!-- Source CSS -->
-    
-      
-        <link rel="stylesheet" href="../../.tmp/styles/main.css">
-      
     
 </head>
 
@@ -416,9 +419,6 @@
   </div>
 
   <script src="theme-build/js/vendors.min.js"></script>
-  <script type="text/javascript">
-    var jQuery_no_conflict = $.noConflict(true);
-  </script>
   <script src="theme-build/js/main.js"></script>
   <script type="text/javascript">
     function TypeaheadCtrl($scope) {
