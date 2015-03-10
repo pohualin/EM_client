@@ -54,7 +54,6 @@ angular.module('emmiManager')
                             });
                             $location.path('/').replace();
                         }, function error(errorResponse) {
-                            window.paul = errorResponse;
                             if (errorResponse.status === 403){
                                 changePasswordForm.oldPassword.$setValidity('bad', false);
                             } else if (errorResponse.status === 406 && errorResponse.data) {
