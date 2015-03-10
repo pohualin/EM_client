@@ -15,7 +15,7 @@ custom_markdown: ./app/styleguide/_assets/CortanaMarkdownRenderer.rb
 
 # List all css to include for the styleguide render examples (path from styleguide directory)
 css_include:
-  - '../../.tmp/styles/main.css'
+  #- '/styles/main.css'
 
 # List all js to include for the styleguide render examples (path from styleguide directory)
 js_include:

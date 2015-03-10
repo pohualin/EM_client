@@ -9,10 +9,8 @@
   </div>
 
   <script src="theme-build/js/vendors.min.js"></script>
-  <script type="text/javascript">
-    var jQuery_no_conflict = $.noConflict(true);
-  </script>
   <script src="theme-build/js/main.js"></script>
+  <!-- build:js theme-build/js/search.js -->
   <script type="text/javascript">
     function TypeaheadCtrl($scope) {
       $scope.selected = undefined;
@@ -37,6 +35,7 @@
       };
     }
   </script>
+  <!-- endbuild -->
   <script type="text/ng-template" id="customTemplate.html">
     <a href="{{match.model.path}}">
       <p class="cortana-search-title">{{match.model.title}}</p>
