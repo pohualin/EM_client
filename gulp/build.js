@@ -83,7 +83,7 @@ gulp.task('router-partials', function () {
         .pipe($.size({title: 'router-partials', showFiles: true}));
 });
 
-gulp.task('html', ['styles', 'admin-scripts', 'client-scripts', 'router-scripts', 'admin-partials', 'client-partials', 'router-partials'],
+gulp.task('html', ['styles', 'admin-scripts', 'client-scripts', 'router-scripts', 'admin-partials', 'client-partials', 'router-partials', 'styleguide'],
     function () {
     var jsFilter = $.filter('**/*.js');
     var cssFilter = $.filter('**/*.css');
@@ -168,7 +168,9 @@ gulp.task('api-docs', function () {
 });
 
 gulp.task('styleguide', function () {
-    return gulp.src('app/styleguide/theme-build/**/*')
+    return gulp.src('hologram_config.yml')
+        .pipe($.hologram({logging:true}))
+        gulp.src('app/styleguide/theme-build/**/*')
         .pipe(gulp.dest('dist/styleguide/theme-build'));
 });
 
@@ -176,4 +178,4 @@ gulp.task('clean', function () {
     return gulp.src(['.tmp', 'dist'], { read: false }).pipe($.clean());
 });
 
-gulp.task('build', ['html', 'images', 'favicon', 'fonts', 'font-paths', 'translations', 'api-docs', 'styleguide']);
+gulp.task('build', ['html', 'images', 'favicon', 'fonts', 'font-paths', 'translations', 'api-docs']);
