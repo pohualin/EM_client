@@ -88,7 +88,7 @@ gulp.task('html', ['styles', 'admin-scripts', 'client-scripts', 'router-scripts'
     var jsFilter = $.filter('**/*.js');
     var cssFilter = $.filter('**/*.css');
 
-    return gulp.src('app/*.html')
+    return gulp.src(['app/*.html','app/styleguide/*.html'], { base: 'app' })
         .pipe($.inject(gulp.src('.tmp/partials/**/*.js'), {
             read: false,
             starttag: '<!-- inject:partials -->',
@@ -141,7 +141,7 @@ gulp.task('favicon', function () {
 
 gulp.task('fonts', function () {
     return gulp.src(mainBowerFiles())
-        .pipe($.filter('**/*.{eot,svg,ttf,woff}'))
+        .pipe($.filter('**/*.{eot,svg,ttf,woff,woff2}'))
         .pipe($.flatten())
         .pipe(gulp.dest('dist/fonts'))
         .pipe($.size({title: 'fonts', showFiles:true}));
@@ -168,8 +168,8 @@ gulp.task('api-docs', function () {
 });
 
 gulp.task('styleguide', function () {
-    return gulp.src('app/styleguide/**/*')
-        .pipe(gulp.dest('dist/styleguide'));
+    return gulp.src('app/styleguide/theme-build/**/*')
+        .pipe(gulp.dest('dist/styleguide/theme-build'));
 });
 
 gulp.task('clean', function () {
