@@ -64,8 +64,6 @@ angular.module('emmiManager')
                                         changePasswordForm.password.$setValidity('policy', false);
                                     }
                                 });
-                            } else {
-                                $location.path('/credentials/expired/failure').replace();
                             }
                         });
                 }
