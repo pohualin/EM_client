@@ -7,7 +7,7 @@ angular.module('emmiManager')
     .service('SecretQuestionService', ['$http', 'UriTemplate', 'Session', 'API',
         function ($http, UriTemplate, Session, API) {
             return {
-
+            
                 /**
                  * Calls the back end get Secret Questions list
                  *
@@ -35,8 +35,8 @@ angular.module('emmiManager')
                  * @param client user id
                  * @returns all questions and the responses with asterisks
                  */
-                getAllUserSecretQuestionAsteriskResponse: function(user) {
-                	return $http.get(UriTemplate.create(Session.link.secretQuestionAsteriskResponses).stringify({size: 2}),user)
+                getAllUserSecretQuestionAsteriskResponse: function() {
+                	return $http.get(UriTemplate.create(Session.link.secretQuestionAsteriskResponses).stringify({size: 2}))
                     		.then(function(response) {
                             return response;
                         });
@@ -48,8 +48,10 @@ angular.module('emmiManager')
                  * @param client user id
                  * @returns all questions and responses for a client user
                  */
-                getAllUserSecretQuestionResponse: function() {
-                    return $http.get(UriTemplate.create(Session.link.secretQuestionResponses).stringify({size: 2}))
+                getAllUserSecretQuestionResponse: function(password) {
+                	            
+                	    return $http.get(UriTemplate.create(Session.link.secretQuestionResponses).stringify({size: 2, password: password}),
+                    		{override403: true})
                     		.then(function(response) {
                             return response;
                         });

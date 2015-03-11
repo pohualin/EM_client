@@ -9,6 +9,8 @@ angular.module('emmiManager')
         function ($scope, $location, SecretQuestionService, $alert, $modal) { 	
     	
     	$scope.secretQuestionFormSubmitted = false;
+    	var promptPasswordModal = $modal({scope: $scope, template: '/client-facing/secretQuestions/edit/promptPassword.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
+    	
     	/**
     	 * When the save button is clicked. Sends all updates
     	 * to the back, then rebinds the form objects with dthe
@@ -45,6 +47,39 @@ angular.module('emmiManager')
         	
     	};
     	
+    	$scope.promptPassword = function() {
+    		   
+               promptPasswordModal.$promise.then(promptPasswordModal.show);
+        };
+    	
+    	$scope.validatePassword = function(password) {
+    		$scope.passowrd = password;
+       	          		
+       		SecretQuestionService.getAllUserSecretQuestionResponse(password).then(
+       				function success(response) {
+		       			var existingResponse = response.data.content;
+		                $scope.question1Original = existingResponse.length > 0 ? existingResponse[0] : SecretQuestionService.createNewResponse();
+		                $scope.question1 = angular.copy($scope.question1Original);
+		                $scope.question2Original =  existingResponse.length > 1 ? existingResponse[1] : SecretQuestionService.createNewResponse();
+		                $scope.question2 = angular.copy($scope.question2Original);
+		                promptPasswordModal.$promise.then(promptPasswordModal.hide);
+       				}, 
+	            	function error(response){
+	            		if (response.status === 403){
+	            			if (!$scope.errorAlert) {
+	                            $scope.errorAlert = $alert({
+	                                title: ' ',
+	                                content: 'Please check your password and try again.',
+	                                container: '#message-container',
+	                                type: 'danger',
+	                                show: true,
+	                                dismissable: false
+	                            });
+	                        }
+	            		}
+	            	});    
+       	
+       	};
     	
         /**
          * Called when cancel is clicked.. takes the original
@@ -54,28 +89,18 @@ angular.module('emmiManager')
            $location.path('/');
           
        };
-       
-      
-       
-       function init(){
-          console.log('edieweweew');
-          	SecretQuestionService.getSecretQuestions().then(function(response) {
-          		$scope.secretQuestions = response.data.content; 
-       		});
-          	
-        	SecretQuestionService.getAllUserSecretQuestionResponse($scope.account).then(function(response) {
-            
-        	var existingResponse = response.data.content;
-            $scope.question1Original = existingResponse.length > 0 ? existingResponse[0] : SecretQuestionService.createNewResponse();
-            $scope.question1 = angular.copy($scope.question1Original);
-            	
-            $scope.question2Original =  existingResponse.length > 1 ? existingResponse[1] : SecretQuestionService.createNewResponse();
-            $scope.question2 = angular.copy($scope.question2Original);
-        	}); 
-        }
         
-        init();
-            
-        }
-    ])
+           
+       function init(){
+    	   SecretQuestionService.getSecretQuestions().then(function(response) {
+         		$scope.secretQuestions = response.data.content; 
+      		});
+    	   $scope.promptPassword();
+              	
+       }
+        
+       init();
+    }])
 ;
+
+

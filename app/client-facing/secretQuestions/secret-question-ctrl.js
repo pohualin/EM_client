@@ -17,6 +17,8 @@ angular.module('emmiManager')
         $scope.saveOrUpdateSecretQuestion = function(valid) {
         	$scope.secretQuestionFormSubmitted = true;
         	if(valid){
+        		if($scope.question1.entity === $scope.question2.entity)
+        		{console.log('same questions');}
         	    SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.question1.entity);
 	        	SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.question2.entity);
 	        	$alert({
@@ -70,7 +72,7 @@ angular.module('emmiManager')
        		});
           	
         	SecretQuestionService.getAllUserSecretQuestionResponse().then(function(response) {
-            
+        	
         	var existingResponse = response.data.content;
             $scope.question1Original = existingResponse.length > 0 ? existingResponse[0] : SecretQuestionService.createNewResponse();
             $scope.question1 = angular.copy($scope.question1Original);
