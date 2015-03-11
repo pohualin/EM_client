@@ -1,13 +1,23 @@
 'use strict';
 
 angular.module('emmiManager')
-    .controller('MainCtrl', ['$rootScope', '$scope', '$translate', '$locale', '$alert', '$compile', 'tmhDynamicLocale', 'account', 'arrays', 'moment', 'MainService',
-        function ($rootScope, $scope, $translate, $locale, $alert, $compile, tmhDynamicLocale, account, arrays, moment, MainService) {
+      	.controller('MainCtrl', ['$rootScope', '$scope', '$translate', '$locale', '$alert', '$compile', 'tmhDynamicLocale', 'account', 'arrays', 'moment', 'MainService', 'SecretQuestionService',
+    	     function ($rootScope, $scope, $translate, $locale, $alert, $compile, tmhDynamicLocale, account, arrays, moment, MainService, SecretQuestionService ) {
         $scope.today = new Date();
+        $scope.isSecretQuestion = false;
         $scope.changeLanguage = function (langKey) {
             $translate.use(langKey);
             tmhDynamicLocale.set(langKey);
         };
+        
+       
+        if($scope.authenticated){
+        	SecretQuestionService.getAllUserSecretQuestionAsteriskResponse($scope.account.id).then(function(response) {
+        		if(response.data.content.length === 2){
+        			$scope.isSecretQuestion = true;
+        		}
+        	}); 
+        }
         
         function init(){
             if (account && account.clientResource) {

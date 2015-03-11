@@ -5,30 +5,20 @@ angular.module('emmiManager')
 /**
  * This manages interactions when a user needs to select secret questions and responses.
  */
-    .controller('SecretQuestionController', ['$scope', '$location', 'SecretQuestionService', '$alert',
+    .controller('SecretQuestionCreateController', ['$scope', '$location', 'SecretQuestionService', '$alert',
         function ($scope, $location, SecretQuestionService, $alert) { 	
     	
     	$scope.secretQuestionFormSubmitted = false;
     	/**
     	 * When the save button is clicked. Sends all updates
-    	 * to the back, then rebinds the form objects with dthe
+    	 * to the back, then rebinds the form objects with the
     	 * results
     	 */
         $scope.saveOrUpdateSecretQuestion = function(valid) {
         	$scope.secretQuestionFormSubmitted = true;
         	if(valid){
-        		SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.question1.entity);
+        	    SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.question1.entity);
 	        	SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.question2.entity);
-	        	$alert({
-					title: ' ',
-					content: 'The secret questions and responses have been saved successfully.',
-					container: 'body',
-					type: 'success',
-					placement: 'top',
-				    show: true,
-				    duration: 5,
-				    dismissable: true
-				});
 	        	$location.path('/');
     		} else {
                 if (!$scope.errorAlert) {
@@ -45,24 +35,25 @@ angular.module('emmiManager')
         	
     	};
     	
-    	/**
+    	 
+        /**
          * Called when cancel is clicked.. takes the original
          * objects and copies them back into the bound objects.
          */
-    	$scope.cancel = function () {
-           $location.path('/');
-          
-       };
-            
+    	$scope.notNow = function () {
+            $location.path('/');
+           
+        };
+       
        function init(){
-   
+           
+            
           	SecretQuestionService.getSecretQuestions().then(function(response) {
           		$scope.secretQuestions = response.data.content; 
        		});
           	
           	$scope.question1 = SecretQuestionService.createNewResponse();
           	$scope.question2 = SecretQuestionService.createNewResponse();
-            
         }
         
         init();
