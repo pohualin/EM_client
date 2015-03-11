@@ -17,9 +17,7 @@ angular.module('emmiManager')
         $scope.saveOrUpdateSecretQuestion = function(valid) {
         	$scope.secretQuestionFormSubmitted = true;
         	if(valid){
-        		if($scope.question1.entity === $scope.question2.entity)
-        		{console.log('same questions');}
-        	    SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.question1.entity);
+        		SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.question1.entity);
 	        	SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.question2.entity);
 	        	$alert({
 					title: ' ',
@@ -61,7 +59,6 @@ angular.module('emmiManager')
        		if(response.data.content.length === 2){
        			$scope.isSecretQuestion = true;
        		}
-       		console.log($scope);
        	}); 
        }
        
