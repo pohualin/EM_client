@@ -63,7 +63,7 @@
                                     $rootScope.$broadcast('event:auth-loginRequired', rejection);
                                 }
                                 return deferred.promise;
-                            } else if (rejection.status === 403 && !rejection.config.ignoreAuthModule) {
+                            } else if (rejection.status === 403 && !rejection.config.ignoreAuthModule && !rejection.config.override403) {
                                 $rootScope.$broadcast('event:auth-notAuthorized', rejection);
                             } else if (rejection.status === 500) {
                                 $rootScope.$broadcast('event:server-error', rejection.data);
