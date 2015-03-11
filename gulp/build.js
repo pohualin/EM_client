@@ -88,7 +88,7 @@ gulp.task('html', ['styles', 'admin-scripts', 'client-scripts', 'router-scripts'
     var jsFilter = $.filter('**/*.js');
     var cssFilter = $.filter('**/*.css');
 
-    return gulp.src('app/*.html')
+    return gulp.src(['app/*.html','app/styleguide/*.html'], { base: 'app' })
         .pipe($.inject(gulp.src('.tmp/partials/**/*.js'), {
             read: false,
             starttag: '<!-- inject:partials -->',
@@ -141,10 +141,16 @@ gulp.task('favicon', function () {
 
 gulp.task('fonts', function () {
     return gulp.src(mainBowerFiles())
-        .pipe($.filter('**/*.{eot,svg,ttf,woff}'))
+        .pipe($.filter('**/*.{eot,svg,ttf,woff,woff2}'))
         .pipe($.flatten())
         .pipe(gulp.dest('dist/fonts'))
         .pipe($.size({title: 'fonts', showFiles:true}));
+});
+
+gulp.task('font-paths', ['html'], function () {
+    return gulp.src('dist/styles/*.css')
+        .pipe($.replace('../../bower_components/bootstrap-sass/assets/fonts/bootstrap/', '../fonts/'))
+        .pipe(gulp.dest('dist/styles'));
 });
 
 gulp.task('translations', function () {
@@ -161,8 +167,13 @@ gulp.task('api-docs', function () {
             .pipe(gulp.dest('dist/bower_components/swagger-ui/dist'));
 });
 
+gulp.task('styleguide', function () {
+    return gulp.src('app/styleguide/theme-build/**/*')
+        .pipe(gulp.dest('dist/styleguide/theme-build'));
+});
+
 gulp.task('clean', function () {
     return gulp.src(['.tmp', 'dist'], { read: false }).pipe($.clean());
 });
 
-gulp.task('build', ['html', 'images', 'favicon', 'fonts', 'translations', 'api-docs']);
+gulp.task('build', ['html', 'images', 'favicon', 'fonts', 'font-paths', 'translations', 'api-docs', 'styleguide']);

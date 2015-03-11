@@ -28,7 +28,7 @@ angular.module('emmiManager')
 					 	}
                 	};
                 },
-              
+            
                               
                 /**
                  * Calls the back end to get all question and responses with asterisks                 *
@@ -42,6 +42,7 @@ angular.module('emmiManager')
                         });
                 },
                 		       
+
                 /**
                  * Calls the back end to get all question and response for a client user
                  *

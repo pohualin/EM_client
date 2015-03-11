@@ -10,7 +10,7 @@ angular.module('emmiManager')
             tmhDynamicLocale.set(langKey);
         };
         
-        
+       
         if($scope.authenticated){
         	SecretQuestionService.getAllUserSecretQuestionAsteriskResponse($scope.account.id).then(function(response) {
         		if(response.data.content.length === 2){
