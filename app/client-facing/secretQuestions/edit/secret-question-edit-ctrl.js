@@ -9,7 +9,7 @@ angular.module('emmiManager')
         function ($scope, $location, SecretQuestionService, $alert, $modal) { 	
     	
     	$scope.secretQuestionFormSubmitted = false;
-    	var promptPasswordModal = $modal({scope: $scope, template: '/client-facing/secretQuestions/edit/promptPassword.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
+    	var promptPasswordModal = $modal({scope: $scope, template: 'client-facing/secretQuestions/edit/promptPassword.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
     	
     	/**
     	 * When the save button is clicked. Sends all updates
