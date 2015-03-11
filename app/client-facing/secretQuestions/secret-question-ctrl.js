@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  * This manages interactions when a user needs to select secret questions and responses.
  */
-    .controller('SecretQuestionController', ['$scope', '$location', 'SecretQuestionService', '$alert', '$modal',
-        function ($scope, $location, SecretQuestionService, $alert, $modal) { 	
+    .controller('SecretQuestionController', ['$scope', '$location', 'SecretQuestionService', '$alert',
+        function ($scope, $location, SecretQuestionService, $alert) { 	
     	
     	$scope.secretQuestionFormSubmitted = false;
     	/**
@@ -53,30 +53,16 @@ angular.module('emmiManager')
            $location.path('/');
           
        };
-       
-       if($scope.authenticated){
-       	SecretQuestionService.getAllUserSecretQuestionResponse().then(function(response) {
-       		if(response.data.content.length === 2){
-       			$scope.isSecretQuestion = true;
-       		}
-       	}); 
-       }
-       
+            
        function init(){
    
           	SecretQuestionService.getSecretQuestions().then(function(response) {
           		$scope.secretQuestions = response.data.content; 
        		});
           	
-        	SecretQuestionService.getAllUserSecretQuestionResponse().then(function(response) {
-        	
-        	var existingResponse = response.data.content;
-            $scope.question1Original = existingResponse.length > 0 ? existingResponse[0] : SecretQuestionService.createNewResponse();
-            $scope.question1 = angular.copy($scope.question1Original);
-            	
-            $scope.question2Original =  existingResponse.length > 1 ? existingResponse[1] : SecretQuestionService.createNewResponse();
-            $scope.question2 = angular.copy($scope.question2Original);
-        	}); 
+          	$scope.question1 = SecretQuestionService.createNewResponse();
+          	$scope.question2 = SecretQuestionService.createNewResponse();
+            
         }
         
         init();
