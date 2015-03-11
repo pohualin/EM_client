@@ -1,3 +1,5 @@
+var jQuery_no_conflict = $.noConflict(true);
+
 /* ==========================================================
  * app.js
  * Angular app

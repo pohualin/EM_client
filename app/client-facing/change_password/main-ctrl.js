@@ -15,7 +15,60 @@ angular.module('emmiManager')
                 $scope.passwordChange = ChangePasswordService.createChangeHolder();
                 $scope.changePasswordFormSubmitted = false;
             };
+            
+            /**
+             * clear bad validity for to avoid multiple error icons
+             */
+            $scope.oldPasswordChanged = function () {
+                $scope.changePasswordForm.oldPassword.$setValidity('bad', true);
+            };
+            
+            /**
+             * method to make sure two new password fields match
+             */
+            $scope.passwordChanged = function () {
+                var passwordChange = $scope.passwordChange;
+                $scope.changePasswordForm.password.$setValidity('policy', true);
+                $scope.changePasswordForm.confirmPassword.$setValidity('same', passwordChange.password === passwordChange.confirmPassword);
+            };
 
+            /**
+             * call server to save
+             * handle 406 error to show particular error icon based on reason
+             */
+            $scope.save = function (changePasswordForm) {
+                $scope.changePasswordFormSubmitted = true;
+                changePasswordForm.oldPassword.$setValidity('bad', true);
+                changePasswordForm.password.$setValidity('policy', true);
+                if (changePasswordForm.$valid) {
+                    ChangePasswordService.changePassword($scope.account, $scope.passwordChange)
+                        .then(function success() {
+                            $alert({
+                                content: 'The password for <b>' + account.login +
+                                '</b> has been successfully changed.',
+                                type: 'success',
+                                placement: 'top',
+                                show: true,
+                                duration: 5,
+                                dismissable: true
+                            });
+                            $location.path('/').replace();
+                        }, function error(errorResponse) {
+                            if (errorResponse.status === 403){
+                                changePasswordForm.oldPassword.$setValidity('bad', false);
+                            } else if (errorResponse.status === 406 && errorResponse.data) {
+                                angular.forEach(errorResponse.data, function(validationError){
+                                    if(validationError.entity.reason === 'BAD'){
+                                        changePasswordForm.oldPassword.$setValidity('bad', false);
+                                    } else if (validationError.entity.reason === 'POLICY') {
+                                        changePasswordForm.password.$setValidity('policy', false);
+                                    }
+                                });
+                            }
+                        });
+                }
+            };
+            
             function init(){
                 $scope.reset();
                 ChangePasswordService.loadPolicy($scope.account.clientResource).then(function (response){
