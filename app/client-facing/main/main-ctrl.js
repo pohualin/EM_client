@@ -14,7 +14,6 @@ angular.module('emmiManager')
         if($scope.authenticated){
         	SecretQuestionService.getAllUserSecretQuestionAsteriskResponse($scope.account.id).then(function(response) {
         		if(response.data.content.length === 2){
-        			console.log($scope.account.id);
         			$scope.isSecretQuestion = true;
         		}
         	}); 
