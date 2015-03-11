@@ -1,17 +1,24 @@
 'use strict';
 
 angular.module('emmiManager')
-.service('ProfileService', ['API', '$http', 'UriTemplate', function (api, $http, UriTemplate) {
+.service('ProfileService', ['API', '$http', 'UriTemplate', '$q', function (api, $http, UriTemplate, $q) {
 	return {
 		update: function (userClient) {
-			return $http.put(UriTemplate.create(api.authenticated).stringify(), userClient).then(function(response) {
+			return $http.put(UriTemplate.create(userClient.link.self).stringify(), userClient).then(function(response) {
 				return response.data;
 			});
 		},
 		get: function (userClient) {
-			return $http.get(userClient.link.getById).then(function(response){
-				return response.data;
-			});
+			var deferred = $q.defer();
+			if(userClient.self){
+				$http.get(userClient.link.self).then(function(response){
+					deferred.resolve(response.data);
+				});
+			} else {
+				deferred.resolve(userClient);
+			}
+			return deferred.promise;
+			
 		}
 	};
 }])
