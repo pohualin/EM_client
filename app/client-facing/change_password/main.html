@@ -26,16 +26,20 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group"
-                             data-ng-class="{ 'has-error' : changePasswordForm.password.$invalid && changePasswordFormSubmitted }">
+                             data-ng-class="{ 'has-error' : changePasswordForm.oldPassword.$invalid && changePasswordFormSubmitted }">
                             <label class="control-label" for="password">Old Password:</label>
 
                             <div class="error-circle glyphicon glyphicon-exclamation-sign"
-                                 data-ng-show="changePasswordForm.password.$error.required && changePasswordFormSubmitted"
+                                 data-ng-show="changePasswordForm.oldPassword.$error.required && changePasswordFormSubmitted"
                                  data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                                  data-title="Required"></div>
+                            <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                                 data-ng-show="changePasswordForm.oldPassword.$error.bad && changePasswordFormSubmitted"
+                                 data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                                 data-title="Please enter your current password"></div>
                             <input class="form-control" id="oldPassword" data-ng-model="passwordChange.oldPassword"
                                    name="oldPassword" autocomplete="off"
-                                   type="password" maxlength="50" data-auto-focus required data-ng-change="passwordChanged()">
+                                   type="password" maxlength="50" data-auto-focus required data-ng-change="oldPasswordChanged()">
                         </div>
                     </div>
                 </div>
