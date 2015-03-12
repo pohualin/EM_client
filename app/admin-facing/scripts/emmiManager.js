@@ -100,7 +100,7 @@ angular.module('emmiManager', [
 
     })
 
-    .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, arrays, $document, $modal) {
+    .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, PATTERN, arrays, $document, $modal) {
 
         var modals = [];
 
