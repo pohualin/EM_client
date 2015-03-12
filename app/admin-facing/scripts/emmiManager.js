@@ -49,6 +49,11 @@ angular.module('emmiManager', [
         INACTIVE_TEAMS:'i',
         UNTAGGED_TEAMS:'ut'
     })
+    
+    .constant('PATTERN', {
+        EMAIL: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$/
+    })
+    
     .config(
         function ($httpProvider, $translateProvider, tmhDynamicLocaleProvider, HateoasInterceptorProvider, $datepickerProvider, API, unsavedWarningsConfigProvider) {
 
@@ -95,7 +100,7 @@ angular.module('emmiManager', [
 
     })
 
-    .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, arrays, $document) {
+    .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, PATTERN, arrays, $document) {
 
         var modals = [];
 
@@ -125,7 +130,9 @@ angular.module('emmiManager', [
                 }
             }
         };
-
+        
+        $rootScope.emailPattern = PATTERN.EMAIL;
+        
         $rootScope.$on('$routeChangeStart', function (event, next) {
             $rootScope.userRoles = USER_ROLES;
             $rootScope.isAuthorized = AuthSharedService.isAuthorized;
