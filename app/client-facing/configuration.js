@@ -46,6 +46,11 @@ angular.module('emmiManager', [
         INACTIVE_TEAMS: 'i',
         UNTAGGED_TEAMS: 'ut'
     })
+    
+    .constant('PATTERN', {
+        EMAIL: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$/
+    })
+    
     .config(function ($httpProvider, $translateProvider, tmhDynamicLocaleProvider, HateoasInterceptorProvider, $datepickerProvider, API) {
 
         // Initialize angular-translate
@@ -77,7 +82,7 @@ angular.module('emmiManager', [
         });
     })
 
-    .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, arrays, $document, ConfigurationService) {
+    .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, PATTERN, arrays, $document, ConfigurationService) {
 
         var modals = [];
 
@@ -109,6 +114,8 @@ angular.module('emmiManager', [
                 }
             }
         };
+        
+        $rootScope.emailPattern = PATTERN.EMAIL;
 
         $rootScope.$on('$routeChangeStart', function (event, next) {
             $rootScope.userRoles = USER_ROLES;
