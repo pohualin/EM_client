@@ -37,11 +37,6 @@
 .modal-backdrop.emmi-fade {
     background: rgba(0, 0, 0, 0.5);
 }
- // Account for difference between Bootstrap Sass and the AngularStrap modal directive
-.modal-backdrop {
-    position: fixed;
-    height: 100%;
-}
 
 .modal-confirm-exit {
     z-index: 1080;
