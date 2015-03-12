@@ -26,6 +26,7 @@ angular.module('emmiManager', [
     .constant('USER_ROLES', {
         all: '*',
         admin: 'PERM_CLIENT_SUPER_USER',
+        teamScheduler: 'PERM_CLIENT_TEAM_SCHEDULE_PROGRAM',
         user: 'PERM_USER'
     })
 
