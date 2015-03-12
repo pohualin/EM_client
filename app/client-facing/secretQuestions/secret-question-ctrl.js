@@ -11,13 +11,13 @@ angular.module('emmiManager')
     	$scope.secretQuestionFormSubmitted = false;
     	/**
     	 * When the save button is clicked. Sends all updates
-    	 * to the back, then rebinds the form objects with the
+    	 * to the back, then rebinds the form objects with dthe
     	 * results
     	 */
         $scope.saveOrUpdateSecretQuestion = function(valid) {
         	$scope.secretQuestionFormSubmitted = true;
         	if(valid){
-        	    SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.question1.entity);
+        		SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.question1.entity);
 	        	SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.question2.entity);
 	        	$alert({
 					title: ' ',
@@ -44,32 +44,25 @@ angular.module('emmiManager')
             }
         	
     	};
-        
-        /**
+    	
+    	/**
          * Called when cancel is clicked.. takes the original
          * objects and copies them back into the bound objects.
          */
-        $scope.cancel = function() {
+    	$scope.cancel = function () {
            $location.path('/');
           
        };
-       
-       function init(){
-           
             
+       function init(){
+   
           	SecretQuestionService.getSecretQuestions().then(function(response) {
           		$scope.secretQuestions = response.data.content; 
        		});
           	
-        	SecretQuestionService.getAllUserSecretQuestionResponse().then(function(response) {
+          	$scope.question1 = SecretQuestionService.createNewResponse();
+          	$scope.question2 = SecretQuestionService.createNewResponse();
             
-        	var existingResponse = response.data.content;
-            $scope.question1Original = existingResponse.length > 0 ? existingResponse[0] : SecretQuestionService.createNewResponse();
-            $scope.question1 = angular.copy($scope.question1Original);
-            	
-            $scope.question2Original =  existingResponse.length > 1 ? existingResponse[1] : SecretQuestionService.createNewResponse();
-            $scope.question2 = angular.copy($scope.question2Original);
-        	}); 
         }
         
         init();

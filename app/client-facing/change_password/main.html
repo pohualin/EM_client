@@ -1,0 +1,106 @@
+<form name="changePasswordForm" class="form" novalidate>
+    <div class="container" data-ng-cloak>
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <h3>Please create a new password</h3>
+                <div class="row" data-ng-show="policy">
+                    <div class="col-md-12">
+                        <p>Passwords must be at least <strong>{{policy.passwordLength}} characters</strong>
+                            long and contain at least:</p>
+                        <ul>
+                            <li data-ng-show="policy.uppercaseLetters">
+                                one <strong>uppercase</strong> letter
+                            </li>
+                            <li data-ng-show="policy.lowercaseLetters">
+                                one <strong>lowercase</strong> letter
+                            </li>
+                            <li data-ng-show="policy.numbers">
+                                one <strong>number</strong>
+                            </li>
+                            <li data-ng-show="policy.specialChars">
+                                one <strong>special</strong> character (such as @, # or !)
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group"
+                             data-ng-class="{ 'has-error' : changePasswordForm.oldPassword.$invalid && changePasswordFormSubmitted }">
+                            <label class="control-label" for="password">Old Password:</label>
+
+                            <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                                 data-ng-show="changePasswordForm.oldPassword.$error.required && changePasswordFormSubmitted"
+                                 data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                                 data-title="Required"></div>
+                            <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                                 data-ng-show="changePasswordForm.oldPassword.$error.bad && changePasswordFormSubmitted"
+                                 data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                                 data-title="Please enter your current password"></div>
+                            <input class="form-control" id="oldPassword" data-ng-model="passwordChange.oldPassword"
+                                   name="oldPassword" autocomplete="off"
+                                   type="password" maxlength="50" data-auto-focus required data-ng-change="oldPasswordChanged()">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group"
+                             data-ng-class="{ 'has-error' : changePasswordForm.password.$invalid && changePasswordFormSubmitted }">
+                            <label class="control-label" for="password">New Password:</label>
+
+                            <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                                 data-ng-show="changePasswordForm.password.$error.required && changePasswordFormSubmitted"
+                                 data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                                 data-title="Required"></div>
+                            <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                                 data-ng-show="changePasswordForm.password.$error.policy && changePasswordFormSubmitted"
+                                 data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                                 data-title="Password must meet guidelines"></div>
+                            <input class="form-control" id="password" data-ng-model="passwordChange.password"
+                                   name="password" autocomplete="off"
+                                   type="password" maxlength="50" required data-ng-change="passwordChanged()">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group"
+                             data-ng-class="{ 'has-error' : !changePasswordForm.password.$error.required &&
+                            changePasswordForm.confirmPassword.$invalid && changePasswordFormSubmitted }">
+                            <label class="control-label" for="confirmPassword">Confirm Password:</label>
+
+                            <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                                 data-ng-show="!changePasswordForm.password.$error.required &&
+                            changePasswordForm.confirmPassword.$error.required && changePasswordFormSubmitted"
+                                 data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                                 data-title="Required"></div>
+                            <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                                 data-ng-show="!changePasswordForm.password.$error.required &&
+                         !changePasswordForm.confirmPassword.$error.required &&
+                         changePasswordForm.confirmPassword.$error.same && changePasswordFormSubmitted"
+                                 data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                                 data-title="Passwords must match"></div>
+                            <input class="form-control" id="confirmPassword"
+                                   data-ng-model="passwordChange.confirmPassword"
+                                   name="confirmPassword" autocomplete="off"
+                                   type="password" maxlength="50" required data-ng-change="passwordChanged()">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="actions pull-right">
+                            <div class="form-group">
+                                <button class="btn btn-primary" type="submit"
+                                        data-ng-click="save(changePasswordForm)">
+                                    <span>Save</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
