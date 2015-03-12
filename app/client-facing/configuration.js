@@ -77,7 +77,7 @@ angular.module('emmiManager', [
         });
     })
 
-    .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, arrays, $document, ConfigurationService) {
+    .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, arrays, $document, ConfigurationService, $modal) {
 
         var modals = [];
 
@@ -155,6 +155,19 @@ angular.module('emmiManager', [
         // Call when the 403 response is returned by the server
         $rootScope.$on('event:auth-notAuthorized', function () {
             $location.path('/403').replace();
+        });
+
+        // Call when 409 response is returned by the server
+        $rootScope.$on('event:optimistic-lock-failure', function (event, rejection) {
+            console.log('409: ' + rejection.data.detail);
+            $modal({
+                title: 'Object Already Modified',
+                content: 'You have attempted to save an object that has already been modified by another user.' +
+                ' Please refresh the page to load the latest changes before attempting to save again.',
+                animation: 'none',
+                backdropAnimation: 'emmi-fade',
+                backdrop: 'static',
+                show: true});
         });
 
         // Call when the 500 response is returned by the server
