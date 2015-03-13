@@ -2,11 +2,13 @@
 
 angular.module('emmiManager').controller(
     'LocationEditorController',
-    function($scope, $location, $alert, Client, $controller, locationResource, Tag, $q,
-        focus, Location, LocationService) {
+    function($scope, $alert, locationResource, focus, Location, LocationService) {
 
         $scope.cancel = function(locationForm) {
-            $scope.hideError();
+            if ($scope.locationErrorAlert){
+                $scope.locationErrorAlert.hide();
+            }
+            $scope.locationFormSubmitted = false;
             locationForm.$setPristine();
             $scope.edit();
             _paq.push(['trackEvent', 'Form Action', 'Location Edit', 'Cancel']);
@@ -14,7 +16,7 @@ angular.module('emmiManager').controller(
 
         $scope.edit = function() {
             $scope.editMode = true;
-            $scope.locationToEdit = angular.copy($scope.location);
+            $scope.locationToEdit = angular.copy($scope.locationResource);
             focus('locationName');
             _paq.push(['trackEvent', 'Form Action', 'Location Edit', 'Edit']);
         };
@@ -23,11 +25,9 @@ angular.module('emmiManager').controller(
             var isValid = locationForm.$valid;
         	$scope.locationFormSubmitted = true;
         	if (isValid) {
-                locationForm.$setPristine();
-                LocationService.updateLocation($scope.locationToEdit).then(function(response) {
-                    angular.copy(response.data, $scope.locationResource);
-                    angular.copy(response.data.entity, $scope.location);
-                    $scope.cancel();
+                LocationService.updateLocation($scope.locationToEdit.entity).then(function(response) {
+                    $scope.locationResource = response.data;
+                    $scope.cancel(locationForm);
                 });
                 _paq.push(['trackEvent', 'Form Action', 'Location Edit', 'Save']);
             } else {
@@ -45,27 +45,15 @@ angular.module('emmiManager').controller(
         };
 
         $scope.showCancelSave = function(){
-        	return !angular.equals($scope.location, $scope.locationToEdit);
+        	return !angular.equals($scope.locationResource, $scope.locationToEdit);
         };
 
-        function init() {
-            $controller('ViewEditCommon', {
-                $scope: $scope
-            });
+        Location.getReferenceData().then(function (refData) {
+            $scope.statuses = refData.statusFilter;
+            $scope.states = refData.state;
+        });
 
-            if (locationResource) {
-            	Location.getReferenceData().then(function (refData) {
-                    $scope.statuses = refData.statusFilter;
-                    $scope.states = refData.state;
-                });
+        $scope.locationResource = locationResource;
+        $scope.edit();
 
-                $scope.locationResource = locationResource;
-                $scope.location = locationResource.entity; // for the view state
-                $scope.edit();
-            } else {
-                $location.path('/locations');
-            }
-        }
-
-        init();
     });
