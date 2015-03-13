@@ -83,7 +83,7 @@ angular.module('emmiManager', [
         });
     })
 
-    .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, PATTERN, arrays, $document, ConfigurationService, $modal) {
+    .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, PATTERN, arrays, $document, ConfigurationService, $modal, $timeout) {
 
         var modals = [];
 
@@ -119,13 +119,21 @@ angular.module('emmiManager', [
         $rootScope.emailPattern = PATTERN.EMAIL;
 
         $rootScope.$on('$routeChangeStart', function (event, next) {
-            $rootScope.userRoles = USER_ROLES;
             $rootScope.isAuthorized = AuthSharedService.isAuthorized;
-            AuthSharedService.authorizedRoute((next.access) ? next.access.authorizedRoles : [USER_ROLES.all]);
+            $rootScope.userRoles = USER_ROLES;
+            var path = $location.path();
+            if (path !== '/logout' &&
+                path !== '/login' &&
+                path !== '/err' &&
+                path !== '/403' &&
+                path !== '/500' ) {
+                // authorize all routes other than some known system routes
+                AuthSharedService.valid((next.access) ? next.access.authorizedRoles : [USER_ROLES.all]);
+            }
         });
 
         $rootScope.$on('$routeChangeError', function () {
-            $location.path('/').replace();
+            $location.path('/error').replace();
         });
 
         $rootScope.$on('$routeChangeSuccess', function (e, current) {
@@ -162,7 +170,9 @@ angular.module('emmiManager', [
 
         // Call when the 403 response is returned by the server
         $rootScope.$on('event:auth-notAuthorized', function () {
-            $location.path('/403').replace();
+            $timeout(function (){
+                $location.path('/403').replace();
+            });
         });
 
         // Call when 409 response is returned by the server
@@ -175,7 +185,8 @@ angular.module('emmiManager', [
                 animation: 'none',
                 backdropAnimation: 'emmi-fade',
                 backdrop: 'static',
-                show: true});
+                show: true
+            });
         });
 
         // Call when the 500 response is returned by the server
@@ -194,7 +205,7 @@ angular.module('emmiManager', [
                 var d = event.srcElement || event.target;
                 if (!(d.tagName.toUpperCase() === 'INPUT' &&
                     (d.type.toUpperCase() === 'TEXT' ||
-                        d.type.toUpperCase() === 'PASSWORD'))) {
+                    d.type.toUpperCase() === 'PASSWORD'))) {
                     event.preventDefault();
                 }
             }

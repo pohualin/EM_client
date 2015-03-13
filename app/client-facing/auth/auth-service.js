@@ -26,67 +26,51 @@ angular.module('emmiManager')
                         },
                         ignoreAuthModule: 'ignoreAuthModule'
                     }).success(function () {
-                        self.currentUser().then(function (currentUser) {
-                            authService.loginConfirmed(currentUser);
+                        self.valid('*').then(function (loggedIn) {
+                            if (loggedIn) {
+                                authService.loginConfirmed(loggedIn);
+                            }
                         });
                     }).error(function (error) {
                         self.processLoginFailureError(error, creds);
                         Session.destroy();
                     });
                 },
-                currentUser: function (reload) {
-                    var deferred = $q.defer();
-                    var me = this;
+                currentUser: function (deferred) {
+                    deferred = deferred || $q.defer();
                     if (makingCurrentUserCall) {
                         currentUserCallQueue.push(deferred);
                     } else {
-                        me._requestUser(deferred, me, reload);
+                        deferred.resolve($rootScope.account);
                     }
                     return deferred.promise;
                 },
-                _requestUser: function (deferred, me, reload) {
-                    if (!Session.login || reload === true) {
-                        makingCurrentUserCall = true;
-                        $http.get(API.authenticated, {
-                            ignoreAuthModule: 'ignoreAuthModule'
-                        }).success(function (user) {
-                            $rootScope.account = Session.create(user);
-                            $rootScope.authenticated = true;
-                            deferred.resolve($rootScope.account);
-                        }).error(function () {
-                            var fake = Session.create({login: 'na'});
-                            fake.notLoggedIn = true;
-                            deferred.resolve(fake);
-                            $rootScope.authenticated = false;
-                        }).finally(function () {
-                            makingCurrentUserCall = false;
-                            var nextCall = currentUserCallQueue.shift();
-                            if (nextCall) {
-                                me._requestUser(nextCall, me, false);
-                            }
-                        });
-                    } else {
-                        $rootScope.authenticated = !!Session.id;
-                        $rootScope.account = Session;
-                        deferred.resolve(Session);
-                    }
-
-                    return deferred.promise;
-                },
-                authorizedRoute: function (authorizedRoles) {
-                    var self = this;
-                    self.currentUser(true).then(function (user) {
-                        if (!self.isAuthorized(authorizedRoles)) {
-                            if (user === null || user.notLoggedIn) {
-                                // user needs to login
-                                $rootScope.$broadcast('event:auth-loginRequired', {location: angular.copy($location)});
-                            } else {
-                                // user is not allowed
-                                $rootScope.$broadcast('event:auth-notAuthorized');
-                            }
+                valid: function (authorizedRoles) {
+                    makingCurrentUserCall = true;
+                    var me = this;
+                    return $http.get(API.authenticated, {
+                        ignoreAuthModule: 'ignoreAuthModule'
+                    }).success(function (user, status, headers, config) {
+                        $rootScope.account = Session.create(user);
+                        $rootScope.authenticated = true;
+                        if (!$rootScope.isAuthorized(authorizedRoles)) {
+                            $rootScope.$broadcast('event:auth-notAuthorized');
+                        }
+                        return $rootScope.account;
+                    }).error(function (data, status, headers, config) {
+                        $rootScope.authenticated = false;
+                        if (!$rootScope.isAuthorized(authorizedRoles)) {
+                            $rootScope.$broadcast('event:auth-loginRequired', {location: angular.copy($location)});
+                        }
+                    }).finally(function () {
+                        makingCurrentUserCall = false;
+                        var nextCall = currentUserCallQueue.shift();
+                        if (nextCall) {
+                            me.currentUser(nextCall);
                         }
                     });
                 },
+
                 isAuthorized: function (authorizedRoles) {
                     if (!angular.isArray(authorizedRoles)) {
                         if (authorizedRoles === '*') {
@@ -97,7 +81,7 @@ angular.module('emmiManager')
                     var isAuthorized = false;
                     angular.forEach(authorizedRoles, function (authorizedRole) {
 
-                        var authorized = (!!Session.id &&
+                        var authorized = (!!Session.login &&  Session.userRoles &&
                         Session.userRoles.indexOf(authorizedRole) !== -1);
 
                         if (authorized || authorizedRole === '*') {
@@ -123,19 +107,19 @@ angular.module('emmiManager')
                     Session.destroy();
                     authService.loginCancelled();
                 },
-                processLoginFailureError: function(error, creds){
+                processLoginFailureError: function (error, creds) {
                     $rootScope.authenticationError = false;
                     $rootScope.lockError = false;
                     $rootScope.lockExpirationDateTime = null;
-                    if (angular.isObject(error)){
-                        if(error.entity.reason === 'BAD'){
+                    if (angular.isObject(error)) {
+                        if (error.entity.reason === 'BAD') {
                             $rootScope.authenticationError = true;
                         } else if (error.entity.reason === 'LOCK') {
                             $rootScope.lockError = true;
                             if (error.entity.userClient.lockExpirationDateTime) {
                                 $rootScope.lockExpirationDateTime = error.entity.userClient.lockExpirationDateTime + 'Z';
                             }
-                        } else if (error.entity.reason === 'EXPIRED')  {
+                        } else if (error.entity.reason === 'EXPIRED') {
                             error.clientResource.link = arrays.convertToObject('rel', 'href', error.clientResource.link);
                             $rootScope.$broadcast('event:auth-credentialsExpired', {
                                 credentials: creds,
