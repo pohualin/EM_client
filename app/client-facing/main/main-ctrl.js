@@ -1,33 +1,34 @@
 'use strict';
 
 angular.module('emmiManager')
-      	.controller('MainCtrl', ['$rootScope', '$scope', '$translate', '$locale', '$alert', '$compile', 'tmhDynamicLocale', 'account', 'arrays', 'moment', 'MainService', 'SecretQuestionService',
-    	     function ($rootScope, $scope, $translate, $locale, $alert, $compile, tmhDynamicLocale, account, arrays, moment, MainService, SecretQuestionService ) {
-        $scope.today = new Date();
-        $scope.isSecretQuestion = false;
-        $scope.changeLanguage = function (langKey) {
-            $translate.use(langKey);
-            tmhDynamicLocale.set(langKey);
-        };
-        
-        if($scope.authenticated){
-        	SecretQuestionService.getAllUserSecretQuestionAsteriskResponse($scope.account.id).then(function(response) {
-        		if(response.data.content.length === 2){
-        			$scope.isSecretQuestion = true;
-        		}
-        	}); 
-        }
-        
-        function init(){
-        	if (account && account.clientResource) {
+    .controller('MainCtrl', ['$scope', '$translate', '$alert', 'tmhDynamicLocale', 'account', 'MainService', 'SecretQuestionService',
+        function ($scope, $translate, $alert, tmhDynamicLocale, account, MainService, SecretQuestionService) {
+
+            // initial setup
+            $scope.account = account;
+            $scope.today = new Date();
+            $scope.changeLanguage = function (langKey) {
+                $translate.use(langKey);
+                tmhDynamicLocale.set(langKey);
+            };
+
+
+            if ($scope.authenticated) {
+                // user is logged in
                 $scope.page.setTitle(account.clientResource.entity.name + ' Home');
-                angular.extend($scope.account, account);
-                $scope.passwordExpiresInDays = 
-                    MainService.getPasswordExpiresInDays(account.passwordExpirationTime);
-                MainService.loadPolicy(account.clientResource).then(function (response){
-                    if ($scope.passwordExpiresInDays <= response.data.passwordExpirationDaysReminder) {
+
+                // determine if secret questions have been answered
+                SecretQuestionService.getAllUserSecretQuestionAsteriskResponse(account.id).then(function (response) {
+                    if (response.data.content.length === 2) {
+                        $scope.isSecretQuestion = true;
+                    }
+                });
+
+                // see if the password is going to expire soon
+                MainService.checkPasswordExpiration(account).then(function (response) {
+                    if (response.showReminder) {
                         $alert({
-                            content: 'Your password will expire in ' +$scope.passwordExpiresInDays+ ' days.',
+                            content: 'Your password will expire in ' + response.passwordExpiresInDays + ' days.',
                             template: 'client-facing/main/password-reminder-alert.tpl.html',
                             type: 'warning',
                             placement: 'top',
@@ -36,9 +37,14 @@ angular.module('emmiManager')
                         });
                     }
                 });
-            }
-        }
 
-        init();
-    }])
+                // figure out which teams for which this user is allowed to schedule
+                MainService.specificTeamsHavingLink(account, 'schedulePrograms')
+                    .then(function (teams) {
+                        $scope.teamsAllowedToSchedule = teams;
+                    });
+            }
+
+
+        }])
 ;
