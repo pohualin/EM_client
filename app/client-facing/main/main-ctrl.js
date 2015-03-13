@@ -10,7 +10,6 @@ angular.module('emmiManager')
             tmhDynamicLocale.set(langKey);
         };
         
-       
         if($scope.authenticated){
         	SecretQuestionService.getAllUserSecretQuestionAsteriskResponse($scope.account.id).then(function(response) {
         		if(response.data.content.length === 2){
@@ -20,7 +19,7 @@ angular.module('emmiManager')
         }
         
         function init(){
-            if (account && account.clientResource) {
+        	if (account && account.clientResource) {
                 $scope.page.setTitle(account.clientResource.entity.name + ' Home');
                 angular.extend($scope.account, account);
                 $scope.passwordExpiresInDays = 

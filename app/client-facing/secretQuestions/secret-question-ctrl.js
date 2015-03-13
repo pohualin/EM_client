@@ -9,6 +9,7 @@ angular.module('emmiManager')
         function ($scope, $location, SecretQuestionService, $alert) { 	
     	
     	$scope.secretQuestionFormSubmitted = false;
+    	$scope.duplicated = false;
     	/**
     	 * When the save button is clicked. Sends all updates
     	 * to the back, then rebinds the form objects with dthe
@@ -16,12 +17,13 @@ angular.module('emmiManager')
     	 */
         $scope.saveOrUpdateSecretQuestion = function(valid) {
         	$scope.secretQuestionFormSubmitted = true;
-        	if(valid){
+        	var message;
+        	if(valid && !$scope.duplicated){
         		SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.question1.entity);
 	        	SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.question2.entity);
 	        	$alert({
 					title: ' ',
-					content: 'The secret questions and responses have been saved successfully.',
+					content: 'Your security questions have been updated successfully.',
 					container: 'body',
 					type: 'success',
 					placement: 'top',
@@ -45,14 +47,25 @@ angular.module('emmiManager')
         	
     	};
     	
+    	
     	/**
          * Called when cancel is clicked.. takes the original
          * objects and copies them back into the bound objects.
          */
-    	$scope.cancel = function () {
+       $scope.cancel = function () {
            $location.path('/');
           
        };
+       
+       $scope.onChange= function(){
+   			if(angular.equals($scope.question1.entity.secretQuestion, $scope.question2.entity.secretQuestion) &&
+   					!(angular.isUndefined($scope.question1.entity.secretQuestion))){
+   				$scope.duplicated =  true;
+   			}
+   			else{
+   				$scope.duplicated =  false;
+   			}
+   		};
             
        function init(){
    
