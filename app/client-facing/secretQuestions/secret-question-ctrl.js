@@ -17,7 +17,6 @@ angular.module('emmiManager')
     	 */
         $scope.saveOrUpdateSecretQuestion = function(valid) {
         	$scope.secretQuestionFormSubmitted = true;
-        	var message;
         	if(valid && !$scope.duplicated){
         		SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.question1.entity);
 	        	SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.question2.entity);
