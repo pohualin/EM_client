@@ -2,8 +2,7 @@
 
 angular.module('emmiManager').controller(
     'LocationEditorController',
-    function($scope, $location, $alert, Client, $controller, locationResource,
-        focus, Location, LocationService) {
+    function($scope, $alert, locationResource, focus, Location, LocationService) {
 
         $scope.cancel = function(locationForm) {
             if ($scope.locationErrorAlert){

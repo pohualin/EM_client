@@ -5,11 +5,11 @@
         </div>
 		<div class="row">
 			<div class="col-md-6 pull-left">
-				<h2>Location Information</h2>
+				<h3>Location Information</h3>
 			</div>
 			<div class="col-md-6" data-ng-show="showCancelSave()">
 				<div class="pull-right">
-					<h2></h2>
+					<h3></h3>
 					<a class="btn btn-link" data-ng-click="cancel(locationForm)">cancel</a> |
 					<a class="btn btn-link" type="button" data-ng-click="saveLocation(locationForm)"><span>save</span>
 					</a>
@@ -31,7 +31,7 @@
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Please enter a valid name."></div>
                     <input class="form-control" id="locationName" data-ng-model="locationToEdit.entity.name" name="locationName"
-                           type="text" maxlength="255" required
+                           type="text" maxlength="255" required data-focus-on="locationName" data-auto-focus
                            data-ng-pattern="/^[\-\.a-zA-Z0-9 '=_;:@#&,\(\)!]*$/">
                 </div>
             </div>
