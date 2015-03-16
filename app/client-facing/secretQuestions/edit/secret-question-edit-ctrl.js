@@ -9,7 +9,6 @@ angular.module('emmiManager')
         function ($scope, $location, SecretQuestionService, $alert, $modal) { 	
     	
     	$scope.secretQuestionFormSubmitted = false;
-    	$scope.duplicated = false;
     	var promptPasswordModal = $modal({scope: $scope, template: 'client-facing/secretQuestions/edit/promptPassword.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
     	
     	/**
@@ -19,7 +18,7 @@ angular.module('emmiManager')
     	 */
         $scope.saveOrUpdateSecretQuestion = function(valid) {
         	$scope.secretQuestionFormSubmitted = true;
-        	if(valid && !$scope.duplicated){
+        	if(valid){
         		SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.question1.entity);
 	        	SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.question2.entity);
 	        	$alert({
@@ -55,11 +54,11 @@ angular.module('emmiManager')
     	$scope.onChange= function(){
     		if(angular.equals($scope.question1.entity.secretQuestion, $scope.question2.entity.secretQuestion) &&
     		   !(angular.isUndefined($scope.question1.entity.secretQuestion))){
-    			$scope.duplicated =  true;
-    		}
+    			$scope.secretQuestionForm.secretQuestion2.$setValidity('duplicated', false);
+           	}
     		else{
-    			$scope.duplicated =  false;
-    		}
+    			$scope.secretQuestionForm.secretQuestion2.$setValidity('duplicated', true);
+      		}
     	};
       	
     	$scope.promptPassword = function() {
