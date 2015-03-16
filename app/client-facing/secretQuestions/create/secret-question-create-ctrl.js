@@ -9,16 +9,27 @@ angular.module('emmiManager')
         function ($scope, $location, SecretQuestionService, $alert) { 	
     	
     	$scope.secretQuestionFormSubmitted = false;
+    	$scope.duplicated = false;
     	/**
     	 * When the save button is clicked. Sends all updates
-    	 * to the back, then rebinds the form objects with the
+    	 * to the back, then rebinds the form objects with dthe
     	 * results
     	 */
         $scope.saveOrUpdateSecretQuestion = function(valid) {
         	$scope.secretQuestionFormSubmitted = true;
         	if(valid){
-        	    SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.question1.entity);
+        		SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.question1.entity);
 	        	SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.question2.entity);
+	        	$alert({
+					title: ' ',
+					content: 'Your security questions have been updated successfully.',
+					container: 'body',
+					type: 'success',
+					placement: 'top',
+				    show: true,
+				    duration: 5,
+				    dismissable: true
+				});
 	        	$location.path('/');
     		} else {
                 if (!$scope.errorAlert) {
@@ -32,9 +43,22 @@ angular.module('emmiManager')
                     });
                 }
             }
-        	
+  	
     	};
     	
+    	/**
+    	 * When the save button is clicked. Check if the user
+    	 * selected 2 same questions or not
+    	 */
+    	$scope.onChange= function(){
+    		if(angular.equals($scope.question1.entity.secretQuestion, $scope.question2.entity.secretQuestion) &&
+    	       !(angular.isUndefined($scope.question1.entity.secretQuestion))){
+    	    	$scope.secretQuestionForm.secretQuestion2.$setValidity('duplicated', false);
+    	    }
+    	    else{
+    	    	$scope.secretQuestionForm.secretQuestion2.$setValidity('duplicated', true);
+    	    }
+    	};
     	 
         /**
          * Called when cancel is clicked.. takes the original
@@ -46,9 +70,8 @@ angular.module('emmiManager')
         };
        
        function init(){
-           
-            
-          	SecretQuestionService.getSecretQuestions().then(function(response) {
+                       
+    		SecretQuestionService.getSecretQuestions().then(function(response) {
           		$scope.secretQuestions = response.data.content; 
        		});
           	

@@ -21,7 +21,7 @@ angular.module('emmiManager')
 	        	SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.question2.entity);
 	        	$alert({
 					title: ' ',
-					content: 'The secret questions and responses have been saved successfully.',
+					content: 'Your security questions have been updated successfully.',
 					container: 'body',
 					type: 'success',
 					placement: 'top',
@@ -45,13 +45,24 @@ angular.module('emmiManager')
         	
     	};
     	
+    	
     	/**
          * Called when cancel is clicked.. takes the original
          * objects and copies them back into the bound objects.
          */
-    	$scope.cancel = function () {
+       $scope.cancel = function () {
            $location.path('/');
           
+       };
+       
+       $scope.onChange= function(){
+   			if(angular.equals($scope.question1.entity.secretQuestion, $scope.question2.entity.secretQuestion) &&
+   					!(angular.isUndefined($scope.question1.entity.secretQuestion))){
+   				$scope.secretQuestionForm.secretQuestion2.$setValidity('duplicated', false);
+           	}
+    		else{
+    			$scope.secretQuestionForm.secretQuestion2.$setValidity('duplicated', true);
+      		}
        };
             
        function init(){
