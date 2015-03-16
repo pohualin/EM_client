@@ -7,9 +7,11 @@ angular.module('emmiManager')
         		'account': ['AuthSharedService', 'ProfileService', '$q', function (AuthSharedService, ProfileService, $q) {
                     var deferred = $q.defer();
                 	AuthSharedService.currentUser().then(function (loggedInUser){
-                    	ProfileService.get(loggedInUser).then(function (refreshedUserResponse){
-                    		deferred.resolve(refreshedUserResponse);
-                    	});
+                        if (!loggedInUser.notLoggedIn){
+                            ProfileService.get(loggedInUser).then(function (refreshedUserResponse){
+                                deferred.resolve(refreshedUserResponse);
+                            });
+                        }deferred.resolve(loggedInUser);
                     });
                 	return deferred.promise;
                 }]
