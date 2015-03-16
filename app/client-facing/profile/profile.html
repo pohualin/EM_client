@@ -1,67 +1,104 @@
 <div class="container" data-ng-cloak>
 	<div class="row" data-ng-switch="authenticated">
-	<h1>{{editMode ? 'Edit Profile' : 'View Profile'}}</h1>
-	<div data-ng-hide="editMode">
-		<a class="btn btn-link" data-ng-click="edit()">edit</a>
-		<div class="row" >
-	        <div class="col-md-4">
-	           First Name:
-	        </div>
-	        <div class="col-md-4">
-	            {{userClient.firstName}}
-	        </div>
-	    </div>
-	    <div class="row">
-	        <div class="col-md-4">
-	           Last Name:
-	        </div>
-	        <div class="col-md-4">
-	            {{userClient.lastName}}
-	        </div>
-	    </div>
-    </div>
-    
-    <div class="row">
-        <div class="col-md-6">
-            <a href="#/change_password">Change Password</a>
+        <h1>{{editMode ? 'Edit Profile' : 'View Profile'}}</h1>
+        <div data-ng-hide="editMode">
+            <a class="btn btn-link" data-ng-click="edit()">edit</a>
+            <div class="row" >
+                <div class="col-md-4">
+                   First Name:
+                </div>
+                <div class="col-md-4">
+                    {{userClient.firstName}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                   Last Name:
+                </div>
+                <div class="col-md-4">
+                    {{userClient.lastName}}
+                </div>
+            </div>
+        </div>
+
+        <form name="userClientForm" class="form" novalidate unsaved-warning-form>
+            <div class="row "  data-ng-show="editMode">
+                <div class="pull-right">
+                    <button type="button" class="btn btn-link" data-ng-click="cancel()"> cancel </button>
+                    <button class="btn btn-default" data-ng-click="saveProfileUpdates(userClient, userClientForm.$valid)"> Save Changes </button>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="firstName">First Name: </label>
+                    <div class="error-circle glyphicon glyphicon-exclamation-sign" data-ng-show="userClientForm.firstName.$error.required && formSubmitted"
+                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                         data-title="Required"></div>
+                    <div class="error-circle glyphicon glyphicon-exclamation-sign" data-ng-show="userClientForm.firstName.$error.pattern && formSubmitted"
+                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                         data-title="Please enter a valid first name."></div>
+                    <input class="form-control" data-ng-model="userClient.firstName" id="firstName" name="firstName"
+                           type="text"
+                           data-auto-focus
+                           data-ng-pattern="/^[a-zA-Z '-]*$/" data-animation="am-flip-x"
+                           data-focus-on="firstName">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="lastName">Last Name: </label>
+                    <div class="error-circle glyphicon glyphicon-exclamation-sign" data-ng-show="userClientForm.lastName.$error.required && formSubmitted"
+                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                         data-title="Required"></div>
+                    <div class="error-circle glyphicon glyphicon-exclamation-sign" data-ng-show="userClientForm.lastName.$error.pattern && formSubmitted"
+                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                         data-title="Please enter a valid last name."></div>
+                    <input class="form-control" data-ng-model="userClient.lastName" id="lastName" name="lastName"
+                           type="text"
+                           data-auto-focus
+                           data-ng-pattern="/^[a-zA-Z '-]*$/" data-animation="am-flip-x"
+                           data-focus-on="lastName">
+                </div>
+            </div>
+        </form>
+
+        <div class="row" >
+            <div data-ng-hide="emailEditMode">
+                <div class="col-md-4">
+                    Email:
+                </div>
+                <div class="col-md-4">
+                    {{userClient.email}} 		<a class="btn btn-link" data-ng-click="editEmail()">edit email</a>
+                </div>
+            </div>
+        </div>
+
+        <form name="userClientForm2"  data-ng-show="emailEditMode" class="form" novalidate unsaved-warning-form>
+            <div class="form-group" data-ng-hide="passwordIsValidated"><!--add the flag isPasswordValidated before you show this field -->
+                <div class="col-md-12">
+                    <div class="form-group"
+                         data-ng-class="{ 'has-error' : password.$invalid && changePasswordFormSubmitted }">
+                        <label class="control-label" for="password">Old Password:</label>
+                        <input class="form-control" id="password" data-ng-model="password"
+                               name="password" autocomplete="off"
+                               type="password" maxlength="50" data-auto-focus required>
+                        <button class="btn btn-default" data-ng-click="verifyPassword(userClient, password)"> Go </button>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group"  data-ng-show="passwordIsValidated"
+                 data-ng-class="{ 'has-error' : userClientForm2.email.$invalid && userClientForm2Submitted}">
+                <label class="control-label" for="email">Email:</label>
+                <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                     data-ng-show="userClientForm2.email.$error.pattern && userClientForm2Submitted"
+                     data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                     data-title="Please enter a valid email."></div>
+                <input class="form-control" data-ng-model="userClient.email" id="email" name="email" type="text"
+                       maxlength="255" data-ng-pattern="emailPattern" />
+                <button class="btn btn-default" data-ng-click="updateEmail(userClient)"> Update Email </button>
+            </div>
+        </form>
+
+        <div class="row">
+            <div class="col-md-6">
+                <a href="#/change_password">Change Password</a>
+            </div>
         </div>
     </div>
-    
-	<form name="userClientForm" class="form" novalidate unsaved-warning-form>
-		<div class="row "  data-ng-show="editMode">
-			<div class="pull-right">
-			    <button type="button" class="btn btn-link" data-ng-click="cancel()"> cancel </button>
-			    <button class="btn btn-default" data-ng-click="saveProfileUpdates(userClient, userClientForm.$valid)"> Save Changes </button>
-			</div>
-			<div class="form-group">
-	        	<label class="control-label" for="firstName">First Name: </label>
-	            <div class="error-circle glyphicon glyphicon-exclamation-sign" data-ng-show="userClientForm.firstName.$error.required && formSubmitted"
-	                 data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-	                 data-title="Required"></div>
-	            <div class="error-circle glyphicon glyphicon-exclamation-sign" data-ng-show="userClientForm.firstName.$error.pattern && formSubmitted"
-	                 data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-	                 data-title="Please enter a valid first name."></div>
-	            <input class="form-control" data-ng-model="userClient.firstName" id="firstName" name="firstName"
-	                   type="text"
-	                   data-auto-focus
-	                   data-ng-pattern="/^[\-\.a-zA-Z0-9 '=_;:`@#&,\(\)\/!]*$/" data-animation="am-flip-x"
-	                   data-focus-on="firstName">
-	        </div>
-			<div class="form-group">
-	            <label class="control-label" for="lastName">Last Name: </label>
-	            <div class="error-circle glyphicon glyphicon-exclamation-sign" data-ng-show="userClientForm.lastName.$error.required && formSubmitted"
-	                 data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-	                 data-title="Required"></div>
-	            <div class="error-circle glyphicon glyphicon-exclamation-sign" data-ng-show="userClientForm.lastName.$error.pattern && formSubmitted"
-	                 data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-	                 data-title="Please enter a valid last name."></div>
-	            <input class="form-control" data-ng-model="userClient.lastName" id="lastName" name="lastName"
-	                   type="text"
-	                   data-auto-focus
-	                   data-ng-pattern="/^[\-\.a-zA-Z0-9 '=_;:`@#&,\(\)\/!]*$/" data-animation="am-flip-x"
-	                   data-focus-on="lastName">
-			</div>
-		</div>
-	</form>
-</div>
 </div>

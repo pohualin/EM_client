@@ -18,8 +18,13 @@ angular.module('emmiManager')
 				deferred.resolve(userClient);
 			}
 			return deferred.promise;
-			
-		}
+
+		},
+        verifyPassword: function (userClient, password) {
+            return $http.get(userClient.link.verifyPassword, {password: password}).then(function(response){
+                return response.data;
+            });
+        }
 	};
 }])
 ;
