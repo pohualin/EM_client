@@ -8,7 +8,7 @@ angular.module('emmiManager')
     function ($rootScope,$location,Session) {
         return {
             routeUser:function(){
-                if (!Session.emailValidated) {
+                if (!Session.emailValidated && Session.email) {
                     //if email is not verified for user
                     $location.path('/validateEmail').replace();
                 } else if ($location.path() === '/login') {
