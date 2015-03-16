@@ -4,7 +4,7 @@ angular.module('emmiManager')
     	var selectedTeam;
     	return {
     	    viewTeam: function (teamEntity) {
-                $location.path('/clients/' + teamEntity.client.id + '/teams/' + teamEntity.id);
+                $location.path('/clients/' + teamEntity.client.id).search('team', teamEntity.id);
             },
             selectTeam: function (url, teamId) {
                 return $http.get(UriTemplate.create(url).stringify({id: teamId}))
