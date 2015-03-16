@@ -2,9 +2,9 @@
     <div class="row col-md-6">
         <div class="col-md-12">
             <h2>
-                Please Confirm Your Email Address
+                Please confirm your email address
             </h2>
-            Verifying Your email address will make your account more secure, and allow you to reset your password if you
+            Verifying your email address will make your account more secure, and allow you to reset your password if you
             forget it in the future.
 
             <div class="well well-sm col-md-12" data-ng-model="account.email">{{account.email}}</div>
@@ -13,7 +13,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group pull-right">
-                    <a data-ng-click="notNow()">Not Now</a>
+                    <button class="btn btn-link" type="submit" data-ng-click="notNow()">not now</button>
                     <button type="button" class="btn btn-primary" data-ng-click="sendActivationEmail()">
                         Confirm Email
                     </button>
