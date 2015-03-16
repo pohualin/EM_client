@@ -19,11 +19,11 @@ angular.module('emmiManager')
         $scope.saveOrUpdateSecretQuestion = function(valid) {
         	$scope.secretQuestionFormSubmitted = true;
         	if(valid){
-        	    SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.question1.entity);
+        		SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.question1.entity);
 	        	SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.question2.entity);
 	        	$alert({
 					title: ' ',
-					content: 'The secret questions and responses have been saved successfully.',
+					content: 'Your security questions have been updated successfully.',
 					container: 'body',
 					type: 'success',
 					placement: 'top',
@@ -33,8 +33,8 @@ angular.module('emmiManager')
 				});
 	        	$location.path('/');
     		} else {
-                if (!$scope.errorAlert) {
-                    $scope.errorAlert = $alert({
+                if (!$scope.formAlert) {
+                    $scope.formAlert = $alert({
                         title: ' ',
                         content: 'Please correct the below information.',
                         container: '#message-container',
@@ -47,6 +47,20 @@ angular.module('emmiManager')
         	
     	};
     	
+    	/**
+    	 * When the save button is clicked. Check if the user
+    	 * selected 2 same questions or not
+    	 */
+    	$scope.onChange= function(){
+    		if(angular.equals($scope.question1.entity.secretQuestion, $scope.question2.entity.secretQuestion) &&
+    		   !(angular.isUndefined($scope.question1.entity.secretQuestion))){
+    			$scope.secretQuestionForm.secretQuestion2.$setValidity('duplicated', false);
+           	}
+    		else{
+    			$scope.secretQuestionForm.secretQuestion2.$setValidity('duplicated', true);
+      		}
+    	};
+      	
     	$scope.promptPassword = function() {
     		   
                promptPasswordModal.$promise.then(promptPasswordModal.show);
@@ -54,8 +68,7 @@ angular.module('emmiManager')
     	
     	$scope.validatePassword = function(password) {
     		$scope.passowrd = password;
-       	          		
-       		SecretQuestionService.getAllUserSecretQuestionResponse(password).then(
+    		SecretQuestionService.getAllUserSecretQuestionResponse(password).then(
        				function success(response) {
 		       			var existingResponse = response.data.content;
 		                $scope.question1Original = existingResponse.length > 0 ? existingResponse[0] : SecretQuestionService.createNewResponse();
@@ -79,6 +92,10 @@ angular.module('emmiManager')
 	            		}
 	            	});    
        	
+       	};
+       	
+       	$scope.cancelPassword = function(){
+       		$location.path('/viewSecretQuestions');
        	};
     	
         /**
