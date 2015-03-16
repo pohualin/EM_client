@@ -1,18 +1,17 @@
 'use strict';
 
 angular.module('emmiManager')
-    .controller('validateEmail', ['$scope', 'ValidationService', '$alert', '$location', 'locationBeforeLogin',
-        function ($scope, ValidationService, $alert, $location, locationBeforeLogin) {
+    .controller('validateEmail', ['$scope', 'ValidationService', '$alert', '$location', 'validationKey',
+        function ($scope, ValidationService, $alert, $location, validationKey) {
+
             /**
-             * Send an activation email to the user
+             * Validate email after a user clicks the link in their validation email
              */
-            $scope.sendActivationEmail = function () {
-                ValidationService.sendValidationEmail($scope.account).then(function () {
-                    $location.path(locationBeforeLogin).replace();
+            if (validationKey) {
+                ValidationService.validateEmail(validationKey).then(function () {
                     //show confirmation banner
                     $alert({
-                        content: 'Please check your email. A link has been sent to <strong>' + $scope.account.email +
-                            '</strong> to finish setting up your account.',
+                        content: 'Thanks! Your email address has been verified.',
                         type: 'success',
                         placement: 'top',
                         show: true,
@@ -20,12 +19,8 @@ angular.module('emmiManager')
                         dismissable: true
                     });
                 });
-            };
-
-
-            $scope.notNow = function () {
-                $location.path(locationBeforeLogin).replace();
-            };
+                $location.path('/').replace();
+            }
         }])
 ;
 
