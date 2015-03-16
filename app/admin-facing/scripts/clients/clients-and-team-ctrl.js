@@ -5,7 +5,7 @@ angular.module('emmiManager')
 /**
  *  Edit a single client
  */
-    .controller('ClientAndTeamCtrl', function ($scope, $route, $routeParams, $templateCache, $controller, clientResource, ViewTeam) {
+    .controller('ClientAndTeamCtrl', function ($scope, $route, $routeParams, $controller, clientResource, ViewTeam) {
 
         $scope.showTeam = 'no';
         $controller('ClientDetailCtrl', {$scope: $scope, clientResource: clientResource});
@@ -23,7 +23,6 @@ angular.module('emmiManager')
                             var teamClientResource = {};
                             teamClientResource.clientResource = clientResource;
                             teamClientResource.teamResource = teamResource;
-                            console.log($templateCache);
                             $controller('TeamEditController', {$scope: $scope, teamClientResource: teamClientResource});
                         } else {
                             console.log('No such team found!');
