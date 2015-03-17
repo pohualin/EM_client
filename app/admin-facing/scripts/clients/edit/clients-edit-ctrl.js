@@ -31,7 +31,7 @@ angular.module('emmiManager')
 
         setTitle();
 
-        $scope.cancel = function (metadataForm) {
+        $scope.clientEditCancel = function (metadataForm) {
             $scope.hideError();
             metadataForm.$setPristine();
             $scope.editMode = false;
@@ -40,7 +40,7 @@ angular.module('emmiManager')
             _paq.push(['trackEvent', 'Form Action', 'Client Edit', 'Cancel']);
         };
 
-        $scope.edit = function () {
+        $scope.clientEdit = function () {
             $scope.editMode = true;
             $scope.clientToEdit = angular.copy($scope.client);
             $scope.clientToEdit.origSalesForceAccount = $scope.clientToEdit.salesForceAccount.accountNumber;
@@ -48,7 +48,7 @@ angular.module('emmiManager')
             _paq.push(['trackEvent', 'Form Action', 'Client Edit', 'Edit']);
         };
 
-        $scope.save = function (metadataForm) {
+        $scope.clientSave = function (metadataForm) {
             var isValid = metadataForm.$valid;
             $scope.metadataSubmitted = true;
             if (isValid && $scope.clientToEdit.salesForceAccount) {
