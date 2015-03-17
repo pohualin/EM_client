@@ -27,6 +27,10 @@
                                             <button type="button" class="btn-link" data-ng-hide="group.editMode" data-ng-click="startEditMode(group)">
                                                 <small>edit</small>
                                             </button>
+                                            <button type="button" class="btn-link" data-ng-show="group.deletable"
+                                                    data-ng-click="remove(group)">
+                                                <small>remove</small>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
