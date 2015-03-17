@@ -30,6 +30,6 @@ angular.module('emmiManager')
                     return $http.delete(groupResource.link.self);
                 }
 
-            }
+            };
         }])
 ;
