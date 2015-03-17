@@ -1,8 +1,8 @@
 <div class="container" data-ng-cloak>
 	<div class="row" data-ng-switch="authenticated">
-        <h1>{{editMode ? 'Edit Profile' : 'View Profile'}}</h1>
+        <h1>{{editMode || emailEditMode ? 'Edit Profile' : 'View Profile'}}</h1>
 
-        <div class="row" >
+        <div class="row" data-ng-show="(emailError || editEmailForm.password.$invalid) && editEmailFormSubmitted">
             <div class="col-md-12" id="message-container"></div>
         </div>
 
@@ -73,27 +73,32 @@
                 </div>
             </div>
         </div>
-
-        <form name="userClientForm2"  data-ng-show="emailEditMode" class="form" novalidate unsaved-warning-form>
+        <br/>
+        <form name="editEmailForm"  data-ng-show="emailEditMode" class="form" novalidate unsaved-warning-form>
             <div class="form-group" data-ng-hide="passwordIsValidated"><!--add the flag isPasswordValidated before you show this field -->
                     <div class="form-group"
-                         data-ng-class="{ 'has-error' : password.$invalid && changePasswordFormSubmitted }">
-                        <label class="control-label" for="password">Old Password:</label>
+                         data-ng-class="{ 'has-error' : editEmailForm.password.$invalid && editEmailFormSubmitted }">
+                        <label class="control-label" for="password">Enter your current Password:</label>
+                        <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                             data-ng-show="editEmailForm.password.$invalid && editEmailFormSubmitted"
+                             data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                             data-title="Please enter a valid password."></div>
                         <input class="form-control" id="password" data-ng-model="password"
                                name="password" autocomplete="off"
                                type="password" maxlength="50" data-auto-focus required>
                         <button class="btn btn-default" data-ng-click="verifyPassword(userClient, password)"> Go </button>
+                        <button type="button" class="btn btn-link" data-ng-click="cancelEmailChange()"> cancel </button>
                     </div>
             </div>
 
             <div class="form-group" data-ng-show="passwordIsValidated"
-                 data-ng-class="{ 'has-error' : userClientForm2.email.$invalid && userClientForm2Submitted }">
+                 data-ng-class="{ 'has-error' : editEmailFormSubmitted && (editEmailForm.email.$error.pattern || emailError)}">
                 <label class="control-label" for="email">Email:</label>
 
                 <div class="error-circle glyphicon glyphicon-exclamation-sign"
-                     data-ng-show="userClientForm2.email.$error.pattern && userClientForm2Submitted || emailError"
+                     data-ng-show="editEmailForm.email.$error.pattern && editEmailFormSubmitted || emailError"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                     data-title="Please enter a valid email."></div>
+                     data-title="Please enter a valid email, this email is in use in the system already."></div>
                 <input class="form-control" id="email" data-ng-model="userClient.email"
                        name="email" type="text"
                        maxlength="255" data-focus-on="email"

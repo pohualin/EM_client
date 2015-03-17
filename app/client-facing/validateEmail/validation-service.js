@@ -16,7 +16,7 @@ angular.module('emmiManager')
                  */
                 sendValidationEmail: function (user) {
                     var deferred = $q.defer();
-                    $http.post(UriTemplate.create(user.link.validate).stringify(),user).then(function(response) {
+                    $http.post(UriTemplate.create(user.link.sendValidationEmail).stringify(),user).then(function(response) {
                         deferred.resolve(response);
                     });
                     return deferred.promise;

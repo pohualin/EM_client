@@ -1,12 +1,11 @@
 'use strict';
 
 angular.module('emmiManager')
-	.controller('ProfileCtrl', ['$scope', 'userClientReqdResource', 'API', 'ProfileService', '$alert',
-        function($scope, userClientReqdResource, api, ProfileService, $alert){
+	.controller('ProfileCtrl', ['$scope', 'userClientReqdResource', 'API', 'ProfileService', '$alert', 'ValidationService',
+        function($scope, userClientReqdResource, api, ProfileService, $alert, ValidationService){
 
 	$scope.editMode = false;
 	$scope.userClient  = userClientReqdResource;
-
 	$scope.edit = function () {
 		$scope.editMode = true;
 	};
@@ -33,18 +32,29 @@ angular.module('emmiManager')
     };
 
     $scope.verifyPassword = function (userClient, password){
-        ProfileService.verifyPassword(userClient, password).then(function(response){
-           $scope.passwordIsValidated = true;
+        $scope.editEmailFormSubmitted = true;
+        ProfileService.verifyPassword(userClient, password).then(function success(response){
+            $scope.passwordIsValidated = true;
+            $scope.editEmailForm.password.$invalid = false;
+            $scope.editEmailFormSubmitted = false;
+        }, function error(error){
+            $scope.editEmailForm.password.$invalid = true;
+            $scope.formValidationError();
         });
     };
 
     $scope.updateEmail = function (userClient) {
-        $scope.userClientForm2Submitted = true;
+        $scope.editEmailFormSubmitted = true;
         ProfileService.update(userClient).then(function success(response){
             angular.extend($scope.userClient, response);
-            $scope.emailEditMode = false;
-            $scope.passwordIsValidated = false;
-            $scope.password = '';
+            $scope.resetEditEmailForm();
+            if(!response.emailValidated){
+                ValidationService.sendValidationEmail(response).then(function (response){
+                    ProfileService.get(userClientReqdResource).then(function(response) {
+                        angular.extend($scope.userClient, response);
+                    });
+                });
+            }
         }, function error(err){
             $scope.handleSaveError(err);
         });
@@ -66,7 +76,6 @@ angular.module('emmiManager')
                         $scope.emailError = conflict;
                     }
                 } else if ('EMAIL' === conflict.reason && totalErrorCount === 1) {
-                    console.log('email');
                     // only show email error if there is not a login error
                     $scope.emailError = conflict;
                 }
@@ -93,10 +102,15 @@ angular.module('emmiManager')
     $scope.cancelEmailChange = function () {
         ProfileService.get(userClientReqdResource).then(function(response){
             angular.extend($scope.userClient, response);
-            $scope.emailEditMode = false;
-            $scope.passwordIsValidated = false;
-            $scope.password = '';
+            $scope.resetEditEmailForm();
         });
+    };
+
+    $scope.resetEditEmailForm = function () {
+        $scope.emailEditMode = false;
+        $scope.passwordIsValidated = false;
+        $scope.password = '';
+        $scope.editEmailFormSubmitted = false;
     };
 }])
 ;
