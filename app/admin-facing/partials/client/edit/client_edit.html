@@ -6,9 +6,9 @@
         <div class="col-md-6">
             <div class="pull-right">
                 <h2></h2>
-                <a class="btn btn-link" data-ng-click="cancel(metadataForm)">cancel</a>
+                <a class="btn btn-link" data-ng-click="clientEditCancel(metadataForm)">cancel</a>
                 |
-                <a class="btn btn-link" type="button" data-on-ok="save(metadataForm)"
+                <a class="btn btn-link" type="button" data-on-ok="clientSave(metadataForm)"
                    data-save-click data-client-to-edit="clientToEdit" data-checking-for-dupes="checkingForDupes"
                    data-ng-disabled="metadataForm.clientName.$error.unique">
                     <span>save edits</span>
@@ -169,7 +169,7 @@
                 <span>{{clientToEdit.salesForceAccount.city}}<span
                         data-ng-show="clientToEdit.salesForceAccount.city && clientToEdit.salesForceAccount.state">,&nbsp;</span>{{clientToEdit.salesForceAccount.state}}
                 </span>
-            <button class="btn btn-link" data-ng-click="changeSfAccount()" required
+            <button class="btn btn-link" data-ng-click="changeClientSfAccount()" required
                     data-ng-disabled="metadataForm.clientName.$error.unique">update
             </button>
         </div>

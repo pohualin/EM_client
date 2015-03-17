@@ -23,29 +23,6 @@ angular.module('emmiManager')
             return deferred.promise;
         }];
 
-        var teamClientResource = ['AuthSharedService', 'Client', '$route', '$q', 'ViewTeam', function (AuthSharedService, Client, $route, $q, ViewTeam) {
-            var deferred = $q.defer();
-            AuthSharedService.currentUser().then(function () {
-                Client.selectClient($route.current.params.clientId).then(function (clientResource) {
-                    if (clientResource) {
-                        ViewTeam.selectTeam(clientResource.link.teamByTeamId, $route.current.params.teamId).then(function (teamResource) {
-                            if (teamResource) {
-                                deferred.resolve({
-                                    clientResource: clientResource,
-                                    teamResource: teamResource
-                                });
-                            } else {
-                                deferred.reject();
-                            }
-                        });
-                    } else {
-                        deferred.reject();
-                    }
-                });
-            });
-            return deferred.promise;
-        }];
-
         // Routes
         $routeProvider
             .when('/clients/:clientId/teams/new', {
@@ -57,17 +34,6 @@ angular.module('emmiManager')
                 },
                 resolve: {
                     'clientResource': clientResource
-                }
-            })
-            .when('/clients/:clientId/teams/:teamId', {
-                templateUrl: 'admin-facing/partials/team/team_edit.html',
-                controller: 'TeamEditController',
-                access: {
-                    authorizedRoles: USER_ROLES.all
-                },
-                reloadOnSearch: false,
-                resolve: {
-                    'teamClientResource': teamClientResource
                 }
             })
             .when('/teams', {
