@@ -4,8 +4,8 @@ angular.module('emmiManager')
 /**
  * Service for configuration.
  */
-    .service('ConfigurationService', ['$rootScope','$location', '$q', 'Session','SecretQuestionService',
-    function ($rootScope,$location,$q,Session,SecretQuestionService) {
+    .service('ConfigurationService', ['$rootScope','$location', 'Session','SecretQuestionService',
+    function ($rootScope,$location,Session,SecretQuestionService) {
         return {
         	
             routeUser:function(){
