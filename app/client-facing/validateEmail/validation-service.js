@@ -4,7 +4,7 @@ angular.module('emmiManager')
 /**
  * Service for activation.
  */
-    .service('ValidationService', ['$http', 'UriTemplate', '$q','API',
+    .service('ValidationService', ['$http', 'UriTemplate', '$q', 'API',
         function ($http, UriTemplate, $q, API) {
             return {
 
@@ -16,10 +16,30 @@ angular.module('emmiManager')
                  */
                 sendValidationEmail: function (user) {
                     var deferred = $q.defer();
-                    $http.post(UriTemplate.create(user.link.sendValidationEmail).stringify(),user).then(function(response) {
+                    $http.post(UriTemplate.create(user.link.sendValidationEmail).stringify(), user).then(function (response) {
                         deferred.resolve(response);
                     });
                     return deferred.promise;
+                },
+
+                /**
+                 * validate an email
+                 *
+                 * @param user which has the email to validate
+                 * @returns the promise
+                 *
+                 */
+                validateEmail: function (user) {
+                    var deferred = $q.defer();
+                    $http.put(UriTemplate.create(user.link.self).stringify(), user)
+                        .success(function (data, status, headers, config) {
+                            deferred.resolve(data);
+                        })
+                        .error(function (msg, code) {
+                            deferred.reject(msg);
+                        });
+                    return deferred.promise;
+
                 },
 
                 /**
@@ -29,13 +49,15 @@ angular.module('emmiManager')
                  * @returns the promise
                  *
                  */
-                validateEmail: function (emailValidationToken) {
+                validateEmailToken: function (emailValidationToken) {
                     var deferred = $q.defer();
-                    $http.put(UriTemplate.create(API.validateEmail).stringify(),{validationToken: emailValidationToken}).then(function(response) {
+                    $http.put(UriTemplate.create(API.validateEmailToken).stringify(), {validationToken: emailValidationToken}).then(function (response) {
                         deferred.resolve(response);
                     });
                     return deferred.promise;
                 }
+
+
             };
         }
     ])
