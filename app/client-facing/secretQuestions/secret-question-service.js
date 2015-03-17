@@ -4,8 +4,8 @@ angular.module('emmiManager')
 /**
  * Service for Secret Question Responses
  */
-    .service('SecretQuestionService', ['$http', 'UriTemplate', 'Session', 'API',
-        function ($http, UriTemplate, Session, API) {
+    .service('SecretQuestionService', ['$http', 'UriTemplate','$q', 'Session', 'API',
+        function ($http, UriTemplate, $q, Session, API) {
             return {
             
                 /**
@@ -43,7 +43,22 @@ angular.module('emmiManager')
                 },
                 		       
 
-                /**
+                
+                // determine if secret questions have been answered
+                isClientUserHasSecretQuestions: function(){
+                	var deferred = $q.defer();
+                	this.getAllUserSecretQuestionAsteriskResponse().then(function (response) {
+                		if (response.data.content.length === 2) {
+                            deferred.resolve(true);
+                         }
+                         else{
+                        	deferred.resolve(false);
+                         }
+                	 });
+                      return deferred.promise;
+               },
+                		      
+                 /**
                  * Calls the back end to get all question and response for a client user
                  *
                  * @param client user id
