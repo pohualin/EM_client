@@ -18,7 +18,7 @@ angular.module('emmiManager')
                 $scope.page.setTitle(account.clientResource.entity.name + ' Home');
 
                 // determine if secret questions have been answered
-                SecretQuestionService.getAllUserSecretQuestionAsteriskResponse(account.id).then(function (response) {
+                SecretQuestionService.getAllUserSecretQuestionAsteriskResponse().then(function (response) {
                     if (response.data.content.length === 2) {
                         $scope.isSecretQuestion = true;
                     }
