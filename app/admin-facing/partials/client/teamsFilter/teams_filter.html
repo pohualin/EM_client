@@ -58,7 +58,7 @@
             <hr>
             <div data-ng-repeat="team in clientTeams">
                 <!--when a user clicks on a team they are taken to that team's page-->
-                <a data-ng-href="#/clients/{{clientId}}?team={{team.id}}&{{currentRouteQueryString}}">{{team.name}}</a>
+                <a data-ng-click="selectTeam(team.id)">{{team.name}}</a>
             </div>
             <div data-ng-show="clientTeams===null">No teams exist for this search.</div>
             <hr>
@@ -77,7 +77,7 @@
                 <!--show the teams that have the above tag-->
                 <div data-ng-repeat="team in teamList">
                     <!--take user to the team's page when the link is clicked-->
-                    <a data-ng-href="#/clients/{{clientId}}?team={{team.id}}&{{currentRouteQueryString}}">{{team.name}}</a>
+                    <a data-ng-click="selectTeam(team.id)">{{team.name}}</a>
                 </div>
             </div>
             <div data-ng-show="listOfTeamsByTag===null">No teams exist for this search.</div>
@@ -89,7 +89,7 @@
             Teams without a '{{selectedGroup.entity.name}}' tag
             <div data-ng-repeat="team in teamsNotInGroup">
                 <!--show all the teams that do not have a tag in the organize by group that was selected-->
-                <a data-ng-href="#/clients/{{clientId}}?team={{team.id}}&{{currentRouteQueryString}}">{{team.name}}</a>
+                <a data-ng-click="selectTeam(team.id)">{{team.name}}</a>
             </div>
         </div>
     </div>

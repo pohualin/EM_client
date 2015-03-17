@@ -3,9 +3,9 @@
 angular.module('emmiManager')
 
 /**
- *  Edit a single client
+ *  Combined view for client and teams
  */
-    .controller('ClientAndTeamCtrl', function ($scope, $route, $routeParams, $controller, clientResource, ViewTeam) {
+    .controller('ClientAndTeamCtrl', function ($scope, $rootScope, $route, $routeParams, $controller, clientResource, ViewTeam) {
 
         // Function to retrieve and initialize team-related code
         function setupTeam() {
@@ -28,6 +28,8 @@ angular.module('emmiManager')
 
         if ($routeParams.team) {
             setupTeam();
+            // If the team is included in the $routeParams, filter it out so that subsequent routing on the page doesn't get messed up
+            $scope.currentRouteQueryString = $rootScope.currentRouteQueryString.replace(/(&team=)\w+/, '');
         }
 
         // Listen for changes to the Route. When the route
@@ -38,6 +40,8 @@ angular.module('emmiManager')
                 if ($routeParams.team) {
                     $scope.showTeam = 'loading';
                     setupTeam();
+                    // If the team is included in the $routeParams, filter it out so that subsequent routing on the page doesn't get messed up
+                    $scope.currentRouteQueryString = $rootScope.currentRouteQueryString.replace(/(&team=)\w+/, '');
                 } else {
                     $scope.showTeam = 'no';
                     // Reset page title

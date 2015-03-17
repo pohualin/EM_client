@@ -4,6 +4,13 @@
 @import 'sample';
 
 // miscellaneous rules
+
+[ng-click],
+[data-ng-click],
+[x-ng-click] {
+    cursor: pointer;
+}
+
 .search-spinner {
     display: inline-block;
     background: url(/images/search_spinner.gif) no-repeat center center;
