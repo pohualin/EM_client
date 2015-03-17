@@ -25,13 +25,6 @@ angular.module('emmiManager')
             		authorizedRoles: [USER_ROLES.all]
             	},
             	resolve: requiredUserClientResources
-            })
-            .otherwise({
-                redirectTo: '/',
-                resolve: requiredUserClientResources,
-                access: {
-                    authorizedRoles: [USER_ROLES.all]
-                }
             });
     })
 ;

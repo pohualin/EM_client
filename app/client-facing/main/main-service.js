@@ -108,17 +108,59 @@ angular.module('emmiManager')
         };
     })
 
-    .factory('MainService',['$http', 'UriTemplate', 'moment',
-     function ($http, UriTemplate, moment) {
+    .service('MainService',['$http', 'UriTemplate', 'moment', '$q',
+     function ($http, UriTemplate, moment, $q) {
         return {
-            loadPolicy: function (client) {
-                return $http.get(UriTemplate.create(client.link.passwordPolicy).stringify())
-                    .success(function (response) {
-                        return response.data;
-                    });
+            /**
+             * Check to see if the passed account should show a reminder for password
+             * expiration
+             *
+             * @param account to check
+             * @returns {Deferred}
+             */
+            checkPasswordExpiration: function(account){
+                var deferred = $q.defer(),
+                    ret = {
+                        showReminder: false,
+                        passwordExpiresInDays: 0
+                    };
+                if (account && account.passwordExpirationTime && account.clientResource) {
+                    var daysUntilExpiration = moment(account.passwordExpirationTime).diff(moment(), 'days') + 1;
+                    $http.get(UriTemplate.create(account.clientResource.link.passwordPolicy).stringify())
+                        .success(function (response) {
+                            if (daysUntilExpiration <= response.passwordExpirationDaysReminder) {
+                                ret.showReminder = true;
+                                ret.passwordExpiresInDays = daysUntilExpiration;
+                                deferred.resolve(ret);
+                            }
+                        }, function fail() {
+                            deferred.resolve(ret);
+                        });
+                } else {
+                  deferred.resolve(ret);
+                }
+                return deferred.promise;
             },
-            getPasswordExpiresInDays: function(passwordExpirationTime){
-                return moment(passwordExpirationTime).diff(moment(), 'days') + 1;
+
+            /**
+             * Return an array of Team objects for which this user has the passed permission
+             * @param account
+             * @returns {*}
+             */
+            specificTeamsHavingLink: function(account, linkName){
+                var deferred = $q.defer(),
+                    teams = [];
+                if (account && account.teams){
+                    angular.forEach(account.teams, function (team){
+                        if (team.link[linkName]){
+                            teams.push(team);
+                        }
+                    });
+                    deferred.resolve(teams);
+                } else {
+                    deferred.resolve(teams);
+                }
+                return deferred.promise;
             }
         };
     }])

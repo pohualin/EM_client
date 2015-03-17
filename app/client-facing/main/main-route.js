@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('emmiManager')
-    .config(function ($routeProvider, USER_ROLES) {
+    .config(function ($routeProvider) {
 
         var requiredResources = {
         		'account': ['AuthSharedService', 'ProfileService', '$q', function (AuthSharedService, ProfileService, $q) {
@@ -23,43 +23,30 @@ angular.module('emmiManager')
                 templateUrl: 'client-facing/main/main.html',
                 controller: 'MainCtrl',
                 title: 'Home',
-                access: {
-                    authorizedRoles: [USER_ROLES.all]
-                },
                 resolve: requiredResources
+            })
+            .when('/error', {
+                templateUrl: 'client-facing/main/err.html'
             })
             .when('/403', {
                 templateUrl: 'client-facing/main/403.html',
                 resolve: requiredResources,
-                title: 'Access Denied',
-                access: {
-                    authorizedRoles: [USER_ROLES.all]
-                }
+                title: 'Access Denied'
             })
             .when('/500', {
                 templateUrl: 'client-facing/main/500.html',
                 resolve: requiredResources,
-                title: 'Server Error',
-                access: {
-                    authorizedRoles: [USER_ROLES.all]
-                }
+                title: 'Server Error'
             })
             .when('/docs', {
                 templateUrl: 'client-facing/doc/docs.html',
                 title: 'Documentation',
-                access: {
-                    authorizedRoles: [USER_ROLES.admin]
-                }
+                resolve: requiredResources
             })
             .otherwise({
                 redirectTo: '/',
-                resolve: requiredResources,
-                access: {
-                    authorizedRoles: [USER_ROLES.all]
-                }
+                resolve: requiredResources
             });
     })
-
-
 ;
 
