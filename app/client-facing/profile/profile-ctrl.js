@@ -35,10 +35,10 @@ angular.module('emmiManager')
         $scope.editEmailFormSubmitted = true;
         ProfileService.verifyPassword(userClient, password).then(function success(response){
             $scope.passwordIsValidated = true;
-            $scope.editEmailForm.password.$invalid = false;
+            $scope.editEmailForm.password.$setValidity(true);
             $scope.editEmailFormSubmitted = false;
         }, function error(error){
-            $scope.editEmailForm.password.$invalid = true;
+            $scope.editEmailForm.password.$setValidity(false);
             $scope.formValidationError();
         });
     };

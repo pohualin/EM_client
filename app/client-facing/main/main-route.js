@@ -4,17 +4,9 @@ angular.module('emmiManager')
     .config(function ($routeProvider) {
 
         var requiredResources = {
-        		'account': ['AuthSharedService', 'ProfileService', '$q', function (AuthSharedService, ProfileService, $q) {
-                    var deferred = $q.defer();
-                	AuthSharedService.currentUser().then(function (loggedInUser){
-                        if (!loggedInUser.notLoggedIn){
-                            ProfileService.get(loggedInUser).then(function (refreshedUserResponse){
-                                deferred.resolve(refreshedUserResponse);
-                            });
-                        }deferred.resolve(loggedInUser);
-                    });
-                	return deferred.promise;
-                }]
+            'account': ['AuthSharedService', function (AuthSharedService) {
+                return AuthSharedService.currentUser();
+            }]
         };
 
         // Routes
