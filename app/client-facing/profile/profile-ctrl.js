@@ -37,7 +37,7 @@ angular.module('emmiManager')
             $scope.passwordIsValidated = true;
             $scope.editEmailForm.password.$setValidity(true);
             $scope.editEmailFormSubmitted = false;
-        }, function error(){
+        }, function fail(error){
             $scope.editEmailForm.password.$setValidity(false);
             $scope.formValidationError();
         });
@@ -65,6 +65,7 @@ angular.module('emmiManager')
             var totalErrorCount = error.data.conflicts.length;
             angular.forEach(error.data.conflicts, function (conflict) {
                 if ('LOGIN' === conflict.reason) {
+                    console.log('login');
                     // login conflict
                     if (!$scope.userClientEdit.useEmail) {
                         // user did not check 'Use Email'

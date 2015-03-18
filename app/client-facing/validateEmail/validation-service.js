@@ -29,13 +29,13 @@ angular.module('emmiManager')
                  * @returns the promise
                  *
                  */
-                validateEmail: function (user) {
+                saveEmail: function (user) {
                     var deferred = $q.defer();
                     $http.put(UriTemplate.create(user.link.self).stringify(), user)
-                        .success(function (data, status, headers, config) {
+                        .success(function (data) {
                             deferred.resolve(data);
                         })
-                        .error(function (msg, code) {
+                        .error(function (msg) {
                             deferred.reject(msg);
                         });
                     return deferred.promise;

@@ -9,9 +9,9 @@ angular.module('emmiManager')
             $scope.sendActivationEmail = function (isValid) {
                 $scope.editEmailFormSubmitted=true;
                 if(isValid) {
-                    //check if email is already in use
-                    ValidationService.validateEmail(account).then(
-                        function(response) {
+                    //check if email is already in use and save email
+                    ValidationService.saveEmail(account).then(
+                        function() {
                             //send validation email
                             ValidationService.sendValidationEmail(account).then(function () {
                                 $location.path(locationBeforeLogin).replace();
