@@ -40,7 +40,5 @@ angular.module('emmiManager')
                 resolve: requiredResources
             });
     })
-
-
 ;
 
