@@ -48,6 +48,25 @@ angular.module('emmiManager')
                 focus('focus-' + tagGroup.entity.id);
             };
 
+            /**
+             * Happens when the warning popover is opened or closed
+             *
+             * @param group being warned about
+             * @param open true means warning is open
+             */
+            $scope.warningToggle = function (group, open) {
+                group.warningOpen = open;
+                if (group.original) {
+                    // this solves the click remove, expand to edit, click no on remove, cancel flow
+                    group.original.warningOpen = open;
+                }
+            };
+
+            /**
+             * When the 'ok' is clicked inside the delete warning popover
+             *
+             * @param group to remove
+             */
             $scope.remove = function (group) {
                 AdminManageGroupService.remove(group).then(function () {
                     $scope.loadExisting();
@@ -57,7 +76,8 @@ angular.module('emmiManager')
             /**
              * Called when 'cancel' is clicked on an existing panel
              *
-             * @param tagGroup
+             * @param tagGroup to be canceled
+             * @param restore to put the original back
              */
             $scope.cancelEditMode = function (tagGroup, restore) {
                 if (restore) {
@@ -91,7 +111,7 @@ angular.module('emmiManager')
              */
             $scope.saveNewGroup = function (tagGroup) {
                 tagGroup.tags = $scope.newTagGroupTags;
-                Tag.createReferenceGroup(tagGroup).then(function (newGroup) {
+                Tag.createReferenceGroup(tagGroup).then(function () {
                     delete $scope.newTagGroup;
                     delete $scope.newTagGroupTags;
                     $scope.loadExisting();
@@ -120,37 +140,5 @@ angular.module('emmiManager')
             $scope.loadExisting();
 
         }])
-
-/**
- * Check for tag groups with the same name
- */
-    .directive('groupTitleUnique', function () {
-        return {
-            restrict: 'A',
-            require: 'ngModel',
-            scope: false,
-            link: function (scope, ele, attrs, ctrl) {
-                // add a parser that will process each time the value is
-                // parsed into the model when the user updates it.
-                ctrl.$parsers.unshift(function (value) {
-                    if (value) {
-                        var newGroupTitle = value.toLowerCase().replace(/[^a-z0-9]+/g, '');
-                        var found = false;
-                        angular.forEach(scope.tagGroups, function (group, key) {
-                            var normalizedTitle = group.entity.name.toLowerCase().replace(/[^a-z0-9]+/g, '');
-                            if (newGroupTitle === normalizedTitle) {
-                                found = true;
-                            }
-                        });
-                        ctrl.$setValidity('unique', !found);
-                    } else {
-                        ctrl.$setValidity('unique', true);
-                    }
-
-                    return value;
-                });
-            }
-        };
-    })
 
 ;
