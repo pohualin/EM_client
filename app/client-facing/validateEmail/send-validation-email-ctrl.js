@@ -3,11 +3,17 @@
 angular.module('emmiManager')
     .controller('sendValidationEmail', ['$scope', 'ValidationService', '$alert', '$location', 'account', 'locationBeforeLogin',
         function ($scope, ValidationService, $alert, $location, account, locationBeforeLogin) {
+            //store original email
+            ValidationService.get(account).then(function (accountWithOriginalEmail) {
+                account.originalUserClientEmail = accountWithOriginalEmail.originalUserClientEmail;
+            });
+
             /**
              * Send a validation email to the user
              */
-            $scope.sendActivationEmail = function (isValid) {
+            $scope.sendValidationEmail = function (isValid) {
                 $scope.editEmailFormSubmitted=true;
+                $scope.editEmailForm.email.$setValidity('duplicate',true);
                 if(isValid) {
                     //check if email is already in use and save email
                     ValidationService.saveEmail(account).then(
@@ -29,7 +35,7 @@ angular.module('emmiManager')
                         }, function() {
                             //server error
                             $scope.showEmailErrorAlert();
-                            $scope.editEmailForm.email.$setValidity('duplicate',true);
+                            $scope.editEmailForm.email.$setValidity('duplicate',false);
                         });
                 }else{
                     //email doesn't match the matcher on email field or is blank

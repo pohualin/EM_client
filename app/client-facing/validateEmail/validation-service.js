@@ -31,6 +31,9 @@ angular.module('emmiManager')
                  */
                 saveEmail: function (user) {
                     var deferred = $q.defer();
+                    if(user.email !== null && user.login !== null && user.login.toUpperCase() === user.originalUserClientEmail.toUpperCase()){
+                        user.login = user.email;
+                    }
                     $http.put(UriTemplate.create(user.link.self).stringify(), user)
                         .success(function (data) {
                             deferred.resolve(data);
@@ -40,6 +43,18 @@ angular.module('emmiManager')
                         });
                     return deferred.promise;
 
+                },
+
+                /**
+                 * Get current userclient
+                 * @param userClient
+                 * @returns {*}
+                 */
+                get: function (userClient) {
+                    return $http.get(userClient.link.self).then(function (response) {
+                        response.data.originalUserClientEmail = response.data.email;
+                        return response.data;
+                    });
                 },
 
                 /**
