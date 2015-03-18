@@ -37,7 +37,7 @@ angular.module('emmiManager')
             $scope.passwordIsValidated = true;
             $scope.editEmailForm.password.$setValidity(true);
             $scope.editEmailFormSubmitted = false;
-        }, function error(error){
+        }, function fail(error){
             $scope.editEmailForm.password.$setValidity(false);
             $scope.formValidationError();
         });
