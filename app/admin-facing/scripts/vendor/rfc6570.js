@@ -314,7 +314,11 @@ angular.module('emmiManager')
 
         return {
             create: function (uri) {
-                uri = uri || '/no_url_given/404';
+                if (!uri) {
+                    console.log('Attempting to call back-end without a URI. This is a developer coding error. ' +
+                    'Perhaps the HATEOAS link is not present?');
+                }
+                uri = uri || '';
                 return new UriTemplate(uri);
             }
         };

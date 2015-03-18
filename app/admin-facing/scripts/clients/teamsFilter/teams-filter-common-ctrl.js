@@ -101,4 +101,10 @@ angular.module('emmiManager')
             $location.search(URL_PARAMETERS.UNTAGGED_TEAMS, $scope.showUntaggedTeams).replace();
             $rootScope.currentRouteQueryString = arrays.toQueryString($location.search());
         };
+
+        $scope.selectTeam = function (id) {
+            $location.search('team', id).replace();
+            $rootScope.currentRouteQueryString = arrays.toQueryString($location.search());
+        };
+
     });
