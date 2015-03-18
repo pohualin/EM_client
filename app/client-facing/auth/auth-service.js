@@ -28,6 +28,9 @@ angular.module('emmiManager')
                     }).success(function () {
                         self.valid('*').then(function (loggedIn) {
                             if (loggedIn) {
+                            	$rootScope.authenticationError = false;
+                                $rootScope.lockError = false;
+                                $rootScope.lockExpirationDateTime = null;
                                 authService.loginConfirmed(loggedIn);
                             }
                         });
