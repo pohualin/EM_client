@@ -24,11 +24,18 @@
                                                    required data-group-title-unique>
                                         </div>
                                         <div class="pull-right">
-                                            <button type="button" class="btn-link" data-ng-hide="group.editMode" data-ng-click="startEditMode(group)">
+                                            <button type="button" class="btn-link"
+                                                    data-ng-hide="group.editMode || group.warningOpen"
+                                                    data-ng-click="startEditMode(group)">
                                                 <small>edit</small>
                                             </button>
-                                            <button type="button" class="btn-link" data-ng-show="group.deletable"
-                                                    data-ng-click="remove(group)">
+                                            <button type="button" class="btn-link"
+                                                    data-ng-show="group.deletable"
+                                                    data-on-ok="remove(group)"
+                                                    data-placement="auto bottom"
+                                                    data-on-open-popover="warningToggle(group, true)"
+                                                    data-on-close-popover="warningToggle(group, false)"
+                                                    data-delete-group-warning>
                                                 <small>remove</small>
                                             </button>
                                         </div>
@@ -42,7 +49,8 @@
                                             <button type="button" class="btn btn-link" data-ng-click="cancelEditMode(group, true)">
                                                 cancel
                                             </button>
-                                            <button class="btn btn-default" data-ng-click="update(group, $index)"
+                                            <button class="btn btn-default" type="button"
+                                                    data-ng-click="update(group, $index)"
                                                     data-ng-disabled="!existingTagGroupForm_{{$index}}.$valid"
                                                     data-ng-show="existingTagGroupForm_{{$index}}.$valid && group.changed">
                                                 Save
@@ -74,7 +82,8 @@
                                         <hr/>
                                         <div class="pull-right">
                                             <button type="button" class="btn btn-link" data-ng-click="cancelNew()">cancel</button>
-                                            <button class="btn btn-default" data-ng-click="saveNewGroup(newTagGroup)"
+                                            <button class="btn btn-default" type="button"
+                                                    data-ng-click="saveNewGroup(newTagGroup)"
                                                     data-ng-disabled="!newTagGroupForm.$valid"
                                                     data-ng-show="newTagGroupForm.$valid">
                                                 Save Group
