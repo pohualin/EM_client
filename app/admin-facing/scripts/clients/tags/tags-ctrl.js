@@ -76,7 +76,9 @@ angular.module('emmiManager')
         $scope.overrideConflictingTeamTags = function (isValid) {
             $scope.saveTags(isValid);
             $scope.hideConflictingTeamsPopover();
-            $scope.hideClientTags();
+            if ($scope.hideClientTags) {
+                $scope.hideClientTags();
+            }
         };
 
         $scope.saveTags = function (isValid) {
@@ -152,11 +154,7 @@ angular.module('emmiManager')
                 });
                 // if there were a match disable and select the library group
                 libraryGroup.disabled = match;
-                if (libraryGroup.disabled) {
-                    libraryGroup.checked = true;
-                } else {
-                    libraryGroup.checked = false; // make sure to uncheck any previously checked libraries that may have been removed and are now enabled (EM-880)
-                }
+                libraryGroup.checked = !!libraryGroup.disabled;
             });
         };
 

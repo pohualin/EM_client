@@ -1,24 +1,50 @@
 <div class="container" data-ng-cloak>
     <div class="row col-md-6">
-        <div class="col-md-12">
-            <h2>
-                Please confirm your email address
-            </h2>
-            Verifying your email address will make your account more secure, and allow you to reset your password if you
-            forget it in the future.
-
-            <div class="well well-sm col-md-12" data-ng-model="account.email">{{account.email}}</div>
-        </div>
-
-        <div class="row">
+        <form name="editEmailForm" class="form" novalidate>
             <div class="col-md-12">
-                <div class="form-group pull-right">
-                    <button class="btn btn-link" type="submit" data-ng-click="notNow()">not now</button>
-                    <button type="button" class="btn btn-primary" data-ng-click="sendActivationEmail()">
-                        Confirm Email
-                    </button>
+                <div class="row" data-ng-show="!editEmailForm.$valid || editEmailForm.email.$error.duplicate">
+                    <div class="col-md-12" id="message-container"></div>
+                </div>
+                <h2>
+                    Please confirm your email address
+                </h2>
+                Verifying your email address will make your account more secure, and allow you to reset your password if
+                you
+                forget it in the future.
+
+                <div class="form-group"
+                     data-ng-class="{ 'has-error' : (editEmailForm.email.$invalid || editEmailForm.email.$error.duplicate) && editEmailFormSubmitted }">
+                    <label class="control-label" for="email">Email:</label>
+
+                    <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                         data-ng-show="editEmailForm.email.$error.required && editEmailFormSubmitted"
+                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                         data-title="Required"></div>
+                    <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                         data-ng-show="editEmailForm.email.$error.pattern && editEmailFormSubmitted"
+                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                         data-title="Please enter a valid email."></div>
+                    <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                         data-ng-show="editEmailForm.email.$error.duplicate && editEmailFormSubmitted"
+                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                         data-title="This email address is being used by another account"></div>
+                    <input class="form-control" id="email" data-ng-model="account.email"
+                           name="email" type="text" required
+                           maxlength="255" data-focus-on="email"
+                           data-ng-pattern="emailPattern"/>
                 </div>
             </div>
-        </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group pull-right">
+                        <button class="btn btn-link" type="submit" data-ng-click="notNow()">not now</button>
+                        <button type="button" class="btn btn-primary" data-ng-click="sendValidationEmail(editEmailForm.$valid)()">
+                            Confirm Email
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
