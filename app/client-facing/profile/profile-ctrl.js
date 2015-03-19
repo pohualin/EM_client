@@ -41,7 +41,7 @@ angular.module('emmiManager')
         }, function fail(error){
             $scope.editEmailFormSubmitted = true;
             $scope.passwordIsValidated = false;
-            $scope.formValidationError();
+            $scope.formValidationError('Please check your password and try again.');
         });
     };
 
@@ -90,11 +90,12 @@ angular.module('emmiManager')
         }
     };
 
-    $scope.formValidationError = function () {
+    $scope.formValidationError = function (message) {
+        var content = message ? message : 'Please correct the below information.';
         if (!$scope.errorAlert) {
             $scope.errorAlert = $alert({
                 title: ' ',
-                content: 'Please correct the below information.',
+                content: content,
                 container: '#message-container',
                 type: 'danger',
                 show: true,
