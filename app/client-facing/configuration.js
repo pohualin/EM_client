@@ -126,7 +126,8 @@ angular.module('emmiManager', [
                 path !== '/login' &&
                 path !== '/err' &&
                 path !== '/403' &&
-                path !== '/500' ) {
+                path !== '/500' &&
+                path !== '/unauthorized') {
                 // authorize all routes other than some known system routes
                 AuthSharedService.valid((next.access) ? next.access.authorizedRoles : [USER_ROLES.all]);
             }
@@ -159,6 +160,10 @@ angular.module('emmiManager', [
             $rootScope.expiredCredentials = rejection.credentials;
             $rootScope.expiredClient = rejection.client;
             $location.path('/credentials/expired').replace();
+        });
+
+        $rootScope.$on('event:auth-totallyNotAuthorized', function () {
+            $location.path('/unauthorized').replace();
         });
 
         // Call when the 401 response is returned by the server
