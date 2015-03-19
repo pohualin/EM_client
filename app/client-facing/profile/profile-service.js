@@ -4,7 +4,7 @@ angular.module('emmiManager')
 .service('ProfileService', ['API', '$http', 'UriTemplate', '$q', function (api, $http, UriTemplate, $q) {
 	return {
 		update: function (userClient) {
-            if(userClient.email !== null && userClient.login !== null && userClient.login.toUpperCase() === userClient.originalUserClientEmail.toUpperCase()){
+            if(userClient.email && userClient.login && userClient.login.toUpperCase() === userClient.originalUserClientEmail.toUpperCase()){
                 userClient.login = userClient.email;
             }
 			return $http.put(UriTemplate.create(userClient.link.self).stringify(), userClient).then(function (response) {
