@@ -65,7 +65,9 @@
                                 return deferred.promise;
                             } else if (rejection.status === 403 && !rejection.config.ignoreAuthModule && !rejection.config.override403) {
                                 $rootScope.$broadcast('event:auth-notAuthorized', rejection);
-                            } else if (rejection.status === 500) {
+                            } else if (rejection.status === 409 && !rejection.config.override409) {
+                                $rootScope.$broadcast('event:optimistic-lock-failure', rejection);
+                            } else if (rejection.status === 500 && !rejection.config.override500) {
                                 $rootScope.$broadcast('event:server-error', rejection.data);
                             }
                             // otherwise, default behaviour

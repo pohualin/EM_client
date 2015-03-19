@@ -26,6 +26,7 @@ angular.module('emmiManager', [
     .constant('USER_ROLES', {
         all: '*',
         admin: 'PERM_CLIENT_SUPER_USER',
+        teamScheduler: 'PERM_CLIENT_TEAM_SCHEDULE_PROGRAM',
         user: 'PERM_USER'
     })
 
@@ -46,6 +47,11 @@ angular.module('emmiManager', [
         INACTIVE_TEAMS: 'i',
         UNTAGGED_TEAMS: 'ut'
     })
+
+    .constant('PATTERN', {
+        EMAIL: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$/
+    })
+
     .config(function ($httpProvider, $translateProvider, tmhDynamicLocaleProvider, HateoasInterceptorProvider, $datepickerProvider, API) {
 
         // Initialize angular-translate
@@ -77,7 +83,7 @@ angular.module('emmiManager', [
         });
     })
 
-    .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, arrays, $document, ConfigurationService) {
+    .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, PATTERN, arrays, $document, ConfigurationService, $modal, $timeout) {
 
         var modals = [];
 
@@ -110,14 +116,25 @@ angular.module('emmiManager', [
             }
         };
 
+        $rootScope.emailPattern = PATTERN.EMAIL;
+
         $rootScope.$on('$routeChangeStart', function (event, next) {
-            $rootScope.userRoles = USER_ROLES;
             $rootScope.isAuthorized = AuthSharedService.isAuthorized;
-            AuthSharedService.authorizedRoute((next.access) ? next.access.authorizedRoles : [USER_ROLES.all]);
+            $rootScope.userRoles = USER_ROLES;
+            var path = $location.path();
+            if (path !== '/logout' &&
+                path !== '/login' &&
+                path !== '/err' &&
+                path !== '/403' &&
+                path !== '/500' &&
+                path !== '/unauthorized') {
+                // authorize all routes other than some known system routes
+                AuthSharedService.valid((next.access) ? next.access.authorizedRoles : [USER_ROLES.all]);
+            }
         });
 
         $rootScope.$on('$routeChangeError', function () {
-            $location.path('/').replace();
+            $location.path('/error').replace();
         });
 
         $rootScope.$on('$routeChangeSuccess', function (e, current) {
@@ -145,6 +162,10 @@ angular.module('emmiManager', [
             $location.path('/credentials/expired').replace();
         });
 
+        $rootScope.$on('event:auth-totallyNotAuthorized', function () {
+            $location.path('/unauthorized').replace();
+        });
+
         // Call when the 401 response is returned by the server
         $rootScope.$on('event:auth-loginRequired', function (event, rejection) {
             Session.destroy();
@@ -154,7 +175,23 @@ angular.module('emmiManager', [
 
         // Call when the 403 response is returned by the server
         $rootScope.$on('event:auth-notAuthorized', function () {
-            $location.path('/403').replace();
+            $timeout(function (){
+                $location.path('/403').replace();
+            });
+        });
+
+        // Call when 409 response is returned by the server
+        $rootScope.$on('event:optimistic-lock-failure', function (event, rejection) {
+            console.log('409: ' + rejection.data.detail);
+            $modal({
+                title: 'Object Already Modified',
+                content: 'You have attempted to save an object that has already been modified by another user.' +
+                ' Please refresh the page to load the latest changes before attempting to save again.',
+                animation: 'none',
+                backdropAnimation: 'emmi-fade',
+                backdrop: 'static',
+                show: true
+            });
         });
 
         // Call when the 500 response is returned by the server
@@ -173,7 +210,7 @@ angular.module('emmiManager', [
                 var d = event.srcElement || event.target;
                 if (!(d.tagName.toUpperCase() === 'INPUT' &&
                     (d.type.toUpperCase() === 'TEXT' ||
-                        d.type.toUpperCase() === 'PASSWORD'))) {
+                    d.type.toUpperCase() === 'PASSWORD'))) {
                     event.preventDefault();
                 }
             }

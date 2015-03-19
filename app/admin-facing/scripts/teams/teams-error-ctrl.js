@@ -18,6 +18,8 @@ angular.module('emmiManager')
                     show: true,
                     dismissable: false
                 });
+            } else {
+                $scope.errorAlert.show();
             }
         };
     })

@@ -13,10 +13,23 @@ angular.module('emmiManager')
             this.userRoles = user.permission;
             this.link = user.link;
             this.clientResource = user.clientResource;
-            this.passwordExpirationTime = user.passwordExpirationTime +'Z';
-            this.passwordSavedTime = user.passwordSavedTime +'Z';
-            this.clientResource.link = arrays.convertToObject('rel', 'href',
+            if (user.passwordExpirationTime) {
+                this.passwordExpirationTime = user.passwordExpirationTime + 'Z';
+            }
+            if (user.passwordSavedTime) {
+                this.passwordSavedTime = user.passwordSavedTime + 'Z';
+            }
+            if (user.teams) {
+                angular.forEach(user.teams, function(team) {
+                    team.link = arrays.convertToObject('rel', 'href',
+                        team.link);
+                });
+            }
+            this.teams = user.teams;
+            if (this.clientResource) {
+                this.clientResource.link = arrays.convertToObject('rel', 'href',
                     this.clientResource.link);
+            }
             return this;
         };
         this.destroy = function () {
@@ -28,7 +41,8 @@ angular.module('emmiManager')
             this.userRoles = null;
             this.link = null;
             this.clientResource = null;
-            this.passwordLastUpdateTime = null;
+            this.passwordExpirationTime = null;
+            this.teams = null;
         };
         return this;
     }])
