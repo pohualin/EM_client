@@ -29,6 +29,7 @@ angular.module('emmiManager')
             $scope.passwordChanged = function () {
                 var passwordChange = $scope.passwordChange;
                 $scope.changePasswordForm.password.$setValidity('policy', true);
+                $scope.changePasswordForm.password.$setValidity('history', true);
                 $scope.changePasswordForm.confirmPassword.$setValidity('same', passwordChange.password === passwordChange.confirmPassword);
             };
 
@@ -40,6 +41,7 @@ angular.module('emmiManager')
                 $scope.changePasswordFormSubmitted = true;
                 changePasswordForm.oldPassword.$setValidity('bad', true);
                 changePasswordForm.password.$setValidity('policy', true);
+                changePasswordForm.password.$setValidity('history', true);
                 if (changePasswordForm.$valid) {
                     ChangePasswordService.changePassword($scope.account, $scope.passwordChange)
                         .then(function success() {
@@ -62,6 +64,8 @@ angular.module('emmiManager')
                                         changePasswordForm.oldPassword.$setValidity('bad', false);
                                     } else if (validationError.entity.reason === 'POLICY') {
                                         changePasswordForm.password.$setValidity('policy', false);
+                                    } else if (validationError.entity.reason === 'HISTORY') {
+                                        changePasswordForm.password.$setValidity('history', false);
                                     }
                                 });
                             }
