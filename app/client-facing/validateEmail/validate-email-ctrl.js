@@ -8,7 +8,7 @@ angular.module('emmiManager')
              * Validate email after a user clicks the link in their validation email
              */
             if (validationKey) {
-                ValidationService.validateEmail(validationKey).then(function () {
+                ValidationService.validateEmailToken(validationKey).then(function () {
                     //show confirmation banner
                     $alert({
                         content: 'Thanks! Your email address has been verified.',
