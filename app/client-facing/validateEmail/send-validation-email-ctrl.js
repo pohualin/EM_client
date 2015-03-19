@@ -62,6 +62,13 @@ angular.module('emmiManager')
             $scope.notNow = function () {
                 $location.path(locationBeforeLogin).replace();
             };
+
+            /**
+             * mark email as not a duplicate after the user changes the email
+             */
+            $scope.resetDuplicateValidity = function(){
+                $scope.editEmailForm.email.$setValidity('duplicate',true);
+            };
         }])
 ;
 
