@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('emmiManager')
-	.controller('ProfileCtrl', ['$scope', 'userClientReqdResource', 'API', 'ProfileService', '$alert', 'ValidationService',
-        function($scope, userClientReqdResource, api, ProfileService, $alert, ValidationService){
+	.controller('ProfileCtrl', ['$scope', 'userClientReqdResource', 'API', 'ProfileService', '$alert', 'ValidationService', '$modal',
+        function($scope, userClientReqdResource, api, ProfileService, $alert, ValidationService, $modal){
 
 	$scope.editMode = false;
 	$scope.userClient  = userClientReqdResource;
@@ -29,35 +29,39 @@ angular.module('emmiManager')
 
     $scope.editEmail = function () {
         $scope.emailEditMode = true;
+        $scope.promptPasswordModal = {};
+        $scope.promptPasswordModal = $modal({scope: $scope, template: 'client-facing/profile/passwordPrompt.html', animation: 'none', backdropAnimation: 'emmi-fade', backdrop: 'static'});
     };
 
-    $scope.verifyPassword = function (userClient, password){
-        $scope.editEmailFormSubmitted = true;
-        ProfileService.verifyPassword(userClient, password).then(function success(response){
-            $scope.passwordIsValidated = true;
-            $scope.editEmailForm.password.$setValidity(true);
+    $scope.verifyPassword = function (password){
+        ProfileService.verifyPassword($scope.userClient, password).then(function success(response){
             $scope.editEmailFormSubmitted = false;
+            $scope.passwordIsValidated = true;
+            $scope.promptPasswordModal.hide();
         }, function fail(error){
-            $scope.editEmailForm.password.$setValidity(false);
+            $scope.editEmailFormSubmitted = true;
+            $scope.passwordIsValidated = false;
             $scope.formValidationError();
         });
     };
 
-    $scope.updateEmail = function (userClient) {
+    $scope.updateEmail = function (userClient, valid) {
         $scope.editEmailFormSubmitted = true;
-        ProfileService.update(userClient).then(function success(response){
-            angular.extend($scope.userClient, response);
-            $scope.resetEditEmailForm();
-            if(!response.emailValidated){
-                ValidationService.sendValidationEmail(response).then(function (response){
-                    ProfileService.get(userClientReqdResource).then(function(response) {
-                        angular.extend($scope.userClient, response);
+        if (valid) {
+            ProfileService.update(userClient).then(function success(response) {
+                angular.extend($scope.userClient, response);
+                $scope.resetEditEmailForm();
+                if (!response.emailValidated) {
+                    ValidationService.sendValidationEmail(response).then(function (response) {
+                        ProfileService.get(userClientReqdResource).then(function (response) {
+                            angular.extend($scope.userClient, response);
+                        });
                     });
-                });
-            }
-        }, function error(err){
-            $scope.handleSaveError(err);
-        });
+                }
+            }, function error(err) {
+                $scope.handleSaveError(err);
+            });
+        }
     };
 
     $scope.handleSaveError = function (error) {
@@ -103,6 +107,7 @@ angular.module('emmiManager')
         ProfileService.get(userClientReqdResource).then(function(response){
             angular.extend($scope.userClient, response);
             $scope.resetEditEmailForm();
+            $scope.promptPasswordModal.hide();
         });
     };
 
