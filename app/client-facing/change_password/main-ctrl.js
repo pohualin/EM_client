@@ -60,9 +60,7 @@ angular.module('emmiManager')
                                 changePasswordForm.oldPassword.$setValidity('bad', false);
                             } else if (errorResponse.status === 406 && errorResponse.data) {
                                 angular.forEach(errorResponse.data, function(validationError){
-                                    if(validationError.entity.reason === 'BAD'){
-                                        changePasswordForm.oldPassword.$setValidity('bad', false);
-                                    } else if (validationError.entity.reason === 'POLICY') {
+                                    if (validationError.entity.reason === 'POLICY') {
                                         changePasswordForm.password.$setValidity('policy', false);
                                     } else if (validationError.entity.reason === 'HISTORY') {
                                         changePasswordForm.password.$setValidity('history', false);
