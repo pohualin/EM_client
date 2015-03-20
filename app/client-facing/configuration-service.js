@@ -11,6 +11,7 @@ angular.module('emmiManager')
             	if(!Session.secretQuestionCreated){
             		$location.path('/createSecretQuestions').replace();
            		}
+            	
                 if(!Session.email){
                     //if email was not supplied
                     $location.path('/addEmail').replace();

@@ -28,6 +28,9 @@ angular.module('emmiManager')
                     }).success(function () {
                         self.valid('*').then(function (loggedIn) {
                             if (loggedIn) {
+                            	$rootScope.authenticationError = false;
+                                $rootScope.lockError = false;
+                                $rootScope.lockExpirationDateTime = null;
                                 authService.loginConfirmed(loggedIn);
                             }
                         });
@@ -59,7 +62,9 @@ angular.module('emmiManager')
                         return $rootScope.account;
                     }).error(function (data, status, headers, config) {
                         $rootScope.authenticated = false;
-                        if (!$rootScope.isAuthorized(authorizedRoles)) {
+                        if (status === 403) {
+                            $rootScope.$broadcast('event:auth-totallyNotAuthorized');
+                        } else if (!$rootScope.isAuthorized(authorizedRoles)) {
                             $rootScope.$broadcast('event:auth-loginRequired', {location: angular.copy($location)});
                         }
                     }).finally(function () {
