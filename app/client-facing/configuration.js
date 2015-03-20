@@ -166,13 +166,12 @@ angular.module('emmiManager', [
          */
         $rootScope.isSystemRoute = function () {
             var path = $location.path();
-            var ret = path === '/logout' ||
+            return path === '/logout' ||
                 path === '/login' ||
                 path === '/error' ||
                 path === '/403' ||
                 path === '/500' ||
                 path === '/unauthorized';
-            return ret;
         };
 
         $rootScope.$on('$routeChangeStart', function (event, next) {
