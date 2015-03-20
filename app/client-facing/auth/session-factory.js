@@ -12,6 +12,7 @@ angular.module('emmiManager')
             this.emailValidated = user.emailValidated;
             this.userRoles = user.permission;
             this.link = user.link;
+            this.secretQuestionCreated = user.secretQuestionCreated;
             this.clientResource = user.clientResource;
             if (user.passwordExpirationTime) {
                 this.passwordExpirationTime = user.passwordExpirationTime + 'Z';
@@ -35,6 +36,7 @@ angular.module('emmiManager')
             this.lastName = null;
             this.email = null;
             this.emailValidated = null;
+            this.secretQuestionCreated = false;
             this.userRoles = null;
             this.link = null;
             this.clientResource = null;

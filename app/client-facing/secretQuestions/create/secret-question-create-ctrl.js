@@ -18,8 +18,7 @@ angular.module('emmiManager')
         $scope.saveOrUpdateSecretQuestion = function(valid) {
         	$scope.secretQuestionFormSubmitted = true;
         	if(valid){
-        		SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.question1.entity);
-	        	SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.question2.entity);
+        		SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.question1.entity, $scope.question2.entity);
 	        	$alert({
 					title: ' ',
 					content: 'Your security questions have been updated successfully.',

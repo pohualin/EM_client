@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('emmiManager')
-    .controller('MainCtrl', ['$scope', '$translate', '$alert', 'tmhDynamicLocale', 'account', 'MainService', 'SecretQuestionService',
-        function ($scope, $translate, $alert, tmhDynamicLocale, account, MainService, SecretQuestionService) {
+    .controller('MainCtrl', ['$scope', '$translate', '$alert', 'tmhDynamicLocale', 'account', 'MainService', 'Session',
+        function ($scope, $translate, $alert, tmhDynamicLocale, account, MainService, Session) {
 
             // initial setup
             $scope.account = account;
@@ -16,14 +16,12 @@ angular.module('emmiManager')
             if ($scope.authenticated) {
                 // user is logged in
                 $scope.page.setTitle(account.clientResource.entity.name + ' Home');
-
+                
                 // determine if secret questions have been answered
-                SecretQuestionService.getAllUserSecretQuestionAsteriskResponse().then(function (response) {
-                    if (response.data.content.length === 2) {
-                        $scope.isSecretQuestion = true;
-                    }
-                });
-
+                if(Session.secretQuestionCreated){
+                	$scope.isSecretQuestion = true;
+           		}
+               
                 // see if the password is going to expire soon
                 MainService.checkPasswordExpiration(account).then(function (response) {
                     if (response.showReminder) {
