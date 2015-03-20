@@ -78,8 +78,8 @@ angular.module('emmiManager')
                 	.then(
                 		 function(result){
                 	     deferred.resolve(result);
-                	     result[1].data.entity.userClient.secretQuestionCreated = true;
-                		 $http.put(UriTemplate.create(Session.link.self).stringify(), result[1].data.entity.userClient)
+                	     var secretQuestionsCreated = true;
+                	     $http.put(UriTemplate.create(Session.link.updateUserClientSecretQuestionFlag).stringify({secretQuestionsCreated: secretQuestionsCreated}))
                 				.then(function(response){
                 					deferred.resolve(response.data);
                 				});
