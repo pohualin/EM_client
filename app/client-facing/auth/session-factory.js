@@ -13,6 +13,7 @@ angular.module('emmiManager')
             this.userRoles = user.permission;
             this.link = user.link;
             this.clientResource = user.clientResource;
+            this.impersonated = user.impersonated;
             if (user.passwordExpirationTime) {
                 this.passwordExpirationTime = user.passwordExpirationTime + 'Z';
             }
@@ -40,6 +41,7 @@ angular.module('emmiManager')
             this.clientResource = null;
             this.passwordExpirationTime = null;
             this.teams = null;
+            this.impersonated = null;
         };
         return this;
     }])
