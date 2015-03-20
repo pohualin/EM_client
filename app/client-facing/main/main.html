@@ -8,7 +8,8 @@
               data-translate-value-username="{{ account.firstName + ' ' + account.lastName}}"
               data-translate-value-today="{{ today | date:'fullDate' }}"></span> <span data-ng-hide="account">The date is {{ today | date:'fullDate' }}.</span>
         </p>
-        <div>
+
+        <div data-ng-hide="account.impersonated">
             User
             <ul>
                 <li data-ng-switch-when="true" data-ng-show="isAuthorized(userRoles.admin)">
@@ -31,6 +32,18 @@
                 </li>
                 <li data-ng-switch-when="true">
                     <a data-ng-href="#/logout" data-translate="global.menu.logout">Log Out</a>
+                </li>
+            </ul>
+        </div>
+
+        <div data-ng-show="account.impersonated">
+            Impersonated Administrator
+            <ul>
+                <li data-ng-switch-when="true" data-ng-show="isAuthorized(userRoles.admin)">
+                    <a data-ng-href="#/docs">Documentation</a>
+                </li>
+                <li data-ng-show="account.link.adminApp">
+                    <a data-ng-href="{{account.link.adminApp}}">Back to Administration Application</a>
                 </li>
             </ul>
         </div>
