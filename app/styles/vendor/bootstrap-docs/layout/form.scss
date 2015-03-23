@@ -40,23 +40,31 @@ category: 1. Layout - Form
 
 ```html_example
 <div class="checkbox">
-  <label>
-    <input type="checkbox" value="">
-    Option one is this and that&mdash;be sure to include why it's great
+    <input type="checkbox" id="optionsCheckbox1" value="">
+    <label for="optionsCheckbox1">Option one is this and that - be sure to include why it's great</label>
   </label>
 </div>
-
+<div class="checkbox">
+    <input type="checkbox" id="optionsCheckbox2" value="" disabled>
+    <label for="optionsCheckbox2">Option two is disabled</label>
+  </label>
+</div>
+<div class="checkbox">
+    <input type="checkbox" id="optionsCheckbox3" value="" disabled checked>
+    <label for="optionsCheckbox3">Option three is checked, but disabled</label>
+  </label>
+</div>
 <div class="radio">
-  <label>
     <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-    Option one is this and that&mdash;be sure to include why it's great
-  </label>
+    <label for="optionsRadios1">Option one is this and that - be sure to include why it's great</label>
 </div>
 <div class="radio">
-  <label>
     <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-    Option two can be something else and selecting it will deselect option one
-  </label>
+    <label for="optionsRadios2">Option two can be something else and selecting it will deselect option one</label>
+</div>
+<div class="radio">
+    <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" disabled>
+    <label for="optionsRadios3">Option three is disabled</label>
 </div>
 ```
 */
@@ -70,15 +78,18 @@ category: 1. Layout - Form
 ---
 
 ```html_example
-<label class="checkbox-inline">
-  <input type="checkbox" id="inlineCheckbox1" value="option1"> 1
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="inlineCheckbox2" value="option2"> 2
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="inlineCheckbox3" value="option3"> 3
-</label>
+<div class="checkbox-inline">
+  <input type="checkbox" id="inlineCheckbox1" value="option1">
+  <label for="inlineCheckbox1">One</label>
+</div>
+<div class="checkbox-inline">
+  <input type="checkbox" id="inlineCheckbox2" value="option2">
+  <label for="inlineCheckbox2">Two</label>
+</div>
+<div class="checkbox-inline">
+  <input type="checkbox" id="inlineCheckbox3" value="option3">
+  <label for="inlineCheckbox3">Three</label>
+</div>
 ```
 */
 
@@ -162,9 +173,8 @@ category: 1. Layout - Form
     <p class="help-block">Example block-level help text here.</p>
   </div>
   <div class="checkbox">
-    <label>
-      <input type="checkbox"> Check me out
-    </label>
+    <input type="checkbox" id="exampleInputCheckbox">
+    <label for="exampleInputCheckbox">Check me out</label>
   </div>
   <button type="submit" class="btn btn-default">Submit</button>
 </form>
@@ -191,9 +201,8 @@ category: 1. Layout - Form
     <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password">
   </div>
   <div class="checkbox">
-    <label>
-      <input type="checkbox"> Remember me
-    </label>
+    <input type="checkbox" id="exampleInputCheckbox2">
+    <label for="exampleInputCheckbox2">Remember me</label>
   </div>
   <button type="submit" class="btn btn-default">Sign in</button>
 </form>
@@ -226,9 +235,8 @@ category: 1. Layout - Form
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
       <div class="checkbox">
-        <label>
-          <input type="checkbox"> Remember me
-        </label>
+        <input type="checkbox" id="inputCheckbox3">
+        <label for="inputCheckbox3">Remember me</label>
       </div>
     </div>
   </div>

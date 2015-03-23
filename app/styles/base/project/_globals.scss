@@ -126,7 +126,7 @@
 
     /* _____ BUTTONS _____ */
     .btn {
-        @include button-size(13px, 26px, $font-size-base, $line-height-base, $border-radius-small);
+        @include button-size($padding-base-vertical, $padding-base-vertical*2, $font-size-base, $line-height-base, $border-radius-base);
         text-transform: uppercase;
         box-shadow: 2px 2px 0px 0px rgba(110,124,136,0.25);
     }
@@ -220,14 +220,150 @@
 
     .btn-lg {
         // line-height: ensure even-numbered height of button next to large input
-        @include button-size(19px, 38px, $font-size-base, $line-height-large, $border-radius-small);
+        @include button-size($padding-large-vertical, $padding-large-vertical*2, $font-size-base, $line-height-large, $border-radius-base);
     }
     .btn-sm {
         // line-height: ensure proper height of button next to small input
-        @include button-size($padding-small-vertical, $padding-small-horizontal, $font-size-small, $line-height-small, $border-radius-small);
+        @include button-size($padding-small-vertical, $padding-small-horizontal, $font-size-small, $line-height-small, $border-radius-base);
     }
     .btn-xs {
-        @include button-size($padding-xs-vertical, $padding-xs-horizontal, $font-size-small, $line-height-small, $border-radius-small);
+        @include button-size($padding-xs-vertical, $padding-xs-horizontal, $font-size-small, $line-height-small, $border-radius-base);
+    }
+
+    /* _____ FORMS _____ */
+    label {
+        font-size: $font-size-small;
+        text-transform: uppercase;
+    }
+    .radio,
+    .radio-inline,
+    .checkbox,
+    .checkbox-inline {
+        label {
+            font-size: $font-size-base;
+            font-weight: normal;
+            text-transform: none;
+             // For custom checkbox radio alignment...
+            padding-left: 0;
+            line-height: 25px; // height of custom control
+        }
+    }
+    .form-group {
+        margin-bottom: 20px;
+    }
+    .form-control:focus {
+        box-shadow: none !important;
+    }
+    .has-success .form-control {
+        color: $state-success-text;
+    }
+    .has-warning .form-control {
+        color: $state-warning-text;
+    }
+    .has-error .form-control {
+        color: $state-danger-text;
+    }
+    // Placeholder text
+    .form-control::-moz-placeholder {
+        font-weight: 300;
+        font-style: italic;
+    }
+    .form-control:-ms-input-placeholder {
+        font-weight: 300;
+        font-style: italic;
+    }
+    .form-control::-webkit-input-placeholder {
+        font-weight: 300;
+        font-style: italic;
+    }
+    // Custom checkbox and radio buttons
+    .radio input[type="radio"],
+    .radio-inline input[type="radio"],
+    .checkbox input[type="checkbox"],
+    .checkbox-inline input[type="checkbox"] {
+        margin-left: 0;
+    }
+    /*
+    Position and hide the real checkboxes and radio buttons.
+    The inputs are made transparent instead of completely hidden to preserve
+    clickability in browsers that don't have clickable labels, like Safari for
+    iOS 5 and older.
+    */
+    input[type="checkbox"],
+    input[type="radio"] {
+        position: absolute;
+        /* Match the image dimensions */
+        width: 25px;
+        height: 25px;
+        /* Reset anything that could peek out or interfere with dimensions */
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        outline: 0;
+        opacity: 0;
+        visibility: hidden;
+        cursor: pointer;
+    }
+    /*
+    Insert a pseudo element inside each label and give it a background
+    image that will become the custom checkbox or radio button.
+    Using inline-block lets you use vertical-align to adjust it vertically
+    as needed.
+    */
+    input[type="checkbox"] + label:before,
+    input[type="radio"] + label:before {
+        cursor: pointer;
+        display: inline-block;
+        width: 25px;
+        height: 25px;
+        margin-right: 10px;
+        //background: url('../images/radio-checkbox.png') no-repeat;
+        background: #FAFBFB;
+        border: 1px solid #C2C2C2;
+        content: " ";
+        vertical-align: top;
+        border-radius: 3px;
+        transition: background-color 0.3s ease;
+    }
+    input[type="radio"] + label:before {
+        border-radius: 25px;
+    }
+    input[type="radio"]:checked + label:before {
+        background-color: #6CC5DC;
+        border-color: #6CC5DC;
+        box-shadow: inset 0px 0px 0px 3px rgba(255,255,255,1);
+    }
+    input[type="radio"]:focus + label:before {
+        border-color: #9EA9B5;
+    }
+    input[type="radio"]:checked:focus + label:before {
+        border-color: #21A4C7;
+    }
+    input[type="radio"]:disabled + label:before {
+        background-color: $input-bg-disabled;
+        border-color: #CFD2D5;
+        cursor: $cursor-disabled;
+    }
+    input[type="checkbox"]:checked + label:before {
+        font-family: 'ui-font-solid';
+        font-size: 24px;
+        line-height: .9;
+        content: '\E435';
+        color: #fff;
+        background-color: #6CC5DC;
+        border-color: #6CC5DC;
+    }
+    input[type="checkbox"]:focus + label:before {
+        border-color: #9EA9B5;
+    }
+    input[type="checkbox"]:checked:focus + label:before {
+        border-color: #21A4C7;
+    }
+    input[type="checkbox"]:disabled + label:before {
+        background-color: $input-bg-disabled;
+        border-color: #CFD2D5;
+        cursor: $cursor-disabled;
     }
 
     /* _____ LAYOUT _____ */
