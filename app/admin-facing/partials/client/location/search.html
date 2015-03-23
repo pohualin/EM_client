@@ -88,7 +88,7 @@
                                     <td data-ng-show="clientLocation.link.self">
                                         <input type="checkbox" disabled="disabled" checked>
                                     </td>
-                                    <td>{{clientLocation.location.entity.name}}</td>
+                                    <td>{{clientLocation.location.entity.name}} <em>{{clientLocation.location.entity.active ? '' : "(inactive)"}}</em></td>
                                     <td>
                                         {{clientLocation.location.entity.belongsTo.name}}
                                     </td>
