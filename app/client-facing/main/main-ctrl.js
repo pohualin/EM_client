@@ -3,7 +3,6 @@
 angular.module('emmiManager')
     .controller('MainCtrl', ['$scope', '$translate', '$alert', 'tmhDynamicLocale', 'account', 'MainService', '$rootScope',
         function ($scope, $translate, $alert, tmhDynamicLocale, account, MainService, $rootScope) {
-
             // initial setup
             $scope.account = account;
             $scope.today = new Date();
