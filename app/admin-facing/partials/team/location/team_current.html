@@ -12,7 +12,7 @@
 
         <tr data-ng-class="{highlight: location.highlight}"  data-ng-repeat="location in locations" >
             <td>
-                {{location.entity.location.name}}
+                {{location.entity.location.name}} <em>{{location.entity.location.active ? '' : "(inactive)"}}</em>
                 <span data-ng-show="location.entity.location.belongsTo && location.entity.location.belongsTo.id !== team.entity.id"> <em>({{location.entity.location.belongsTo.name}})</em></span>
                 <span data-ng-show="!location.entity.location.belongsTo"> <em>(<span data-translate="client_edit_page.locations.no_client_owner"></span>)</em></span>
             </td>
