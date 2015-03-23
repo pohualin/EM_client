@@ -48,7 +48,7 @@ angular.module('emmiManager')
                     convertPageContentLinks(response.data.content);
                     return response.data;
                 });
-            },            
+            },
             fetchPageLink: function (href) {
                 return $http.get(href)
                     .then(function (response) {
@@ -63,6 +63,7 @@ angular.module('emmiManager')
                     phone: null,
                     city: null,
                     state: null,
+                    active: true,
                     belongsToMutable: true,
                     belongsToCheckbox: true,
                     belongsTo: null,
