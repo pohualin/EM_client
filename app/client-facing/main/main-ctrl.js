@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('emmiManager')
-    .controller('MainCtrl', ['$scope', '$translate', '$alert', 'tmhDynamicLocale', 'account', 'MainService', '$rootScope',
-        function ($scope, $translate, $alert, tmhDynamicLocale, account, MainService, $rootScope) {
+    .controller('MainCtrl', ['$scope', '$translate', '$alert', 'tmhDynamicLocale', 'account', 'MainService', 'Session', '$rootScope',
+        function ($scope, $translate, $alert, tmhDynamicLocale, account, MainService, Session, $rootScope) {
+
             // initial setup
             $scope.account = account;
             $scope.today = new Date();
