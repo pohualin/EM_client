@@ -10,10 +10,11 @@ angular.module('emmiManager')
             this.lastName = user.lastName;
             this.email = user.email;
             this.emailValidated = user.emailValidated;
+            this.secretQuestionCreated = user.secretQuestionCreated;
             this.userRoles = user.permission;
             this.link = user.link;
-            this.secretQuestionCreated = user.secretQuestionCreated;
             this.clientResource = user.clientResource;
+            this.impersonated = user.impersonated;
             if (user.passwordExpirationTime) {
                 this.passwordExpirationTime = user.passwordExpirationTime + 'Z';
             }
@@ -36,12 +37,13 @@ angular.module('emmiManager')
             this.lastName = null;
             this.email = null;
             this.emailValidated = null;
-            this.secretQuestionCreated = false;
+            this.emailValidated = false;
             this.userRoles = null;
             this.link = null;
             this.clientResource = null;
             this.passwordExpirationTime = null;
             this.teams = null;
+            this.impersonated = null;
         };
         return this;
     }])

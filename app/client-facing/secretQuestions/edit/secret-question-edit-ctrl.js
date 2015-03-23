@@ -13,7 +13,7 @@ angular.module('emmiManager')
     	
     	/**
     	 * When the save button is clicked. Sends all updates
-    	 * to the back, then rebinds the form objects with dthe
+    	 * to the back, then re-binds the form objects with the
     	 * results
     	 */
         $scope.saveOrUpdateSecretQuestion = function(valid) {

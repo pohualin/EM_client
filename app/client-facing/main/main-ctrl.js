@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('emmiManager')
-    .controller('MainCtrl', ['$scope', '$translate', '$alert', 'tmhDynamicLocale', 'account', 'MainService', 'Session',
-        function ($scope, $translate, $alert, tmhDynamicLocale, account, MainService, Session) {
+    .controller('MainCtrl', ['$scope', '$translate', '$alert', 'tmhDynamicLocale', 'account', 'MainService', '$rootScope',
+        function ($scope, $translate, $alert, tmhDynamicLocale, account, MainService, $rootScope) {
 
             // initial setup
             $scope.account = account;
@@ -16,23 +16,27 @@ angular.module('emmiManager')
             if ($scope.authenticated) {
                 // user is logged in
                 $scope.page.setTitle(account.clientResource.entity.name + ' Home');
-                
+
                 // determine if secret questions have been answered
                 if(Session.secretQuestionCreated){
                 	$scope.isSecretQuestion = true;
            		}
-               
+
                 // see if the password is going to expire soon
                 MainService.checkPasswordExpiration(account).then(function (response) {
                     if (response.showReminder) {
-                        $alert({
-                            content: 'Your password will expire in ' + response.passwordExpiresInDays + ' days.',
-                            template: 'client-facing/main/password-reminder-alert.tpl.html',
-                            type: 'warning',
-                            placement: 'top',
-                            show: true,
-                            dismissable: true
-                        });
+                        if (!$scope.passwordAlert) {
+                            $rootScope.passwordAlert = $alert({
+                                content: 'Your password will expire in ' + response.passwordExpiresInDays + ' days.',
+                                template: 'client-facing/main/password-reminder-alert.tpl.html',
+                                type: 'warning',
+                                placement: 'top',
+                                show: true,
+                                dismissable: true
+                            });
+                        } else {
+                            $scope.passwordAlert.show();
+                        }
                     }
                 });
 
