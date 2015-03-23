@@ -32,9 +32,9 @@ $body-bg:               #F0F1F3 !default;
 $text-color:            $gray !default;
 
 //** Global textual link color.
-$link-color:            $brand-primary !default;
+$link-color:            #6CC5DC !default;
 //** Link hover color set via `darken()` function.
-$link-hover-color:      darken($link-color, 15%) !default;
+$link-hover-color:      #21A4C7 !default;
 //** Link hover decoration.
 $link-hover-decoration: underline !default;
 
@@ -149,29 +149,29 @@ $table-border-color:            #e7e7e7 !default;
 
 $btn-font-weight:                normal !default;
 
-$btn-default-color:              #333 !default;
+$btn-default-color:              #6CC5DC !default;
 $btn-default-bg:                 #fff !default;
-$btn-default-border:             #ccc !default;
+$btn-default-border:             #6CC5DC !default;
 
 $btn-primary-color:              #fff !default;
 $btn-primary-bg:                 $brand-primary !default;
-$btn-primary-border:             darken($btn-primary-bg, 5%) !default;
+$btn-primary-border:             $brand-primary !default;
 
 $btn-success-color:              #fff !default;
-$btn-success-bg:                 $brand-success !default;
-$btn-success-border:             darken($btn-success-bg, 5%) !default;
+$btn-success-bg:                 #9DCC29 !default;
+$btn-success-border:             #9DCC29 !default;
 
 $btn-info-color:                 #fff !default;
-$btn-info-bg:                    $brand-info !default;
-$btn-info-border:                darken($btn-info-bg, 5%) !default;
+$btn-info-bg:                    #6CC5DC !default;
+$btn-info-border:                #6CC5DC !default;
 
 $btn-warning-color:              #fff !default;
 $btn-warning-bg:                 $brand-warning !default;
-$btn-warning-border:             darken($btn-warning-bg, 5%) !default;
+$btn-warning-border:             $brand-warning !default;
 
 $btn-danger-color:               #fff !default;
-$btn-danger-bg:                  $brand-danger !default;
-$btn-danger-border:              darken($btn-danger-bg, 5%) !default;
+$btn-danger-bg:                  #FF7E66 !default;
+$btn-danger-border:              #FF7E66 !default;
 
 $btn-link-disabled-color:        $gray-light !default;
 

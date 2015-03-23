@@ -28,6 +28,8 @@
         //@include radial-gradient($color-main-light, $color-main);
     }
 
+    /* _____ HEADINGS _____ */
+
     h1, .h1 {
     }
 
@@ -48,6 +50,8 @@
     a,
     a:visited {
     }
+
+    /* _____ TABLES _____ */
 
     .table {
         width: 100%;
@@ -118,6 +122,112 @@
         tr:last-child td:last-child {
             border-radius: 0 0 $border-radius-base 0;
         }
+    }
+
+    /* _____ BUTTONS _____ */
+    .btn {
+        @include button-size(13px, 26px, $font-size-base, $line-height-base, $border-radius-small);
+        text-transform: uppercase;
+        box-shadow: 2px 2px 0px 0px rgba(110,124,136,0.25);
+    }
+
+    .btn-default,
+    .btn-grey,
+    .btn-link,
+    .btn-cancel {
+        box-shadow: none;
+    }
+
+    .btn-default {
+        &:hover,
+        &:focus,
+        &.focus,
+        &:active,
+        &.active,
+        .open > &.dropdown-toggle {
+            background-color: #e9f7fa;
+        }
+    }
+
+    .btn-primary {
+        &:hover,
+        &:focus,
+        &.focus,
+        &:active,
+        &.active,
+        .open > &.dropdown-toggle {
+            background-color: #1C94B4;
+            border-color: #1C94B4;
+        }
+    }
+
+    .btn-success {
+        &:hover,
+        &:focus,
+        &.focus,
+        &:active,
+        &.active,
+        .open > &.dropdown-toggle {
+            background-color: #6ABB10;
+            border-color: #6ABB10;
+        }
+    }
+
+    .btn-info {
+        &:hover,
+        &:focus,
+        &.focus,
+        &:active,
+        &.active,
+        .open > &.dropdown-toggle {
+            background-color: #5FB5CB;
+            border-color: #5FB5CB;
+        }
+    }
+
+    .btn-danger {
+        &:hover,
+        &:focus,
+        &.focus,
+        &:active,
+        &.active,
+        .open > &.dropdown-toggle {
+            background-color: #DC6B56;
+            border-color: #DC6B56;
+        }
+    }
+
+    .btn-grey {
+        @include button-variant($gray, #ECEDEF, #ECEDEF);
+    }
+
+    .btn-link {
+        &:hover,
+        &:focus {
+            text-decoration: none;
+        }
+    }
+
+    .btn-cancel {
+        @extend .btn-link;
+        color: #BBC5CF;
+        &:hover,
+        &:focus {
+            color: #9EA9B5;
+            text-decoration: none;
+        }
+    }
+
+    .btn-lg {
+        // line-height: ensure even-numbered height of button next to large input
+        @include button-size(19px, 38px, $font-size-base, $line-height-large, $border-radius-small);
+    }
+    .btn-sm {
+        // line-height: ensure proper height of button next to small input
+        @include button-size($padding-small-vertical, $padding-small-horizontal, $font-size-small, $line-height-small, $border-radius-small);
+    }
+    .btn-xs {
+        @include button-size($padding-xs-vertical, $padding-xs-horizontal, $font-size-small, $line-height-small, $border-radius-small);
     }
 
     /* _____ LAYOUT _____ */
