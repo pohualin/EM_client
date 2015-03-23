@@ -37,7 +37,7 @@ angular.module('emmiManager')
             this.lastName = null;
             this.email = null;
             this.emailValidated = null;
-            this.emailValidated = false;
+            this.secretQuestionCreated = false;
             this.userRoles = null;
             this.link = null;
             this.clientResource = null;
