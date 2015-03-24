@@ -5,7 +5,7 @@ angular.module('emmiManager')
 
         // Routes
         $routeProvider
-            .when('/impersonate/:clientId/:nextRoute', {
+            .when('/impersonate/:clientId/:nextRoute*', {
                 templateUrl: 'client-facing/impersonate/impersonate.html',
                 controller: 'ImpersonationController',
                 access: {
