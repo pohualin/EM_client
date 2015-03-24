@@ -54,6 +54,7 @@ angular.module('emmiManager')
              * functionality if user clicks not now
              */
             $scope.notNow = function () {
+                NewEmailService.notNow(account);
                 $location.path(locationBeforeLogin).replace();
             };
 

@@ -25,6 +25,19 @@ angular.module('emmiManager')
                         });
                     return deferred.promise;
 
+                },
+
+                /**
+                 * dont ask user for information again until expiration date
+                 *
+                 * @param userClient current userClient
+                 * @returns the response
+                 *
+                 */
+                notNow: function(userClient){
+                    $http.put(UriTemplate.create(userClient.link.notNow).stringify(),userClient).then(function (response) {
+                        return response;
+                    });
                 }
             };
         }
