@@ -7,8 +7,11 @@ angular.module('emmiManager')
  */
     .controller('ClientAndTeamCtrl', function ($scope, $rootScope, $route, $routeParams, $controller, clientResource, ViewTeam) {
 
+        $scope.currentTeam = null;
+
         // Function to retrieve and initialize team-related code
         function setupTeam() {
+            $scope.currentTeam = $routeParams.team;
             ViewTeam.selectTeam(clientResource.link.teamByTeamId, $routeParams.team).then(function (teamResource) {
                 if (teamResource) {
                     $scope.showTeam = 'yes';
@@ -36,12 +39,15 @@ angular.module('emmiManager')
         // changes, load the relative controller
         $scope.$on(
             '$routeUpdate',
-            function ($currentRoute, $previousRoute) {
+            function (event, $next) {
                 if ($routeParams.team) {
-                    $scope.showTeam = 'loading';
-                    setupTeam();
-                    // If the team is included in the $routeParams, filter it out so that subsequent routing on the page doesn't get messed up
-                    $scope.currentRouteQueryString = $rootScope.currentRouteQueryString.replace(/(&team=)\w+/, '');
+                    // Make sure the team hasn't changed so it doesn't 'reload'
+                    if ($routeParams.team !== $scope.currentTeam) {
+                        $scope.showTeam = 'loading';
+                        setupTeam();
+                        // If the team is included in the $routeParams, filter it out so that subsequent routing on the page doesn't get messed up
+                        $scope.currentRouteQueryString = $rootScope.currentRouteQueryString.replace(/(&team=)\w+/, '');
+                    }
                 } else {
                     $scope.showTeam = 'no';
                     // Reset page title

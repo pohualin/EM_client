@@ -12,7 +12,7 @@
                 forget it in the future.
 
                 <div class="form-group"
-                     data-ng-class="{ 'has-error' : addEmailForm.email.$error && addEmailFormSubmitted }">
+                     data-ng-class="{ 'has-error' : (editEmailForm.email.$invalid || editEmailForm.email.$error.duplicate) && addEmailFormSubmitted }">
                     <div class="error-circle glyphicon glyphicon-exclamation-sign"
                          data-ng-show="addEmailForm.email.$error.pattern && addEmailFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger"

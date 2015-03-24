@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('emmiManager')
-    .controller('MainCtrl', ['$scope', '$translate', '$alert', 'tmhDynamicLocale', 'account', 'MainService', 'SecretQuestionService',
-        function ($scope, $translate, $alert, tmhDynamicLocale, account, MainService, SecretQuestionService) {
+    .controller('MainCtrl', ['$scope', '$translate', '$alert', 'tmhDynamicLocale', 'account', 'MainService', 'Session', '$rootScope',
+        function ($scope, $translate, $alert, tmhDynamicLocale, account, MainService, Session, $rootScope) {
 
             // initial setup
             $scope.account = account;
@@ -18,23 +18,25 @@ angular.module('emmiManager')
                 $scope.page.setTitle(account.clientResource.entity.name + ' Home');
 
                 // determine if secret questions have been answered
-                SecretQuestionService.getAllUserSecretQuestionAsteriskResponse().then(function (response) {
-                    if (response.data.content.length === 2) {
-                        $scope.isSecretQuestion = true;
-                    }
-                });
+                if(Session.secretQuestionCreated){
+                	$scope.isSecretQuestion = true;
+           		}
 
                 // see if the password is going to expire soon
                 MainService.checkPasswordExpiration(account).then(function (response) {
                     if (response.showReminder) {
-                        $alert({
-                            content: 'Your password will expire in ' + response.passwordExpiresInDays + ' days.',
-                            template: 'client-facing/main/password-reminder-alert.tpl.html',
-                            type: 'warning',
-                            placement: 'top',
-                            show: true,
-                            dismissable: true
-                        });
+                        if (!$scope.passwordAlert) {
+                            $rootScope.passwordAlert = $alert({
+                                content: 'Your password will expire in ' + response.passwordExpiresInDays + ' days.',
+                                template: 'client-facing/main/password-reminder-alert.tpl.html',
+                                type: 'warning',
+                                placement: 'top',
+                                show: true,
+                                dismissable: true
+                            });
+                        } else {
+                            $scope.passwordAlert.show();
+                        }
                     }
                 });
 
