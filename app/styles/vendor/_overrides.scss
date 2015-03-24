@@ -40,3 +40,14 @@
         margin: 0 7px;
     }
 }
+
+.input-group-btn > .btn {
+    //box-shadow: none;
+    box-shadow: 0px 1px 0px 0px $input-border;
+}
+
+.input-group-addon.checkbox,
+.input-group-addon.radio {
+    padding-top: $padding-base-vertical - 3; // adjust based on size of checkbox/radio
+    padding-bottom: $padding-base-vertical - 3; // adjust based on size of checkbox/radio
+}
