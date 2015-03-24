@@ -14,10 +14,9 @@ angular.module('emmiManager')
                         skipInformationCollection =  moment(Session.notNowExpirationTime + 'Z').isBefore();
                     }
 
-                    if(!Session.secretQuestionCreated){
+                    if(!Session.secretQuestionCreated && !skipInformationCollection){
                         $location.path('/createSecretQuestions').replace();
-                    }
-                    if (!Session.email && !skipInformationCollection) {
+                    } else if (!Session.email && !skipInformationCollection) {
                         //if email was not supplied
                         $location.path('/addEmail').replace();
                     } else if (!Session.emailValidated && !skipInformationCollection) {
