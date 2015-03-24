@@ -9,13 +9,13 @@ category: 2. Components - Pagination
 
 ```html_example
 <ul class="pagination">
-  <li><a href="#">&laquo;</a></li>
+  <li class="previous"><a href="#">Previous</a></li>
   <li><a href="#">1</a></li>
   <li><a href="#">2</a></li>
   <li><a href="#">3</a></li>
   <li><a href="#">4</a></li>
   <li><a href="#">5</a></li>
-  <li><a href="#">&raquo;</a></li>
+  <li class="next"><a href="#">Next</a></li>
 </ul>
 ```
 */
@@ -31,13 +31,13 @@ category: 2. Components - Pagination
 
 ```html_example
 <ul class="pagination">
-  <li class="disabled"><a href="#">&laquo;</a></li>
+  <li class="previous disabled"><a href="#">Previous</a></li>
   <li class="active"><a href="#">1</a></li>
   <li><a href="#">2</a></li>
   <li><a href="#">3</a></li>
   <li><a href="#">4</a></li>
   <li><a href="#">5</a></li>
-  <li><a href="#">&raquo;</a></li>
+  <li class="next"><a href="#">Next</a></li>
 </ul>
 ```
 */
@@ -53,37 +53,37 @@ category: 2. Components - Pagination
 
 ```html_example
 <ul class="pagination pagination-lg">
-  <li><a href="#">&laquo;</a></li>
+  <li class="previous"><a href="#">Previous</a></li>
   <li><a href="#">1</a></li>
   <li><a href="#">2</a></li>
   <li><a href="#">3</a></li>
   <li><a href="#">4</a></li>
   <li><a href="#">5</a></li>
-  <li><a href="#">&raquo;</a></li>
+  <li class="next"><a href="#">Next</a></li>
 </ul>
 
 <br>
 
 <ul class="pagination">
-  <li><a href="#">&laquo;</a></li>
+  <li class="previous"><a href="#">Previous</a></li>
   <li><a href="#">1</a></li>
   <li><a href="#">2</a></li>
   <li><a href="#">3</a></li>
   <li><a href="#">4</a></li>
   <li><a href="#">5</a></li>
-  <li><a href="#">&raquo;</a></li>
+  <li class="next"><a href="#">Next</a></li>
 </ul>
 
 <br>
 
 <ul class="pagination pagination-sm">
-  <li><a href="#">&laquo;</a></li>
+  <li class="previous"><a href="#">Previous</a></li>
   <li><a href="#">1</a></li>
   <li><a href="#">2</a></li>
   <li><a href="#">3</a></li>
   <li><a href="#">4</a></li>
   <li><a href="#">5</a></li>
-  <li><a href="#">&raquo;</a></li>
+  <li class="next"><a href="#">Next</a></li>
 </ul>
 ```
 */
