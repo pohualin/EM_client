@@ -30,3 +30,13 @@
         }
     }
 }
+
+.breadcrumb {
+    @include remIt(font-size, 13);
+    font-weight: 300;
+    & > li + li:before {
+        background: url('../images/breadcrumb.png') no-repeat 50% 50%;
+        padding: 0 4px;
+        margin: 0 7px;
+    }
+}
