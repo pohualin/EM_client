@@ -18,7 +18,36 @@ angular.module('emmiManager')
 
     })
 
+/**
+ * Sorting helper functions
+ */
+    .controller('CommonSort', ['$scope', function ($scope) {
+        $scope.createSortProperty = function (property) {
+            var sort = $scope.sortProperty || {};
+            if (sort && sort.property === property) {
+                // same property was clicked
+                if (!sort.ascending) {
+                    // third click removes sort
+                    sort = null;
+                } else {
+                    // switch to descending
+                    sort.ascending = false;
+                }
+            } else {
+                // change sort property
+                sort.property = property;
+                sort.ascending = true;
+            }
+            return sort;
+        };
+    }])
+
+/**
+ * Pagination helper functions
+ */
     .controller('CommonPagination', ['$scope', function($scope){
+
+        $scope.pageSizes = [5, 10, 15, 25];
 
         $scope.isEmpty = function (obj) {
             if (!obj){
@@ -99,6 +128,8 @@ angular.module('emmiManager')
 
         $controller('CommonPagination', {$scope: $scope});
 
+                $controller('CommonSort', {$scope: $scope});
+
         // set the proper value in the search chooser based upon the path
         if ($location.path() === '/clients'){
             $scope.option = 'Clients';
@@ -111,8 +142,6 @@ angular.module('emmiManager')
         } else if ($location.path() === '/users'){
             $scope.option = 'Users';
         }
-
-        $scope.pageSizes = [5, 10, 15, 25];
 
         // when first loading the page
         var searchObject = $location.search();
@@ -174,25 +203,6 @@ angular.module('emmiManager')
 
             $location.search(queryObject).replace();
             $rootScope.currentRouteQueryString = arrays.toQueryString($location.search());
-        };
-
-        $scope.createSortProperty = function (property){
-            var sort = $scope.sortProperty || {};
-            if (sort && sort.property === property) {
-                // same property was clicked
-                if (!sort.ascending) {
-                    // third click removes sort
-                    sort = null;
-                } else {
-                    // switch to descending
-                    sort.ascending = false;
-                }
-            } else {
-                // change sort property
-                sort.property = property;
-                sort.ascending = true;
-            }
-            return sort;
         };
 
     }])
