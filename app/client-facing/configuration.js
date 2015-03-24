@@ -25,7 +25,8 @@ angular.module('emmiManager', [
 
     .constant('USER_ROLES', {
         all: '*',
-        admin: 'PERM_GOD',
+        admin: 'PERM_CLIENT_SUPER_USER',
+        teamScheduler: 'PERM_CLIENT_TEAM_SCHEDULE_PROGRAM',
         user: 'PERM_USER'
     })
 
@@ -46,6 +47,11 @@ angular.module('emmiManager', [
         INACTIVE_TEAMS: 'i',
         UNTAGGED_TEAMS: 'ut'
     })
+
+    .constant('PATTERN', {
+        EMAIL: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$/
+    })
+
     .config(function ($httpProvider, $translateProvider, tmhDynamicLocaleProvider, HateoasInterceptorProvider, $datepickerProvider, API) {
 
         // Initialize angular-translate
@@ -77,12 +83,13 @@ angular.module('emmiManager', [
         });
     })
 
-    .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, arrays, $document) {
+    .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, PATTERN, arrays, $document, ConfigurationService, $modal, $timeout) {
 
-        var modals = [];
+        var modals = [], alerts = [];
 
         $rootScope.authenticated = false;
 
+        // auto track $modal windows
         $rootScope.$on('modal.show', function (e, $modal) {
             // if modal is not already in list
             if (modals.indexOf($modal) === -1) {
@@ -90,10 +97,50 @@ angular.module('emmiManager', [
             }
         });
 
+        // un-track $modal windows on hide
         $rootScope.$on('modal.hide', function (e, $modal) {
             var modalIndex = modals.indexOf($modal);
             modals.splice(modalIndex, 1);
         });
+
+        // auto track $alert windows
+        $rootScope.$on('alert.show', function (e, $alert) {
+            // if alert is not already in list
+            if (alerts.indexOf($alert) === -1) {
+                alerts.push($alert);
+            }
+        });
+
+        // un-track $alert windows on hide
+        $rootScope.$on('alert.hide', function (e, $alert) {
+            var idx = modals.indexOf($alert);
+            alerts.splice(idx, 1);
+        });
+
+
+        /**
+         * Hide all $modal windows
+         */
+        $rootScope.killAllModals = function () {
+            if (modals.length) {
+                angular.forEach(modals, function ($modal) {
+                    $modal.$promise.then($modal.hide);
+                });
+                modals = [];
+            }
+        };
+
+        /**
+         * Hide all $alert windows
+         */
+        $rootScope.killAllAlerts = function () {
+            if (alerts.length) {
+                angular.forEach(alerts, function ($alert) {
+                    $alert.$promise.then($alert.hide);
+                });
+                alerts = [];
+            }
+        };
 
         $rootScope.page = {
             setTitle: function (title) {
@@ -110,24 +157,42 @@ angular.module('emmiManager', [
             }
         };
 
+        $rootScope.emailPattern = PATTERN.EMAIL;
+
+        /**
+         * Special routes that are system level.
+         *
+         * @returns {boolean}
+         */
+        $rootScope.isSystemRoute = function () {
+            var path = $location.path();
+            return path === '/logout' ||
+                path === '/login' ||
+                path === '/error' ||
+                path === '/403' ||
+                path === '/500' ||
+                path === '/unauthorized';
+        };
+
         $rootScope.$on('$routeChangeStart', function (event, next) {
-            $rootScope.userRoles = USER_ROLES;
             $rootScope.isAuthorized = AuthSharedService.isAuthorized;
-            AuthSharedService.authorizedRoute((next.access) ? next.access.authorizedRoles : [USER_ROLES.all]);
+            $rootScope.userRoles = USER_ROLES;
+            if (!$rootScope.isSystemRoute()) {
+                // authorize all routes other than some known system routes
+                AuthSharedService.valid((next.access) ? next.access.authorizedRoles : [USER_ROLES.all]);
+            }
         });
 
         $rootScope.$on('$routeChangeError', function () {
-            $location.path('/').replace();
+            $location.path('/error').replace();
         });
 
         $rootScope.$on('$routeChangeSuccess', function (e, current) {
             $rootScope.currentRouteQueryString = arrays.toQueryString(current.params);
             // hide all modals
-            if (modals.length) {
-                angular.forEach(modals, function ($modal) {
-                    $modal.$promise.then($modal.hide);
-                });
-                modals = [];
+            $rootScope.killAllModals();
+            if ($rootScope.isSystemRoute()) {
+                $rootScope.killAllAlerts();
             }
             var pageTitle = current && current.$$route && current.$$route.title;
             $rootScope.page.setTitle(pageTitle);
@@ -136,20 +201,17 @@ angular.module('emmiManager', [
         // Call when the the client is confirmed
         $rootScope.$on('event:auth-loginConfirmed', function () {
             $rootScope.authenticated = true;
-            if ($location.path() === '/login') {
-                var priorRequestPath = $rootScope.locationBeforeLogin;
-                if (priorRequestPath) {
-                    $location.path(priorRequestPath.path()).replace();
-                } else {
-                    $location.path('/').replace();
-                }
-            }
+            ConfigurationService.routeUser();
         });
 
         $rootScope.$on('event:auth-credentialsExpired', function (event, rejection) {
             $rootScope.expiredCredentials = rejection.credentials;
             $rootScope.expiredClient = rejection.client;
             $location.path('/credentials/expired').replace();
+        });
+
+        $rootScope.$on('event:auth-totallyNotAuthorized', function () {
+            $location.path('/unauthorized').replace();
         });
 
         // Call when the 401 response is returned by the server
@@ -161,7 +223,23 @@ angular.module('emmiManager', [
 
         // Call when the 403 response is returned by the server
         $rootScope.$on('event:auth-notAuthorized', function () {
-            $location.path('/403').replace();
+            $timeout(function () {
+                $location.path('/403').replace();
+            });
+        });
+
+        // Call when 409 response is returned by the server
+        $rootScope.$on('event:optimistic-lock-failure', function (event, rejection) {
+            console.log('409: ' + rejection.data.detail);
+            $modal({
+                title: 'Object Already Modified',
+                content: 'You have attempted to save an object that has already been modified by another user.' +
+                ' Please refresh the page to load the latest changes before attempting to save again.',
+                animation: 'none',
+                backdropAnimation: 'emmi-fade',
+                backdrop: 'static',
+                show: true
+            });
         });
 
         // Call when the 500 response is returned by the server

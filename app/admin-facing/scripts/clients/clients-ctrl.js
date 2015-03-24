@@ -31,7 +31,7 @@ angular.module('emmiManager')
             };
         });
 
-        $scope.findAccount = debounce(function (term) {
+        $scope.findClientSfAccount = debounce(function (term) {
             Client.findSalesForceAccount($scope.findSalesForceAccountLink, term).then(function (searchResults) {
                 if (searchResults.entity) {
                     if ($scope.clientToEdit) {
@@ -53,7 +53,7 @@ angular.module('emmiManager')
             });
         }, 500);
 
-        $scope.chooseAccount = function (account) {
+        $scope.chooseClientSfAccount = function (account) {
             if (account && !account.clientName) {
                 $scope.clientToEdit.salesForceAccount = account;
                 $scope.updatingSalesForceAccount = false;
@@ -67,14 +67,14 @@ angular.module('emmiManager')
             return !$scope.sfResult.complete && $scope.sfResult.account.length > 0;
         };
 
-        $scope.changeSfAccount = function () {
+        $scope.changeClientSfAccount = function () {
             $scope.sfSearch.searchQuery = $scope.clientToEdit.salesForceAccount.name;
             $scope.sfResult.account = [];
             $scope.updatingSalesForceAccount = true;
             focus('SfSearch');
         };
 
-        $scope.revertSfAccount = function () {
+        $scope.revertClientSfAccount = function () {
             $scope.updatingSalesForceAccount = false;
         };
 
@@ -94,6 +94,8 @@ angular.module('emmiManager')
                     show: true,
                     dismissable: false
                 });
+            } else {
+                $scope.errorAlert.show();
             }
         };
     })

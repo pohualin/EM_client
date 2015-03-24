@@ -1,14 +1,22 @@
 <div class="container" data-ng-cloak>
-    <div class="row">
-        <h1>Emmi Manager 2.0 - Client Facing</h1>
+    <div class="row" data-ng-switch="authenticated">
+        <ol class="breadcrumb h3">
+            <li class="active">Emmi Manager <span data-ng-switch-when="true">- {{account.clientResource.entity.name}}</span></li>
+        </ol>
+        <p>
         <span data-translate="main.welcome" data-ng-show="account"
               data-translate-value-username="{{ account.firstName + ' ' + account.lastName}}"
               data-translate-value-today="{{ today | date:'fullDate' }}"></span> <span data-ng-hide="account">The date is {{ today | date:'fullDate' }}.</span>
+        </p>
 
-        <div>
-            <ul data-ng-switch="authenticated">
-                <li data-ng-show="isAuthorized(userRoles.admin)">
+        <div data-ng-hide="account.impersonated">
+            User
+            <ul>
+                <li data-ng-switch-when="true" data-ng-show="isAuthorized(userRoles.admin)">
                     <a data-ng-href="#/docs">Documentation</a>
+                </li>
+                <li data-ng-switch-when="true">
+                	<a data-ng-href="#/profile">My Profile</a>
                 </li>
                 <li data-ng-switch-when="false">
                     <a data-ng-href="#/credentials/forgot">Forgot Password</a>
@@ -16,9 +24,34 @@
                 <li data-ng-switch-when="false">
                     <a data-ng-href="#/login" data-translate="global.menu.login">Login</a>
                 </li>
+                <li data-ng-switch-when="true" data-ng-hide="isSecretQuestion">
+                    <a data-ng-href="#/secretQuestions">My Security Questions</a>
+                </li>
+                <li data-ng-switch-when="true" data-ng-show="isSecretQuestion">
+                    <a data-ng-href="#/viewSecretQuestions">My Security Questions</a>
+                </li>
                 <li data-ng-switch-when="true">
                     <a data-ng-href="#/logout" data-translate="global.menu.logout">Log Out</a>
                 </li>
+            </ul>
+        </div>
+
+        <div data-ng-show="account.impersonated">
+            Impersonated Administrator
+            <ul>
+                <li data-ng-switch-when="true" data-ng-show="isAuthorized(userRoles.admin)">
+                    <a data-ng-href="#/docs">Documentation</a>
+                </li>
+                <li data-ng-show="account.link.adminApp">
+                    <a data-ng-href="{{account.link.adminApp}}">Back to Administration Application</a>
+                </li>
+            </ul>
+        </div>
+
+        <div data-ng-show="teamsAllowedToSchedule">
+            Schedule Emmi Programs
+            <ul>
+                <li data-ng-repeat="team in teamsAllowedToSchedule"><a href="#/teams/{{team.entity.id}}/schedule">{{team.entity.name}}</a></li>
             </ul>
         </div>
     </div>

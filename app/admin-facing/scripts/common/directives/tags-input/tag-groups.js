@@ -17,7 +17,7 @@ angular.module('emmiManager')
             replace: false,
             transclude: false,
             templateUrl: 'admin-facing/partials/common/directives/tags-input/tag-groups.tpl.html',
-            controller: ['$scope','$attrs','$element', function ($scope, $attrs, $element) {
+            controller: ['$scope', function ($scope) {
                 $scope.createMode = false;
                 $scope.selectedTagGroupIndex = -1;
                 $scope.groups = $scope.groups || [];
@@ -49,6 +49,7 @@ angular.module('emmiManager')
                                 tags: []
                             };
                             $scope.groups.push(tagGroup);
+                            $scope.onChange('add group');
                             $scope.$broadcast('tag:add', tagGroup);
                         }
                         return true;
@@ -69,11 +70,15 @@ angular.module('emmiManager')
                     $scope.groups.splice(groupIndex, 1);
                     $scope.selectedTagGroupIndex = -1;
                     $scope.taggingMode = false;
+                    angular.forEach($scope.groups, function (group) {
+                        // removing any group means none are 'new' anymore
+                        group.brandNew = false;
+                    });
                     $scope.onChange('remove group');
                 };
 
                 $scope.changeTagGroupTitle = function (groupIndex) {
-                    $scope.hasEmpties();
+                    $scope.formField.$setValidity('empty', !$scope.hasEmpties());
 
                     // Title already gets changed from data binding, so really just need to hide the edit form
                     $scope.groups[groupIndex].editMode = false;
@@ -189,13 +194,13 @@ angular.module('emmiManager')
                 };
 
             }],
-            link: function(scope, element, attrs, ngModelCtrl) {
+            link: function (scope, element) {
 
                 var addBtn = element.find('.btn-add-group'),
                     origAddBtnText = addBtn.text();
 
                 // watch for removed tags and re-check for uniqueness
-                scope.$watchCollection('groups', function (newVal, oldVal) {
+                scope.$watchCollection('groups', function (newVal) {
                     // tag added or removed
                     scope.formField.$setValidity('empty', !scope.hasEmpties());
                     if (newVal && newVal.length === 0) {
@@ -226,7 +231,7 @@ angular.module('emmiManager')
                 element.on('hide.bs.dropdown', function () {
                     scope.$apply(function () {
                         scope.taggingMode = false;
-                        scope.hasEmpties();
+                        scope.formField.$setValidity('empty', !scope.hasEmpties());
                     });
                 });
 

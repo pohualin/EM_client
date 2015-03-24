@@ -4,6 +4,8 @@ angular.module('emmiManager')
     .service('UsersService', ['$filter', '$q', '$http', 'UriTemplate', 'CommonService', 'Session',
         function ($filter, $q, $http, UriTemplate, CommonService, Session) {
             var selectedUser;
+            var pattern = /[a-z0-9!@#$%^&*()<>?]$/;
+
             return {
                 /**
                  * Create a new User placeholder
@@ -15,7 +17,8 @@ angular.module('emmiManager')
                         email: null,
                         login: null,
                         useEmail: true,
-                        active:true,
+                        webApiUser: false,
+                        active: true,
                     };
                     return newUser;
                 },
@@ -27,7 +30,8 @@ angular.module('emmiManager')
                         email: user.email,
                         login: user.email,
                         id: user.id,
-                        active:user.active,
+                        active: user.active,
+                        webApiUser: user.webApiUser,
                         version: user.version
                     };
 
@@ -58,7 +62,22 @@ angular.module('emmiManager')
                 updateUser: function (userToBeEdit) {
                     return $http.put(UriTemplate.create(Session.link.users).stringify(), this.userAssembler(userToBeEdit))
                         .success(function (response) {
-                        	selectedUser = response;
+                            selectedUser = response;
+                            selectedUser.currentlyActive = selectedUser.active;
+                            return response;
+                        });
+                },
+
+                /**
+                 * Saves a password on the user
+                 * @param userWithPassword
+                 */
+                savePassword: function(userWithPassword){
+                    return $http.put(UriTemplate.create(userWithPassword.link.password).stringify(), {
+                        password: userWithPassword.password
+                    })
+                        .success(function (response) {
+                            selectedUser = response;
                             selectedUser.currentlyActive = selectedUser.active;
                             return response;
                         });
@@ -70,7 +89,7 @@ angular.module('emmiManager')
                 toggleActivation: function (user) {
                     var external = this;
                     user.active = !user.active;
-                    return this.setUser(user.id).then(function(response){
+                    return this.setUser(user.id).then(function (response) {
                         user.role = {};
                         user.role.entity = response.roles[0];
                         user.version = response.version;
@@ -122,7 +141,7 @@ angular.module('emmiManager')
                     }
                 },
 
-               /**
+                /**
                  * Call server to get a list of User admin roles
                  */
                 listUserAdminRoles: function () {
@@ -141,15 +160,28 @@ angular.module('emmiManager')
                 /**
                  * Get the User role to default on the New user screen
                  */
-                getDefaultRole: function(roles){
-                	var roleToDefault = {};
-                	angular.forEach(roles, function (role) {
-                		if(role.entity.defaultRole){
-                			roleToDefault = role.entity;
-                		}
+                getDefaultRole: function (roles) {
+                    var roleToDefault = {};
+                    angular.forEach(roles, function (role) {
+                        if (role.entity.defaultRole) {
+                            roleToDefault = role.entity;
+                        }
                     });
-                	return roleToDefault;
+                    return roleToDefault;
+                },
+
+                generatePassword: function () {
+                    var char = '', n, length = 25, prefix = '' ;
+                    while (prefix.length < length) {
+                        n = Math.floor(Math.random() * 94) + 33;
+                        char = String.fromCharCode(n);
+                        if (char.match(pattern)) {
+                            prefix = '' + prefix + char;
+                        }
+                    }
+                    return prefix;
                 }
+
             };
         }])
 ;

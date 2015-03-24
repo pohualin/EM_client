@@ -108,5 +108,60 @@ angular.module('emmiManager')
         };
     })
 
+    .service('MainService',['$http', 'UriTemplate', 'moment', '$q',
+     function ($http, UriTemplate, moment, $q) {
+        return {
+            /**
+             * Check to see if the passed account should show a reminder for password
+             * expiration
+             *
+             * @param account to check
+             * @returns {Deferred}
+             */
+            checkPasswordExpiration: function(account){
+                var deferred = $q.defer(),
+                    ret = {
+                        showReminder: false,
+                        passwordExpiresInDays: 0
+                    };
+                if (account && account.passwordExpirationTime && account.clientResource) {
+                    var daysUntilExpiration = moment(account.passwordExpirationTime).diff(moment(), 'days') + 1;
+                    $http.get(UriTemplate.create(account.clientResource.link.passwordPolicy).stringify())
+                        .success(function (response) {
+                            if (daysUntilExpiration <= response.passwordExpirationDaysReminder) {
+                                ret.showReminder = true;
+                                ret.passwordExpiresInDays = daysUntilExpiration;
+                                deferred.resolve(ret);
+                            }
+                        }, function fail() {
+                            deferred.resolve(ret);
+                        });
+                } else {
+                  deferred.resolve(ret);
+                }
+                return deferred.promise;
+            },
 
+            /**
+             * Return an array of Team objects for which this user has the passed permission
+             * @param account
+             * @returns {*}
+             */
+            specificTeamsHavingLink: function(account, linkName){
+                var deferred = $q.defer(),
+                    teams = [];
+                if (account && account.teams){
+                    angular.forEach(account.teams, function (team){
+                        if (team.link[linkName]){
+                            teams.push(team);
+                        }
+                    });
+                    deferred.resolve(teams);
+                } else {
+                    deferred.resolve(teams);
+                }
+                return deferred.promise;
+            }
+        };
+    }])
 ;

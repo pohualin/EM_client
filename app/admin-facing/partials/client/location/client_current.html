@@ -10,7 +10,7 @@
             <th>&nbsp;</th>
         </tr>
         <tr data-ng-repeat="clientLocation in clientLocations">
-            <td class="col-sm-3">{{clientLocation.location.entity.name}}
+            <td class="col-sm-3">{{clientLocation.location.entity.name}} <em>{{clientLocation.location.entity.active ? '' : "(inactive)"}}</em>
                 <span data-ng-show="clientLocation.location.entity.belongsTo && clientLocation.location.entity.belongsTo.id !== client.entity.id"> <em>({{clientLocation.location.entity.belongsTo.name}})</em></span>
                 <span data-ng-show="!clientLocation.location.entity.belongsTo"> <em>(<span data-translate="client_edit_page.locations.no_client_owner"></span>)</em></span>
             </td>

@@ -23,15 +23,17 @@ angular.module('emmiManager')
              */
             $scope.passwordChanged = function () {
                 var passwordChange = $scope.passwordChange;
+                $scope.changePasswordForm.password.$setValidity('policy', true);
                 $scope.changePasswordForm.confirmPassword.$setValidity('same', passwordChange.password === passwordChange.confirmPassword);
             };
 
             /**
              * Completes the reset
              */
-            $scope.save = function (formValid) {
+            $scope.save = function (changePasswordForm) {
                 $scope.changePasswordFormSubmitted = true;
-                if (formValid) {
+                changePasswordForm.password.$setValidity('policy', true);
+                if (changePasswordForm.$valid) {
                     ResetClientUserPasswordService.reset(resetToken, $scope.passwordChange)
                         .then(function () {
                             $alert({
@@ -43,8 +45,12 @@ angular.module('emmiManager')
                                 dismissable: true
                             });
                             $location.path('/').replace();
-                        }, function error() {
-                            $location.path('/credentials/reset/failure').replace();
+                        }, function error(errorResponse) {
+                            if (errorResponse.status === 406) {
+                                changePasswordForm.password.$setValidity('policy', false);
+                            } else {
+                                $location.path('/credentials/reset/failure').replace();
+                            }
                         }
                     );
                 }

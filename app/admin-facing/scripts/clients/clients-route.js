@@ -9,21 +9,19 @@ angular.module('emmiManager')
             }]
         };
 
-        var clientDetailRequiredResources = {
-            'clientResource': ['AuthSharedService','Client', '$route', '$q', function (AuthSharedService, Client, $route, $q){
-                var deferred = $q.defer();
-                AuthSharedService.currentUser().then(function (){
-                    Client.selectClient($route.current.params.clientId).then(function (clientResource){
-                        if (clientResource) {
-                            deferred.resolve(clientResource);
-                        } else {
-                            deferred.reject();
-                        }
-                    });
+        var clientResource = ['AuthSharedService', 'Client', '$route', '$q', function (AuthSharedService, Client, $route, $q) {
+            var deferred = $q.defer();
+            AuthSharedService.currentUser().then(function () {
+                Client.selectClient($route.current.params.clientId).then(function (clientResource) {
+                    if (clientResource) {
+                        deferred.resolve(clientResource);
+                    } else {
+                        deferred.reject();
+                    }
                 });
-                return deferred.promise;
-            }]
-        };
+            });
+            return deferred.promise;
+        }];
 
         // Routes
         $routeProvider
@@ -47,13 +45,15 @@ angular.module('emmiManager')
                 resolve: requiredResources
             })
             .when('/clients/:clientId', {
-                templateUrl: 'admin-facing/partials/client/edit/editor.html',
-                controller: 'ClientDetailCtrl',
+                templateUrl: 'admin-facing/partials/client/client-and-team.html',
+                controller: 'ClientAndTeamCtrl',
                 access: {
                     authorizedRoles: USER_ROLES.all
                 },
                 reloadOnSearch: false,
-                resolve: clientDetailRequiredResources
+                resolve: {
+                    'clientResource': clientResource
+                }
             });
     })
 

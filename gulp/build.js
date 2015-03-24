@@ -11,6 +11,7 @@ gulp.task('styles', function () {
         .pipe($.rubySass({ style: 'expanded' }))
         .pipe($.autoprefixer('last 1 version'))
         .pipe(gulp.dest('.tmp/styles'))
+        .pipe(gulp.dest('app/styles'))
         .pipe($.size({title: 'styles', showFiles:true}));
 });
 
