@@ -36,8 +36,8 @@ angular.module('emmiManager')
                  * See if UserClient is eligible for changing password
                  */
                 eligibleToChange: function (policy, account) {
-                    return moment(account.passwordSavedTime).diff(moment(), 'days') + 2 
-                        > policy.daysBetweenPasswordChange;
+                    return moment().diff(moment(account.passwordSavedTime), 'days') - policy.daysBetweenPasswordChange
+                        > -1;
                 },
                 
                 /**
