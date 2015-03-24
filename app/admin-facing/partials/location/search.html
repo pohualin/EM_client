@@ -82,7 +82,7 @@
 				</tr>
 				<tr
 					data-ng-repeat="location in locations | orderBy:'location.sortIdx'">
-					<td>{{location.entity.name}}</td>
+					<td>{{location.entity.name}} <em>{{location.entity.active ? '' : "(inactive)"}}</em></td>
 					<td>{{location.entity.belongsTo.name}}</td>
 					<td>{{location.entity.phone}}</td>
 					<td>{{location.entity.city}}</td>
