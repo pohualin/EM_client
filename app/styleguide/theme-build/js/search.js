@@ -862,7 +862,7 @@
 
 
       {}];
-      $scope.onSelect = function ($item, $model, $label) {
+      $scope.$on('$typeahead.select', function(event, $item){
         window.location.replace($item.path);
-      };
+      });
     }

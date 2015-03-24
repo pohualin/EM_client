@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>1. Layout - Grid</title>
+    <title>3. JavaScript - Typeahead</title>
 
     <!-- Styleguide CSS -->
     <link rel="stylesheet" href="./theme-build/css/vendors.css">
@@ -157,7 +157,7 @@
             
               
               
-                <li><a class="active" href="1._layout_-_grid.html">Grid</a></li>
+                <li><a href="1._layout_-_grid.html">Grid</a></li>
               
             
           
@@ -447,7 +447,7 @@
             
               
               
-                <li><a href="3._javascript_-_typeahead.html">Typeahead</a></li>
+                <li><a class="active" href="3._javascript_-_typeahead.html">Typeahead</a></li>
               
             
           
@@ -458,7 +458,7 @@
 
     <header class="cortana-header sb-slide">
       
-        <h1>Emmi Manager Style Guide: Grid</h1>
+        <h1>Emmi Manager Style Guide: Typeahead</h1>
       
       <div id="open-left" class="cortana-menu-btn">
         <span></span>
@@ -478,7 +478,7 @@
           <ul data-offset="-30">
             
               
-                <li><a href="#a-grid">Grid System</a></li>
+                <li><a href="#a-typeahead">Typeahead</a></li>
               
             
           </ul>
@@ -489,65 +489,19 @@
 
 
 
-<h1 id="a-grid" class="styleguide">Grid System</h1>
-
-<p>Bootstrap includes a responsive, mobile first fluid grid system that
-appropriately scales up to 12 columns as the device or viewport size increases.
-It includes predefined classes for easy layout options, as well as powerful
-mixins for generating more semantic layouts.</p>
-
-<h2>Introduction</h2>
-
-<p>Grid systems are used for creating page layouts through a series of rows and
-columns that house your content. Here&#39;s how the Bootstrap grid system works:</p>
-
-<ul>
-<li>  Rows must be placed within a <code>.container</code> (fixed-width) or <code>.container-fluid</code> (full-width) for proper alignment and padding.</li>
-<li>  Use rows to create horizontal groups of columns.</li>
-<li>  Content should be placed within columns, and only columns may be immediate children of rows.</li>
-<li>  Predefined grid classes like <code>.row</code> and <code>.col-xs-4</code> are available for quickly making grid layouts. Less mixins can also be used for more semantic layouts.</li>
-<li>  Columns create gutters (gaps between column content) via <code>padding</code>. That padding is offset in rows for the first and last column via negative margin on <code>.row</code>s.</li>
-<li>  The negative margin is why the examples below are outdented. It&#39;s so that content within grid columns is lined up with non-grid content.</li>
-<li>  Grid columns are created by specifying the number of twelve available columns you wish to span. For example, three equal columns would use three <code>.col-xs-4</code>.</li>
-<li>  If more than 12 columns are placed within a single row, each group of extra columns will, as one unit, wrap onto a new line.</li>
-<li>  Grid classes apply to devices with screen widths greater than or equal to the breakpoint sizes, and override grid classes targeted at smaller devices. Therefore, e.g. applying any <code>.col-md-*</code> class to an element will not only affect its styling on medium devices but also on large devices if a <code>.col-lg-*</code> class is not present.</li>
-</ul>
-</div><div class="codeExample"><div class="exampleOutput"><!-- Stack the columns on mobile by making one full-width and the other half-width -->
-<div class="row show-grid">
-  <div class="col-xs-12 col-md-8">.col-xs-12 .col-md-8</div>
-  <div class="col-xs-6 col-md-4">.col-xs-6 .col-md-4</div>
-</div>
-
-<!-- Columns start at 50% wide on mobile and bump up to 33.3% wide on desktop -->
-<div class="row show-grid">
-  <div class="col-xs-6 col-md-4">.col-xs-6 .col-md-4</div>
-  <div class="col-xs-6 col-md-4">.col-xs-6 .col-md-4</div>
-  <div class="col-xs-6 col-md-4">.col-xs-6 .col-md-4</div>
-</div>
-
-<!-- Columns are always 50% wide, on mobile and desktop -->
-<div class="row show-grid">
-  <div class="col-xs-6">.col-xs-6</div>
-  <div class="col-xs-6">.col-xs-6</div>
-</div>
-</div><div class="codeBlock"><div class="highlight"><pre><span class="c">&lt;!-- Stack the columns on mobile by making one full-width and the other half-width --&gt;</span>
-<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"row show-grid"</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"col-xs-12 col-md-8"</span><span class="nt">&gt;</span>.col-xs-12 .col-md-8<span class="nt">&lt;/div&gt;</span>
-  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"col-xs-6 col-md-4"</span><span class="nt">&gt;</span>.col-xs-6 .col-md-4<span class="nt">&lt;/div&gt;</span>
-<span class="nt">&lt;/div&gt;</span>
-
-<span class="c">&lt;!-- Columns start at 50% wide on mobile and bump up to 33.3% wide on desktop --&gt;</span>
-<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"row show-grid"</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"col-xs-6 col-md-4"</span><span class="nt">&gt;</span>.col-xs-6 .col-md-4<span class="nt">&lt;/div&gt;</span>
-  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"col-xs-6 col-md-4"</span><span class="nt">&gt;</span>.col-xs-6 .col-md-4<span class="nt">&lt;/div&gt;</span>
-  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"col-xs-6 col-md-4"</span><span class="nt">&gt;</span>.col-xs-6 .col-md-4<span class="nt">&lt;/div&gt;</span>
-<span class="nt">&lt;/div&gt;</span>
-
-<span class="c">&lt;!-- Columns are always 50% wide, on mobile and desktop --&gt;</span>
-<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"row show-grid"</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"col-xs-6"</span><span class="nt">&gt;</span>.col-xs-6<span class="nt">&lt;/div&gt;</span>
-  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"col-xs-6"</span><span class="nt">&gt;</span>.col-xs-6<span class="nt">&lt;/div&gt;</span>
-<span class="nt">&lt;/div&gt;</span>
+<h1 id="a-typeahead" class="styleguide">Typeahead</h1>
+</div><div class="codeExample"><div class="exampleOutput"><form class="form-inline" role="form">
+  <div class="form-group">
+    <label>State</label>
+    <input type="text" class="form-control" ng-model="selectedState" ng-options="state for state in states" placeholder="Enter state" bs-typeahead>
+  </div>
+</form>
+</div><div class="codeBlock"><div class="highlight"><pre><span class="nt">&lt;form</span> <span class="na">class=</span><span class="s">"form-inline"</span> <span class="na">role=</span><span class="s">"form"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"form-group"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;label&gt;</span>State<span class="nt">&lt;/label&gt;</span>
+    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">class=</span><span class="s">"form-control"</span> <span class="na">ng-model=</span><span class="s">"selectedState"</span> <span class="na">ng-options=</span><span class="s">"state for state in states"</span> <span class="na">placeholder=</span><span class="s">"Enter state"</span> <span class="na">bs-typeahead</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
 </pre></div></div></div><div class="cortana-content">
         </div>
       </div>

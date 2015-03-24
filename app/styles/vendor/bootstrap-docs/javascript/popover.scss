@@ -1,0 +1,23 @@
+@charset "UTF-8";
+
+/*doc
+---
+title: Popover
+name: a-popover
+category: 3. JavaScript - Popover
+---
+
+```html_example
+<!-- Button to trigger a default popover with a scope as an object {title:'', content:'', etc.} -->
+<button type="button" class="btn btn-lg btn-primary" data-placement="bottom" data-animation="am-flip-x" bs-popover="popover">Click to toggle popover
+  <br>
+  <small>(using an object)</small>
+</button>
+
+<!-- You can also use data-attrs to assign scope variables -->
+<button type="button" class="btn btn-lg btn-primary" data-placement="top-right" title="{{popover.title}}" data-content="{{popover.content}}" data-trigger="focus" bs-popover>Click to toggle popover
+  <br>
+  <small>(using data-attrs)</small>
+</button>
+```
+*/

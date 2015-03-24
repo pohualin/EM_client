@@ -1,0 +1,18 @@
+@charset "UTF-8";
+
+/*doc
+---
+title: Typeahead
+name: a-typeahead
+category: 3. JavaScript - Typeahead
+---
+
+```html_example
+<form class="form-inline" role="form">
+  <div class="form-group">
+    <label>State</label>
+    <input type="text" class="form-control" ng-model="selectedState" ng-options="state for state in states" placeholder="Enter state" bs-typeahead>
+  </div>
+</form>
+```
+*/

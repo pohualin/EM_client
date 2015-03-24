@@ -23,7 +23,7 @@
     
 </head>
 
-  <body class="cortana-body">
+  <body class="cortana-body"  ng-controller="MainController">
 
     <!-- Sort the cateogires alphabetically -->
     
@@ -114,6 +114,14 @@
         
         
       
+        
+        
+          
+        
+      
+        
+        
+      
 
       <nav class="cortana-nav">
         <ul>
@@ -179,6 +187,10 @@
               
                 <li><a href="1._layout_-_typography.html">Typography</a></li>
               
+            
+          
+            
+          
             
           
             
@@ -364,6 +376,81 @@
               
             
           
+            
+          
+            
+          
+          </ul>
+        
+          <h3>3. JavaScript</h3>
+          <ul>
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+              
+              
+                <li><a href="3._javascript_-_popover.html">Popover</a></li>
+              
+            
+          
+            
+              
+              
+                <li><a href="3._javascript_-_typeahead.html">Typeahead</a></li>
+              
+            
+          
           </ul>
         
       </nav>
@@ -379,7 +466,7 @@
         <span></span>
       </div>
       <div class="cortana-search-wrapper" ng-controller="TypeaheadCtrl">
-        <input id="cortana-search" type="text" class="form-control cortana-search" ng-model="customSelected" placeholder="Search" typeahead="data as data.title for data in searchData | filter:{title:$viewValue}" typeahead-template-url="customTemplate.html" class="form-control" typeahead-on-select="onSelect($item, $model, $label)">
+        <input id="cortana-search" type="text" class="form-control cortana-search" placeholder="Search" ng-model="customSelected" ng-options="data as data.title for data in searchData | filter:{title:$viewValue}" template="customTemplate.html" bs-typeahead>
       </div>
     </header>
 
@@ -476,6 +563,31 @@
   </div>
 
   <script src="theme-build/js/vendors.min.js"></script>
+  <script src="../bower_components/angular/angular.js"></script>
+  <script src="../bower_components/angular-cookies/angular-cookies.js"></script>
+  <script src="../bower_components/angular-touch/angular-touch.js"></script>
+  <script src="../bower_components/angular-sanitize/angular-sanitize.js"></script>
+  <script src="../bower_components/angular-resource/angular-resource.js"></script>
+  <script src="../bower_components/angular-animate/angular-animate.js"></script>
+  <script src="../bower_components/angular-route/angular-route.js"></script>
+  <script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="../bower_components/angular-strap/dist/angular-strap.js"></script>
+  <script src="../bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
+  <script src="../bower_components/angular-dynamic-locale/src/tmhDynamicLocale.js"></script>
+  <script src="../bower_components/chosen/chosen.jquery.js"></script>
+  <script src="../bower_components/angular-chosen-localytics/chosen.js"></script>
+  <script src="../bower_components/jquery.inputmask/dist/inputmask/jquery.inputmask.js"></script>
+  <script src="../bower_components/jquery.inputmask/dist/inputmask/jquery.inputmask.extensions.js"></script>
+  <script src="../bower_components/jquery.inputmask/dist/inputmask/jquery.inputmask.date.extensions.js"></script>
+  <script src="../bower_components/jquery.inputmask/dist/inputmask/jquery.inputmask.numeric.extensions.js"></script>
+  <script src="../bower_components/jquery.inputmask/dist/inputmask/jquery.inputmask.phone.extensions.js"></script>
+  <script src="../bower_components/jquery.inputmask/dist/inputmask/jquery.inputmask.regex.extensions.js"></script>
+  <script src="../bower_components/moment/moment.js"></script>
+  <script src="../bower_components/angular-moment/angular-moment.js"></script>
+  <script src="../bower_components/angular-translate/angular-translate.js"></script>
+  <script src="../bower_components/angular-translate-loader-url/angular-translate-loader-url.js"></script>
+  <script src="../bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.js"></script>
+  <script src="../bower_components/angular-ivh-treeview/dist/ivh-treeview.js"></script>
   <script src="theme-build/js/main.js"></script>
   <!-- build:js theme-build/js/search.js -->
   <script type="text/javascript">
@@ -1147,6 +1259,18 @@
               
               
               {
+              "title": "Popover",
+              "breadcrumb": "3. JavaScript - Popover > Popover",
+              "path": "3._javascript_-_popover.html#a-popover"
+              },
+            
+          
+        
+          
+            
+              
+              
+              {
               "title": "Tabs",
               "breadcrumb": "2. Components - Nav > Tabs",
               "path": "2._components_-_nav.html#a-tabs"
@@ -1287,6 +1411,18 @@
               
               
               {
+              "title": "Typeahead",
+              "breadcrumb": "3. JavaScript - Typeahead > Typeahead",
+              "path": "3._javascript_-_typeahead.html#a-typeahead"
+              },
+            
+          
+        
+          
+            
+              
+              
+              {
               "title": "UI-Font Solid",
               "breadcrumb": "1. Layout - Icons > UI-Font Solid",
               "path": "1._layout_-_icons.html#a-ui-font"
@@ -1343,17 +1479,21 @@
           
         
       {}];
-      $scope.onSelect = function ($item, $model, $label) {
+      $scope.$on('$typeahead.select', function(event, $item){
         window.location.replace($item.path);
-      };
+      });
     }
   </script>
   <!-- endbuild -->
   <script type="text/ng-template" id="customTemplate.html">
-    <a href="{{match.model.path}}">
-      <p class="cortana-search-title">{{match.model.title}}</p>
-      <p class="cortana-search-path">{{match.model.breadcrumb}}</p>
-    </a>
+    <ul tabindex="-1" class="typeahead dropdown-menu" ng-show="$isVisible()" role="select">
+        <li role="presentation" ng-repeat="match in $matches" ng-class="{active: $index == $activeIndex}">
+            <a role="menuitem" tabindex="-1" ng-click="$select($index, $event)">
+              <p class="cortana-search-title">{{match.value.title}}</p>
+              <p class="cortana-search-path">{{match.value.breadcrumb}}</p>
+            </a>
+        </li>
+    </ul>
   </script>
   
   <!-- Source Components -->

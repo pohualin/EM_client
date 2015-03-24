@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>1. Layout - Grid</title>
+    <title>3. JavaScript - Popover</title>
 
     <!-- Styleguide CSS -->
     <link rel="stylesheet" href="./theme-build/css/vendors.css">
@@ -157,7 +157,7 @@
             
               
               
-                <li><a class="active" href="1._layout_-_grid.html">Grid</a></li>
+                <li><a href="1._layout_-_grid.html">Grid</a></li>
               
             
           
@@ -440,7 +440,7 @@
             
               
               
-                <li><a href="3._javascript_-_popover.html">Popover</a></li>
+                <li><a class="active" href="3._javascript_-_popover.html">Popover</a></li>
               
             
           
@@ -458,7 +458,7 @@
 
     <header class="cortana-header sb-slide">
       
-        <h1>Emmi Manager Style Guide: Grid</h1>
+        <h1>Emmi Manager Style Guide: Popover</h1>
       
       <div id="open-left" class="cortana-menu-btn">
         <span></span>
@@ -478,7 +478,7 @@
           <ul data-offset="-30">
             
               
-                <li><a href="#a-grid">Grid System</a></li>
+                <li><a href="#a-popover">Popover</a></li>
               
             
           </ul>
@@ -489,65 +489,29 @@
 
 
 
-<h1 id="a-grid" class="styleguide">Grid System</h1>
+<h1 id="a-popover" class="styleguide">Popover</h1>
+</div><div class="codeExample"><div class="exampleOutput"><!-- Button to trigger a default popover with a scope as an object {title:'', content:'', etc.} -->
+<button type="button" class="btn btn-lg btn-primary" data-placement="bottom" data-animation="am-flip-x" bs-popover="popover">Click to toggle popover
+  <br>
+  <small>(using an object)</small>
+</button>
 
-<p>Bootstrap includes a responsive, mobile first fluid grid system that
-appropriately scales up to 12 columns as the device or viewport size increases.
-It includes predefined classes for easy layout options, as well as powerful
-mixins for generating more semantic layouts.</p>
+<!-- You can also use data-attrs to assign scope variables -->
+<button type="button" class="btn btn-lg btn-primary" data-placement="top-right" title="{{popover.title}}" data-content="{{popover.content}}" data-trigger="focus" bs-popover>Click to toggle popover
+  <br>
+  <small>(using data-attrs)</small>
+</button>
+</div><div class="codeBlock"><div class="highlight"><pre><span class="c">&lt;!-- Button to trigger a default popover with a scope as an object {title:'', content:'', etc.} --&gt;</span>
+<span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn btn-lg btn-primary"</span> <span class="na">data-placement=</span><span class="s">"bottom"</span> <span class="na">data-animation=</span><span class="s">"am-flip-x"</span> <span class="na">bs-popover=</span><span class="s">"popover"</span><span class="nt">&gt;</span>Click to toggle popover
+  <span class="nt">&lt;br&gt;</span>
+  <span class="nt">&lt;small&gt;</span>(using an object)<span class="nt">&lt;/small&gt;</span>
+<span class="nt">&lt;/button&gt;</span>
 
-<h2>Introduction</h2>
-
-<p>Grid systems are used for creating page layouts through a series of rows and
-columns that house your content. Here&#39;s how the Bootstrap grid system works:</p>
-
-<ul>
-<li>  Rows must be placed within a <code>.container</code> (fixed-width) or <code>.container-fluid</code> (full-width) for proper alignment and padding.</li>
-<li>  Use rows to create horizontal groups of columns.</li>
-<li>  Content should be placed within columns, and only columns may be immediate children of rows.</li>
-<li>  Predefined grid classes like <code>.row</code> and <code>.col-xs-4</code> are available for quickly making grid layouts. Less mixins can also be used for more semantic layouts.</li>
-<li>  Columns create gutters (gaps between column content) via <code>padding</code>. That padding is offset in rows for the first and last column via negative margin on <code>.row</code>s.</li>
-<li>  The negative margin is why the examples below are outdented. It&#39;s so that content within grid columns is lined up with non-grid content.</li>
-<li>  Grid columns are created by specifying the number of twelve available columns you wish to span. For example, three equal columns would use three <code>.col-xs-4</code>.</li>
-<li>  If more than 12 columns are placed within a single row, each group of extra columns will, as one unit, wrap onto a new line.</li>
-<li>  Grid classes apply to devices with screen widths greater than or equal to the breakpoint sizes, and override grid classes targeted at smaller devices. Therefore, e.g. applying any <code>.col-md-*</code> class to an element will not only affect its styling on medium devices but also on large devices if a <code>.col-lg-*</code> class is not present.</li>
-</ul>
-</div><div class="codeExample"><div class="exampleOutput"><!-- Stack the columns on mobile by making one full-width and the other half-width -->
-<div class="row show-grid">
-  <div class="col-xs-12 col-md-8">.col-xs-12 .col-md-8</div>
-  <div class="col-xs-6 col-md-4">.col-xs-6 .col-md-4</div>
-</div>
-
-<!-- Columns start at 50% wide on mobile and bump up to 33.3% wide on desktop -->
-<div class="row show-grid">
-  <div class="col-xs-6 col-md-4">.col-xs-6 .col-md-4</div>
-  <div class="col-xs-6 col-md-4">.col-xs-6 .col-md-4</div>
-  <div class="col-xs-6 col-md-4">.col-xs-6 .col-md-4</div>
-</div>
-
-<!-- Columns are always 50% wide, on mobile and desktop -->
-<div class="row show-grid">
-  <div class="col-xs-6">.col-xs-6</div>
-  <div class="col-xs-6">.col-xs-6</div>
-</div>
-</div><div class="codeBlock"><div class="highlight"><pre><span class="c">&lt;!-- Stack the columns on mobile by making one full-width and the other half-width --&gt;</span>
-<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"row show-grid"</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"col-xs-12 col-md-8"</span><span class="nt">&gt;</span>.col-xs-12 .col-md-8<span class="nt">&lt;/div&gt;</span>
-  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"col-xs-6 col-md-4"</span><span class="nt">&gt;</span>.col-xs-6 .col-md-4<span class="nt">&lt;/div&gt;</span>
-<span class="nt">&lt;/div&gt;</span>
-
-<span class="c">&lt;!-- Columns start at 50% wide on mobile and bump up to 33.3% wide on desktop --&gt;</span>
-<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"row show-grid"</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"col-xs-6 col-md-4"</span><span class="nt">&gt;</span>.col-xs-6 .col-md-4<span class="nt">&lt;/div&gt;</span>
-  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"col-xs-6 col-md-4"</span><span class="nt">&gt;</span>.col-xs-6 .col-md-4<span class="nt">&lt;/div&gt;</span>
-  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"col-xs-6 col-md-4"</span><span class="nt">&gt;</span>.col-xs-6 .col-md-4<span class="nt">&lt;/div&gt;</span>
-<span class="nt">&lt;/div&gt;</span>
-
-<span class="c">&lt;!-- Columns are always 50% wide, on mobile and desktop --&gt;</span>
-<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"row show-grid"</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"col-xs-6"</span><span class="nt">&gt;</span>.col-xs-6<span class="nt">&lt;/div&gt;</span>
-  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"col-xs-6"</span><span class="nt">&gt;</span>.col-xs-6<span class="nt">&lt;/div&gt;</span>
-<span class="nt">&lt;/div&gt;</span>
+<span class="c">&lt;!-- You can also use data-attrs to assign scope variables --&gt;</span>
+<span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn btn-lg btn-primary"</span> <span class="na">data-placement=</span><span class="s">"top-right"</span> <span class="na">title=</span><span class="s">"{{popover.title}}"</span> <span class="na">data-content=</span><span class="s">"{{popover.content}}"</span> <span class="na">data-trigger=</span><span class="s">"focus"</span> <span class="na">bs-popover</span><span class="nt">&gt;</span>Click to toggle popover
+  <span class="nt">&lt;br&gt;</span>
+  <span class="nt">&lt;small&gt;</span>(using data-attrs)<span class="nt">&lt;/small&gt;</span>
+<span class="nt">&lt;/button&gt;</span>
 </pre></div></div></div><div class="cortana-content">
         </div>
       </div>
