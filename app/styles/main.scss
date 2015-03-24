@@ -7,6 +7,7 @@ $icon-font-path: "../../bower_components/bootstrap-sass/assets/fonts/bootstrap/"
 */
 @import 'vendor/_normalize';
 @import 'components/ui-font/_ui-font-solid'; // Icons should be declared early on
+@import 'components/fontawesome/_fontawesome-custom'; // Icons should be declared early on
 @import 'vendor/_bootstrap-custom';
 @import 'vendor/_angular-strap';
 
