@@ -154,6 +154,34 @@
 
 
               {
+              "title": "Group",
+              "breadcrumb": "2. Components - Button Groups > Group",
+              "path": "2._components_-_button_groups.html#a-bg-group"
+              },
+
+
+
+              {
+              "title": "Sizes",
+              "breadcrumb": "2. Components - Button Groups > Sizes",
+              "path": "2._components_-_button_groups.html#b-bg-sizes"
+              },
+
+
+
+              {
+              "title": "With dropdown",
+              "breadcrumb": "2. Components - Button Groups > With dropdown",
+              "path": "2._components_-_button_groups.html#c-bg-with-dropdown"
+              },
+
+
+
+
+
+
+
+              {
               "title": "Breadcrumb",
               "breadcrumb": "2. Components - Breadcrumb > Breadcrumb",
               "path": "2._components_-_breadcrumb.html#a-breadcrumb"
@@ -237,6 +265,14 @@
 
 
 
+              {
+              "title": "Sizes",
+              "breadcrumb": "2. Components - Pagination > Sizes",
+              "path": "2._components_-_pagination.html#c-pagination-sizes"
+              },
+
+
+
 
 
 
@@ -245,34 +281,6 @@
               "title": "Grid System",
               "breadcrumb": "1. Layout - Grid > Grid System",
               "path": "1._layout_-_grid.html#a-grid"
-              },
-
-
-
-
-
-
-
-              {
-              "title": "Group",
-              "breadcrumb": "2. Components - Button Groups > Group",
-              "path": "2._components_-_button_groups.html#a-group"
-              },
-
-
-
-              {
-              "title": "Sizes",
-              "breadcrumb": "2. Components - Button Groups > Sizes",
-              "path": "2._components_-_button_groups.html#b-sizes"
-              },
-
-
-
-              {
-              "title": "With dropdown",
-              "breadcrumb": "2. Components - Button Groups > With dropdown",
-              "path": "2._components_-_button_groups.html#c-with-dropdown"
               },
 
 
@@ -432,7 +440,7 @@
               {
               "title": "Sizes",
               "breadcrumb": "2. Components - Input groups > Sizes",
-              "path": "2._components_-_input_groups.html#c-sizes"
+              "path": "2._components_-_input_groups.html#c-input-group-sizes"
               },
 
 
@@ -630,6 +638,14 @@
 
 
               {
+              "title": "Contextual",
+              "breadcrumb": "2. Components - Panels > Contextual",
+              "path": "2._components_-_panels.html#d-panel-contextual"
+              },
+
+
+
+              {
               "title": "Panel with table",
               "breadcrumb": "2. Components - Panels > Panel with table",
               "path": "2._components_-_panels.html#e-panel-table"
@@ -661,6 +677,14 @@
               "title": "Pills",
               "breadcrumb": "2. Components - Nav > Pills",
               "path": "2._components_-_nav.html#b-pills"
+              },
+
+
+
+              {
+              "title": "With dropdown",
+              "breadcrumb": "2. Components - Nav > With dropdown",
+              "path": "2._components_-_nav.html#c-nav-with-dropdown"
               },
 
 
@@ -805,6 +829,14 @@
               "title": "Default well",
               "breadcrumb": "2. Components - Well > Default well",
               "path": "2._components_-_well.html#a-well"
+              },
+
+
+
+              {
+              "title": "Sizes",
+              "breadcrumb": "2. Components - Well > Sizes",
+              "path": "2._components_-_well.html#b-sizes"
               },
 
 
