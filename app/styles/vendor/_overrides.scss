@@ -1,0 +1,32 @@
+// Custom overrides for Bootstrap components. General overrides are in the project's global stylesheet.
+
+.close {
+    @include remIt(font-size, 25);
+}
+
+.alert {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    @include remIt(font-size, 16);
+    font-weight: 300;
+    box-shadow: 3px 3px 0px 0px rgba(110,124,136,0.10);
+    strong {
+        text-transform: uppercase;
+    }
+}
+
+.alert-dismissable,
+.alert-dismissible {
+    .close {
+        top: -4px;
+        @include opacity(.75);
+        .icon-delete {
+            font-weight: bold;
+        }
+        &:hover,
+        &:focus {
+            color: inherit;
+            @include opacity(1);
+        }
+    }
+}
