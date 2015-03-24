@@ -352,6 +352,7 @@ Just use the `icon-` prefix followed by the specific icon class.
 
 [class^="icon-"], [class*=" icon-"] {
     font-family: 'ui-font-solid';
+    font-size: 150%; // default font character size is a bit small
     speak: none;
     font-style: normal;
     font-weight: normal;

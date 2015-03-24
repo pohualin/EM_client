@@ -254,6 +254,10 @@
     .form-control:focus {
         box-shadow: none !important;
     }
+    .has-feedback label ~ .form-control-feedback {
+        top: 22px;
+        font-size: 24px;
+    }
     .has-success .form-control {
         color: $state-success-text;
     }
