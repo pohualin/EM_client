@@ -11,7 +11,15 @@ var jQuery_no_conflict = $.noConflict(true);
  ========================================================== */
 
 (function(){
-  var app = angular.module('cortana', ['mgcrea.ngStrap']);
+  var app = angular.module('cortana', [
+    'mgcrea.ngStrap',
+    'emmi.typeahead',
+    'ngTagsInput',
+    'emmi.inputMask',
+    'angularMoment',
+    'emmi-angular-multiselect',
+    'truncate'
+  ]);
 
   app.controller('MainController', function($scope) {
     // For Popover example

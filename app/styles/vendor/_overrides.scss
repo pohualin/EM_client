@@ -173,7 +173,8 @@
     box-shadow: none;
 }
 
-.typeahead.dropdown-menu {
+.typeahead.dropdown-menu,
+.typeahead-menu.dropdown-menu {
     padding: 0;
     border-top-right-radius: 0;
     border-top-left-radius: 0;
