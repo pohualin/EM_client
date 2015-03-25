@@ -200,50 +200,6 @@
 
 }
 
-
-// Tag library popover
-.btn-tag-library + .popover {
-    max-width: 316px;
-}
-.popover {
-    .btn-close {
-        position: absolute;
-        top: 0;
-        right: 0;
-        margin: 6px 6px 0 0;
-    }
-    .toggle-trigger {
-        cursor: pointer;
-        margin-left: -6px;
-        .caret {
-            margin: 0 4px 0 0;
-            content: "";
-            border-top: 4px solid transparent;
-            border-bottom: 4px solid transparent;
-            border-left: 4px solid;
-        }
-        &.open .caret {
-            border-top: 4px solid;
-            border-right: 4px solid transparent;
-            border-left: 4px solid transparent;
-        }
-    }
-    .toggle-content {
-        display: none;
-        margin-left: 35px;
-        color: #999;
-        &.open {
-            display: block;
-        }
-        small {
-            display: block;
-        }
-    }
-    .form-actions .info {
-        display: block;
-    }
-}
-
 ul.tags-view {
 	margin: 0 -10px;
 }

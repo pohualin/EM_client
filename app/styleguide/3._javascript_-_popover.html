@@ -481,6 +481,10 @@
                 <li><a href="#a-popover">Popover</a></li>
               
             
+              
+                <li><a href="#b-popover-footer">With Footer</a></li>
+              
+            
           </ul>
         </nav>
 
@@ -490,27 +494,40 @@
 
 
 <h1 id="a-popover" class="styleguide">Popover</h1>
-</div><div class="codeExample"><div class="exampleOutput"><!-- Button to trigger a default popover with a scope as an object {title:'', content:'', etc.} -->
-<button type="button" class="btn btn-lg btn-primary" data-placement="bottom" data-animation="am-flip-x" bs-popover="popover">Click to toggle popover
-  <br>
-  <small>(using an object)</small>
-</button>
 
-<!-- You can also use data-attrs to assign scope variables -->
-<button type="button" class="btn btn-lg btn-primary" data-placement="top-right" title="{{popover.title}}" data-content="{{popover.content}}" data-trigger="focus" bs-popover>Click to toggle popover
-  <br>
-  <small>(using data-attrs)</small>
+<p><a href="http://mgcrea.github.io/angular-strap/#/popovers#popovers">AngularStrap Popovers</a></p>
+
+<ol>
+<li>Button to trigger a default popover with a scope as an object {title:&#39;&#39;, content:&#39;&#39;, etc.}</li>
+<li>You can also use data-attrs to assign scope variables</li>
+</ol>
+</div><div class="codeExample"><div class="exampleOutput"><button type="button" class="btn btn-primary" data-placement="top-left" data-bs-popover="popover">
+    Click to toggle popover
 </button>
-</div><div class="codeBlock"><div class="highlight"><pre><span class="c">&lt;!-- Button to trigger a default popover with a scope as an object {title:'', content:'', etc.} --&gt;</span>
-<span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn btn-lg btn-primary"</span> <span class="na">data-placement=</span><span class="s">"bottom"</span> <span class="na">data-animation=</span><span class="s">"am-flip-x"</span> <span class="na">bs-popover=</span><span class="s">"popover"</span><span class="nt">&gt;</span>Click to toggle popover
-  <span class="nt">&lt;br&gt;</span>
-  <span class="nt">&lt;small&gt;</span>(using an object)<span class="nt">&lt;/small&gt;</span>
+<button type="button" class="btn btn-primary" data-placement="bottom" title="{{popover.title}}" data-content="" data-trigger="focus" data-bs-popover>
+    Click to toggle popover
+</button>
+</div><div class="codeBlock"><div class="highlight"><pre><span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn btn-primary"</span> <span class="na">data-placement=</span><span class="s">"top-left"</span> <span class="na">data-bs-popover=</span><span class="s">"popover"</span><span class="nt">&gt;</span>
+    Click to toggle popover
 <span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn btn-primary"</span> <span class="na">data-placement=</span><span class="s">"bottom"</span> <span class="na">title=</span><span class="s">"{{popover.title}}"</span> <span class="na">data-content=</span><span class="s">""</span> <span class="na">data-trigger=</span><span class="s">"focus"</span> <span class="na">data-bs-popover</span><span class="nt">&gt;</span>
+    Click to toggle popover
+<span class="nt">&lt;/button&gt;</span>
+</pre></div></div></div><div class="cortana-content">
+<h1 id="b-popover-footer" class="styleguide">With Footer</h1>
 
-<span class="c">&lt;!-- You can also use data-attrs to assign scope variables --&gt;</span>
-<span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn btn-lg btn-primary"</span> <span class="na">data-placement=</span><span class="s">"top-right"</span> <span class="na">title=</span><span class="s">"{{popover.title}}"</span> <span class="na">data-content=</span><span class="s">"{{popover.content}}"</span> <span class="na">data-trigger=</span><span class="s">"focus"</span> <span class="na">bs-popover</span><span class="nt">&gt;</span>Click to toggle popover
-  <span class="nt">&lt;br&gt;</span>
-  <span class="nt">&lt;small&gt;</span>(using data-attrs)<span class="nt">&lt;/small&gt;</span>
+<p>You can also add a footer for buttons and such.</p>
+</div><div class="codeExample"><div class="exampleOutput"><button type="button" class="btn btn-primary" data-placement="bottom-left" data-template="./theme-build/html/popover-template.tpl.html" data-bs-popover>
+    Click to toggle popover
+</button>
+<button type="button" class="btn btn-primary" data-placement="bottom-left" title="Are you sure?" data-content-template="./theme-build/html/popover-content-template.tpl.html" data-bs-popover>
+    Click to toggle popover
+</button>
+</div><div class="codeBlock"><div class="highlight"><pre><span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn btn-primary"</span> <span class="na">data-placement=</span><span class="s">"bottom-left"</span> <span class="na">data-template=</span><span class="s">"./theme-build/html/popover-template.tpl.html"</span> <span class="na">data-bs-popover</span><span class="nt">&gt;</span>
+    Click to toggle popover
+<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn btn-primary"</span> <span class="na">data-placement=</span><span class="s">"bottom-left"</span> <span class="na">title=</span><span class="s">"Are you sure?"</span> <span class="na">data-content-template=</span><span class="s">"./theme-build/html/popover-content-template.tpl.html"</span> <span class="na">data-bs-popover</span><span class="nt">&gt;</span>
+    Click to toggle popover
 <span class="nt">&lt;/button&gt;</span>
 </pre></div></div></div><div class="cortana-content">
         </div>
@@ -1222,6 +1239,14 @@
               "title": "Popover",
               "breadcrumb": "3. JavaScript - Popover > Popover",
               "path": "3._javascript_-_popover.html#a-popover"
+              },
+            
+              
+              
+              {
+              "title": "With Footer",
+              "breadcrumb": "3. JavaScript - Popover > With Footer",
+              "path": "3._javascript_-_popover.html#b-popover-footer"
               },
             
           

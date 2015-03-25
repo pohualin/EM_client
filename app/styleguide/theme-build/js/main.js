@@ -16,8 +16,8 @@ var jQuery_no_conflict = $.noConflict(true);
   app.controller('MainController', function($scope) {
     // For Popover example
     $scope.popover = {
-      "title": "Title",
-      "content": "Hello Popover<br />This is a multiline message!"
+      "title": "This thing already exists...",
+      "content": "The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog."
     };
     // For Typeahead example
     $scope.selectedState = "";

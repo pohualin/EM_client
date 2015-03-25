@@ -7,17 +7,36 @@ name: a-popover
 category: 3. JavaScript - Popover
 ---
 
-```html_example
-<!-- Button to trigger a default popover with a scope as an object {title:'', content:'', etc.} -->
-<button type="button" class="btn btn-lg btn-primary" data-placement="bottom" data-animation="am-flip-x" bs-popover="popover">Click to toggle popover
-  <br>
-  <small>(using an object)</small>
-</button>
+[AngularStrap Popovers](http://mgcrea.github.io/angular-strap/#/popovers#popovers)
 
-<!-- You can also use data-attrs to assign scope variables -->
-<button type="button" class="btn btn-lg btn-primary" data-placement="top-right" title="{{popover.title}}" data-content="{{popover.content}}" data-trigger="focus" bs-popover>Click to toggle popover
-  <br>
-  <small>(using data-attrs)</small>
+1. Button to trigger a default popover with a scope as an object {title:'', content:'', etc.}
+2. You can also use data-attrs to assign scope variables
+
+```html_example
+<button type="button" class="btn btn-primary" data-placement="top-left" data-bs-popover="popover">
+    Click to toggle popover
+</button>
+<button type="button" class="btn btn-primary" data-placement="bottom" title="{{popover.title}}" data-content="" data-trigger="focus" data-bs-popover>
+    Click to toggle popover
+</button>
+```
+*/
+
+/*doc
+---
+title: With Footer
+name: b-popover-footer
+category: 3. JavaScript - Popover
+---
+
+You can also add a footer for buttons and such.
+
+```html_example
+<button type="button" class="btn btn-primary" data-placement="bottom-left" data-template="./theme-build/html/popover-template.tpl.html" data-bs-popover>
+    Click to toggle popover
+</button>
+<button type="button" class="btn btn-primary" data-placement="bottom-left" title="Are you sure?" data-content-template="./theme-build/html/popover-content-template.tpl.html" data-bs-popover>
+    Click to toggle popover
 </button>
 ```
 */

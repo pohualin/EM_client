@@ -533,19 +533,19 @@ $tooltip-arrow-color:         $tooltip-bg !default;
 //** Popover body background color
 $popover-bg:                          #fff !default;
 //** Popover maximum width
-$popover-max-width:                   276px !default;
+$popover-max-width:                   355px !default;
 //** Popover border color
-$popover-border-color:                rgba(0,0,0,.2) !default;
+$popover-border-color:                #ADB6BE !default;
 //** Popover fallback border color
-$popover-fallback-border-color:       #ccc !default;
+$popover-fallback-border-color:       #ADB6BE !default;
 
 //** Popover title background color
-$popover-title-bg:                    darken($popover-bg, 3%) !default;
+$popover-title-bg:                    #6E7C88 !default;
 
 //** Popover arrow width
 $popover-arrow-width:                 10px !default;
 //** Popover arrow color
-$popover-arrow-color:                 $popover-bg !default;
+$popover-arrow-color:                 #6E7C88 !default;
 
 //** Popover outer arrow width
 $popover-arrow-outer-width:           ($popover-arrow-width + 1) !default;
