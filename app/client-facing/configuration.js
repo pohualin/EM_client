@@ -83,7 +83,7 @@ angular.module('emmiManager', [
         });
     })
 
-    .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, PATTERN, arrays, $document, ConfigurationService, $modal, $timeout) {
+    .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, PATTERN, arrays, $document, ConfigurationService, $modal, $timeout, moment) {
 
         var modals = [], alerts = [];
 
@@ -266,19 +266,19 @@ angular.module('emmiManager', [
         
         moment.locale('en', {
         	relativeTime: {
-        		future: "in %s",
-                past: "now",
-                s:  "a few seconds",
-                m:  "a minute",
-                mm: "%d minutes",
-                h:  "an hour",
-                hh: "%d hours",
-                d:  "a day",
-                dd: "%d days",
-                M:  "a month",
-                MM: "%d months",
-                y:  "a year",
-                yy: "%d years"
+        		future: 'in %s',
+                past: 'now',
+                s:  'a few seconds',
+                m:  'a minute',
+                mm: '%d minutes',
+                h:  'an hour',
+                hh: '%d hours',
+                d:  'a day',
+                dd: '%d days',
+                M:  'a month',
+                MM: '%d months',
+                y:  'a year',
+                yy: '%d years'
         	}
         });
     });
