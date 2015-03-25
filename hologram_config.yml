@@ -10,8 +10,8 @@ destination: ./app/styleguide
 # The assets needed to build the docs (includes header.html,
 # footer.html, etc)
 # You may put doc related assets here too: images, css, etc.
-documentation_assets: ./app/styleguide/_assets
-custom_markdown: ./app/styleguide/_assets/CortanaMarkdownRenderer.rb
+documentation_assets: ./app/styleguide_assets
+custom_markdown: ./app/styleguide_assets/CortanaMarkdownRenderer.rb
 
 # List all css to include for the styleguide render examples (path from styleguide directory)
 css_include:
