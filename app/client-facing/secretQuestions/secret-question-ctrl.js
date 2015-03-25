@@ -5,20 +5,19 @@ angular.module('emmiManager')
 /**
  * This manages interactions when a user needs to select secret questions and responses.
  */
-    .controller('SecretQuestionController', ['$scope', '$location', 'SecretQuestionService', '$alert',
-        function ($scope, $location, SecretQuestionService, $alert) { 	
+    .controller('SecretQuestionController', ['$scope', '$location', 'SecretQuestionService', '$alert', '$q',
+        function ($scope, $location, SecretQuestionService, $alert, $q) { 	
     	
     	$scope.secretQuestionFormSubmitted = false;
     	/**
     	 * When the save button is clicked. Sends all updates
-    	 * to the back, then rebinds the form objects with dthe
+    	 * to the back, then re-binds the form objects with the
     	 * results
     	 */
         $scope.saveOrUpdateSecretQuestion = function(valid) {
         	$scope.secretQuestionFormSubmitted = true;
         	if(valid){
-        		SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.question1.entity);
-	        	SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.question2.entity);
+        		SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.question1.entity, $scope.question2.entity);
 	        	$alert({
 					title: ' ',
 					content: 'Your security questions have been updated successfully.',

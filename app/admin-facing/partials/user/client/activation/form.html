@@ -8,10 +8,12 @@
                  data-ng-show="selectedUserClient.entity.email && !selectedUserClient.entity.activated"
                  data-ng-switch="selectedUserClient.entity.activationExpirationDateTime != null &&
                      selectedUserClient.entity.activationKey != null">
-                <button class="btn btn-default" type="submit"
+                <button class="btn btn-default" type="button"
                         data-ng-show="selectedUserClient.entity.email"
                         data-ng-click="sendActivationEmail()">
-                    <span>Send User Setup Email</span>
+                    <span data-ng-switch-when="false">Send</span>
+                    <span data-ng-switch-when="true">Resend</span>
+                    <span> User Setup Email</span>
                 </button>
                 <em data-ng-switch-when="true">
                     <span class="glyphicon glyphicons-ok-circle"></span>
@@ -34,7 +36,7 @@
                 <div data-ng-show="selectedUserClient.entity.email && selectedUserClient.entity.activated"
                      data-ng-switch="selectedUserClient.entity.passwordResetExpirationDateTime != null &&
                      selectedUserClient.entity.passwordResetToken != null">
-                    <button class="btn btn-default" type="submit" data-ng-click="passwordReset()">
+                    <button class="btn btn-default" type="button" data-ng-click="passwordReset()">
                         <span>Resend Password Email</span>
                     </button>
                     <em data-ng-switch-when="true">

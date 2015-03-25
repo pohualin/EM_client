@@ -1,0 +1,60 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="pull-right">
+                    <h3></h3>
+                    {{total}}
+                    <span data-ng-show="total != 1" data-translate="global.labels.total"> results</span>
+                    <span data-ng-show="total === 1" data-translate="global.labels.totalSingular"> result</span>
+                </div>
+                <div class="pull-left">
+                    <h3>Program List</h3>
+                </div>
+            </div>
+        </div>
+        <br>
+        <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0" cellspacing="0"
+               data-ng-show="programs">
+            <tr>
+                <th class="sort col-sm-3" data-ng-click="sort('id')">ID <span
+                    data-ng-show="sortProperty.property === 'id'"><span class="glyphicon sort-icon"
+                                                                        data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
+                </th>
+                <th class="sort col-sm-3" data-ng-click="sort('name')">Name <span
+                    data-ng-show="sortProperty.property === 'name'"><span class="glyphicon sort-icon"
+                                                                          data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
+                </th>
+                <th class="sort col-sm-3" data-ng-click="sort('brand.description')">Brand <span
+                    data-ng-show="sortProperty.property === 'brand.description'"><span class="glyphicon sort-icon"
+                                                                                       data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
+                </th>
+                <th class="sort col-sm-2" data-ng-click="sort('source.name')">Source <span
+                    data-ng-show="sortProperty.property === 'source.name'"><span class="glyphicon sort-icon"
+                                                                                 data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
+                </th>
+            </tr>
+            <tr data-ng-repeat="program in programs | orderBy:'program.sortIdx'">
+                <td>{{program.entity.id}}</td>
+                <td>{{program.entity.name}}</td>
+                <td>{{program.entity.brand.description}}</td>
+                <td>{{program.entity.source.name}}</td>
+            </tr>
+        </table>
+        <div class="row" data-ng-show="programs">
+            <div data-ng-show="links" class="col-md-12 col-sm-12">
+                <ul class="pagination">
+                    <li data-ng-repeat="link in links | orderBy:'order'"
+                        data-ng-class="{'active': link.name == currentPage}">
+                        <a data-ng-show="link.name != currentPage" href
+                           data-ng-click="fetchPage(link.href)">{{link.name}}</a>
+                        <span data-ng-hide="link.name != currentPage">{{link.name}}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div data-ng-hide="programs">
+            <span data-translate="global.messages.search.no_results_found"></span>
+        </div>
+    </div>
+</div>

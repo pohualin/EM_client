@@ -83,12 +83,13 @@ angular.module('emmiManager', [
         });
     })
 
-    .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, PATTERN, arrays, $document, ConfigurationService, $modal, $timeout) {
+    .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, PATTERN, arrays, $document, ConfigurationService, $modal, $timeout, moment) {
 
-        var modals = [];
+        var modals = [], alerts = [];
 
         $rootScope.authenticated = false;
 
+        // auto track $modal windows
         $rootScope.$on('modal.show', function (e, $modal) {
             // if modal is not already in list
             if (modals.indexOf($modal) === -1) {
@@ -96,10 +97,50 @@ angular.module('emmiManager', [
             }
         });
 
+        // un-track $modal windows on hide
         $rootScope.$on('modal.hide', function (e, $modal) {
             var modalIndex = modals.indexOf($modal);
             modals.splice(modalIndex, 1);
         });
+
+        // auto track $alert windows
+        $rootScope.$on('alert.show', function (e, $alert) {
+            // if alert is not already in list
+            if (alerts.indexOf($alert) === -1) {
+                alerts.push($alert);
+            }
+        });
+
+        // un-track $alert windows on hide
+        $rootScope.$on('alert.hide', function (e, $alert) {
+            var idx = modals.indexOf($alert);
+            alerts.splice(idx, 1);
+        });
+
+
+        /**
+         * Hide all $modal windows
+         */
+        $rootScope.killAllModals = function () {
+            if (modals.length) {
+                angular.forEach(modals, function ($modal) {
+                    $modal.$promise.then($modal.hide);
+                });
+                modals = [];
+            }
+        };
+
+        /**
+         * Hide all $alert windows
+         */
+        $rootScope.killAllAlerts = function () {
+            if (alerts.length) {
+                angular.forEach(alerts, function ($alert) {
+                    $alert.$promise.then($alert.hide);
+                });
+                alerts = [];
+            }
+        };
 
         $rootScope.page = {
             setTitle: function (title) {
@@ -118,16 +159,25 @@ angular.module('emmiManager', [
 
         $rootScope.emailPattern = PATTERN.EMAIL;
 
+        /**
+         * Special routes that are system level.
+         *
+         * @returns {boolean}
+         */
+        $rootScope.isSystemRoute = function () {
+            var path = $location.path();
+            return path === '/logout' ||
+                path === '/login' ||
+                path === '/error' ||
+                path === '/403' ||
+                path === '/500' ||
+                path === '/unauthorized';
+        };
+
         $rootScope.$on('$routeChangeStart', function (event, next) {
             $rootScope.isAuthorized = AuthSharedService.isAuthorized;
             $rootScope.userRoles = USER_ROLES;
-            var path = $location.path();
-            if (path !== '/logout' &&
-                path !== '/login' &&
-                path !== '/err' &&
-                path !== '/403' &&
-                path !== '/500' &&
-                path !== '/unauthorized') {
+            if (!$rootScope.isSystemRoute()) {
                 // authorize all routes other than some known system routes
                 AuthSharedService.valid((next.access) ? next.access.authorizedRoles : [USER_ROLES.all]);
             }
@@ -140,11 +190,9 @@ angular.module('emmiManager', [
         $rootScope.$on('$routeChangeSuccess', function (e, current) {
             $rootScope.currentRouteQueryString = arrays.toQueryString(current.params);
             // hide all modals
-            if (modals.length) {
-                angular.forEach(modals, function ($modal) {
-                    $modal.$promise.then($modal.hide);
-                });
-                modals = [];
+            $rootScope.killAllModals();
+            if ($rootScope.isSystemRoute()) {
+                $rootScope.killAllAlerts();
             }
             var pageTitle = current && current.$$route && current.$$route.title;
             $rootScope.page.setTitle(pageTitle);
@@ -175,7 +223,7 @@ angular.module('emmiManager', [
 
         // Call when the 403 response is returned by the server
         $rootScope.$on('event:auth-notAuthorized', function () {
-            $timeout(function (){
+            $timeout(function () {
                 $location.path('/403').replace();
             });
         });
@@ -214,5 +262,23 @@ angular.module('emmiManager', [
                     event.preventDefault();
                 }
             }
+        });
+        
+        moment.locale('en', {
+        	relativeTime: {
+        		future: 'in %s',
+                past: 'now',
+                s:  'a few seconds',
+                m:  'a minute',
+                mm: '%d minutes',
+                h:  'an hour',
+                hh: '%d hours',
+                d:  'a day',
+                dd: '%d days',
+                M:  'a month',
+                MM: '%d months',
+                y:  'a year',
+                yy: '%d years'
+        	}
         });
     });
