@@ -14,6 +14,7 @@ dist
 .tmp
 .sass-cache
 app/bower_components
+app/styleguide
 app/styles/*.css*
 app/logs
 
