@@ -168,15 +168,19 @@ gulp.task('api-docs', function () {
             .pipe(gulp.dest('dist/bower_components/swagger-ui/dist'));
 });
 
-gulp.task('styleguide', function () {
+gulp.task('hologram', function () {
     return gulp.src('hologram_config.yml')
-        .pipe($.hologram({logging:true}))
-        gulp.src('app/styleguide/theme-build/**/*')
+        .pipe($.hologram({logging:true}));
+});
+
+gulp.task('styleguide', ['hologram'], function () {
+    // Make sure Hologram has built before moving assets
+    return gulp.src('app/styleguide/theme-build/**/*')
         .pipe(gulp.dest('dist/styleguide/theme-build'));
 });
 
 gulp.task('clean', function () {
-    return gulp.src(['.tmp', 'dist'], { read: false }).pipe($.clean());
+    return gulp.src(['.tmp', 'dist', 'app/styleguide'], { read: false }).pipe($.clean());
 });
 
 gulp.task('build', ['html', 'images', 'favicon', 'fonts', 'font-paths', 'translations', 'api-docs']);
