@@ -8,10 +8,32 @@ category: 3. JavaScript - Typeahead
 ---
 
 ```html_example
-<form class="form-inline" role="form">
+<form class="form" role="form">
   <div class="form-group">
     <label>State</label>
-    <input type="text" class="form-control" ng-model="selectedState" ng-options="state for state in states" placeholder="Enter state" bs-typeahead>
+    <input type="text" class="form-control" ng-model="selectedState" ng-options="state for state in states" placeholder="Enter state" data-bs-typeahead>
+  </div>
+</form>
+```
+*/
+
+/*doc
+---
+title: Search
+name: b-typeahead-search
+category: 3. JavaScript - Typeahead
+---
+
+```html_example
+<form class="form" role="form">
+  <div class="form-group">
+    <div class="input-group">
+      <input type="text" class="form-control typeahead-search has-input-icon-search" ng-model="selectedName" ng-options="name for name in names" placeholder="Search by Last Name or Access Code" data-bs-typeahead>
+      <span class="input-icon"><i class="icon-search"></i></span>
+      <span class="input-group-btn">
+        <button class="btn btn-success" type="button">Go</button>
+      </span>
+    </div>
   </div>
 </form>
 ```

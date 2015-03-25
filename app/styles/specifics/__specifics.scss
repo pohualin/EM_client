@@ -5,6 +5,43 @@
 @import 'popovers';
 
 // miscellaneous rules
+.input-icon {
+    display: block;
+    position: absolute;
+    z-index: 3;
+    left: 0;
+    font-size: 24px;
+    color: #C7D0D8;
+    margin: 7px $padding-base-horizontal - 2;
+    transition: opacity 0.2s ease;
+}
+
+.has-input-icon-search {
+    transition: padding 0.3s ease-in-out;
+    padding-left: $padding-base-horizontal + 24;
+    ~ .input-group-btn {
+        //display: none;
+        //visibility: hidden;
+    }
+    &:focus {
+        padding-left: $padding-base-horizontal;
+        ~ .input-icon {
+            opacity: 0;
+            //display: none;
+        }
+        ~ .input-group-btn {
+            //display: inline-block;
+            //visibility: visible;
+        }
+    }
+}
+
+.typeahead-search {
+    .dropdown-menu {
+        width: 100%;
+    }
+}
+
 
 [ng-click],
 [data-ng-click],
