@@ -1,0 +1,20 @@
+<form name="addProgramForm" novalidate data-unsaved-warning-form>
+    <div id="add-program-alerts-container" data-ng-show="addProgramForm.$invalid || !!scheduledProgram.program"></div>
+    <div class="row">
+        <div class="col-md-4 pull-right"
+             data-ng-include="'client-facing/schedule/program/program_attributes.html'"></div>
+        <div class="col-md-8">
+            <div class="row" data-ng-include="'client-facing/schedule/program/program_filter.html'"></div>
+            <br/>
+            <div class="row" data-ng-include="'client-facing/schedule/program/program_table.html'"></div>
+        </div>
+        <div class="col-md-4 pull-right"
+             data-ng-include="'client-facing/schedule/program/program_actions.html'"></div>
+    </div>
+</form>
+
+
+
+
+
+
