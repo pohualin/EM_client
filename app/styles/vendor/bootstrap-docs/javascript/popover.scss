@@ -1,0 +1,42 @@
+@charset "UTF-8";
+
+/*doc
+---
+title: Popover
+name: a-popover
+category: 3. JavaScript - Popover
+---
+
+[AngularStrap Popovers](http://mgcrea.github.io/angular-strap/#/popovers#popovers)
+
+1. Button to trigger a default popover with a scope as an object {title:'', content:'', etc.}
+2. You can also use data-attrs to assign scope variables
+
+```html_example
+<button type="button" class="btn btn-primary" data-placement="top-left" data-bs-popover="popover">
+    Click to toggle popover
+</button>
+<button type="button" class="btn btn-primary" data-placement="bottom" title="{{popover.title}}" data-content="" data-trigger="focus" data-bs-popover>
+    Click to toggle popover
+</button>
+```
+*/
+
+/*doc
+---
+title: With Footer
+name: b-popover-footer
+category: 3. JavaScript - Popover
+---
+
+You can also add a footer for buttons and such.
+
+```html_example
+<button type="button" class="btn btn-primary" data-placement="bottom-left" data-template="./theme-build/html/popover-template.tpl.html" data-bs-popover>
+    Click to toggle popover
+</button>
+<button type="button" class="btn btn-primary" data-placement="bottom-left" title="Are you sure?" data-content-template="./theme-build/html/popover-content-template.tpl.html" data-bs-popover>
+    Click to toggle popover
+</button>
+```
+*/

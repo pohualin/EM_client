@@ -99,25 +99,29 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label class="sr-only" for="belongsTo">Belongs To:</label>
-                        <input type="checkbox" name="belongsTo" id="belongsTo"
-                               data-ng-model="location.belongsToCheckbox"
-                               data-ng-show="location.belongsToMutable">
-                        <span data-ng-show="!location.belongsToMutable && location.belongsTo">Location belongs to {{location.belongsTo.name}}</span>
-                        <span data-ng-show="location.belongsToMutable">Location belongs to
-                            <span data-ng-show="client.entity.name"> {{client.entity.name}}</span>
-                            <span data-ng-hide="client.entity.name"> this client</span>
-                        </span>
+                        <div class="checkbox">
+                            <label class="sr-only">Belongs To:</label>
+                            <input type="checkbox" name="belongsTo" id="belongsTo"
+                                   data-ng-model="location.belongsToCheckbox"
+                                   data-ng-show="location.belongsToMutable">
+                            <label for="belongsTo"></label>
+                            <span data-ng-show="!location.belongsToMutable && location.belongsTo">Location belongs to {{location.belongsTo.name}}</span>
+                            <span data-ng-show="location.belongsToMutable">Location belongs to
+                                <span data-ng-show="client.entity.name"> {{client.entity.name}}</span>
+                                <span data-ng-hide="client.entity.name"> this client</span>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label class="sr-only" for="active">Active:</label>
-                        <input type="checkbox" name="active" id="active"
-                            data-ng-model="location.active">
-                        <span>Active</span>
+                        <div class="checkbox">
+                            <input type="checkbox" name="active" id="active"
+                                data-ng-model="location.active">
+                            <label for="active">Active</label>
+                        </div>
                     </div>
                 </div>
             </div>

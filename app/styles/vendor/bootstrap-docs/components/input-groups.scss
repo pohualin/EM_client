@@ -35,7 +35,7 @@ category: 2. Components - Input groups
 /*doc
 ---
 title: Sizes
-name: c-sizes
+name: c-input-group-sizes
 category: 2. Components - Input groups
 ---
 
@@ -72,8 +72,9 @@ category: 2. Components - Input groups
 
 ```html_example
 <div class="input-group">
-  <span class="input-group-addon">
-    <input type="checkbox">
+  <span class="input-group-addon checkbox">
+    <input type="checkbox" id="inputGroupCheckbox" value="">
+    <label for="inputGroupCheckbox"></label>
   </span>
   <input type="text" class="form-control">
 </div>

@@ -1,0 +1,23 @@
+@charset "UTF-8";
+
+/*doc
+---
+title: Datepicker
+name: a-datepicker
+category: 3. JavaScript - Datepicker
+---
+
+[AngularStrap Datepicker](http://mgcrea.github.io/angular-strap/#/datepickers#datepickers)
+
+```html_example
+<div class="form-group">
+    <label class="control-label" for="inputDate">Date</label>
+    <div class="has-input-icon has-input-icon-calendar">
+      <input id="inputDate" class="form-control" placeholder="MM/DD/YYYY" type="text" name="inputDate"
+           data-ng-model="selectedDate" data-autoclose="true"
+           data-dateType="iso" data-bs-datepicker>
+      <span class="input-icon"><i class="icon-calendar"></i></span>
+    </div>
+</div>
+```
+*/

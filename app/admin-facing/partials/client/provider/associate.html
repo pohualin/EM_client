@@ -80,11 +80,17 @@
                                 </tr>
                                 <tr data-ng-repeat="clientProvider in providers| orderBy:sortIdx" data-ng-class="clientProvider.link.self ? 'text-muted' : ''">
                                     <td data-ng-hide="clientProvider.link.self">
-                                        <input type="checkbox" data-ng-model="clientProvider.provider.entity.newprovider"
+                                        <div class="checkbox">
+                                            <input type="checkbox" id="clientProviderCb{{$index}}" data-ng-model="clientProvider.provider.entity.newprovider"
                                                ng-change="onCheckboxChange(clientProvider.provider)">
+                                            <label for="clientProviderCb{{$index}}"></label>
+                                        </div>
                                     </td>
                                     <td data-ng-show="clientProvider.link.self">
-                                        <input type="checkbox" disabled="disabled" checked>
+                                        <div class="checkbox">
+                                            <input type="checkbox" id="clientProviderOffCb{{$index}}" disabled="disabled" checked>
+                                            <label for="clientProviderOffCb{{$index}}"></label>
+                                        </div>
                                     </td>
                                     <td>{{clientProvider.provider.entity.firstName}} {{clientProvider.provider.entity.middleName}} {{clientProvider.provider.entity.lastName}} <em>{{clientProvider.provider.entity.active ? '' : "(inactive)"}}</em></td>
                                     <td>

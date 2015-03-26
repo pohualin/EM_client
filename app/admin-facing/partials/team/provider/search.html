@@ -81,10 +81,16 @@
                                 </tr>
                                 <tr data-ng-repeat="teamProvider in searchedProvidersList"  data-ng-class="teamProvider.link.self ? 'text-muted' : ''">
 									<td data-ng-hide="teamProvider.link.self">
-										<input type="checkbox" data-ng-model="teamProvider.provider.entity.checked"  data-ng-change="onCheckboxChange(teamProvider.provider)">
+                                        <div class="checkbox">
+                                            <input type="checkbox" id="teamProviderSearchCb{{$index}}" data-ng-model="teamProvider.provider.entity.checked"  data-ng-change="onCheckboxChange(teamProvider.provider)">
+                                            <label for="teamProviderSearchCb{{$index}}"></label>
+                                        </div>
 									</td>
 									<td data-ng-show="teamProvider.link.self">
-                                        <input type="checkbox" disabled="disabled" checked>
+                                        <div class="checkbox">
+                                            <input type="checkbox" id="teamProviderSearchOffCb{{$index}}" disabled="disabled" checked>
+                                            <label for="teamProviderSearchOffCb{{$index}}"></label>
+                                        </div>
                                     </td>
 									<td>{{teamProvider.provider.entity.firstName}} {{teamProvider.provider.entity.middleName}} {{teamProvider.provider.entity.lastName}} <em>{{teamProvider.provider.entity.active ? '' : "(inactive)"}}</em></td>
                                     <td>{{teamProvider.provider.entity.specialty.name}}</td>
