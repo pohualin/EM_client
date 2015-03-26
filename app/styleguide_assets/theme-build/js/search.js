@@ -10,6 +10,18 @@
 
 
               {
+              "title": "Accordion",
+              "breadcrumb": "3. JavaScript - Accordion > Accordion",
+              "path": "3._javascript_-_accordion.html#a-accordion"
+              },
+
+
+
+
+
+
+
+              {
               "title": "Alerts",
               "breadcrumb": "2. Components - Alerts > Alerts",
               "path": "2._components_-_alerts.html#a-alerts"
@@ -222,6 +234,18 @@
 
 
               {
+              "title": "Datepicker",
+              "breadcrumb": "3. JavaScript - Datepicker > Datepicker",
+              "path": "3._javascript_-_datepicker.html#a-datepicker"
+              },
+
+
+
+
+
+
+
+              {
               "title": "Default pager",
               "breadcrumb": "2. Components - Pager > Default pager",
               "path": "2._components_-_pager.html#a-default-pager"
@@ -425,6 +449,14 @@
 
 
 
+              {
+              "title": "Input Icons",
+              "breadcrumb": "1. Layout - Form > Input Icons",
+              "path": "1._layout_-_form.html#m-input-icons"
+              },
+
+
+
 
 
 
@@ -570,6 +602,18 @@
 
 
               {
+              "title": "Modal",
+              "breadcrumb": "3. JavaScript - Modal > Modal",
+              "path": "3._javascript_-_modal.html#a-modal"
+              },
+
+
+
+
+
+
+
+              {
               "title": "Navbar",
               "breadcrumb": "2. Components - Navbar > Navbar",
               "path": "2._components_-_navbar.html#a-navbar"
@@ -657,6 +701,26 @@
               "title": "Panel with list",
               "breadcrumb": "2. Components - Panels > Panel with list",
               "path": "2._components_-_panels.html#f-panel-list"
+              },
+
+
+
+
+
+
+
+              {
+              "title": "Popover",
+              "breadcrumb": "3. JavaScript - Popover > Popover",
+              "path": "3._javascript_-_popover.html#a-popover"
+              },
+
+
+
+              {
+              "title": "With Footer",
+              "breadcrumb": "3. JavaScript - Popover > With Footer",
+              "path": "3._javascript_-_popover.html#b-popover-footer"
               },
 
 
@@ -797,6 +861,38 @@
               "title": "Description",
               "breadcrumb": "1. Layout - Typography > Description",
               "path": "1._layout_-_typography.html#k-description"
+              },
+
+
+
+
+
+
+
+              {
+              "title": "Tooltip",
+              "breadcrumb": "3. JavaScript - Tooltip > Tooltip",
+              "path": "3._javascript_-_tooltip.html#a-tooltip"
+              },
+
+
+
+
+
+
+
+              {
+              "title": "Typeahead",
+              "breadcrumb": "3. JavaScript - Typeahead > Typeahead",
+              "path": "3._javascript_-_typeahead.html#a-typeahead"
+              },
+
+
+
+              {
+              "title": "Search",
+              "breadcrumb": "3. JavaScript - Typeahead > Search",
+              "path": "3._javascript_-_typeahead.html#b-typeahead-search"
               },
 
 
