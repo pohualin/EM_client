@@ -79,27 +79,30 @@
         <div class="col-md-8" data-ng-show="userClientEdit.useEmail">
             <label class="control-label" for="useEmail">User ID:</label>
             <div class="checkbox">
+                <input id="useEmail" type="checkbox" checked data-ng-model="userClientEdit.useEmail"
+                       data-ng-change="useEmailChange()"/>
                 <label for="useEmail">
-                    <input id="useEmail" type="checkbox" checked data-ng-model="userClientEdit.useEmail"
-                           data-ng-change="useEmailChange()"/>&nbsp;&nbsp;Use Email
+                    &nbsp;&nbsp;Use Email
                 </label>
             </div>
         </div>
         <div class="col-md-4 pull-left" data-ng-hide="userClientEdit.useEmail">
             <label class="control-label" for="useEmail">&nbsp;</label>
             <div class="checkbox">
+                <input id="useEmailChecked" type="checkbox" checked data-ng-model="userClientEdit.useEmail"
+                       data-ng-change="useEmailChange()"/>
                 <label for="useEmailChecked">
-                    <input id="useEmailChecked" type="checkbox" checked data-ng-model="userClientEdit.useEmail"
-                           data-ng-change="useEmailChange()"/>&nbsp;&nbsp;Use Email
+                    &nbsp;&nbsp;Use Email
                 </label>
             </div>
         </div>
         <div class="col-md-4">
             <label class="control-label">&nbsp;</label>
             <div class="checkbox">
+                <input id="active" type="checkbox"
+                       data-ng-model="userClientEdit.entity.active" data-no-dirty-check/>
                 <label for="active" class="pull-right">
-                    <input id="active" type="checkbox"
-                           data-ng-model="userClientEdit.entity.active" data-no-dirty-check/>&nbsp;&nbsp;Active
+                    &nbsp;&nbsp;Active
                 </label>
             </div>
         </div>

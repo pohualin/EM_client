@@ -141,11 +141,14 @@ gulp.task('favicon', function () {
 });
 
 gulp.task('fonts', function () {
-    return gulp.src(mainBowerFiles())
+    return gulp.src('app/fonts/*.{eot,svg,ttf,woff,woff2}')
+        .pipe(gulp.dest('dist/fonts'))
+        .pipe($.size({title: 'app fonts', showFiles:true})),
+        gulp.src(mainBowerFiles())
         .pipe($.filter('**/*.{eot,svg,ttf,woff,woff2}'))
         .pipe($.flatten())
         .pipe(gulp.dest('dist/fonts'))
-        .pipe($.size({title: 'fonts', showFiles:true}));
+        .pipe($.size({title: 'bower fonts', showFiles:true}));
 });
 
 gulp.task('font-paths', ['html'], function () {

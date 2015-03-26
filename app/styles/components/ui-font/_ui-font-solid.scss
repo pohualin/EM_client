@@ -1,0 +1,695 @@
+/*doc
+---
+title: UI-Font Solid
+name: a-ui-font
+category: 1. Layout - Icons
+---
+
+Just use the `icon-` prefix followed by the specific icon class.
+
+```html_example
+<a href="#">
+  <i class="icon-plus"></i> Add Location
+</a>
+```
+
+
+|  Icon                                         |  Class                                  | Name                                    |
+|-----------------------------------------------|-----------------------------------------|-----------------------------------------|
+| <i class='icon-arrow-down'></i> | <pre>icon-arrow-down</pre> | arrow-down |
+| <i class='icon-arrow-up'></i> | <pre>icon-arrow-up</pre> | arrow-up |
+| <i class='icon-caret-right'></i> | <pre>icon-caret-right</pre> | caret-right |
+| <i class='icon-caret-left'></i> | <pre>icon-caret-left</pre> | caret-left |
+| <i class='icon-arrow-circle-down'></i> | <pre>icon-arrow-circle-down</pre> | arrow-circle-down |
+| <i class='icon-arrow-circle-up'></i> | <pre>icon-arrow-circle-up</pre> | arrow-circle-up |
+| <i class='icon-arrow-o-circle-right'></i> | <pre>icon-arrow-o-circle-right</pre> | arrow-o-circle-right |
+| <i class='icon-arrow-o-circle-left'></i> | <pre>icon-arrow-o-circle-left</pre> | arrow-o-circle-left |
+| <i class='icon-caret-o-circle-left'></i> | <pre>icon-caret-o-circle-left</pre> | caret-o-circle-left |
+| <i class='icon-caret-o-circle-right'></i> | <pre>icon-caret-o-circle-right</pre> | caret-o-circle-right |
+| <i class='icon-arrow-circle-right'></i> | <pre>icon-arrow-circle-right</pre> | arrow-circle-right |
+| <i class='icon-arrow-circle-left'></i> | <pre>icon-arrow-circle-left</pre> | arrow-circle-left |
+| <i class='icon-caret-circle-left'></i> | <pre>icon-caret-circle-left</pre> | caret-circle-left |
+| <i class='icon-caret-circle-right'></i> | <pre>icon-caret-circle-right</pre> | caret-circle-right |
+| <i class='icon-check-o-circle'></i> | <pre>icon-check-o-circle</pre> | check-o-circle |
+| <i class='icon-delete-o-circle'></i> | <pre>icon-delete-o-circle</pre> | delete-o-circle |
+| <i class='icon-check-circle'></i> | <pre>icon-check-circle</pre> | check-circle |
+| <i class='icon-delete-circle'></i> | <pre>icon-delete-circle</pre> | delete-circle |
+| <i class='icon-return-left'></i> | <pre>icon-return-left</pre> | return-left |
+| <i class='icon-return-right'></i> | <pre>icon-return-right</pre> | return-right |
+| <i class='icon-traffic'></i> | <pre>icon-traffic</pre> | traffic |
+| <i class='icon-back'></i> | <pre>icon-back</pre> | back |
+| <i class='icon-forward'></i> | <pre>icon-forward</pre> | forward |
+| <i class='icon-contract'></i> | <pre>icon-contract</pre> | contract |
+| <i class='icon-expand'></i> | <pre>icon-expand</pre> | expand |
+| <i class='icon-exit-fullscreen'></i> | <pre>icon-exit-fullscreen</pre> | exit-fullscreen |
+| <i class='icon-expand-window'></i> | <pre>icon-expand-window</pre> | expand-window |
+| <i class='icon-refresh'></i> | <pre>icon-refresh</pre> | refresh |
+| <i class='icon-sync'></i> | <pre>icon-sync</pre> | sync |
+| <i class='icon-cycle'></i> | <pre>icon-cycle</pre> | cycle |
+| <i class='icon-repeat'></i> | <pre>icon-repeat</pre> | repeat |
+| <i class='icon-bar-chart'></i> | <pre>icon-bar-chart</pre> | bar-chart |
+| <i class='icon-bar-chart-up'></i> | <pre>icon-bar-chart-up</pre> | bar-chart-up |
+| <i class='icon-stats-up'></i> | <pre>icon-stats-up</pre> | stats-up |
+| <i class='icon-stats-down'></i> | <pre>icon-stats-down</pre> | stats-down |
+| <i class='icon-stats-easel-up'></i> | <pre>icon-stats-easel-up</pre> | stats-easel-up |
+| <i class='icon-stats-easel-down'></i> | <pre>icon-stats-easel-down</pre> | stats-easel-down |
+| <i class='icon-bar-chart-easel'></i> | <pre>icon-bar-chart-easel</pre> | bar-chart-easel |
+| <i class='icon-window-down'></i> | <pre>icon-window-down</pre> | window-down |
+| <i class='icon-window-up'></i> | <pre>icon-window-up</pre> | window-up |
+| <i class='icon-window-maximize'></i> | <pre>icon-window-maximize</pre> | window-maximize |
+| <i class='icon-window-minimize'></i> | <pre>icon-window-minimize</pre> | window-minimize |
+| <i class='icon-login'></i> | <pre>icon-login</pre> | login |
+| <i class='icon-logout'></i> | <pre>icon-logout</pre> | logout |
+| <i class='icon-panel-close'></i> | <pre>icon-panel-close</pre> | panel-close |
+| <i class='icon-panel-show'></i> | <pre>icon-panel-show</pre> | panel-show |
+| <i class='icon-command-line'></i> | <pre>icon-command-line</pre> | command-line |
+| <i class='icon-window'></i> | <pre>icon-window</pre> | window |
+| <i class='icon-window-plus'></i> | <pre>icon-window-plus</pre> | window-plus |
+| <i class='icon-window-minus'></i> | <pre>icon-window-minus</pre> | window-minus |
+| <i class='icon-window-check'></i> | <pre>icon-window-check</pre> | window-check |
+| <i class='icon-window-delete'></i> | <pre>icon-window-delete</pre> | window-delete |
+| <i class='icon-share-right'></i> | <pre>icon-share-right</pre> | share-right |
+| <i class='icon-share-left'></i> | <pre>icon-share-left</pre> | share-left |
+| <i class='icon-multiple-windows'></i> | <pre>icon-multiple-windows</pre> | multiple-windows |
+| <i class='icon-list-th-lg'></i> | <pre>icon-list-th-lg</pre> | list-th-lg |
+| <i class='icon-grid-lg'></i> | <pre>icon-grid-lg</pre> | grid-lg |
+| <i class='icon-grid-lg'></i> | <pre>icon-grid-lg</pre> | grid-lg |
+| <i class='icon-list-th-lg'></i> | <pre>icon-list-th-lg</pre> | list-th-lg |
+| <i class='icon-sidebar'></i> | <pre>icon-sidebar</pre> | sidebar |
+| <i class='icon-list-bullet'></i> | <pre>icon-list-bullet</pre> | list-bullet |
+| <i class='icon-bars'></i> | <pre>icon-bars</pre> | bars |
+| <i class='icon-outdent'></i> | <pre>icon-outdent</pre> | outdent |
+| <i class='icon-indent'></i> | <pre>icon-indent</pre> | indent |
+| <i class='icon-document'></i> | <pre>icon-document</pre> | document |
+| <i class='icon-text-doc'></i> | <pre>icon-text-doc</pre> | text-doc |
+| <i class='icon-zipped-doc'></i> | <pre>icon-zipped-doc</pre> | zipped-doc |
+| <i class='icon-text-doc-plus'></i> | <pre>icon-text-doc-plus</pre> | text-doc-plus |
+| <i class='icon-text-doc-minus'></i> | <pre>icon-text-doc-minus</pre> | text-doc-minus |
+| <i class='icon-heart-card'></i> | <pre>icon-heart-card</pre> | heart-card |
+| <i class='icon-diamond-card'></i> | <pre>icon-diamond-card</pre> | diamond-card |
+| <i class='icon-spade-card'></i> | <pre>icon-spade-card</pre> | spade-card |
+| <i class='icon-club-card'></i> | <pre>icon-club-card</pre> | club-card |
+| <i class='icon-book'></i> | <pre>icon-book</pre> | book |
+| <i class='icon-clipboard'></i> | <pre>icon-clipboard</pre> | clipboard |
+| <i class='icon-check-clipboard'></i> | <pre>icon-check-clipboard</pre> | check-clipboard |
+| <i class='icon-delete-clipboard'></i> | <pre>icon-delete-clipboard</pre> | delete-clipboard |
+| <i class='icon-text-clipboard'></i> | <pre>icon-text-clipboard</pre> | text-clipboard |
+| <i class='icon-address-book'></i> | <pre>icon-address-book</pre> | address-book |
+| <i class='icon-calendar'></i> | <pre>icon-calendar</pre> | calendar |
+| <i class='icon-calendar-day'></i> | <pre>icon-calendar-day</pre> | calendar-day |
+| <i class='icon-id-card'></i> | <pre>icon-id-card</pre> | id-card |
+| <i class='icon-polaroids'></i> | <pre>icon-polaroids</pre> | polaroids |
+| <i class='icon-polaroids-blank'></i> | <pre>icon-polaroids-blank</pre> | polaroids-blank |
+| <i class='icon-photos'></i> | <pre>icon-photos</pre> | photos |
+| <i class='icon-photo'></i> | <pre>icon-photo</pre> | photo |
+| <i class='icon-camera'></i> | <pre>icon-camera</pre> | camera |
+| <i class='icon-headphones'></i> | <pre>icon-headphones</pre> | headphones |
+| <i class='icon-stop'></i> | <pre>icon-stop</pre> | stop |
+| <i class='icon-play'></i> | <pre>icon-play</pre> | play |
+| <i class='icon-record'></i> | <pre>icon-record</pre> | record |
+| <i class='icon-pause'></i> | <pre>icon-pause</pre> | pause |
+| <i class='icon-ffw'></i> | <pre>icon-ffw</pre> | ffw |
+| <i class='icon-rev'></i> | <pre>icon-rev</pre> | rev |
+| <i class='icon-skip-forward'></i> | <pre>icon-skip-forward</pre> | skip-forward |
+| <i class='icon-skip-back'></i> | <pre>icon-skip-back</pre> | skip-back |
+| <i class='icon-eject'></i> | <pre>icon-eject</pre> | eject |
+| <i class='icon-volume-max'></i> | <pre>icon-volume-max</pre> | volume-max |
+| <i class='icon-volume-max'></i> | <pre>icon-volume-max</pre> | volume-max |
+| <i class='icon-volume-min'></i> | <pre>icon-volume-min</pre> | volume-min |
+| <i class='icon-mute'></i> | <pre>icon-mute</pre> | mute |
+| <i class='icon-volume-plus'></i> | <pre>icon-volume-plus</pre> | volume-plus |
+| <i class='icon-volume-minus'></i> | <pre>icon-volume-minus</pre> | volume-minus |
+| <i class='icon-volume-delete'></i> | <pre>icon-volume-delete</pre> | volume-delete |
+| <i class='icon-music-notes'></i> | <pre>icon-music-notes</pre> | music-notes |
+| <i class='icon-music-notes-box'></i> | <pre>icon-music-notes-box</pre> | music-notes-box |
+| <i class='icon-speaker'></i> | <pre>icon-speaker</pre> | speaker |
+| <i class='icon-boombox'></i> | <pre>icon-boombox</pre> | boombox |
+| <i class='icon-ipod'></i> | <pre>icon-ipod</pre> | ipod |
+| <i class='icon-microphone'></i> | <pre>icon-microphone</pre> | microphone |
+| <i class='icon-microphone-alt'></i> | <pre>icon-microphone-alt</pre> | microphone-alt |
+| <i class='icon-cd'></i> | <pre>icon-cd</pre> | cd |
+| <i class='icon-vinyl'></i> | <pre>icon-vinyl</pre> | vinyl |
+| <i class='icon-cassette'></i> | <pre>icon-cassette</pre> | cassette |
+| <i class='icon-eq'></i> | <pre>icon-eq</pre> | eq |
+| <i class='icon-slate'></i> | <pre>icon-slate</pre> | slate |
+| <i class='icon-film'></i> | <pre>icon-film</pre> | film |
+| <i class='icon-tv'></i> | <pre>icon-tv</pre> | tv |
+| <i class='icon-monitor'></i> | <pre>icon-monitor</pre> | monitor |
+| <i class='icon-keyboard'></i> | <pre>icon-keyboard</pre> | keyboard |
+| <i class='icon-printer'></i> | <pre>icon-printer</pre> | printer |
+| <i class='icon-printing'></i> | <pre>icon-printing</pre> | printing |
+| <i class='icon-mouse'></i> | <pre>icon-mouse</pre> | mouse |
+| <i class='icon-text'></i> | <pre>icon-text</pre> | text |
+| <i class='icon-ribbon'></i> | <pre>icon-ribbon</pre> | ribbon |
+| <i class='icon-gamepad'></i> | <pre>icon-gamepad</pre> | gamepad |
+| <i class='icon-portable-game'></i> | <pre>icon-portable-game</pre> | portable-game |
+| <i class='icon-tablet'></i> | <pre>icon-tablet</pre> | tablet |
+| <i class='icon-calculator'></i> | <pre>icon-calculator</pre> | calculator |
+| <i class='icon-floppy-disc'></i> | <pre>icon-floppy-disc</pre> | floppy-disc |
+| <i class='icon-flashlight'></i> | <pre>icon-flashlight</pre> | flashlight |
+| <i class='icon-bell'></i> | <pre>icon-bell</pre> | bell |
+| <i class='icon-hourglass'></i> | <pre>icon-hourglass</pre> | hourglass |
+| <i class='icon-smartphone'></i> | <pre>icon-smartphone</pre> | smartphone |
+| <i class='icon-cellphone'></i> | <pre>icon-cellphone</pre> | cellphone |
+| <i class='icon-lightbulb'></i> | <pre>icon-lightbulb</pre> | lightbulb |
+| <i class='icon-telephone'></i> | <pre>icon-telephone</pre> | telephone |
+| <i class='icon-battery-full'></i> | <pre>icon-battery-full</pre> | battery-full |
+| <i class='icon-battery-half'></i> | <pre>icon-battery-half</pre> | battery-half |
+| <i class='icon-battery-low'></i> | <pre>icon-battery-low</pre> | battery-low |
+| <i class='icon-battery-charge'></i> | <pre>icon-battery-charge</pre> | battery-charge |
+| <i class='icon-flashlight'></i> | <pre>icon-flashlight</pre> | flashlight |
+| <i class='icon-wrench'></i> | <pre>icon-wrench</pre> | wrench |
+| <i class='icon-settings'></i> | <pre>icon-settings</pre> | settings |
+| <i class='icon-zoom-in'></i> | <pre>icon-zoom-in</pre> | zoom-in |
+| <i class='icon-zoom-out'></i> | <pre>icon-zoom-out</pre> | zoom-out |
+| <i class='icon-search'></i> | <pre>icon-search</pre> | search |
+| <i class='icon-cloud'></i> | <pre>icon-cloud</pre> | cloud |
+| <i class='icon-cloud-upload'></i> | <pre>icon-cloud-upload</pre> | cloud-upload |
+| <i class='icon-cloud-up'></i> | <pre>icon-cloud-up</pre> | cloud-up |
+| <i class='icon-cloud-down'></i> | <pre>icon-cloud-down</pre> | cloud-down |
+| <i class='icon-cloud-check'></i> | <pre>icon-cloud-check</pre> | cloud-check |
+| <i class='icon-cloud-delete'></i> | <pre>icon-cloud-delete</pre> | cloud-delete |
+| <i class='icon-bluetooth'></i> | <pre>icon-bluetooth</pre> | bluetooth |
+| <i class='icon-wifi'></i> | <pre>icon-wifi</pre> | wifi |
+| <i class='icon-firewire'></i> | <pre>icon-firewire</pre> | firewire |
+| <i class='icon-usb'></i> | <pre>icon-usb</pre> | usb |
+| <i class='icon-plug'></i> | <pre>icon-plug</pre> | plug |
+| <i class='icon-outlet'></i> | <pre>icon-outlet</pre> | outlet |
+| <i class='icon-command-line'></i> | <pre>icon-command-line</pre> | command-line |
+| <i class='icon-shuffle'></i> | <pre>icon-shuffle</pre> | shuffle |
+| <i class='icon-ethernet'></i> | <pre>icon-ethernet</pre> | ethernet |
+| <i class='icon-code'></i> | <pre>icon-code</pre> | code |
+| <i class='icon-fullscreen'></i> | <pre>icon-fullscreen</pre> | fullscreen |
+| <i class='icon-contrast'></i> | <pre>icon-contrast</pre> | contrast |
+| <i class='icon-coverflow'></i> | <pre>icon-coverflow</pre> | coverflow |
+| <i class='icon-zoom-out-solid'></i> | <pre>icon-zoom-out-solid</pre> | zoom-out-solid |
+| <i class='icon-zoom-in-solid'></i> | <pre>icon-zoom-in-solid</pre> | zoom-in-solid |
+| <i class='icon-info'></i> | <pre>icon-info</pre> | info |
+| <i class='icon-info-circle'></i> | <pre>icon-info-circle</pre> | info-circle |
+| <i class='icon-outbox'></i> | <pre>icon-outbox</pre> | outbox |
+| <i class='icon-inbox'></i> | <pre>icon-inbox</pre> | inbox |
+| <i class='icon-download'></i> | <pre>icon-download</pre> | download |
+| <i class='icon-compose'></i> | <pre>icon-compose</pre> | compose |
+| <i class='icon-layout'></i> | <pre>icon-layout</pre> | layout |
+| <i class='icon-link'></i> | <pre>icon-link</pre> | link |
+| <i class='icon-windows'></i> | <pre>icon-windows</pre> | windows |
+| <i class='icon-flash-drive'></i> | <pre>icon-flash-drive</pre> | flash-drive |
+| <i class='icon-location'></i> | <pre>icon-location</pre> | location |
+| <i class='icon-bus'></i> | <pre>icon-bus</pre> | bus |
+| <i class='icon-train'></i> | <pre>icon-train</pre> | train |
+| <i class='icon-gas'></i> | <pre>icon-gas</pre> | gas |
+| <i class='icon-dashboard'></i> | <pre>icon-dashboard</pre> | dashboard |
+| <i class='icon-dashboard-alt'></i> | <pre>icon-dashboard-alt</pre> | dashboard-alt |
+| <i class='icon-flag'></i> | <pre>icon-flag</pre> | flag |
+| <i class='icon-flag-alt'></i> | <pre>icon-flag-alt</pre> | flag-alt |
+| <i class='icon-plane'></i> | <pre>icon-plane</pre> | plane |
+| <i class='icon-compass'></i> | <pre>icon-compass</pre> | compass |
+| <i class='icon-clock'></i> | <pre>icon-clock</pre> | clock |
+| <i class='icon-watch'></i> | <pre>icon-watch</pre> | watch |
+| <i class='icon-alarm-clock'></i> | <pre>icon-alarm-clock</pre> | alarm-clock |
+| <i class='icon-megaphone'></i> | <pre>icon-megaphone</pre> | megaphone |
+| <i class='icon-locked-alt'></i> | <pre>icon-locked-alt</pre> | locked-alt |
+| <i class='icon-unlocked-alt'></i> | <pre>icon-unlocked-alt</pre> | unlocked-alt |
+| <i class='icon-locked'></i> | <pre>icon-locked</pre> | locked |
+| <i class='icon-unlocked'></i> | <pre>icon-unlocked</pre> | unlocked |
+| <i class='icon-keyboard'></i> | <pre>icon-keyboard</pre> | keyboard |
+| <i class='icon-cube-open'></i> | <pre>icon-cube-open</pre> | cube-open |
+| <i class='icon-cube'></i> | <pre>icon-cube</pre> | cube |
+| <i class='icon-mailbox'></i> | <pre>icon-mailbox</pre> | mailbox |
+| <i class='icon-file-drawer'></i> | <pre>icon-file-drawer</pre> | file-drawer |
+| <i class='icon-folder-flat'></i> | <pre>icon-folder-flat</pre> | folder-flat |
+| <i class='icon-folder'></i> | <pre>icon-folder</pre> | folder |
+| <i class='icon-folder-plus'></i> | <pre>icon-folder-plus</pre> | folder-plus |
+| <i class='icon-folder-minus'></i> | <pre>icon-folder-minus</pre> | folder-minus |
+| <i class='icon-attach'></i> | <pre>icon-attach</pre> | attach |
+| <i class='icon-recycle'></i> | <pre>icon-recycle</pre> | recycle |
+| <i class='icon-recycle-bin'></i> | <pre>icon-recycle-bin</pre> | recycle-bin |
+| <i class='icon-envelope'></i> | <pre>icon-envelope</pre> | envelope |
+| <i class='icon-mail'></i> | <pre>icon-mail</pre> | mail |
+| <i class='icon-mail-down'></i> | <pre>icon-mail-down</pre> | mail-down |
+| <i class='icon-mail-up'></i> | <pre>icon-mail-up</pre> | mail-up |
+| <i class='icon-check'></i> | <pre>icon-check</pre> | check |
+| <i class='icon-delete'></i> | <pre>icon-delete</pre> | delete |
+| <i class='icon-map'></i> | <pre>icon-map</pre> | map |
+| <i class='icon-brush'></i> | <pre>icon-brush</pre> | brush |
+| <i class='icon-pen'></i> | <pre>icon-pen</pre> | pen |
+| <i class='icon-pencil'></i> | <pre>icon-pencil</pre> | pencil |
+| <i class='icon-thumbtack'></i> | <pre>icon-thumbtack</pre> | thumbtack |
+| <i class='icon-male'></i> | <pre>icon-male</pre> | male |
+| <i class='icon-female'></i> | <pre>icon-female</pre> | female |
+| <i class='icon-brightness-up'></i> | <pre>icon-brightness-up</pre> | brightness-up |
+| <i class='icon-brightness-down'></i> | <pre>icon-brightness-down</pre> | brightness-down |
+| <i class='icon-crosshair'></i> | <pre>icon-crosshair</pre> | crosshair |
+| <i class='icon-trefoil-circle'></i> | <pre>icon-trefoil-circle</pre> | trefoil-circle |
+| <i class='icon-cross-circle'></i> | <pre>icon-cross-circle</pre> | cross-circle |
+| <i class='icon-power'></i> | <pre>icon-power</pre> | power |
+| <i class='icon-pie-chart'></i> | <pre>icon-pie-chart</pre> | pie-chart |
+| <i class='icon-share'></i> | <pre>icon-share</pre> | share |
+| <i class='icon-move'></i> | <pre>icon-move</pre> | move |
+| <i class='icon-star-6'></i> | <pre>icon-star-6</pre> | star-6 |
+| <i class='icon-star-5'></i> | <pre>icon-star-5</pre> | star-5 |
+| <i class='icon-alert-o'></i> | <pre>icon-alert-o</pre> | alert-o |
+| <i class='icon-alert'></i> | <pre>icon-alert</pre> | alert |
+| <i class='icon-option'></i> | <pre>icon-option</pre> | option |
+| <i class='icon-plus'></i> | <pre>icon-plus</pre> | plus |
+| <i class='icon-minus'></i> | <pre>icon-minus</pre> | minus |
+| <i class='icon-user'></i> | <pre>icon-user</pre> | user |
+| <i class='icon-group'></i> | <pre>icon-group</pre> | group |
+| <i class='icon-user-plus'></i> | <pre>icon-user-plus</pre> | user-plus |
+| <i class='icon-user-minus'></i> | <pre>icon-user-minus</pre> | user-minus |
+| <i class='icon-user-delete'></i> | <pre>icon-user-delete</pre> | user-delete |
+| <i class='icon-chat'></i> | <pre>icon-chat</pre> | chat |
+| <i class='icon-chat-dots'></i> | <pre>icon-chat-dots</pre> | chat-dots |
+| <i class='icon-chat-rect'></i> | <pre>icon-chat-rect</pre> | chat-rect |
+| <i class='icon-chat-rect-dots'></i> | <pre>icon-chat-rect-dots</pre> | chat-rect-dots |
+| <i class='icon-chat-lines'></i> | <pre>icon-chat-lines</pre> | chat-lines |
+| <i class='icon-chat-rect-lines'></i> | <pre>icon-chat-rect-lines</pre> | chat-rect-lines |
+| <i class='icon-infinity'></i> | <pre>icon-infinity</pre> | infinity |
+| <i class='icon-umbrella'></i> | <pre>icon-umbrella</pre> | umbrella |
+| <i class='icon-necktie'></i> | <pre>icon-necktie</pre> | necktie |
+| <i class='icon-briefcase'></i> | <pre>icon-briefcase</pre> | briefcase |
+| <i class='icon-first-aid'></i> | <pre>icon-first-aid</pre> | first-aid |
+| <i class='icon-capsule'></i> | <pre>icon-capsule</pre> | capsule |
+| <i class='icon-shield'></i> | <pre>icon-shield</pre> | shield |
+| <i class='icon-mustache'></i> | <pre>icon-mustache</pre> | mustache |
+| <i class='icon-bag'></i> | <pre>icon-bag</pre> | bag |
+| <i class='icon-tag'></i> | <pre>icon-tag</pre> | tag |
+| <i class='icon-credit-card'></i> | <pre>icon-credit-card</pre> | credit-card |
+| <i class='icon-planet'></i> | <pre>icon-planet</pre> | planet |
+| <i class='icon-earth'></i> | <pre>icon-earth</pre> | earth |
+| <i class='icon-globe'></i> | <pre>icon-globe</pre> | globe |
+| <i class='icon-trophy'></i> | <pre>icon-trophy</pre> | trophy |
+| <i class='icon-medal'></i> | <pre>icon-medal</pre> | medal |
+| <i class='icon-trashcan'></i> | <pre>icon-trashcan</pre> | trashcan |
+| <i class='icon-trefoil'></i> | <pre>icon-trefoil</pre> | trefoil |
+| <i class='icon-leaf'></i> | <pre>icon-leaf</pre> | leaf |
+| <i class='icon-lamp'></i> | <pre>icon-lamp</pre> | lamp |
+| <i class='icon-home'></i> | <pre>icon-home</pre> | home |
+| <i class='icon-help'></i> | <pre>icon-help</pre> | help |
+| <i class='icon-magnet'></i> | <pre>icon-magnet</pre> | magnet |
+| <i class='icon-heart'></i> | <pre>icon-heart</pre> | heart |
+| <i class='icon-d6'></i> | <pre>icon-d6</pre> | d6 |
+| <i class='icon-asterisk'></i> | <pre>icon-asterisk</pre> | asterisk |
+| <i class='icon-flask'></i> | <pre>icon-flask</pre> | flask |
+| <i class='icon-flask-tilted'></i> | <pre>icon-flask-tilted</pre> | flask-tilted |
+| <i class='icon-test-tube'></i> | <pre>icon-test-tube</pre> | test-tube |
+| <i class='icon-mallet'></i> | <pre>icon-mallet</pre> | mallet |
+| <i class='icon-fork-spoon'></i> | <pre>icon-fork-spoon</pre> | fork-spoon |
+| <i class='icon-spatula'></i> | <pre>icon-spatula</pre> | spatula |
+| <i class='icon-chef-hat'></i> | <pre>icon-chef-hat</pre> | chef-hat |
+| <i class='icon-place-setting'></i> | <pre>icon-place-setting</pre> | place-setting |
+| <i class='icon-knife-fork'></i> | <pre>icon-knife-fork</pre> | knife-fork |
+| <i class='icon-grill-open'></i> | <pre>icon-grill-open</pre> | grill-open |
+| <i class='icon-grill'></i> | <pre>icon-grill</pre> | grill |
+| <i class='icon-platter'></i> | <pre>icon-platter</pre> | platter |
+| <i class='icon-droplet'></i> | <pre>icon-droplet</pre> | droplet |
+| <i class='icon-wine'></i> | <pre>icon-wine</pre> | wine |
+| <i class='icon-wine-tilted'></i> | <pre>icon-wine-tilted</pre> | wine-tilted |
+| <i class='icon-drink'></i> | <pre>icon-drink</pre> | drink |
+| <i class='icon-drink-straw'></i> | <pre>icon-drink-straw</pre> | drink-straw |
+| <i class='icon-popsicle'></i> | <pre>icon-popsicle</pre> | popsicle |
+| <i class='icon-popsicle-eaten'></i> | <pre>icon-popsicle-eaten</pre> | popsicle-eaten |
+| <i class='icon-ice-cream'></i> | <pre>icon-ice-cream</pre> | ice-cream |
+| <i class='icon-ice-cream-alt'></i> | <pre>icon-ice-cream-alt</pre> | ice-cream-alt |
+| <i class='icon-ice-cream-eaten-alt'></i> | <pre>icon-ice-cream-eaten-alt</pre> | ice-cream-eaten-alt |
+| <i class='icon-ice-cream-eaten'></i> | <pre>icon-ice-cream-eaten</pre> | ice-cream-eaten |
+| <i class='icon-mug'></i> | <pre>icon-mug</pre> | mug |
+| <i class='icon-noodle-bowl'></i> | <pre>icon-noodle-bowl</pre> | noodle-bowl |
+| <i class='icon-bowl'></i> | <pre>icon-bowl</pre> | bowl |
+| <i class='icon-bowl-spoon'></i> | <pre>icon-bowl-spoon</pre> | bowl-spoon |
+| <i class='icon-apple'></i> | <pre>icon-apple</pre> | apple |
+| <i class='icon-apple-eaten'></i> | <pre>icon-apple-eaten</pre> | apple-eaten |
+| <i class='icon-pizza'></i> | <pre>icon-pizza</pre> | pizza |
+| <i class='icon-pizza-eaten'></i> | <pre>icon-pizza-eaten</pre> | pizza-eaten |
+| <i class='icon-drumstick'></i> | <pre>icon-drumstick</pre> | drumstick |
+| <i class='icon-drumstick-eaten'></i> | <pre>icon-drumstick-eaten</pre> | drumstick-eaten |
+| <i class='icon-muffin'></i> | <pre>icon-muffin</pre> | muffin |
+| <i class='icon-mustard'></i> | <pre>icon-mustard</pre> | mustard |
+| <i class='icon-mustard-alt'></i> | <pre>icon-mustard-alt</pre> | mustard-alt |
+| <i class='icon-ketchup'></i> | <pre>icon-ketchup</pre> | ketchup |
+| <i class='icon-sauce'></i> | <pre>icon-sauce</pre> | sauce |
+| <i class='icon-egg'></i> | <pre>icon-egg</pre> | egg |
+| <i class='icon-fish'></i> | <pre>icon-fish</pre> | fish |
+| <i class='icon-fridge'></i> | <pre>icon-fridge</pre> | fridge |
+| <i class='icon-eye'></i> | <pre>icon-eye</pre> | eye |
+| <i class='icon-glasses'></i> | <pre>icon-glasses</pre> | glasses |
+| <i class='icon-crown'></i> | <pre>icon-crown</pre> | crown |
+| <i class='icon-king'></i> | <pre>icon-king</pre> | king |
+| <i class='icon-notepad'></i> | <pre>icon-notepad</pre> | notepad |
+*/
+
+@font-face {
+    font-family: 'ui-font-solid';
+    src: url('../fonts/uifont-solid.eot');
+    src: url('../fonts/uifont-solid.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/uifont-solid.ttf') format('truetype'),
+         url('../fonts/uifont-solid.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+[class^="icon-"], [class*=" icon-"] {
+    font-family: 'ui-font-solid';
+    //font-size: 150%; // default font character size is a bit small
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Enable Ligatures ================ */
+    -webkit-font-feature-settings: "liga";
+    -moz-font-feature-settings: "liga=1";
+    -moz-font-feature-settings: "liga";
+    -ms-font-feature-settings: "liga" 1;
+    -o-font-feature-settings: "liga";
+    font-feature-settings: "liga";
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-arrow-down:before { content: '\E111'; }
+.icon-arrow-up:before { content: '\E112'; }
+.icon-caret-right:before { content: '\E113'; }
+.icon-caret-left:before { content: '\E114'; }
+.icon-arrow-circle-down:before { content: '\E115'; }
+.icon-arrow-circle-up:before { content: '\E116'; }
+.icon-arrow-o-circle-right:before { content: '\E117'; }
+.icon-arrow-o-circle-left:before { content: '\E118'; }
+.icon-caret-o-circle-left:before { content: '\E121'; }
+.icon-caret-o-circle-right:before { content: '\E122'; }
+.icon-arrow-circle-right:before { content: '\E123'; }
+.icon-arrow-circle-left:before { content: '\E124'; }
+.icon-caret-circle-left:before { content: '\E125'; }
+.icon-caret-circle-right:before { content: '\E126'; }
+.icon-check-o-circle:before { content: '\E127'; }
+.icon-delete-o-circle:before { content: '\E128'; }
+.icon-check-circle:before { content: '\E131'; }
+.icon-delete-circle:before { content: '\E132'; }
+.icon-return-left:before { content: '\E133'; }
+.icon-return-right:before { content: '\E134'; }
+.icon-traffic:before { content: '\E135'; }
+.icon-back:before { content: '\E136'; }
+.icon-forward:before { content: '\E137'; }
+.icon-contract:before { content: '\E138'; }
+.icon-expand:before { content: '\E141'; }
+.icon-exit-fullscreen:before { content: '\E142'; }
+.icon-expand-window:before { content: '\E143'; }
+.icon-refresh:before { content: '\E144'; }
+.icon-sync:before { content: '\E145'; }
+.icon-cycle:before { content: '\E146'; }
+.icon-repeat:before { content: '\E147'; }
+.icon-bar-chart:before { content: '\E148'; }
+.icon-bar-chart-up:before { content: '\E151'; }
+.icon-stats-up:before { content: '\E152'; }
+.icon-stats-down:before { content: '\E153'; }
+.icon-stats-easel-up:before { content: '\E154'; }
+.icon-stats-easel-down:before { content: '\E155'; }
+.icon-bar-chart-easel:before { content: '\E156'; }
+.icon-window-down:before { content: '\E157'; }
+.icon-window-up:before { content: '\E158'; }
+.icon-window-maximize:before { content: '\E161'; }
+.icon-window-minimize:before { content: '\E162'; }
+.icon-login:before { content: '\E163'; }
+.icon-logout:before { content: '\E164'; }
+.icon-panel-close:before { content: '\E165'; }
+.icon-panel-show:before { content: '\E166'; }
+.icon-command-line:before { content: '\E167'; }
+.icon-window:before { content: '\E168'; }
+.icon-window-plus:before { content: '\E171'; }
+.icon-window-minus:before { content: '\E172'; }
+.icon-window-check:before { content: '\E173'; }
+.icon-window-delete:before { content: '\E174'; }
+.icon-share-right:before { content: '\E175'; }
+.icon-share-left:before { content: '\E176'; }
+.icon-multiple-windows:before { content: '\E177'; }
+.icon-list-th-lg:before { content: '\E178'; }
+.icon-grid-lg:before { content: '\E181'; }
+.icon-grid:before { content: '\E182'; }
+.icon-list-th:before { content: '\E183'; }
+.icon-sidebar:before { content: '\E184'; }
+.icon-list-bullet:before { content: '\E185'; }
+.icon-bars:before { content: '\E186'; }
+.icon-outdent:before { content: '\E187'; }
+.icon-indent:before { content: '\E188'; }
+.icon-document:before { content: '\E211'; }
+.icon-text-doc:before { content: '\E212'; }
+.icon-zipped-doc:before { content: '\E213'; }
+.icon-text-doc-plus:before { content: '\E214'; }
+.icon-text-doc-minus:before { content: '\E215'; }
+.icon-heart-card:before { content: '\E216'; }
+.icon-diamond-card:before { content: '\E217'; }
+.icon-spade-card:before { content: '\E218'; }
+.icon-club-card:before { content: '\E221'; }
+.icon-book:before { content: '\E222'; }
+.icon-clipboard:before { content: '\E223'; }
+.icon-check-clipboard:before { content: '\E224'; }
+.icon-delete-clipboard:before { content: '\E225'; }
+.icon-text-clipboard:before { content: '\E226'; }
+.icon-address-book:before { content: '\E227'; }
+.icon-calendar:before { content: '\E228'; }
+.icon-calendar-day:before { content: '\E231'; }
+.icon-id-card:before { content: '\E232'; }
+.icon-polaroids:before { content: '\E233'; }
+.icon-polaroids-blank:before { content: '\E234'; }
+.icon-photos:before { content: '\E235'; }
+.icon-photo:before { content: '\E236'; }
+.icon-camera:before { content: '\E237'; }
+.icon-headphones:before { content: '\E238'; }
+.icon-stop:before { content: '\E241'; }
+.icon-play:before { content: '\E242'; }
+.icon-record:before { content: '\E243'; }
+.icon-pause:before { content: '\E244'; }
+.icon-ffw:before { content: '\E245'; }
+.icon-rev:before { content: '\E246'; }
+.icon-skip-forward:before { content: '\E247'; }
+.icon-skip-back:before { content: '\E248'; }
+.icon-eject:before { content: '\E251'; }
+.icon-volume-max:before { content: '\E252'; }
+.icon-volume:before { content: '\E253'; }
+.icon-volume-min:before { content: '\E254'; }
+.icon-mute:before { content: '\E255'; }
+.icon-volume-plus:before { content: '\E256'; }
+.icon-volume-minus:before { content: '\E257'; }
+.icon-volume-delete:before { content: '\E258'; }
+.icon-music-notes:before { content: '\E261'; }
+.icon-music-notes-box:before { content: '\E262'; }
+.icon-speaker:before { content: '\E263'; }
+.icon-boombox:before { content: '\E264'; }
+.icon-ipod:before { content: '\E265'; }
+.icon-microphone:before { content: '\E266'; }
+.icon-microphone-alt:before { content: '\E267'; }
+.icon-cd:before { content: '\E268'; }
+.icon-vinyl:before { content: '\E271'; }
+.icon-cassette:before { content: '\E272'; }
+.icon-eq:before { content: '\E273'; }
+.icon-slate:before { content: '\E274'; }
+.icon-film:before { content: '\E275'; }
+.icon-tv:before { content: '\E276'; }
+.icon-monitor:before { content: '\E277'; }
+.icon-keyboard:before { content: '\E278'; }
+.icon-printer:before { content: '\E281'; }
+.icon-printing:before { content: '\E282'; }
+.icon-mouse:before { content: '\E283'; }
+.icon-text:before { content: '\E284'; }
+.icon-ribbon:before { content: '\E285'; }
+.icon-gamepad:before { content: '\E286'; }
+.icon-portable-game:before { content: '\E287'; }
+.icon-tablet:before { content: '\E288'; }
+.icon-calculator:before { content: '\E311'; }
+.icon-floppy-disc:before { content: '\E312'; }
+.icon-flashlight:before { content: '\E313'; }
+.icon-bell:before { content: '\E314'; }
+.icon-hourglass:before { content: '\E315'; }
+.icon-smartphone:before { content: '\E316'; }
+.icon-cellphone:before { content: '\E317'; }
+.icon-lightbulb:before { content: '\E318'; }
+.icon-telephone:before { content: '\E321'; }
+.icon-battery-full:before { content: '\E322'; }
+.icon-battery-half:before { content: '\E323'; }
+.icon-battery-low:before { content: '\E324'; }
+.icon-battery-charge:before { content: '\E325'; }
+.icon-flash:before { content: '\E326'; }
+.icon-wrench:before { content: '\E327'; }
+.icon-settings:before { content: '\E328'; }
+.icon-zoom-in:before { content: '\E331'; }
+.icon-zoom-out:before { content: '\E332'; }
+.icon-search:before { content: '\E333'; }
+.icon-cloud-upload:before { content: '\E334'; }
+.icon-cloud:before { content: '\E335'; }
+.icon-cloud-up:before { content: '\E336'; }
+.icon-cloud-down:before { content: '\E337'; }
+.icon-cloud-check:before { content: '\E338'; }
+.icon-cloud-delete:before { content: '\E341'; }
+.icon-bluetooth:before { content: '\E342'; }
+.icon-wifi:before { content: '\E343'; }
+.icon-firewire:before { content: '\E344'; }
+.icon-usb:before { content: '\E345'; }
+.icon-plug:before { content: '\E346'; }
+.icon-outlet:before { content: '\E347'; }
+.icon-command:before { content: '\E348'; }
+.icon-shuffle:before { content: '\E351'; }
+.icon-ethernet:before { content: '\E352'; }
+.icon-code:before { content: '\E353'; }
+.icon-fullscreen:before { content: '\E354'; }
+.icon-contrast:before { content: '\E355'; }
+.icon-coverflow:before { content: '\E356'; }
+.icon-zoom-out-solid:before { content: '\E357'; }
+.icon-zoom-in-solid:before { content: '\E358'; }
+.icon-info:before { content: '\E361'; }
+.icon-info-circle:before { content: '\E362'; }
+.icon-outbox:before { content: '\E363'; }
+.icon-inbox:before { content: '\E364'; }
+.icon-download:before { content: '\E365'; }
+.icon-compose:before { content: '\E366'; }
+.icon-layout:before { content: '\E367'; }
+.icon-link:before { content: '\E368'; }
+.icon-windows:before { content: '\E371'; }
+.icon-flash-drive:before { content: '\E372'; }
+.icon-location:before { content: '\E373'; }
+.icon-bus:before { content: '\E374'; }
+.icon-train:before { content: '\E375'; }
+.icon-gas:before { content: '\E376'; }
+.icon-dashboard:before { content: '\E377'; }
+.icon-dashboard-alt:before { content: '\E378'; }
+.icon-flag:before { content: '\E381'; }
+.icon-flag-alt:before { content: '\E382'; }
+.icon-plane:before { content: '\E383'; }
+.icon-compass:before { content: '\E384'; }
+.icon-clock:before { content: '\E385'; }
+.icon-watch:before { content: '\E386'; }
+.icon-alarm-clock:before { content: '\E387'; }
+.icon-megaphone:before { content: '\E388'; }
+.icon-locked-alt:before { content: '\E411'; }
+.icon-unlocked-alt:before { content: '\E412'; }
+.icon-unlocked:before { content: '\E413'; }
+.icon-locked:before { content: '\E414'; }
+.icon-key:before { content: '\E415'; }
+.icon-cube-open:before { content: '\E416'; }
+.icon-cube:before { content: '\E417'; }
+.icon-mailbox:before { content: '\E418'; }
+.icon-file-drawer:before { content: '\E421'; }
+.icon-folder-flat:before { content: '\E422'; }
+.icon-folder:before { content: '\E423'; }
+.icon-folder-plus:before { content: '\E424'; }
+.icon-folder-minus:before { content: '\E425'; }
+.icon-attach:before { content: '\E426'; }
+.icon-recycle:before { content: '\E427'; }
+.icon-recycle-bin:before { content: '\E428'; }
+.icon-envelope:before { content: '\E431'; }
+.icon-mail:before { content: '\E432'; }
+.icon-mail-down:before { content: '\E433'; }
+.icon-mail-up:before { content: '\E434'; }
+.icon-check:before { content: '\E435'; }
+.icon-delete:before { content: '\E436'; }
+.icon-map:before { content: '\E437'; }
+.icon-brush:before { content: '\E438'; }
+.icon-pen:before { content: '\E441'; }
+.icon-pencil:before { content: '\E442'; }
+.icon-thumbtack:before { content: '\E443'; }
+.icon-male:before { content: '\E444'; }
+.icon-female:before { content: '\E445'; }
+.icon-brightness-up:before { content: '\E446'; }
+.icon-brightness-down:before { content: '\E447'; }
+.icon-crosshair:before { content: '\E448'; }
+.icon-trefoil-circle:before { content: '\E451'; }
+.icon-cross-circle:before { content: '\E452'; }
+.icon-power:before { content: '\E453'; }
+.icon-pie-chart:before { content: '\E454'; }
+.icon-share:before { content: '\E455'; }
+.icon-move:before { content: '\E456'; }
+.icon-star-6:before { content: '\E457'; }
+.icon-star-5:before { content: '\E458'; }
+.icon-alert-o:before { content: '\E461'; }
+.icon-alert:before { content: '\E462'; }
+.icon-option:before { content: '\E463'; }
+.icon-plus:before { content: '\E464'; }
+.icon-minus:before { content: '\E465'; }
+.icon-user:before { content: '\E466'; }
+.icon-group:before { content: '\E467'; }
+.icon-user-plus:before { content: '\E468'; }
+.icon-user-minus:before { content: '\E471'; }
+.icon-user-delete:before { content: '\E472'; }
+.icon-chat:before { content: '\E473'; }
+.icon-chat-dots:before { content: '\E474'; }
+.icon-chat-rect:before { content: '\E475'; }
+.icon-chat-rect-dots:before { content: '\E476'; }
+.icon-chat-lines:before { content: '\E477'; }
+.icon-chat-rect-lines:before { content: '\E478'; }
+.icon-infinity:before { content: '\E481'; }
+.icon-umbrella:before { content: '\E482'; }
+.icon-necktie:before { content: '\E483'; }
+.icon-briefcase:before { content: '\E484'; }
+.icon-first-aid:before { content: '\E485'; }
+.icon-capsule:before { content: '\E486'; }
+.icon-shield:before { content: '\E487'; }
+.icon-mustache:before { content: '\E488'; }
+.icon-bag:before { content: '\E511'; }
+.icon-tag:before { content: '\E512'; }
+.icon-credit-card:before { content: '\E513'; }
+.icon-planet:before { content: '\E514'; }
+.icon-earth:before { content: '\E515'; }
+.icon-globe:before { content: '\E516'; }
+.icon-trophy:before { content: '\E517'; }
+.icon-medal:before { content: '\E518'; }
+.icon-trashcan:before { content: '\E521'; }
+.icon-trefoil:before { content: '\E522'; }
+.icon-leaf:before { content: '\E523'; }
+.icon-lamp:before { content: '\E524'; }
+.icon-home:before { content: '\E525'; }
+.icon-help:before { content: '\E526'; }
+.icon-magnet:before { content: '\E527'; }
+.icon-heart:before { content: '\E528'; }
+.icon-d6:before { content: '\E531'; }
+.icon-asterisk:before { content: '\E532'; }
+.icon-flask:before { content: '\E533'; }
+.icon-flask-tilted:before { content: '\E534'; }
+.icon-test-tube:before { content: '\E535'; }
+.icon-mallet:before { content: '\E536'; }
+.icon-fork-spoon:before { content: '\E537'; }
+.icon-spatula:before { content: '\E538'; }
+.icon-chef-hat:before { content: '\E541'; }
+.icon-place-setting:before { content: '\E542'; }
+.icon-knife-fork:before { content: '\E543'; }
+.icon-grill-open:before { content: '\E544'; }
+.icon-grill:before { content: '\E545'; }
+.icon-platter:before { content: '\E546'; }
+.icon-droplet:before { content: '\E547'; }
+.icon-wine:before { content: '\E548'; }
+.icon-wine-tilted:before { content: '\E551'; }
+.icon-drink:before { content: '\E552'; }
+.icon-drink-straw:before { content: '\E553'; }
+.icon-popsicle:before { content: '\E554'; }
+.icon-popsicle-eaten:before { content: '\E555'; }
+.icon-ice-cream:before { content: '\E556'; }
+.icon-ice-cream-alt:before { content: '\E557'; }
+.icon-ice-cream-eaten-alt:before { content: '\E558'; }
+.icon-ice-cream-eaten:before { content: '\E561'; }
+.icon-mug:before { content: '\E562'; }
+.icon-noodle-bowl:before { content: '\E563'; }
+.icon-bowl:before { content: '\E564'; }
+.icon-bowl-spoon:before { content: '\E565'; }
+.icon-apple:before { content: '\E566'; }
+.icon-apple-eaten:before { content: '\E567'; }
+.icon-pizza:before { content: '\E568'; }
+.icon-pizza-eaten:before { content: '\E571'; }
+.icon-drumstick:before { content: '\E572'; }
+.icon-drumstick-eaten:before { content: '\E573'; }
+.icon-muffin:before { content: '\E574'; }
+.icon-mustard:before { content: '\E575'; }
+.icon-mustard-alt:before { content: '\E576'; }
+.icon-ketchup:before { content: '\E577'; }
+.icon-sauce:before { content: '\E578'; }
+.icon-egg:before { content: '\E581'; }
+.icon-fish:before { content: '\E582'; }
+.icon-fridge:before { content: '\E583'; }
+.icon-eye:before { content: '\E584'; }
+.icon-glasses:before { content: '\E585'; }
+.icon-crown:before { content: '\E586'; }
+.icon-king:before { content: '\E587'; }
+.icon-notepad:before { content: '\E588'; }

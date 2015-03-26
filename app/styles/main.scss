@@ -6,6 +6,8 @@ $icon-font-path: "../../bower_components/bootstrap-sass/assets/fonts/bootstrap/"
 ========== INIT
 */
 @import 'vendor/_normalize';
+@import 'components/ui-font/_ui-font-solid'; // Icons should be declared early on
+@import 'components/fontawesome/_fontawesome-custom'; // Icons should be declared early on
 @import 'vendor/_bootstrap-custom';
 @import 'vendor/_angular-strap';
 
@@ -15,6 +17,8 @@ $icon-font-path: "../../bower_components/bootstrap-sass/assets/fonts/bootstrap/"
 */
 // variables, fonts, mixins, helpers... common styles used across the entire site
 @import 'base/__base';
+// vendor overrides
+@import 'vendor/_overrides';
 
 
 /*!

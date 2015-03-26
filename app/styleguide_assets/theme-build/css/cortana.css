@@ -49,7 +49,7 @@
     text-align: center !important;
     margin: 0 !important;
     padding: 0 !important;
-    font-family: "Open Sans", sans-serif !important;
+    font-family: "Ubuntu", sans-serif !important;
     font-weight: normal !important;
     font-size: 28px !important;
     font-style: normal !important;
@@ -83,7 +83,7 @@
   border: 1px solid #f4f6f9 !important;
   position: relative !important;
   width: 100% !important;
-  overflow-y: auto !important;
+  /*overflow-y: auto !important;*/
   -webkit-box-sizing: border-box !important;
   -moz-box-sizing: border-box !important;
   box-sizing: border-box !important; }
@@ -98,10 +98,10 @@
     border-bottom-right-radius: 4px !important;
     padding: 5px 8px !important;
     display: inline-block !important;
-    font-family: "Open Sans", sans-serif !important; }
+    font-family: "Ubuntu", sans-serif !important; }
 
 .cortana-footer {
-  font-family: "Open Sans", sans-serif !important;
+  font-family: "Ubuntu", sans-serif !important;
   text-align: center !important;
   padding-bottom: 50px !important;
   font-size: 14px !important;
@@ -125,7 +125,7 @@
   font-size: 18px !important;
   line-height: 1.6em !important; }
   .cortana-content h1, .cortana-content h2, .cortana-content h3, .cortana-content h4, .cortana-content h5, .cortana-content h6 {
-    font-family: "Open Sans", sans-serif !important;
+    font-family: "Ubuntu", sans-serif !important;
     font-weight: bold !important;
     font-style: normal !important;
     margin: 2em 0 0.4em 0 !important;
@@ -153,7 +153,7 @@
       .cortana-content h3 {
         font-size: 21px !important; } }
   .cortana-content p {
-    font-family: "Open Sans", sans-serif !important;
+    font-family: "Ubuntu", sans-serif !important;
     line-height: 1.6em !important;
     padding: 0 30px !important;
     margin: 1.8em 0 !important;
@@ -171,7 +171,7 @@
       padding: 0 !important; }
   .cortana-content table {
     margin: 30px !important;
-    font-family: "Open Sans", sans-serif !important;
+    font-family: "Ubuntu", sans-serif !important;
     border-collapse: collapse !important; }
     @media only screen and (max-width: 900px) {
       .cortana-content table {
@@ -264,7 +264,7 @@
     width: 100% !important;
     padding: 3px 5% !important;
     text-decoration: none !important;
-    font-family: "Open Sans", sans-serif !important;
+    font-family: "Ubuntu", sans-serif !important;
     color: #ecf0f1 !important;
     margin: 0 !important;
     font-style: normal !important;
@@ -291,7 +291,7 @@
   .cortana-nav h3 {
     padding: 20px 5% 0 5% !important;
     margin: 20px 0 10px 0 !important;
-    font-family: "Open Sans", sans-serif !important;
+    font-family: "Ubuntu", sans-serif !important;
     color: #ecf0f1 !important;
     border-top: 1px solid #364350 !important;
     font-size: 18px !important;
@@ -315,7 +315,7 @@
     width: 100% !important;
     padding: 5px 0 !important;
     text-decoration: none !important;
-    font-family: "Open Sans", sans-serif !important;
+    font-family: "Ubuntu", sans-serif !important;
     -webkit-transition: color 0.2s !important;
     transition: color 0.2s !important;
     font-size: 16px !important;
@@ -393,7 +393,7 @@
     border-bottom-right-radius: 4px !important;
     padding: 5px 8px !important;
     display: inline-block !important;
-    font-family: "Open Sans", sans-serif !important; }
+    font-family: "Ubuntu", sans-serif !important; }
   .codeBlock.jsExample:after {
     content: 'JavaScript' !important; }
   .codeBlock .highlight {
@@ -442,7 +442,7 @@
   -webkit-box-shadow: none !important;
   box-shadow: none !important;*/
   padding-left: 45px !important;
-  font-family: "Open Sans", sans-serif !important;
+  font-family: "Ubuntu", sans-serif !important;
   /*font-size: 14px !important;*/
   background: #fff url("../img/search-icon.svg") no-repeat 10px 6px !important;
   background: #fff url("../img/search-icon.png") no-repeat 10px 6px !important \9 ; }
@@ -467,7 +467,7 @@
 
 .cortana-search-wrapper li {
   padding: 8px 15px !important;
-  font-family: "Open Sans", sans-serif !important;
+  font-family: "Ubuntu", sans-serif !important;
   border-top: 1px solid #bdc3c7 !important; }
   .cortana-search-wrapper li:first-child {
     border: none !important; }
