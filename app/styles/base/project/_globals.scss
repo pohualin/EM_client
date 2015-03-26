@@ -283,14 +283,54 @@
         top: 22px;
         font-size: 24px;
     }
-    .has-success .form-control {
-        color: $state-success-text;
+    // Validation states
+    .has-success {
+        // Override the input form control text color (otherwise normal)
+        .form-control {
+            color: $state-success-text;
+        }
+        // Override the input form control label text color (otherwise validation state color)
+        .control-label {
+            color: inherit;
+        }
+        // Color any icons based on the validation state color
+        [class^="icon-"], [class*=" icon-"],
+        [class^="fa-"], [class*=" fa-"],
+        .glyphicon {
+            color: $state-success-text;
+        }
     }
-    .has-warning .form-control {
-        color: $state-warning-text;
+    .has-warning {
+        // Override the input form control text color (otherwise normal)
+        .form-control {
+            color: $state-warning-text;
+        }
+        // Override the input form control label text color (otherwise validation state color)
+        .control-label {
+            color: inherit;
+        }
+        // Color any icons based on the validation state color
+        [class^="icon-"], [class*=" icon-"],
+        [class^="fa-"], [class*=" fa-"],
+        .glyphicon {
+            color: $state-warning-text;
+        }
     }
-    .has-error .form-control {
-        color: $state-danger-text;
+    .has-error {
+        // Override the input form control text color (otherwise normal)
+        .form-control {
+            color: $state-danger-text;
+        }
+        // Override the input form control label text color (otherwise validation state color)
+        .control-label {
+            color: inherit;
+        }
+        // Color any icons based on the validation state color
+        [class^="icon-"], [class*=" icon-"],
+        [class^="fa-"], [class*=" fa-"],
+        .glyphicon {
+            color: $state-danger-text;
+        }
     }
     // Placeholder text
     .form-control::-moz-placeholder {
