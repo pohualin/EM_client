@@ -200,6 +200,21 @@
         @include button-variant($gray, #ECEDEF, #ECEDEF);
     }
 
+    .btn-icon {
+        @include button-variant(#6CC5DC, transparent, transparent);
+        border: 0;
+        box-shadow: none;
+        padding: 0 .25em;
+        &:hover,
+        &:focus,
+        &.focus,
+        &:active,
+        &.active,
+        .open > &.dropdown-toggle {
+            color: #21A4C7;
+        }
+    }
+
     .btn-link {
         &:hover,
         &:focus {
@@ -215,6 +230,11 @@
             color: #9EA9B5;
             text-decoration: none;
         }
+    }
+
+    // Button class that inherits it's color from it's containing element
+    .btn-inherit {
+        color: inherit;
     }
 
     .btn-lg {

@@ -185,3 +185,21 @@
     }
 }
 
+.panel-secondary {
+    @include panel-variant($panel-secondary-border, $panel-secondary-text, $panel-secondary-heading-bg, $panel-secondary-heading-bg);
+}
+
+.panel-title {
+    @include remIt(font-size, 16);
+    font-weight: 300;
+    text-transform: none;
+    > a:hover {
+        cursor: pointer;
+        text-decoration: none;
+    }
+}
+
+.panel-group .panel + .panel {
+  margin-top: 10px;
+}
+
