@@ -24,6 +24,9 @@ angular.module('emmiManager')
             $scope.saveScheduledProgram = function(addProgramForm){
                 $scope.addProgramFormSubmitted = true;
                 if ($scope.scheduledProgram.program && addProgramForm.$valid){
+                    $scope.addProgramFormSubmitted = true;
+
+                    // save the scheduled program
 
                 } else {
                     $scope.showError();
@@ -53,14 +56,20 @@ angular.module('emmiManager')
             };
 
             $scope.selectProgram = function (programResource) {
-                if (programResource.selected) {
-                    if ($scope.scheduledProgram.program) {
-                        $scope.scheduledProgram.program.selected = false;
-                    }
+                if ($scope.scheduledProgram.program) {
+                    $scope.scheduledProgram.program.selected = false;
+                }
+                if (programResource && programResource.selected) {
                     $scope.scheduledProgram.program = programResource;
                 } else {
                     $scope.scheduledProgram.program = '';
                 }
+            };
+
+            $scope.reset = function () {
+                $scope.selectProgram();
+                $scope.addProgramFormSubmitted = false;
+                $scope.showAllResults(false);
             };
 
             /**
