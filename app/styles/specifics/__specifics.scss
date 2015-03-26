@@ -5,34 +5,55 @@
 @import 'popovers';
 
 // miscellaneous rules
+.has-input-icon {
+    position: relative;
+    .form-control {
+        padding-left: $padding-base-horizontal + 24;
+        &:focus ~ .input-icon {
+            color: $brand-secondary;
+        }
+    }
+}
 .input-icon {
     display: block;
     position: absolute;
     z-index: 3;
+    top: 0;
     left: 0;
     font-size: 24px;
     color: #C7D0D8;
     margin: 7px $padding-base-horizontal - 2;
-    transition: opacity 0.2s ease;
+    transition: all 0.2s ease;
 }
 
+.has-input-icon-telephone { }
+.has-input-icon-calendar {
+    .form-control {
+        padding-left: $padding-base-horizontal;
+    }
+    .input-icon {
+        left: auto;
+        right: 0;
+    }
+}
 .has-input-icon-search {
-    transition: padding 0.3s ease-in-out;
-    padding-left: $padding-base-horizontal + 24;
-    ~ .input-group-btn {
+    .form-control {
+        transition: padding 0.3s ease-in-out;
+        &:focus {
+            padding-left: $padding-base-horizontal;
+            ~ .input-icon {
+                opacity: 0;
+                //display: none;
+            }
+            ~ .input-group-btn {
+                //display: inline-block;
+                //visibility: visible;
+            }
+        }
+    }
+    .input-group-btn {
         //display: none;
         //visibility: hidden;
-    }
-    &:focus {
-        padding-left: $padding-base-horizontal;
-        ~ .input-icon {
-            opacity: 0;
-            //display: none;
-        }
-        ~ .input-group-btn {
-            //display: inline-block;
-            //visibility: visible;
-        }
     }
 }
 

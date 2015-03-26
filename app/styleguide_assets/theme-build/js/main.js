@@ -19,7 +19,18 @@ var jQuery_no_conflict = $.noConflict(true);
     'angularMoment',
     'emmi-angular-multiselect',
     'truncate'
-  ]);
+  ])
+
+  .config(function ($datepickerProvider) {
+
+    // ensure dates are compatible with back-end
+    angular.extend($datepickerProvider.defaults, {
+        dateFormat: 'MM/dd/yyyy',
+        modelDateFormat: 'yyyy-MM-dd',
+        dateType: 'string'
+    });
+
+  });
 
   app.controller('MainController', function($scope) {
 
@@ -56,6 +67,9 @@ var jQuery_no_conflict = $.noConflict(true);
       }
     ];
     $scope.panels.activePanels = [];
+
+    // For Datepicker example
+    $scope.selectedDate;
 
   });
 

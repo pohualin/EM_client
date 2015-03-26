@@ -274,3 +274,21 @@ category: 1. Layout - Form
 </div>
 ```
 */
+
+/*doc
+---
+title: Input Icons
+name: m-input-icons
+category: 1. Layout - Form
+---
+
+```html_example
+<div class="form-group">
+  <label class="control-label" for="inputPhone">Phone Number</label>
+  <div class="has-input-icon has-input-icon-telephone">
+    <input type="text" id="inputPhone" class="form-control" placeholder="XXX-XXX-XXXX">
+    <span class="input-icon"><i class="icon-telephone"></i></span>
+  </div>
+</div>
+```
+*/

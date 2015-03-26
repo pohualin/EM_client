@@ -16,6 +16,7 @@ $gray-light:             #B2B2B2 !default;
 $gray-lighter:           lighten($gray-base, 93.5%) !default;
 
 $brand-primary:         #21A4C7 !default;
+$brand-secondary:       #6CC5DC !default;
 $brand-success:         #5cb85c !default;
 $brand-info:            #5bc0de !default;
 $brand-warning:         #f0ad4e !default;
@@ -57,7 +58,7 @@ $font-size-h1:            ceil(($font-size-base * 1.7)) !default; // ~24px
 $font-size-h2:            floor(($font-size-base * 1.43)) !default; // ~20px
 $font-size-h3:            floor(($font-size-base * 1.43)) !default; // ~20px
 $font-size-h4:            ceil(($font-size-base * 0.85)) !default; // ~12px
-$font-size-h5:            $font-size-base !default;
+$font-size-h5:            ceil(($font-size-base * 0.78)) !default; // ~11px
 $font-size-h6:            ceil(($font-size-base * 0.85)) !default; // ~12px
 
 //** Unit-less `line-height` for use in components like buttons.

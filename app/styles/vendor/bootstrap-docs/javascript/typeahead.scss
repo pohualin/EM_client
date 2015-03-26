@@ -27,8 +27,8 @@ category: 3. JavaScript - Typeahead
 ```html_example
 <form class="form" role="form">
   <div class="form-group">
-    <div class="input-group">
-      <input type="text" class="form-control typeahead-search has-input-icon-search" ng-model="selectedName" ng-options="name for name in names" placeholder="Search by Last Name or Access Code" data-bs-typeahead>
+    <div class="input-group has-input-icon has-input-icon-search">
+      <input type="text" class="form-control typeahead-search" ng-model="selectedName" ng-options="name for name in names" placeholder="Search by Last Name or Access Code" data-bs-typeahead>
       <span class="input-icon"><i class="icon-search"></i></span>
       <span class="input-group-btn">
         <button class="btn btn-success" type="button">Go</button>
