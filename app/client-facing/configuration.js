@@ -51,6 +51,12 @@ angular.module('emmiManager', [
     .constant('PATTERN', {
         EMAIL: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$/
     })
+    
+    .constant('ERROR_MESSAGE', {
+        LOCK_PART_1: 'Your account has been temporarily locked due to too many login attempts. You can try again ',
+        LOCK_PART_2: ', or contact Emmi Support at 866-294-3664 or support@emmisolutions.com.',
+        LOCK_EXPIRED: 'Your account has been temporarily locked due to too many login attempts. Please try again.'
+    })
 
     .config(function ($httpProvider, $translateProvider, tmhDynamicLocaleProvider, HateoasInterceptorProvider, $datepickerProvider, API) {
 
@@ -83,7 +89,7 @@ angular.module('emmiManager', [
         });
     })
 
-    .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, PATTERN, arrays, $document, ConfigurationService, $modal, $timeout, moment) {
+    .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, PATTERN, ERROR_MESSAGE, arrays, $document, ConfigurationService, $modal, $timeout, moment) {
 
         var modals = [], alerts = [];
 
@@ -266,8 +272,8 @@ angular.module('emmiManager', [
         
         moment.locale('en', {
         	relativeTime: {
-        		future: 'in %s',
-                past: 'now',
+        		future: ERROR_MESSAGE.LOCK_PART_1 + 'in %s' + ERROR_MESSAGE.LOCK_PART_2,
+                past: ERROR_MESSAGE.LOCK_EXPIRED,
                 s:  'a few seconds',
                 m:  'a minute',
                 mm: '%d minutes',
