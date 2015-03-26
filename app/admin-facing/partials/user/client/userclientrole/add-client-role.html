@@ -1,9 +1,8 @@
 <form name="clientRolesSelection" data-popover-right-toggle>
     <div class="form-group" style="min-width: 200px; min-height: 50px">
         <div class="radio" data-ng-repeat="clientRole in clientRoles">
-            <label>
-                <input type="radio" data-ng-model="$parent.clientRolesSelection.selectedClientRole" value="{{clientRole.entity.id}}" />&nbsp;&nbsp;
-            </label>
+            <input type="radio" id="clientRole{{$index}}" data-ng-model="$parent.clientRolesSelection.selectedClientRole" value="{{clientRole.entity.id}}" />&nbsp;&nbsp;
+            <label for="clientRole{{$index}}"></label>
             <span class="toggle-trigger">
                 <span data-ng-show="clientRole.entity.permissions.length > 0" class="caret"></span>
                 <span>{{ clientRole.entity.name }}</span>

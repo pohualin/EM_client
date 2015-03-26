@@ -50,10 +50,10 @@
                         <div class="panel-collapse" data-bs-collapse-target>
                             <div class="panel-body">
                                 <div class="checkbox"
-                                     data-ng-repeat="permission in role.entity.userClientTeamPermissions  | orderBy:'rank'">
+                                        data-ng-repeat="permission in role.entity.userClientTeamPermissions  | orderBy:'rank'">
+                                    <input id="{{role.entity.id}}_perm_{{permission.name}}" type="checkbox"
+                                        data-ng-model="permission.active"/>
                                     <label for="{{role.entity.id}}_perm_{{permission.name}}">
-                                        <input id="{{role.entity.id}}_perm_{{permission.name}}" type="checkbox"
-                                               data-ng-model="permission.active"/>
                                         {{permission.name | translate}}
                                     </label>
                                 </div>
@@ -92,9 +92,9 @@
                             <div class="panel-body">
                                 <div class="checkbox"
                                      data-ng-repeat="permission in newClientTeamRole.userClientTeamPermissions  | orderBy:'rank'">
+                                    <input id="perm_{{permission.name}}" type="checkbox"
+                                           data-ng-model="permission.active"/>
                                     <label for="perm_{{permission.name}}">
-                                        <input id="perm_{{permission.name}}" type="checkbox"
-                                               data-ng-model="permission.active"/>
                                         {{permission.name | translate}}
                                     </label>
                                 </div>

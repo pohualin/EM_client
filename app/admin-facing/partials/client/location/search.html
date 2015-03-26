@@ -82,11 +82,17 @@
                                 </tr>
                                 <tr data-ng-repeat="clientLocation in locations| orderBy:sortIdx" data-ng-class="clientLocation.link.length > 0 ? 'text-muted' : ''">
                                     <td data-ng-hide="clientLocation.link.self">
-                                        <input type="checkbox" data-ng-model="clientLocation.location.entity.newlocation"
+                                        <div class="checkbox">
+                                            <input type="checkbox" id="clientLocationCb{{$index}}" data-ng-model="clientLocation.location.entity.newlocation"
                                                ng-change="onCheckboxChange(clientLocation.location)">
+                                            <label for="clientLocationCb{{$index}}"></label>
+                                        </div>
                                     </td>
                                     <td data-ng-show="clientLocation.link.self">
-                                        <input type="checkbox" disabled="disabled" checked>
+                                        <div class="checkbox">
+                                            <input type="checkbox" id="clientLocationOffCb{{$index}}" disabled="disabled" checked>
+                                            <label for="clientLocationOffCb{{$index}}"></label>
+                                        </div>
                                     </td>
                                     <td>{{clientLocation.location.entity.name}} <em>{{clientLocation.location.entity.active ? '' : "(inactive)"}}</em></td>
                                     <td>

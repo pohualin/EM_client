@@ -31,9 +31,9 @@
             <div class="col-md-4">
                 <label>&nbsp;</label>
                 <div class="checkbox">
+                    <input id="active" type="checkbox" data-ng-model="clientToEdit.active"
+                            data-ng-disabled="clientForm.clientName.$error.unique"/>
                     <label for="active">
-                        <input id="active" type="checkbox" data-ng-model="clientToEdit.active"
-                               data-ng-disabled="clientForm.clientName.$error.unique"/>
                         Active
                     </label>
                 </div>
