@@ -10,6 +10,18 @@
 
 
               {
+              "title": "Accordion",
+              "breadcrumb": "3. JavaScript - Accordion > Accordion",
+              "path": "3._javascript_-_accordion.html#a-accordion"
+              },
+
+
+
+
+
+
+
+              {
               "title": "Alerts",
               "breadcrumb": "2. Components - Alerts > Alerts",
               "path": "2._components_-_alerts.html#a-alerts"
@@ -154,6 +166,34 @@
 
 
               {
+              "title": "Group",
+              "breadcrumb": "2. Components - Button Groups > Group",
+              "path": "2._components_-_button_groups.html#a-bg-group"
+              },
+
+
+
+              {
+              "title": "Sizes",
+              "breadcrumb": "2. Components - Button Groups > Sizes",
+              "path": "2._components_-_button_groups.html#b-bg-sizes"
+              },
+
+
+
+              {
+              "title": "With dropdown",
+              "breadcrumb": "2. Components - Button Groups > With dropdown",
+              "path": "2._components_-_button_groups.html#c-bg-with-dropdown"
+              },
+
+
+
+
+
+
+
+              {
               "title": "Breadcrumb",
               "breadcrumb": "2. Components - Breadcrumb > Breadcrumb",
               "path": "2._components_-_breadcrumb.html#a-breadcrumb"
@@ -185,6 +225,18 @@
               "title": "Active / Disabled",
               "breadcrumb": "1. Layout - Buttons > Active / Disabled",
               "path": "1._layout_-_buttons.html#c-active-disabled"
+              },
+
+
+
+
+
+
+
+              {
+              "title": "Datepicker",
+              "breadcrumb": "3. JavaScript - Datepicker > Datepicker",
+              "path": "3._javascript_-_datepicker.html#a-datepicker"
               },
 
 
@@ -237,6 +289,14 @@
 
 
 
+              {
+              "title": "Sizes",
+              "breadcrumb": "2. Components - Pagination > Sizes",
+              "path": "2._components_-_pagination.html#c-pagination-sizes"
+              },
+
+
+
 
 
 
@@ -245,46 +305,6 @@
               "title": "Grid System",
               "breadcrumb": "1. Layout - Grid > Grid System",
               "path": "1._layout_-_grid.html#a-grid"
-              },
-
-
-
-
-
-
-
-              {
-              "title": "Group",
-              "breadcrumb": "2. Components - Button Groups > Group",
-              "path": "2._components_-_button_groups.html#a-group"
-              },
-
-
-
-              {
-              "title": "Sizes",
-              "breadcrumb": "2. Components - Button Groups > Sizes",
-              "path": "2._components_-_button_groups.html#b-sizes"
-              },
-
-
-
-              {
-              "title": "With dropdown",
-              "breadcrumb": "2. Components - Button Groups > With dropdown",
-              "path": "2._components_-_button_groups.html#c-with-dropdown"
-              },
-
-
-
-
-
-
-
-              {
-              "title": "Icons",
-              "breadcrumb": "1. Layout - Icons > Icons",
-              "path": "1._layout_-_icons.html#a-icons"
               },
 
 
@@ -429,6 +449,14 @@
 
 
 
+              {
+              "title": "Input Icons",
+              "breadcrumb": "1. Layout - Form > Input Icons",
+              "path": "1._layout_-_form.html#m-input-icons"
+              },
+
+
+
 
 
 
@@ -444,7 +472,7 @@
               {
               "title": "Sizes",
               "breadcrumb": "2. Components - Input groups > Sizes",
-              "path": "2._components_-_input_groups.html#c-sizes"
+              "path": "2._components_-_input_groups.html#c-input-group-sizes"
               },
 
 
@@ -574,6 +602,18 @@
 
 
               {
+              "title": "Modal",
+              "breadcrumb": "3. JavaScript - Modal > Modal",
+              "path": "3._javascript_-_modal.html#a-modal"
+              },
+
+
+
+
+
+
+
+              {
               "title": "Navbar",
               "breadcrumb": "2. Components - Navbar > Navbar",
               "path": "2._components_-_navbar.html#a-navbar"
@@ -642,6 +682,14 @@
 
 
               {
+              "title": "Contextual",
+              "breadcrumb": "2. Components - Panels > Contextual",
+              "path": "2._components_-_panels.html#d-panel-contextual"
+              },
+
+
+
+              {
               "title": "Panel with table",
               "breadcrumb": "2. Components - Panels > Panel with table",
               "path": "2._components_-_panels.html#e-panel-table"
@@ -662,6 +710,26 @@
 
 
               {
+              "title": "Popover",
+              "breadcrumb": "3. JavaScript - Popover > Popover",
+              "path": "3._javascript_-_popover.html#a-popover"
+              },
+
+
+
+              {
+              "title": "With Footer",
+              "breadcrumb": "3. JavaScript - Popover > With Footer",
+              "path": "3._javascript_-_popover.html#b-popover-footer"
+              },
+
+
+
+
+
+
+
+              {
               "title": "Tabs",
               "breadcrumb": "2. Components - Nav > Tabs",
               "path": "2._components_-_nav.html#a-tabs"
@@ -673,6 +741,14 @@
               "title": "Pills",
               "breadcrumb": "2. Components - Nav > Pills",
               "path": "2._components_-_nav.html#b-pills"
+              },
+
+
+
+              {
+              "title": "With dropdown",
+              "breadcrumb": "2. Components - Nav > With dropdown",
+              "path": "2._components_-_nav.html#c-nav-with-dropdown"
               },
 
 
@@ -794,9 +870,77 @@
 
 
               {
+              "title": "Tooltip",
+              "breadcrumb": "3. JavaScript - Tooltip > Tooltip",
+              "path": "3._javascript_-_tooltip.html#a-tooltip"
+              },
+
+
+
+
+
+
+
+              {
+              "title": "Typeahead",
+              "breadcrumb": "3. JavaScript - Typeahead > Typeahead",
+              "path": "3._javascript_-_typeahead.html#a-typeahead"
+              },
+
+
+
+              {
+              "title": "Search",
+              "breadcrumb": "3. JavaScript - Typeahead > Search",
+              "path": "3._javascript_-_typeahead.html#b-typeahead-search"
+              },
+
+
+
+
+
+
+
+              {
+              "title": "UI-Font Solid",
+              "breadcrumb": "1. Layout - Icons > UI-Font Solid",
+              "path": "1._layout_-_icons.html#a-ui-font"
+              },
+
+
+
+              {
+              "title": "FontAwesome Custom",
+              "breadcrumb": "1. Layout - Icons > FontAwesome Custom",
+              "path": "1._layout_-_icons.html#b-fa-font"
+              },
+
+
+
+              {
+              "title": "Glyphicons",
+              "breadcrumb": "1. Layout - Icons > Glyphicons",
+              "path": "1._layout_-_icons.html#c-glyphicons"
+              },
+
+
+
+
+
+
+
+              {
               "title": "Default well",
               "breadcrumb": "2. Components - Well > Default well",
               "path": "2._components_-_well.html#a-well"
+              },
+
+
+
+              {
+              "title": "Sizes",
+              "breadcrumb": "2. Components - Well > Sizes",
+              "path": "2._components_-_well.html#b-sizes"
               },
 
 
@@ -814,7 +958,7 @@
 
 
       {}];
-      $scope.onSelect = function ($item, $model, $label) {
+      $scope.$on('$typeahead.select', function(event, $item){
         window.location.replace($item.path);
-      };
+      });
     }
