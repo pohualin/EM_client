@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('emmiManager')
-    .controller('AddProgramController', ['$scope', '$controller', 'AddProgramService', 'moment', '$alert',
-        function ($scope, $controller, AddProgramService, moment, $alert) {
+    .controller('AddProgramController', ['$scope', '$controller', 'AddProgramService', 'moment', '$alert', '$timeout',
+        function ($scope, $controller, AddProgramService, moment, $alert, $timeout) {
 
             // add common pagination and sorting functions
             $controller('CommonPagination', {$scope: $scope});
@@ -21,11 +21,9 @@ angular.module('emmiManager')
                 viewByDate: moment().add(30, 'days').format('YYYY-MM-DD')
             };
 
-            $scope.saveScheduledProgram = function(addProgramForm){
+            $scope.saveScheduledProgram = function (addProgramForm) {
                 $scope.addProgramFormSubmitted = true;
-                if ($scope.scheduledProgram.program && addProgramForm.$valid){
-                    $scope.addProgramFormSubmitted = true;
-
+                if ($scope.scheduledProgram.program && addProgramForm.$valid) {
                     // save the scheduled program
 
                 } else {
@@ -55,7 +53,16 @@ angular.module('emmiManager')
                 }
             };
 
-            $scope.selectProgram = function (programResource) {
+            var resetViewByDateField = function(form){
+                if (form) {
+                    $timeout(function () {
+                        form.viewByDate.$setViewValue(form.viewByDate.$viewValue);
+                    });
+                }
+            };
+
+            $scope.selectProgram = function (programResource, form) {
+                resetViewByDateField(form);
                 if ($scope.scheduledProgram.program) {
                     $scope.scheduledProgram.program.selected = false;
                 }
@@ -66,8 +73,8 @@ angular.module('emmiManager')
                 }
             };
 
-            $scope.reset = function () {
-                $scope.selectProgram();
+            $scope.reset = function (form) {
+                $scope.selectProgram(null, form);
                 $scope.addProgramFormSubmitted = false;
                 $scope.showAllResults(false);
             };
