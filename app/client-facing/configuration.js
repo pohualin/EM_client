@@ -12,6 +12,7 @@ angular.module('emmiManager', [
     'emmiManager.api',
     'pascalprecht.translate',
     'tmh.dynamicLocale',
+    'emmi.navbar',
     'emmi.typeahead',
     'localytics.directives',
     'ngTagsInput',
@@ -263,7 +264,7 @@ angular.module('emmiManager', [
                 }
             }
         });
-        
+
         moment.locale('en', {
         	relativeTime: {
         		future: 'in %s',

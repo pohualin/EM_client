@@ -28,7 +28,7 @@ $brand-danger:          #d9534f !default;
 //## Settings for some of the most global styles.
 
 //** Background color for `<body>`.
-$body-bg:               #fff !default;
+$body-bg:               #F0F1F3 !default;
 //** Global text color on `<body>`.
 $text-color:            $gray !default;
 
@@ -246,7 +246,7 @@ $dropdown-link-color:            #B0B1B2 !default;
 //** Hover color for dropdown links.
 $dropdown-link-hover-color:      $gray !default;
 //** Hover background for dropdown links.
-$dropdown-link-hover-bg:         rgba(108,197,220,0.05) !default;
+$dropdown-link-hover-bg:         rgba(108,197,220,0.15) !default;
 
 //** Active dropdown menu item text color.
 $dropdown-link-active-color:     $gray !default;
@@ -358,29 +358,29 @@ $container-lg:                 $container-large-desktop !default;
 //##
 
 // Basics of a navbar
-$navbar-height:                    50px !default;
-$navbar-margin-bottom:             $line-height-computed !default;
+$navbar-height:                    52px !default;
+$navbar-margin-bottom:             0px !default;
 $navbar-border-radius:             $border-radius-base !default;
 $navbar-padding-horizontal:        floor(($grid-gutter-width / 2)) !default;
 $navbar-padding-vertical:          (($navbar-height - $line-height-computed) / 2) !default;
 $navbar-collapse-max-height:       340px !default;
 
-$navbar-default-color:             #777 !default;
-$navbar-default-bg:                #f8f8f8 !default;
-$navbar-default-border:            darken($navbar-default-bg, 6.5%) !default;
+$navbar-default-color:             #D4D8DC !default;
+$navbar-default-bg:                #6E7C88 !default;
+$navbar-default-border:            #6E7C88 !default;
 
 // Navbar links
-$navbar-default-link-color:                #777 !default;
-$navbar-default-link-hover-color:          #333 !default;
-$navbar-default-link-hover-bg:             transparent !default;
-$navbar-default-link-active-color:         #555 !default;
+$navbar-default-link-color:                #D4D8DC !default;
+$navbar-default-link-hover-color:          #eee !default;
+$navbar-default-link-hover-bg:             rgba(255,255,255,0.2) !default;
+$navbar-default-link-active-color:         #fff !default;
 $navbar-default-link-active-bg:            darken($navbar-default-bg, 6.5%) !default;
 $navbar-default-link-disabled-color:       #ccc !default;
 $navbar-default-link-disabled-bg:          transparent !default;
 
 // Navbar brand label
-$navbar-default-brand-color:               $navbar-default-link-color !default;
-$navbar-default-brand-hover-color:         darken($navbar-default-brand-color, 10%) !default;
+$navbar-default-brand-color:               #fff !default;
+$navbar-default-brand-hover-color:         #fff !default;
 $navbar-default-brand-hover-bg:            transparent !default;
 
 // Navbar toggle
@@ -420,7 +420,7 @@ $navbar-inverse-toggle-border-color:        #333 !default;
 //##
 
 //=== Shared nav styles
-$nav-link-padding:                          10px 15px !default;
+$nav-link-padding:                          10px 22px !default;
 $nav-link-hover-bg:                         $gray-lighter !default;
 
 $nav-disabled-link-color:                   $gray-light !default;

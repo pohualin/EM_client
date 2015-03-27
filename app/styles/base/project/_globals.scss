@@ -14,18 +14,41 @@
     html {
         font-size: 100%;
         width: 100%;
-        height: 100%;
+        position: relative;
+        min-height: 100%;
     }
 
     body {
-        //@include remIt(font-size, 16);
-        // line-height: 1.4;
-        // background: #fff;
-        // font-family: "titillium", Arial, "sans-serif";
-        // width: 100%;
-        // color: #000;
+        margin-bottom: 110px;
         // min-height: 100%;
-        //@include radial-gradient($color-main-light, $color-main);
+    }
+
+    /* _____ STICKY FOOTER _____ */
+    footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        /* Set the fixed height of the footer here */
+        height: 110px;
+        background-color: $navbar-default-bg;
+        // Emmi-specific footer styles
+        margin: 25px 0 0;
+        color: #D4D8DC;
+        padding: 22px 0;
+        font-weight: 300;
+        [class^="icon-"], [class*=" icon-"] {
+            @include remIt(font-size, 17);
+        }
+        .phone-help {
+            margin-right: 30px;
+            font-weight: 400;
+        }
+        a,
+        a:hover,
+        a:focus {
+            font-weight: 400;
+            color: inherit;
+        }
     }
 
     /* _____ HEADINGS _____ */
@@ -436,6 +459,14 @@
     }
 
     /* _____ LAYOUT _____ */
+
+    .layout-card {
+        background: #fff;
+        border-radius: $border-radius-base;
+        box-shadow: 4px 4px 0px 0px rgba(110,124,136,0.07);
+        margin: 0 0 12px;
+        padding: 28px 28px 30px;
+    }
 
     .mainContainer {
         @extend %clearfix;
