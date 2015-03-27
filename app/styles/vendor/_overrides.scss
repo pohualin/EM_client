@@ -34,6 +34,9 @@
 .breadcrumb {
     @include remIt(font-size, 13);
     font-weight: 300;
+    & li a:hover {
+        text-decoration: none;
+    }
     & > li + li:before {
         //font-family: 'fontawesome';
         // font-size: 18px;
