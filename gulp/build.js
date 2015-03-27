@@ -111,7 +111,7 @@ gulp.task('html', ['styles', 'admin-scripts', 'client-scripts', 'router-scripts'
         .pipe($.useref.assets())
         .pipe($.rev())
         .pipe(jsFilter)
-        .pipe($.ngmin())
+        .pipe($.ngAnnotate())
         .pipe($.uglify())
         .pipe(jsFilter.restore())
         .pipe(cssFilter)
