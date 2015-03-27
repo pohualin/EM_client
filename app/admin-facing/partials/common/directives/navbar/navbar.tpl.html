@@ -19,10 +19,10 @@
                         </ul>
                     </li>
                 </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a id="drop2" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
-                            User Name
+                <ul class="nav navbar-nav navbar-right" data-ng-switch="authenticated">
+                    <li class="dropdown" data-ng-if="account">
+                        <a id="drop2" href="#" class="dropdown-toggle" aria-haspopup="true" role="button" aria-expanded="false" data-toggle="dropdown">
+                            {{ account.firstName + ' ' + account.lastName}}
                             <span class="fa-angle-down"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
@@ -39,8 +39,13 @@
                             <span class="badge badge-danger">4</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="#" role="button">
+                    <li data-ng-switch-when="false">
+                        <a data-ng-href="#/login" data-translate="global.menu.login">
+                            Login
+                        </a>
+                    </li>
+                    <li data-ng-switch-when="true">
+                        <a data-ng-href="#/logout" data-translate="global.menu.logout">
                             Logout
                         </a>
                     </li>

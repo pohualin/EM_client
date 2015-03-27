@@ -6,9 +6,6 @@ angular.module('emmi.navbar', [])
             restrict: 'AE', // E = Element, A = Attribute, C = Class, M = Comment
             templateUrl: '/admin-facing/partials/common/directives/navbar/navbar.tpl.html',
             transclude: true,
-            scope: {
-
-            },
             controller: function ($scope, $element, $attrs, $transclude) {
 
             },

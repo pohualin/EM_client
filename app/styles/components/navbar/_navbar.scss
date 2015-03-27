@@ -1,5 +1,9 @@
 // Custom CSS for the main app navigation
 
+.app-header {
+    margin: 0 0 25px;
+}
+
 .navbar {
     margin: 0;
 }
@@ -20,6 +24,11 @@
             border-left: 1px solid #a1aab2; //rgba(255,255,255,0.35)
             border-right: 1px solid #a1aab2; //rgba(255,255,255,0.35)
         }
+    }
+    .open > a,
+    .open > a:hover,
+    .open > a:focus {
+        border-color: #a1aab2;
     }
     // Dropdown indicator
     .fa-angle-down {
