@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+/*doc
+---
+title: Tooltip
+name: a-tooltip
+category: 3. JavaScript - Tooltip
+---
+
+[AngularStrap Tooltips](http://mgcrea.github.io/angular-strap/#/tooltips#tooltips)
+
+```html_example
+<div class="form-group has-error">
+    <label class="control-label" for="tooltipExample">Email</label>
+    <span class="fa-exclamation-circle" data-bs-tooltip data-placement="right" data-type="danger" data-container="body" data-title="Please enter a valid email"></span>
+    <input class="form-control" id="tooltipExample" name="tooltipExample" type="text" required>
+</div>
+```
+*/

@@ -8,7 +8,7 @@ category: 1. Layout - Images
 
 
 ```html_example
-<img src="http://lorempixel.com/700/400/cats" alt="Some cats image">
+<img src="/images/placeholder/fillmurray_700x400.jpeg" alt="Some cats image">
 ```
 */
 
@@ -24,7 +24,7 @@ category: 1. Layout - Images
 
 ```html_example
 <figure>
-  <img src="http://lorempixel.com/700/400/cats" alt="Some cats image">
+  <img src="/images/placeholder/fillmurray_700x400.jpeg" alt="Some cats image">
   <figcaption>Note : Lorem ipsum dolor sit amet, consectetur adipiscing elit.</figcaption>
 </figure>
 ```
@@ -40,8 +40,8 @@ category: 1. Layout - Images
 ---
 
 ```html_example
-<img src="http://lorempixel.com/150/150/cats" alt="Some cats image" class="img-rounded">
-<img src="http://lorempixel.com/150/150/cats" alt="Some cats image" class="img-circle">
-<img src="http://lorempixel.com/150/150/cats" alt="Some cats image" class="img-thumbnail">
+<img src="/images/placeholder/fillmurray_150x150.jpeg" alt="Some cats image" class="img-rounded">
+<img src="/images/placeholder/fillmurray_150x150.jpeg" alt="Some cats image" class="img-circle">
+<img src="/images/placeholder/fillmurray_150x150.jpeg" alt="Some cats image" class="img-thumbnail">
 ```
 */
