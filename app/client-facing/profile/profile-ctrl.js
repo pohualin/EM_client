@@ -105,6 +105,7 @@ angular.module('emmiManager')
     };
 
     $scope.cancelEmailChange = function () {
+        $scope.userClient.email = '';
         ProfileService.get(userClientReqdResource).then(function(response){
             angular.extend($scope.userClient, response);
             $scope.resetEditEmailForm();
