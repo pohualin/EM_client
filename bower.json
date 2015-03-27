@@ -3,16 +3,16 @@
     "version": "0.0.0",
     "dependencies": {
         "modernizr": "2.8.3",
-        "angular": "1.2.*",
+        "angular": "1.2.28",
         "jquery": "1.*",
-        "angular-cookies": "1.2.*",
-        "angular-touch": "1.2.*",
-        "angular-sanitize": "1.2.*",
-        "angular-resource": "1.2.*",
-        "angular-animate": "1.2.*",
-        "angular-route": "1.2.*",
+        "angular-cookies": "1.2.28",
+        "angular-touch": "1.2.28",
+        "angular-sanitize": "1.2.28",
+        "angular-resource": "1.2.28",
+        "angular-animate": "1.2.28",
+        "angular-route": "1.2.28",
         "angular-strap": "2.2.1",
-        "angular-i18n": "1.2.*",
+        "angular-i18n": "1.2.28",
         "angular-dynamic-locale": "0.1.27",
         "bootstrap": "~3.2.0",
         "angular-motion": "~0.3.3",
@@ -28,14 +28,11 @@
         "bootstrap-sass": "~3.3.3"
     },
     "devDependencies": {
-        "angular-mocks": "1.2.*"
+        "angular-mocks": "1.2.28"
     },
     "overrides": {
         "chosen": {
             "main": "chosen.jquery.js"
         }
-    },
-    "resolutions": {
-        "angular": "1.2.28"
     }
 }
