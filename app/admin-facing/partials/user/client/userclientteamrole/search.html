@@ -78,11 +78,17 @@
 					</tr>
 					<tr data-ng-repeat="userClientUserClientTeamRole in userClientUserClientTeamRoles">
 						<td data-ng-show="!userClientUserClientTeamRole.link.self || userClientUserClientTeamRole.entity.warning">
-                            <input type="checkbox" data-ng-model="userClientUserClientTeamRole.entity.selected"
-                                   data-ng-change="onCheckboxChange(userClientUserClientTeamRole.entity)">
+                            <div class="checkbox">
+                                <input type="checkbox" id="userClientTeamRoleCb{{$index}}" data-ng-model="userClientUserClientTeamRole.entity.selected"
+                                       data-ng-change="onCheckboxChange(userClientUserClientTeamRole.entity)">
+                                <label for="userClientTeamRoleCb{{$index}}"></label>
+                            </div>
                         </td>
                         <td data-ng-show="userClientUserClientTeamRole.link.self && !userClientUserClientTeamRole.entity.warning">
-                            <input type="checkbox" disabled="disabled" checked>
+                            <div class="checkbox">
+                                <input type="checkbox" id="userClientTeamRoleOffCb{{$index}}" disabled="disabled" checked>
+                                <label for="userClientTeamRoleOffCb{{$index}}"></label>
+                            </div>
                         </td>
 						<td>{{userClientUserClientTeamRole.entity.team.name}}
 							<div class="error-circle glyphicon glyphicon-exclamation-sign"

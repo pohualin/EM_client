@@ -5,4 +5,14 @@
             <li class="active">Schedule an Emmi Program - {{team.entity.name}}</li>
         </ol>
     </div>
+    <div class="row">
+        <h3>Choose Programs:</h3>
+        <hr/>
+    </div>
+
+
+    <div class="row" data-ng-include="'client-facing/schedule/program/program_chooser.html'"
+         data-ng-controller="AddProgramController"></div>
+
+    <br/>
 </div>

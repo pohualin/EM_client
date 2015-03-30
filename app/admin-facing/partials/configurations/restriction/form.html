@@ -5,9 +5,12 @@
     <div class="row">
         <div class="col-md-12">
             <div class="form-group">
-                <input id="emailConfigRestrict" type="checkbox"
-                    data-ng-model="clientRestrictConfiguration.entity.emailConfigRestrict"
-                    data-ng-change="save()" />&nbsp;Restrict valid email addresses
+                <div class="checkbox">
+                    <input id="emailConfigRestrict" type="checkbox"
+                        data-ng-model="clientRestrictConfiguration.entity.emailConfigRestrict"
+                        data-ng-change="save()" />
+                    <label for="emailConfigRestrict">&nbsp;Restrict valid email addresses</label>
+                </div>
             </div>
         </div>
         <div class="col-md-12" data-ng-show="originalClientRestrictConfiguration.entity.emailConfigRestrict">
@@ -17,9 +20,12 @@
     <div class="row">
         <div class="col-md-12">
             <div class="form-group">
-                <input id="ipConfigRestrict" type="checkbox"
-                    data-ng-model="clientRestrictConfiguration.entity.ipConfigRestrict"
-                    data-ng-change="save()" />&nbsp;Restrict IP Range
+                <div class="checkbox">
+                    <input id="ipConfigRestrict" type="checkbox"
+                        data-ng-model="clientRestrictConfiguration.entity.ipConfigRestrict"
+                        data-ng-change="save()" />
+                    <label for="ipConfigRestrict">&nbsp;Restrict IP Range</label>
+                </div>
             </div>
         </div>
         <div class="col-md-12" data-ng-show="originalClientRestrictConfiguration.entity.ipConfigRestrict">

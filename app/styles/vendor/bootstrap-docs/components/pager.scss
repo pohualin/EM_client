@@ -26,8 +26,8 @@ category: 2. Components - Pager
 
 ```html_example
 <ul class="pager">
-  <li class="previous"><a href="#">&larr; Older</a></li>
-  <li class="next"><a href="#">Newer &rarr;</a></li>
+  <li class="previous"><a href="#"><i class="fa-angle-left"></i> Older</a></li>
+  <li class="next"><a href="#">Newer <i class="fa-angle-right"></i></a></li>
 </ul>
 ```
 */
@@ -43,8 +43,8 @@ category: 2. Components - Pager
 
 ```html_example
 <ul class="pager">
-  <li class="previous disabled"><a href="#">&larr; Older</a></li>
-  <li class="next"><a href="#">Newer &rarr;</a></li>
+  <li class="previous disabled"><a href="#"><i class="fa-angle-left"></i> Older</a></li>
+  <li class="next"><a href="#">Newer <i class="fa-angle-right"></i></a></li>
 </ul>
 ```
 */

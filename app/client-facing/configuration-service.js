@@ -8,6 +8,10 @@ angular.module('emmiManager')
     function ($rootScope,$location,Session) {
         return {
             routeUser:function(){
+            	if(!Session.secretQuestionCreated){
+            		$location.path('/createSecretQuestions').replace();
+           		}
+            	
                 if(!Session.email){
                     //if email was not supplied
                     $location.path('/addEmail').replace();
