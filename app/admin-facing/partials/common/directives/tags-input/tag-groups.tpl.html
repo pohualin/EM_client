@@ -11,7 +11,7 @@
             <div data-tags-input class="tags-input" data-ng-model="tagGroup.tags" data-on-tag-added="onChange('tag added')" data-on-tag-removed="onChange('tag removed')" data-on-tag-edited="onChange('tag edited')" data-ng-click="$event.stopPropagation();" data-ng-paste="pasteTags($event, $index)" data-enable-editing-last-tag="true" data-add-on-space="false" data-replace-spaces-with-dashes="false" data-name="tags"></div>
         </div>
         <button type="button" class="btn btn-link tag-group-remove" data-ng-click="removeTagGroup($index)">
-            <span class="glyphicon glyphicon-remove"></span>
+            <span class="icon-delete"></span>
         </button>
         <div class="error-circle fa-exclamation-circle" data-ng-hide="tagGroup.isValid"
             data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
@@ -22,6 +22,6 @@
     <div class="tag-group-create form-inline" data-ng-show="createMode">
         <div class="input-group">
             <input type="text" class="form-control" data-ng-model="newTagGroupTitle" data-focus-on="createMode" data-ng-enter="newTagGroup()" data-ng-blur="newTagGroup()">
-            <div class="input-group-addon btn" data-ng-click="exitCreateMode()"><span data-ng-click="exitCreateMode()" class="glyphicon glyphicon-remove"></span></div>
+            <div class="input-group-addon btn" data-ng-click="exitCreateMode()"><span data-ng-click="exitCreateMode()" class="icon-delete"></span></div>
         </div>
     </div>

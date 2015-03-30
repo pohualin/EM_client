@@ -5,7 +5,7 @@
                  data-ng-class="{ 'has-error' : !scheduledProgram.program && addProgramFormSubmitted }">
                 <label class="control-label" data-ng-hide="showAll">Top 10 Programs</label>
                 <button data-ng-show="showAll" class="btn-link" data-ng-click="showAllResults(false)">
-                    <label class="control-label"><span class="glyphicon glyphicon-list-alt"></span> show top 10
+                    <label class="control-label"><span class="icon-list-bullet"></span> show top 10
                         only</label>
                 </button>
                 <div class="error-circle fa-exclamation-circle"
@@ -42,17 +42,17 @@
                 <input type="checkbox" id="program_{{program.entity.id}}" data-ng-model="program.selected" data-ng-change="selectProgram(program,addProgramForm)"/>
                 <label for="program_{{program.entity.id}}"></label>
             </td>
-            <td><span data-ng-show="program.entity.type.name === 'MULTIMEDIA PROGRAM'" class="glyphicon glyphicon-film"
+            <td><span data-ng-show="program.entity.type.name === 'MULTIMEDIA PROGRAM'" class="icon-film"
                       title="Multimedia"></span>
-                <span data-ng-show="program.entity.type.name === 'ARTICLE'" class="glyphicon glyphicon-file"
+                <span data-ng-show="program.entity.type.name === 'ARTICLE'" class="icon-text-doc"
                       title="Article"></span>
-                <span data-ng-show="program.entity.type.name === 'IVR CALL'" class="glyphicon glyphicon-earphone"
+                <span data-ng-show="program.entity.type.name === 'IVR CALL'" class="icon-telephone"
                       title="Call"></span>
                 <span data-ng-show="program.entity.type.name === 'TRANSITION PROGRAM'"
-                      class="glyphicon glyphicon-earphone" title="Transition Program"></span>
-                <span data-ng-show="program.entity.type.name === 'NAVIGATE'" class="glyphicon glyphicon-earphone"
+                      class="icon-telephone" title="Transition Program"></span>
+                <span data-ng-show="program.entity.type.name === 'NAVIGATE'" class="icon-telephone"
                       title="Navigate"></span>
-                <span data-ng-show="program.entity.type.name === 'MESSAGE'" class="glyphicon glyphicon-earphone"
+                <span data-ng-show="program.entity.type.name === 'MESSAGE'" class="icon-telephone"
                       title="Message"></span>
                 {{program.entity.name}}
             </td>
