@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="./theme-build/css/cortana.css">
     <link rel="stylesheet" href="./theme-build/css/github.css">
 
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700,300italic,400italic,500italic,700italic">
     <!-- build:css({.tmp,app}) /styles/main.css -->
     <link rel="stylesheet" href="/bower_components/angular-motion/dist/angular-motion.min.css">
     <link rel="stylesheet" href="/bower_components/bootstrap-additions/dist/bootstrap-additions.css">
@@ -26,7 +27,7 @@
     <% end %>
 </head>
 
-  <body class="cortana-body">
+  <body class="cortana-body"  ng-controller="MainController">
 
     <!-- Sort the cateogires alphabetically -->
     <% @categories = @categories.sort { |a,b| a[0].downcase <=> b[0].downcase } %>
@@ -79,7 +80,7 @@
         <span></span>
       </div>
       <div class="cortana-search-wrapper" ng-controller="TypeaheadCtrl">
-        <input id="cortana-search" type="text" class="form-control cortana-search" ng-model="customSelected" placeholder="Search" typeahead="data as data.title for data in searchData | filter:{title:$viewValue}" typeahead-template-url="customTemplate.html" class="form-control" typeahead-on-select="onSelect($item, $model, $label)">
+        <input id="cortana-search" type="text" class="form-control cortana-search" placeholder="Search" ng-model="customSelected" ng-options="data as data.title for data in searchData | filter:{title:$viewValue}" template="customTemplate.html" bs-typeahead>
       </div>
     </header>
 

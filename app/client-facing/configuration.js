@@ -12,6 +12,7 @@ angular.module('emmiManager', [
     'emmiManager.api',
     'pascalprecht.translate',
     'tmh.dynamicLocale',
+    'emmi.navbar',
     'emmi.typeahead',
     'localytics.directives',
     'ngTagsInput',
@@ -269,7 +270,7 @@ angular.module('emmiManager', [
                 }
             }
         });
-        
+
         moment.locale('en', {
         	relativeTime: {
         		future: ERROR_MESSAGE.LOCK_PART_1 + 'in %s' + ERROR_MESSAGE.LOCK_PART_2,

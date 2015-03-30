@@ -10,29 +10,35 @@
     }
 
     .header {
-        background-color: #f5f5f5;
+        color: #fff;
+        border-color: $brand-primary;
+        background: $brand-primary;
+        font-size: $font-size-small;
+        font-weight: 600;
+        text-transform: uppercase;
     }
 
     .header > div {
-        padding-top: 4px;
-        padding-bottom: 4px;
+        padding-top: $table-cell-padding*2;
+        padding-bottom: $table-cell-padding*1.8;
     }
 
     .footer > div {
-        border-top: 1px solid #ccc;
+        border-top: 1px solid $gray-light;
         padding-top: 8px;
+        padding-bottom: 8px;
     }
 
     .results > div {
-        padding-top: 4px;
-        padding-bottom: 4px;
+        padding-top: 11px;
+        padding-bottom: 11px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
     }
 
     .results.active {
-        background-color: #428bca;
+        background-color: $dropdown-link-active-bg;
     }
 
     .results.active > div {

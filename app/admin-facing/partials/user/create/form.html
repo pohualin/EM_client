@@ -91,17 +91,18 @@
             </div>
 
             <div class="col-md-4">
-                <label class="control-label">&nbsp;</label>
-
                 <div class="checkbox">
+                    <input id="active" type="checkbox" data-ng-disabled="userToBeEdit.id === account.id"
+                           data-ng-model="userToBeEdit.active" data-no-dirty-check/>
                     <label for="active">
-                        <input id="active" type="checkbox" data-ng-disabled="userToBeEdit.id === account.id"
-                               data-ng-model="userToBeEdit.active" data-no-dirty-check/>&nbsp;&nbsp;Active
+                        &nbsp;&nbsp;Active
                     </label>
-                    &nbsp;&nbsp;
+                </div>&nbsp;&nbsp;
+                <div class="checkbox">
+                    <input id="webApiUser" type="checkbox" data-ng-disabled="userToBeEdit.id === account.id"
+                           data-ng-model="userToBeEdit.webApiUser"/>
                     <label for="webApiUser">
-                        <input id="webApiUser" type="checkbox" data-ng-disabled="userToBeEdit.id === account.id"
-                               data-ng-model="userToBeEdit.webApiUser"/>&nbsp;&nbsp;API User
+                        &nbsp;&nbsp;API User
                     </label>
                 </div>
             </div>

@@ -1,9 +1,8 @@
 <form name="tagGroupLibraries" data-popover-toggle>
     <div class="form-group">
         <div class="checkbox" data-ng-repeat="library in libraries | filter:disableLibrary()">
-            <label>
-                <input type="checkbox" value="" data-ng-model="library.checked" data-ng-disabled="library.disabled">&nbsp;&nbsp;
-            </label>
+            <input type="checkbox" id="roleLibraryCb{{$index}}" value="" data-ng-model="library.checked" data-ng-disabled="library.disabled">&nbsp;&nbsp;
+            <label for="roleLibraryCb{{$index}}"></label>
             <span class="toggle-trigger">
                 <span data-ng-show="library.entity.permission.length > 0" class="caret"></span>
                 <span data-ng-class="{'text-muted': library.disabled}">{{ library.entity.name }}</span>

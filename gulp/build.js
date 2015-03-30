@@ -111,7 +111,7 @@ gulp.task('html', ['styles', 'admin-scripts', 'client-scripts', 'router-scripts'
         .pipe($.useref.assets())
         .pipe($.rev())
         .pipe(jsFilter)
-        .pipe($.ngmin())
+        .pipe($.ngAnnotate())
         .pipe($.uglify())
         .pipe(jsFilter.restore())
         .pipe(cssFilter)
@@ -141,11 +141,14 @@ gulp.task('favicon', function () {
 });
 
 gulp.task('fonts', function () {
-    return gulp.src(mainBowerFiles())
+    return gulp.src('app/fonts/*.{eot,svg,ttf,woff,woff2}')
+        .pipe(gulp.dest('dist/fonts'))
+        .pipe($.size({title: 'app fonts', showFiles:true})),
+        gulp.src(mainBowerFiles())
         .pipe($.filter('**/*.{eot,svg,ttf,woff,woff2}'))
         .pipe($.flatten())
         .pipe(gulp.dest('dist/fonts'))
-        .pipe($.size({title: 'fonts', showFiles:true}));
+        .pipe($.size({title: 'bower fonts', showFiles:true}));
 });
 
 gulp.task('font-paths', ['html'], function () {
@@ -168,15 +171,19 @@ gulp.task('api-docs', function () {
             .pipe(gulp.dest('dist/bower_components/swagger-ui/dist'));
 });
 
-gulp.task('styleguide', function () {
+gulp.task('hologram', function () {
     return gulp.src('hologram_config.yml')
-        .pipe($.hologram({logging:true}))
-        gulp.src('app/styleguide/theme-build/**/*')
+        .pipe($.hologram({logging:true}));
+});
+
+gulp.task('styleguide', ['hologram'], function () {
+    // Make sure Hologram has built before moving assets
+    return gulp.src('app/styleguide/theme-build/**/*')
         .pipe(gulp.dest('dist/styleguide/theme-build'));
 });
 
 gulp.task('clean', function () {
-    return gulp.src(['.tmp', 'dist'], { read: false }).pipe($.clean());
+    return gulp.src(['.tmp', 'dist', 'app/styleguide'], { read: false }).pipe($.clean());
 });
 
 gulp.task('build', ['html', 'images', 'favicon', 'fonts', 'font-paths', 'translations', 'api-docs']);
