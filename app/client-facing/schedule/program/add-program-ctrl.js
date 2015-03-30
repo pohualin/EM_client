@@ -12,7 +12,6 @@ angular.module('emmiManager')
 
             $scope.specialties = null;
             $scope.providers = null;
-            $scope.locations = null;
 
             $scope.scheduledProgram = {
                 provider: '',
@@ -20,6 +19,14 @@ angular.module('emmiManager')
                 program: '',
                 viewByDate: moment().add(30, 'days').format('YYYY-MM-DD')
             };
+
+            AddProgramService.loadLocations($scope.team).then(function (locations){
+                $scope.locations = locations;
+            });
+
+            AddProgramService.loadProviders($scope.team).then(function (providers){
+                $scope.providers = providers;
+            });
 
             $scope.saveScheduledProgram = function (addProgramForm) {
                 $scope.addProgramFormSubmitted = true;

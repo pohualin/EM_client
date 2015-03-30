@@ -36,6 +36,48 @@ angular.module('emmiManager')
                             return response.data;
                         });
 
+                },
+
+                /**
+                 * Loads possible team locations
+                 *
+                 * @param teamResource to find the locations link
+                 * @returns {*}
+                 */
+                loadLocations: function (teamResource) {
+                    var locations = [];
+                    return $http.get(UriTemplate.create(teamResource.link.locations).stringify())
+                        .then(function success(response) {
+                            var page = response.data;
+                            locations.push.apply(locations, page.content);
+                            if (page.link && page.link['page-next']) {
+                                $http.get(page.link['page-next']).then(function (response) {
+                                    success(response);
+                                });
+                            }
+                            return locations;
+                        });
+                },
+
+                /**
+                 * Loads possible team providers
+                 *
+                 * @param teamResource to find the providers link
+                 * @returns {*}
+                 */
+                loadProviders: function (teamResource) {
+                    var providers = [];
+                    return $http.get(UriTemplate.create(teamResource.link.providers).stringify())
+                        .then(function success(response) {
+                            var page = response.data;
+                            providers.push.apply(providers, page.content);
+                            if (page.link && page.link['page-next']) {
+                                $http.get(page.link['page-next']).then(function (response) {
+                                    success(response);
+                                });
+                            }
+                            return providers;
+                        });
                 }
             };
         }])
