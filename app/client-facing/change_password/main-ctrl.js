@@ -30,6 +30,7 @@ angular.module('emmiManager')
                 var passwordChange = $scope.passwordChange;
                 $scope.changePasswordForm.password.$setValidity('policy', true);
                 $scope.changePasswordForm.password.$setValidity('history', true);
+                $scope.changePasswordForm.password.$setValidity('eligibility', true);
                 $scope.changePasswordForm.confirmPassword.$setValidity('same', passwordChange.password === passwordChange.confirmPassword);
             };
 
@@ -42,6 +43,7 @@ angular.module('emmiManager')
                 changePasswordForm.oldPassword.$setValidity('bad', true);
                 changePasswordForm.password.$setValidity('policy', true);
                 changePasswordForm.password.$setValidity('history', true);
+                changePasswordForm.password.$setValidity('eligibility', true);
                 if (changePasswordForm.$valid) {
                     ChangePasswordService.changePassword($scope.account, $scope.passwordChange)
                         .then(function success() {
@@ -60,7 +62,9 @@ angular.module('emmiManager')
                                 changePasswordForm.oldPassword.$setValidity('bad', false);
                             } else if (errorResponse.status === 406 && errorResponse.data) {
                                 angular.forEach(errorResponse.data, function(validationError){
-                                    if (validationError.entity.reason === 'POLICY') {
+                                    if(validationError.entity.reason === 'DAYS_BETWEEN') {
+                                        changePasswordForm.password.$setValidity('eligibility', false);
+                                    } else if (validationError.entity.reason === 'POLICY') {
                                         changePasswordForm.password.$setValidity('policy', false);
                                     } else if (validationError.entity.reason === 'HISTORY') {
                                         changePasswordForm.password.$setValidity('history', false);
