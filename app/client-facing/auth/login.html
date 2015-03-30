@@ -13,8 +13,7 @@
                 <strong>&nbsp;</strong>Your account has been temporarily locked due to too many login attempts. You can try again
                             <span data-ng-switch-when="true" data-am-time-ago="lockExpirationDateTime">
                                 in time
-                            </span>
-                            , or contact Emmi Support at 866-294-3664 or support@emmisolutions.com.
+                            </span>, or contact Emmi Support at 866-294-3664 or support@emmisolutions.com.
             </div>
             <form class="form" name="loginForm" data-ng-submit="login(credentials)" novalidate>
                 <div class="form-group"
@@ -42,8 +41,8 @@
                            autocomplete="off" data-ng-model="credentials.password">
                 </div>
                 <div class="checkbox">
-                    <label>
-                        <input type="checkbox" data-ng-model="credentials.rememberMe">
+                    <input type="checkbox" id="rememberMe" data-ng-model="credentials.rememberMe">
+                    <label for="rememberMe">
                         <span data-translate="login.form.rememberme">Remember me on this computer.</span>
                     </label>
                 </div>

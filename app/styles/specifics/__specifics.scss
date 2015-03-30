@@ -2,8 +2,86 @@
 
 // import contextual entities
 @import 'sample';
+@import 'popovers';
 
 // miscellaneous rules
+.has-input-icon {
+    position: relative;
+    .form-control {
+        padding-left: $padding-base-horizontal + 24;
+        &:focus ~ .input-icon {
+            color: $brand-secondary;
+        }
+    }
+}
+.input-icon {
+    display: block;
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    left: 0;
+    font-size: 24px;
+    color: #C7D0D8;
+    margin: 7px $padding-base-horizontal - 2;
+    transition: all 0.2s ease;
+}
+
+.has-input-icon-telephone { }
+.has-input-icon-calendar {
+    .form-control {
+        padding-left: $padding-base-horizontal;
+    }
+    .input-icon {
+        left: auto;
+        right: 0;
+    }
+}
+.has-input-icon-search {
+    .form-control {
+        transition: padding 0.3s ease-in-out;
+        &:focus {
+            padding-left: $padding-base-horizontal;
+            ~ .input-icon {
+                opacity: 0;
+                //display: none;
+            }
+            ~ .input-group-btn {
+                //display: inline-block;
+                //visibility: visible;
+            }
+        }
+    }
+    .input-group-btn {
+        //display: none;
+        //visibility: hidden;
+    }
+}
+
+.typeahead-search {
+    + .dropdown-menu {
+        width: 100%;
+    }
+}
+
+.panel-title {
+    .icon-caret-right {
+        display: inline-block; // so our transform below will work
+        font-size: 24px;
+        line-height: 1;
+        transition: all 0.2s ease-in;
+    }
+    .btn-icon {
+        font-size: 24px;
+        line-height: 1;
+    }
+}
+.panel-open {
+    .panel-title .icon-caret-right {
+        // Change the caret when panel is opened
+        transform: rotate(90deg);
+    }
+}
+
 
 [ng-click],
 [data-ng-click],
@@ -48,6 +126,7 @@
 .modal-backdrop {
     position: fixed;
     height: 100%;
+    z-index: 1030;
 }
 
 .modal-confirm-exit {

@@ -25,8 +25,13 @@
                 </th>
             </tr>
             <tr data-ng-repeat="location in clientLocations" data-ng-class="location.location.entity.disabled ? 'text-muted' : ''">
-                <td><input type="checkbox" data-ng-model="location.location.entity.checked"  data-ng-disabled="location.location.entity.disabled"
-                           ng-change="onClientCheckboxChange(location)"></td>
+                <td>
+                    <div class="checkbox">
+                        <input type="checkbox" id="clientLocationCb{{$index}}" data-ng-model="location.location.entity.checked"  data-ng-disabled="location.location.entity.disabled"
+                           ng-change="onClientCheckboxChange(location)">
+                        <label for="clientLocationCb{{$index}}"></label>
+                    </div>
+                </td>
                 <td>{{location.location.entity.name}}  <em>{{location.location.entity.active ? '' : "(inactive)"}}</em></td>
                 <td>
                     {{location.location.entity.belongsTo.name}}
