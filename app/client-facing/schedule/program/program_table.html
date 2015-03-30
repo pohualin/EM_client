@@ -33,8 +33,8 @@
         <tr>
             <th class="sort col-sm-1"></th>
             <th class="sort col-sm-11" data-ng-click="sort('name')">Name <span
-                data-ng-show="sortProperty.property === 'name'"><span class="glyphicon sort-icon"
-                                                                      data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
+                data-ng-show="sortProperty.property === 'name'"><span class="sort-icon"
+                                                                      data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
             </th>
         </tr>
         <tr data-ng-repeat="program in programs | orderBy:'program.sortIdx'">
