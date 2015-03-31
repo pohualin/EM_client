@@ -75,7 +75,8 @@ angular.module('emmiManager')
              *
              * @param clientRoleEntity to be saved
              */
-            $scope.saveNewRole = function (clientRoleEntity) {
+            $scope.saveNewRole = function (clientRoleEntity, form) {
+                form.$setPristine();
                 ManageUserRolesService.saveNewClientRole(clientRoleEntity).then(function () {
                     delete $scope.newClientRole;
                     $scope.loadExisting();
@@ -85,7 +86,8 @@ angular.module('emmiManager')
             /**
              * Called when 'cancel' is clicked on the create new client role panel
              */
-            $scope.cancelNew = function () {
+            $scope.cancelNew = function (form) {
+                form.$setPristine();
                 delete $scope.newClientRole;
             };
 

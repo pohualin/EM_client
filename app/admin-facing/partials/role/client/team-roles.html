@@ -79,7 +79,7 @@
     <div class="row">
         <div class="col-md-5">
             <form name="newClientTeamRoleForm" class="form"
-                  novalidate>
+                  novalidate unsaved-warning-form>
                 <div class="panel-group" data-ng-show="newClientTeamRole">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -100,9 +100,9 @@
                                 </div>
                                 <hr/>
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-link" data-ng-click="cancelNew()">cancel
+                                    <button type="button" class="btn btn-link" data-ng-click="cancelNew(newClientTeamRoleForm)">cancel
                                     </button>
-                                    <button class="btn btn-default" data-ng-click="saveNewRole(newClientTeamRole)"
+                                    <button class="btn btn-default" data-ng-click="saveNewRole(newClientTeamRole, newClientTeamRoleForm)"
                                             data-ng-show="newClientTeamRoleForm.$valid && hasAPermissionChecked(newClientTeamRole)">
                                         Save Role
                                     </button>
