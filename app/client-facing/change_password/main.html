@@ -29,11 +29,11 @@
                              data-ng-class="{ 'has-error' : changePasswordForm.oldPassword.$invalid && changePasswordFormSubmitted }">
                             <label class="control-label" for="password">Current Password:</label>
 
-                            <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                            <div class="error-circle fa-exclamation-circle"
                                  data-ng-show="changePasswordForm.oldPassword.$error.required && changePasswordFormSubmitted"
                                  data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                                  data-title="Required"></div>
-                            <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                            <div class="error-circle fa-exclamation-circle"
                                  data-ng-show="changePasswordForm.oldPassword.$error.bad && changePasswordFormSubmitted"
                                  data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                                  data-title="Please enter your current password"></div>
@@ -49,11 +49,11 @@
                              data-ng-class="{ 'has-error' : changePasswordForm.password.$invalid && changePasswordFormSubmitted }">
                             <label class="control-label" for="password">New Password:</label>
 
-                            <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                            <div class="error-circle fa-exclamation-circle"
                                  data-ng-show="changePasswordForm.password.$error.required && changePasswordFormSubmitted"
                                  data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                                  data-title="Required"></div>
-                            <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                            <div class="error-circle fa-exclamation-circle"
                                  data-ng-show="changePasswordForm.password.$error.policy && changePasswordFormSubmitted"
                                  data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                                  data-title="Password must meet guidelines"></div>
@@ -77,11 +77,11 @@
                              data-ng-class="{ 'has-error' : changePasswordForm.confirmPassword.$invalid && changePasswordFormSubmitted }">
                             <label class="control-label" for="confirmPassword">Confirm Password:</label>
 
-                            <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                            <div class="error-circle fa-exclamation-circle"
                                  data-ng-show="changePasswordForm.confirmPassword.$error.required && changePasswordFormSubmitted"
                                  data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                                  data-title="Required"></div>
-                            <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                            <div class="error-circle fa-exclamation-circle"
                                  data-ng-show="!changePasswordForm.password.$error.required &&
                          !changePasswordForm.confirmPassword.$error.required &&
                          changePasswordForm.confirmPassword.$error.same && changePasswordFormSubmitted"

@@ -93,7 +93,9 @@ angular.module('emmiManager', [
         angular.extend($datepickerProvider.defaults, {
             dateFormat: 'MM/dd/yyyy',
             modelDateFormat: 'yyyy-MM-dd',
-            dateType: 'string'
+            dateType: 'string',
+            iconLeft: 'fa-angle-left',
+            iconRight: 'fa-angle-right'
         });
 
         unsavedWarningsConfigProvider.logEnabled = false;

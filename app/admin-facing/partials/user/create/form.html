@@ -13,11 +13,11 @@
                      data-ng-class="{ 'has-error' : userForm.firstName.$invalid && userFormSubmitted }">
                     <label class="control-label" for="firstName">First Name:</label>
 
-                    <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                    <div class="error-circle fa-exclamation-circle"
                          data-ng-show="userForm.firstName.$error.required && userFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Required"></div>
-                    <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                    <div class="error-circle fa-exclamation-circle"
                          data-ng-show="userForm.firstName.$error.pattern && userFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Please enter a valid first name"></div>
@@ -33,11 +33,11 @@
                      data-ng-class="{ 'has-error' : userForm.lastName.$invalid && userFormSubmitted }">
                     <label class="control-label" for="lastName">Last Name:</label>
 
-                    <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                    <div class="error-circle fa-exclamation-circle"
                          data-ng-show="userForm.lastName.$error.required && userFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Required"></div>
-                    <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                    <div class="error-circle fa-exclamation-circle"
                          data-ng-show="userForm.lastName.$error.pattern && userFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Please enter a valid last name"></div>
@@ -53,15 +53,15 @@
                      data-ng-class="{ 'has-error' : userForm.email.$invalid && userFormSubmitted }">
                     <label class="control-label" for="email">Email:</label>
 
-                    <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                    <div class="error-circle fa-exclamation-circle"
                          data-ng-show="userForm.email.$error.required && userFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Required"></div>
-                    <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                    <div class="error-circle fa-exclamation-circle"
                          data-ng-show="userForm.email.$error.pattern && userFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Please enter a valid email"></div>
-                    <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                    <div class="error-circle fa-exclamation-circle"
                          data-ng-show="userForm.email.$error.unique && userFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="This email is already in use"></div>
@@ -77,7 +77,7 @@
                      data-ng-class="{ 'has-error' : userForm.role.$invalid && userFormSubmitted }">
                     <label class="control-label" for="role">Role: {{user}}</label>
 
-                    <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                    <div class="error-circle fa-exclamation-circle"
                          data-ng-show="userForm.role.$invalid && userFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Please enter at least 1 permission"></div>
