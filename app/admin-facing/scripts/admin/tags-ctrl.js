@@ -135,6 +135,17 @@ angular.module('emmiManager')
                 $scope.newTagGroupTags = [];
                 focus('focus-new-group');
             };
+            
+            /**
+             * Toggle between active/inactive for a group that is not tied to any team.
+             */
+            $scope.toggleActiveInactive = function(tagGroup){
+                tagGroup.entity.active = tagGroup.entity.active ? false : true;
+                Tag.updateReferenceGroup(tagGroup).then(function (editedGroup) {
+                    angular.extend(tagGroup, editedGroup);
+                    $scope.cancelEditMode(tagGroup, false);
+                });
+            };
 
             // start by loading the current tag libraries
             $scope.loadExisting();
