@@ -38,6 +38,16 @@
                                                     data-delete-group-warning>
                                                 <small>remove</small>
                                             </button>
+                                            <button type="button" class="btn-link"
+                                                    data-ng-show="!group.deletable && group.entity.active"
+                                                    data-ng-click="toggleActiveInactive(group)">
+                                                <small>inactive</small>
+                                            </button>
+                                            <button type="button" class="btn-link"
+                                                    data-ng-show="!group.deletable && !group.entity.active"
+                                                    data-ng-click="toggleActiveInactive(group)">
+                                                <small>active</small>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>

@@ -21,7 +21,7 @@ angular.module('emmiManager')
 
 
         // load the groups for this client as well as the tag libraries
-        $q.all([Tag.loadGroups(Client.getClient()), Tag.loadReferenceData()]).then(function (response) {
+        $q.all([Tag.loadGroups(Client.getClient()), Tag.loadActiveReferenceGroups()]).then(function (response) {
             var clientGroups = response[0],
                 tagLibraries = response[1],
                 libraryMap = {};
@@ -37,6 +37,7 @@ angular.module('emmiManager')
                 });
             });
 
+            window.paul = tagLibraries;
             $scope.tagLibraries = tagLibraries;
             $scope.tagLibraryMap = libraryMap;
 

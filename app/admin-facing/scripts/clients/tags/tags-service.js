@@ -94,6 +94,26 @@ angular.module('emmiManager')
                 });
                 return deferred.promise;
             },
+            loadActiveReferenceGroups: function () {
+                var deferred = $q.defer();
+                var responseArray = [];
+                $http.get(UriTemplate.create(Session.link.activeReferenceGroups).stringify()).then(function iterateRefGroupPage(response) {
+                    CommonService.convertPageContentLinks(response.data);
+                    angular.forEach(response.data.content, function (group) {
+                        var newArray = [];
+                        group.title = group.entity.name;
+                        responseArray.push(group);
+                    });
+
+                    if (response.data.link && response.data.link['page-next']) {
+                        $http.get(response.data.link['page-next']).then(function (response) {
+                            iterateRefGroupPage(response);
+                        });
+                    }
+                    deferred.resolve(responseArray);
+                });
+                return deferred.promise;
+            },
             createReferenceGroup: function (groupToSave) {
                 if (groupToSave) {
                     angular.forEach(groupToSave.tags, function (t) {
@@ -122,7 +142,8 @@ angular.module('emmiManager')
                         referenceTags: groupToSave.tags,
                         referenceGroup: {
                             id: groupToSave.entity.id,
-                            name: groupToSave.title
+                            name: groupToSave.title,
+                            active: groupToSave.entity.active
                         }
                     };
                     return $http.post(
