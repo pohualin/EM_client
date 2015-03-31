@@ -1,0 +1,101 @@
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Emmi<strong>Manager</strong></a>
+            </div>
+            <div class="collapse navbar-collapse bs-example-js-navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a id="drop1" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
+                            Some Hospital Name
+                            <span class="fa-angle-down"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://twitter.com/fat">Action</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://twitter.com/fat">Another action</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://twitter.com/fat">Something else here</a></li>
+                            <li role="presentation" class="divider"></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://twitter.com/fat">Separated link</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" data-ng-switch="authenticated">
+                    <li class="dropdown" data-ng-if="account">
+                        <a id="drop2" href="#" class="dropdown-toggle" aria-haspopup="true" role="button" aria-expanded="false" data-toggle="dropdown">
+                            {{ account.firstName + ' ' + account.lastName}}
+                            <span class="fa-angle-down"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://twitter.com/fat">Action</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://twitter.com/fat">Another action</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://twitter.com/fat">Something else here</a></li>
+                            <li role="presentation" class="divider"></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://twitter.com/fat">Separated link</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#" role="button">
+                            Messages
+                            <span class="badge badge-danger">4</span>
+                        </a>
+                    </li>
+                    <li data-ng-switch-when="false">
+                        <a data-ng-href="#/login" data-translate="global.menu.login">
+                            Login
+                        </a>
+                    </li>
+                    <li data-ng-switch-when="true">
+                        <a data-ng-href="#/logout" data-translate="global.menu.logout">
+                            Logout
+                        </a>
+                    </li>
+                </ul>
+            </div><!-- /.nav-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+    <nav class="section-nav section-nav-default">
+        <div class="container">
+            <ul class="section-nav-items">
+                <li class="section-nav-item">
+                    <a href="#" class="section-nav-link active">
+                        <i class="icon-calendar"></i>
+                        Schedule
+                    </a>
+                </li>
+                <li class="section-nav-item">
+                    <a href="#" class="section-nav-link">
+                        <i class="icon-group"></i>
+                        Patients
+                    </a>
+                </li>
+                <li class="section-nav-item">
+                    <a href="#" class="section-nav-link">
+                        <i class="icon-bar-chart"></i>
+                        Reports
+                    </a>
+                </li>
+                <li class="section-nav-item">
+                    <a href="#" class="section-nav-link">
+                        <i class="icon-info-circle"></i>
+                        Help
+                    </a>
+                </li>
+                <li class="section-nav-item">
+                    <a href="#" class="section-nav-link">
+                        <i class="icon-settings"></i>
+                        Settings
+                    </a>
+                </li>
+            </ul>
+            <div class="section-nav-search">
+                <form class="form" role="form">
+                    <div class="form-group">
+                        <div class="has-input-icon has-input-icon-search">
+                            <input type="text" class="form-control" placeholder="Search by Last Name or Access Code">
+                            <span class="input-icon"><i class="icon-search"></i></span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </nav>

@@ -181,19 +181,12 @@ th.sort {
   }
 }
 
-.glyphicon-small {
-    font-size: x-small;
-    padding-right: .5em;
-    vertical-align: top;
-    margin-top: .2em;
-    &.rotate-90 {
-        margin-top: .6em;
-        -webkit-transform: rotate(90deg);
-        -moz-transform: rotate(90deg);
-        -ms-transform: rotate(90deg);
-        -o-transform: rotate(90deg);
-        transform: rotate(90deg);
-    }
+.rotate-90 {
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    transform: rotate(90deg);
 }
 
 TR.nowrap TD, TH {

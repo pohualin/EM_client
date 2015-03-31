@@ -38,6 +38,7 @@
 <script src="bower_components/angular-resource/angular-resource.js"></script>
 <script src="bower_components/angular-animate/angular-animate.js"></script>
 <script src="bower_components/angular-route/angular-route.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 <script src="bower_components/angular-strap/dist/angular-strap.js"></script>
 <script src="bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
 <script src="bower_components/angular-dynamic-locale/src/tmhDynamicLocale.js"></script>
@@ -61,6 +62,7 @@
 <!-- build:js({app,.tmp}) scripts/client-main.js -->
 <script src="admin-facing/scripts/vendor/http-auth-interceptor.js"></script>
 <script src="admin-facing/scripts/vendor/hateoas.js"></script>
+<script src="admin-facing/scripts/common/directives/navbar/navbar.js"></script>
 <script src="admin-facing/scripts/common/directives/multi-select/multiselect.js"></script>
 <script src="admin-facing/scripts/common/directives/typeahead/typeahead.js"></script>
 <script src="admin-facing/scripts/common/directives/tags-input/tags-input.js"></script>
@@ -88,6 +90,7 @@
 <script src="admin-facing/scripts/common/bootstrap-client.js"></script>
 <script src="admin-facing/scripts/search/search-ctrl.js"></script>
 
+<script src="client-facing/common/error-message-service.js"></script>
 <script src="client-facing/credentials/credentials-route.js"></script>
 <script src="client-facing/credentials/expired/expired-ctrl.js"></script>
 <script src="client-facing/credentials/expired/expired-service.js"></script>
@@ -97,6 +100,7 @@
 <script src="client-facing/credentials/reset/reset-service.js"></script>
 <script src="client-facing/change_password/route.js"></script>
 <script src="client-facing/change_password/main-ctrl.js"></script>
+<script src="client-facing/change_password/pre-main-ctrl.js"></script>
 <script src="client-facing/change_password/service.js"></script>
 <script src="client-facing/credentials/forgot/forgot-ctrl.js"></script>
 <script src="client-facing/credentials/forgot/forgot-service.js"></script>
@@ -127,6 +131,16 @@
 <script src="client-facing/schedule/schedule-service.js"></script>
 <script src="client-facing/schedule/program/add-program-ctrl.js"></script>
 <script src="client-facing/schedule/program/add-program-service.js"></script>
+
+<script src="client-facing/loginInterruption/login-interruption-ctrl.js"></script>
+<script src="client-facing/loginInterruption/login-interruption-router.js"></script>
+<script src="client-facing/loginInterruption/login-interruption-service.js"></script>
+<script src="client-facing/loginInterruption/validateEmail/send-validation-email-ctrl.js"></script>
+<script src="client-facing/loginInterruption/validateEmail/validation-service.js"></script>
+<script src="client-facing/loginInterruption/secretQuestions/secret-question-create-ctrl.js"></script>
+<script src="client-facing/loginInterruption/secretQuestions/secret-question-service.js"></script>
+<script src="client-facing/loginInterruption/enterEmail/new-email-service.js"></script>
+<script src="client-facing/loginInterruption/enterEmail/enter-email-ctrl.js"></script>
 
 <!-- inject:client-partials -->
 <!-- endinject -->
