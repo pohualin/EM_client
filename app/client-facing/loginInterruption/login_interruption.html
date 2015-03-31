@@ -1,0 +1,37 @@
+<div class="col-md-12">
+    <form name="loginInterruptForm" class="form" novalidate>
+        <div class="row" data-ng-show="!loginInterruptForm.$valid || loginInterruptForm.email.$error.duplicate">
+            <div class="col-md-12" id="message-container"></div>
+        </div>
+
+        <div class="row" data-ng-hide="account.originalUserClientEmail || !account.secretQuestionCreated"
+             data-ng-include="'client-facing/loginInterruption/enterEmail/enter_email.html'"></div>
+
+        <div class="row" data-ng-hide="account.emailValidated || !account.originalUserClientEmail || !account.secretQuestionCreated"
+             data-ng-include="'client-facing/loginInterruption/validateEmail/validate_email.html'"></div>
+
+        <div class="row" data-ng-hide="account.secretQuestionCreated || !account.originalUserClientEmail || !account.emailValidated"
+             data-ng-include="'client-facing/loginInterruption/secretQuestions/secret-question-create.html'"></div>
+
+        <div class="row"
+             data-ng-show="!account.secretQuestionCreated && (!account.emailValidated||!account.originalUserClientEmail) "
+             data-ng-include="'client-facing/loginInterruption/multiple_questions.html'"></div>
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <hr>
+                <div class="form-group pull-right">
+                    <a type="button" class="btn" data-ng-click="notNow()">not now</a>
+                    <button class="btn btn-primary" type="submit" data-ng-hide="Session.secretQuestionCreated"
+                            data-ng-click="save(loginInterruptForm.addEmail.$valid,
+                             loginInterruptForm.validateEmail.$valid,
+                             loginInterruptForm.secretQuestion1.$valid && loginInterruptForm.secretQuestion2.$valid)"
+                            >
+                        Save
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

@@ -7,7 +7,7 @@
                 Provider:
             </label>
 
-            <div class="error-circle glyphicon glyphicon-exclamation-sign"
+            <div class="error-circle fa-exclamation-circle"
                  data-ng-show="addProgramForm.provider.$error.required && addProgramFormSubmitted"
                  data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                  data-title="Required"></div>
@@ -37,7 +37,7 @@
                 Location:
             </label>
 
-            <div class="error-circle glyphicon glyphicon-exclamation-sign"
+            <div class="error-circle fa-exclamation-circle"
                  data-ng-show="addProgramForm.location.$error.required && addProgramFormSubmitted"
                  data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                  data-title="Required"></div>
@@ -66,17 +66,17 @@
             <label class="control-label" for="viewByDate">
                 View-by Date:
             </label>
-            <div class="error-circle glyphicon glyphicon-exclamation-sign"
+            <div class="error-circle fa-exclamation-circle"
                  data-ng-show="!addProgramForm.viewByDate.$error.date &&
                                addProgramForm.viewByDate.$error.required &&
                                addProgramFormSubmitted"
                  data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                  data-title="Required"></div>
-            <div class="error-circle glyphicon glyphicon-exclamation-sign"
+            <div class="error-circle fa-exclamation-circle"
                  data-ng-show="!addProgramForm.viewByDate.$error.required && addProgramForm.viewByDate.$error.min && addProgramFormSubmitted"
                  data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                  data-title="Please enter a date in the future"></div>
-            <div class="error-circle glyphicon glyphicon-exclamation-sign"
+            <div class="error-circle fa-exclamation-circle"
                  data-ng-show="(addProgramForm.viewByDate.$error.min && addProgramForm.viewByDate.$error.date && addProgramForm.viewByDate.$error.required
                   || addProgramForm.viewByDate.$error.date && addProgramForm.viewByDate.$error.required) && addProgramFormSubmitted"
                  data-bs-tooltip data-placement="right" data-type="danger" data-container="body"

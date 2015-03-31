@@ -1,4 +1,4 @@
-<div class="modal" tabindex="-1" role="dialog" data-ng-submit="add(emailRestrictConfigurationForm)" 
+<div class="modal" tabindex="-1" role="dialog" data-ng-submit="add(emailRestrictConfigurationForm)"
     data-ng-controller="AddEmailRestrictConfigurationController">
     <form name="emailRestrictConfigurationForm" class="form" novalidate>
         <div class="modal-dialog">
@@ -12,15 +12,15 @@
                             <div class="form-group"
                                  data-ng-class="{ 'has-error' : emailRestrictConfigurationForm.emailEnding.$invalid && emailRestrictConfigurationFormSubmitted }">
                                 <label class="control-label" for="emailEnding">Email ending:</label>
-                                <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                                <div class="error-circle fa-exclamation-circle"
                                      data-ng-show="emailRestrictConfigurationForm.emailEnding.$error.required && emailRestrictConfigurationFormSubmitted"
                                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                                      data-title="Required"></div>
-                                <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                                <div class="error-circle fa-exclamation-circle"
                                     data-ng-show="emailRestrictConfigurationForm.emailEnding.$error.pattern && emailRestrictConfigurationFormSubmitted"
                                     data-bs-tooltip data-placement="right" data-type="danger"
                                     data-container="body" data-title="Please enter a valid email ending."></div>
-                                <input class="form-control" id="emailEnding" 
+                                <input class="form-control" id="emailEnding"
                                        data-ng-model="emailRestrictConfiguration.entity.emailEnding"
                                        name="emailEnding"
                                        type="text"
@@ -35,7 +35,7 @@
                             <div class="form-group"
                                  data-ng-class="{ 'has-error' : emailRestrictConfigurationForm.description.$invalid && emailRestrictConfigurationFormSubmitted }">
                                 <label class="control-label" for="description">Description:</label>
-                                <input class="form-control" id="passwordLength" 
+                                <input class="form-control" id="passwordLength"
                                        data-ng-model="emailRestrictConfiguration.entity.description"
                                        name="description"
                                        type="text" >

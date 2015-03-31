@@ -27,10 +27,10 @@
                 </div>
                 <div class="form-group" data-ng-class="{ 'has-error' : userClientForm.firstName.$invalid && formSubmitted }">
                     <label class="control-label" for="firstName">First Name: </label>
-                    <div class="error-circle glyphicon glyphicon-exclamation-sign" data-ng-show="userClientForm.firstName.$error.required && formSubmitted"
+                    <div class="error-circle fa-exclamation-circle" data-ng-show="userClientForm.firstName.$error.required && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Required"></div>
-                    <div class="error-circle glyphicon glyphicon-exclamation-sign" data-ng-show="userClientForm.firstName.$error.pattern && formSubmitted"
+                    <div class="error-circle fa-exclamation-circle" data-ng-show="userClientForm.firstName.$error.pattern && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Please enter a valid first name."></div>
                     <input class="form-control" data-ng-model="userClient.firstName" id="firstName" name="firstName"
@@ -41,10 +41,10 @@
                 </div>
                 <div class="form-group"  data-ng-class="{ 'has-error' : userClientForm.lastName.$invalid && formSubmitted }">
                     <label class="control-label" for="lastName">Last Name: </label>
-                    <div class="error-circle glyphicon glyphicon-exclamation-sign" data-ng-show="userClientForm.lastName.$error.required && formSubmitted"
+                    <div class="error-circle fa-exclamation-circle" data-ng-show="userClientForm.lastName.$error.required && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Required"></div>
-                    <div class="error-circle glyphicon glyphicon-exclamation-sign" data-ng-show="userClientForm.lastName.$error.pattern && formSubmitted"
+                    <div class="error-circle fa-exclamation-circle" data-ng-show="userClientForm.lastName.$error.pattern && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Please enter a valid last name."></div>
                     <input class="form-control" data-ng-model="userClient.lastName" id="lastName" name="lastName"
@@ -62,7 +62,7 @@
                     Email:
                 </div>
                 <div>
-                    {{userClient.email}} 		<a class="btn btn-link" data-ng-click="editEmail()">edit email</a>
+                    {{userClient.email}} <a class="btn btn-link" data-ng-click="editEmail()"> {{ userClient.email ? 'edit email' : 'add an email address' }} </a>
                 </div>
             </div>
         </div>
@@ -71,12 +71,11 @@
             <div class="form-group" data-ng-show="passwordIsValidated"
                  data-ng-class="{ 'has-error' : editEmailFormSubmitted && (editEmailForm.email.$error.pattern || emailError)}">
                 <label class="control-label" for="email">Email:</label>
-
-                <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                <div class="error-circle fa-exclamation-circle"
                      data-ng-show="editEmailForm.email.$error.pattern && editEmailFormSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                      data-title="Please enter a valid email."></div>
-                <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                <div class="error-circle fa-exclamation-circle"
                      data-ng-show="emailError && editEmailFormSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                      data-title="This email address is being used by another account."></div>
@@ -91,7 +90,7 @@
 
         <div class="row">
             <div class="col-md-6">
-                <a href="#/change_password">Change Password</a>
+                <span data-ng-controller="PreChangePasswordController"><a href='' data-ng-click="allowAnotherPasswordChange()">Change password</a></a></span>
             </div>
         </div>
     </div>

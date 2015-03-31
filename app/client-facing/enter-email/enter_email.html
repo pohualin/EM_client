@@ -13,15 +13,15 @@
 
                 <div class="form-group"
                      data-ng-class="{ 'has-error' : (editEmailForm.email.$invalid || editEmailForm.email.$error.duplicate) && addEmailFormSubmitted }">
-                    <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                    <div class="error-circle fa-exclamation-circle"
                          data-ng-show="addEmailForm.email.$error.pattern && addEmailFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger"
                          data-container="body" data-title="Please enter a valid email."></div>
-                    <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                    <div class="error-circle fa-exclamation-circle"
                          data-ng-show="addEmailForm.email.$error.required && addEmailFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Required"></div>
-                    <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                    <div class="error-circle fa-exclamation-circle"
                          data-ng-show="addEmailForm.email.$error.duplicate && addEmailFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="This email address is being used by another account"></div>
