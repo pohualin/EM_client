@@ -56,7 +56,7 @@ angular.module('emmiManager', [
     })
 
     .config(
-        function ($httpProvider, $translateProvider, tmhDynamicLocaleProvider, HateoasInterceptorProvider, $datepickerProvider, API, unsavedWarningsConfigProvider) {
+        function ($provide, $httpProvider, $translateProvider, tmhDynamicLocaleProvider, HateoasInterceptorProvider, $datepickerProvider, API, unsavedWarningsConfigProvider) {
 
         // Initialize angular-translate
         $translateProvider.useUrlLoader(API.messages);
@@ -96,6 +96,18 @@ angular.module('emmiManager', [
             dateType: 'string',
             iconLeft: 'fa-angle-left',
             iconRight: 'fa-angle-right'
+        });
+
+        // extend ivh.treeview ivhTreeviewCheckbox directive so we can skin the checkboxes (EM-1046)
+        $provide.decorator('ivhTreeviewCheckboxDirective', function($delegate) {
+            var directive = $delegate[0];
+            directive.template = [
+                '<span class="checkbox"><input id="ivhTreeviewCheckbox_{{node.name}}" type="checkbox"',
+                    'ng-model="isSelected"',
+                    'ng-change="ctrl.select(node, isSelected)" />',
+                '<label for="ivhTreeviewCheckbox_{{node.name}}"></label></span>'
+            ].join('\n');
+            return $delegate;
         });
 
         unsavedWarningsConfigProvider.logEnabled = false;

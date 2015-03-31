@@ -446,9 +446,20 @@
         background-color: #6CC5DC;
         border-color: #6CC5DC;
     }
+    input[type="checkbox"]:indeterminate + label:before {
+        font-family: 'ui-font-solid';
+        font-size: 24px;
+        line-height: .9;
+        content: '\E465';
+        color: #fff;
+        background-color: #6CC5DC;
+        border-color: #6CC5DC;
+        padding-left: 1px;
+    }
     input[type="checkbox"]:focus + label:before {
         border-color: #9EA9B5;
     }
+    input[type="checkbox"]:indeterminate:focus + label:before,
     input[type="checkbox"]:checked:focus + label:before {
         border-color: #21A4C7;
     }
