@@ -41,6 +41,7 @@ app using the *Import Icons* button (or via Main Menu > Manage Projects) to retr
 }
 
 [class^="fa-"], [class*=" fa-"] {
+    display: inline-block;
     font-family: 'fontawesome';
     speak: none;
     font-style: normal;

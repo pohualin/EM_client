@@ -22,11 +22,11 @@
                      data-ng-class="{ 'has-error' : locationForm.locationName.$invalid && locationFormSubmitted }">
                     <label class="control-label" for="locationName">Name:</label>
 
-                    <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                    <div class="error-circle fa-exclamation-circle"
                          data-ng-show="locationForm.locationName.$error.required && locationFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Required"></div>
-                    <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                    <div class="error-circle fa-exclamation-circle"
                          data-ng-show="locationForm.locationName.$error.pattern && locationFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Please enter a valid name."></div>
@@ -41,11 +41,11 @@
                 <div class="form-group"
                      data-ng-class="{ 'has-error' : locationForm.phone.$invalid && locationFormSubmitted }">
                     <label class="control-label" for="phone">Phone:</label>
-                    <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                    <div class="error-circle fa-exclamation-circle"
                          data-ng-show="locationForm.phone.$error.required && locationFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Required"></div>
-                    <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                    <div class="error-circle fa-exclamation-circle"
                          data-ng-show="!locationForm.phone.$error.required && locationForm.phone.$error.pattern && locationFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Please enter a valid phone number."></div>
@@ -61,11 +61,11 @@
                      data-ng-class="{ 'has-error' : locationForm.city.$invalid && locationFormSubmitted }">
                     <label class="control-label" for="city">City:</label>
 
-                    <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                    <div class="error-circle fa-exclamation-circle"
                          data-ng-show="locationForm.city.$error.required && locationFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Required"></div>
-                    <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                    <div class="error-circle fa-exclamation-circle"
                          data-ng-show="locationForm.city.$error.pattern && locationFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Please enter a valid city."></div>
@@ -80,7 +80,7 @@
                      data-ng-class="{ 'has-error' : locationForm.state.$invalid && locationFormSubmitted }">
                     <label class="control-label" for="state">State:</label>
 
-                    <div class="error-circle glyphicon glyphicon-exclamation-sign" data-ng-show="locationForm.state.$invalid && locationFormSubmitted"
+                    <div class="error-circle fa-exclamation-circle" data-ng-show="locationForm.state.$invalid && locationFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Required"></div>
                     <select class="form-control" id="state" data-ng-model="locationToEdit.entity.state"
@@ -97,6 +97,17 @@
                     <div>
                     	<span data-ng-show="locationToEdit.entity.belongsTo"> {{locationToEdit.entity.belongsTo.name}}</span>
             			<span data-ng-show="!locationToEdit.entity.belongsTo"> <span data-translate="client_edit_page.locations.no_client_owner"></span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="checkbox">
+                        <input type="checkbox" id="locationActiveCheckbox"
+                               data-ng-model="locationToEdit.entity.active">
+                        <label for="locationActiveCheckbox">Active</label>
                     </div>
                 </div>
             </div>

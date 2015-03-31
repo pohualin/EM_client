@@ -1,4 +1,4 @@
-<div class="modal" tabindex="-1" role="dialog" data-ng-submit="add(ipRestrictConfigurationForm)" 
+<div class="modal" tabindex="-1" role="dialog" data-ng-submit="add(ipRestrictConfigurationForm)"
     data-ng-controller="AddIpRestrictConfigurationController">
     <form name="ipRestrictConfigurationForm" class="form" novalidate>
         <div class="modal-dialog">
@@ -12,18 +12,18 @@
                             <div class="form-group"
                                  data-ng-class="{ 'has-error' : ipRestrictConfigurationForm.ipRangeStart.$invalid && ipRestrictConfigurationFormSubmitted }">
                                 <label class="control-label" for="ipRangeStart">Start IP:</label>
-                                <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                                <div class="error-circle fa-exclamation-circle"
                                      data-ng-show="ipRestrictConfigurationForm.ipRangeStart.$error.required && ipRestrictConfigurationFormSubmitted"
                                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                                      data-title="Required"></div>
-                                <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                                <div class="error-circle fa-exclamation-circle"
                                     data-ng-show="ipRestrictConfigurationForm.ipRangeStart.$error.pattern && ipRestrictConfigurationFormSubmitted"
                                     data-bs-tooltip data-placement="right" data-type="danger"
                                     data-container="body" data-title="Please enter a valid IP start."></div>
-                                <input class="form-control" id="ipRangeStart" 
+                                <input class="form-control" id="ipRangeStart"
                                        data-ng-model="ipRestrictConfiguration.entity.ipRangeStart"
                                        name="ipRangeStart"
-                                       type="text" 
+                                       type="text"
                                        data-ng-pattern="/^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/"
                                        placeholder="0.0.0.0"
                                        required data-auto-focus>
@@ -35,18 +35,18 @@
                             <div class="form-group"
                                  data-ng-class="{ 'has-error' : ipRestrictConfigurationForm.ipRangeEnd.$invalid && ipRestrictConfigurationFormSubmitted }">
                                 <label class="control-label" for="ipRangeEnd">End IP:</label>
-                                <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                                <div class="error-circle fa-exclamation-circle"
                                      data-ng-show="ipRestrictConfigurationForm.ipRangeEnd.$error.required && ipRestrictConfigurationFormSubmitted"
                                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                                      data-title="Required"></div>
-                                <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                                <div class="error-circle fa-exclamation-circle"
                                     data-ng-show="ipRestrictConfigurationForm.ipRangeEnd.$error.pattern && ipRestrictConfigurationFormSubmitted"
                                     data-bs-tooltip data-placement="right" data-type="danger"
                                     data-container="body" data-title="Please enter a valid IP end"></div>
-                                <input class="form-control" id="ipRangeEnd" 
+                                <input class="form-control" id="ipRangeEnd"
                                        data-ng-model="ipRestrictConfiguration.entity.ipRangeEnd"
                                        name="ipRangeEnd"
-                                       type="text" 
+                                       type="text"
                                        data-ng-pattern="/^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/"
                                        placeholder="0.0.0.0"
                                        required >
@@ -58,7 +58,7 @@
                             <div class="form-group"
                                  data-ng-class="{ 'has-error' : ipRestrictConfigurationForm.description.$invalid && ipRestrictConfigurationFormSubmitted }">
                                 <label class="control-label" for="description">Description:</label>
-                                <input class="form-control" id="passwordLength" 
+                                <input class="form-control" id="passwordLength"
                                        data-ng-model="ipRestrictConfiguration.entity.description"
                                        name="description"
                                        type="text" >

@@ -72,8 +72,8 @@
 						<th class="sort col-sm-1">&nbsp;</th>
 						<th class="sort col-sm-3" data-ng-click="sort('name')">Name
 							<span data-ng-show="sortProperty.property === 'name'"><span
-								class="glyphicon sort-icon"
-								data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
+								class="sort-icon"
+								data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
 						</th>
 					</tr>
 					<tr data-ng-repeat="userClientUserClientTeamRole in userClientUserClientTeamRoles">
@@ -91,7 +91,7 @@
                             </div>
                         </td>
 						<td>{{userClientUserClientTeamRole.entity.team.name}}
-							<div class="error-circle glyphicon glyphicon-exclamation-sign"
+							<div class="error-circle fa-exclamation-circle"
 					             data-ng-show="userClientUserClientTeamRole.entity.warning"
 					             data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
 					             data-title={{userClientUserClientTeamRole.entity.warning}}></div>
