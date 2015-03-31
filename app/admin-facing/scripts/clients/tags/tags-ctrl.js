@@ -37,7 +37,6 @@ angular.module('emmiManager')
                 });
             });
 
-            window.paul = tagLibraries;
             $scope.tagLibraries = tagLibraries;
             $scope.tagLibraryMap = libraryMap;
 
