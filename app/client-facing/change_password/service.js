@@ -4,8 +4,8 @@ angular.module('emmiManager')
 /**
  * Service for change password
  */
-    .service('ChangePasswordService', ['$http', 'UriTemplate', 'API',
-        function ($http, UriTemplate, api) {
+    .service('ChangePasswordService', ['$http', 'UriTemplate', 'API', 'moment',
+        function ($http, UriTemplate, api, moment) {
             return {
 
                 /**
@@ -30,6 +30,14 @@ angular.module('emmiManager')
                     }, {override403: true}).success(function (response) {
                             return response;
                         });
+                },
+                
+                /**
+                 * See if UserClient is eligible for changing password
+                 */
+                eligibleToChange: function (policy, account) {
+                    return moment().diff(moment(account.passwordSavedTime), 'days') - policy.daysBetweenPasswordChange
+                        > -1;
                 },
                 
                 /**
