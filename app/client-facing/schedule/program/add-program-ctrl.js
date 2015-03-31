@@ -104,7 +104,7 @@ angular.module('emmiManager')
                 AddProgramService.loadProviders($scope.team, $scope.scheduledProgram.location).then(
                     function (providers) {
                         $scope.providers = providers;
-                        if (providers.length == 1) {
+                        if (providers.length === 1) {
                             $scope.scheduledProgram.provider = providers[0];
                         }
                     }).finally(function () {
@@ -122,7 +122,7 @@ angular.module('emmiManager')
                 AddProgramService.loadLocations($scope.team, $scope.scheduledProgram.provider).then(
                     function (locations) {
                         $scope.locations = locations;
-                        if (locations.length == 1) {
+                        if (locations.length === 1) {
                             $scope.scheduledProgram.location = locations[0];
                         }
                     }).finally(function () {

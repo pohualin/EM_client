@@ -2,8 +2,8 @@
 
 angular.module('emmiManager')
 
-    .service('AddProgramService', ['$http', 'UriTemplate',
-        function ($http, UriTemplate) {
+    .service('AddProgramService', ['$http', 'UriTemplate', 'moment',
+        function ($http, UriTemplate, moment) {
             return {
 
                 /**
