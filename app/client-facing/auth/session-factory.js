@@ -18,6 +18,9 @@ angular.module('emmiManager')
             if (user.passwordExpirationTime) {
                 this.passwordExpirationTime = user.passwordExpirationTime + 'Z';
             }
+            if (user.passwordSavedTime) {
+                this.passwordSavedTime = user.passwordSavedTime + 'Z';
+            }
             if (user.teams) {
                 angular.forEach(user.teams, function(team) {
                     team.link = arrays.convertToObject('rel', 'href',
