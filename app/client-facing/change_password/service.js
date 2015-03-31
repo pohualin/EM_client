@@ -18,7 +18,7 @@ angular.module('emmiManager')
                         confirmPassword: null
                     };
                 },
-                
+
                 /**
                  * Call server side to verify old password, validate new password pattern and save new password
                  */
@@ -31,15 +31,14 @@ angular.module('emmiManager')
                             return response;
                         });
                 },
-                
+
                 /**
                  * See if UserClient is eligible for changing password
                  */
                 eligibleToChange: function (policy, account) {
-                    return moment().diff(moment(account.passwordSavedTime), 'days') - policy.daysBetweenPasswordChange
-                        > -1;
+                    return (moment().diff(moment(account.passwordSavedTime), 'days') - policy.daysBetweenPasswordChange) > -1;
                 },
-                
+
                 /**
                  * Load Client password policy to use
                  */
