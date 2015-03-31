@@ -4,8 +4,8 @@ angular.module('emmiManager')
 /**
  * Service for change password
  */
-    .service('ChangePasswordService', ['$http', 'UriTemplate', 'API',
-        function ($http, UriTemplate, api) {
+    .service('ChangePasswordService', ['$http', 'UriTemplate', 'API', 'moment',
+        function ($http, UriTemplate, api, moment) {
             return {
 
                 /**
@@ -18,7 +18,7 @@ angular.module('emmiManager')
                         confirmPassword: null
                     };
                 },
-                
+
                 /**
                  * Call server side to verify old password, validate new password pattern and save new password
                  */
@@ -31,7 +31,14 @@ angular.module('emmiManager')
                             return response;
                         });
                 },
-                
+
+                /**
+                 * See if UserClient is eligible for changing password
+                 */
+                eligibleToChange: function (policy, account) {
+                    return (moment().diff(moment(account.passwordSavedTime), 'days') - policy.daysBetweenPasswordChange) > -1;
+                },
+
                 /**
                  * Load Client password policy to use
                  */

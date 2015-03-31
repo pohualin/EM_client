@@ -351,6 +351,7 @@ Just use the `icon-` prefix followed by the specific icon class.
 
 
 [class^="icon-"], [class*=" icon-"] {
+    display: inline-block;
     font-family: 'ui-font-solid';
     //font-size: 150%; // default font character size is a bit small
     speak: none;
