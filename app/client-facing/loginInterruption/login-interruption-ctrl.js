@@ -18,12 +18,17 @@ angular.module('emmiManager')
                 $scope.loginInterruptFormSubmitted = true;
                 if (!account.originalUserClientEmail && !$scope.addEmailSaveSuccesful) {
                     promises.push($scope.saveEmail(isAddEmailValid));
-                }
-                if (!account.emailValidated && account.originalUserClientEmail && !$scope.validateEmailSaveSuccesful) {
+                } else if (!account.emailValidated && !$scope.validateEmailSaveSuccesful) {
                     promises.push($scope.sendValidationEmail(isValidateEmailValid));
                 }
                 if (!account.secretQuestionCreated && !$scope.secretQuestionEmailSaveSuccesful) {
-                    promises.push($scope.saveOrUpdateSecretQuestion(isSecretQuestionsEmailValid));
+                    if(promises.length > 0){
+                        $q.all(promises).then(function() {
+                            promises.push($scope.saveOrUpdateSecretQuestion(isSecretQuestionsEmailValid));
+                        });
+                    } else {
+                        promises.push($scope.saveOrUpdateSecretQuestion(isSecretQuestionsEmailValid));
+                    }
                 }
 
                 $q.all(promises).then(function() {
