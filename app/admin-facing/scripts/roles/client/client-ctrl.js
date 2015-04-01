@@ -74,6 +74,7 @@ angular.module('emmiManager')
              * Called when the save button is clicked on a new client role
              *
              * @param clientRoleEntity to be saved
+             * @param form for unsaved changes
              */
             $scope.saveNewRole = function (clientRoleEntity, form) {
                 form.$setPristine();
@@ -85,6 +86,8 @@ angular.module('emmiManager')
 
             /**
              * Called when 'cancel' is clicked on the create new client role panel
+             *
+             * @param form for unsaved changes
              */
             $scope.cancelNew = function (form) {
                 form.$setPristine();
@@ -95,8 +98,10 @@ angular.module('emmiManager')
              * Called when 'cancel' is clicked on an existing panel
              *
              * @param clientRoleResource
+             * @param form for unsaved changes
              */
-            $scope.cancelExisting = function (clientRoleResource) {
+            $scope.cancelExisting = function (clientRoleResource, form) {
+                form.$setPristine();
                 clientRoleResource.editName = false;
                 angular.extend(clientRoleResource, clientRoleResource.original);
                 delete clientRoleResource.original;
@@ -108,10 +113,16 @@ angular.module('emmiManager')
              * the back.
              *
              * @param clientRoleResource for the panel
+             * @param form for unsaved changes
              */
-            $scope.panelStateChange = function (clientRoleResource) {
+            $scope.panelStateChange = function (clientRoleResource, form) {
                 if (clientRoleResource.activePanel === 0 && !clientRoleResource.original) {
                     ManageUserRolesService.loadPermissions(clientRoleResource);
+                    // Set the form back to pristine after loading permissions from server
+                    form.$setPristine();
+                } else {
+                    // Set the form back to pristine after initialization
+                    form.$setPristine();
                 }
             };
 
@@ -131,8 +142,10 @@ angular.module('emmiManager')
              * an existing role
              *
              * @param clientRoleResource to be updated
+             * @param form for unsaved changes
              */
-            $scope.update = function (clientRoleResource) {
+            $scope.update = function (clientRoleResource, form) {
+                form.$setPristine();
                 ManageUserRolesService.saveExistingClientRole(clientRoleResource);
             };
 

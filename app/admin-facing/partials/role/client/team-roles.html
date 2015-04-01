@@ -3,9 +3,9 @@
 
     <div class="row" data-ng-show="existingClientTeamRoles" data-ng-repeat="role in existingClientTeamRoles">
         <div class="col-md-5">
-            <form name="existingClientTeamRoleForm_{{$index}}" class="form" novalidate>
+            <form name="existingClientTeamRoleForm_{{$index}}" class="form" novalidate unsaved-warning-form>
                 <div class="panel-group" data-ng-model="role.activePanel"
-                     data-ng-change="panelStateChange(role)" data-start-collapsed="true"
+                     data-ng-change="panelStateChange(role, existingClientTeamRoleForm_{{$index}})" data-start-collapsed="true"
                      data-bs-collapse>
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -59,11 +59,11 @@
                                 </div>
                                 <hr/>
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-link" data-ng-click="cancelExisting(role)"
+                                    <button type="button" class="btn btn-link" data-ng-click="cancelExisting(role, existingClientTeamRoleForm_{{$index}})"
                                             data-bs-collapse-toggle>
                                         cancel
                                     </button>
-                                    <button class="btn btn-default" data-ng-click="update(role)"
+                                    <button class="btn btn-default" data-ng-click="update(role, existingClientTeamRoleForm_{{$index}})"
                                             data-bs-collapse-toggle
                                             data-ng-show="existingClientTeamRoleForm_{{$index}}.$valid && existingHasChanged(role) && hasAPermissionChecked(role.entity)">
                                         Save Changes
