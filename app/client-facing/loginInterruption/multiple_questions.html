@@ -13,10 +13,13 @@
             </div>
             <br>
             <img src="images/one-icon.png" alt="One">
-            <label class="control-label" for="validateEmail" data-ng-hide="account.originalUserClientEmail">Please add an email address to your account:</label>
-            <label class="control-label" for="validateEmail" data-ng-show="account.originalUserClientEmail">Please verify the email address for your account:</label>
+            <label class="control-label" for="validateEmail" data-ng-hide="account.originalUserClientEmail">Please add
+                an email address to your account:</label>
+            <label class="control-label" for="validateEmail" data-ng-show="account.originalUserClientEmail">Please
+                verify the email address for your account:</label>
             <br>
             <br>
+
             <div class="form-group"
                  data-ng-class="{ 'has-error' : (loginInterruptForm.validateEmail.$invalid || loginInterruptForm.validateEmail.$error.duplicate) && loginInterruptFormSubmitted }">
 
@@ -47,8 +50,10 @@
 
             <img src="images/two-icon.png" alt="Two">
             <label class="control-label" for="validateEmail">Please choose your security questions:</label>
-            <br>
-            <br>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
             <label>Question 1:</label>
 
             <div class="error-circle glyphicon glyphicon-exclamation-sign"
@@ -57,6 +62,8 @@
                  data-title="Required">
             </div>
         </div>
+
+
         <div class="col-md-6">
             <div class="error-circle glyphicon glyphicon-exclamation-sign"
                  data-ng-show="loginInterruptForm.response1.$error.required && loginInterruptFormSubmitted"
