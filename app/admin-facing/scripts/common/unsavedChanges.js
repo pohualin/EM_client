@@ -214,26 +214,32 @@ angular.module('unsavedChanges', ['resettable'])
             // user beyond the message string. It will be a standard confirm dialog.
             //$window.onbeforeunload = _this.confirmExit;
 
-            function routeChange(event, next, current) {
+            function routeChange(event, next) {
                 unsavedWarningsConfig.log('user is moving with ' + '$locationChangeStart');
                 if (!allFormsClean()) {
                     unsavedWarningsConfig.log('a form is dirty');
 
-                    var myModal = $modal({
-                        show: true,
-                        content: 'Are you sure? Any unsaved changes will be lost.',
-                        template: 'admin-facing/partials/common/cancel.tpl.html',
-                        animation: 'none',
-                        backdropAnimation: 'emmi-fade',
-                        backdrop: 'static'});
-
-                    $rootScope.ok = function() {
+                    event.currentScope.unsavedFormOk = function() {
                         unsavedWarningsConfig.log('user doesn\'t care about loosing stuff');
                         $rootScope.$broadcast('resetResettables');
                         tearDown();
                         $window.location.href = next;
                         //$location.path($location.url(next).hash()); //Go to page they're interested in
                     };
+
+                    event.currentScope.unsavedFormCancel = function() {
+                        $rootScope.$broadcast('$unsaved-form-cancel-clicked');
+                    };
+
+                    $modal({
+                        show: true,
+                        scope: event.currentScope,
+                        content: 'Are you sure? Any unsaved changes will be lost.',
+                        template: 'admin-facing/partials/common/cancel.tpl.html',
+                        animation: 'none',
+                        backdropAnimation: 'emmi-fade',
+                        backdrop: 'static'});
+
 
                     //prevent navigation by default since we'll handle it
                     //once the user selects a dialog option
@@ -301,7 +307,7 @@ angular.module('unsavedChanges', ['resettable'])
                 unsavedWarningSharedService.init(formCtrl);
 
                 // bind to form submit, this makes the typical submit button work
-                // in addition to the ability to bind to a seperate button which clears warning
+                // in addition to the ability to bind to a separate button which clears warning
                 formElement.bind('submit', function(event) {
                     if (formCtrl.$valid) {
                         $timeout(function (){
