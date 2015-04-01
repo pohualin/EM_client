@@ -101,12 +101,23 @@ angular.module('emmiManager', [
         // extend ivh.treeview ivhTreeviewCheckbox directive so we can skin the checkboxes (EM-1046)
         $provide.decorator('ivhTreeviewCheckboxDirective', function($delegate) {
             var directive = $delegate[0];
+            var link = directive.link;
             directive.template = [
-                '<span class="checkbox"><input id="ivhTreeviewCheckbox_{{node.name}}" type="checkbox"',
+                '<span class="checkbox"><input id="ivhTreeviewCheckbox_{{elementId}}_{{node.name}}" type="checkbox"',
                     'ng-model="isSelected"',
                     'ng-change="ctrl.select(node, isSelected)" />',
-                '<label for="ivhTreeviewCheckbox_{{node.name}}"></label></span>'
+                '<label for="ivhTreeviewCheckbox_{{elementId}}_{{node.name}}"></label></span>'
             ].join('\n');
+            directive.compile = function() {
+                return function(scope, element, attrs) {
+                    link.apply(this, arguments);
+                    // get the closest treeview container id
+                    var elementId = angular.element(element).closest('.ivh-treeview-container').attr('id');
+                    if (elementId) {
+                        scope.elementId = elementId;
+                    }
+                };
+            };
             return $delegate;
         });
 
