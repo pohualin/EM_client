@@ -33,11 +33,10 @@
 }
 
 .multi-select > .multi-select-dropdown > .multi-select-filters > .multi-select-filter {
-  display: inline;
+  display: block;
   padding: 0.2em 0.6em 0.3em;
   font-weight: 400;
   color: #666;
-  text-align: center;
   white-space: nowrap;
   vertical-align: baseline;
   cursor: pointer;
@@ -59,7 +58,7 @@
   margin-left: 0;
 }
 
-.multi-select > .multi-select-dropdown > ul > li > a {
+.multi-select > .multi-select-dropdown > ul > li > .multi-select-option-link {
   display: block;
   padding: 3px 20px;
   clear: both;
@@ -69,10 +68,15 @@
   text-decoration: none;
 }
 
-.multi-select > .multi-select-dropdown > ul > li > a:hover {
+.multi-select > .multi-select-dropdown > ul > li > .multi-select-option-link:hover {
   color: #363636;
   text-decoration: none;
   background-color: #f5f5f5;
+}
+
+.multi-select > .multi-select-dropdown .multi-select-filters label,
+.multi-select > .multi-select-dropdown .multi-select-option label {
+  display: block;
 }
 
 .multi-select > .multi-select-dropdown > ul > li .multi-select-other-container {

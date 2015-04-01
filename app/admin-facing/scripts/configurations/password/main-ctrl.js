@@ -12,6 +12,7 @@ angular.module('emmiManager')
              * Cancel any changes
              */
             $scope.cancel = function (clientPasswordConfigurationForm) {
+                clientPasswordConfigurationForm.$setPristine();
                 $scope.clientPasswordConfigurationFormSubmitted = false;
                 $scope.clientPasswordConfiguration = angular.copy($scope.originalClientPasswordConfiguration);
             };
@@ -35,6 +36,7 @@ angular.module('emmiManager')
                             duration: 5,
                             dismissable: true
                         });
+                        clientPasswordConfigurationForm.$setPristine();
                     });
                 });
             };
@@ -45,6 +47,7 @@ angular.module('emmiManager')
             $scope.save = function (clientPasswordConfigurationForm) {
                 $scope.clientPasswordConfigurationFormSubmitted = true;
                 if (clientPasswordConfigurationForm.$valid) {
+                    clientPasswordConfigurationForm.$setPristine();
                     ClientPasswordConfigurationsService.save($scope.clientPasswordConfiguration).then(function (response) {
                         $scope.originalClientPasswordConfiguration = response;
                         $scope.clientPasswordConfiguration = angular.copy($scope.originalClientPasswordConfiguration);

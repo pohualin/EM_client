@@ -2,7 +2,8 @@
 
 angular.module('emmiManager')
 
-    .controller('TeamEditController', function ($scope, teamClientResource, EditTeam, ViewTeam, $controller) {
+    .controller('TeamEditController', ['$scope', 'teamClientResource', 'EditTeam', 'ViewTeam', '$controller', 'focus',
+        function ($scope, teamClientResource, EditTeam, ViewTeam, $controller, focus) {
 
         $controller('TeamErrorController', {$scope: $scope});
 
@@ -18,6 +19,18 @@ angular.module('emmiManager')
         function setTitle(){
             $scope.page.setTitle('Team ' + $scope.team.id + ' - ' + $scope.team.name);
         }
+
+        /**
+         * Necessary for the directives to communicate
+         * with each other, ordering the save to only
+         * happen after the duplicate check has finished
+         *
+         * @type {{now: boolean, click: boolean}}
+         */
+        $scope.checkingForDupes = {
+            now: false,
+            click: false
+        };
 
         setTitle();
 
@@ -58,7 +71,7 @@ angular.module('emmiManager')
             } else {
                 $scope.showError();
                 // Loop through the form's validation errors and log to Piwik
-                var formErrors = $scope.teamForm.$error;
+                var formErrors = teamForm.$error;
                 for (var errorType in formErrors) {
                     if (formErrors.hasOwnProperty(errorType)) {
                         for (var i = 0; i < formErrors[errorType].length; i++) {
@@ -70,5 +83,5 @@ angular.module('emmiManager')
         };
 
 
-    })
+    }])
 ;

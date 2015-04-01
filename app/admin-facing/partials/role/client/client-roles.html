@@ -3,9 +3,9 @@
 
     <div class="row" data-ng-show="existingClientRoles" data-ng-repeat="role in existingClientRoles">
         <div class="col-md-5">
-            <form name="existingRoleForm_{{$index}}" class="form" novalidate>
+            <form name="existingRoleForm_{{$index}}" class="form" novalidate unsaved-warning-form>
                 <div class="panel-group" data-ng-model="role.activePanel"
-                     data-ng-change="panelStateChange(role)" data-start-collapsed="true"
+                     data-ng-change="panelStateChange(role, existingRoleForm_{{$index}})" data-start-collapsed="true"
                      data-bs-collapse>
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -54,11 +54,11 @@
 
                                 <hr/>
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-link" data-ng-click="cancelExisting(role)"
+                                    <button type="button" class="btn btn-link" data-ng-click="cancelExisting(role, existingRoleForm_{{$index}})"
                                             data-bs-collapse-toggle>
                                         cancel
                                     </button>
-                                    <button class="btn btn-default" data-ng-click="update(role)"
+                                    <button class="btn btn-default" data-ng-click="update(role, existingRoleForm_{{$index}})"
                                             data-bs-collapse-toggle
                                             data-ng-show="existingRoleForm_{{$index}}.$valid && existingHasChanged(role) && hasAPermissionChecked(role.entity)">
                                         Save Changes
@@ -74,7 +74,7 @@
     <div class="row">
         <div class="col-md-5">
             <form name="newClientRoleForm" class="form"
-                  novalidate>
+                  novalidate unsaved-warning-form>
                 <div class="panel-group" data-ng-show="newClientRole">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -85,12 +85,12 @@
                         </div>
                         <div class="panel-collapse">
                             <div class="panel-body">
-                                <div data-ivh-treeview="newClientRole.userClientPermissions" class="ivh-treeview-container" id="newClientRoleTV"></div>
+                                <div data-ng-if="newClientRole.userClientPermissions" data-ivh-treeview="newClientRole.userClientPermissions" class="ivh-treeview-container" id="newClientRoleTV"></div>
                                 <hr/>
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-link" data-ng-click="cancelNew()">cancel
+                                    <button type="button" class="btn btn-link" data-ng-click="cancelNew(newClientRoleForm)">cancel
                                     </button>
-                                    <button class="btn btn-default" data-ng-click="saveNewRole(newClientRole)"
+                                    <button class="btn btn-default" data-ng-click="saveNewRole(newClientRole, newClientRoleForm)"
                                             data-ng-show="newClientRoleForm.$valid && hasAPermissionChecked(newClientRole)">
                                         Save Role
                                     </button>

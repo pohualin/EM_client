@@ -5,18 +5,18 @@
   <div class="multi-select-dropdown hide">
 
     <div class="multi-select-filters checkbox" ng-show="showFilters">
-      <span class="multi-select-filter" ng-click="selectAll()">
+      <div class="multi-select-filter">
         <input type="checkbox" id="multiselectAllCb" ng-model="allSelected" ng-click="clickSelectAllCheckbox($event)" class="multi-select-select-all-checkbox">
-        <label for="multiselectAllCb">Select All</label>
-      </span>
+        <label for="multiselectAllCb" class="multi-select-filter-label">Select All</label>
+      </div>
     </div><!-- ./multi-select-filters -->
 
     <ul >
       <li class="multi-select-option" ng-repeat="value in values">
-        <a class="multi-select-option-link checkbox" href="javascript:;" ng-if="!isOther(value)" ng-click="selectOption(value)" ng-class="{selected: isSelected(value)}">
+        <div class="multi-select-option-link checkbox" ng-if="!isOther(value)" ng-class="{selected: isSelected(value)}">
           <input type="checkbox" id="multiselectOptionCb{{$index}}" ng-checked="isOptionSelected(value)" ng-click="clickCheckbox($event, value)">
-          <label for="multiselectOptionCb{{$index}}">{{value[labelField]}}</label>
-        </a><!-- ./multi-select-option-link -->
+          <label for="multiselectOptionCb{{$index}}" class="multi-select-option-label">{{value[labelField]}}</label>
+        </div><!-- ./multi-select-option-link -->
         <div class="multi-select-other-container" ng-if="showOther && isOther(value)">
           <input type="text" class="form-control multi-select-other"
             placeholder="Other"
