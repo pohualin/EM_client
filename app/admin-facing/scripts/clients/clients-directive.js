@@ -79,7 +79,8 @@ angular.module('emmiManager')
             };
         }])
 
-    .directive('saveClick', ['$popover', 'Client', '$timeout', '$translate', function ($popover, Client, $timeout, $translate) {
+    .directive('saveClick', ['$popover', 'Client', '$timeout', '$translate',
+        function ($popover, Client, $timeout, $translate) {
         return {
             restrict: 'EA',
             scope: {
@@ -92,12 +93,11 @@ angular.module('emmiManager')
                     scope.saveWarning.hide();
                     scope.clientToEdit.active = true;
                 };
-
-                if (scope.dupeCheck) {
+                if (scope.delayClickEvent) {
                     // de-register first $watch
-                    scope.dupeCheck();
+                    scope.delayClickEvent();
                 }
-                scope.dupeCheck = scope.$watch(
+                scope.delayClickEvent = scope.$watch(
                     function (scope) {
                         return scope.checkingForDupes;
                     },
@@ -127,7 +127,11 @@ angular.module('emmiManager')
                             scope.saveWarning.show();
                         }
                     } else {
-                        scope.checkingForDupes.click = true;
+                        $timeout(function () {
+                            scope.checkingForDupes.click = true;
+                            // causes the object to change even if click is already true
+                            scope.checkingForDupes.rnd = Math.random();
+                        });
                     }
                 });
             }

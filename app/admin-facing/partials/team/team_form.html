@@ -15,9 +15,10 @@
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="{{'team_edit_page.unique_popup_dialog.message' | translate}}"></div>
                     <input class="form-control" data-ng-model="teamToSave.name" id="teamName" name="teamName" type="text"
-                           data-unique-team-name data-team="teamToSave" data-unique-url="url" data-auto-focus
+                           data-unique-team-name data-team="teamToSave" data-unique-url="url"
+                           data-checking-for-dupes="checkingForDupes" data-edit-mode="editMode"
                            required data-ng-pattern="/^[\-\.a-zA-Z0-9 '=_;:`!@#&,\(\)\/]*$/" data-animation="am-flip-x"
-                           data-focus-on="teamName">
+                           data-auto-focus data-focus-on="teamName">
                 </div>
             </div>
         </div>

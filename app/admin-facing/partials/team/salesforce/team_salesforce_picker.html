@@ -38,7 +38,7 @@
                     <span>
                         {{teamToSave.salesForceAccount.city}}<span data-ng-show="teamToSave.salesForceAccount.city && teamToSave.salesForceAccount.state">,&nbsp;{{teamToSave.salesForceAccount.state}}</span>
                     </span>
-                    <button class="btn btn-link" data-ng-click="changeSfAccount(teamToSave.salesForceAccount)" required >update</button>
+                    <button class="btn btn-link" type="button" data-ng-click="changeSfAccount(teamToSave.salesForceAccount)" required >update</button>
                 </div>
             </div>
             <div class="col-md-2" data-ng-show="teamToSave.salesForceAccount.phoneNumber">
