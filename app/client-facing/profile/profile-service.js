@@ -9,7 +9,9 @@ angular.module('emmiManager')
                 userClient.login = userClient.email;
             }
 			return $http.put(UriTemplate.create(userClient.link.self).stringify(), userClient).then(function (response) {
-				return response.data;
+				var updatedUser = response.data;
+                updatedUser.email = updatedUser.email || '';
+                return updatedUser;
 			});
 		},
 		get: function (userClient) {

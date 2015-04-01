@@ -56,7 +56,7 @@ angular.module('emmiManager', [
     })
 
     .config(
-        function ($httpProvider, $translateProvider, tmhDynamicLocaleProvider, HateoasInterceptorProvider, $datepickerProvider, API, unsavedWarningsConfigProvider) {
+        function ($provide, $httpProvider, $translateProvider, tmhDynamicLocaleProvider, HateoasInterceptorProvider, $datepickerProvider, API, unsavedWarningsConfigProvider) {
 
         // Initialize angular-translate
         $translateProvider.useUrlLoader(API.messages);
@@ -93,7 +93,32 @@ angular.module('emmiManager', [
         angular.extend($datepickerProvider.defaults, {
             dateFormat: 'MM/dd/yyyy',
             modelDateFormat: 'yyyy-MM-dd',
-            dateType: 'string'
+            dateType: 'string',
+            iconLeft: 'fa-angle-left',
+            iconRight: 'fa-angle-right'
+        });
+
+        // extend ivh.treeview ivhTreeviewCheckbox directive so we can skin the checkboxes (EM-1046)
+        $provide.decorator('ivhTreeviewCheckboxDirective', function($delegate) {
+            var directive = $delegate[0];
+            var link = directive.link;
+            directive.template = [
+                '<span class="checkbox"><input id="ivhTreeviewCheckbox_{{elementId}}_{{node.name}}" type="checkbox"',
+                    'ng-model="isSelected"',
+                    'ng-change="ctrl.select(node, isSelected)" />',
+                '<label for="ivhTreeviewCheckbox_{{elementId}}_{{node.name}}"></label></span>'
+            ].join('\n');
+            directive.compile = function() {
+                return function(scope, element, attrs) {
+                    link.apply(this, arguments);
+                    // get the closest treeview container id
+                    var elementId = angular.element(element).closest('.ivh-treeview-container').attr('id');
+                    if (elementId) {
+                        scope.elementId = elementId;
+                    }
+                };
+            };
+            return $delegate;
         });
 
         unsavedWarningsConfigProvider.logEnabled = false;

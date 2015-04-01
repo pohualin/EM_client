@@ -16,30 +16,16 @@ angular.module('emmiManager')
                      * Load the team from either the logged in user or from the back-end
                      * if the user is an administrator
                      */
-                    'team': ['AuthSharedService', 'MainService', 'ScheduleService', '$q', '$route',
-                        function (AuthSharedService, MainService, ScheduleService, $q, $route) {
+                    'team': ['AuthSharedService', 'ScheduleService', '$q', '$route',
+                        function (AuthSharedService, ScheduleService, $q, $route) {
                             var deferred = $q.defer();
                             AuthSharedService.currentUser().then(function (loggedInUser) {
-                                MainService.specificTeamsHavingLink(loggedInUser, 'schedulePrograms').then(function (teams) {
-                                    var ret;
-                                    angular.forEach(teams, function (team) {
-                                        if ($route.current.params.teamId === team.entity.id + '') {
-                                            ret = team;
-                                        }
+                                ScheduleService.loadTeam(loggedInUser.clientResource, $route.current.params.teamId)
+                                    .then(function (response) {
+                                        deferred.resolve(response.data);
+                                    }, function error() {
+                                        deferred.reject();
                                     });
-                                    if (ret) {
-                                        // user has a special permission for this team
-                                        deferred.resolve(ret);
-                                    } else {
-                                        // try to load the team for this user (maybe they are an admin)
-                                        ScheduleService.loadTeam(loggedInUser.clientResource, $route.current.params.teamId)
-                                            .then(function (response) {
-                                                deferred.resolve(response.data);
-                                            }, function error() {
-                                                deferred.reject();
-                                            });
-                                    }
-                                });
                             });
                             return deferred.promise;
                         }]
