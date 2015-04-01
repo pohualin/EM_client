@@ -16,7 +16,7 @@ angular.module('emmiManager')
 
         $scope.cancel = function () {
             $scope.editMode = false;
-            $location.path("clients").search($scope.currentRouteQueryString);
+            $location.path('clients').search($scope.currentRouteQueryString);
         };
 
         if ($scope.cancelClickDereg) {
