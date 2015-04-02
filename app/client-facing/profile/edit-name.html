@@ -1,9 +1,5 @@
 <div class="col-md-12">
         
-    <div class="row" data-ng-show="userClientForm.$invalid && formSubmitted">
-        <div class="col-md-12" id="message-container"></div>
-    </div>
-
     <div class="row">
         <div class="col-md-12">
             <div class="pull-right">
@@ -43,8 +39,7 @@
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                      data-title="Please enter a valid last name."></div>
                 <input class="form-control" data-ng-model="userClient.lastName" id="lastName" name="lastName"
-                       type="text"
-                       data-auto-focus required
+                       type="text" required
                        data-ng-pattern="/^[a-zA-Z '-]*$/" data-animation="am-flip-x"
                        data-focus-on="lastName">
             </div>
