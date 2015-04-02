@@ -8,18 +8,12 @@ angular.module('emmiManager')
         function ($rootScope, $location, Session, moment) {
             return {
                 routeUser: function () {
-                    var skipInformationCollection = false;
-
-                    if (Session.notNowExpirationTime) {
-                        skipInformationCollection =  moment(Session.notNowExpirationTime + 'Z').isBefore();
-                    }
-
-                    if(!Session.secretQuestionCreated && !skipInformationCollection){
+                    if(!Session.secretQuestionCreated && Session.interruptLoginFlow){
                         $location.path('/createSecretQuestions').replace();
-                    } else if (!Session.email && !skipInformationCollection) {
+                    } else if (!Session.email && Session.interruptLoginFlow) {
                         //if email was not supplied
                         $location.path('/addEmail').replace();
-                    } else if (!Session.emailValidated && !skipInformationCollection) {
+                    } else if (!Session.emailValidated && Session.interruptLoginFlow) {
                         //if email is not verified for user
                         $location.path('/validateEmail').replace();
                     } else if ($location.path() === '/login') {
