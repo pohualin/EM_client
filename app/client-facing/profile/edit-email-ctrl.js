@@ -83,7 +83,7 @@ angular.module('emmiManager')
      * Called when edit mail link is clicked
      */
     $scope.editEmail = function () {
-        $scope.setEmailEditMode(true);
+        // $scope.setEmailEditMode(true);
         $scope.promptPasswordModal = {};
         $scope.promptPasswordModal = 
             $modal({scope: $scope, template: 'client-facing/profile/passwordPrompt.html', animation: 'none', backdropAnimation: 'emmi-fade', backdrop: 'static'});
@@ -96,6 +96,7 @@ angular.module('emmiManager')
         ProfileService.verifyPassword($scope.userClient, password).then(function success(response){
             $scope.editEmailFormSubmitted = false;
             $scope.passwordIsValidated = true;
+            $scope.setEmailEditMode(true);
             $scope.promptPasswordModal.hide();
         }, function fail(error){
             $scope.editEmailFormSubmitted = true;
