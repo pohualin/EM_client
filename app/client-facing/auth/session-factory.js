@@ -16,6 +16,7 @@ angular.module('emmiManager')
             this.clientResource = user.clientResource;
             this.impersonated = user.impersonated;
             this.notNowExpirationTime = user.notNowExpirationTime;
+            this.interruptLoginFlow = user.interruptLoginFlow;
             if (user.passwordExpirationTime) {
                 this.passwordExpirationTime = user.passwordExpirationTime + 'Z';
             }
@@ -46,6 +47,7 @@ angular.module('emmiManager')
             this.teams = null;
             this.impersonated = null;
             this.notNowExpirationTime = null;
+            this.interruptLoginFlow = null;
         };
         return this;
     }])
