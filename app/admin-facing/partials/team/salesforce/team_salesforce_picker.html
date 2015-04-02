@@ -3,7 +3,7 @@
         data-ng-class="{'masked': teamForm.teamName.$error.unique}" >
         <div class="form-group has-feedback" data-ng-class="{ 'has-error' : formSubmitted && !teamToSave.salesForceAccount }">
             <label class="control-label" for="salesForceAccount">Salesforce Account:</label>
-            <div class="error-circle glyphicon glyphicon-exclamation-sign" data-ng-show="!teamToSave.salesForceAccount && formSubmitted"
+            <div class="error-circle fa-exclamation-circle" data-ng-show="!teamToSave.salesForceAccount && formSubmitted"
                  data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                  data-title="Please enter an associated Salesforce account"></div>
             <div id="teamSalesforceAccount" class="typeahead" data-id="salesForceAccount" data-emmi-typeahead data-items="sfResult.account" data-term="sfSearch.searchQuery" data-search="findAccount(term)" data-select="chooseAccount(item)" data-placeholder="Start typing..." data-blur="revertSfAccount()" data-focus="TeamSfSearch" data-min-length="5">
@@ -38,7 +38,7 @@
                     <span>
                         {{teamToSave.salesForceAccount.city}}<span data-ng-show="teamToSave.salesForceAccount.city && teamToSave.salesForceAccount.state">,&nbsp;{{teamToSave.salesForceAccount.state}}</span>
                     </span>
-                    <button class="btn btn-link" data-ng-click="changeSfAccount(teamToSave.salesForceAccount)" required >update</button>
+                    <button class="btn btn-link" type="button" data-ng-click="changeSfAccount(teamToSave.salesForceAccount)" required >update</button>
                 </div>
             </div>
             <div class="col-md-2" data-ng-show="teamToSave.salesForceAccount.phoneNumber">

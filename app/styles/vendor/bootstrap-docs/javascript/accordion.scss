@@ -1,1 +1,33 @@
+@charset "UTF-8";
 
+/*doc
+---
+title: Accordion
+name: a-accordion
+category: 3. JavaScript - Accordion
+---
+
+```html_example
+<!-- ngModel is optional -->
+<div class="panel-group" ng-model="panels.activePanels" data-allow-multiple="true" bs-collapse>
+  <div class="panel panel-secondary" ng-class="{ 'panel-open': panels.activePanels.indexOf($index) !== -1 }" ng-repeat="panel in panels">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a bs-collapse-toggle>
+          <span class="icon-caret-right"></span>
+          {{ panel.title }}
+        </a>
+        <div class="pull-right">
+          <button type="button" class="btn btn-icon btn-inherit"><i class="icon-trashcan"></i></button>
+        </div>
+      </h4>
+    </div>
+    <div class="panel-collapse" bs-collapse-target>
+      <div class="panel-body">
+        {{ panel.body }}
+      </div>
+    </div>
+  </div>
+</div>
+```
+*/

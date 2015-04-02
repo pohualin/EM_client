@@ -4,18 +4,13 @@ angular.module('emmiManager')
 /**
  * Service for configuration.
  */
-    .service('ConfigurationService', ['$rootScope', '$location', 'Session', 'moment',
-        function ($rootScope, $location, Session, moment) {
+    .service('ConfigurationService', ['$rootScope', '$location', 'Session',
+        function ($rootScope, $location, Session) {
             return {
                 routeUser: function () {
-                    if(!Session.secretQuestionCreated && Session.interruptLoginFlow){
-                        $location.path('/createSecretQuestions').replace();
-                    } else if (!Session.email && Session.interruptLoginFlow) {
+                    if (!Session.email || !Session.emailValidated || !Session.secretQuestionCreated) {
                         //if email was not supplied
-                        $location.path('/addEmail').replace();
-                    } else if (!Session.emailValidated && Session.interruptLoginFlow) {
-                        //if email is not verified for user
-                        $location.path('/validateEmail').replace();
+                        $location.path('/passwordInformation').replace();
                     } else if ($location.path() === '/login') {
                         var priorRequestPath = $rootScope.locationBeforeLogin;
                         if (priorRequestPath) {
@@ -26,11 +21,8 @@ angular.module('emmiManager')
                             $location.path('/').replace();
                         }
                     }
-
                 }
-
             };
-        }])
-;
+        }]);
 
 

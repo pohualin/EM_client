@@ -49,27 +49,31 @@
                             <th class="sort col-sm-0">&nbsp;</th>
                             <th data-ng-class="sizeClass" data-ng-click="sortTeam('name')" >
                                 Name
-                                <span data-ng-show="sortProperty.property === 'name'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span>
+                                <span data-ng-show="sortProperty.property === 'name'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span>
                             </th>
                             <th data-ng-class="sizeClass" data-ng-click="sortTeam('belongsTo.name')" >
                                 Client Owner
-                                <span data-ng-show="sortProperty.property === 'belongsTo.name'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span>
+                                <span data-ng-show="sortProperty.property === 'belongsTo.name'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span>
                             </th>
                             <th class="sort col-sm-2" data-ng-click="sortTeam('city')">
                                 City/State
-                                <span data-ng-show="sortProperty.property === 'city'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span>
+                                <span data-ng-show="sortProperty.property === 'city'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span>
                             </th>
                             <th class="sort col-sm-2" data-ng-click="sortTeam('phone')">
                                 Phone
-                                <span data-ng-show="sortProperty.property === 'phone'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span>
+                                <span data-ng-show="sortProperty.property === 'phone'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span>
                             </th>
                             <th class="sort col-sm-3" data-ng-show="providersData">
                                 Add to Providers
                             </th>
                         </tr>
                         <tr data-ng-repeat="location in locations" data-ng-class="location.location.entity.disabled ? 'text-muted' : ''">
-                            <td><input type="checkbox" data-ng-model="location.location.entity.checked"  data-ng-disabled="location.location.entity.disabled"
-                                       ng-change="onCheckboxChange(location)"></td>
+                            <td>
+                                <div class="checkbox">
+                                    <input type="checkbox" id="locationSearchCb{{$index}}" data-ng-model="location.location.entity.checked"  data-ng-disabled="location.location.entity.disabled" ng-change="onCheckboxChange(location)">
+                                    <label for="locationSearchCb{{$index}}"></label>
+                                </div>
+                            </td>
                             <td>{{location.location.entity.name}} <em>{{location.location.entity.active ? '' : "(inactive)"}}</em></td>
                             <td>
                                 {{location.location.entity.belongsTo.name}}

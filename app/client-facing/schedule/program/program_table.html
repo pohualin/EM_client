@@ -1,1 +1,79 @@
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="pull-left"
+                 data-ng-class="{ 'has-error' : !scheduledProgram.program && addProgramFormSubmitted }">
+                <label class="control-label" data-ng-hide="showAll">Top 10 Programs</label>
+                <button data-ng-show="showAll" class="btn-link" data-ng-click="showAllResults(false)">
+                    <label class="control-label"><span class="icon-list-bullet"></span> show top 10
+                        only</label>
+                </button>
+                <div class="error-circle fa-exclamation-circle"
+                     data-ng-show="!scheduledProgram.program && addProgramFormSubmitted"
+                     data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                     data-title="Required"></div>
+            </div>
+            <div class="pull-right">
+                <div data-ng-hide="showAll">
+                    <button class="btn-link" data-ng-click="showAllResults(true)">show all</button>
+                </div>
+                <div data-ng-show="showAll">
+                    <button class="btn-link">
+                        {{total}}
+                        <span data-ng-show="total != 1" data-translate="global.labels.total"> results</span>
+                        <span data-ng-show="total === 1" data-translate="global.labels.totalSingular"> result</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0" cellspacing="0"
+           data-ng-show="programs">
+        <tr>
+            <th class="sort col-sm-1"></th>
+            <th class="sort col-sm-11" data-ng-click="sort('name')">Name <span
+                data-ng-show="sortProperty.property === 'name'"><span class="sort-icon"
+                                                                      data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
+            </th>
+        </tr>
+        <tr data-ng-repeat="program in programs | orderBy:'program.sortIdx'">
+            <td>
+                <input type="checkbox" id="program_{{program.entity.id}}" data-ng-model="program.selected" data-ng-change="selectProgram(program,addProgramForm)"/>
+                <label for="program_{{program.entity.id}}"></label>
+            </td>
+            <td><span data-ng-show="program.entity.type.name === 'MULTIMEDIA PROGRAM'" class="icon-film"
+                      title="Multimedia"></span>
+                <span data-ng-show="program.entity.type.name === 'ARTICLE'" class="icon-text-doc"
+                      title="Article"></span>
+                <span data-ng-show="program.entity.type.name === 'IVR CALL'" class="icon-telephone"
+                      title="Call"></span>
+                <span data-ng-show="program.entity.type.name === 'TRANSITION PROGRAM'"
+                      class="icon-telephone" title="Transition Program"></span>
+                <span data-ng-show="program.entity.type.name === 'NAVIGATE'" class="icon-telephone"
+                      title="Navigate"></span>
+                <span data-ng-show="program.entity.type.name === 'MESSAGE'" class="icon-telephone"
+                      title="Message"></span>
+                {{program.entity.name}}
+            </td>
+        </tr>
+    </table>
+
+    <div class="row" data-ng-show="programs && showAll">
+        <div data-ng-show="links" class="col-md-12 col-sm-12">
+            <ul class="pagination">
+                <li data-ng-repeat="link in links | orderBy:'order'"
+                    data-ng-class="{'active': link.name == currentPage}">
+                    <a data-ng-show="link.name != currentPage" href
+                       data-ng-click="fetchPage(link.href)">{{link.name}}</a>
+                    <span data-ng-hide="link.name != currentPage">{{link.name}}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div data-ng-hide="programs">
+        <span data-translate="global.messages.search.no_results_found"></span>
+    </div>
+</div>
+
 

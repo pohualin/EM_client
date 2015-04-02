@@ -4,20 +4,21 @@
                      data-ng-class="{ 'has-error' : (teamForm.teamName.$invalid && formSubmitted) || teamForm.teamName.$error.unique}">
                     <label data-translate="team_edit_page.information.name" for="teamName">Name</label>
 
-                    <div class="error-circle glyphicon glyphicon-exclamation-sign" data-ng-show="teamForm.teamName.$error.required && formSubmitted"
+                    <div class="error-circle fa-exclamation-circle" data-ng-show="teamForm.teamName.$error.required && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="{{'team_edit_page.error_msg.required' | translate}}"></div>
-                    <div class="error-circle glyphicon glyphicon-exclamation-sign" data-ng-show="teamForm.teamName.$error.pattern && formSubmitted"
+                    <div class="error-circle fa-exclamation-circle" data-ng-show="teamForm.teamName.$error.pattern && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="{{'team_edit_page.error_msg.invalid_team_name' | translate}}"></div>
-                    <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                    <div class="error-circle fa-exclamation-circle"
                          data-ng-show="formSubmitted && teamForm.teamName.$error.unique && teamForm.teamName.$.invalid"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="{{'team_edit_page.unique_popup_dialog.message' | translate}}"></div>
                     <input class="form-control" data-ng-model="teamToSave.name" id="teamName" name="teamName" type="text"
-                           data-unique-team-name data-team="teamToSave" data-unique-url="url" data-auto-focus
+                           data-unique-team-name data-team="teamToSave" data-unique-url="url"
+                           data-checking-for-dupes="checkingForDupes" data-edit-mode="editMode"
                            required data-ng-pattern="/^[\-\.a-zA-Z0-9 '=_;:`!@#&,\(\)\/]*$/" data-animation="am-flip-x"
-                           data-focus-on="teamName">
+                           data-auto-focus data-focus-on="teamName">
                 </div>
             </div>
         </div>
@@ -27,7 +28,7 @@
                     <label data-translate="team_edit_page.information.description"
                            for="teamDescription">Description</label>
 
-                    <div class="error-circle glyphicon glyphicon-exclamation-sign" data-ng-show="teamForm.teamDescription.$error.pattern && formSubmitted"
+                    <div class="error-circle fa-exclamation-circle" data-ng-show="teamForm.teamDescription.$error.pattern && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="{{'team_edit_page.error_msg.invalid_team_description' | translate}}"></div>
                     <input class="form-control" data-ng-model="teamToSave.description" id="teamDescription"
@@ -39,9 +40,9 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="checkbox">
+                    <input id="active" type="checkbox" data-ng-model="teamToSave.active"
+                            data-ng-disabled="teamForm.teamName.$error.unique"/>
                     <label for="active">
-                        <input id="active" type="checkbox" data-ng-model="teamToSave.active"
-                               data-ng-disabled="teamForm.teamName.$error.unique"/>
                         Active
                     </label>
                 </div>

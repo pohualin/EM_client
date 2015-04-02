@@ -12,11 +12,11 @@
                     <div class="form-group"
                          data-ng-class="{ 'has-error' : providerForm.providerFirstName.$invalid && providerFormSubmitted }">
                         <label class="control-label" for="providerFirstName">First Name:</label>
-                        <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                        <div class="error-circle fa-exclamation-circle"
                              data-ng-show="providerForm.providerFirstName.$error.required && providerFormSubmitted"
                              data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                              data-title="Required"></div>
-                        <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                        <div class="error-circle fa-exclamation-circle"
                              data-ng-show="providerForm.providerFirstName.$error.pattern && providerFormSubmitted"
                              data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                              data-title="Please enter a valid first name."></div>
@@ -31,7 +31,7 @@
                     <div class="form-group"
                          data-ng-class="{ 'has-error' : providerForm.providerMiddleName.$invalid && providerFormSubmitted }">
                         <label class="control-label" for="providerMiddleName">Middle Name:</label>
-                        <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                        <div class="error-circle fa-exclamation-circle"
                              data-ng-show="providerForm.providerMiddleName.$error.pattern && providerFormSubmitted"
                              data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                              data-title="Please enter a valid middle name."></div>
@@ -47,11 +47,11 @@
                          data-ng-class="{ 'has-error' : providerForm.providerLastName.$invalid && providerFormSubmitted }">
                         <label class="control-label" for="providerLastName">Last Name:</label>
 
-                        <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                        <div class="error-circle fa-exclamation-circle"
                              data-ng-show="providerForm.providerLastName.$error.required && providerFormSubmitted"
                              data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                              data-title="Required"></div>
-                        <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                        <div class="error-circle fa-exclamation-circle"
                              data-ng-show="providerForm.providerLastName.$error.pattern && providerFormSubmitted"
                              data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                              data-title="Please enter a valid last name."></div>
@@ -78,7 +78,7 @@
                     <div class="form-group"
                          data-ng-class="{ 'has-error' : providerForm.email.$invalid && providerFormSubmitted }">
                         <label class="control-label" for="email">Email:</label>
-                        <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                        <div class="error-circle fa-exclamation-circle"
                              data-ng-show="providerForm.email.$error.pattern && providerFormSubmitted"
                              data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                              data-title="Please enter a valid email."></div>
@@ -99,8 +99,8 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <div class="checkbox">
+                            <input id="providerActive" type="checkbox" data-ng-model="clientProvider.provider.entity.active"/>
                             <label for="providerActive">
-                                <input id="providerActive" type="checkbox" data-ng-model="clientProvider.provider.entity.active"/>
                                 Active
                             </label>
                         </div>

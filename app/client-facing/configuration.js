@@ -12,6 +12,7 @@ angular.module('emmiManager', [
     'emmiManager.api',
     'pascalprecht.translate',
     'tmh.dynamicLocale',
+    'emmi.navbar',
     'emmi.typeahead',
     'localytics.directives',
     'ngTagsInput',
@@ -51,7 +52,7 @@ angular.module('emmiManager', [
     .constant('PATTERN', {
         EMAIL: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$/
     })
-
+    
     .config(function ($httpProvider, $translateProvider, tmhDynamicLocaleProvider, HateoasInterceptorProvider, $datepickerProvider, API) {
 
         // Initialize angular-translate
@@ -79,11 +80,13 @@ angular.module('emmiManager', [
         angular.extend($datepickerProvider.defaults, {
             dateFormat: 'MM/dd/yyyy',
             modelDateFormat: 'yyyy-MM-dd',
-            dateType: 'string'
+            dateType: 'string',
+            iconLeft: 'fa-angle-left',
+            iconRight: 'fa-angle-right'
         });
     })
 
-    .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, PATTERN, arrays, $document, ConfigurationService, $modal, $timeout) {
+    .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, PATTERN, arrays, $document, ConfigurationService, $modal, $timeout, moment, ErrorMessageTranslateService) {
 
         var modals = [], alerts = [];
 
@@ -262,5 +265,25 @@ angular.module('emmiManager', [
                     event.preventDefault();
                 }
             }
+        });
+
+        ErrorMessageTranslateService.getLockErrorMessages().then(function(ERROR_MESSAGE){
+        	moment.locale('en', {
+            	relativeTime: {
+            		future: ERROR_MESSAGE.LOCK_PART_1 + 'in %s' + ERROR_MESSAGE.LOCK_PART_2,
+                    past: ERROR_MESSAGE.LOCK_EXPIRED,
+                    s:  'a few seconds',
+                    m:  'a minute',
+                    mm: '%d minutes',
+                    h:  'an hour',
+                    hh: '%d hours',
+                    d:  'a day',
+                    dd: '%d days',
+                    M:  'a month',
+                    MM: '%d months',
+                    y:  'a year',
+                    yy: '%d years'
+            	}
+            });
         });
     });

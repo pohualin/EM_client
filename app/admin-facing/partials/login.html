@@ -11,7 +11,7 @@
                      data-ng-class="{ 'has-error' : loginForm.username.$invalid && loginForm.submitted}">
                     <label class="control-label" for="username" data-translate="login.form.user">User:</label>
 
-                    <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                    <div class="error-circle fa-exclamation-circle"
                          data-ng-show="loginForm.username.$error.required && loginForm.submitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Required"></div>
@@ -23,7 +23,7 @@
                      data-ng-class="{ 'has-error' : loginForm.password.$invalid && loginForm.submitted}">
                     <label class="control-label" for="password" data-translate="login.form.password">Password:</label>
 
-                    <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                    <div class="error-circle fa-exclamation-circle"
                          data-ng-show="loginForm.password.$error.required && loginForm.submitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Required"></div>
@@ -31,8 +31,8 @@
                            autocomplete="off" data-ng-model="credentials.password">
                 </div>
                 <div class="checkbox">
-                    <label>
-                        <input type="checkbox" data-ng-model="credentials.rememberMe">
+                    <input type="checkbox" id="rememberMe" data-ng-model="credentials.rememberMe">
+                    <label for="rememberMe">
                         <span data-translate="login.form.rememberme">Remember me on this computer.</span>
                     </label>
                 </div>

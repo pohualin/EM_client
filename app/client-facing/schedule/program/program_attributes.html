@@ -1,1 +1,93 @@
+<div class="col-md-12">
+
+    <div class="row">
+        <div class="form-group col-md-12"
+             data-ng-class="{ 'has-error' : addProgramForm.provider.$invalid && addProgramFormSubmitted }">
+            <label class="control-label" for="provider">
+                Provider:
+            </label>
+
+            <div class="error-circle fa-exclamation-circle"
+                 data-ng-show="addProgramForm.provider.$error.required && addProgramFormSubmitted"
+                 data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                 data-title="Required"></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <select id="provider" name="provider" class="form-control"
+                            data-ng-class="{'loading' : loadingProviderLocation}"
+                            data-ng-disabled="!providers || providers.length == 0 || loadingProviderLocation"
+                            data-ng-model="scheduledProgram.provider" data-ng-change="onProviderChange()"
+                            data-ng-options="teamProvider.name for teamProvider in providers track by teamProvider.entity.id"
+                            data-disable-search-threshold="10" data-allow-single-deselect="true"
+                            data-no-results-text="'No team providers'"
+                            data-placeholder="Choose Provider"
+                            required
+                            data-chosen>
+                        <option></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-md-12"
+             data-ng-class="{ 'has-error' : addProgramForm.location.$invalid && addProgramFormSubmitted }">
+            <label class="control-label" for="location">
+                Location:
+            </label>
+
+            <div class="error-circle fa-exclamation-circle"
+                 data-ng-show="addProgramForm.location.$error.required && addProgramFormSubmitted"
+                 data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                 data-title="Required"></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <select id="location" name="location" class="form-control"
+                            data-ng-class="{'loading' : loadingProviderLocation}"
+                            data-ng-disabled="!locations || locations.length == 0 || loadingProviderLocation"
+                            data-ng-model="scheduledProgram.location" data-ng-change="onLocationChange()"
+                            data-ng-options="teamLocation.entity.location.name for teamLocation in locations track by teamLocation.entity.id"
+                            data-disable-search-threshold="10" data-allow-single-deselect="true"
+                            data-no-results-text="'No team locations'"
+                            data-placeholder="Choose Location"
+                            required
+                            data-chosen>
+                        <option></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-md-12"
+             data-ng-class="{ 'has-error' : addProgramForm.viewByDate.$invalid && addProgramFormSubmitted }">
+            <label class="control-label" for="viewByDate">
+                View-by Date:
+            </label>
+            <div class="error-circle fa-exclamation-circle"
+                 data-ng-show="!addProgramForm.viewByDate.$error.date &&
+                               addProgramForm.viewByDate.$error.required &&
+                               addProgramFormSubmitted"
+                 data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                 data-title="Required"></div>
+            <div class="error-circle fa-exclamation-circle"
+                 data-ng-show="!addProgramForm.viewByDate.$error.required && addProgramForm.viewByDate.$error.min && addProgramFormSubmitted"
+                 data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                 data-title="Please enter a date in the future"></div>
+            <div class="error-circle fa-exclamation-circle"
+                 data-ng-show="(addProgramForm.viewByDate.$error.min && addProgramForm.viewByDate.$error.date && addProgramForm.viewByDate.$error.required
+                  || addProgramForm.viewByDate.$error.date && addProgramForm.viewByDate.$error.required) && addProgramFormSubmitted"
+                 data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                 data-title="Please select a valid date"></div>
+            <input id="viewByDate" class="form-control" type="text" name="viewByDate"
+                   data-ng-model="scheduledProgram.viewByDate" data-autoclose="true"
+                   data-dateType="iso" data-bs-datepicker
+                   data-min-date="today" required>
+        </div>
+    </div>
+
+</div>
+
 

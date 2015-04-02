@@ -1,1 +1,18 @@
+@charset "UTF-8";
 
+/*doc
+---
+title: Modal
+name: a-modal
+category: 3. JavaScript - Modal
+---
+
+[AngularStrap Modal](http://mgcrea.github.io/angular-strap/#/modals#modals)
+
+```html_example
+<button type="button" class="btn btn-lg btn-primary"
+     data-animation="none" data-backdrop-animation="emmi-fade" data-title="Modal Title" data-content="Some modal content that you want to read."
+     data-backdrop="static" data-container="body" data-template="./theme-build/html/modal-template.tpl.html" data-bs-modal>Modal Example
+</button>
+```
+*/

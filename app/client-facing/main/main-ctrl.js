@@ -26,7 +26,7 @@ angular.module('emmiManager')
                 MainService.checkPasswordExpiration(account).then(function (response) {
                     if (response.showReminder) {
                         if (!$scope.passwordAlert) {
-                            $rootScope.passwordAlert = $alert({
+                            $scope.passwordAlert = $alert({
                                 content: 'Your password will expire in ' + response.passwordExpiresInDays + ' days.',
                                 template: 'client-facing/main/password-reminder-alert.tpl.html',
                                 type: 'warning',

@@ -66,25 +66,31 @@
                                     <th class="sort col-sm-3" data-ng-click="sort('lastName')">
                                         Name
                                         <span data-ng-show="sortProperty.property === 'lastName'">
-                                            <span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span>
+                                            <span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span>
                                         </span>
                                     </th>
                                     <th class="sort col-sm-3" data-ng-click="sort('specialty.name')">
                                         Primary Specialty
-                                        <span data-ng-show="sortProperty.property === 'specialty.name'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
+                                        <span data-ng-show="sortProperty.property === 'specialty.name'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
                                     </th>
                                     <th class="sort col-sm-3" data-ng-click="sort('email')">
                                         Email
-                                        <span data-ng-show="sortProperty.property === 'email'"><span class="glyphicon sort-icon" data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
+                                        <span data-ng-show="sortProperty.property === 'email'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
                                     </th>
                                 </tr>
                                 <tr data-ng-repeat="clientProvider in providers| orderBy:sortIdx" data-ng-class="clientProvider.link.self ? 'text-muted' : ''">
                                     <td data-ng-hide="clientProvider.link.self">
-                                        <input type="checkbox" data-ng-model="clientProvider.provider.entity.newprovider"
+                                        <div class="checkbox">
+                                            <input type="checkbox" id="clientProviderCb{{$index}}" data-ng-model="clientProvider.provider.entity.newprovider"
                                                ng-change="onCheckboxChange(clientProvider.provider)">
+                                            <label for="clientProviderCb{{$index}}"></label>
+                                        </div>
                                     </td>
                                     <td data-ng-show="clientProvider.link.self">
-                                        <input type="checkbox" disabled="disabled" checked>
+                                        <div class="checkbox">
+                                            <input type="checkbox" id="clientProviderOffCb{{$index}}" disabled="disabled" checked>
+                                            <label for="clientProviderOffCb{{$index}}"></label>
+                                        </div>
                                     </td>
                                     <td>{{clientProvider.provider.entity.firstName}} {{clientProvider.provider.entity.middleName}} {{clientProvider.provider.entity.lastName}} <em>{{clientProvider.provider.entity.active ? '' : "(inactive)"}}</em></td>
                                     <td>

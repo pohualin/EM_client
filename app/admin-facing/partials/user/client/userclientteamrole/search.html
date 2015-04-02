@@ -72,20 +72,26 @@
 						<th class="sort col-sm-1">&nbsp;</th>
 						<th class="sort col-sm-3" data-ng-click="sort('name')">Name
 							<span data-ng-show="sortProperty.property === 'name'"><span
-								class="glyphicon sort-icon"
-								data-ng-class="{'glyphicon-chevron-down': sortProperty.ascending, 'glyphicon-chevron-up': !sortProperty.ascending}"></span></span>
+								class="sort-icon"
+								data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
 						</th>
 					</tr>
 					<tr data-ng-repeat="userClientUserClientTeamRole in userClientUserClientTeamRoles">
 						<td data-ng-show="!userClientUserClientTeamRole.link.self || userClientUserClientTeamRole.entity.warning">
-                            <input type="checkbox" data-ng-model="userClientUserClientTeamRole.entity.selected"
-                                   data-ng-change="onCheckboxChange(userClientUserClientTeamRole.entity)">
+                            <div class="checkbox">
+                                <input type="checkbox" id="userClientTeamRoleCb{{$index}}" data-ng-model="userClientUserClientTeamRole.entity.selected"
+                                       data-ng-change="onCheckboxChange(userClientUserClientTeamRole.entity)">
+                                <label for="userClientTeamRoleCb{{$index}}"></label>
+                            </div>
                         </td>
                         <td data-ng-show="userClientUserClientTeamRole.link.self && !userClientUserClientTeamRole.entity.warning">
-                            <input type="checkbox" disabled="disabled" checked>
+                            <div class="checkbox">
+                                <input type="checkbox" id="userClientTeamRoleOffCb{{$index}}" disabled="disabled" checked>
+                                <label for="userClientTeamRoleOffCb{{$index}}"></label>
+                            </div>
                         </td>
 						<td>{{userClientUserClientTeamRole.entity.team.name}}
-							<div class="error-circle glyphicon glyphicon-exclamation-sign"
+							<div class="error-circle fa-exclamation-circle"
 					             data-ng-show="userClientUserClientTeamRole.entity.warning"
 					             data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
 					             data-title={{userClientUserClientTeamRole.entity.warning}}></div>

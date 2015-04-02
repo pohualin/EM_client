@@ -9,7 +9,7 @@
             </ol>
         </div>
     </div>
-    <form name="clientPasswordConfigurationForm" class="form-horizontal" novalidate>
+    <form name="clientPasswordConfigurationForm" class="form-horizontal" novalidate unsaved-warning-form>
         <div class="row">
             <div class="col-md-3"
                  data-ng-include="'admin-facing/partials/configurations/main.html'">
@@ -20,10 +20,10 @@
                 </div>
                 <div class="pull-right">
                 <span data-ng-show="showButtons() && !loading">
-                    <a class="btn btn-link" data-ng-click="cancel()">cancel</a>
+                    <a class="btn btn-link" data-ng-click="cancel(clientPasswordConfigurationForm)">cancel</a>
                 </span>
                 <span data-ng-show="clientPasswordConfiguration.link.self">
-                    <a class="btn btn-default" data-ng-click="reset()">Reset Defaults</a>
+                    <a class="btn btn-default" data-ng-click="reset(clientPasswordConfigurationForm)">Reset Defaults</a>
                 </span>
                 <span data-ng-show="showButtons() && !loading">
                     <button class="btn btn-primary" type="submit"
