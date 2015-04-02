@@ -2,7 +2,7 @@
     <h2>
         <a href="#/">Emmi Manager</a> :&nbsp;New Client
     </h2>
-    <form name="clientForm" data-ng-submit="save(clientForm.$valid)" class="form" novalidate unsaved-warning-form>
+    <form name="clientForm" class="form" novalidate unsaved-warning-form>
         <div id="alerts-container" data-ng-show="clientForm.$invalid || !clientToEdit.salesForceAccount"></div>
         <div id="remove-container"></div>
         <h2>Client Information</h2>
@@ -144,7 +144,7 @@
                 <span>{{clientToEdit.salesForceAccount.city}}<span
                         data-ng-show="clientToEdit.salesForceAccount.city && clientToEdit.salesForceAccount.state">,&nbsp;</span>{{clientToEdit.salesForceAccount.state}}
                 </span>
-                <button class="btn btn-link" data-ng-click="changeClientSfAccount()" required
+                <button class="btn btn-link" type="button" data-ng-click="changeClientSfAccount()" required
                         data-ng-disabled="clientForm.clientName.$error.unique">update
                 </button>
             </div>
@@ -156,8 +156,11 @@
             <div class="col-md-12">
                 <div class="actions pull-right">
                     <div class="form-group">
-                        <a class="btn btn-link" href="#/clients?{{currentRouteQueryString}}" analytics-on analytics-category="Form Action" analytics-event="Client Create" analytics-label="Cancel">cancel</a>
-                        <button class="btn btn-primary" type="submit" data-ng-disabled="clientForm.clientName.$error.unique">
+                        <a class="btn btn-link" href data-ng-click="cancel()" analytics-on analytics-category="Form Action" analytics-event="Client Create" analytics-label="Cancel">cancel</a>
+                        <button class="btn btn-primary" type="button"
+                                data-on-ok="save(clientForm)"
+                                data-save-click data-client-to-edit="clientToEdit" data-checking-for-dupes="checkingForDupes"
+                                data-ng-disabled="clientForm.clientName.$error.unique">
                             <span data-translate="client_edit_page.save_button">Continue...</span>
                         </button>
                     </div>

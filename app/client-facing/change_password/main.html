@@ -27,7 +27,7 @@
                     <div class="col-md-12">
                         <div class="form-group"
                              data-ng-class="{ 'has-error' : changePasswordForm.oldPassword.$invalid && changePasswordFormSubmitted }">
-                            <label class="control-label" for="password">Current Password:</label>
+                            <label class="control-label" for="oldPassword">Current Password:</label>
 
                             <div class="error-circle fa-exclamation-circle"
                                  data-ng-show="changePasswordForm.oldPassword.$error.required && changePasswordFormSubmitted"
@@ -57,11 +57,11 @@
                                  data-ng-show="changePasswordForm.password.$error.policy && changePasswordFormSubmitted"
                                  data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                                  data-title="Password must meet guidelines"></div>
-                            <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                            <div class="error-circle fa-exclamation-circle"
                                  data-ng-show="changePasswordForm.password.$error.history && changePasswordFormSubmitted"
                                  data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                                  data-title="Must not match your previous {{policy.passwordRepetitions}} passwords"></div>
-                            <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                            <div class="error-circle fa-exclamation-circle"
                                  data-ng-show="changePasswordForm.password.$error.eligibility && changePasswordFormSubmitted"
                                  data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                                  data-title="A minimum of {{policy.daysBetweenPasswordChange}} days are required between password changes"></div>

@@ -18,6 +18,7 @@ angular.module('emmiManager')
 		get: function (userClient) {
             return $http.get(userClient.link.self).then(function (response) {
                 response.data.originalUserClientEmail = response.data.email;
+                response.data.email = response.data.email || '';
                 return response.data;
             });
 		},

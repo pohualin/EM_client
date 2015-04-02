@@ -4,6 +4,9 @@
             <h2>
                 Please confirm your email address
             </h2>
+            <div class="row" data-ng-show="!loginInterruptForm.$valid || loginInterruptForm.email.$error.duplicate">
+                <div class="col-md-12" id="message-container"></div>
+            </div>
             Verifying your email address will make your account more secure, and allow you to reset your password if
             you
             forget it in the future.
@@ -12,15 +15,15 @@
                  data-ng-class="{ 'has-error' : (loginInterruptForm.validateEmail.$invalid || loginInterruptForm.validateEmail.$error.duplicate) && loginInterruptFormSubmitted }">
                 <label class="control-label" for="validateEmail">Email:</label>
 
-                <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                <div class="fa-exclamation-circle"
                      data-ng-show="loginInterruptForm.validateEmail.$error.pattern && loginInterruptFormSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                      data-title="Please enter a valid email."></div>
-                <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                <div class="fa-exclamation-circle"
                      data-ng-show="loginInterruptForm.validateEmail.$error.required && loginInterruptFormSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                      data-title="Required"></div>
-                <div class="error-circle glyphicon glyphicon-exclamation-sign"
+                <div class="fa-exclamation-circle"
                      data-ng-show="loginInterruptForm.validateEmail.$error.duplicate && loginInterruptFormSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                      data-title="This email address is being used by another account"></div>
