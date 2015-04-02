@@ -14,18 +14,30 @@ angular.module('emmiManager')
                 return updatedUser;
 			});
 		},
+		
 		get: function (userClient) {
             return $http.get(userClient.link.self).then(function (response) {
                 response.data.originalUserClientEmail = response.data.email;
                 return response.data;
             });
 		},
+		
         verifyPassword: function (userClient, password) {
             return $http.get(UriTemplate.create(userClient.link.verifyPassword).stringify({size: 2, password: password}),
                 {override403: true})
                 .then(function(response) {
                     return response;
                 });
+        },
+        
+        /**
+         * Set useEmail to true if email and login are same
+         */
+        setUseEmail: function(userClient){
+            if (angular.equals(userClient.email,
+                    userClient.login)) {
+                userClient.useEmail = true;
+            }
         }
 	};
 }])
