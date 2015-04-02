@@ -1,8 +1,6 @@
 <div class="col-md-12">
     <form name="loginInterruptForm" class="form" novalidate>
-        <div class="row" data-ng-show="!loginInterruptForm.$valid || loginInterruptForm.email.$error.duplicate">
-            <div class="col-md-12" id="message-container"></div>
-        </div>
+
 
         <div class="row" data-ng-hide="account.originalUserClientEmail || !account.secretQuestionCreated"
              data-ng-include="'client-facing/loginInterruption/enterEmail/enter_email.html'"></div>
