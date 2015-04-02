@@ -74,8 +74,10 @@ angular.module('emmiManager')
              * Called when the save button is clicked on a new client role
              *
              * @param clientTeamRoleEntity to be saved
+             * @param form for unsaved changes
              */
-            $scope.saveNewRole = function (clientTeamRoleEntity) {
+            $scope.saveNewRole = function (clientTeamRoleEntity, form) {
+                form.$setPristine();
                 ManageUserTeamRolesService.saveNewClientTeamRole(clientTeamRoleEntity).then(function () {
                     delete $scope.newClientTeamRole;
                     $scope.loadExisting();
@@ -84,8 +86,11 @@ angular.module('emmiManager')
 
             /**
              * Called when 'cancel' is clicked on the create new client role panel
+             *
+             * @param form for unsaved changes
              */
-            $scope.cancelNew = function () {
+            $scope.cancelNew = function (form) {
+                form.$setPristine();
                 delete $scope.newClientTeamRole;
             };
 
@@ -93,8 +98,10 @@ angular.module('emmiManager')
              * Called when 'cancel' is clicked on an existing panel
              *
              * @param clientTeamRoleResource
+             * @param form for unsaved changes
              */
-            $scope.cancelExisting = function (clientTeamRoleResource) {
+            $scope.cancelExisting = function (clientTeamRoleResource, form) {
+                form.$setPristine();
                 clientTeamRoleResource.editName = false;
                 angular.extend(clientTeamRoleResource, clientTeamRoleResource.original);
                 delete clientTeamRoleResource.original;
@@ -106,10 +113,16 @@ angular.module('emmiManager')
              * the back.
              *
              * @param clientTeamRoleResource for the panel
+             * @param form for unsaved changes
              */
-            $scope.panelStateChange = function (clientTeamRoleResource) {
+            $scope.panelStateChange = function (clientTeamRoleResource, form) {
                 if (clientTeamRoleResource.activePanel === 0 && !clientTeamRoleResource.original) {
                     ManageUserTeamRolesService.loadPermissions(clientTeamRoleResource);
+                    // Set the form back to pristine after loading permissions from server
+                    form.$setPristine();
+                } else {
+                    // Set the form back to pristine after initialization
+                    form.$setPristine();
                 }
             };
 
@@ -129,8 +142,10 @@ angular.module('emmiManager')
              * an existing role
              *
              * @param clientTeamRoleResource to be updated
+             * @param form for unsaved changes
              */
-            $scope.update = function (clientTeamRoleResource) {
+            $scope.update = function (clientTeamRoleResource, form) {
+                form.$setPristine();
                 ManageUserTeamRolesService.saveExistingClientTeamRole(clientTeamRoleResource);
             };
 
