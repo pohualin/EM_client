@@ -69,7 +69,6 @@ angular.module('emmiManager')
                  * @returns all questions and empty response
                  */
                 validateUserSecurityResponse: function(resetToken, questionResponses) {
-                	console.log(questionResponses);
                 	return $http.put(UriTemplate.create(API.validateSecretResponses).stringify({token: resetToken}), questionResponses)
                     		.then(function(response) {
                     	    return response;
@@ -79,7 +78,7 @@ angular.module('emmiManager')
                  /**
                  * Calls the back end to get all question and response for a client user
                  *
-                 * @param client user id
+                 * @param password
                  * @returns all questions and responses for a client user
                  */
                 getAllUserSecretQuestionResponse: function(password) {
@@ -87,6 +86,21 @@ angular.module('emmiManager')
                 	    return $http.get(UriTemplate.create(Session.link.secretQuestionResponses).stringify({size: 2, password: password}),
                     		{override403: true})
                     		.then(function(response) {
+                            return response;
+                        });
+                },
+                
+                
+                /**
+                 * Calls the back end to make sure user has permission for add security question
+                 *
+                 * @param password
+                 * @returns true or false
+                 */
+                validatePassword: function (password) {
+                    return $http.get(UriTemplate.create(Session.link.verifyPassword).stringify({size: 2, password: password}),
+                        {override403: true})
+                        .then(function(response) {
                             return response;
                         });
                 },
