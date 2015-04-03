@@ -72,7 +72,6 @@ angular.module('emmiManager')
        };
         
         function init(){
-            console.log(resetToken);
             $scope.question1 = SecretQuestionService.createNewResponse();
           	$scope.question2 = SecretQuestionService.createNewResponse();
           	SecretQuestionService.getUserExistingSecurityQuestion(resetToken)

@@ -9,7 +9,7 @@ angular.module('emmiManager')
         function ($scope, $location, SecretQuestionService, $alert, $modal) { 	
     	
     	$scope.secretQuestionFormSubmitted = false;
-    	var promptPasswordModal = $modal({scope: $scope, template: 'client-facing/secretQuestions/edit/promptPassword.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
+    	var promptPasswordModal = $modal({scope: $scope, template: 'client-facing/secretQuestions/promptPassword.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
     	
     	/**
     	 * When the save button is clicked. Sends all updates
@@ -30,7 +30,7 @@ angular.module('emmiManager')
 				    duration: 5,
 				    dismissable: true
 				});
-	        	$location.path('/');
+	        	$location.path('/viewSecurityQuestions').replace();
     		} else {
                 if (!$scope.formAlert) {
                     $scope.formAlert = $alert({
@@ -94,7 +94,7 @@ angular.module('emmiManager')
        	};
        	
        	$scope.cancelPassword = function(){
-       		$location.path('/viewSecretQuestions');
+       		$location.path('/viewSecurityQuestions').replace();
        	};
     	
         /**

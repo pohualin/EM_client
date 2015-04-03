@@ -11,7 +11,7 @@ angular.module('emmiManager')
        $scope.secretQuestionFormSubmitted = false;
              
        $scope.editSecretQuestion = function () {
-    	   $location.path('/editSecretQuestions').replace();
+    	   $location.path('/editSecurityQuestions').replace();
         };
   
        function init(){
@@ -20,12 +20,12 @@ angular.module('emmiManager')
           		$scope.secretQuestions = response.data.content; 
        		});
           	
-        	SecretQuestionService.getAllUserSecretQuestionAsteriskResponse().then(function(response) {
+        	SecretQuestionService.getAllUserSecretQuestionAsteriskResponse($scope.account.id).then(function(response) {
             
         	var existingResponse = response.data.content;
             $scope.question1Original = existingResponse.length > 0 ? existingResponse[0] : SecretQuestionService.createNewResponse();
             $scope.question1 = angular.copy($scope.question1Original);
-                        	
+            	
             $scope.question2Original =  existingResponse.length > 1 ? existingResponse[1] : SecretQuestionService.createNewResponse();
             $scope.question2 = angular.copy($scope.question2Original);
         	}); 
