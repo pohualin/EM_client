@@ -28,8 +28,7 @@ angular.module('emmiManager')
                  * @returns the promise
                  */
                 reset: function (resetToken, newPassword, userClientSecretQuestionResponse) {
-                	console.log(userClientSecretQuestionResponse);
-                    return $http.put(UriTemplate.create(api.resetPassword).stringify(), {
+                	return $http.put(UriTemplate.create(api.resetPassword).stringify(), {
                         resetToken: resetToken,
                         newPassword: newPassword.password,
                         userClientSecretQuestionResponse: userClientSecretQuestionResponse
