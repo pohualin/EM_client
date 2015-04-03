@@ -31,6 +31,7 @@ angular.module('emmiManager')
                             	$rootScope.authenticationError = false;
                                 $rootScope.lockError = false;
                                 $rootScope.lockExpirationDateTime = null;
+                                $rootScope.username = null;
                                 authService.loginConfirmed(loggedIn);
                             }
                         });
