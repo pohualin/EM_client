@@ -5,6 +5,11 @@
 @import 'popovers';
 
 // miscellaneous rules
+.icon-size-xl { font-size: $font-size-h1; } // 24px
+.icon-size-lg { font-size: $font-size-h2; } // 20px
+.icon-size-md { font-size: 16px; } // 16px
+.icon-size-sm { font-size: $font-size-h4; } // 12px
+
 .has-input-icon {
     position: relative;
     .form-control {
@@ -175,9 +180,10 @@ div.masked:before {
 
 th.sort {
   cursor: pointer;
-  span.glyphicon {
-    font-size: x-small;
-    vertical-align: baseline;
+  .sort-icon {
+    font-size: 20px;
+    line-height: 10px;
+    vertical-align: text-top;
   }
 }
 

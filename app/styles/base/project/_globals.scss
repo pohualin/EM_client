@@ -53,6 +53,20 @@
 
     /* _____ HEADINGS _____ */
 
+    // Vertical rhythm and single direction margins (http://csswizardry.com/2012/06/single-direction-margin-declarations/)
+    h1, .h1,
+    h2, .h2,
+    h3, .h3 {
+        margin-top: 0;
+        margin-bottom: $line-height-computed;
+    }
+    h4, .h4,
+    h5, .h5,
+    h6, .h6 {
+        margin-top: 0;
+        margin-bottom: ($line-height-computed / 2);
+    }
+
     h1, .h1 {
     }
 
@@ -93,8 +107,8 @@
             font-size: $font-size-small;
             font-weight: 600;
             text-transform: uppercase;
-            padding-top: $table-cell-padding*2;
-            padding-bottom: $table-cell-padding*1.8;
+            padding-top: $table-cell-padding;
+            padding-bottom: $table-cell-padding*0.8;
         }
         // column cells
         tr > td {
@@ -109,6 +123,14 @@
         // Nesting
         .table {
             background-color: #fff;
+        }
+    }
+
+    .table-secondary {
+        > thead > tr > th {
+            color: #fff;
+            border-color: $brand-secondary;
+            background: $brand-secondary;
         }
     }
 
@@ -470,6 +492,10 @@
     }
 
     /* _____ LAYOUT _____ */
+
+    .app-header + .container {
+        padding-bottom: 25px;
+    }
 
     .layout-card {
         background: #fff;
