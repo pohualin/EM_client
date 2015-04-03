@@ -25,7 +25,7 @@ angular.module('emmiManager')
 				angular.extend($scope.userClient, response);
 			});
 		} else {
-            $scope.formValidationError();
+            // $scope.formValidationError();
 		}
 	};
 	

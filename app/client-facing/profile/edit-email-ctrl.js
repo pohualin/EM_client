@@ -54,7 +54,7 @@ angular.module('emmiManager')
                 }
             });
             if (totalErrorCount > 0) {
-                $scope.formValidationError();
+                // $scope.formValidationError();
             }
         }
     };
@@ -91,34 +91,39 @@ angular.module('emmiManager')
     /**
      * Called when submit is clicked on password validation form
      */
-    $scope.verifyPassword = function (password){
+    $scope.verifyPassword = function (form, password){
         ProfileService.verifyPassword($scope.userClient, password).then(function success(response){
             $scope.editEmailFormSubmitted = false;
+            $scope.passwordValidationFormSubmitted = false;
             $scope.passwordIsValidated = true;
             $scope.setEmailEditMode(true);
             $scope.promptPasswordModal.hide();
         }, function fail(error){
-            $scope.editEmailFormSubmitted = true;
-            $scope.passwordIsValidated = false;
+            $scope.passwordValidationFormSubmitted = true;
+            form.password.$setValidity('match', false);
             $scope.formValidationError('Please check your password and try again.');
         });
     };
     
+    $scope.resetPasswordFormValidity = function(form){
+        form.password.$setValidity('match', true);
+    };
+    
     /**
-     * Called when cancel is clicked from editEmailForm
+     * Called when cancel is clicked from password validation form
      */
-    $scope.cancelEmailChange = function () {
+    $scope.cancelPasswordValidation = function () {
+        $scope.passwordValidationFormSubmitted = false;
         ProfileService.get($scope.userClient).then(function(response){
             angular.extend($scope.userClient, response);
-            $scope.resetEditEmailForm();
-            $scope.promptPasswordModal.hide();
+            $scope.promptPasswordModal.destroy();
+            $scope.hideErrorAlert();
         });
     };
 
     $scope.resetEditEmailForm = function () {
         $scope.setEmailEditMode(false);
         $scope.passwordIsValidated = false;
-        $scope.password = '';
         $scope.editEmailFormSubmitted = false;
         $scope.hideErrorAlert();
     };
