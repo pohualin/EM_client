@@ -64,9 +64,9 @@ angular.module('emmiManager')
                 }
             })
             .when('/reset_password/:resetToken', {
-                templateUrl: 'client-facing/credentials/reset/reset.html',
-                controller: 'ResetClientUserPasswordController',
-                title: 'Reset Password',
+                templateUrl: 'client-facing/credentials/reset/validateSecurityResponses/validate-security-question.html',
+                controller: 'ValidateSecurityQuestionController',
+                title: 'Validate Security Questions',
                 access: {
                     authorizedRoles: [USER_ROLES.all]
                 },
@@ -74,9 +74,37 @@ angular.module('emmiManager')
                     resetToken: ['$route', '$q', function ($route, $q) {
                         var deferred = $q.defer();
                         if ($route.current.params.resetToken) {
-                            deferred.resolve($route.current.params.resetToken);
+                        	deferred.resolve($route.current.params.resetToken);
                         } else {
-                            deferred.reject();
+                        	deferred.reject();
+                        }
+                        return deferred.promise;
+                    }]
+                }
+            })
+             .when('/reset_password/reset/:resetToken', {
+                templateUrl: 'client-facing/credentials/reset/reset.html',
+                controller: 'ResetClientUserPasswordController',
+                title: 'Reset Password',
+                access: {
+                    authorizedRoles: [USER_ROLES.all]
+                },
+                resolve: {
+                	securityQuestions: ['$q', 'SecretQuestionService', function ($q, SecretQuestionService){
+                		var deferred = $q.defer();
+                        if (SecretQuestionService.getUserInputSecurityResponses()) {
+                        	deferred.resolve(SecretQuestionService.getUserInputSecurityResponses());
+                        } else {
+                        	deferred.reject();
+                        }
+                        return deferred.promise;
+                	}],
+                    resetToken: ['$route', '$q', function ($route, $q) {
+                    	var deferred = $q.defer();
+                        if ($route.current.params.resetToken) {
+                        	deferred.resolve($route.current.params.resetToken);
+                        } else {
+                        	deferred.reject();
                         }
                         return deferred.promise;
                     }]
