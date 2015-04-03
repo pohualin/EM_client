@@ -3,8 +3,10 @@
 angular.module('emmiManager')
     .controller('LoginCtrl', ['$scope', '$location', 'AuthSharedService', '$rootScope',
         function ($scope, $location, AuthSharedService, $rootScope) {
+        
             $scope.credentials = {
-                rememberMe: true
+                rememberMe: true,
+                username: $rootScope.username
             };
 
             $rootScope.authenticationError = false;

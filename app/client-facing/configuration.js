@@ -219,6 +219,7 @@ angular.module('emmiManager', [
 
         // Call when the 401 response is returned by the server
         $rootScope.$on('event:auth-loginRequired', function (event, rejection) {
+            $rootScope.username = $rootScope.account.login;
             Session.destroy();
             $rootScope.locationBeforeLogin = rejection.location;
             $location.path('/login').replace();
