@@ -19,6 +19,9 @@
 	            	</span>
             	</span>
             </div>
+            <div class="alert alert-danger error-circle fa-exclamation-circle" data-ng-show="username">
+                <strong>&nbsp;</strong>Your session has timed out. Please login again.
+            </div>
 			
             <form class="form" name="loginForm" data-ng-submit="login(credentials)" novalidate>
                 <div class="form-group"
