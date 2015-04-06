@@ -19,8 +19,8 @@
     }
 
     .header > div {
-        padding-top: $table-cell-padding*2;
-        padding-bottom: $table-cell-padding*1.8;
+        padding-top: $table-cell-padding;
+        padding-bottom: $table-cell-padding*0.8;
     }
 
     .footer > div {
@@ -42,7 +42,7 @@
     }
 
     .results.active > div {
-        color: #fff;
+        color: $gray;
     }
 
     .results.unselectable > div {

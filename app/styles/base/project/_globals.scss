@@ -134,6 +134,10 @@
         }
     }
 
+    table tr.no-hover:hover {
+        background-color: $table-bg;
+    }
+
     .table-bordered {
         border-collapse: separate; // necessary for border-radius to work
         //border-radius: $border-radius-base; // Needs to be set on the individual cells because of table heading design treatment
