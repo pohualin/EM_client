@@ -1,11 +1,12 @@
+<div class="app-header" data-emmi-navbar></div>
 <div class="container" data-ng-cloak>
-    <h2>
-        <a href="#/">Emmi Manager</a> :&nbsp;New Client
-    </h2>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="layout-card">
     <form name="clientForm" class="form" novalidate unsaved-warning-form>
         <div id="alerts-container" data-ng-show="clientForm.$invalid || !clientToEdit.salesForceAccount"></div>
         <div id="remove-container"></div>
-        <h2>Client Information</h2>
+        <h1>Client Information</h1>
         <div class="row">
             <div class="col-md-8">
                 <div class="form-group"
@@ -99,7 +100,6 @@
                 <div class="form-group"
                      data-ng-class="{ 'has-error' : clientForm.clientContractStart.$invalid && formSubmitted }">
                     <label class="control-label" for="contractStart">Contract Start</label>
-
                     <div class="error-circle fa-exclamation-circle"
                          data-ng-show="!clientForm.clientContractStart.$error.date && clientForm.clientContractStart.$error.required && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
@@ -107,17 +107,19 @@
                     <div class="error-circle fa-exclamation-circle" data-ng-show="clientForm.clientContractStart.$error.date && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Please select a valid date"></div>
-                    <input id="contractStart" class="form-control" type="text" name="clientContractStart"
-                           data-ng-model="clientToEdit.contractStart" data-autoclose="true"
-                           data-dateType="iso" data-bs-datepicker required data-max-date="{{clientToEdit.contractEnd}}"
-                           required data-ng-disabled="clientForm.clientName.$error.unique">
+                    <div class="has-input-icon has-input-icon-calendar">
+                        <input id="contractStart" class="form-control" placeholder="MM/DD/YYYY" type="text" name="clientContractStart"
+                               data-ng-model="clientToEdit.contractStart" data-autoclose="true"
+                               data-dateType="iso" data-bs-datepicker required data-max-date="{{clientToEdit.contractEnd}}"
+                               data-ng-disabled="clientForm.clientName.$error.unique">
+                        <span class="input-icon"><i class="icon-calendar"></i></span>
+                    </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group"
                      data-ng-class="{ 'has-error' : clientForm.clientContractEnd.$invalid && formSubmitted }">
                     <label class="control-label" for="contractEnd">Contract End</label>
-
                     <div class="error-circle fa-exclamation-circle"
                          data-ng-show="!clientForm.clientContractEnd.$error.date && clientForm.clientContractEnd.$error.required && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
@@ -125,11 +127,14 @@
                     <div class="error-circle fa-exclamation-circle" data-ng-show="clientForm.clientContractEnd.$error.date && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Please select a valid date"></div>
-                    <input id="contractEnd" class="form-control" type="text" name="clientContractEnd"
-                           data-ng-model="clientToEdit.contractEnd" data-autoclose="true"
-                           data-dateType="string" data-bs-datepicker required
-                           data-min-date="{{clientToEdit.contractStart | addDays:1}}"
-                           required data-ng-disabled="clientForm.clientName.$error.unique">
+                    <div class="has-input-icon has-input-icon-calendar">
+                        <input id="contractEnd" class="form-control" placeholder="MM/DD/YYYY" type="text" name="clientContractEnd"
+                               data-ng-model="clientToEdit.contractEnd" data-autoclose="true"
+                               data-dateType="string" data-bs-datepicker required
+                               data-min-date="{{clientToEdit.contractStart | addDays:1}}"
+                            data-ng-disabled="clientForm.clientName.$error.unique">
+                        <span class="input-icon"><i class="icon-calendar"></i></span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -156,7 +161,7 @@
             <div class="col-md-12">
                 <div class="actions pull-right">
                     <div class="form-group">
-                        <a class="btn btn-link" href data-ng-click="cancel()" analytics-on analytics-category="Form Action" analytics-event="Client Create" analytics-label="Cancel">cancel</a>
+                        <a class="btn btn-cancel" href data-ng-click="cancel()" analytics-on analytics-category="Form Action" analytics-event="Client Create" analytics-label="Cancel">cancel</a>
                         <button class="btn btn-primary" type="button"
                                 data-on-ok="save(clientForm)"
                                 data-save-click data-client-to-edit="clientToEdit" data-checking-for-dupes="checkingForDupes"
@@ -167,6 +172,9 @@
                 </div>
             </div>
         </div>
-
     </form>
-</div>
+            </div><!-- .layout-card -->
+        </div><!-- .col-md-12 -->
+    </div><!-- .row -->
+</div><!-- .container -->
+<footer class="footer" data-ng-include="'admin-facing/partials/common/footer.tpl.html'"></footer>
