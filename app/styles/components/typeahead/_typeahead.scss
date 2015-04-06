@@ -23,10 +23,15 @@
         padding-bottom: $table-cell-padding*0.8;
     }
 
+    .no-results > div,
     .footer > div {
         border-top: 1px solid $gray-light;
         padding-top: 8px;
         padding-bottom: 8px;
+    }
+
+    .no-results > div {
+        border: 0;
     }
 
     .results > div {
