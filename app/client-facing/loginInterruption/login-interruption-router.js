@@ -5,7 +5,7 @@ angular.module('emmiManager')
         // Routes
         $routeProvider
             .when('/passwordInformation', {
-                templateUrl: 'client-facing/loginInterruption/login_interruption.html',
+                templateUrl: 'client-facing/loginInterruption/login_interruption_main.html',
                 controller: 'loginInterruption',
                 title: 'Request Information',
                 access: {

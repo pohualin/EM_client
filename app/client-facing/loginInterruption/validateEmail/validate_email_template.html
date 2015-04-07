@@ -1,0 +1,22 @@
+<div class="form-group"
+     data-ng-class="{ 'has-error' : (validateEmailForm.validateEmail.$invalid || validateEmailForm.validateEmail.$error.duplicate) && validateEmailFormSubmitted }">
+    <label class="control-label" for="validateEmail">Email:</label>
+
+    <div class="fa-exclamation-circle"
+         data-ng-show="validateEmailForm.validateEmail.$error.pattern && validateEmailFormSubmitted"
+         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+         data-title="Please enter a valid email."></div>
+    <div class="fa-exclamation-circle"
+         data-ng-show="validateEmailForm.validateEmail.$error.required && validateEmailFormSubmitted"
+         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+         data-title="Required"></div>
+    <div class="fa-exclamation-circle"
+         data-ng-show="validateEmailForm.validateEmail.$error.duplicate && validateEmailFormSubmitted"
+         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+         data-title="This email address is being used by another account"></div>
+    <input class="form-control" required id="validateEmail"
+           data-ng-model="account.email" name="validateEmail"
+           type="text" data-ng-change="resetDuplicateValidity()"
+           maxlength="255" data-focus-on="validateEmail"
+           data-ng-pattern="emailPattern"/>
+</div>
