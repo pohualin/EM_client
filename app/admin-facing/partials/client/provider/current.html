@@ -1,4 +1,11 @@
 <div class="col-md-12" data-ng-controller="ClientProvidersController">
+    <div class="pull-right">
+        <div data-ng-controller="ClientOpenProviderAssociateOperationController">
+            <button type="button" class="btn btn-link btn-link-nopad" data-ng-click="associateProviders()">
+                <i class="icon-plus"></i> add providers
+            </button>
+        </div>
+    </div>
     <h2>Providers</h2>
     <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0"
            cellspacing="0" data-ng-show="clientProviders" data-ng-controller="ClientCurrentProvidersOperationController">
@@ -17,7 +24,7 @@
                 <a href data-to-remove="clientProvider"
                    data-on-ok="removeExistingProvider(clientProvider)"
                    data-on-open-popover="openDeletePopover(clientProvider.provider.entity)"
-                   data-on-close-popover="closeDeletePopover(clientProvider.provider.entity)"                   
+                   data-on-close-popover="closeDeletePopover(clientProvider.provider.entity)"
                    data-client-provider-delete-warning="">remove from client</a>
             </td>
         </tr>
@@ -34,13 +41,6 @@
                     <span data-ng-hide="link.name != currentPage">{{link.name}}</span>
                 </li>
             </ul>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12" data-ng-controller="ClientOpenProviderAssociateOperationController">
-            <button type="button" class="btn btn-link" data-ng-click="associateProviders()">
-                add providers
-            </button>
         </div>
     </div>
 </div>
