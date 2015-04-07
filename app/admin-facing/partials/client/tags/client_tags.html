@@ -3,15 +3,34 @@
         <div class="row">
             <div class="col-md-6 pull-left">
                 <h2>
-                    Tags
+                    Groups &amp; Tags
                 </h2>
             </div>
-            <div class="col-md-6" data-ng-show="clientTagsHaveChanges && !saving">
-                <h2></h2>
+            <div class="col-md-6">
                 <div class="pull-right">
-                    <button class="btn btn-link" data-ng-click="cancelTagChanges()" data-ng-hide="hideCancelButton">cancel</button>
-                    <span data-ng-hide="hideCancelButton">| </span>
-                    <button class="btn btn-link" type="button"
+                    <span data-ng-hide="tagInputMode || clientForm.clientTagGroups.$error.unique || clientForm.clientTagGroups.$error.blankTitle">
+                        <button class="btn btn-link btn-link-nopad btn-tag-library" type="button" title="Select groups to add:"
+                        data-placement="top" data-content-template="admin-facing/partials/client/tags/tag_library.html"
+                        data-trigger="click" data-bs-popover data-popover-dismiss>
+                            <i class="icon-plus"></i> Add from Library
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="tag-groups" data-tag-groups data-ng-model="client.tagGroups" data-library-groups="tagLibraryMap"
+                      data-name="clientTagGroups" data-form-field="clientForm.clientTagGroups"
+                      data-tagging-mode="tagInputMode" data-ng-change="tagsChanged">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" data-ng-show="clientTagsHaveChanges && !saving">
+                <div class="pull-right">
+                    <button class="btn btn-cancel" data-ng-click="cancelTagChanges()" data-ng-hide="hideCancelButton">cancel</button>
+                    <button class="btn btn-success" type="button"
                             data-conflicting-team-tags="conflictingTeamTags"
                             data-ng-click="checkForConflicts(clientForm.$valid);"
                             data-ng-disabled="tagInputMode || !clientForm.$valid"
@@ -19,30 +38,13 @@
                             data-team-conflict-popover>
                         <span>save changes</span>
                     </button>
-
                 </div>
             </div>
-            <div class="col-md-6" data-ng-show="saving">
-                <h2></h2>
+            <div class="col-md-12" data-ng-show="saving">
                 <div class="pull-right">
                     <span class="text-muted">saving...</span>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-            <span data-tag-groups data-ng-model="client.tagGroups" data-library-groups="tagLibraryMap"
-                  data-name="clientTagGroups" data-form-field="clientForm.clientTagGroups"
-                  data-tagging-mode="tagInputMode" data-ng-change="tagsChanged">
-            </span>
-            <span data-ng-hide="tagInputMode || clientForm.clientTagGroups.$error.unique || clientForm.clientTagGroups.$error.blankTitle">
-                <small>&nbsp;&nbsp;&nbsp;or</small>
-                <button class="btn btn-link btn-tag-library" type="button" title="Select groups to add:"
-                        data-placement="top" data-content-template="admin-facing/partials/client/tags/tag_library.html"
-                        data-trigger="click" data-bs-popover data-popover-dismiss>Add from Library
-                </button>
-            </span>
-                </div>
         </div>
     </div>
 </form>
