@@ -231,6 +231,16 @@ TR.nowrap TD, TH {
   cursor:pointer;
 }
 
+.entity-info {
+    .entity-value-label {
+        margin: 0 0 2px;
+    }
+    .entity-value {
+        @include remIt(font-size, 16);
+        margin: 0 0 15px;
+    }
+}
+
 // various example component implementations
 @include example();
 @include example('.example2');
