@@ -1,11 +1,13 @@
 // Custom CSS for the main app navigation
 
 .app-header {
-    margin: 0 0 25px;
+    position: relative;
+    z-index: $zindex-navbar;
 }
 
 .navbar {
     margin: 0;
+    border-radius: 0;
 }
 
 .navbar-brand {
@@ -55,19 +57,27 @@
 }
 
 .section-nav {
-    box-shadow: 0px 4px 0px 0px rgba(110,124,136,0.12);
+    position: relative;
+    //box-shadow: 0px 4px 0px 0px rgba(110,124,136,0.12);
+    box-shadow: 0px 4px 0px 0px rgba(0,0,0,0.07);
     background: $brand-secondary;
     @include clearfix();
 }
 
 .app-breadcrumb {
+    position: relative;
+    z-index: $zindex-navbar;
     background: #fff;
-    box-shadow: 0px 4px 0px 0px rgba(110,124,136,0.12);
+    //box-shadow: 0px 4px 0px 0px rgba(110,124,136,0.12);
+    box-shadow: 0px 4px 0px 0px rgba(0,0,0,0.07);
     .breadcrumb {
         margin: 0;
         padding: 9px 25px;
     }
 }
+// .app-header ~ .app-breadcrumb {
+//     margin: -25px 0 25px;
+// }
 
 .section-nav-items {
     float: left;
