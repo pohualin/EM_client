@@ -57,6 +57,18 @@ angular.module('emmiManager')
                 });
 
                 return teamProviderTeamLocationSaveRequest;
+            },
+            
+            setAllTabs: function(addAnother){
+            	return {'activeTab' : addAnother ? 1 : 0, 'data' : [
+            	        {
+            	            'title': 'Client locations',
+            	            'template': 'admin-facing/partials/team/location/tabs/team-client-locations-tab.html'
+         		        },
+         		        {
+         		            'title': 'Search all locations',
+         		            'template': 'admin-facing/partials/team/location/tabs/team-search-all-tab.html'
+         		        }]};
             }
         };
     }])
