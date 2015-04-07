@@ -6,7 +6,7 @@
                     Please complete your account profile
                 </h2>
 
-                <div data-ng-show="noEmailNoQuestionForm.$invalid || noEmailNoQuestionForm.addEmail.$error.duplicate">
+                <div data-ng-show="noEmailNoQuestionForm.$invalid">
                     <div class="col-md-12" id="message-container">
                     </div>
                 </div>
@@ -22,7 +22,7 @@
                 <label class="control-label">Please add an email address to your account:</label>
 
                 <div class="form-group"
-                     data-ng-class="{ 'has-error' : (noEmailNoQuestionForm.addEmail.$invalid || noEmailNoQuestionForm.addEmail.$error.duplicate) && noEmailNoQuestionFormSubmitted }">
+                     data-ng-class="{ 'has-error' : noEmailNoQuestionForm.addEmail.$invalid && noEmailNoQuestionFormSubmitted }">
                     <div class="fa-exclamation-circle"
                          data-ng-show="noEmailNoQuestionForm.addEmail.$error.pattern && noEmailNoQuestionFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger"

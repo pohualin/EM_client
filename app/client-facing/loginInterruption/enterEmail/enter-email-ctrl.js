@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('emmiManager')
-    .controller('enterEmail', ['$scope', 'NewEmailService', 'ValidationService', '$alert', '$location', '$q',
-        function ($scope, NewEmailService, ValidationService, $alert, $location, $q) {
+    .controller('enterEmail', ['$scope', 'NewEmailService', 'ValidationService', '$alert', '$location', 'EmailRestrictConfigurationsService',
+        function ($scope, NewEmailService, ValidationService, $alert, $location, EmailRestrictConfigurationsService) {
             $scope.enterEmailFormSubmitted = false;
 
             /**
@@ -33,16 +33,16 @@ angular.module('emmiManager')
                     }, function (error) {
                         //server error.
                         $scope.enterEmailForm.addEmail.$setValidity('duplicate', false);
-//                        if (error.status === 406 && error.data && error.data.conflicts) {
-//                            $scope.enterEmailForm.addEmail.$setValidity('duplicate', true);
-//                        }
-//                        if (error.status === 406 && error.data && error.data.validationError) {
-//                            EmailRestrictConfigurationsService.allValidEmailEndings().then(function (response) {
-//                                error.data.validationError.validEmailEndings = response;
-//                                $scope.emailError = error.data.validationError;
-//                            });
-//                            $scope.formValidationError();
-//                        }
+                        if (error.status === 406 && error.data && error.data.conflicts) {
+                            $scope.enterEmailForm.addEmail.$setValidity('duplicate', true);
+                        }
+                        if (error.status === 406 && error.data && error.data.validationError) {
+                            EmailRestrictConfigurationsService.allValidEmailEndings().then(function (response) {
+                                error.data.validationError.validEmailEndings = response;
+                                $scope.emailError = error.data.validationError;
+                            });
+                            $scope.formValidationError();
+                        }
                         //error function
                         if (!$scope.emailErrorAlert) {
                             $scope.emailErrorAlert = $alert({
