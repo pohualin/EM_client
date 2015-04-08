@@ -51,7 +51,25 @@
         }
     }
 
+    hr {
+        border-color: rgba(151,151,151,0.4);
+    }
+
     /* _____ HEADINGS _____ */
+
+    // Vertical rhythm and single direction margins (http://csswizardry.com/2012/06/single-direction-margin-declarations/)
+    h1, .h1,
+    h2, .h2,
+    h3, .h3 {
+        margin-top: 0;
+        margin-bottom: $line-height-computed;
+    }
+    h4, .h4,
+    h5, .h5,
+    h6, .h6 {
+        margin-top: 0;
+        margin-bottom: ($line-height-computed / 2);
+    }
 
     h1, .h1 {
     }
@@ -93,8 +111,8 @@
             font-size: $font-size-small;
             font-weight: 600;
             text-transform: uppercase;
-            padding-top: $table-cell-padding*2;
-            padding-bottom: $table-cell-padding*1.8;
+            padding-top: $table-cell-padding;
+            padding-bottom: $table-cell-padding*0.8;
         }
         // column cells
         tr > td {
@@ -110,6 +128,18 @@
         .table {
             background-color: #fff;
         }
+    }
+
+    .table-secondary {
+        > thead > tr > th {
+            color: #fff;
+            border-color: $brand-secondary;
+            background: $brand-secondary;
+        }
+    }
+
+    table tr.no-hover:hover {
+        background-color: $table-bg;
     }
 
     .table-bordered {
@@ -471,6 +501,12 @@
 
     /* _____ LAYOUT _____ */
 
+    .app-content,
+    .app-header ~ .container {
+        padding-top: 25px;
+        padding-bottom: 25px;
+    }
+
     .layout-card {
         background: #fff;
         border-radius: $border-radius-base;
@@ -479,11 +515,81 @@
         padding: 28px 28px 30px;
     }
 
-    .mainContainer {
-        @extend %clearfix;
-        width: 100%;
-        max-width: #{$containerWidth}px;
-        margin: 0 auto;
+    .app-content-with-sidebar {
+        position: relative;
+        // for faux equal height columns
+        overflow: hidden;
+        padding-left: 25px;
+    }
+
+    /*
+    * Main Content
+    */
+    .main-content {
+        @include make-md-column(8.5);
+        //@include make-md-column-offset(3.5);
+    }
+    .sidebar + .main-content {
+        padding-left: 25px;
+    }
+
+    /*
+    * Sidebar
+    */
+    .sidebar {
+        @include make-md-column(3.5);
+        background-color: #636E77;
+        color: #fff;
+        color: rgba(255,255,255,0.85);
+        margin-top: -25px;
+        // for faux equal height columns
+        margin-bottom: -99999px;
+        padding-bottom: 99999px;
+        // another sidebar method
+        // position: absolute;
+        // top: 0;
+        // bottom: 0;
+        // z-index: 1000;
+        // overflow-x: hidden;
+        // overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+        > .sidebar-wrapper {
+            padding: 25px 15px;
+        }
+        .sidebar-heading {
+            color: rgba(255,255,255,0.85);
+        }
+        label {
+            font-weight: normal;
+        }
+        hr {
+            border-color: rgba(255,255,255,0.25);
+        }
+        select.form-control {
+            background: #9fa6ab;
+            background: rgba(250,251,251,0.40);
+            border: 1px solid #b7bbc0;
+            border: 1px solid rgba(207,210,213,0.50);
+            color: rgba(255,255,255,0.85);
+        }
+        .teams-filter-heading {
+            color: rgba(255,255,255,0.85);
+            .team-count {
+                margin-left: 10px;
+                opacity: 0.8;
+            }
+        }
+        .teams-filter-group {
+            margin: 0 0 28px;
+        }
+        .teams-filter-list {
+            font-weight: 300;
+            @include remIt(font-size, 16);
+            line-height: 1.875;
+            a:hover, a:focus {
+                color: $link-color;
+                text-decoration: underline;
+            }
+        }
     }
 
 }

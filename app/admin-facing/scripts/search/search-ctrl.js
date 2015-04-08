@@ -73,16 +73,20 @@ angular.module('emmiManager')
                 for (var i = 0, l = responsePage.linkList.length; i < l; i++) {
                     var aLink = responsePage.linkList[i];
                     if (aLink.rel.indexOf('self') === -1) {
-                        var linkValue = aLink.rel.substring(5);
+                        var linkValue = aLink.rel.substring(5),
+                            linkClass = '';
                         if (linkValue === 'next'){
-                            linkValue = '>';
+                            linkValue = 'Next';
+                            linkClass = 'next';
                         } else if (linkValue === 'prev'){
-                            linkValue = '<';
+                            linkValue = 'Previous';
+                            linkClass = 'previous';
                         }
                         $scope.links.push({
                             order: i,
                             name: linkValue,
-                            href: aLink.href
+                            href: aLink.href,
+                            className: linkClass
                         });
                     }
                 }

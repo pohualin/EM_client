@@ -11,7 +11,7 @@ angular.module('emmiManager')
        $scope.secretQuestionFormSubmitted = false;
              
        $scope.editSecretQuestion = function () {
-    	   $location.path('/editSecretQuestions');
+    	   $location.path('/editSecurityQuestions').replace();
         };
   
        function init(){

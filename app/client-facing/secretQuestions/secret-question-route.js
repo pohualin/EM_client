@@ -11,10 +11,10 @@ angular.module('emmiManager')
     	
     	 // Routes
         $routeProvider
-        .when('/editSecretQuestions', {
+        .when('/editSecurityQuestions', {
             templateUrl: 'client-facing/secretQuestions/edit/secret-question-edit.html',
             controller: 'SecretQuestionEditController',
-            title: 'Edit Secret Question',
+            title: 'Edit security Question',
              access: {
                  authorizedRoles: [USER_ROLES.all]
              },
@@ -23,10 +23,10 @@ angular.module('emmiManager')
         
         // Routes
         $routeProvider
-        .when('/viewSecretQuestions', {
+        .when('/viewSecurityQuestions', {
             templateUrl: 'client-facing/secretQuestions/edit/secret-question-view.html',
             controller: 'SecretQuestionViewController',
-            title: 'View Secret Question',
+            title: 'Create or View Security Question',
              access: {
                  authorizedRoles: [USER_ROLES.all]
              },
@@ -35,10 +35,10 @@ angular.module('emmiManager')
         
         // Routes
         $routeProvider
-        .when('/createSecretQuestions', {
+        .when('/createSecurityQuestions', {
             templateUrl: 'client-facing/secretQuestions/create/secret-question-create.html',
             controller: 'SecretQuestionCreateController',
-            title: 'Create Secret Question',
+            title: 'Create security Question',
              access: {
                  authorizedRoles: [USER_ROLES.all]
              },
@@ -47,10 +47,10 @@ angular.module('emmiManager')
         
      // Routes
         $routeProvider
-        .when('/secretQuestions', {
+        .when('/securityQuestions', {
             templateUrl: 'client-facing/secretQuestions/secret-question.html',
             controller: 'SecretQuestionController',
-            title: 'Secret Question',
+            title: 'Security Question',
              access: {
                  authorizedRoles: [USER_ROLES.all]
              },
