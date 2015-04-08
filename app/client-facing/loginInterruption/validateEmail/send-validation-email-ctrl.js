@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('emmiManager')
-    .controller('sendValidationEmail', ['$scope', 'ValidationService', '$alert', '$location',
-        function ($scope, ValidationService, $alert, $location) {
+    .controller('sendValidationEmail', ['$scope', 'ValidationService', '$alert', '$location','EmailRestrictConfigurationsService',
+        function ($scope, ValidationService, $alert, $location, EmailRestrictConfigurationsService) {
             //store original email
             ValidationService.get($scope.account).then(function (accountWithOriginalEmail) {
                 $scope.account.originalUserClientEmail = accountWithOriginalEmail.originalUserClientEmail;
@@ -35,31 +35,41 @@ angular.module('emmiManager')
                                 });
                             });
 
-                        }, function () {
+                        }, function (error) {
                             //server error
-                            $scope.validateEmailForm.validateEmail.$setValidity('duplicate', false);
-
-                            $scope.validateEmailErrorAlert = $alert({
-                                title: ' ',
-                                content: 'Please correct the below information.',
-                                container: '#message-container-validate-email',
-                                type: 'danger',
-                                show: true,
-                                dismissable: false
-                            });
+                            if (error.conflicts) {
+                                $scope.validateEmailForm.validateEmail.$setValidity('duplicate', false);
+                            }
+                            if (error.validationError) {
+                                EmailRestrictConfigurationsService.allValidEmailEndings($scope.account).then(function (response) {
+                                    error.validationError.validEmailEndings = response;
+                                    $scope.emailError = error.validationError;
+                                });
+                            }
+                            if(!$scope.validateEmailErrorAlert) {
+                                $scope.validateEmailErrorAlert = $alert({
+                                    title: ' ',
+                                    content: 'Please correct the below information.',
+                                    container: '#message-container-validate-email',
+                                    type: 'danger',
+                                    show: true,
+                                    dismissable: false
+                                });
+                            }
 
                         });
                 } else {
                     //email doesn't match the matcher on email field or is blank
-
-                    $scope.validateEmailErrorAlert = $alert({
-                        title: ' ',
-                        content: 'Please correct the below information.',
-                        container: '#message-container-validate-email',
-                        type: 'danger',
-                        show: true,
-                        dismissable: false
-                    });
+                    if(!$scope.validateEmailErrorAlert) {
+                        $scope.validateEmailErrorAlert = $alert({
+                            title: ' ',
+                            content: 'Please correct the below information.',
+                            container: '#message-container-validate-email',
+                            type: 'danger',
+                            show: true,
+                            dismissable: false
+                        });
+                    }
 
                 }
             };

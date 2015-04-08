@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('emmiManager')
-    .controller('validateEmailQuestions', ['$scope', '$alert', '$location', '$controller', 'ValidationService', 'SecretQuestionService',
-        function ($scope, $alert, $location, $controller, ValidationService, SecretQuestionService) {
+    .controller('validateEmailQuestions', ['$scope', '$alert', '$location', '$controller', 'ValidationService', 'SecretQuestionService', 'EmailRestrictConfigurationsService',
+        function ($scope, $alert, $location, $controller, ValidationService, SecretQuestionService, EmailRestrictConfigurationsService) {
 
             $scope.notValidatedEmailNoQuestionFormSubmitted = false;
 
@@ -46,9 +46,18 @@ angular.module('emmiManager')
                                 });
 
                         });
-                    }, function () {
+                    }, function (error) {
                         //server error
-                        $scope.notValidatedEmailNoQuestionForm.validateEmail.$setValidity('duplicate', false);
+                        if (error.conflicts) {
+                            $scope.notValidatedEmailNoQuestionForm.validateEmail.$setValidity('duplicate', false);
+                        }
+                        if (error.validationError) {
+                            EmailRestrictConfigurationsService.allValidEmailEndings($scope.account).then(function (response) {
+                                error.validationError.validEmailEndings = response;
+                                $scope.emailError = error.validationError;
+                            });
+                        }
+
                         if (!$scope.notValidateEmailErrorAlert) {
                             $scope.notValidateEmailErrorAlert = $alert({
                                 title: ' ',
@@ -61,14 +70,16 @@ angular.module('emmiManager')
                         }
                     });
                 } else {
-                    $scope.notValidateEmailErrorAlert = $alert({
-                        title: ' ',
-                        content: 'Please correct the below information.',
-                        container: '#message-container-validate-email-no-question',
-                        type: 'danger',
-                        show: true,
-                        dismissable: false
-                    });
+                    if (!$scope.notValidateEmailErrorAlert) {
+                        $scope.notValidateEmailErrorAlert = $alert({
+                            title: ' ',
+                            content: 'Please correct the below information.',
+                            container: '#message-container-validate-email-no-question',
+                            type: 'danger',
+                            show: true,
+                            dismissable: false
+                        });
+                    }
                 }
             };
 
