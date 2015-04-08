@@ -44,7 +44,8 @@ angular.module('emmiManager')
             });
         };
 
-        $scope.addLocations = function () {
+        $scope.addLocations = function (addAnother) {
+            $scope.addAnother = addAnother;
         	$modal({scope: $scope, template: 'admin-facing/partials/team/location/search.html', animation: 'none', backdropAnimation: 'emmi-fade', show: true, backdrop: 'static'});
         };
 
@@ -91,7 +92,7 @@ angular.module('emmiManager')
             $scope.refresh();
 
             if (addAnother) {
-                $scope.addLocations();
+                $scope.addLocations(true);
                 $scope.displaySuccessfull(locationsToAdd, '#message-container', addAnother);
             } else {
                 $scope.displaySuccessfull(locationsToAdd, '#remove-container', addAnother);

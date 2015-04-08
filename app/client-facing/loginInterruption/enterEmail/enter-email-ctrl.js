@@ -32,16 +32,14 @@ angular.module('emmiManager')
                         });
                     }, function (error) {
                         //server error.
-                        $scope.enterEmailForm.addEmail.$setValidity('duplicate', false);
-                        if (error.status === 406 && error.data && error.data.conflicts) {
-                            $scope.enterEmailForm.addEmail.$setValidity('duplicate', true);
+                        if (error.conflicts) {
+                            $scope.enterEmailForm.addEmail.$setValidity('duplicate', false);
                         }
-                        if (error.status === 406 && error.data && error.data.validationError) {
-                            EmailRestrictConfigurationsService.allValidEmailEndings().then(function (response) {
-                                error.data.validationError.validEmailEndings = response;
-                                $scope.emailError = error.data.validationError;
+                        if (error.validationError) {
+                            EmailRestrictConfigurationsService.allValidEmailEndings($scope.account).then(function (response) {
+                                error.validationError.validEmailEndings = response;
+                                $scope.emailError = error.validationError;
                             });
-                            $scope.formValidationError();
                         }
                         //error function
                         if (!$scope.emailErrorAlert) {

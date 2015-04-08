@@ -8,12 +8,12 @@
                     <div class="col-md-1"></div>
                 </div>
                 <div class="row" >
-                    <div data-bs-tabs data-ng-show="clientHasLocations()">
-                        <div data-ng-include="'admin-facing/partials/team/location/tabs/team-client-locations-tab.html'" data-bs-pane data-title="Client locations" ></div>
-                        <div data-ng-include="'admin-facing/partials/team/location/tabs/team-search-all-tab.html'" data-bs-pane data-title="Search all locations" ></div>
+                    <div data-bs-active-pane="tabs.activeTab" data-bs-tabs data-ng-show="clientHasLocations()">
+                        <div data-ng-repeat="tab in tabs.data" data-ng-include="tab.template" data-title="{{tab.title}}" data-bs-pane>
+                        </div>
                     </div>
                     <div data-ng-hide="clientHasLocations()">
-                        <div data-ng-include="'admin-facing/partials/team/location/tabs/team-search-all-tab.html'" data-bs-pane data-title="Search all locations" ></div>
+                        <div data-ng-include="'admin-facing/partials/team/location/tabs/team-search-all-tab.html'" data-title="Search all locations" ></div>
                     </div>
                 </div>
             </div>

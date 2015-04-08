@@ -39,7 +39,7 @@ angular.module('emmiManager')
                         var locationResource = location.data.location;
 
                         if (addAnother) {
-                            $scope.addLocations();
+                            $scope.addLocations(true);
                             container = '#message-container';
                         }
 
