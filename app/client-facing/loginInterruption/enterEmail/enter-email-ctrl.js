@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('emmiManager')
-    .controller('enterEmail', ['$scope', 'NewEmailService', 'ValidationService', '$alert', '$location',
-        function ($scope, NewEmailService, ValidationService, $alert, $location) {
+    .controller('enterEmail', ['$scope', 'NewEmailService', 'ValidationService', '$alert', '$location', 'EmailRestrictConfigurationsService',
+        function ($scope, NewEmailService, ValidationService, $alert, $location, EmailRestrictConfigurationsService) {
             $scope.enterEmailFormSubmitted = false;
 
             /**
@@ -32,8 +32,15 @@ angular.module('emmiManager')
                         });
                     }, function (error) {
                         //server error.
-                        $scope.enterEmailForm.addEmail.$setValidity('duplicate', false);
-
+                        if (error.conflicts) {
+                            $scope.enterEmailForm.addEmail.$setValidity('duplicate', false);
+                        }
+                        if (error.validationError) {
+                            EmailRestrictConfigurationsService.allValidEmailEndings($scope.account).then(function (response) {
+                                error.validationError.validEmailEndings = response;
+                                $scope.emailError = error.validationError;
+                            });
+                        }
                         //error function
                         if (!$scope.emailErrorAlert) {
                             $scope.emailErrorAlert = $alert({
