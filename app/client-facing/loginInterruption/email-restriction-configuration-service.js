@@ -22,6 +22,7 @@ angular.module('emmiManager')
                 /**
                  * Get EmailRestrictConfiguration by Client
                  */
+                /*
                 getEmailRestrictConfiguration: function (sort) {
                     return $http.get(UriTemplate.create(Client.getClient().link.emailRestrictConfigurations).stringify({
                         sort: sort && sort.property ? sort.property + ',' + (sort.ascending ? 'asc' : 'desc') : ''
@@ -31,6 +32,7 @@ angular.module('emmiManager')
                             return response.data;
                         });
                 },
+                */
                 
                 /**
                  * Return an empty EmailRestrictConfiguration
@@ -52,6 +54,7 @@ angular.module('emmiManager')
                 /**
                  * Save EmailRestrictConfiguration
                  */ 
+                /*
                 save: function(emailRestrictConfiguration){
                     return $http.post(UriTemplate.create(Client.getClient().link.emailRestrictConfigurations).stringify(), 
                             emailRestrictConfiguration.entity)
@@ -60,6 +63,7 @@ angular.module('emmiManager')
                             return response.data;
                         });
                 },
+                */
                 
                 /**
                  * Return an array of valid email endings
