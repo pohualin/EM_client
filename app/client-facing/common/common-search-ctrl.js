@@ -1,23 +1,5 @@
 'use strict';
 angular.module('emmiManager')
-/*    .controller('SearchOptionDropDownCtrl', function ($scope, $location) {
-
-        $scope.changehref = function (option) {
-            if (option === 'Clients') {
-                $location.path('/clients');
-            } else if (option === 'Teams') {
-                $location.path('/teams');
-            } else if (option === 'Providers') {
-                $location.path('/providers');
-            } else if (option === 'Locations') {
-                $location.path('/locations');
-            } else if (option === 'Users') {
-                $location.path('/users');
-            }
-        };
-
-    })*/
-
 /**
  * Sorting helper functions
  */
@@ -191,21 +173,5 @@ angular.module('emmiManager')
               break;
             }
         }
-/*
-
-        $scope.serializeToQueryString = function (query, page, status, sort, size){
-            var queryObject={};
-            queryObject[URL_PARAMETERS.QUERY] = query;
-            queryObject[URL_PARAMETERS.PAGE] = page;
-            queryObject[URL_PARAMETERS.STATUS] = status;
-            queryObject[URL_PARAMETERS.SORT] = sort ? sort.property : '';
-            queryObject[URL_PARAMETERS.DIRECTION] = sort ? (sort.ascending ? 'asc' : 'desc') : '';
-            queryObject[URL_PARAMETERS.SIZE] = size;
-
-            $location.search(queryObject).replace();
-            $rootScope.currentRouteQueryString = arrays.toQueryString($location.search());
-        };
-*/
-
     }])
 ;

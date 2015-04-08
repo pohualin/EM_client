@@ -22,7 +22,6 @@ angular.module('emmiManager')
                     AuthSharedService.currentUser().then(function (loggedInUser) {
                         ViewPatientService.loadPatient(loggedInUser.clientResource, $route.current.params.patientId)
                             .then(function (response) {
-                                console.log(response);
                                 deferred.resolve(response.data);
                             }, function error() {
                                 deferred.reject();
