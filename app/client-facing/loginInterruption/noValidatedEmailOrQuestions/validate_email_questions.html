@@ -38,7 +38,7 @@
                          data-ng-show="notValidatedEmailNoQuestionForm.validateEmail.$error.duplicate && notValidatedEmailNoQuestionFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="This email address is being used by another account"></div>
-                    <input class="form-control" required id="validateEmail"
+                    <input class="form-control" required id="validateEmail" data-popover-save-error data-save-error="emailError"
                            data-ng-model="account.email" name="validateEmail"
                            type="text" data-ng-change="resetDuplicateValidityEmailAndQuestions()"
                            maxlength="255" data-focus-on="validateEmail"

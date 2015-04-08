@@ -11,7 +11,7 @@ angular.module('emmiManager')
                  * Get EmailRestrictConfiguration by Client
                  */
                 getEmailRestrictConfiguration: function (account, sort) {
-                    return $http.get(UriTemplate.create($scope.account.clientResource.link.emailRestrictConfigurations).stringify({
+                    return $http.get(UriTemplate.create(account.clientResource.link.emailRestrictConfigurations).stringify({
                         sort: sort && sort.property ? sort.property + ',' + (sort.ascending ? 'asc' : 'desc') : ''
                     }))
                         .then(function (response) {
