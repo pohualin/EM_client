@@ -18,8 +18,11 @@ angular.module('emmiManager')
                         duration: 5,
                         dismissable: true
                     });
+                    $location.path('/').replace();
+                }, function error() {
+                    $location.path('/credentials/validateEmail/failure').replace();
                 });
-                $location.path('/').replace();
+
             }
         }])
 ;
