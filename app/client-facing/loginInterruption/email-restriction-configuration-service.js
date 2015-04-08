@@ -4,8 +4,8 @@ angular.module('emmiManager')
 /**
  * This service is responsible CRUD operations for EmailRestrictConfiguration resources
  */
-    .service('EmailRestrictConfigurationsService', ['$filter', '$q', '$http', 'UriTemplate', 'CommonService', 'Client',
-        function ($filter, $q, $http, UriTemplate, CommonService, Client) {
+    .service('EmailRestrictConfigurationsService', ['$filter', '$q', '$http', 'UriTemplate', 'CommonService', 
+        function ($filter, $q, $http, UriTemplate, CommonService) {
             return {
                 
                 /**
