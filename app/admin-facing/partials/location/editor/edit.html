@@ -1,6 +1,10 @@
 <form name="locationForm" class="form" novalidate unsaved-warning-form>
 	<div class="col-md-12">
-        <div id="validation-container" data-ng-show="locationForm.$invalid && locationFormSubmitted"></div>
+        <div id="validation-container" data-ng-show="locationForm.$invalid && locationFormSubmitted">
+            <div class="alert alert-danger">
+                Please correct the below information.
+            </div>
+        </div>
 		<div class="row">
 			<div class="col-md-6 pull-left">
 				<h3>Location Information</h3>

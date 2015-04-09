@@ -6,7 +6,7 @@ angular.module('emmiManager').controller(
         focus, ProviderService) {
 
         $scope.cancel = function(providerForm) {
-            $scope.hideError();
+            $scope.providerFormSubmitted = false;
             providerForm.$setPristine();
             $scope.edit();
             _paq.push(['trackEvent', 'Form Action', 'Provider Edit', 'Cancel']);
@@ -34,17 +34,6 @@ angular.module('emmiManager').controller(
                     $scope.cancel(providerForm);
                 });
                 _paq.push(['trackEvent', 'Form Action', 'Provider Edit', 'Save']);
-            } else {
-                if (!$scope.providerErrorAlert) {
-                    $scope.providerErrorAlert = $alert({
-                        title: ' ',
-                        content: 'Please correct the below information.',
-                        container: '#validation-container',
-                        type: 'danger',
-                        show: true,
-                        dismissable: false
-                    });
-                }
             }
         };
 
