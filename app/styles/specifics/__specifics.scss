@@ -62,6 +62,15 @@
     }
 }
 
+// Make sure checkboxes and radios within tables don't get the margins
+td {
+    .radio,
+    .checkbox {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+}
+
 .typeahead-search {
     + .dropdown-menu {
         width: 100%;

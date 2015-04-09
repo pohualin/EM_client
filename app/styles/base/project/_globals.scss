@@ -281,6 +281,10 @@
         }
     }
 
+    .btn-link-nopad {
+        padding: 0;
+    }
+
     .btn-cancel {
         @extend .btn-link;
         color: #BBC5CF;
