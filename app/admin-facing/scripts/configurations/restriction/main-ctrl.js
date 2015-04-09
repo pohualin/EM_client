@@ -17,6 +17,7 @@ angular.module('emmiManager')
                 $scope.clientRestrictConfiguration = angular.copy($scope.originalClientRestrictConfiguration);
                 $alert({
                     content: '<b>' + $scope.client.name + '</b> has been updated successfully.',
+                    container: '#messages-container',
                     type: 'success',
                     placement: 'top',
                     show: true,
@@ -25,7 +26,7 @@ angular.module('emmiManager')
                 });
             });
         };
-        
+
         /**
          * init method called when page is loading
          */
@@ -39,4 +40,4 @@ angular.module('emmiManager')
 
         init();
     }]);
- 
+

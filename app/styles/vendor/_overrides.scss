@@ -18,7 +18,7 @@
 .alert-dismissable,
 .alert-dismissible {
     .close {
-        top: -4px;
+        //top: -4px;
         @include opacity(.75);
         .icon-delete {
             font-weight: bold;
@@ -28,6 +28,42 @@
             color: inherit;
             @include opacity(1);
         }
+    }
+}
+
+/*
+ * Alerts placements from Bootstrap Additions (need to override and we'll handle with our global alerts cotainer)
+ */
+.global-messages-container {
+    position: fixed;
+    width: 80%;
+    max-width: 1056px;
+    z-index: 1050;
+    text-align: center;
+    // center it in the window
+    margin: 30px auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    // center the auto-width alert
+    .alert {
+        display: inline-block !important; // Angularstrap sets this to block, so auto widths won't work
+    }
+    // override bootstrap additions classes
+    .alert.top,
+    .alert.top-left,
+    .alert.top-right,
+    .alert.bottom,
+    .alert.bottom-left,
+    .alert.bottom-right {
+        position: relative;
+        z-index: auto;
+        text-align: left;
+        margin: 0 0 20px;
+        top: auto;
+        right: auto;
+        bottom: auto;
+        left: auto;
     }
 }
 

@@ -35,6 +35,7 @@ angular.module('emmiManager')
                             }
                             $alert({
                                 content: 'User <b>' + savedUserClientResource.entity.login + '</b> has been successfully created.',
+                                container: '#messages-container',
                                 type: 'success',
                                 placement: 'top',
                                 show: true,
