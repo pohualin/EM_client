@@ -94,7 +94,7 @@ angular.module('emmiManager')
                     $alert({
                         title: ' ',
                         content: message,
-                        container: '#message-container',
+                        container: '#modal-messages-container',
                         type: 'success',
                         show: true,
                         duration: 5,

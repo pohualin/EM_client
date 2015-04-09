@@ -126,7 +126,7 @@ angular.module('emmiManager')
                                 $scope.errorAlert = $alert({
                                     title: ' ',
                                     content: 'Please correct the below information.',
-                                    container: '#message-container',
+                                    container: '#messages-container',
                                     type: 'danger',
                                     show: true,
                                     dismissable: false
@@ -139,7 +139,7 @@ angular.module('emmiManager')
                         $scope.errorAlert = $alert({
                             title: ' ',
                             content: 'Please correct the below information.',
-                            container: '#message-container',
+                            container: '#messages-container',
                             type: 'danger',
                             show: true,
                             dismissable: false

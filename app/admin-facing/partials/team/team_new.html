@@ -10,8 +10,8 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div id="alerts-container" data-ng-show="teamForm.$invalid || !teamToSave.salesForceAccount"></div>
-            <div id="remove-container"></div>
+            <div id="validation-container" data-ng-show="teamForm.$invalid || !teamToSave.salesForceAccount"></div>
+            <div id="messages-container"></div>
             <h2 data-translate="team_edit_page.information.title">Team Information</h2>
             <form name="teamForm" class="form" novalidate unsaved-warning-form>
                 <div data-ng-include="'admin-facing/partials/team/team_form.html'"></div>

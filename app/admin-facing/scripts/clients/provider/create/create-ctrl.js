@@ -37,7 +37,7 @@ angular.module('emmiManager')
                             $alert({
                                 title: ' ',
                                 content: 'The provider <b>' + providerName + '</b> has been successfully created.',
-                                container: '#message-container',
+                                container: '#modal-messages-container',
                                 type: 'success',
                                 show: true,
                                 duration: 5,
@@ -62,7 +62,7 @@ angular.module('emmiManager')
                         $scope.providerErrorAlert = $alert({
                             title: ' ',
                             content: 'Please correct the below information.',
-                            container: '#message-container',
+                            container: '#modal-messages-container',
                             type: 'danger',
                             show: true,
                             dismissable: false
