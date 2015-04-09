@@ -506,6 +506,8 @@ tagsInput.directive('tiAutosize', function() {
                     span.css('display', '');
                     width = span.prop('offsetWidth');
                     span.css('display', 'none');
+                }else{
+                    width = element.prop('scrollWidth');
                 }
 
                 element.css('width', width ? width + THRESHOLD + 'px' : '');
@@ -520,6 +522,10 @@ tagsInput.directive('tiAutosize', function() {
                 if (!ctrl.$modelValue) {
                     resize(value);
                 }
+            });
+
+            element.on('focus', function() {
+                resize();
             });
         }
     };
