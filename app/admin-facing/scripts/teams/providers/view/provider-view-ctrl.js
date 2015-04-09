@@ -94,7 +94,7 @@ angular.module('emmiManager')
                 $alert({
                     title: ' ',
                     content: 'The provider <b>' + provider.entity.provider.firstName + ' ' + provider.entity.provider.lastName + '</b> has been successfully removed.',
-                    container: 'body',
+                    container: '#messages-container',
                     type: 'success',
                     placement: 'top',
                     show: true,
@@ -297,7 +297,7 @@ angular.module('emmiManager')
 		        		$alert({
 							title: ' ',
 							content: message,
-							container: 'body',
+							container: '#messages-container',
 							type: 'success',
 							placement: 'top',
 						    show: true,
@@ -356,7 +356,7 @@ angular.module('emmiManager')
 	                $alert({
 						title: ' ',
 						content: 'The provider <b>'+ response.data.entity.firstName + ' ' + response.data.entity.lastName +'</b> has been successfully added.',
-						container: 'body',
+						container: '#messages-container',
 						type: 'success',
 						placement: 'top',
 					    show: true,

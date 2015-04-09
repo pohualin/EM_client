@@ -13,7 +13,7 @@ angular.module('emmiManager')
 
             $scope.saveProvider = function (isValid) {
             	$scope.providerFormSubmitted = true;
-                if (isValid && (($scope.potentialLocations.length > 0 && $scope.selectedItems.length > 0) || $scope.potentialLocations.length < 1)) { 
+                if (isValid && (($scope.potentialLocations.length > 0 && $scope.selectedItems.length > 0) || $scope.potentialLocations.length < 1)) {
                     // Compose save request
                 	$scope.teamProviderTeamLocationSaveRequest = TeamProviderService.composeTeamProviderTeamLocationSaveRequest(
                 			$scope.selectedItems,
@@ -26,7 +26,7 @@ angular.module('emmiManager')
             			$scope.teamProviderTeamLocationSaveRequest).then(function(){
             				ProviderView.paginatedProvidersForTeam($scope.teamResource).then(function(response){
             	        		$scope.handleResponse(response, 'listOfTeamProviders');
-            	        	});  
+            	        	});
                 		$scope.$hide();
                 	});
                     _paq.push(['trackEvent', 'Form Action', 'Team Provider Edit', 'Save']);
@@ -35,7 +35,7 @@ angular.module('emmiManager')
                         $scope.providerErrorAlert = $alert({
                             title: ' ',
                             content: 'Please correct the below information.',
-                            container: '#message-container',
+                            container: '#modal-messages-container',
                             type: 'danger',
                             show: true,
                             dismissable: false

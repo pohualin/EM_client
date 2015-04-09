@@ -5,9 +5,6 @@ angular.module('emmiManager').controller(
     function($scope, $alert, locationResource, focus, Location, LocationService) {
 
         $scope.cancel = function(locationForm) {
-            if ($scope.locationErrorAlert){
-                $scope.locationErrorAlert.hide();
-            }
             $scope.locationFormSubmitted = false;
             locationForm.$setPristine();
             $scope.edit();
@@ -30,17 +27,6 @@ angular.module('emmiManager').controller(
                     $scope.cancel(locationForm);
                 });
                 _paq.push(['trackEvent', 'Form Action', 'Location Edit', 'Save']);
-            } else {
-                if (!$scope.locationErrorAlert) {
-                    $scope.locationErrorAlert = $alert({
-                        title: ' ',
-                        content: 'Please correct the below information.',
-                        container: '#message-container',
-                        type: 'danger',
-                        show: true,
-                        dismissable: false
-                    });
-                }
             }
         };
 
