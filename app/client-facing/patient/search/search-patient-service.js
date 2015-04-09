@@ -20,6 +20,6 @@ angular.module('emmiManager')
                         return response.data;
                     });
                 }
-            }
+            };
         }])
 ;
