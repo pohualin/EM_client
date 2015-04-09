@@ -67,8 +67,12 @@ angular.module('emmiManager')
                     $scope.conflictingTeamTags = conflictingTeamTags;
                     $scope.showPopover();
                 } else {
-                    $scope.saveTags(isValid);
-                    $scope.hideOpenModals();
+                    if($scope.isGroupOrTagRemoved){
+                        $scope.showPopover();
+                    } else {
+                        $scope.saveTags(isValid);
+                        $scope.hideOpenModals();
+                    }
                 }
             });
         };
@@ -93,6 +97,7 @@ angular.module('emmiManager')
                         $scope.client.tagGroups = angular.copy($scope.client.savedGroups);
                         $scope.clientTagsHaveChanges = false;
                         $scope.saving = false;
+                        $scope.isGroupOrTagRemoved = false;
                         if ($scope.team) {
                             var tagGroupToDisplay = [];
                             angular.forEach(clientGroups, function (group) {
@@ -122,12 +127,16 @@ angular.module('emmiManager')
 
         $scope.tagsChanged = function () {
             $scope.clientTagsHaveChanges = true;
+            Tag.isGroupOrTagRemoved($scope.client).then(function(response){
+                $scope.isGroupOrTagRemoved = response;
+            });
             $scope.disableLibrary();
         };
 
         $scope.cancelTagChanges = function () {
             $scope.client.tagGroups = angular.copy($scope.client.savedGroups);
             $scope.clientTagsHaveChanges = false;
+            $scope.isGroupOrTagRemoved = false;
             $scope.disableLibrary();
         };
 
