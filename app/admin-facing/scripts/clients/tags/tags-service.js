@@ -229,6 +229,37 @@ angular.module('emmiManager')
                     });
                     return deferred.promise;
                 }
+            },
+            isGroupOrTagRemoved: function(client){
+                var deferred = $q.defer();
+                var tagGroups = [];
+                var tags = [];
+                var isRemove = false;
+                angular.forEach(client.tagGroups, function(tagGroup){
+                    if(tagGroup.id){
+                        tagGroups.push(tagGroup.id);
+                    }
+                    
+                    angular.forEach(tagGroup.tags, function(tag){
+                        if(tag.id){
+                            tags.push(tag.id);
+                        }
+                    });
+                });
+                
+                angular.forEach(client.savedGroups, function(savedGroup){
+                    if(tagGroups.indexOf(savedGroup.id) === -1){
+                        isRemove = true;
+                    } else {
+                        angular.forEach(savedGroup.tags, function(tag){
+                            if(tags.indexOf(tag.id) === -1){
+                                isRemove = true;
+                            }
+                        });
+                    }
+                });
+                deferred.resolve(isRemove);
+                return deferred.promise;
             }
         };
     });
