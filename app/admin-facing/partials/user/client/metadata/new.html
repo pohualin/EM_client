@@ -11,9 +11,7 @@
     <div class="row">
         <div class="col-md-12" data-ng-cloak>
             <form name="userClientForm" class="form" novalidate unsaved-warning-form>
-                <div class="row" data-ng-show="userClientForm.$invalid">
-                    <div class="col-md-12" id="messages-container"></div>
-                </div>
+                <div id="validation-container" data-ng-show="userClientForm.$invalid"></div>
                 <div class="row">
                     <div class="col-md-6 pull-left">
                         <h2>New User</h2>

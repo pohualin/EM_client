@@ -39,7 +39,7 @@ angular.module('emmiManager').controller(
                     $scope.providerErrorAlert = $alert({
                         title: ' ',
                         content: 'Please correct the below information.',
-                        container: '#messages-container',
+                        container: '#validation-container',
                         type: 'danger',
                         show: true,
                         dismissable: false
