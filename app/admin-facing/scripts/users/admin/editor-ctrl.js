@@ -98,6 +98,7 @@ angular.module('emmiManager')
                             }
                             $alert({
                                 content: message,
+                                container: '#messages-container',
                                 type: 'success',
                                 placement: placement,
                                 show: true,
@@ -110,6 +111,7 @@ angular.module('emmiManager')
                         if (formDirty) {
                             $alert({
                                 content: 'User <b>' + $scope.userToBeEdit.login + '</b> has been successfully updated.',
+                                container: '#messages-container',
                                 type: 'success',
                                 placement: placement,
                                 show: true,

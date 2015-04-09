@@ -87,6 +87,7 @@ angular.module('emmiManager')
                     $alert({
                         content: 'A password reset email has been sent to <strong>' + UsersClientService.getUserClient().entity.email +
                         '</strong>.',
+                        container: '#messages-container',
                         type: 'success',
                         placement: 'top',
                         show: true,
@@ -111,6 +112,7 @@ angular.module('emmiManager')
                             $alert({
                                 content: 'The password for <b>' + UsersClientService.getUserClient().entity.login +
                                 '</b> has been successfully saved.',
+                                container: '#messages-container',
                                 type: 'success',
                                 placement: 'top',
                                 show: true,

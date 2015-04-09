@@ -30,6 +30,7 @@ angular.module('emmiManager')
                         $scope.loading = false;
                         $alert({
                             content: '<b>' + $scope.client.name + '</b> has been updated successfully.',
+                            container: '#messages-container',
                             type: 'success',
                             placement: 'top',
                             show: true,
@@ -55,6 +56,7 @@ angular.module('emmiManager')
                         $scope.clientPasswordConfigurationFormSubmitted = false;
                         $alert({
                             content: '<b>' + $scope.client.name + '</b> has been updated successfully.',
+                            container: '#messages-container',
                             type: 'success',
                             placement: 'top',
                             show: true,

@@ -40,6 +40,7 @@ angular.module('emmiManager')
                         }
                         $alert({
                             content: 'User <b>' + response.data.login + '</b> has been successfully created.',
+                            container: '#messages-container',
                             type: 'success',
                             placement: 'top',
                             show: true,
