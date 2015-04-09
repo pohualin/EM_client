@@ -8,7 +8,6 @@ angular.module('emmiManager')
                 function (AuthSharedService, $q, $route) {
                     var deferred = $q.defer();
                     AuthSharedService.currentUser().then(function (loggedInUser) {
-                        console.log(loggedInUser);
                         deferred.resolve(loggedInUser.clientResource);
                     });
                     return deferred.promise;

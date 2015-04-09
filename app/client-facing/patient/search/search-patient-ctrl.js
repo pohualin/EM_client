@@ -4,7 +4,7 @@ angular.module('emmiManager')
     .controller('SearchPatientController', ['$scope', '$controller', 'SearchPatientService', 'client',
         function ($scope, $controller, SearchPatientService, client) {
 
-            $controller('CommonSearch', {$scope: $scope}); //wait a min, this i scoming in from admin.html?
+            $controller('ClientCommonSearch', {$scope: $scope});
 
             var contentProperty = 'patients';
 

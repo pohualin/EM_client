@@ -3,7 +3,7 @@ angular.module('emmiManager')
 /**
  * Sorting helper functions
  */
-    .controller('CommonSort', ['$scope', function ($scope) {
+    .controller('ClientCommonSort', ['$scope', function ($scope) {
         $scope.createSortProperty = function (property) {
             var sort = $scope.sortProperty || {};
             if (sort && sort.property === property) {
@@ -27,12 +27,12 @@ angular.module('emmiManager')
 /**
  * Pagination helper functions
  */
-    .controller('CommonPagination', ['$scope', function($scope){
+    .controller('ClientCommonPagination', ['$scope', function ($scope) {
 
         $scope.pageSizes = [5, 10, 15, 25];
 
         $scope.isEmpty = function (obj) {
-            if (!obj){
+            if (!obj) {
                 return true;
             }
             return angular.equals({}, obj);
@@ -41,7 +41,7 @@ angular.module('emmiManager')
         $scope.handleResponse = function (responsePage, contentProperty) {
             if (responsePage && responsePage.content) {
                 // sort the rows the way they exist on the response page
-                for (var sort = 0, size = responsePage.content.length; sort < size; sort++ ){
+                for (var sort = 0, size = responsePage.content.length; sort < size; sort++) {
                     var content = responsePage.content[sort];
                     content.sortIdx = sort;
                 }
@@ -56,9 +56,9 @@ angular.module('emmiManager')
                     var aLink = responsePage.linkList[i];
                     if (aLink.rel.indexOf('self') === -1) {
                         var linkValue = aLink.rel.substring(5);
-                        if (linkValue === 'next'){
+                        if (linkValue === 'next') {
                             linkValue = '>';
-                        } else if (linkValue === 'prev'){
+                        } else if (linkValue === 'prev') {
                             linkValue = '<';
                         }
                         $scope.links.push({
@@ -105,73 +105,40 @@ angular.module('emmiManager')
  * 3. Handles tri-click sorting properties
  * 4. Handles response page pagination and sorting
  */
-    .controller('CommonSearch', ['$scope', '$location', '$rootScope', 'arrays', '$controller','URL_PARAMETERS',
-            function ($scope, $location, $rootScope, arrays, $controller,URL_PARAMETERS) {
+    .controller('ClientCommonSearch', ['$scope', '$location', '$rootScope', 'arrays', '$controller', 'URL_PARAMETERS',
+        function ($scope, $location, $rootScope, arrays, $controller, URL_PARAMETERS) {
 
-        $controller('CommonPagination', {$scope: $scope});
+            $controller('ClientCommonPagination', {$scope: $scope});
 
-                $controller('CommonSort', {$scope: $scope});
+            $controller('ClientCommonSort', {$scope: $scope});
 
-        // set the proper value in the search chooser based upon the path
-        if ($location.path() === '/clients'){
-            $scope.option = 'Clients';
-        } else if ($location.path() === '/teams'){
-            $scope.option = 'Teams';
-        } else if ($location.path() === '/providers'){
-            $scope.option = 'Providers';
-        } else if ($location.path() === '/locations'){
-            $scope.option = 'Locations';
-        } else if ($location.path() === '/users'){
-            $scope.option = 'Users';
-        }
+            // when first loading the page
+            var searchObject = $location.search();
+            if (searchObject && searchObject.q) {
+                $scope.query = searchObject.q;
+                $scope.status = searchObject.status;
 
-        // when first loading the page
-        var searchObject = $location.search();
-        if (searchObject && searchObject.q) {
-            $scope.query = searchObject.q;
-            $scope.status = searchObject.status;
-
-            // page size validation
-            if (searchObject.size) {
-                // ignore a page size not within the 'pageSizes'
-                angular.forEach($scope.pageSizes, function (pageSize) {
-                    // cast to string to allow for === comparison
-                    if ('' + pageSize === searchObject.size) {
-                        $scope.currentPageSize = searchObject.size;
-                    }
-                });
-            }
-            $scope.sortProperty = {};
-            if (searchObject.sort) {
-                $scope.sortProperty.property = searchObject.sort;
-                if (searchObject.dir) {
-                    if (searchObject.dir === 'asc') {
-                        $scope.sortProperty.ascending = true;
-                    } else if (searchObject.dir === 'desc') {
-                        $scope.sortProperty.ascending = false;
+                // page size validation
+                if (searchObject.size) {
+                    // ignore a page size not within the 'pageSizes'
+                    angular.forEach($scope.pageSizes, function (pageSize) {
+                        // cast to string to allow for === comparison
+                        if ('' + pageSize === searchObject.size) {
+                            $scope.currentPageSize = searchObject.size;
+                        }
+                    });
+                }
+                $scope.sortProperty = {};
+                if (searchObject.sort) {
+                    $scope.sortProperty.property = searchObject.sort;
+                    if (searchObject.dir) {
+                        if (searchObject.dir === 'asc') {
+                            $scope.sortProperty.ascending = true;
+                        } else if (searchObject.dir === 'desc') {
+                            $scope.sortProperty.ascending = false;
+                        }
                     }
                 }
             }
-            // Set $scope.pageWhereBuilt
-            switch (searchObject.p) {
-            case URL_PARAMETERS.CLIENT:
-              $scope.pageWhereBuilt = 'client';
-              break;
-            case URL_PARAMETERS.TEAM:
-              $scope.pageWhereBuilt = 'team';
-              break;
-            case URL_PARAMETERS.PROVIDER:
-              $scope.pageWhereBuilt = 'provider';
-              break;
-            case URL_PARAMETERS.LOCATION:
-              $scope.pageWhereBuilt = 'location';
-              break;
-            case URL_PARAMETERS.USER:
-                $scope.pageWhereBuilt = 'user';
-                break;
-            default:
-              break;
-            }
-        }
-    }])
+        }])
 ;
