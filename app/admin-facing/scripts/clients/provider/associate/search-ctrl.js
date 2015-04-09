@@ -64,7 +64,7 @@ angular.module('emmiManager')
                     if (!addAnother) {
                         $scope.$hide();
                         var message = ($scope.singleProviderAdded) ?
-                            ' <b>' + $scope.singleProviderAdded.firstName + ' ' + $scope.singleProviderAdded.lastName + '</b> has been added successfully.' :
+                            ' <b>' + $scope.singleProviderAdded.firstName + ' ' + $scope.singleProviderAdded.middleName + ' ' + $scope.singleProviderAdded.lastName + '</b> has been added successfully.' :
                             'The selected providers have been added successfully.';
                         $alert({
                             title: ' ',
@@ -90,7 +90,7 @@ angular.module('emmiManager')
                     focus('ProviderSearchFocus');
                     var clientName = (Client.getClient().entity.name) ? '<b>' + Client.getClient().entity.name + '</b>.' : 'the client.',
                         message = (!$scope.singleProviderAdded) ? 'The selected providers were successfully added to ' + clientName :
-                            'The provider <b>' + $scope.singleProviderAdded.firstName + ' ' + $scope.singleProviderAdded.lastName + '</b> has been successfully added to ' + clientName;
+                            'The provider <b>' + $scope.singleProviderAdded.firstName + ' ' + $scope.singleProviderAdded.middleName + ' ' + $scope.singleProviderAdded.lastName + '</b> has been successfully added to ' + clientName;
                     $alert({
                         title: ' ',
                         content: message,

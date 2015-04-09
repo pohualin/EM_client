@@ -29,7 +29,7 @@ angular.module('emmiManager')
             };
 
             $scope.showRemovalSuccess = function (providerResource) {
-                var name = providerResource.provider.entity.firstName + ' ' + providerResource.provider.entity.lastName;
+                var name = providerResource.provider.entity.firstName + ' ' + providerResource.provider.entity.middleName + ' ' + providerResource.provider.entity.lastName;
                 $alert({
                     title: ' ',
                     content: 'The provider <b>' + name + '</b> has been successfully removed.',

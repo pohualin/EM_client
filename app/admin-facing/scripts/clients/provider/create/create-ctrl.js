@@ -29,7 +29,7 @@ angular.module('emmiManager')
                         $scope.performSearch();
 
                         var providerResource = provider.data.provider,
-                            providerName = providerResource.entity.firstName + ' ' + providerResource.entity.lastName;
+                            providerName = providerResource.entity.firstName + ' ' + providerResource.entity.middleName + ' ' + providerResource.entity.lastName;
 
                         $scope.hideNewProviderModal();
                         if (addAnother) {
