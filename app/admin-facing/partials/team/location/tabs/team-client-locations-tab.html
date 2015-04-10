@@ -1,7 +1,7 @@
-<div class="form-group" data-ng-show="clientHasLocations()" >
-    <div class="col-md-12 col-sm-12" >
+        <br/>
         <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0"
-               cellspacing="0" data-ng-show="clientLocations" >
+               cellspacing="0" data-ng-show="clientLocations">
+            <thead>
             <tr>
                 <th class="sort col-sm-0">&nbsp;</th>
                 <th data-ng-class="sizeClass" data-ng-click="sortClient('name')">
@@ -24,6 +24,8 @@
                     Add to Providers
                 </th>
             </tr>
+            </thead>
+            <tbody>
             <tr data-ng-repeat="location in clientLocations" data-ng-class="location.location.entity.disabled ? 'text-muted' : ''">
                 <td>
                     <div class="checkbox">
@@ -41,8 +43,9 @@
                 </td>
                 <td>{{location.location.entity.phone}}</td>
                 <td data-ng-show="providersData">
-                    <div class="col-xs-12" data-ng-show="providersData && location.location.entity.checked && !location.location.entity.disabled">
+                    <div data-ng-if="providersData && location.location.entity.checked && !location.location.entity.disabled">
                            <div data-multi-select
+                            name="providersData{{$index}}"
                             values="providersData"
                             model="location.location.entity.providersSelected"
                             show-filters="true"
@@ -53,15 +56,18 @@
                     </div>
                 </td>
             </tr>
+            <tr class="no-hover">
+                <td colspan="6" class="text-center" data-ng-show="links">
+                    <ul class="pagination">
+                        <li data-ng-repeat="link in links | orderBy:'order'" class="{{link.className}}" data-ng-class="{'active': link.name == currentPage}">
+                            <a data-ng-click="fetchPageClientLocations(link.href)">
+                                <i class="fa-angle-left" data-ng-if="link.className === 'previous'"></i>
+                                {{link.name}}
+                                <i class="fa-angle-right" data-ng-if="link.className === 'next'"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+            </tbody>
         </table>
-        <div data-ng-show="links">
-            <ul class="pagination">
-                <li data-ng-repeat="link in links | orderBy:'order'" data-ng-class="{'active': link.name == currentPage}">
-                    <a data-ng-show="link.name != currentPage" href
-                       data-ng-click="fetchPageClientLocations(link.href)">{{link.name}}</a>
-                    <span data-ng-hide="link.name != currentPage">{{link.name}}</span>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
