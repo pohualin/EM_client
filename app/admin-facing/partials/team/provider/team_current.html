@@ -15,7 +15,7 @@
                 </thead>
                 <tbody>
 				<tr data-ng-repeat="teamProvider in listOfTeamProviders">
-			    	<td>{{teamProvider.entity.provider.firstName}} {{teamProvider.entity.provider.lastName}} <em>{{teamProvider.entity.provider.active ? '' : "(inactive)"}}</em></td>
+                    <td>{{teamProvider.entity.provider.firstName}} {{teamProvider.entity.provider.middleName}} {{teamProvider.entity.provider.lastName}} <em>{{teamProvider.entity.provider.active ? '' : "(inactive)"}}</em></td>
 			    	<td>{{teamProvider.entity.provider.specialty.name}}</td>
 			    	<td>{{teamProvider.entity.provider.email}}</td>
 			    	<td>

@@ -56,7 +56,7 @@ angular.module('emmiManager')
         };
 
         $scope.checkForConflicts = function (isValid) {
-            Tag.checkForConflicts(Client.getClient()).then(function (conflictingTeamTags) {
+            Tag.checkForConflicts(Client.getClient(), $scope.removedTags).then(function (conflictingTeamTags) {
                 if (conflictingTeamTags.length > 0) {
                     if (conflictingTeamTags.length === 1 && (conflictingTeamTags[0].conflictingTeamIds[0] === parseInt($route.current.params.teamId))) {
                         //if the only team with this tag is the team we are currently on don't show popover
@@ -67,12 +67,8 @@ angular.module('emmiManager')
                     $scope.conflictingTeamTags = conflictingTeamTags;
                     $scope.showPopover();
                 } else {
-                    if($scope.isGroupOrTagRemoved){
-                        $scope.showPopover();
-                    } else {
-                        $scope.saveTags(isValid);
-                        $scope.hideOpenModals();
-                    }
+                    $scope.saveTags(isValid);
+                    $scope.hideOpenModals();
                 }
             });
         };
@@ -97,7 +93,7 @@ angular.module('emmiManager')
                         $scope.client.tagGroups = angular.copy($scope.client.savedGroups);
                         $scope.clientTagsHaveChanges = false;
                         $scope.saving = false;
-                        $scope.isGroupOrTagRemoved = false;
+                        delete $scope.removedTags;
                         if ($scope.team) {
                             var tagGroupToDisplay = [];
                             angular.forEach(clientGroups, function (group) {
@@ -127,8 +123,8 @@ angular.module('emmiManager')
 
         $scope.tagsChanged = function () {
             $scope.clientTagsHaveChanges = true;
-            Tag.isGroupOrTagRemoved($scope.client).then(function(response){
-                $scope.isGroupOrTagRemoved = response;
+            Tag.removedTags($scope.client).then(function(response){
+                $scope.removedTags = response;
             });
             $scope.disableLibrary();
         };
@@ -136,7 +132,7 @@ angular.module('emmiManager')
         $scope.cancelTagChanges = function () {
             $scope.client.tagGroups = angular.copy($scope.client.savedGroups);
             $scope.clientTagsHaveChanges = false;
-            $scope.isGroupOrTagRemoved = false;
+            delete $scope.removedTags;
             $scope.disableLibrary();
         };
 
