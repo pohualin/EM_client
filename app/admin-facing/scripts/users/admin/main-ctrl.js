@@ -77,6 +77,7 @@ angular.module('emmiManager')
                     }
                     $alert({
                         content: message,
+                        container: '#messages-container',
                         type: 'success',
                         placement: 'top',
                         show: true,

@@ -16,14 +16,14 @@ angular.module('emmiManager')
                         scope.originalClientProvider && scope.originalClientProvider.provider.entity.active) {
                         // pop a warning dialog
                         $popover(element, {
-                            title: '',
+                            title: 'Are you sure you want to deactivate this provider?',
                             scope: scope,
                             trigger: 'manual',
-                            container: 'body',
                             autoClose: true,
                             show: true,
-                            placement: 'top',
+                            placement: 'bottom',
                             target: element,
+                            container: 'body',
                             contentTemplate: 'admin-facing/partials/client/provider/deactivate_popover.tpl.html'
                         });
                     } else {
@@ -63,8 +63,9 @@ angular.module('emmiManager')
                                     trigger: 'manual',
                                     show: true,
                                     autoClose: true,
-                                    placement: 'top',
+                                    placement: 'bottom',
                                     target: element,
+                                    container: 'body',
                                     contentTemplate: 'admin-facing/partials/client/provider/delete_popover.tpl.html'
                                 });
                                 scope.$on('tooltip.hide', function () {

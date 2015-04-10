@@ -8,7 +8,7 @@ angular.module('emmiManager')
 .controller('EmailRestrictConfigurationMainController', ['$alert', '$scope', '$controller', 'EmailRestrictConfigurationsService',
     function ($alert, $scope, $controller, EmailRestrictConfigurationsService) {
         var contentProperty = 'emailRestrictConfigurations';
-    
+
         /**
          * Fetch another set of existing emailRestrictConfigurations
          */
@@ -20,14 +20,14 @@ angular.module('emmiManager')
                 $scope.loading = false;
             });
         };
-        
+
         /**
          * Fetch the first set of existing emailRestrictConfigurations
          */
         $scope.listExisting = function(){
             getEmailRestrict();
         };
-        
+
         /**
          * Remove one single emailRestrictConfiguration
          */
@@ -35,6 +35,7 @@ angular.module('emmiManager')
             EmailRestrictConfigurationsService.remove(emailRestrictToRemove).then(function(response){
                 $alert({
                     content: '<b>' + $scope.client.name + '</b> has been updated successfully.',
+                    container: '#messages-container',
                     type: 'success',
                     placement: 'top',
                     show: true,
@@ -44,7 +45,7 @@ angular.module('emmiManager')
                 getEmailRestrict();
             });
         };
-        
+
         /**
          * Sort the existing emailRestrictConfigurations
          */
@@ -52,7 +53,7 @@ angular.module('emmiManager')
             var sort = $scope.createSortProperty(property);
             getEmailRestrict(sort);
         };
-        
+
         /**
          * init method called when page is loading
          */
@@ -60,7 +61,7 @@ angular.module('emmiManager')
             $controller('CommonSearch', {$scope: $scope});
             $scope.listExisting();
         }
-        
+
         /**
          * Utility method to call by sort and listExisting
          */
@@ -78,4 +79,4 @@ angular.module('emmiManager')
 
         init();
     }]);
- 
+

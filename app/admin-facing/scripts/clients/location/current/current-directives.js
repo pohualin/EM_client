@@ -29,8 +29,9 @@ angular.module('emmiManager')
                                 trigger: 'manual',
                                 show: true,
                                 autoClose: true,
-                                placement: 'top',
+                                placement: 'bottom',
                                 target: element,
+                                container: 'body',
                                 contentTemplate: 'admin-facing/partials/client/location/delete_popover.tpl.html'
                             });
 

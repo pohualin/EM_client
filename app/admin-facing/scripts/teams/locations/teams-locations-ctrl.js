@@ -35,7 +35,7 @@ angular.module('emmiManager')
             $alert({
                 title: ' ',
                 content: 'The location <b>' + locationResource.entity.location.name + '</b> has been successfully removed from ' + locationResource.entity.team.name,
-                container: '#remove-container',
+                container: '#messages-container',
                 type: 'success',
                 show: true,
                 duration: 5,
@@ -44,7 +44,8 @@ angular.module('emmiManager')
             });
         };
 
-        $scope.addLocations = function () {
+        $scope.addLocations = function (addAnother) {
+            $scope.addAnother = addAnother;
         	$modal({scope: $scope, template: 'admin-facing/partials/team/location/search.html', animation: 'none', backdropAnimation: 'emmi-fade', show: true, backdrop: 'static'});
         };
 
@@ -91,10 +92,10 @@ angular.module('emmiManager')
             $scope.refresh();
 
             if (addAnother) {
-                $scope.addLocations();
-                $scope.displaySuccessfull(locationsToAdd, '#message-container', addAnother);
+                $scope.addLocations(true);
+                $scope.displaySuccessfull(locationsToAdd, '#modal-messages-container', addAnother);
             } else {
-                $scope.displaySuccessfull(locationsToAdd, '#remove-container', addAnother);
+                $scope.displaySuccessfull(locationsToAdd, '#messages-container', addAnother);
             }
         };
 

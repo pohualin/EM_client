@@ -1,19 +1,22 @@
+        <div class="layout-card">
             <div class="row" data-ng-include="'admin-facing/partials/client/edit/metadata.html'"></div>
-            <hr>
+        </div>
+        <div class="layout-card">
             <div class="row" data-ng-include="'admin-facing/partials/client/tags/client_tags.html'"
                  data-ng-class="{'masked': metadataForm.clientName.$error.unique || editMode}">
             </div>
-            <hr>
+        </div>
+        <div class="layout-card">
             <div class="row" data-ng-include="'admin-facing/partials/client/location/client_current.html'"
                  data-ng-class="{'masked': metadataForm.clientName.$error.unique || editMode}"></div>
             <hr>
             <div class="row" data-ng-include="'admin-facing/partials/client/provider/current.html'"
                  data-ng-class="{'masked': metadataForm.clientName.$error.unique || editMode}"></div>
-            <hr>
+        </div>
+        <div class="layout-card">
             <div class="row">
                 <div class="col-md-6">
                     <a data-ng-show="existingClientRoles.length > 0 || existingClientTeamRoles.length > 0" href="#/clients/{{client.id}}/users">Manage Users</a>
-
                     <a data-ng-show="existingClientRoles.length === 0 && existingClientTeamRoles.length === 0" href="#/clients/{{client.id}}/roles">Manage Users</a>
                 </div>
             </div>
@@ -22,4 +25,4 @@
                     <a href="#/clients/{{client.id}}/password_policy">Configurations</a>
                 </div>
             </div>
-            <hr/>
+        </div>

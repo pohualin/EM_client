@@ -1,27 +1,27 @@
-    <div data-tag-groups-item class="btn-group tag-group" data-ng-repeat="tagGroup in groups" data-ng-class="{ 'selected': $index == selectedTagGroupIndex, 'invalid': !tagGroup.isValid}" data-ng-form="tagGroupForm">
-        <div class="tag-group-edit" data-ng-show="tagGroup.editMode">
-            <input type="text" name="tagGroupTitle" data-ng-model="tagGroup.title" value="{{ tagGroup.title }}" data-focus-on="editMode" data-ng-enter="changeTagGroupTitle($index)" data-ng-blur="changeTagGroupTitle($index)">
-        </div>
-        <button type="button" class="btn" data-ng-class="{ 'btn-info': tagGroup.isValid, 'btn-danger': !tagGroup.isValid}" data-ng-click="selectTagGroup($index)"><span class="tag-group-btn-text" data-ng-class="{ 'invisible' : tagGroup.editMode }"><span class="icon-link" data-ng-show="tagGroup.entity.type || tagGroup.type">&nbsp;</span>{{ tagGroup.title }}</span>&nbsp;</button>
-        <button type="button" class="btn dropdown-toggle" data-ng-class="{ 'btn-info': tagGroup.isValid, 'btn-danger': !tagGroup.isValid}" data-toggle="dropdown">
-            <span class="caret"></span>
+    <div data-tag-groups-item class="btn-group tag-group" data-ng-repeat="tagGroup in groups" data-ng-class="{ 'selected': $index == selectedTagGroupIndex, 'invalid': !tagGroup.isValid, 'has-error': !tagGroup.isValid}" data-ng-form="tagGroupForm">
+        <button type="button" class="btn btn-sm btn-tag-group" data-ng-class="{ 'btn-primary': tagGroup.isValid, 'btn-danger': !tagGroup.isValid}" data-ng-click="selectTagGroup($index)"><span class="tag-group-btn-text" data-ng-class="{ 'invisible' : tagGroup.editMode }"><span class="icon-link" data-ng-if="tagGroup.entity.type || tagGroup.type">&nbsp;</span>{{ tagGroup.title }}</span>&nbsp;</button>
+        <button type="button" class="btn btn-sm btn-tag-group tag-group-remove" data-ng-class="{ 'btn-primary': tagGroup.isValid, 'btn-danger': !tagGroup.isValid}" data-ng-click="removeTagGroup($index)">
+            <span class="icon-delete"></span>
+        </button>
+        <button type="button" class="btn btn-sm btn-tag-group dropdown-toggle" data-ng-class="{ 'btn-primary': tagGroup.isValid, 'btn-danger': !tagGroup.isValid}" data-toggle="dropdown">
+            <span class="fa-angle-down"></span>
             <span class="sr-only">Toggle Dropdown</span>
         </button>
         <div class="dropdown-menu" role="menu" style="width:600px">
             <div data-tags-input class="tags-input" data-ng-model="tagGroup.tags" data-on-tag-added="onChange('tag added')" data-on-tag-removed="onChange('tag removed')" data-on-tag-edited="onChange('tag edited')" data-ng-click="$event.stopPropagation();" data-ng-paste="pasteTags($event, $index)" data-enable-editing-last-tag="true" data-add-on-space="false" data-replace-spaces-with-dashes="false" data-name="tags"></div>
         </div>
-        <button type="button" class="btn btn-link tag-group-remove" data-ng-click="removeTagGroup($index)">
-            <span class="icon-delete"></span>
-        </button>
+        <div class="tag-group-edit" data-ng-show="tagGroup.editMode">
+            <input type="text" name="tagGroupTitle" data-ng-model="tagGroup.title" value="{{ tagGroup.title }}" data-focus-on="editMode" data-ng-enter="changeTagGroupTitle($index)" data-ng-blur="changeTagGroupTitle($index)">
+        </div>
         <div class="error-circle fa-exclamation-circle" data-ng-hide="tagGroup.isValid"
             data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
             data-title="{{ tagGroup.isValidMessage }}"></div>
         &nbsp;
     </div>
-    <button data-ng-hide="createMode || taggingMode || formField.$error.unique || formField.$error.blankTitle" class="btn btn-default btn-add-group" type="button" data-ng-click="enterCreateMode()" data-swap-text="Add New Tag Group">Add Groups &amp; Tags</button>
+    <button data-ng-hide="createMode || taggingMode || formField.$error.unique || formField.$error.blankTitle" class="btn btn-sm btn-default btn-add-group" type="button" data-ng-click="enterCreateMode()" data-swap-text="Add New Tag Group">Add Groups &amp; Tags</button>
     <div class="tag-group-create form-inline" data-ng-show="createMode">
-        <div class="input-group">
-            <input type="text" class="form-control" data-ng-model="newTagGroupTitle" data-focus-on="createMode" data-ng-enter="newTagGroup()" data-ng-blur="newTagGroup()">
-            <div class="input-group-addon btn" data-ng-click="exitCreateMode()"><span data-ng-click="exitCreateMode()" class="icon-delete"></span></div>
+        <div class="form-group">
+            <input type="text" class="form-control input-sm" data-ng-model="newTagGroupTitle" data-focus-on="createMode" data-ng-enter="newTagGroup()" data-ng-blur="newTagGroup()">
+            <div class="btn btn-sm btn-icon" data-ng-click="exitCreateMode()"><span data-ng-click="exitCreateMode()" class="icon-delete icon-size-lg"></span></div>
         </div>
     </div>

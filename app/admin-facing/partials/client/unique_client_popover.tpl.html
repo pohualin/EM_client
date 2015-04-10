@@ -1,12 +1,11 @@
-<div class="row popover-text">
-    <div class="col-md-12">
-        <table border="0" cellpadding="0" cellspacing="0">
+<div class="popover-text">
+        <table border="0" cellpadding="0" cellspacing="0" class="table table-condensed">
             <tr>
-                <td><span data-translate="client_edit_page.unique_popup_dialog.name"></span></td>
-                <td>{{existsClient.entity.name}}</td>
+                <td><strong><span data-translate="client_edit_page.unique_popup_dialog.name"></span></strong></td>
+                <td><a href="#/clients/{{existsClient.entity.id}}">{{existsClient.entity.name}}</a></td>
             </tr>
             <tr>
-                <td><span data-translate="client_edit_page.unique_popup_dialog.city"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td><strong><span data-translate="client_edit_page.unique_popup_dialog.city"></span></strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                 <td>
                     {{existsClient.entity.salesForceAccount.city}}<span
                         data-ng-show="existsClient.entity.salesForceAccount.city && existsClient.entity.salesForceAccount.state">,&nbsp;</span>{{
@@ -14,12 +13,6 @@
                 </td>
             </tr>
         </table>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <a class="pull-right" href="#/clients/{{existsClient.entity.id}}">view </a>
-    </div>
 </div>
 
 

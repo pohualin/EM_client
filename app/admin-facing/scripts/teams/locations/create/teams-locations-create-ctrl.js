@@ -35,12 +35,12 @@ angular.module('emmiManager')
 
                         $scope.$hide();
                         $scope.refresh();
-                        var container = '#remove-container';
+                        var container = '#messages-container';
                         var locationResource = location.data.location;
 
                         if (addAnother) {
-                            $scope.addLocations();
-                            container = '#message-container';
+                            $scope.addLocations(true);
+                            container = '#modal-messages-container';
                         }
 
                         $alert({

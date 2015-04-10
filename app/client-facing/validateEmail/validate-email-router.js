@@ -45,6 +45,13 @@ angular.module('emmiManager')
                         return deferred.promise;
                     }]
                 }
+            })
+            .when('/credentials/validateEmail/failure', {
+                templateUrl: 'client-facing/validateEmail/validate_email_failed.html',
+                title: 'Please Contact Support',
+                access: {
+                    authorizedRoles: '*'
+                }
             });
     })
 ;

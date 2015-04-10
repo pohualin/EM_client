@@ -33,7 +33,7 @@ angular.module('emmiManager')
                 $alert({
                     title: ' ',
                     content: 'The provider <b>' + name + '</b> has been successfully removed.',
-                    container: 'body',
+                    container: '#messages-container',
                     type: 'success',
                     placement: 'top',
                     show: true,

@@ -5,7 +5,7 @@
         </div>
         <div class="modal-body">
             <div class="row" data-ng-show="providerForm.$invalid">
-                <div class="col-md-12" id="message-container"></div>
+                <div class="col-md-12" id="modal-messages-container"></div>
             </div>
             <div class="row">
                 <div class="col-md-4">
@@ -26,7 +26,6 @@
                                data-ng-pattern="/^[a-zA-Z '-]*$/">
                     </div>
                 </div>
-
                 <div class="col-md-4">
                     <div class="form-group"
                          data-ng-class="{ 'has-error' : providerForm.providerMiddleName.$invalid && providerFormSubmitted }">
@@ -41,7 +40,6 @@
                                data-ng-pattern="/^[a-zA-Z '-]*$/">
                     </div>
                 </div>
-
                 <div class="col-md-4">
                     <div class="form-group"
                          data-ng-class="{ 'has-error' : providerForm.providerLastName.$invalid && providerFormSubmitted }">
@@ -108,13 +106,12 @@
                 </div>
             </div>
         </div>
-
         <div class="modal-footer">
-            <button type="button" class="btn btn-link" data-ng-click="cancelProviderSave();$hide()">cancel</button>
+            <button type="button" class="btn btn-cancel" data-ng-click="cancelProviderSave();$hide()">cancel</button>
             <button type="button" class="btn btn-default" data-ng-show="saveAndAddAnother"
-                    data-ng-click="saveAndAddAnother(providerForm.$valid)">Save & Add Another
+                    data-ng-click="saveAndAddAnother(providerForm.$valid)"><i class="icon-plus"></i> Save & Add Another
             </button>
-            <input type="submit" id="submit" class="btn btn-primary" value="Save" data-client-provider-deactivate-warning/>
+            <input type="submit" id="submit" class="btn btn-success" value="Save" data-client-provider-deactivate-warning/>
         </div>
     </div>
 </form>

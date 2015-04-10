@@ -214,5 +214,6 @@ angular.module('emmiManager')
     	});
         $scope.teamClientLocations = {};
         $scope.cleanSearch();
+        $scope.tabs = TeamSearchLocation.setAllTabs($scope.addAnother);
     })
 ;
