@@ -56,7 +56,7 @@ angular.module('emmiManager', [
     })
 
     .config(
-        function ($provide, $httpProvider, $translateProvider, tmhDynamicLocaleProvider, HateoasInterceptorProvider, $datepickerProvider, API, unsavedWarningsConfigProvider) {
+        function ($provide, $httpProvider, $translateProvider, tmhDynamicLocaleProvider, HateoasInterceptorProvider, $datepickerProvider, $alertProvider, API, unsavedWarningsConfigProvider) {
 
         // Initialize angular-translate
         $translateProvider.useUrlLoader(API.messages);
@@ -96,6 +96,12 @@ angular.module('emmiManager', [
             dateType: 'string',
             iconLeft: 'fa-angle-left',
             iconRight: 'fa-angle-right'
+        });
+
+        // custom global angularstrap configurations
+        angular.extend($alertProvider.defaults, {
+            animation: 'am-fade-and-slide-top',
+            template: 'admin-facing/partials/common/directives/alert/alert.tpl.html'
         });
 
         // extend ivh.treeview ivhTreeviewCheckbox directive so we can skin the checkboxes (EM-1046)

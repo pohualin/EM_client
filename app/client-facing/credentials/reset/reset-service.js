@@ -20,21 +20,36 @@ angular.module('emmiManager')
                 },
 
                 /**
-                 * Calls the backend reset password on the API
+                 * Calls the back end reset password on the API
                  *
                  * @param resetToken the user's temporary reset token
-                 * @param newPassword the new password object (same as createChangeHolder object)
+                 * @param newPassword the new password object 
+                 * @param userClientSecretQuestionResponse user enter security responses
                  * @returns the promise
                  */
-                reset: function (resetToken, newPassword) {
-                    return $http.put(UriTemplate.create(api.resetPassword).stringify(), {
+                reset: function (resetToken, newPassword, userClientSecretQuestionResponse) {
+                	return $http.put(UriTemplate.create(api.resetPassword).stringify(), {
                         resetToken: resetToken,
-                        newPassword: newPassword.password
+                        newPassword: newPassword.password,
+                        userClientSecretQuestionResponse: userClientSecretQuestionResponse
                     })
-                        .success(function (response) {
-                            return response;
+                    .success(function (response) {
+                        return response;
+                    });
+                },
+                
+                /**
+                 * Calls the back end to locked out a user with reset password token 
+                 * @param resetToken
+                 * @returns userClient
+                 */
+                lockedOutUserByResetToken: function(resetToken) {
+                	return $http.put(UriTemplate.create(api.lockedOutUserByResetToken).stringify({token: resetToken}))
+                    		.then(function(response) {
+                    		return response;
                         });
                 },
+                
 
                 /**
                  * Loads the password policy for the token

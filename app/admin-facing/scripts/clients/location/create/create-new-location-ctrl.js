@@ -32,7 +32,7 @@ angular.module('emmiManager')
                         $alert({
                             title: ' ',
                             content: 'The location <b>' + locationResource.entity.name + '</b> has been successfully created.',
-                            container: '#message-container',
+                            container: '#modal-messages-container',
                             type: 'success',
                             show: true,
                             duration: 5,
@@ -42,7 +42,7 @@ angular.module('emmiManager')
                         $alert({
                             title: ' ',
                             content: ' <b>' +locationResource.entity.name + '</b> has been added successfully.',
-                            container: '#remove-container',
+                            container: '#messages-container',
                             type: 'success',
                             placement: 'top',
                             show: true,

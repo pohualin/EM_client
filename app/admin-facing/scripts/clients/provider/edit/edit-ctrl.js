@@ -28,7 +28,7 @@ angular.module('emmiManager')
                         $scope.providerErrorAlert = $alert({
                             title: ' ',
                             content: 'Please correct the below information.',
-                            container: '#message-container',
+                            container: '#modal-messages-container',
                             type: 'danger',
                             show: true,
                             dismissable: false

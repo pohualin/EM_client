@@ -32,7 +32,7 @@ angular.module('emmiManager')
                 $scope.locationErrorAlert = $alert({
                     title: ' ',
                     content: 'Please correct the below information.',
-                    container: '#message-container',
+                    container: '#modal-messages-container',
                     type: 'danger',
                     show: true,
                     dismissable: false

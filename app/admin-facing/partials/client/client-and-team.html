@@ -1,27 +1,31 @@
-<div class="container" data-ng-cloak>
-    <div class="row">
-        <div class="col-md-12">
-            <ol class="breadcrumb h3">
-                <li><a href="#/">Emmi Manager</a></li>
-                <li data-ng-class="{'active': !team.id}"><a data-ng-href="#/clients/{{client.id}}?{{currentRouteQueryString}}"><span data-bs-tooltip="'id: {{client.id}}'" data-placement="right">{{client.name}}</span></a></li>
-                <li data-ng-if="team.id" class="active"><span data-bs-tooltip="'id: {{team.id}}'" data-placement="right">{{team.name}}</span></li>
-            </ol>
-        </div>
+<div class="app-header" data-emmi-navbar></div>
+<nav class="app-breadcrumb">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="#/">Emmi Manager</a></li>
+            <li data-ng-class="{'active': !team.id}"><a data-ng-href="#/clients/{{client.id}}?{{currentRouteQueryString}}"><span data-bs-tooltip="'id: {{client.id}}'" data-placement="right">{{client.name}}</span></a></li>
+            <li data-ng-if="team.id" class="active"><span data-bs-tooltip="'id: {{team.id}}'" data-placement="right">{{team.name}}</span></li>
+        </ol>
     </div>
+</nav>
+<div class="app-content app-content-with-sidebar container" data-ng-cloak>
     <div class="row" data-ng-switch on="showTeam">
-        <div class="col-md-3 teamFilterSideBorder"
+        <div class="sidebar"
              data-ng-include="'admin-facing/partials/client/teamsFilter/teams_filter.html'"></div>
         <!-- Loading state -->
-        <div class="col-md-9" data-ng-switch-when="loading">
-            <p class="text-center"><img src="/images/search_spinner.gif" alt="Loading..."/></p>
+        <div class="main-content" data-ng-switch-when="loading">
+            <div class="layout-card">
+                <p class="text-center"><img src="/images/search_spinner.gif" alt="Loading..."/></p>
+            </div>
         </div>
         <!-- Client View/Edit content -->
-        <div class="col-md-9" data-ng-switch-default>
+        <div class="main-content" data-ng-switch-default>
             <div data-ng-include="'admin-facing/partials/client/edit/editor.html'"></div>
         </div>
         <!-- Original Team Edit (/admin-facing/partials/team/team_edit.html) content -->
-        <div class="col-md-9" ng-switch-when="yes">
+        <div class="main-content" ng-switch-when="yes">
             <div data-ng-include="'admin-facing/partials/team/team_edit.html'"></div>
         </div>
-    </div>
-</div>
+    </div><!-- .row -->
+</div><!-- .container -->
+<footer class="footer" data-ng-include="'admin-facing/partials/common/footer.tpl.html'"></footer>

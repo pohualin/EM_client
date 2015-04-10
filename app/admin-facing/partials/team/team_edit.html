@@ -1,9 +1,7 @@
-<div id="remove-container"></div>
 <div class="row" data-ng-hide="editMode" data-ng-include="'admin-facing/partials/team/team_view.html'"></div>
 <div class="row" data-ng-show="editMode">
     <div class="col-md-12">
-        <div id="alerts-container" data-ng-show="teamForm.$invalid || !teamToSave.salesForceAccount"></div>
-
+        <div id="validation-container" data-ng-show="teamForm.$invalid || !teamToSave.salesForceAccount"></div>
         <div class="pull-right">
             <a class="btn btn-link" data-ng-click="cancel(teamForm)">cancel</a>
             |
@@ -34,5 +32,9 @@
 <hr>
 <a target="schedule_program" href="{{clientBaseUrl}}#/impersonate/{{client.id}}/teams/{{team.id}}/schedule">
     Schedule Program
+</a>
+<hr>
+<a target="create_patient" href="{{clientBaseUrl}}#/impersonate/{{client.id}}/patients">
+    Create Patient
 </a>
 <hr/>

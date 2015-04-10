@@ -86,19 +86,21 @@
                                         <a href="#/clients/{{client.entity.id}}?{{currentRouteQueryString}}"><i class="icon-compose icon-size-xl"></i></a>
                                     </td>
                                 </tr>
+                                <tr class="no-hover">
+                                    <td colspan="5" class="text-center" data-ng-show="links">
+                                        <ul class="pagination">
+                                            <li data-ng-repeat="link in links | orderBy:'order'" class="{{link.className}}" data-ng-class="{'active': link.name == currentPage}">
+                                                <a data-ng-click="fetchPage(link.href)">
+                                                    <i class="fa-angle-left" data-ng-if="link.className === 'previous'"></i>
+                                                    {{link.name}}
+                                                    <i class="fa-angle-right" data-ng-if="link.className === 'next'"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
-                        <div class="row" data-ng-show="clients">
-                            <div data-ng-show="links" class="col-md-8 col-sm-8">
-                                <ul class="pagination">
-                                    <li data-ng-repeat="link in links | orderBy:'order'" data-ng-class="{'active': link.name == currentPage}">
-                                        <a data-ng-show="link.name != currentPage" href
-                                           data-ng-click="fetchPage(link.href)">{{link.name}}</a>
-                                        <span data-ng-hide="link.name != currentPage">{{link.name}}</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
                         <div data-ng-hide="clients">
                             <span data-translate="global.messages.search.no_results_found"></span>
                         </div>
@@ -108,4 +110,4 @@
         </div><!-- .col-md-12 -->
     </div><!-- .row -->
 </div><!-- .container -->
-<footer class="footer" data-ng-include="'/admin-facing/partials/common/footer.tpl.html'"></footer>
+<footer class="footer" data-ng-include="'admin-facing/partials/common/footer.tpl.html'"></footer>

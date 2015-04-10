@@ -29,7 +29,7 @@ angular.module('emmiManager')
                         $scope.performSearch();
 
                         var providerResource = provider.data.provider,
-                            providerName = providerResource.entity.firstName + ' ' + providerResource.entity.lastName;
+                            providerName = providerResource.entity.firstName + ' ' + providerResource.entity.middleName + ' ' + providerResource.entity.lastName;
 
                         $scope.hideNewProviderModal();
                         if (addAnother) {
@@ -37,7 +37,7 @@ angular.module('emmiManager')
                             $alert({
                                 title: ' ',
                                 content: 'The provider <b>' + providerName + '</b> has been successfully created.',
-                                container: '#message-container',
+                                container: '#modal-messages-container',
                                 type: 'success',
                                 show: true,
                                 duration: 5,
@@ -47,7 +47,7 @@ angular.module('emmiManager')
                             $alert({
                                 title: ' ',
                                 content: ' <b>' + providerName + '</b> has been added successfully.',
-                                container: 'body',
+                                container: '#messages-container',
                                 type: 'success',
                                 placement: 'top',
                                 show: true,
@@ -62,7 +62,7 @@ angular.module('emmiManager')
                         $scope.providerErrorAlert = $alert({
                             title: ' ',
                             content: 'Please correct the below information.',
-                            container: '#message-container',
+                            container: '#modal-messages-container',
                             type: 'danger',
                             show: true,
                             dismissable: false

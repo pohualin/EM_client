@@ -54,7 +54,7 @@ angular.module('emmiManager')
             $alert({
                 title: ' ',
                 content: 'The location <b>' + locationResource.location.entity.name + '</b> has been successfully removed.',
-                container: '#remove-container',
+                container: '#messages-container',
                 type: 'success',
                 placement: 'top',
                 show: true,

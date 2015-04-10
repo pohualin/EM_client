@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  * This manages interactions when a user clicks an activation link
  */
-    .controller('ResetClientUserPasswordController', ['$scope', '$location', 'ResetClientUserPasswordService', 'resetToken', '$alert',
-        function ($scope, $location, ResetClientUserPasswordService, resetToken, $alert) {
+    .controller('ResetClientUserPasswordController', ['$scope', '$location', 'ResetClientUserPasswordService', 'resetToken', 'securityQuestions', 'SecretQuestionService', '$alert',
+        function ($scope, $location, ResetClientUserPasswordService, resetToken, securityQuestions, SecretQuestionService, $alert) {
 
             $scope.passwordChange = ResetClientUserPasswordService.createNewPasswordHolder();
             $scope.changePasswordFormSubmitted = false;
@@ -36,8 +36,9 @@ angular.module('emmiManager')
                 changePasswordForm.password.$setValidity('policy', true);
                 changePasswordForm.password.$setValidity('history', true);
                 if (changePasswordForm.$valid) {
-                    ResetClientUserPasswordService.reset(resetToken, $scope.passwordChange)
+                    ResetClientUserPasswordService.reset(resetToken, $scope.passwordChange, securityQuestions)
                         .then(function () {
+                        	SecretQuestionService.setUserInputSecurityResponses(null);
                             $alert({
                                 content: 'Your password has been reset. Please login.',
                                 type: 'success',
@@ -56,6 +57,9 @@ angular.module('emmiManager')
                                         changePasswordForm.password.$setValidity('history', false);
                                     }
                                 });
+                            } 
+                            else if (errorResponse.status === 403) {
+                            	$location.path('/credentials/reset/failure').replace();
                             } else {
                                 $location.path('/credentials/reset/failure').replace();
                             }

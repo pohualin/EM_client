@@ -29,7 +29,7 @@ angular.module('emmiManager')
                     delete tag.text;
                     delete tag.group;
                 });
-                $http.post(UriTemplate.create(teamResource.link.tags).stringify(), tagsCopy).
+                return $http.post(UriTemplate.create(teamResource.link.tags).stringify(), tagsCopy).
                     then(function (response) {
                         return response;
                     });
@@ -39,6 +39,25 @@ angular.module('emmiManager')
                     then(function (response) {
                         return response;
                     });
+            },
+            isExistingTagRemoved: function(existingTags, updatedTags){
+                var deferred = $q.defer();
+                var updatedTagIds = [];
+                var isRemove = false;
+                angular.forEach(updatedTags, function(tag){
+                    if(tag.id){
+                        updatedTagIds.push(tag.id);
+                    }
+                });
+                
+                angular.forEach(existingTags, function(tag){
+                    if(updatedTagIds.indexOf(tag.id) === -1){
+                        isRemove = true;
+                    }
+                });
+                
+                deferred.resolve(isRemove);
+                return deferred.promise;
             }
         };
     })

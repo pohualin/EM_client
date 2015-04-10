@@ -49,7 +49,7 @@ angular.module('emmiManager')
                         $scope.formValidationError();
                     }
                 }
-                
+
                 if (error.status === 406 && error.data && error.data.validationError) {
                     EmailRestrictConfigurationsService.allValidEmailEndings().then(function(response){
                         error.data.validationError.validEmailEndings = response;
@@ -67,7 +67,7 @@ angular.module('emmiManager')
                     $scope.errorAlert = $alert({
                         title: ' ',
                         content: 'Please correct the below information.',
-                        container: '#message-container',
+                        container: '#validation-container',
                         type: 'danger',
                         show: true,
                         dismissable: false

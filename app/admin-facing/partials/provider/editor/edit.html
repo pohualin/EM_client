@@ -1,7 +1,9 @@
 <form name="providerForm" class="form" novalidate unsaved-warning-form>
     <div class="col-md-12">
-        <div class="row" data-ng-show="providerForm.$invalid">
-            <div class="col-md-12" id="message-container"></div>
+        <div id="validation-container" data-ng-show="providerForm.$invalid && providerFormSubmitted">
+            <div class="alert alert-danger">
+                Please correct the below information.
+            </div>
         </div>
         <div class="row">
             <div class="col-md-6 pull-left">
