@@ -1,0 +1,61 @@
+		<div class="col-md-12" data-ng-controller="ProviderListController">
+            <div class="pull-right">
+                <button type="button" class="btn btn-link btn-link-nopad" data-ng-click="addProviders()"><i class="icon-plus"></i>  add providers</button>
+            </div>
+		    <h2>Providers</h2>
+			<table class="table table-bordered table-striped table-hover" border="0" cellpadding="0" data-ng-show="listOfTeamProviders.length > 0">
+                <thead>
+				<tr>
+					<th class="col-sm-2">Name </th>
+					<th class="col-sm-2">Primary Specialty </th>
+					<th class="col-sm-3">Email </th>
+					<th class="col-md-2"><div data-ng-show="allTeamLocations.length > 0" >Locations</div></th>
+		            <th class="col-sm-2 text-center">Edit</th>
+				</tr>
+                </thead>
+                <tbody>
+				<tr data-ng-repeat="teamProvider in listOfTeamProviders">
+			    	<td>{{teamProvider.entity.provider.firstName}} {{teamProvider.entity.provider.lastName}} <em>{{teamProvider.entity.provider.active ? '' : "(inactive)"}}</em></td>
+			    	<td>{{teamProvider.entity.provider.specialty.name}}</td>
+			    	<td>{{teamProvider.entity.provider.email}}</td>
+			    	<td>
+                        <div data-ng-show="allTeamLocations.length > 0">
+    						<div data-placement="top" class="pointer" data-ng-show="teamProvider.entity.locations && teamProvider.entity.locations.length > locationsColumnCharLimit" data-content=" {{teamProvider.entity.locations}} " data-trigger="hover" data-delay="200" data-bs-popover data-popover-dismiss>
+                            	{{teamProvider.entity.locations | characters:locationsColumnCharLimit }}
+    						</div>
+    						<div data-placement="top" class="pointer" data-ng-show="teamProvider.entity.locations && teamProvider.entity.locations.length < locationsColumnCharLimit" >
+                            	{{teamProvider.entity.locations | characters:locationsColumnCharLimit }}
+    						</div>
+    						<div data-placement="top" class="pointer" data-ng-show="!teamProvider.entity.locations && allLocationsForTeam.length > locationsColumnCharLimit" data-content="{{allLocationsForTeam}}" data-trigger="hover" data-delay="200" data-bs-popover data-popover-dismiss>
+                            	{{allLocationsForTeam | characters:locationsColumnCharLimit }}
+    						</div>
+    						<div data-placement="top" class="pointer" data-ng-show="!teamProvider.entity.locations && allLocationsForTeam.length < locationsColumnCharLimit">
+                            	{{allLocationsForTeam | characters:locationsColumnCharLimit }}
+    						</div>
+                        </div>
+            		</td>
+					<td class="text-center">
+                		<a href data-ng-click="editProvider(teamProvider)"><i class="icon-compose icon-size-xl"></i></a>
+                        <a href data-ng-click="removeProvider(teamProvider)"><i class="icon-trashcan icon-size-xl"></i></a>
+            		</td>
+			    </tr>
+                <tr class="no-hover">
+                    <td colspan="5" class="text-center" data-ng-show="links">
+                        <ul class="pagination">
+                            <li data-ng-repeat="link in links | orderBy:'order'" class="{{link.className}}" data-ng-class="{'active': link.name == currentPage}">
+                                <a data-ng-click="fetchPage(link.href)">
+                                    <i class="fa-angle-left" data-ng-if="link.className === 'previous'"></i>
+                                    {{link.name}}
+                                    <i class="fa-angle-right" data-ng-if="link.className === 'next'"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+                </tbody>
+			</table>
+            <div data-ng-hide="listOfTeamProviders.length > 0">
+                <span>There are no existing providers<span data-ng-show="team.name">&nbsp;for {{team.name}}</span>.</span>
+            </div>
+		</div>
+	</div>
