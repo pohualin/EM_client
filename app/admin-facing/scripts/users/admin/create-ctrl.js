@@ -40,6 +40,7 @@ angular.module('emmiManager')
                         }
                         $alert({
                             content: 'User <b>' + response.data.login + '</b> has been successfully created.',
+                            container: '#messages-container',
                             type: 'success',
                             placement: 'top',
                             show: true,
@@ -66,7 +67,7 @@ angular.module('emmiManager')
                                 $scope.errorAlert = $alert({
                                     title: ' ',
                                     content: 'Please correct the below information.',
-                                    container: '#message-container',
+                                    container: '#validation-container',
                                     type: 'danger',
                                     show: true,
                                     dismissable: false
@@ -79,7 +80,7 @@ angular.module('emmiManager')
                         $scope.errorAlert = $alert({
                             title: ' ',
                             content: 'Please correct the below information.',
-                            container: '#message-container',
+                            container: '#validation-container',
                             type: 'danger',
                             show: true,
                             dismissable: false

@@ -78,7 +78,7 @@ angular.module('emmiManager')
 		};
 
 		// when a pagination link is used
-        $scope.fetchPaginationLink = function (href) {
+        $scope.fetchPage = function (href) {
             $scope.loading = true;
             ProviderView.fetchPageLink(href).then(function (page) {
         		$scope.handleResponse(page, 'listOfTeamProviders');
@@ -93,8 +93,8 @@ angular.module('emmiManager')
                 $scope.refreshLocationsAndProviders();
                 $alert({
                     title: ' ',
-                    content: 'The provider <b>' + provider.entity.provider.firstName + ' ' + provider.entity.provider.lastName + '</b> has been successfully removed.',
-                    container: 'body',
+                    content: 'The provider <b>' + provider.entity.provider.firstName + ' ' + provider.entity.provider.middleName + ' ' + provider.entity.provider.lastName + '</b> has been successfully removed.',
+                    container: '#messages-container',
                     type: 'success',
                     placement: 'top',
                     show: true,
@@ -287,7 +287,7 @@ angular.module('emmiManager')
 
 		        	ProviderSearch.updateProviderTeamAssociations($scope.teamProviderTeamLocationSaveRequest, $scope.teamResource).then(function (response) {
 		        		$scope.refreshLocationsAndProviders();
-		        		var message = $scope.teamProviderTeamLocationSaveRequest.length > 1 ? 'The selected providers have been successfully added.' : 'The provider <b>'+ $scope.teamProviderTeamLocationSaveRequest[0].provider.firstName + ' ' + $scope.teamProviderTeamLocationSaveRequest[0].provider.lastName +'</b> has been successfully added.';
+		        		var message = $scope.teamProviderTeamLocationSaveRequest.length > 1 ? 'The selected providers have been successfully added.' : 'The provider <b>'+ $scope.teamProviderTeamLocationSaveRequest[0].provider.firstName + ' ' + $scope.teamProviderTeamLocationSaveRequest[0].provider.middleName + ' ' + $scope.teamProviderTeamLocationSaveRequest[0].provider.lastName +'</b> has been successfully added.';
 
 	                    $scope.hideaddprovidermodal();
 
@@ -297,7 +297,7 @@ angular.module('emmiManager')
 		        		$alert({
 							title: ' ',
 							content: message,
-							container: 'body',
+							container: '#messages-container',
 							type: 'success',
 							placement: 'top',
 						    show: true,
@@ -355,8 +355,8 @@ angular.module('emmiManager')
                     }
 	                $alert({
 						title: ' ',
-						content: 'The provider <b>'+ response.data.entity.firstName + ' ' + response.data.entity.lastName +'</b> has been successfully added.',
-						container: 'body',
+						content: 'The provider <b>'+ response.data.entity.firstName + ' ' + response.data.entity.middleName + ' ' + response.data.entity.lastName +'</b> has been successfully added.',
+						container: '#messages-container',
 						type: 'success',
 						placement: 'top',
 					    show: true,

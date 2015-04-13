@@ -5,7 +5,7 @@
         </div>
         <div class="modal-body">
             <div class="row" data-ng-show="providerForm.$invalid || selectedItems < 1 ">
-                <div class="col-md-12" id="message-container"></div>
+                <div class="col-md-12" id="modal-messages-container"></div>
             </div>
             <div class="row">
                 <div class="col-md-4">
@@ -86,8 +86,6 @@
                                maxlength="255" data-ng-pattern="emailPattern" />
                     </div>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-md-4" data-ng-show="potentialLocations.length > 0">
                     <div class="form-group"
                          data-ng-class="{ 'has-error' : selectedItems < 1 && providerFormSubmitted}">
@@ -99,13 +97,15 @@
                              data-title="At least one location is required"></div>
                         <input data-multi-select
                                values="multiSelectData"
-				            model="selectedItems"
-				            show-filters="true"
-				            value-field="id"
-				            label-field="label"
+                            model="selectedItems"
+                            show-filters="true"
+                            value-field="id"
+                            label-field="label"
                                template-path="admin-facing/partials/common/directives/multi-select/multi-select.html"/>
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-md-4" data-ng-show = "clientProvider">
                     <div class="form-group"
                          data-ng-class="{ 'has-error' : providerForm.providerId.$invalid && providerFormSubmitted }">
@@ -115,24 +115,22 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="pull-right">
-                        <div class="checkbox">
-                            <input id="providerActive" type="checkbox" data-ng-model="clientProvider.provider.entity.active"/>
-                            <label for="providerActive">
-                                Active
-                            </label>
-                        </div>
+                    <label>&nbsp;</label><!-- for spacing purposes -->
+                    <div class="checkbox">
+                        <input id="providerActive" type="checkbox" data-ng-model="clientProvider.provider.entity.active"/>
+                        <label for="providerActive">
+                            Active
+                        </label>
                     </div>
                 </div>
             </div>
         </div>
-
         <div class="modal-footer">
-            <button type="button" class="btn btn-link" data-ng-click="cancelProviderSave();$hide()">cancel</button>
+            <button type="button" class="btn btn-cancel" data-ng-click="cancelProviderSave();$hide()">cancel</button>
             <button type="button" class="btn btn-default" data-ng-show="saveAndAddAnother"
                     data-ng-click="saveAndAddAnother(providerForm.$valid)">Save & Add Another
             </button>
-            <input type="submit" id="submit" class="btn btn-primary" value="Save" data-client-provider-deactivate-warning/>
+            <button type="submit" id="submit" class="btn btn-success" data-client-provider-deactivate-warning>Save</button>
         </div>
     </div>
 </form>

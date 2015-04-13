@@ -1,42 +1,40 @@
-<div id="remove-container"></div>
-<div class="row" data-ng-hide="editMode" data-ng-include="'admin-facing/partials/team/team_view.html'"></div>
-<div class="row" data-ng-show="editMode">
-    <div class="col-md-12">
-        <div id="alerts-container" data-ng-show="teamForm.$invalid || !teamToSave.salesForceAccount"></div>
-
-        <div class="pull-right">
-            <a class="btn btn-link" data-ng-click="cancel(teamForm)">cancel</a>
-            |
-            <a class="btn btn-link" type="button"
-               data-on-ok="save(teamForm)" data-team-entity="teamToSave"
-               data-team-edit-save data-checking-for-dupes="checkingForDupes"
-               data-placement="bottom"
-               data-ng-disabled="teamForm.teamName.$error.unique">
-                <span>save edits</span>
-            </a>
+<div class="layout-card">
+    <div class="row" data-ng-hide="editMode" data-ng-include="'admin-facing/partials/team/team_view.html'"></div>
+    <div class="row" data-ng-show="editMode">
+        <div class="col-md-12">
+            <div id="validation-container" data-ng-show="teamForm.$invalid || !teamToSave.salesForceAccount"></div>
+            <form name="teamForm" class="form" novalidate unsaved-warning-form>
+                <div data-ng-include="'admin-facing/partials/team/team_form.html'"></div>
+                <div class="pull-right">
+                    <button class="btn btn-cancel" data-ng-click="cancel(teamForm)">cancel</button>
+                    <button class="btn btn-success" type="button"
+                       data-on-ok="save(teamForm)" data-team-entity="teamToSave"
+                       data-team-edit-save data-checking-for-dupes="checkingForDupes"
+                       data-placement="bottom"
+                       data-ng-disabled="teamForm.teamName.$error.unique">
+                        <span>save edits</span>
+                    </button>
+                </div>
+            </form>
         </div>
-        <h2 data-translate="team_edit_page.information.title">Team Information</h2>
-
-        <form name="teamForm" class="form" novalidate unsaved-warning-form>
-            <div data-ng-include="'admin-facing/partials/team/team_form.html'"></div>
-        </form>
     </div>
 </div>
-<hr>
-<div class="row" data-ng-include="'admin-facing/partials/team/tags/team_tags.html'"
-     data-ng-class="{'masked': teamForm.teamName.$error.unique || editMode}"></div>
-<hr>
-<div class="row" data-ng-include="'admin-facing/partials/team/location/team_current.html'"
-     data-ng-class="{'masked': teamForm.teamName.$error.unique || editMode}"></div>
-<hr>
-<div class="row" data-ng-include="'admin-facing/partials/team/provider/providersTable_edit.html'"
-     data-ng-class="{'masked': teamForm.teamName.$error.unique || editMode}"></div>
-<hr>
-<a target="schedule_program" href="{{clientBaseUrl}}#/impersonate/{{client.id}}/teams/{{team.id}}/schedule">
-    Schedule Program
-</a>
-<hr>
-<a target="create_patient" href="{{clientBaseUrl}}#/impersonate/{{client.id}}/patients">
-    Create Patient
-</a>
-<hr/>
+<div class="layout-card">
+    <div class="row" data-ng-include="'admin-facing/partials/team/tags/team_tags.html'"
+         data-ng-class="{'masked': teamForm.teamName.$error.unique || editMode}"></div>
+</div>
+<div class="layout-card">
+    <div class="row" data-ng-include="'admin-facing/partials/team/location/team_current.html'"
+         data-ng-class="{'masked': teamForm.teamName.$error.unique || editMode}"></div>
+    <hr>
+    <div class="row" data-ng-include="'admin-facing/partials/team/provider/team_current.html'"
+         data-ng-class="{'masked': teamForm.teamName.$error.unique || editMode}"></div>
+</div>
+<div class="layout-card">
+    <a target="schedule_program" href="{{clientBaseUrl}}#/impersonate/{{client.id}}/teams/{{team.id}}/schedule">
+        Schedule Program
+    </a><br/>
+    <a target="create_patient" href="{{clientBaseUrl}}#/impersonate/{{client.id}}/patients">
+        Create Patient
+    </a>
+</div>

@@ -1,28 +1,25 @@
 <div class="modal" tabindex="-1" role="dialog" data-ng-controller="SearchTeamsLocationsController">
     <div class="modal-dialog modal-dialog-large container-fluid">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-body">
                 <div class="row">
-                    <div class="col-md-1"></div>
-                    <div class="col-md-10" id="message-container"></div>
-                    <div class="col-md-1"></div>
+                    <div class="col-md-10 col-md-offset-1" id="modal-messages-container"></div>
                 </div>
                 <div class="row" >
-                    <div data-bs-active-pane="tabs.activeTab" data-bs-tabs data-ng-show="clientHasLocations()">
-                        <div data-ng-repeat="tab in tabs.data" data-ng-include="tab.template" data-title="{{tab.title}}" data-bs-pane>
-                        </div>
+                    <div class="col-md-12" data-bs-active-pane="tabs.activeTab" data-bs-tabs data-ng-show="clientHasLocations()">
+                        <div data-ng-repeat="tab in tabs.data" data-ng-include="tab.template" data-title="{{tab.title}}" data-bs-pane></div>
                     </div>
-                    <div data-ng-hide="clientHasLocations()">
+                    <div class="col-md-12" data-ng-hide="clientHasLocations()">
                         <div data-ng-include="'admin-facing/partials/team/location/tabs/team-search-all-tab.html'" data-title="Search all locations" ></div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-link" data-ng-click="hidePopupLocations()"><span data-translate="team_locations_search_page.cancel.label"></span></button>
+                <button type="button" class="btn btn-cancel" data-ng-click="hidePopupLocations()"><span data-translate="team_locations_search_page.cancel.label"></span></button>
                 <button type="button" class="btn btn-default" data-ng-show="hasLocationsAdded()"
                         data-ng-click="saveAndAddAnother()"><span data-translate="team_locations_search_page.save_and_other.label"></span>
                 </button>
-                <button type="button" class="btn btn-primary" data-ng-show="hasLocationsAdded()" data-ng-click="savePopupLocations(false)"><span data-translate="team_locations_search_page.save.label"></span>
+                <button type="button" class="btn btn-success" data-ng-show="hasLocationsAdded()" data-ng-click="savePopupLocations(false)"><span data-translate="team_locations_search_page.save.label"></span>
                 </button>
             </div>
         </div>

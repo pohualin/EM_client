@@ -35,7 +35,7 @@ angular.module('emmiManager')
             $alert({
                 title: ' ',
                 content: 'The location <b>' + locationResource.entity.location.name + '</b> has been successfully removed from ' + locationResource.entity.team.name,
-                container: '#remove-container',
+                container: '#messages-container',
                 type: 'success',
                 show: true,
                 duration: 5,
@@ -93,9 +93,9 @@ angular.module('emmiManager')
 
             if (addAnother) {
                 $scope.addLocations(true);
-                $scope.displaySuccessfull(locationsToAdd, '#message-container', addAnother);
+                $scope.displaySuccessfull(locationsToAdd, '#modal-messages-container', addAnother);
             } else {
-                $scope.displaySuccessfull(locationsToAdd, '#remove-container', addAnother);
+                $scope.displaySuccessfull(locationsToAdd, '#messages-container', addAnother);
             }
         };
 
