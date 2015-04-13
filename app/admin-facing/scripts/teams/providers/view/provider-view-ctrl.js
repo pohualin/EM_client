@@ -91,9 +91,11 @@ angular.module('emmiManager')
         $scope.removeProvider = function (provider) {
         	ProviderView.removeProvider(provider, $scope.teamResource).then(function (){
                 $scope.refreshLocationsAndProviders();
+                var middleName = provider.entity.provider.middleName ? provider.entity.provider.middleName : '',
+                name = provider.entity.provider.firstName + ' ' + middleName + ' ' + provider.entity.provider.lastName;
                 $alert({
                     title: ' ',
-                    content: 'The provider <b>' + provider.entity.provider.firstName + ' ' + provider.entity.provider.middleName + ' ' + provider.entity.provider.lastName + '</b> has been successfully removed.',
+                    content: 'The provider <b>' + name + '</b> has been successfully removed.',
                     container: '#messages-container',
                     type: 'success',
                     placement: 'top',
@@ -287,7 +289,13 @@ angular.module('emmiManager')
 
 		        	ProviderSearch.updateProviderTeamAssociations($scope.teamProviderTeamLocationSaveRequest, $scope.teamResource).then(function (response) {
 		        		$scope.refreshLocationsAndProviders();
-		        		var message = $scope.teamProviderTeamLocationSaveRequest.length > 1 ? 'The selected providers have been successfully added.' : 'The provider <b>'+ $scope.teamProviderTeamLocationSaveRequest[0].provider.firstName + ' ' + $scope.teamProviderTeamLocationSaveRequest[0].provider.middleName + ' ' + $scope.teamProviderTeamLocationSaveRequest[0].provider.lastName +'</b> has been successfully added.';
+                        if ($scope.teamProviderTeamLocationSaveRequest.length < 2) {
+                            var providerMiddleName = $scope.teamProviderTeamLocationSaveRequest[0].provider.middleName ? $scope.teamProviderTeamLocationSaveRequest[0].provider.middleName : '',
+                                providerFullName = $scope.teamProviderTeamLocationSaveRequest[0].provider.firstName + ' ' + providerMiddleName + ' ' + $scope.teamProviderTeamLocationSaveRequest[0].provider.lastName,
+                                message = 'The provider <b>'+ providerFullName +'</b> has been successfully added.';
+                        } else {
+                            var message = 'The selected providers have been successfully added.';
+                        }
 
 	                    $scope.hideaddprovidermodal();
 
@@ -353,9 +361,12 @@ angular.module('emmiManager')
                     if (addAnother) {
                         $scope.addProviders();
                     }
+                    var providerMiddleName = response.data.entity.middleName ? response.data.entity.middleName : '',
+                        providerFullName = response.data.entity.firstName + ' ' + providerMiddleName + ' ' + response.data.entity.lastName;
+
 	                $alert({
 						title: ' ',
-						content: 'The provider <b>'+ response.data.entity.firstName + ' ' + response.data.entity.middleName + ' ' + response.data.entity.lastName +'</b> has been successfully added.',
+						content: 'The provider <b>'+ providerFullName +'</b> has been successfully added.',
 						container: '#messages-container',
 						type: 'success',
 						placement: 'top',

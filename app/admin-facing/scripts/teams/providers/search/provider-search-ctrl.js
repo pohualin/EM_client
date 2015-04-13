@@ -1,7 +1,7 @@
 'use strict';
 angular.module('emmiManager')
 
-    .controller('ProviderSearchController', function ($scope, $modal, ProviderView, TeamLocation, TeamProviderService, ProviderSearch, $controller, arrays, ProviderCreate, $alert) {
+    .controller('ProviderSearchController', function ($scope, $modal, ProviderView, TeamLocation, TeamProviderService, ProviderSearch, $controller, arrays, ProviderCreate) {
 
         $controller('CommonPagination', {$scope: $scope});
 
