@@ -51,7 +51,6 @@
                     <div class="form-group"
                          data-ng-class="{ 'has-error' : locationForm.city.$invalid && locationFormSubmitted }">
                         <label class="control-label" for="city">City:</label>
-
                         <div class="error-circle fa-exclamation-circle"
                              data-ng-show="locationForm.city.$error.required && locationFormSubmitted"
                              data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
@@ -70,7 +69,6 @@
                     <div class="form-group"
                          data-ng-class="{ 'has-error' : locationForm.state.$invalid && locationFormSubmitted }">
                         <label class="control-label" for="state">State:</label>
-
                         <div class="error-circle fa-exclamation-circle" data-ng-show="locationForm.state.$invalid && locationFormSubmitted"
                              data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                              data-title="Required"></div>
@@ -81,35 +79,35 @@
                     </div>
                 </div>
             </div>
-			<div class="row">
-	            <div data-ng-show="providersData">
-	                <div class="col-xs-12" data-ng-show="providersData">
-	                    <label class="control-label" for="providers">Add to Providers:</label>
-	                    <div data-multi-select
-	                     values="providersData"
-	                     model="location.providersSelected"
-	                     show-filters="true"
-	                     value-field="id"
-	                     label-field="label"
-	                     template-path = "admin-facing/partials/common/directives/multi-select/multi-select.html" >
-	                     </div>
-	                </div>
-	            </div>
+			<div class="row" data-ng-if="providersData">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label" for="providers">Add to Providers:</label>
+                        <div data-multi-select
+                         name="providersData"
+                         values="providersData"
+                         model="location.providersSelected"
+                         show-filters="true"
+                         value-field="id"
+                         label-field="label"
+                         template-path = "admin-facing/partials/common/directives/multi-select/multi-select.html" >
+                         </div>
+                    </div>
+                </div>
 	        </div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
                         <div class="checkbox">
-                            <label class="sr-only">Belongs To:</label>
+                            <label class="sr-only" for="belongsTo">Belongs To:</label>
                             <input type="checkbox" name="belongsTo" id="belongsTo"
                                    data-ng-model="location.belongsToCheckbox"
                                    data-ng-show="location.belongsToMutable">
-                            <label for="belongsTo"></label>
-                            <span data-ng-show="!location.belongsToMutable && location.belongsTo">Location belongs to {{location.belongsTo.name}}</span>
-                            <span data-ng-show="location.belongsToMutable">Location belongs to
+                            <label for="belongsTo" data-ng-if="!location.belongsToMutable && location.belongsTo">Location belongs to {{location.belongsTo.name}}</label>
+                            <label for="belongsTo" data-ng-if="location.belongsToMutable">Location belongs to
                                 <span data-ng-show="client.entity.name"> {{client.entity.name}}</span>
                                 <span data-ng-hide="client.entity.name"> this client</span>
-                            </span>
+                            </label>
                         </div>
                     </div>
                 </div>
@@ -127,11 +125,11 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-ng-click="$hide()">Cancel</button>
+            <button type="button" class="btn btn-cancel" data-ng-click="$hide()">Cancel</button>
             <button type="button" class="btn btn-default" data-ng-show="saveAndAddAnother"
                     data-ng-click="saveAndAddAnother(locationForm.$valid)">Save & Add Another
             </button>
-            <input type="submit" id="submit" class="btn btn-primary" value="Save"/>
+            <button type="submit" class="btn btn-success">Save</button>
         </div>
     </div>
 </form>

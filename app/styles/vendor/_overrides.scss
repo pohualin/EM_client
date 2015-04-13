@@ -309,3 +309,10 @@ table {
     }
 }
 
+// Bootstrap Additions modal
+.modal.center .modal-dialog {
+    max-width: none;
+}
+.modal.center .modal-dialog-large {
+    width: 85%;
+}

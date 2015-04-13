@@ -78,7 +78,7 @@ angular.module('emmiManager')
 		};
 
 		// when a pagination link is used
-        $scope.fetchPaginationLink = function (href) {
+        $scope.fetchPage = function (href) {
             $scope.loading = true;
             ProviderView.fetchPageLink(href).then(function (page) {
         		$scope.handleResponse(page, 'listOfTeamProviders');
