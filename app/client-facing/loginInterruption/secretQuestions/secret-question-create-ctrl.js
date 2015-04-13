@@ -61,6 +61,16 @@ angular.module('emmiManager')
                     $scope.secretQuestionForm.secretQuestion2.$setValidity('duplicated', true);
                 }
             };
+
+            /**
+             * Called when cancel is clicked.. takes the original
+             * objects and copies them back into the bound objects.
+             */
+            $scope.notNow = function () {
+                SecretQuestionService.notNow($scope.account);
+                $location.path($scope.locationBeforeLogin).replace();
+            };
         }
     ])
 ;
+
