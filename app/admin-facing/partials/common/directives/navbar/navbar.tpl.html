@@ -53,51 +53,54 @@
             </div><!-- /.nav-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
-    <nav class="section-nav section-nav-default">
-        <div class="container">
-            <ul class="section-nav-items">
-                <li class="section-nav-item">
-                    <a href="#" class="section-nav-link">
-                        <i class="icon-calendar"></i>
-                        Schedule
-                    </a>
-                </li>
-                <li class="section-nav-item">
-                    <a href="#" class="section-nav-link">
-                        <i class="icon-group"></i>
-                        Patients
-                    </a>
-                </li>
-                <li class="section-nav-item">
-                    <a href="#" class="section-nav-link">
-                        <i class="icon-bar-chart"></i>
-                        Reports
-                    </a>
-                </li>
-                <li class="section-nav-item">
-                    <a href="#" class="section-nav-link">
-                        <i class="icon-info-circle"></i>
-                        Help
-                    </a>
-                </li>
-                <li class="section-nav-item">
-                    <a href="#" class="section-nav-link">
-                        <i class="icon-settings"></i>
-                        Settings
-                    </a>
-                </li>
-            </ul>
-            <div class="section-nav-search">
-                <form class="form" role="form">
-                    <div class="form-group">
-                        <div class="has-input-icon has-input-icon-search">
-                            <input type="text" class="form-control" placeholder="Search by Last Name or Access Code">
-                            <span class="input-icon"><i class="icon-search"></i></span>
+    <div class="sliding-nav" data-headroom data-offset="54" data-tolerance="{up:10,down:5}">
+        <nav class="section-nav section-nav-default">
+            <div class="container">
+                <ul class="section-nav-items">
+                    <li class="section-nav-item">
+                        <a href="#" class="section-nav-link">
+                            <i class="icon-calendar"></i>
+                            Schedule
+                        </a>
+                    </li>
+                    <li class="section-nav-item">
+                        <a href="#" class="section-nav-link">
+                            <i class="icon-group"></i>
+                            Patients
+                        </a>
+                    </li>
+                    <li class="section-nav-item">
+                        <a href="#" class="section-nav-link">
+                            <i class="icon-bar-chart"></i>
+                            Reports
+                        </a>
+                    </li>
+                    <li class="section-nav-item">
+                        <a href="#" class="section-nav-link">
+                            <i class="icon-info-circle"></i>
+                            Help
+                        </a>
+                    </li>
+                    <li class="section-nav-item">
+                        <a href="#" class="section-nav-link">
+                            <i class="icon-settings"></i>
+                            Settings
+                        </a>
+                    </li>
+                </ul>
+                <div class="section-nav-search">
+                    <form class="form" role="form">
+                        <div class="form-group">
+                            <div class="has-input-icon has-input-icon-search">
+                                <input type="text" class="form-control" placeholder="Search by Last Name or Access Code">
+                                <span class="input-icon"><i class="icon-search"></i></span>
+                            </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
-        </div>
-    </nav>
+        </nav>
+        <nav class="app-breadcrumb"><div class="container" data-ng-transclude></div></nav>
+    </div>
     <!-- Our global messages container to hold all fixed positioned alerts -->
     <div id="messages-container" class="global-messages-container"></div>
