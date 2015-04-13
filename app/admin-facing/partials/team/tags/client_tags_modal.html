@@ -1,36 +1,29 @@
 <div class="modal" tabindex="-1" role="dialog">
-    <form name="clientForm" class="form ng-pristine ng-valid modal-dialog modal-dialog-large"
+    <div class="modal-dialog modal-dialog-large">
+        <div class="modal-content">
+            <form name="clientForm" class="form"
           data-ng-controller="ClientTagsController" novalidate="">
-
-        <div class="col-md-12 modal-content">
-            <div class="row">
-                <div class="col-md-6 pull-left">
-                    <h2 data-translate="team_edit.client_tags.modal_title">
-                    </h2>
+                <div class="modal-header">
+                    <h4 data-translate="team_edit.client_tags.modal_title"></h4>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
+                <div class="modal-body">
                     <span data-tag-groups data-ng-model="client.tagGroups" data-library-groups="tagLibraryMap"
                           data-name="clientTagGroups" data-form-field="clientForm.clientTagGroups"
                           data-tagging-mode="tagInputMode" data-ng-change="tagsChanged"></span>
                     <span data-ng-hide="tagInputMode || clientForm.clientTagGroups.$error.unique || clientForm.clientTagGroups.$error.blankTitle">
-                        <small data-translate="team_edit.client_tags.modal_or">&nbsp;&nbsp;&nbsp;</small>
-                        <button class="btn btn-link btn-tag-library" type="button" title="Select groups to add:"
-                                data-placement="bottom" data-content-template="admin-facing/partials/client/tags/tag_library.html"
+                        &nbsp;&nbsp;&nbsp;<small data-translate="team_edit.client_tags.modal_or">or</small>
+                        <button class="btn btn-link btn-sm btn-tag-library" type="button" title="Select groups to add:"
+                                data-placement="top" data-content-template="admin-facing/partials/client/tags/tag_library.html"
                                 data-trigger="click" data-bs-popover data-popover-dismiss
                                 data-translate="team_edit.client_tags.modal_add_from_library">
                         </button>
                     </span>
                 </div>
-            </div>
-
-            <div class="modal-footer row">
-                <div class="col-md-12">
+                <div class="modal-footer">
                     <div class="pull-right">
                         <div class="form-group">
-                            <button class="btn btn-link" data-ng-click="hideClientTags()" data-ng-hide="hideCancelButton">cancel</button>
-                            <button class="btn btn-primary" type="button"
+                            <button class="btn btn-cancel" data-ng-click="hideClientTags()" data-ng-hide="hideCancelButton">cancel</button>
+                            <button class="btn btn-success" type="button"
                                     data-ng-click="checkForConflicts(clientForm.$valid);"
                                     data-ng-disabled="!clientForm.$valid || !clientTagsHaveChanges"
                                     data-popover-dismiss
@@ -39,7 +32,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
-    </form>
+    </div>
 </div>

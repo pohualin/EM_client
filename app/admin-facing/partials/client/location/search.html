@@ -7,7 +7,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-9">
-                        <form name="searchForm" ng-submit="search(searchForm.locationQuery.$valid)" novalidate>
+                        <form name="searchForm" data-ng-submit="search(searchForm.locationQuery.$valid)" novalidate>
                             <div class="form-group">
                                 <label class="sr-only" for="locationQuery">Search locations:</label>
                                 <div class="input-group has-input-icon has-input-icon-search">
@@ -34,7 +34,7 @@
             <div class="modal-body" data-ng-show="searchPerformed">
                 <div>
                     <div class="row" data-ng-hide="removeStatusFilterAndTotal">
-                        <div class="col-md-12 col-sm-12">
+                        <div class="col-md-12">
                             <div class="pull-right">
                                 {{total}}
                                 <span data-ng-show="total != 1" data-translate="global.labels.total"> results</span>
@@ -56,7 +56,7 @@
                     <br/>
 
                     <div class="row">
-                        <div class="col-md-12 col-sm-12">
+                        <div class="col-md-12">
                             <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0"
                                    cellspacing="0"
                                    data-ng-show="locations">

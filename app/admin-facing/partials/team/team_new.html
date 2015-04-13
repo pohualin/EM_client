@@ -1,31 +1,33 @@
+<div class="app-header" data-emmi-navbar></div>
+<nav class="app-breadcrumb">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="#/">Emmi Manager</a></li>
+            <li><a href="#/clients/{{teamClientResource.clientResource.entity.id}}">{{teamClientResource.clientResource.entity.name}}</a></li>
+            <li class="active"><span data-translate="team_edit_page.new.title">New</span> Team</li>
+        </ol>
+    </div>
+</nav>
 <div class="container" data-ng-cloak>
     <div class="row">
         <div class="col-md-12">
-            <ol class="breadcrumb h3">
-                <li><a href="#/">Emmi Manager</a></li>
-                <li><a href="#/clients/{{teamClientResource.clientResource.entity.id}}">{{teamClientResource.clientResource.entity.name}}</a></li>
-                <li class="active"><span data-translate="team_edit_page.new.title">New</span> Team</li>
-            </ol>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div id="validation-container" data-ng-show="teamForm.$invalid || !teamToSave.salesForceAccount"></div>
-            <h2 data-translate="team_edit_page.information.title">Team Information</h2>
-            <form name="teamForm" class="form" novalidate unsaved-warning-form>
-                <div data-ng-include="'admin-facing/partials/team/team_form.html'"></div>
-
-            <div class="pull-right">
-                <button class="btn btn-link" type="button" data-ng-click="cancel()" data-translate="team_edit_page.cancel_button" href analytics-on analytics-category="Form Action" analytics-event="Team Create" analytics-label="Cancel">cancel</button>
-                <button class="btn btn-primary" type="button"
-                        data-on-ok="save(teamForm)" data-team-entity="teamToSave"
-                        data-placement="top" data-checking-for-dupes="checkingForDupes"
-                        data-ng-disabled="teamForm.teamName.$error.unique"
-                        data-team-edit-save>
-                    <span data-translate="team_edit_page.continue_button">Save</span>
-                </button>
-            </div>
-            </form>
-        </div>
-    </div>
-</div>
+            <div class="layout-card">
+                <div id="validation-container" data-ng-show="teamForm.$invalid || !teamToSave.salesForceAccount"></div>
+                <form name="teamForm" class="form" novalidate unsaved-warning-form>
+                    <div data-ng-include="'admin-facing/partials/team/team_form.html'"></div>
+                    <div class="pull-right">
+                        <button class="btn btn-cancel" type="button" data-ng-click="cancel()" data-translate="team_edit_page.cancel_button" href analytics-on analytics-category="Form Action" analytics-event="Team Create" analytics-label="Cancel">cancel</button>
+                        <button class="btn btn-success" type="button"
+                                data-on-ok="save(teamForm)" data-team-entity="teamToSave"
+                                data-placement="top" data-checking-for-dupes="checkingForDupes"
+                                data-ng-disabled="teamForm.teamName.$error.unique"
+                                data-team-edit-save>
+                            <span data-translate="team_edit_page.continue_button">Save</span>
+                        </button>
+                    </div>
+                </form>
+            </div><!-- .layout-card -->
+        </div><!-- .col-md-12 -->
+    </div><!-- .row -->
+</div><!-- .container -->
+<footer class="footer" data-ng-include="'admin-facing/partials/common/footer.tpl.html'"></footer>

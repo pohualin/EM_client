@@ -231,8 +231,9 @@ angular.module('emmiManager')
                             scope: scope,
                             show: false,
                             autoClose: true,
-                            placement: 'top',
+                            placement: 'bottom',
                             trigger: 'manual',
+                            container: 'body',
                             contentTemplate: 'admin-facing/partials/client/tags/conflictingTeam_popover.tpl.html'
                         });
                     }

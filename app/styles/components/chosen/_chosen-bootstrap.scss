@@ -1,26 +1,25 @@
-@mixin hover{
-  color: #FFF;
+@mixin hover {
+  color: $dropdown-link-hover-color;
   text-decoration: none;
-  background-color: #428BCA;
+  background-color: $dropdown-link-hover-bg;
   background-image: none;
 }
 
-@mixin listItem{
+@mixin listItem {
   display: block;
-  padding: 3px 20px;
+  padding: 11px $padding-base-horizontal;
   clear: both;
   font-weight: normal;
-  line-height: 1.428571429;
-  color: #333;
+  //line-height: 1.428571429;
+  color: $dropdown-link-color;
   white-space: nowrap;
   background-image: none;
 }
 
-@mixin inputOutline{
-  border-color: #66AFE9;
+@mixin inputOutline {
+  border-color: $input-border-focus;
   outline: 0;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+  //box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
 }
 
 select.form-control {
@@ -30,39 +29,36 @@ select.form-control {
         display: block;
         width: 100%;
         height: 34px;
-        padding: 6px 12px;
+        padding: 7px 12px;
         font-size: 14px;
         line-height: 1.428571429;
-        color: #555;
+        color: $gray;
         vertical-align: middle;
-        background-color: #fff;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-        -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+        background-color: rgba(250,251,251,0.85);
+        border: 1px solid #CFD2D5;
+        border-radius: $border-radius-base;
+        box-shadow: none;
+        transition: border-color ease-in-out .15s;
         background-image: none;
         div {
           top: 4px;
           color: #000;
         }
       }
-      &chosen-container-active{
+      &.chosen-container-active{
         .chosen-single{
           @include inputOutline;
         }
       }
     }
     .chosen-drop {
-      background-color: #FFF;
-      border: 1px solid #CCC;
-      border: 1px solid rgba(0, 0, 0, 0.15);
-      border-radius: 4px;
-      -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+      background-color: $dropdown-bg;
+      border: 1px solid $dropdown-fallback-border;
+      border: 1px solid $dropdown-border;
+      border-radius: $border-radius-base;
+      box-shadow: none;
       background-clip: padding-box;
-      margin: 2px 0 0;
+      margin: -1px 0 0;
     }
     .chosen-search {
       input[type=text] {
@@ -72,15 +68,13 @@ select.form-control {
         padding: 6px 12px;
         font-size: 14px;
         line-height: 1.428571429;
-        color: #555;
+        color: $gray;
         vertical-align: middle;
-        background-color: #FFF;
-        border: 1px solid #CCC;
-        border-radius: 4px;
-        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-        -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-        transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+        background-color: rgba(250,251,251,0.85);
+        border: 1px solid #CFD2D5;
+        border-radius: $border-radius-base;
+        box-shadow: none;
+        transition: border-color ease-in-out 0.15s;
         background-image: none;
         input[type=text]{
           :focus{
@@ -90,24 +84,25 @@ select.form-control {
       }
     }
     .chosen-results {
-      margin: 2px 0 0;
-      padding: 5px 0;
-      font-size: 14px;
+      margin: 0;
+      padding: 10px 0;
+      font-size: 16px;
       list-style: none;
-      background-color: #fff;
-      margin-bottom: 5px;
+      background-color: $dropdown-bg;
+      //margin-bottom: 5px;
       li {
         @include listItem;
-        &.active-result{
+        &.active-result {
           &:hover{
             @include hover;
           }
           @include listItem;
         }
-        &.group-result{
+        &.group-result {
+          color: $gray;
           font-weight: bold;
         }
-        &.group-option{
+        &.group-option {
           padding-left: 35px;
         }
       }
@@ -115,50 +110,87 @@ select.form-control {
     .chosen-choices {
       display: block;
       width: 100%;
-      min-height: 34px;
-      padding: 6px;
-      font-size: 14px;
+      min-height: 40px;
+      padding: 3px;
+      font-size: 12px;
       line-height: 1.428571429;
-      color: #555;
+      color: $gray;
       vertical-align: middle;
-      background-color: #FFF;
-      border: 1px solid #CCC;
-      border-radius: 4px;
-      -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-      box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-      -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-      transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+      background: rgba(250,251,251,0.85);
+      border: 1px solid #CFD2D5;
+      border-radius: $border-radius-base;
+      box-shadow: none;
+      transition: border-color ease-in-out 0.15s;
       background-image: none;
     }
   }
-  + .chosen-container-multi{
-    .chosen-choices{
-      li{
-        &.search-field{
-          input[type="text"]{
+  + .chosen-container-multi {
+    .chosen-choices {
+      li {
+        &.search-field {
+          margin: 4px;
+          input[type="text"] {
+            font-family: inherit;
+            color: $gray;
             height: auto;
-            padding: 5px 0;
+            padding: .5em 0;
           }
         }
-        &.search-choice{
-          background-image: none;
-          padding: 3px 24px 3px 5px;
-          margin: 0 6px 0 0;
-          font-size: 14px;
-          font-weight: normal;
-          line-height: 1.428571429;
+        &.search-choice {
+          position: relative;
+          display: inline-block;
+          margin: 4px;
+          padding: .5em 2em .5em;
+          font-size: 12px;
+          font-weight: 300;
+          line-height: 16px;
+          color: #fff;
           text-align: center;
           white-space: nowrap;
           vertical-align: middle;
-          cursor: pointer;
-          border: 1px solid #ccc;
-          border-radius: 4px;
-          color: #333;
-          background-color: #FFF;
-          border-color: #CCC;
-          .search-choice-close{
-            top: 8px;
+          border-radius: $border-radius-base;
+          background-color: #5bc0de;
+          background-image: none;
+          border: 0;
+          .search-choice-close {
+            display: none;
+            background: none;
+            color: #fff;
+            width: auto;
+            height: auto;
+            top: 6px;
             right: 6px;
+            font-size: 16px;
+            text-decoration: none !important;
+            // from UI font
+            font-family: 'ui-font-solid';
+            speak: none;
+            font-style: normal;
+            font-weight: normal;
+            font-variant: normal;
+            text-transform: none;
+            line-height: 1;
+
+            /* Enable Ligatures ================ */
+            -webkit-font-feature-settings: "liga";
+            -moz-font-feature-settings: "liga=1";
+            -moz-font-feature-settings: "liga";
+            -ms-font-feature-settings: "liga" 1;
+            -o-font-feature-settings: "liga";
+            font-feature-settings: "liga";
+
+            /* Better Font Rendering =========== */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+
+            &:before {
+              content: '\E436';
+            }
+          }
+          &:hover {
+            .search-choice-close {
+              display: block;
+            }
           }
         }
       }
@@ -169,11 +201,14 @@ select.form-control {
       }
     }
     .chosen-results{
+      li.highlighted {
+        @include hover;
+      }
       li.result-selected{
         display: list-item;
-        color: #ccc;
+        color: $dropdown-link-disabled-color;
         cursor: default;
-        background-color: white;
+        background-color: $gray-lighter;
       }
     }
   }
