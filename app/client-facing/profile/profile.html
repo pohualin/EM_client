@@ -17,7 +17,7 @@
                             <div class="col-md-2">
                                 {{userClient.firstName}} {{userClient.lastName}}
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-4">
                                 <a data-ng-click="edit()">EDIT</a>
                             </div>
                         </div>
@@ -40,7 +40,7 @@
                             <div class="col-md-2">
                                 {{userClient.email}}
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-4">
                                 <a data-ng-click="editEmail()"> {{ userClient.email ? 'EDIT EMAIL' : 'ADD AN EMAIL ADDRESS' }}</a>
                             </div>
                         </div>
@@ -52,6 +52,9 @@
                             </div>
                             <div class="col-md-2">
                                 {{userClient.login}}
+                            </div>
+                            <div class="col-md-4">
+                                <a data-ng-click="editEmail()">EDIT USER ID</a>
                             </div>
                         </div>
                     </div>
