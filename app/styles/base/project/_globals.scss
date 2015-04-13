@@ -517,6 +517,7 @@
         box-shadow: 4px 4px 0px 0px rgba(110,124,136,0.07);
         margin: 0 0 12px;
         padding: 28px 28px 30px;
+        @include clearfix;
     }
 
     .app-content-with-sidebar {

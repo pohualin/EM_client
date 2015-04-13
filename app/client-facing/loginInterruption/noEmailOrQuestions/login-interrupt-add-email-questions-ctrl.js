@@ -3,7 +3,7 @@
 angular.module('emmiManager')
     .controller('addEmailQuestions', ['$scope', '$alert', '$location', '$controller', 'NewEmailService','SecretQuestionService','EmailRestrictConfigurationsService',
         function ($scope, $alert, $location, $controller, NewEmailService, SecretQuestionService, EmailRestrictConfigurationsService ) {
-            $controller('SecretQuestionCreateController', {$scope: $scope});
+            $controller('SecretQuestionCreateLoginController', {$scope: $scope});
             $controller('enterEmail', {$scope: $scope});
 
             $scope.noEmailNoQuestionFormSubmitted = false;
@@ -102,6 +102,7 @@ angular.module('emmiManager')
              * functionality if user clicks not now
              */
             $scope.notNow = function () {
+                NewEmailService.notNow($scope.account);
                 $location.path($scope.locationBeforeLogin).replace();
             };
         }
