@@ -23,7 +23,8 @@ angular.module('emmiManager', [
     'truncate',
     'emmi.noDirtyCheck',
     'unsavedChanges',
-    'ivh.treeview'
+    'ivh.treeview',
+    'headroom'
 ])
 
     .constant('USER_ROLES', {
