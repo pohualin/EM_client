@@ -75,4 +75,12 @@ angular.module('emmiManager')
             $scope.resetDuplicateValidity = function () {
                 $scope.enterEmailForm.addEmail.$setValidity('duplicate', true);
             };
+
+            /**
+             * functionality if user clicks not now
+             */
+            $scope.notNow = function () {
+                NewEmailService.notNow($scope.account);
+                $location.path($scope.locationBeforeLogin).replace();
+            };
         }]);

@@ -107,6 +107,7 @@ angular.module('emmiManager')
              * functionality if user clicks not now
              */
             $scope.notNow = function () {
+                ValidationService.notNow($scope.account);
                 $location.path($scope.locationBeforeLogin).replace();
             };
         }])
