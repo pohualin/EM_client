@@ -31,6 +31,11 @@ angular.module('emmiManager')
 
         setTitle();
 
+
+        $scope.$on('resetResettables',function () {
+            $scope.editMode = false;
+        });
+
         $scope.clientEditCancel = function (metadataForm) {
             $scope.hideError();
             metadataForm.$setPristine();
