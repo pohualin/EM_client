@@ -27,8 +27,12 @@ angular.module('emmiManager')
         });
 
         $scope.saveTagState = function () {
-            TeamTag.save($scope.teamClientResource.teamResource);
-            $scope.hideRemoveTagPopover();
+            TeamTag.save($scope.teamClientResource.teamResource).then(function(response){
+                TeamTag.loadSelectedTags($scope.teamClientResource.teamResource).then(function(response){
+                    $scope.existingTags = response;
+                    $scope.hideRemoveTagPopover();
+                });
+            });
         };
 
         $scope.cancelRemoveTag = function(){
