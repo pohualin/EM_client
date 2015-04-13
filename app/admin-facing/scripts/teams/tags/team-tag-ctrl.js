@@ -32,9 +32,9 @@ angular.module('emmiManager')
         };
 
         $scope.cancelRemoveTag = function(){
-            $scope.hideRemoveTagPopover();
             TeamTag.loadSelectedTags($scope.teamClientResource.teamResource).then(function(response){
                 $scope.existingTags = response;
+                $scope.hideRemoveTagPopover();
             });
         };
 
