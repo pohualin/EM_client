@@ -15,8 +15,10 @@ angular.module('emmiManager')
             this.link = user.link;
             this.clientResource = user.clientResource;
             this.impersonated = user.impersonated;
-            this.notNowExpirationTime = user.notNowExpirationTime;
             this.interruptLoginFlow = user.interruptLoginFlow;
+            if(user.notNowExpirationTime){
+                this.notNowExpirationTime = user.notNowExpirationTime + 'Z';
+            }
             if (user.passwordExpirationTime) {
                 this.passwordExpirationTime = user.passwordExpirationTime + 'Z';
             }
