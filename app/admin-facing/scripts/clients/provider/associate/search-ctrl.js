@@ -63,8 +63,10 @@ angular.module('emmiManager')
                     // close the modal and show the message
                     if (!addAnother) {
                         $scope.$hide();
-                        var message = ($scope.singleProviderAdded) ?
-                            ' <b>' + $scope.singleProviderAdded.firstName + ' ' + $scope.singleProviderAdded.middleName + ' ' + $scope.singleProviderAdded.lastName + '</b> has been added successfully.' :
+                        var providerMiddleName = $scope.singleProviderAdded.middleName ? $scope.singleProviderAdded.middleName : '',
+                            providerFullName = $scope.singleProviderAdded.firstName + ' ' + providerMiddleName + ' ' + $scope.singleProviderAdded.lastName,
+                            message = ($scope.singleProviderAdded) ?
+                            ' <b>' + providerFullName + '</b> has been added successfully.' :
                             'The selected providers have been added successfully.';
                         $alert({
                             title: ' ',
@@ -89,8 +91,10 @@ angular.module('emmiManager')
                     $scope[managedProviderList] = null;
                     focus('ProviderSearchFocus');
                     var clientName = (Client.getClient().entity.name) ? '<b>' + Client.getClient().entity.name + '</b>.' : 'the client.',
+                        providerMiddleName = $scope.singleProviderAdded.middleName ? $scope.singleProviderAdded.middleName : '',
+                        providerFullName = $scope.singleProviderAdded.firstName + ' ' + providerMiddleName + ' ' + $scope.singleProviderAdded.lastName,
                         message = (!$scope.singleProviderAdded) ? 'The selected providers were successfully added to ' + clientName :
-                            'The provider <b>' + $scope.singleProviderAdded.firstName + ' ' + $scope.singleProviderAdded.middleName + ' ' + $scope.singleProviderAdded.lastName + '</b> has been successfully added to ' + clientName;
+                            'The provider <b>' + providerFullName + '</b> has been successfully added to ' + clientName;
                     $alert({
                         title: ' ',
                         content: message,
