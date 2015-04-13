@@ -37,7 +37,7 @@ angular.module('emmiManager')
                     type: 'success',
                     placement: 'top',
                     show: true,
-                    duration: 5,
+                    //duration: 5,
                     dismissable: true
                 });
             };
