@@ -289,12 +289,13 @@ angular.module('emmiManager')
 
 		        	ProviderSearch.updateProviderTeamAssociations($scope.teamProviderTeamLocationSaveRequest, $scope.teamResource).then(function (response) {
 		        		$scope.refreshLocationsAndProviders();
+                        var message;
                         if ($scope.teamProviderTeamLocationSaveRequest.length < 2) {
                             var providerMiddleName = $scope.teamProviderTeamLocationSaveRequest[0].provider.middleName ? $scope.teamProviderTeamLocationSaveRequest[0].provider.middleName : '',
-                                providerFullName = $scope.teamProviderTeamLocationSaveRequest[0].provider.firstName + ' ' + providerMiddleName + ' ' + $scope.teamProviderTeamLocationSaveRequest[0].provider.lastName,
-                                message = 'The provider <b>'+ providerFullName +'</b> has been successfully added.';
+                                providerFullName = $scope.teamProviderTeamLocationSaveRequest[0].provider.firstName + ' ' + providerMiddleName + ' ' + $scope.teamProviderTeamLocationSaveRequest[0].provider.lastName;
+                            message = 'The provider <b>'+ providerFullName +'</b> has been successfully added.';
                         } else {
-                            var message = 'The selected providers have been successfully added.';
+                            message = 'The selected providers have been successfully added.';
                         }
 
 	                    $scope.hideaddprovidermodal();
