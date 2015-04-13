@@ -377,7 +377,9 @@ angular.module('emmiManager')
 					});
 	        	});
                 _paq.push(['trackEvent', 'Form Action', 'Team Provider Create', 'Save']);
-	        }
+	        } else{
+                $scope.showError();
+            }
         };
 
         if($scope.teamResource){
@@ -389,6 +391,21 @@ angular.module('emmiManager')
         	ProviderView.allProvidersForTeam($scope.teamResource).then(function(response){
         		$scope.handleResponse(response, 'listOfTeamProviders');
         	});
+        };
+
+        $scope.showError = function () {
+            if (!$scope.errorAlert) {
+                $scope.errorAlert = $alert({
+                    title: ' ',
+                    content: 'Please correct the below information.',
+                    container: '#modal-messages-container',
+                    type: 'danger',
+                    show: true,
+                    dismissable: false
+                });
+            } else {
+                $scope.errorAlert.show();
+            }
         };
 	})
 ;
