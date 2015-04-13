@@ -44,6 +44,9 @@
             border-right: 1px solid #a1aab2; //rgba(255,255,255,0.35)
         }
     }
+    &.navbar-right > li:first-child > a {
+        border-left: 0;
+    }
     .open > a,
     .open > a:hover,
     .open > a:focus {
