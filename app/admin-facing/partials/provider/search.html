@@ -76,7 +76,7 @@
                             </thead>
                             <tbody>
                                 <tr data-ng-repeat="provider in providers | orderBy:'provider.sortIdx'">
-                                    <td>{{provider.entity.firstName}} {{provider.entity.lastName}} <em>{{provider.entity.active ? '' : "(inactive)"}}</em></td>
+                                    <td>{{provider.entity.firstName}} {{provider.entity.middleName}} {{provider.entity.lastName}} <em>{{provider.entity.active ? '' : "(inactive)"}}</em></td>
                                     <td>{{provider.entity.specialty.name}}</td>
                                     <td>{{provider.entity.email}}</td>
                                     <td class="text-center"><a href="#/providers/{{provider.entity.id}}"><i class="icon-compose icon-size-xl"></i></a></td>
