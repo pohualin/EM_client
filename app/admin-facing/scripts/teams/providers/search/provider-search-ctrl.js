@@ -38,6 +38,9 @@ angular.module('emmiManager')
             });
         };
         
+        /**
+         * Fetch next/previous page in Client Providers tab
+         */
         $scope.fetchPageClientProviders = function (href) {
             $scope.loading = true;
             ProviderSearch.fetchPageLink(href).then(function (providerPage) {
@@ -145,7 +148,9 @@ angular.module('emmiManager')
             });
         };
         
-        
+        /**
+         * Method to manipulate check boxes in Client Providers tab 
+         */
         $scope.setClientProviderSelected = function (providers) {
             angular.forEach(providers, function (provider) {
                 if ($scope.teamProviders[provider.provider.entity.id]) {

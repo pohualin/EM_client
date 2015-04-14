@@ -307,27 +307,9 @@ angular.module('emmiManager')
 
 		        		if (addAnother) {
 	        				$scope.addProviders(true);
-	        				$alert({
-	                            title: ' ',
-	                            content: message,
-	                            container: '#modal-messages-container',
-	                            type: 'success',
-	                            placement: '',
-	                            show: true,
-	                            duration: 5,
-	                            dismissable: true
-	                        });
+	        				$scope.successAlert(message, '#modal-messages-container', addAnother);
 		        		} else {
-		        		    $alert({
-	                            title: ' ',
-	                            content: message,
-	                            container: '#messages-container',
-	                            type: 'success',
-	                            placement: 'top',
-	                            show: true,
-	                            duration: 5,
-	                            dismissable: true
-	                        });
+		        		    $scope.successAlert(message, '#messages-container');
 		        		}
 		        	});
         		}
@@ -375,11 +357,16 @@ angular.module('emmiManager')
 	                ProviderCreate.associateTeamLocationsToProvider(response.data.entity, $scope.teamResource, $scope.selectedItems);
 	        		$scope.hideNewProviderModal();
 	                $scope.refreshLocationsAndProviders();
+	                
+	                var providerMiddleName = response.data.entity.middleName ? response.data.entity.middleName : '',
+                        providerFullName = response.data.entity.firstName + ' ' + providerMiddleName + ' ' + response.data.entity.lastName;
+	                var message = 'The provider <b>'+ providerFullName +'</b> has been successfully added.';
+	                
                     if (addAnother) {
                         $scope.addProviders(true);
-                        $scope.successAlertSaveProvider(response, '#modal-messages-container', addAnother);
+                        $scope.successAlert(message, '#modal-messages-container', addAnother);
                     } else {
-                        $scope.successAlertSaveProvider(response, '#messages-container', addAnother);
+                        $scope.successAlert(message, '#messages-container');
                     }
 	        	});
                 _paq.push(['trackEvent', 'Form Action', 'Team Provider Create', 'Save']);
@@ -388,14 +375,14 @@ angular.module('emmiManager')
             }
         };
 
-        $scope.successAlertSaveProvider = function(response, container, addAnother){
-            var providerMiddleName = response.data.entity.middleName ? response.data.entity.middleName : '',
-                providerFullName = response.data.entity.firstName + ' ' + providerMiddleName + ' ' + response.data.entity.lastName;
+        /**
+         * Display success alert
+         */
+        $scope.successAlert = function(message, container, addAnother){
             var placement = addAnother ? '': 'top';
-
             $alert({
                 title: '',
-                content: 'The provider <b>'+ providerFullName +'</b> has been successfully added.',
+                content: message,
                 container: container,
                 type: 'success',
                 placement: placement,
