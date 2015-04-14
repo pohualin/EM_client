@@ -25,7 +25,7 @@
       <td>
           <div class="checkbox">
               <input type="checkbox" id="clientProviderCb{{$index}}" data-ng-model="teamProvider.provider.entity.checked"  data-ng-disabled="teamProvider.provider.entity.disabled"
-                 ng-change="onClientCheckboxChange(teamProvider)">
+                 ng-change="onCheckboxChange(teamProvider.provider)">
               <label for="clientProviderCb{{$index}}"></label>
           </div>
       </td>
@@ -54,17 +54,17 @@
       </td>
     </tr>
     <tr class="no-hover">
-        <td colspan="6" class="text-center" data-ng-show="links">
-            <ul class="pagination">
-                <li data-ng-repeat="link in links | orderBy:'order'" class="{{link.className}}" data-ng-class="{'active': link.name == currentPage}">
-                    <a data-ng-click="fetchPageClientLocations(link.href)">
-                        <i class="fa-angle-left" data-ng-if="link.className === 'previous'"></i>
-                        {{link.name}}
-                        <i class="fa-angle-right" data-ng-if="link.className === 'next'"></i>
-                    </a>
-                </li>
-            </ul>
-        </td>
+      <td colspan="6" class="text-center" data-ng-show="links">
+        <ul class="pagination">
+          <li data-ng-repeat="link in links | orderBy:'order'" class="{{link.className}}" data-ng-class="{'active': link.name == currentPage}">
+             <a data-ng-click="fetchPageClientProviders(link.href)">
+                 <i class="fa-angle-left" data-ng-if="link.className === 'previous'"></i>
+                 {{link.name}}
+                 <i class="fa-angle-right" data-ng-if="link.className === 'next'"></i>
+             </a>
+          </li>
+        </ul>
+      </td>
     </tr>
   </tbody>
 </table>

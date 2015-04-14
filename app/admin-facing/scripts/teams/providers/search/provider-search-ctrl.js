@@ -15,10 +15,6 @@ angular.module('emmiManager')
                 });
             }
         };
-        
-        $scope.clientHasProviders = function () {
-            return $scope.clientLocations && $scope.clientLocations.length > 0;
-        };
 
         $scope.statusChange = function () {
             $scope.loading = true;
@@ -38,6 +34,16 @@ angular.module('emmiManager')
                 $scope.setCheckboxesForChanged($scope[searchedProvidersList]);
             }, function () {
                 // error happened
+                $scope.loading = false;
+            });
+        };
+        
+        $scope.fetchPageClientProviders = function (href) {
+            $scope.loading = true;
+            ProviderSearch.fetchPageLink(href).then(function (providerPage) {
+                $scope.handleResponse(providerPage, 'clientProviders');
+                $scope.setClientProviderSelected($scope.clientProviders);
+            }, function () {
                 $scope.loading = false;
             });
         };
@@ -109,10 +115,6 @@ angular.module('emmiManager')
             });
         };
 
-        $scope.onClientCheckboxChange = function(provider){
-            // TODO
-        }
-        
         $scope.onCheckboxChange = function (provider) {
             var request = {};
             request.teamLocations = [];
@@ -145,7 +147,7 @@ angular.module('emmiManager')
         
         
         $scope.setClientProviderSelected = function (providers) {
-            angular.forEach( providers , function (provider) {
+            angular.forEach(providers, function (provider) {
                 if ($scope.teamProviders[provider.provider.entity.id]) {
                     $scope.teamProviders[provider.provider.entity.id].isNewAdd = false;
                     $scope.teamProviders[provider.provider.entity.id].disabled = true;
