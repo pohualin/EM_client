@@ -1,13 +1,11 @@
-<div class="app-header" data-emmi-navbar></div>
-<nav class="app-breadcrumb">
-    <div class="container">
-        <ol class="breadcrumb">
-            <li><a href="#/">Emmi Manager</a></li>
-            <li data-ng-class="{'active': !team.id}"><a data-ng-href="#/clients/{{client.id}}?{{currentRouteQueryString}}"><span data-bs-tooltip="'id: {{client.id}}'" data-placement="right">{{client.name}}</span></a></li>
-            <li data-ng-if="team.id" class="active"><span data-bs-tooltip="'id: {{team.id}}'" data-placement="right">{{team.name}}</span></li>
-        </ol>
-    </div>
-</nav>
+<div class="app-header with-breadcrumbs" data-emmi-navbar>
+    <!-- Breadcrumb for transclusion -->
+    <ol class="breadcrumb">
+        <li><a href="#/">Emmi Manager</a></li>
+        <li data-ng-class="{'active': !team.id}"><a data-ng-href="#/clients/{{client.id}}?{{currentRouteQueryString}}"><span data-bs-tooltip="'id: {{client.id}}'" data-placement="right">{{client.name}}</span></a></li>
+        <li data-ng-if="team.id" class="active"><span data-bs-tooltip="'id: {{team.id}}'" data-placement="right">{{team.name}}</span></li>
+    </ol>
+</div>
 <div class="app-content app-content-with-sidebar container" data-ng-cloak>
     <div class="row" data-ng-switch on="showTeam">
         <div class="sidebar"
