@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="layout-card">
-                <h1>Manage Clients, Teams, Providers and Locations:</h1>
+                <h1>Manage Clients, Teams, Providers &amp; Locations</h1>
                 <form name="searchForm" novalidate>
                     <div class="row">
                         <div class="col-md-2 col-sm-2">
@@ -30,7 +30,7 @@
                         </div>
                         <div class="col-md-2 col-sm-2">
                             <div class="pull-right">
-                                <a class="btn btn-link" data-ng-href="#clients/new?{{currentRouteQueryString}}" data-ng-show="searchPerformed">
+                                <a class="btn btn-default" data-ng-href="#clients/new?{{currentRouteQueryString}}" data-ng-show="searchPerformed">
                                     <i class="icon-plus icon-size-md">&nbsp;</i>Create New Client
                                 </a>
                             </div>
@@ -42,24 +42,24 @@
                         <hr>
                         <div class="row" data-ng-hide="removeStatusFilterAndTotal">
                             <div class="col-md-12">
-                                <div class="pull-right">
+                                <div class="pull-right table-results-count">
                                     {{total}}
-                                    <span data-ng-show="total != 1" data-translate="global.labels.total"> results</span>
-                                    <span data-ng-show="total === 1" data-translate="global.labels.totalSingular"> result</span>
+                                    <span data-ng-if="total != 1" data-translate="global.labels.total"> results</span>
+                                    <span data-ng-if="total === 1" data-translate="global.labels.totalSingular"> result</span>
                                 </div>
                                 <form class="form-inline">
                                     <div class="form-group">
                                         <label for="status_filter" data-translate="global.labels.statusFilter">Show:</label>&nbsp;&nbsp;
-                                        <select class="form-control" id="status_filter" data-ng-model="status"
+                                        <select class="form-control input-sm" style="width:110px;" id="status_filter" data-ng-model="status"
                                                 data-ng-options="status | translate for status in statuses"
-                                                data-ng-change="statusChange()">
+                                                data-ng-change="statusChange()" data-chosen data-disable-search="true">
                                         </select>
                                     </div>
                                 </form>
                             </div>
                         </div>
                         <br>
-                        <table class="table table-bordered table-striped table-hover table-secondary" border="0" cellpadding="0" cellspacing="0"
+                        <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0" cellspacing="0"
                                data-ng-show="clients">
                             <thead>
                                 <tr>

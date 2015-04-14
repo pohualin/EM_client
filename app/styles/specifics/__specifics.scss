@@ -187,13 +187,18 @@ div.masked:before {
   border-radius: $border-radius-base;
 }
 
+.table-results-count {
+    line-height: $input-height-small;
+}
 
 th.sort {
   cursor: pointer;
   .sort-icon {
-    font-size: 20px;
+    font-size: 18px;
     line-height: 10px;
-    vertical-align: text-top;
+    vertical-align: top;
+    position: relative;
+    top: 4px;
   }
 }
 

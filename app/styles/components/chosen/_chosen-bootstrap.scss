@@ -24,30 +24,71 @@
 
 select.form-control {
     + .chosen-container {
+        .chosen-results {
+            li.highlighted {
+                @include hover;
+            }
+        }
         &.chosen-container-single {
             .chosen-single {
                 display: block;
                 width: 100%;
-                height: 34px;
-                padding: 7px 12px;
-                font-size: 14px;
-                line-height: 1.428571429;
-                color: $gray;
+                height: $input-height-base; // Make inputs at least the height of their button counterpart (base line-height + padding + border)
+                padding: $padding-base-vertical $padding-base-horizontal;
+                font-size: $font-size-base;
+                line-height: $line-height-base;
+                color: $input-color;
                 vertical-align: middle;
-                background-color: rgba(250,251,251,0.85);
-                border: 1px solid #CFD2D5;
+                background-color: $input-bg;
+                background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
+                border: 1px solid $input-border;
+                border-radius: $input-border-radius;
+                // background-color: rgba(250,251,251,0.85);
+                // border: 1px solid #CFD2D5;
                 border-radius: $border-radius-base;
                 box-shadow: none;
                 transition: border-color ease-in-out .15s;
                 background-image: none;
                 div {
-                    top: 4px;
-                    color: #000;
+                    width: 25px;
+                    font-size: 18px;
+                    // from FontAwesome font
+                    font-family: 'fontawesome';
+                    speak: none;
+                    font-style: normal;
+                    font-weight: normal;
+                    font-variant: normal;
+                    text-transform: none;
+                    line-height: 1;
+
+                    /* Better Font Rendering =========== */
+                    -webkit-font-smoothing: antialiased;
+                    -moz-osx-font-smoothing: grayscale;
+
+                    &:before {
+                        display: block;
+                        width: 100%;
+                        height: 100%;
+                        padding: $padding-base-vertical 0;
+                        line-height: 1;
+                        //line-height: $input-height-base;
+                        content: "\f107"; // angle-down
+                    }
+                    b {
+                        display: none;
+                    }
                 }
             }
             &.chosen-container-active {
                 .chosen-single {
                     @include inputOutline;
+                }
+            }
+            &.chosen-container-active.chosen-with-drop {
+                .chosen-single {
+                    div:before {
+                        content: "\f106"; // angle-up
+                    }
                 }
             }
         }
@@ -202,14 +243,26 @@ select.form-control {
             }
         }
         .chosen-results {
-            li.highlighted {
-                @include hover;
-            }
             li.result-selected {
                 display: list-item;
                 color: $dropdown-link-disabled-color;
                 cursor: default;
                 background-color: $gray-lighter;
+            }
+        }
+    }
+}
+
+// Smaller sized single selects
+select.form-control.input-sm {
+    + .chosen-container {
+        &.chosen-container-single {
+            .chosen-single {
+                height: $input-height-small; // Make inputs at least the height of their button counterpart (base line-height + padding + border)
+                padding: $padding-small-vertical $padding-small-horizontal;
+                div:before {
+                    padding: $padding-small-vertical 0;
+                }
             }
         }
     }
