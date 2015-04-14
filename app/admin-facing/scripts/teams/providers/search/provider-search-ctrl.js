@@ -1,7 +1,7 @@
 'use strict';
 angular.module('emmiManager')
 
-    .controller('ProviderSearchController', function ($scope, $modal, ProviderView, TeamLocation, TeamProviderService, ProviderSearch, $controller, arrays, ProviderCreate, $alert) {
+    .controller('ProviderSearchController', function ($scope, $modal, ProviderView, TeamLocation, TeamProviderService, ProviderSearch, $controller, arrays, ProviderCreate, $alert, ClientProviderService, Client) {
 
         $controller('CommonPagination', {$scope: $scope});
 
@@ -14,6 +14,10 @@ angular.module('emmiManager')
                     $scope.handleResponse(providerPage, 'searchedProvidersList');
                 });
             }
+        };
+        
+        $scope.clientHasProviders = function () {
+            return $scope.clientLocations && $scope.clientLocations.length > 0;
         };
 
         $scope.statusChange = function () {
@@ -105,6 +109,10 @@ angular.module('emmiManager')
             });
         };
 
+        $scope.onClientCheckboxChange = function(provider){
+            // TODO
+        }
+        
         $scope.onCheckboxChange = function (provider) {
             var request = {};
             request.teamLocations = [];
@@ -134,6 +142,28 @@ angular.module('emmiManager')
                 });
             });
         };
+        
+        
+        $scope.setClientProviderSelected = function (providers) {
+            angular.forEach( providers , function (provider) {
+                if ($scope.teamProviders[provider.provider.entity.id]) {
+                    $scope.teamProviders[provider.provider.entity.id].isNewAdd = false;
+                    $scope.teamProviders[provider.provider.entity.id].disabled = true;
+                    $scope.teamProviders[provider.provider.entity.id].checked = true;
+                    $scope.teamProviders[provider.provider.entity.id].associated = true;
+                    provider.provider.entity.isNewAdd = false;
+                    provider.provider.entity.disabled = true;
+                    provider.provider.entity.checked = true;
+                }
+            });
+        };
+        
 
+        var managedClientProviderList = 'clientProviders';
+        ClientProviderService.findForClient(Client.getClient()).then(function (clientProviders) {
+            $scope.handleResponse(clientProviders, managedClientProviderList);
+            $scope.setClientProviderSelected($scope.clientProviders);
+        });
+        $scope.tabs = TeamProviderService.setAllTabs($scope.addAnother);
     })
 ;

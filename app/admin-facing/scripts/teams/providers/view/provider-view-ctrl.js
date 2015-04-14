@@ -18,13 +18,17 @@ angular.module('emmiManager')
         $scope.locationsColumnCharLimit = 25;
 
         $scope.allLocationsForTeam = 'All Locations';
-
+        
         $rootScope.$on('event:teamLocationSavedWithProvider', function () {
         	$scope.refreshLocationsAndProviders();
         });
 
         $scope.refreshLocationsAndProviders = function() {
+            $scope.teamProviders = {};
         	ProviderView.paginatedProvidersForTeam($scope.teamResource).then(function(response){
+        	    angular.forEach(response.content, function (teamProvider) {
+                    $scope.teamProviders[teamProvider.entity.provider.id] = angular.copy(teamProvider.entity.provider);
+                });
         		$scope.handleResponse(response, 'listOfTeamProviders');
         	});
         	TeamLocation.getTeamLocations($scope.teamResource.link.teamLocations).then(function(response){
