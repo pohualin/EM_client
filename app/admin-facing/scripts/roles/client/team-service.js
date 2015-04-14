@@ -1,18 +1,20 @@
 'use strict';
 angular.module('emmiManager')
 
-    .service('ManageUserTeamRolesService', ['$filter', '$q', '$http', 'UriTemplate', 'CommonService', 'Client',
-        function ($filter, $q, $http, UriTemplate, CommonService, Client) {
+    .service('ManageUserTeamRolesService', ['$filter', '$q', '$http', 'UriTemplate', 'CommonService',
+        function ($filter, $q, $http, UriTemplate, CommonService) {
             var referenceData;
             var existingClientTeamRoles = [];
             return {
                 /**
                  * Return true when there are existing client team roles for a client
+                 *
+                 * @param clientResource the client
                  */
-                hasExistingClientTeamRoles: function () {
+                hasExistingClientTeamRoles: function (clientResource) {
                     var deferred = $q.defer();
                     var hasClientTeamRoles = false;
-                    this.loadClientTeamRoles().then(function(){
+                    this.loadClientTeamRoles(clientResource).then(function(){
                         if(existingClientTeamRoles.length > 0){
                             hasClientTeamRoles = true;
                         }
@@ -24,12 +26,13 @@ angular.module('emmiManager')
                  * Loads ALL roles for a team. It then copies over all possible
                  * role permissions on to that role shell.
                  *
+                 * @param clientResource the client
                  * @returns a promise that resolves into the array of Role objects
                  */
-                loadClientTeamRoles: function () {
+                loadClientTeamRoles: function (clientResource) {
                     var deferred = $q.defer();
                     var roles = [];
-                    $http.get(UriTemplate.create(Client.getClient().link.teamRoles).stringify())
+                    $http.get(UriTemplate.create(clientResource.link.teamRoles).stringify())
                         .then(function load(response) {
                             var page = response.data;
                             CommonService.convertPageContentLinks(page);
@@ -94,11 +97,12 @@ angular.module('emmiManager')
                  * Saves a new client role entity object
                  *
                  * @param clientTeamRoleEntity to be created
+                 * @param clientResource the client
                  * @returns a promise that resolves into the saved role
                  */
-                saveNewClientTeamRole: function (clientTeamRoleEntity) {
+                saveNewClientTeamRole: function (clientTeamRoleEntity, clientResource) {
                     var active = $filter('filter')(clientTeamRoleEntity.userClientTeamPermissions, {active: true}, true);
-                    return $http.post(UriTemplate.create(Client.getClient().link.teamRoles).stringify(), {
+                    return $http.post(UriTemplate.create(clientResource.link.teamRoles).stringify(), {
                         name: clientTeamRoleEntity.name,
                         userClientTeamPermissions: active
                     }).then(function (response) {
@@ -147,12 +151,13 @@ angular.module('emmiManager')
                  * Loads ALL reference data pages for client role modification. The reference
                  * data is also cached in this service.
                  *
+                 * @param clientResource the client
                  * @returns a promise that resolves to the full reference data
                  */
-                referenceData: function () {
+                referenceData: function (clientResource) {
                     var deferred = $q.defer();
                     if (!referenceData) {
-                        $http.get((Client.getClient().link.teamRolesReferenceData)).then(function (response) {
+                        $http.get((clientResource.link.teamRolesReferenceData)).then(function (response) {
                             referenceData = response.data;
                             referenceData.roleLibrary = [];
                             // load library roles for reference data
@@ -175,7 +180,7 @@ angular.module('emmiManager')
                 /**
                  * Creates a new clientTeamRoleEntity object
                  *
-                 * @returns a new clientTeamRoleEntity
+                 * @returns {*} a new clientTeamRoleEntity
                  */
                 newClientTeamRoleEntity: function () {
                     return {
@@ -187,9 +192,10 @@ angular.module('emmiManager')
                  * Save all selected roles within the role library
                  *
                  * @param roleLibrary that has the mods
+                 * @param clientResource the client
                  * @returns the clean roleLibrary
                  */
-                saveSelectedLibraries: function (roleLibrary) {
+                saveSelectedLibraries: function (roleLibrary, clientResource) {
                     var deferred = $q.defer();
                     var selections = $filter('filter')(roleLibrary, {checked: true, disabled: false});
                     if (selections.length > 0) {
@@ -201,7 +207,7 @@ angular.module('emmiManager')
                                 permissions.push(p.permission);
                             });
                             saveFunctions.push(
-                                $http.post(UriTemplate.create(Client.getClient().link.teamRoles).stringify(), {
+                                $http.post(UriTemplate.create(clientResource.link.teamRoles).stringify(), {
                                     name: selection.entity.name,
                                     userClientTeamPermissions: permissions,
                                     type: {

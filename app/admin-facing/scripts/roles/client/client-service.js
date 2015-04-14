@@ -1,18 +1,20 @@
 'use strict';
 angular.module('emmiManager')
 
-    .service('ManageUserRolesService', ['$filter', '$q', '$http', '$translate', 'UriTemplate', 'CommonService', 'Client',
-        function ($filter, $q, $http, $translate, UriTemplate, CommonService, Client) {
+    .service('ManageUserRolesService', ['$filter', '$q', '$http', '$translate', 'UriTemplate', 'CommonService',
+        function ($filter, $q, $http, $translate, UriTemplate, CommonService) {
             var referenceData;
             var existingClientRoles = [];
             return {
                 /**
                  * Return true when there are existing client roles for a client
+                 *
+                 * @param clientResource the client
                  */
-                hasExistingClientRoles: function () {
+                hasExistingClientRoles: function (clientResource) {
                     var deferred = $q.defer();
                     var hasClientRoles = false;
-                    this.loadClientRoles().then(function(){
+                    this.loadClientRoles(clientResource).then(function(){
                         if(existingClientRoles.length > 0){
                             hasClientRoles = true;
                         }
@@ -24,12 +26,13 @@ angular.module('emmiManager')
                  * Loads ALL roles for a client. It then copies over all possible
                  * role permissions on to that role shell.
                  *
+                 * @param clientResource the client
                  * @returns a promise that resolves into the array of Role objects
                  */
-                loadClientRoles: function () {
+                loadClientRoles: function (clientResource) {
                     var deferred = $q.defer();
                     var roles = [];
-                    $http.get(UriTemplate.create(Client.getClient().link.roles).stringify())
+                    $http.get(UriTemplate.create(clientResource.link.roles).stringify())
                         .then(function load(response) {
                             var page = response.data;
                             CommonService.convertPageContentLinks(page);
@@ -50,12 +53,13 @@ angular.module('emmiManager')
                 /**
                  * Loads ALL roles for a client with permissions
                  *
+                 * @param clientResource the client
                  * @returns a promise that resolves into the array of Role objects
                  */
-                loadClientRolesWithPermissions: function () {
+                loadClientRolesWithPermissions: function (clientResource) {
                     var deferred = $q.defer();
                     var roles = [];
-                    $http.get(UriTemplate.create(Client.getClient().link.roles).stringify())
+                    $http.get(UriTemplate.create(clientResource.link.roles).stringify())
                         .then(function load(response) {
                             var page = response.data;
                             CommonService.convertPageContentLinks(page);
@@ -102,7 +106,7 @@ angular.module('emmiManager')
                                     }
                                 });
                             });
-                            
+
                             angular.forEach(clientRoleResource.entity.userClientPermissions, function (group) {
                                 var selectedChildren = 0;
                                 angular.forEach(group.children, function(child){
@@ -117,7 +121,7 @@ angular.module('emmiManager')
                                     group.selected = true;
                                 }
                             });
-                            
+
                             clientRoleResource.original = angular.copy(clientRoleResource);
                             return response.data;
                         });
@@ -126,11 +130,12 @@ angular.module('emmiManager')
                  * Saves a new client role entity object
                  *
                  * @param clientRoleEntity to be created
+                 * @param clientResource the client
                  * @returns a promise that resolves into the saved role
                  */
-                saveNewClientRole: function (clientRoleEntity) {
+                saveNewClientRole: function (clientRoleEntity, clientResource) {
                     var active = this.selectedPermissions(clientRoleEntity.userClientPermissions);
-                    return $http.post(UriTemplate.create(Client.getClient().link.roles).stringify(), {
+                    return $http.post(UriTemplate.create(clientResource.link.roles).stringify(), {
                         name: clientRoleEntity.name,
                         userClientPermissions: active
                     }).then(function (response) {
@@ -179,19 +184,20 @@ angular.module('emmiManager')
                  * Loads reference data page and all library roles for a client. The reference
                  * data is also cached in this service.
                  *
+                 * @param clientResource the client
                  * @returns a promise that resolves to the full reference data
                  */
-                referenceData: function () {
+                referenceData: function (clientResource) {
                     var deferred = $q.defer();
                     var external = this;
                     if (!referenceData) {
                         // load reference data
-                        $http.get(UriTemplate.create(Client.getClient().link.rolesReferenceData).stringify()).then(function (response) {
+                        $http.get(UriTemplate.create(clientResource.link.rolesReferenceData).stringify()).then(function (response) {
                             referenceData = response.data;
                             external.composePermissionArray(referenceData.permission).then(function(perm){
                                 referenceData.permission = perm;
                             });
-                            
+
                             referenceData.roleLibrary = [];
                             // load library roles for reference data
                             $http.get(UriTemplate.create(referenceData.link.roles).stringify()).then(function load(roleResponse) {
@@ -223,10 +229,12 @@ angular.module('emmiManager')
                 },
                 /**
                  * Save all selected roles within the role library
+                 *
                  * @param roleLibrary that has the mods
+                 * @param clientResource the client
                  * @returns the clean roleLibrary
                  */
-                saveSelectedLibraries: function (roleLibrary) {
+                saveSelectedLibraries: function (roleLibrary, clientResource) {
                     var deferred = $q.defer();
                     var selections = $filter('filter')(roleLibrary, {checked: true, disabled: false});
                     if (selections.length > 0) {
@@ -238,7 +246,7 @@ angular.module('emmiManager')
                                 permissions.push(p.permission);
                             });
                             saveFunctions.push(
-                                $http.post(UriTemplate.create(Client.getClient().link.roles).stringify(), {
+                                $http.post(UriTemplate.create(clientResource.link.roles).stringify(), {
                                     name: selection.entity.name,
                                     userClientPermissions: permissions,
                                     type: {
@@ -324,7 +332,7 @@ angular.module('emmiManager')
                         });
                         promises.push(deferred.promise);
                     });
-                    
+
                     $q.all(promises).then(function(){
                         var perm = [];
                         angular.forEach(map, function(group){
@@ -337,7 +345,7 @@ angular.module('emmiManager')
                         });
                         deferred.resolve(perm);
                     });
-                    
+
                     return deferred.promise;
                 },
                 /**
@@ -352,7 +360,7 @@ angular.module('emmiManager')
                             angular.forEach(group.children, function(child){
                                 perms.push(child);
                             });
-                        } 
+                        }
                     });
                     return $filter('filter')(perms, {selected: true}, true);
                 }

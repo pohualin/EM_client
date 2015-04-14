@@ -7,22 +7,6 @@ angular.module('emmiManager')
  */
     .config(function ($routeProvider, USER_ROLES) {
 
-        var clientDetailRequiredResources = {
-            'clientResource': ['AuthSharedService', 'Client', '$route', '$q', function (AuthSharedService, Client, $route, $q) {
-                var deferred = $q.defer();
-                AuthSharedService.currentUser().then(function () {
-                    Client.selectClient($route.current.params.clientId).then(function (clientResource) {
-                        if (clientResource) {
-                            deferred.resolve(clientResource);
-                        } else {
-                            deferred.reject();
-                        }
-                    });
-                });
-                return deferred.promise;
-            }]
-        };
-
         // Routes
         $routeProvider
             .when('/clients/:clientId/roles', {
@@ -32,26 +16,41 @@ angular.module('emmiManager')
                     authorizedRoles: USER_ROLES.all
                 },
                 reloadOnSearch: false,
-                resolve: clientDetailRequiredResources
+                resolve: {
+                    'clientResource': ['AuthSharedService', 'Client', '$route', '$q', function (AuthSharedService, Client, $route, $q) {
+                        var deferred = $q.defer();
+                        AuthSharedService.currentUser().then(function () {
+                            Client.selectClient($route.current.params.clientId).then(function (clientResource) {
+                                if (clientResource) {
+                                    deferred.resolve(clientResource);
+                                } else {
+                                    deferred.reject();
+                                }
+                            });
+                        });
+                        return deferred.promise;
+                    }]
+                }
             });
     })
 
     /**
      * Controller for the route landing place
      */
-    .controller('ManageClientRolesMainCtrl', ['$scope', 'Client', 'ManageUserRolesService', 'ManageUserTeamRolesService',
-        function ($scope, Client, ManageUserRolesService, ManageUserTeamRolesService) {
-            $scope.client = Client.getClient().entity;
-            $scope.page.setTitle('Manage User Roles - ' + $scope.client.name);
+    .controller('ManageClientRolesMainCtrl', ['$scope', 'ManageUserRolesService', 'ManageUserTeamRolesService', 'clientResource',
+        function ($scope, ManageUserRolesService, ManageUserTeamRolesService, clientResource) {
+            $scope.clientResource = clientResource;
+            $scope.client = clientResource.entity;
+            $scope.page.setTitle('Manage User Roles - ' + clientResource.entity.name);
             $scope.loading = true;
 
             /**
              * Call this method from ClientRoleAdminCtrl and ClientTeamRoleAdminCtrl to set hasExistingClientRoles and hasExistingClientTeamRoles
              */
             $scope.setHasExistingRoles = function () {
-                ManageUserRolesService.hasExistingClientRoles().then(function(hasClientRoles){
+                ManageUserRolesService.hasExistingClientRoles($scope.clientResource).then(function(hasClientRoles){
                     $scope.hasExistingClientRoles = hasClientRoles;
-                    ManageUserTeamRolesService.hasExistingClientTeamRoles().then(function(hasClientTeamRoles){
+                    ManageUserTeamRolesService.hasExistingClientTeamRoles($scope.clientResource).then(function(hasClientTeamRoles){
                         $scope.hasExistingClientTeamRoles = hasClientTeamRoles;
                         $scope.loading = false;
                     });
