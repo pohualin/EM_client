@@ -94,7 +94,7 @@ angular.module('emmiManager')
                         }).finally(function () {
                             makingCurrentUserCall = false;
                             var nextCall = currentUserCallQueue.shift();
-                            if (nextCall) {
+                            if (nextCall && $rootScope.authenticated) {
                                 me._requestUser(nextCall, me);
                             }
                         });
