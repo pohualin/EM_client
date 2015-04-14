@@ -1,7 +1,7 @@
 'use strict';
 angular.module('emmiManager')
 
-	.controller('ProviderListController', function($rootScope, $scope, $modal, ProviderView, TeamLocation, TeamProviderService, ProviderSearch, $controller, arrays, ProviderCreate,  $alert){
+	.controller('ProviderListController', function($scope, $modal, ProviderView, TeamLocation, TeamProviderService, ProviderSearch, $controller, arrays, ProviderCreate,  $alert){
 
 		$controller('CommonPagination', {$scope: $scope});
 
@@ -19,7 +19,7 @@ angular.module('emmiManager')
 
         $scope.allLocationsForTeam = 'All Locations';
 
-        $rootScope.$on('event:teamLocationSavedWithProvider', function () {
+        $scope.$on('event:teamLocationSavedWithProvider', function () {
         	$scope.refreshLocationsAndProviders();
         });
 
