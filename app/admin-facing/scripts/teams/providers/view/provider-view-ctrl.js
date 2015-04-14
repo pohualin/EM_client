@@ -110,7 +110,6 @@ angular.module('emmiManager')
         $scope.addProviders = function () {
             if($scope.providerErrorAlertForCreate){
                 $scope.providerErrorAlertForCreate.hide();
-
             }
             $scope.associateRequestSubmitted = false;
         	TeamLocation.getTeamLocations($scope.teamResource.link.teamLocations).then(function(response){
