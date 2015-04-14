@@ -28,16 +28,13 @@ angular.module('emmiManager')
                         // reload the existing providers
                         $scope.performSearch();
 
-                        var providerResource = provider.data.provider,
-                            providerMiddleName = providerResource.entity.middleName ? providerResource.entity.middleName : '',
-                            providerFullName = providerResource.entity.firstName + ' ' + providerMiddleName + ' ' + providerResource.entity.lastName;
-
+                        var providerResource = provider.data.provider;
                         $scope.hideNewProviderModal();
                         if (addAnother) {
                             $scope.associateProviders();
                             $alert({
                                 title: ' ',
-                                content: 'The provider <b>' + providerFullName + '</b> has been successfully created.',
+                                content: 'The provider <b>' + providerResource.entity.fullName + '</b> has been successfully created.',
                                 container: '#modal-messages-container',
                                 type: 'success',
                                 show: true,
@@ -47,7 +44,7 @@ angular.module('emmiManager')
                         } else {
                             $alert({
                                 title: ' ',
-                                content: ' <b>' + providerFullName + '</b> has been added successfully.',
+                                content: ' <b>' + providerResource.entity.fullName + '</b> has been added successfully.',
                                 container: '#messages-container',
                                 type: 'success',
                                 placement: 'top',
