@@ -108,6 +108,10 @@ angular.module('emmiManager')
         };
 
         $scope.addProviders = function () {
+            if($scope.providerErrorAlertForCreate){
+                $scope.providerErrorAlertForCreate.hide();
+
+            }
             $scope.associateRequestSubmitted = false;
         	TeamLocation.getTeamLocations($scope.teamResource.link.teamLocations).then(function(response){
                 $scope.allTeamLocations = TeamProviderService.buildMultiSelectData(response);
@@ -354,7 +358,7 @@ angular.module('emmiManager')
 
         $scope.saveProvider = function (isValid, addAnother) {
             $scope.providerFormSubmitted = true;
-        	if (isValid) {
+        	if (isValid && $scope.selectedItems.length > 0) {
 	        	ProviderCreate.create($scope.provider, $scope.teamResource, $scope.selectedItems).then(function(response){
 	                ProviderCreate.associateTeamLocationsToProvider(response.data.entity, $scope.teamResource, $scope.selectedItems);
 	        		$scope.hideNewProviderModal();
@@ -394,8 +398,8 @@ angular.module('emmiManager')
         };
 
         $scope.showError = function () {
-            if (!$scope.errorAlert) {
-                $scope.errorAlert = $alert({
+            if (!$scope.providerErrorAlertForCreate) {
+                $scope.providerErrorAlertForCreate = $alert({
                     title: ' ',
                     content: 'Please correct the below information.',
                     container: '#modal-messages-container',
@@ -404,7 +408,7 @@ angular.module('emmiManager')
                     dismissable: false
                 });
             } else {
-                $scope.errorAlert.show();
+                $scope.providerErrorAlertForCreate.show();
             }
         };
 	})
