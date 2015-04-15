@@ -8,7 +8,7 @@ angular.module('emmiManager')
     .controller('ClientTeamRoleAdminCtrl', ['$scope', 'ManageUserTeamRolesService', '$filter', 'focus',
         function ($scope, ManageUserTeamRolesService, $filter, focus) {
 
-            ManageUserTeamRolesService.referenceData().then(function(referenceData){
+            ManageUserTeamRolesService.referenceData($scope.clientResource).then(function (referenceData) {
                 $scope.clientTeamReferenceData = referenceData;
                 $scope.libraries = referenceData.roleLibrary;
             });
@@ -17,7 +17,7 @@ angular.module('emmiManager')
              * Loads existing roles for the current client
              */
             $scope.loadExisting = function () {
-                ManageUserTeamRolesService.loadClientTeamRoles().then(function (rolesResources) {
+                ManageUserTeamRolesService.loadClientTeamRoles($scope.clientResource).then(function (rolesResources) {
                     $scope.existingClientTeamRoles = rolesResources;
                     $scope.setHasExistingRoles();
                 });
@@ -78,10 +78,11 @@ angular.module('emmiManager')
              */
             $scope.saveNewRole = function (clientTeamRoleEntity, form) {
                 form.$setPristine();
-                ManageUserTeamRolesService.saveNewClientTeamRole(clientTeamRoleEntity).then(function () {
-                    delete $scope.newClientTeamRole;
-                    $scope.loadExisting();
-                });
+                ManageUserTeamRolesService.saveNewClientTeamRole(clientTeamRoleEntity, $scope.clientResource)
+                    .then(function () {
+                        delete $scope.newClientTeamRole;
+                        $scope.loadExisting();
+                    });
             };
 
             /**
@@ -164,9 +165,10 @@ angular.module('emmiManager')
              * called on click of the 'Add' button on the group library popup
              */
             $scope.addLibraries = function () {
-                ManageUserTeamRolesService.saveSelectedLibraries($scope.libraries).then(function (){
-                    $scope.loadExisting();
-                });
+                ManageUserTeamRolesService.saveSelectedLibraries($scope.libraries, $scope.clientResource)
+                    .then(function () {
+                        $scope.loadExisting();
+                    });
             };
 
             /**

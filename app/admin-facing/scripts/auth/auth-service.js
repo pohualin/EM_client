@@ -99,9 +99,11 @@ angular.module('emmiManager')
                             }
                         });
                     } else {
-                        $rootScope.authenticated = !!Session.login;
-                        $rootScope.account = Session;
-                        deferred.resolve(Session);
+                        deferred.resolve($rootScope.account);
+                        var nextCall = currentUserCallQueue.shift();
+                        if (nextCall) {
+                            me._requestUser(nextCall, me);
+                        }
                     }
                 },
 

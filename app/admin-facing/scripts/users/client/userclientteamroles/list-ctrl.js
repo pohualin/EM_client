@@ -15,7 +15,7 @@ angular.module('emmiManager')
     		 * load all UserClientTeamRoles for the client
     		 */
     		$scope.loadClientTeamRoles = function(){
-    			ManageUserTeamRolesService.loadClientTeamRoles().then(function(clientTeamRoles){
+    			ManageUserTeamRolesService.loadClientTeamRoles(Client.getClient()).then(function(clientTeamRoles){
 					$scope.clientTeamRoles = clientTeamRoles;
 					UserClientUserClientTeamRolesService.refreshTeamRoleCards($scope.clientTeamRoles);
                     // update parent controller with roles
