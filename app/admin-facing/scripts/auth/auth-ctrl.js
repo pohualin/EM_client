@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('emmiManager')
-    .controller('LoginCtrl', ['$scope', '$location', 'AuthSharedService', '$rootScope',
-        function ($scope, $location, AuthSharedService, $rootScope) {
+    .controller('LoginCtrl', ['$scope', '$location', 'AuthSharedService', '$rootScope','LoginErrorMessageFactory',
+        function ($scope, $location, AuthSharedService, $rootScope,LoginErrorMessageFactory) {
         
             $scope.credentials = {
                 rememberMe: true,
@@ -10,6 +10,7 @@ angular.module('emmiManager')
             };
 
             $rootScope.authenticationError = false;
+            $rootScope.loginErrorMessageFactory = LoginErrorMessageFactory;
 
             /**
              * Called when login button is clicked

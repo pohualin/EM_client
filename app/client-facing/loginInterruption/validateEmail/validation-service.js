@@ -4,8 +4,8 @@ angular.module('emmiManager')
 /**
  * Service for activation.
  */
-    .service('ValidationService', ['$http', 'UriTemplate', '$q', 'API',
-        function ($http, UriTemplate, $q, API) {
+    .service('ValidationService', ['$http', 'UriTemplate', '$q', 'API','LoginErrorMessageFactory',
+        function ($http, UriTemplate, $q, API,LoginErrorMessageFactory) {
             return {
 
                 /**
@@ -66,9 +66,14 @@ angular.module('emmiManager')
                  */
                 validateEmailToken: function (emailValidationToken) {
                     var deferred = $q.defer();
-                    $http.put(UriTemplate.create(API.validateEmailToken).stringify(), {validationToken: emailValidationToken}).then(function (response) {
-                        deferred.resolve(response);
-                    });
+                    $http.put(UriTemplate.create(API.validateEmailToken).stringify(), {validationToken: emailValidationToken})
+                        .success(function(response) {
+                            deferred.resolve(response);
+                        })
+                        .error(function (response) {
+                            angular.extend(LoginErrorMessageFactory,{showEmailValidationTokenExpired:true});
+                            deferred.resolve(response);
+                        });
                     return deferred.promise;
                 }
 
