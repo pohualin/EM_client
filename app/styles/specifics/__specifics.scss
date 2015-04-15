@@ -4,6 +4,19 @@
 @import 'sample';
 @import 'popovers';
 
+.field-note {
+    margin-left: 14px;
+    &.field-optional {
+        color: $input-color-placeholder;
+        font-style: italic;
+        font-weight: 300;
+    }
+}
+
+.error-circle {
+    margin-left: 4px;
+}
+
 // miscellaneous rules
 .icon-size-xl { font-size: $font-size-h1; } // 24px
 .icon-size-lg { font-size: $font-size-h2; } // 20px
@@ -16,6 +29,10 @@
         padding-left: $padding-base-horizontal + 24;
         &:focus ~ .input-icon {
             color: $brand-secondary;
+        }
+        // Change color of input icon when valid data has been entered
+        &.ng-dirty.ng-valid + .input-icon {
+            color: $gray;
         }
     }
 }
@@ -168,9 +185,9 @@ td {
   color: #333;
 }
 
-.popover-text {
+/*.popover-text {
   font-size: 14px;
-}
+}*/
 
 div.masked {
   position: relative;

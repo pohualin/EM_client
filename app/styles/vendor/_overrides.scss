@@ -5,9 +5,9 @@
 }
 
 .alert {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    @include remIt(font-size, 16);
+    padding-top: 8px;
+    padding-bottom: 8px;
+    @include remIt(font-size, 15);
     font-weight: 300;
     box-shadow: 3px 3px 0px 0px rgba(110,124,136,0.10);
     strong {
@@ -150,13 +150,13 @@ table {
     border-radius: $border-radius-base;
 }
 .popover-title {
-    padding: 12px 14px;
+    padding: 12px 19px;
     padding-right: 32px; // Make sure there's enough room for close button
     color: #fff;
     border-radius: 0;
 }
 .popover-content {
-    padding: 14px;
+    padding: 19px 19px 24px;
     @include remIt(font-size, 16);
     font-weight: 300;
     &:empty {
