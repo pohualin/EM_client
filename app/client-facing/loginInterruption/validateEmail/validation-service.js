@@ -31,7 +31,7 @@ angular.module('emmiManager')
                  */
                 saveEmail: function (user) {
                     var deferred = $q.defer();
-                    if(user.email !== null && user.login !== null && user.login.toUpperCase() === user.originalUserClientEmail.toUpperCase()){
+                    if (user.email !== null && user.login !== null && user.login.toUpperCase() === user.originalUserClientEmail.toUpperCase()) {
                         user.login = user.email;
                     }
                     $http.put(UriTemplate.create(user.link.self).stringify(), user)
@@ -75,6 +75,19 @@ angular.module('emmiManager')
                             deferred.resolve(response);
                         });
                     return deferred.promise;
+                },
+
+                /**
+                 * dont ask user for information again until expiration date
+                 *
+                 * @param userClient current userClient
+                 * @returns the response
+                 *
+                 **/
+                notNow: function (userClient) {
+                    $http.put(UriTemplate.create(userClient.link.notNow).stringify(), userClient).then(function (response) {
+                        return response;
+                    });
                 }
 
 

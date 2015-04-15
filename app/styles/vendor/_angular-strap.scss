@@ -7,7 +7,14 @@
  */
 .datepicker.dropdown-menu {
   width: 250px;
-  height: 270px
+  height: auto !important; // non-static height because our thead buttons are taller (EM-993)
+  border-color: #6CC5DC;
+}
+
+// Day of week label row
+.datepicker.dropdown-menu th.dow {
+    font-size: 14px;
+    font-weight: 300;
 }
 
 .datepicker.dropdown-menu button {
@@ -66,7 +73,6 @@
   }
 
 }
-*/
 
 .alert.top {
     top: 0;
@@ -74,6 +80,7 @@
         top: 65px;
     }
 }
+*/
 
 .tooltip-inner {
   max-width: 600px;

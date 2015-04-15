@@ -44,7 +44,7 @@ angular.module('emmiManager')
     		 * load all UserClientRoles for the client
     		 */
     		$scope.loadClientRoles = function(){
-				ManageUserRolesService.loadClientRolesWithPermissions().then(function(clientRoles){
+				ManageUserRolesService.loadClientRolesWithPermissions(Client.getClient()).then(function(clientRoles){
 					$scope.clientRoles = clientRoles;
 					$scope.setIsSuperUser();
 				});

@@ -281,6 +281,10 @@
         }
     }
 
+    .btn-link-nopad {
+        padding: 0;
+    }
+
     .btn-cancel {
         @extend .btn-link;
         color: #BBC5CF;
@@ -309,6 +313,12 @@
     }
 
     /* _____ FORMS _____ */
+    .form-actions {
+        margin-top: 8px;
+        .form-group {
+            margin-bottom: 5px;
+        }
+    }
     label {
         font-size: $font-size-small;
         text-transform: uppercase;
@@ -327,7 +337,7 @@
         }
     }
     .form-group {
-        margin-bottom: 20px;
+        margin-bottom: 22px;
     }
     .form-control:focus {
         box-shadow: none !important;
@@ -513,6 +523,7 @@
         box-shadow: 4px 4px 0px 0px rgba(110,124,136,0.07);
         margin: 0 0 12px;
         padding: 28px 28px 30px;
+        @include clearfix;
     }
 
     .app-content-with-sidebar {
@@ -542,6 +553,7 @@
         color: #fff;
         color: rgba(255,255,255,0.85);
         margin-top: -25px;
+        //border-top: 4px solid rgba(0,0,0,0.07); // Match the breadcrumb/header shadow
         // for faux equal height columns
         margin-bottom: -99999px;
         padding-bottom: 99999px;
@@ -553,10 +565,23 @@
         // overflow-x: hidden;
         // overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
         > .sidebar-wrapper {
-            padding: 25px 15px;
+            padding: 25px 12px;
         }
         .sidebar-heading {
             color: rgba(255,255,255,0.85);
+        }
+        .configure {
+            a {
+                display: inline-block;
+                text-indent: -999px;
+                width: 24px;
+                height: 24px;
+                background: url('../images/icon-glyphicon-cogwheels.png') no-repeat left center;
+                opacity: 0.5;
+                &:hover {
+                    opacity: 1;
+                }
+            }
         }
         label {
             font-weight: normal;
@@ -564,12 +589,16 @@
         hr {
             border-color: rgba(255,255,255,0.25);
         }
-        select.form-control {
+        select.form-control,
+        select.form-control + .chosen-container .chosen-choices {
             background: #9fa6ab;
             background: rgba(250,251,251,0.40);
             border: 1px solid #b7bbc0;
             border: 1px solid rgba(207,210,213,0.50);
             color: rgba(255,255,255,0.85);
+        }
+        .chosen-container-multi .chosen-choices li.search-field input[type="text"] {
+            color: rgba(255,255,255,0.85) !important;
         }
         .teams-filter-heading {
             color: rgba(255,255,255,0.85);

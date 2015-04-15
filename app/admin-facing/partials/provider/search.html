@@ -3,13 +3,13 @@
     <div class="row">
         <div class="col-md-12">
             <div class="layout-card">
-                <h1>Manage Clients, Teams, Providers and Locations:</h1>
+                <h1>Manage Clients, Teams, Providers &amp; Locations</h1>
                 <form name="searchForm" novalidate>
                     <div class="row">
-                        <div class="col-md-2 col-sm-2">
+                        <div class="col-md-2">
                             <div data-ng-include="'admin-facing/partials/search/search_option_dropdown.html'"></div>
                         </div>
-                        <div class="col-md-6 col-sm-5">
+                        <div class="col-md-6 kill-grid-pad">
                             <div class="form-group">
                                 <label class="sr-only" for="query">Search</label>
                                 <div class="input-group has-input-icon has-input-icon-search">
@@ -25,34 +25,33 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-2 col-sm-3">
+                        <div class="col-md-1">
                             <span data-ng-class="{'search-spinner' : loading}"></span>
                         </div>
                     </div>
                 </form>
                 <div class="row" data-ng-show="searchPerformed">
                     <div class="col-md-12">
-                        <hr>
-                        <div class="row" data-ng-hide="removeStatusFilterAndTotal">
+                        <hr class="search-divider" />
+                        <div class="row table-search-filters" data-ng-hide="removeStatusFilterAndTotal">
                             <div class="col-md-12">
-                                <div class="pull-right">
+                                <div class="pull-right table-results-count">
                                     {{total}}
-                                    <span data-ng-show="total != 1" data-translate="global.labels.total"> results</span>
-                                    <span data-ng-show="total === 1" data-translate="global.labels.totalSingular"> result</span>
+                                    <span data-ng-if="total != 1" data-translate="global.labels.total"> results</span>
+                                    <span data-ng-if="total === 1" data-translate="global.labels.totalSingular"> result</span>
                                 </div>
                                 <form class="form-inline">
                                     <div class="form-group">
-                                        <label for="status_filter" data-translate="global.labels.statusFilter">Show:</label>&nbsp;&nbsp;
-                                        <select class="form-control" id="status_filter" data-ng-model="status"
+                                        <label for="status_filter" data-translate="global.labels.statusFilter">Show:</label>
+                                        <select class="form-control input-sm" style="width:110px;" id="status_filter" data-ng-model="status"
                                                 data-ng-options="status | translate for status in statuses"
-                                                data-ng-change="statusChange()">
+                                                data-ng-change="statusChange()" data-chosen data-disable-search="true">
                                         </select>
                                     </div>
                                 </form>
                             </div>
                         </div>
-                        <br>
-                        <table class="table table-bordered table-striped table-hover table-secondary"
+                        <table class="table table-bordered table-striped table-hover"
                             border="0" cellpadding="0" cellspacing="0" data-ng-show="providers">
                             <thead>
                                 <tr>
@@ -76,7 +75,7 @@
                             </thead>
                             <tbody>
                                 <tr data-ng-repeat="provider in providers | orderBy:'provider.sortIdx'">
-                                    <td>{{provider.entity.firstName}} {{provider.entity.lastName}} <em>{{provider.entity.active ? '' : "(inactive)"}}</em></td>
+                                    <td>{{provider.entity.firstName}} {{provider.entity.middleName}} {{provider.entity.lastName}} <em>{{provider.entity.active ? '' : "(inactive)"}}</em></td>
                                     <td>{{provider.entity.specialty.name}}</td>
                                     <td>{{provider.entity.email}}</td>
                                     <td class="text-center"><a href="#/providers/{{provider.entity.id}}"><i class="icon-compose icon-size-xl"></i></a></td>

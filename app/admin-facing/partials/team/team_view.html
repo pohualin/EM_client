@@ -1,57 +1,36 @@
         <div class="col-md-12">
             <div class="row">
+                <div class="col-md-12">
+                    <h1>
+                        <span data-translate="team_view_page.information.title">Team Information</span>
+                        <span><a class="btn btn-icon icon-size-lg" data-ng-click="edit()"><i class="icon-compose"></i></a></span>
+                    </h1>
+                </div>
+            </div>
+            <div class="row entity-info">
+                <div class="col-md-12">
+                    <h5 class="entity-value-label" data-translate="team_view_page.information.name"></h5>
+                    <div class="entity-value">{{team.name}} <em>({{team.active ? "active" : "inactive"}})</em></div>
+                </div>
+            </div>
+            <div class="row entity-info">
+                <div class="col-md-12">
+                    <h5 class="entity-value-label" data-translate="team_view_page.information.description"></h5>
+                    <div class="entity-value">{{team.description}}</div>
+                </div>
+            </div>
+            <div class="row entity-info">
                 <div class="col-md-6">
-                    <h2 data-translate="team_view_page.information.title">Team Information</h2>
+                    <h5 class="entity-value-label" data-translate="team_view_page.information.salesforce"></h5>
+                    <div class="entity-value">{{team.salesForceAccount.name}}</div>
                 </div>
-                <div class="col-md-6">
-                    <div class="pull-right">
-                        <h2>
-                            <a class="btn btn-primary" data-ng-click="edit()"
-                                    data-translate="team_view_page.edit_button">
-                                Edit Team
-                            </a>
-                        </h2>
-                    </div>
+                <div class="col-md-3">
+                    <h5 class="entity-value-label" data-translate="team_view_page.information.phone"></h5>
+                    <div class="entity-value">{{team.salesForceAccount.phoneNumber}}</div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <span data-translate="team_view_page.information.name"></span>
-                </div>
-                <div class="col-md-4">
-                    {{team.name}} <em>({{team.active ? "active" : "inactive"}})</em>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <span data-translate="team_view_page.information.description"></span>
-                </div>
-                <div class="col-md-8">
-                    {{team.description}}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <span data-translate="team_view_page.information.salesforce"></span>
-                </div>
-                <div class="col-md-8">
-                    {{team.salesForceAccount.name}}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <span data-translate="team_view_page.information.phone"></span>
-                </div>
-                <div class="col-md-8">
-                    {{team.salesForceAccount.phoneNumber}}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <span data-translate="team_view_page.information.fax"></span>
-                </div>
-                <div class="col-md-8">
-                    {{team.salesForceAccount.fax}}
+                <div class="col-md-3">
+                    <h5 class="entity-value-label" data-translate="team_view_page.information.fax"></h5>
+                    <div class="entity-value">{{team.salesForceAccount.fax}}</div>
                 </div>
             </div>
         </div>

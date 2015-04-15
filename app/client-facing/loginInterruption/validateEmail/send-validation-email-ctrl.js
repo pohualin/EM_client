@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('emmiManager')
-    .controller('sendValidationEmail', ['$scope', 'ValidationService', '$alert', '$location','EmailRestrictConfigurationsService',
+    .controller('sendValidationEmail', ['$scope', 'ValidationService', '$alert', '$location', 'EmailRestrictConfigurationsService',
         function ($scope, ValidationService, $alert, $location, EmailRestrictConfigurationsService) {
             //store original email
             ValidationService.get($scope.account).then(function (accountWithOriginalEmail) {
@@ -46,7 +46,7 @@ angular.module('emmiManager')
                                     $scope.emailError = error.validationError;
                                 });
                             }
-                            if(!$scope.validateEmailErrorAlert) {
+                            if (!$scope.validateEmailErrorAlert) {
                                 $scope.validateEmailErrorAlert = $alert({
                                     title: ' ',
                                     content: 'Please correct the below information.',
@@ -60,7 +60,7 @@ angular.module('emmiManager')
                         });
                 } else {
                     //email doesn't match the matcher on email field or is blank
-                    if(!$scope.validateEmailErrorAlert) {
+                    if (!$scope.validateEmailErrorAlert) {
                         $scope.validateEmailErrorAlert = $alert({
                             title: ' ',
                             content: 'Please correct the below information.',
@@ -79,6 +79,14 @@ angular.module('emmiManager')
              */
             $scope.resetDuplicateValidity = function () {
                 $scope.validateEmailForm.validateEmail.$setValidity('duplicate', true);
+            };
+
+            /**
+             * functionality if user clicks not now
+             */
+            $scope.notNow = function () {
+                ValidationService.notNow($scope.account);
+                $location.path($scope.locationBeforeLogin).replace();
             };
         }])
 ;

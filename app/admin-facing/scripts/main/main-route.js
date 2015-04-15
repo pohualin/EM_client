@@ -12,9 +12,16 @@ angular.module('emmiManager')
         // Routes
         $routeProvider
             .when('/', {
+                redirectTo: '/clients', // main page of the site redirects to client search (EM-991)
+                access: {
+                    authorizedRoles: [USER_ROLES.all]
+                },
+                resolve: requiredResources
+            })
+            .when('/settings', {
                 templateUrl: 'admin-facing/partials/main.html',
                 controller: 'MainCtrl',
-                title: 'Home',
+                title: 'Settings',
                 access: {
                     authorizedRoles: [USER_ROLES.all]
                 },

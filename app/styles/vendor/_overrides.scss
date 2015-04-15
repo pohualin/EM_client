@@ -5,9 +5,9 @@
 }
 
 .alert {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    @include remIt(font-size, 16);
+    padding-top: 8px;
+    padding-bottom: 8px;
+    @include remIt(font-size, 15);
     font-weight: 300;
     box-shadow: 3px 3px 0px 0px rgba(110,124,136,0.10);
     strong {
@@ -18,7 +18,7 @@
 .alert-dismissable,
 .alert-dismissible {
     .close {
-        top: -4px;
+        //top: -4px;
         @include opacity(.75);
         .icon-delete {
             font-weight: bold;
@@ -28,6 +28,42 @@
             color: inherit;
             @include opacity(1);
         }
+    }
+}
+
+/*
+ * Alerts placements from Bootstrap Additions (need to override and we'll handle with our global alerts cotainer)
+ */
+.global-messages-container {
+    position: fixed;
+    width: 80%;
+    max-width: 1056px;
+    z-index: 1050;
+    text-align: center;
+    // center it in the window
+    margin: 30px auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    // center the auto-width alert
+    .alert {
+        display: inline-block !important; // Angularstrap sets this to block, so auto widths won't work
+    }
+    // override bootstrap additions classes
+    .alert.top,
+    .alert.top-left,
+    .alert.top-right,
+    .alert.bottom,
+    .alert.bottom-left,
+    .alert.bottom-right {
+        position: relative;
+        z-index: auto;
+        text-align: left;
+        margin: 0 0 20px;
+        top: auto;
+        right: auto;
+        bottom: auto;
+        left: auto;
     }
 }
 
@@ -114,13 +150,13 @@ table {
     border-radius: $border-radius-base;
 }
 .popover-title {
-    padding: 12px 14px;
+    padding: 12px 19px;
     padding-right: 32px; // Make sure there's enough room for close button
     color: #fff;
     border-radius: 0;
 }
 .popover-content {
-    padding: 14px;
+    padding: 19px 19px 24px;
     @include remIt(font-size, 16);
     font-weight: 300;
     &:empty {
@@ -181,6 +217,13 @@ table {
 .dropdown-menu {
     @include remIt(font-size, 16);
     box-shadow: none;
+    > li > a {
+        font-weight: 300;
+        &:hover,
+        &:focus {
+            font-weight: normal;
+        }
+    }
 }
 
 .typeahead.dropdown-menu,
@@ -273,3 +316,10 @@ table {
     }
 }
 
+// Bootstrap Additions modal
+.modal.center .modal-dialog {
+    max-width: none;
+}
+.modal.center .modal-dialog-large {
+    width: 85%;
+}

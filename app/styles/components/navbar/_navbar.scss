@@ -1,11 +1,28 @@
+// Headroom.js CSS for the sliding navigation
+.headroom {
+    transition: transform 250ms linear;
+}
+.headroom--pinned {
+    transform: translateY(0%);
+}
+.headroom--unpinned {
+    transform: translateY(-100%);
+}
+
 // Custom CSS for the main app navigation
 
 .app-header {
     position: relative;
-    z-index: $zindex-navbar;
+    position: fixed;
+    z-index: $zindex-navbar-fixed;
+    right: 0;
+    left: 0;
+    top: 0;
 }
 
 .navbar {
+    position: relative;
+    z-index: $zindex-navbar-fixed+1;
     margin: 0;
     border-radius: 0;
 }
@@ -26,6 +43,9 @@
             border-left: 1px solid #a1aab2; //rgba(255,255,255,0.35)
             border-right: 1px solid #a1aab2; //rgba(255,255,255,0.35)
         }
+    }
+    &.navbar-right > li:first-child > a {
+        border-left: 0;
     }
     .open > a,
     .open > a:hover,
@@ -60,24 +80,23 @@
     position: relative;
     //box-shadow: 0px 4px 0px 0px rgba(110,124,136,0.12);
     box-shadow: 0px 4px 0px 0px rgba(0,0,0,0.07);
+    .with-breadcrumbs & {
+        box-shadow: none;
+    }
     background: $brand-secondary;
     @include clearfix();
 }
 
 .app-breadcrumb {
     position: relative;
-    z-index: $zindex-navbar;
-    background: #fff;
     //box-shadow: 0px 4px 0px 0px rgba(110,124,136,0.12);
     box-shadow: 0px 4px 0px 0px rgba(0,0,0,0.07);
+    background: #fff;
     .breadcrumb {
         margin: 0;
         padding: 9px 25px;
     }
 }
-// .app-header ~ .app-breadcrumb {
-//     margin: -25px 0 25px;
-// }
 
 .section-nav-items {
     float: left;

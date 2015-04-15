@@ -1,7 +1,7 @@
 'use strict';
 angular.module('emmiManager')
 
-	.controller('ProviderListController', function($rootScope, $scope, $modal, ProviderView, TeamLocation, TeamProviderService, ProviderSearch, $controller, arrays, ProviderCreate,  $alert){
+	.controller('ProviderListController', function($scope, $modal, ProviderView, TeamLocation, TeamProviderService, ProviderSearch, $controller, arrays, ProviderCreate,  $alert){
 
 		$controller('CommonPagination', {$scope: $scope});
 
@@ -19,12 +19,16 @@ angular.module('emmiManager')
 
         $scope.allLocationsForTeam = 'All Locations';
 
-        $rootScope.$on('event:teamLocationSavedWithProvider', function () {
+        $scope.$on('event:teamLocationSavedWithProvider', function () {
         	$scope.refreshLocationsAndProviders();
         });
 
         $scope.refreshLocationsAndProviders = function() {
+            $scope.teamProviders = {};
         	ProviderView.paginatedProvidersForTeam($scope.teamResource).then(function(response){
+        	    angular.forEach(response.content, function (teamProvider) {
+                    $scope.teamProviders[teamProvider.entity.provider.id] = angular.copy(teamProvider.entity.provider);
+                });
         		$scope.handleResponse(response, 'listOfTeamProviders');
         	});
         	TeamLocation.getTeamLocations($scope.teamResource.link.teamLocations).then(function(response){
@@ -78,7 +82,7 @@ angular.module('emmiManager')
 		};
 
 		// when a pagination link is used
-        $scope.fetchPaginationLink = function (href) {
+        $scope.fetchPage = function (href) {
             $scope.loading = true;
             ProviderView.fetchPageLink(href).then(function (page) {
         		$scope.handleResponse(page, 'listOfTeamProviders');
@@ -93,8 +97,8 @@ angular.module('emmiManager')
                 $scope.refreshLocationsAndProviders();
                 $alert({
                     title: ' ',
-                    content: 'The provider <b>' + provider.entity.provider.firstName + ' ' + provider.entity.provider.lastName + '</b> has been successfully removed.',
-                    container: 'body',
+                    content: 'The provider <b>' + provider.entity.provider.fullName + '</b> has been successfully removed.',
+                    container: '#messages-container',
                     type: 'success',
                     placement: 'top',
                     show: true,
@@ -105,12 +109,16 @@ angular.module('emmiManager')
             _paq.push(['trackEvent', 'Form Action', 'Team Provider', 'Remove']);
         };
 
-        $scope.addProviders = function () {
+        $scope.addProviders = function (addAnother) {
+            if($scope.providerErrorAlertForCreate){
+                $scope.providerErrorAlertForCreate.hide();
+            }
             $scope.associateRequestSubmitted = false;
         	TeamLocation.getTeamLocations($scope.teamResource.link.teamLocations).then(function(response){
                 $scope.allTeamLocations = TeamProviderService.buildMultiSelectData(response);
             });
        		$scope.addProvidersModalOnScope = {};
+       		$scope.addAnother = addAnother;
         	$scope.addProvidersModalOnScope =  $modal({
   			   scope: $scope,
   			   template: 'admin-facing/partials/team/provider/search.html', animation: 'none', backdropAnimation: 'emmi-fade', show: true, backdrop: 'static'});
@@ -287,23 +295,21 @@ angular.module('emmiManager')
 
 		        	ProviderSearch.updateProviderTeamAssociations($scope.teamProviderTeamLocationSaveRequest, $scope.teamResource).then(function (response) {
 		        		$scope.refreshLocationsAndProviders();
-		        		var message = $scope.teamProviderTeamLocationSaveRequest.length > 1 ? 'The selected providers have been successfully added.' : 'The provider <b>'+ $scope.teamProviderTeamLocationSaveRequest[0].provider.firstName + ' ' + $scope.teamProviderTeamLocationSaveRequest[0].provider.lastName +'</b> has been successfully added.';
+                        var message;
+                        if ($scope.teamProviderTeamLocationSaveRequest.length < 2) {
+                            message = 'The provider <b>'+ $scope.teamProviderTeamLocationSaveRequest[0].provider.fullName +'</b> has been successfully added.';
+                        } else {
+                            message = 'The selected providers have been successfully added.';
+                        }
 
 	                    $scope.hideaddprovidermodal();
 
 		        		if (addAnother) {
-	        				$scope.addProviders();
+	        				$scope.addProviders(true);
+	        				$scope.successAlert(message, '#modal-messages-container', addAnother);
+		        		} else {
+		        		    $scope.successAlert(message, '#messages-container');
 		        		}
-		        		$alert({
-							title: ' ',
-							content: message,
-							container: 'body',
-							type: 'success',
-							placement: 'top',
-						    show: true,
-						    duration: 5,
-						    dismissable: true
-						});
 		        	});
         		}
         	}
@@ -345,29 +351,43 @@ angular.module('emmiManager')
 
         $scope.saveProvider = function (isValid, addAnother) {
             $scope.providerFormSubmitted = true;
-        	if (isValid) {
+        	if (isValid && $scope.selectedItems.length > 0) {
 	        	ProviderCreate.create($scope.provider, $scope.teamResource, $scope.selectedItems).then(function(response){
 	                ProviderCreate.associateTeamLocationsToProvider(response.data.entity, $scope.teamResource, $scope.selectedItems);
 	        		$scope.hideNewProviderModal();
 	                $scope.refreshLocationsAndProviders();
+	                var message = 'The provider <b>'+ response.data.entity.fullName +'</b> has been successfully added.';
+	                
                     if (addAnother) {
-                        $scope.addProviders();
+                        $scope.addProviders(true);
+                        $scope.successAlert(message, '#modal-messages-container', addAnother);
+                    } else {
+                        $scope.successAlert(message, '#messages-container');
                     }
-	                $alert({
-						title: ' ',
-						content: 'The provider <b>'+ response.data.entity.firstName + ' ' + response.data.entity.lastName +'</b> has been successfully added.',
-						container: 'body',
-						type: 'success',
-						placement: 'top',
-					    show: true,
-					    duration: 5,
-					    dismissable: true
-					});
 	        	});
                 _paq.push(['trackEvent', 'Form Action', 'Team Provider Create', 'Save']);
-	        }
+	        } else{
+                $scope.showError();
+            }
         };
 
+        /**
+         * Display success alert
+         */
+        $scope.successAlert = function(message, container, addAnother){
+            var placement = addAnother ? '': 'top';
+            $alert({
+                title: '',
+                content: message,
+                container: container,
+                type: 'success',
+                placement: placement,
+                show: true,
+                duration: 5,
+                dismissable: true
+            });
+        };
+        
         if($scope.teamResource){
 			ProviderView.specialtyRefData($scope.teamResource).then(function(response){
 	        	$scope.specialties = response;
@@ -377,6 +397,21 @@ angular.module('emmiManager')
         	ProviderView.allProvidersForTeam($scope.teamResource).then(function(response){
         		$scope.handleResponse(response, 'listOfTeamProviders');
         	});
+        };
+
+        $scope.showError = function () {
+            if (!$scope.providerErrorAlertForCreate) {
+                $scope.providerErrorAlertForCreate = $alert({
+                    title: ' ',
+                    content: 'Please correct the below information.',
+                    container: '#modal-messages-container',
+                    type: 'danger',
+                    show: true,
+                    dismissable: false
+                });
+            } else {
+                $scope.providerErrorAlertForCreate.show();
+            }
         };
 	})
 ;

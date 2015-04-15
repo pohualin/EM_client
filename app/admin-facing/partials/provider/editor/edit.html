@@ -1,7 +1,9 @@
 <form name="providerForm" class="form" novalidate unsaved-warning-form>
     <div class="col-md-12">
-        <div class="row" data-ng-show="providerForm.$invalid">
-            <div class="col-md-12" id="message-container"></div>
+        <div id="validation-container" data-ng-show="providerForm.$invalid && providerFormSubmitted">
+            <div class="alert alert-danger">
+                Please correct the below information.
+            </div>
         </div>
         <div class="row">
             <div class="col-md-6 pull-left">
@@ -35,7 +37,7 @@
                     <input class="form-control" id="providerFirstName"
                         data-ng-model="providerToEdit.firstName"
                         name="providerFirstName" type="text" maxlength="255" required
-                        data-ng-pattern="/^[a-zA-Z '-]*$/">
+                        data-ng-pattern="/^[a-zA-Z '-(),.]*$/">
                 </div>
             </div>
 
@@ -57,7 +59,7 @@
                     <input class="form-control" id="providerMiddleName"
                         data-ng-model="providerToEdit.middleName"
                         name="providerMiddleName" type="text" maxlength="255"
-                        data-ng-pattern="/^[a-zA-Z '-]*$/">
+                        data-ng-pattern="/^[a-zA-Z '-(),.]*$/">
                 </div>
             </div>
 
@@ -78,7 +80,7 @@
                     <input class="form-control" id="providerLastName"
                         data-ng-model="providerToEdit.lastName"
                         name="providerLastName" type="text" maxlength="255" required
-                        data-ng-pattern="/^[a-zA-Z '-]*$/">
+                        data-ng-pattern="/^[a-zA-Z '-(),.]*$/">
                 </div>
             </div>
         </div>

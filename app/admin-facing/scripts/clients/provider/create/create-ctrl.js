@@ -28,16 +28,14 @@ angular.module('emmiManager')
                         // reload the existing providers
                         $scope.performSearch();
 
-                        var providerResource = provider.data.provider,
-                            providerName = providerResource.entity.firstName + ' ' + providerResource.entity.lastName;
-
+                        var providerResource = provider.data.provider;
                         $scope.hideNewProviderModal();
                         if (addAnother) {
                             $scope.associateProviders();
                             $alert({
                                 title: ' ',
-                                content: 'The provider <b>' + providerName + '</b> has been successfully created.',
-                                container: '#message-container',
+                                content: 'The provider <b>' + providerResource.entity.fullName + '</b> has been successfully created.',
+                                container: '#modal-messages-container',
                                 type: 'success',
                                 show: true,
                                 duration: 5,
@@ -46,8 +44,8 @@ angular.module('emmiManager')
                         } else {
                             $alert({
                                 title: ' ',
-                                content: ' <b>' + providerName + '</b> has been added successfully.',
-                                container: 'body',
+                                content: ' <b>' + providerResource.entity.fullName + '</b> has been added successfully.',
+                                container: '#messages-container',
                                 type: 'success',
                                 placement: 'top',
                                 show: true,
@@ -62,7 +60,7 @@ angular.module('emmiManager')
                         $scope.providerErrorAlert = $alert({
                             title: ' ',
                             content: 'Please correct the below information.',
-                            container: '#message-container',
+                            container: '#modal-messages-container',
                             type: 'danger',
                             show: true,
                             dismissable: false

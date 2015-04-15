@@ -153,29 +153,23 @@ angular.module('emmiManager')
                         });
                 }
             },
-            checkForConflicts: function (clientResource) {
+            checkForConflicts: function (clientResource, removedTags) {
                 var deferred = $q.defer();
                 var groupSaveRequests = GroupSaveRequest.create(clientResource);
+                var tagMap = {};
+                angular.forEach(removedTags, function(removedTag){
+                    var rt = {tag: removedTag.name, numberOfTeams: 0, conflictingTeamIds: []};
+                    tagMap[removedTag.name] = rt;
+                });
+                
                 return $http.post(UriTemplate.create(clientResource.link.invalidTeams).stringify(), groupSaveRequests).then(function (response) {
-                    var tagMap = {};
-                    var conflictingTeamIds = [];
-                    var tagNames = [];
                     angular.forEach(response.data, function (teamTag) {
-                        if (!tagMap[teamTag.tag.name]) {
-                            tagMap[teamTag.tag.name] = 1;
-                            tagNames.push(teamTag.tag.name);
-                            conflictingTeamIds.push(teamTag.team.id);
-                        } else {
-                            tagMap[teamTag.tag.name]++;
-                        }
+                        tagMap[teamTag.tag.name].conflictingTeamIds.push(teamTag.team.id);
+                        tagMap[teamTag.tag.name].numberOfTeams++;
                     });
                     var numberOfTeamForTagMap = [];
-                    angular.forEach(tagNames, function (tagName) {
-                        numberOfTeamForTagMap.push({
-                            tag: tagName,
-                            conflictingTeamIds: conflictingTeamIds,
-                            numberOfTeams: tagMap[tagName]
-                        });
+                    angular.forEach(tagMap, function (removedTag) {
+                        numberOfTeamForTagMap.push(removedTag);
                     });
                     deferred.resolve(numberOfTeamForTagMap);
                     return deferred.promise;
@@ -229,6 +223,40 @@ angular.module('emmiManager')
                     });
                     return deferred.promise;
                 }
+            },
+            removedTags: function(client){
+                var deferred = $q.defer();
+                var tagGroups = [];
+                var tags = [];
+                var removedTags = [];
+                var isRemove = false;
+                angular.forEach(client.tagGroups, function(tagGroup){
+                    if(tagGroup.id){
+                        tagGroups.push(tagGroup.id);
+                    }
+                    
+                    angular.forEach(tagGroup.tags, function(tag){
+                        if(tag.id){
+                            tags.push(tag.id);
+                        }
+                    });
+                });
+                
+                angular.forEach(client.savedGroups, function(savedGroup){
+                    if(tagGroups.indexOf(savedGroup.id) === -1){
+                        angular.forEach(savedGroup.tags, function(tag){
+                            removedTags.push(tag);
+                        });
+                    } else {
+                        angular.forEach(savedGroup.tags, function(tag){
+                            if(tags.indexOf(tag.id) === -1){
+                                removedTags.push(tag);
+                            }
+                        });
+                    }
+                });
+                deferred.resolve(removedTags);
+                return deferred.promise;
             }
         };
     });

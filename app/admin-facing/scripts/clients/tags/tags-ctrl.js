@@ -56,7 +56,7 @@ angular.module('emmiManager')
         };
 
         $scope.checkForConflicts = function (isValid) {
-            Tag.checkForConflicts(Client.getClient()).then(function (conflictingTeamTags) {
+            Tag.checkForConflicts(Client.getClient(), $scope.removedTags).then(function (conflictingTeamTags) {
                 if (conflictingTeamTags.length > 0) {
                     if (conflictingTeamTags.length === 1 && (conflictingTeamTags[0].conflictingTeamIds[0] === parseInt($route.current.params.teamId))) {
                         //if the only team with this tag is the team we are currently on don't show popover
@@ -93,6 +93,7 @@ angular.module('emmiManager')
                         $scope.client.tagGroups = angular.copy($scope.client.savedGroups);
                         $scope.clientTagsHaveChanges = false;
                         $scope.saving = false;
+                        delete $scope.removedTags;
                         if ($scope.team) {
                             var tagGroupToDisplay = [];
                             angular.forEach(clientGroups, function (group) {
@@ -122,12 +123,16 @@ angular.module('emmiManager')
 
         $scope.tagsChanged = function () {
             $scope.clientTagsHaveChanges = true;
+            Tag.removedTags($scope.client).then(function(response){
+                $scope.removedTags = response;
+            });
             $scope.disableLibrary();
         };
 
         $scope.cancelTagChanges = function () {
             $scope.client.tagGroups = angular.copy($scope.client.savedGroups);
             $scope.clientTagsHaveChanges = false;
+            delete $scope.removedTags;
             $scope.disableLibrary();
         };
 
@@ -226,8 +231,9 @@ angular.module('emmiManager')
                             scope: scope,
                             show: false,
                             autoClose: true,
-                            placement: 'top',
+                            placement: 'bottom',
                             trigger: 'manual',
+                            container: 'body',
                             contentTemplate: 'admin-facing/partials/client/tags/conflictingTeam_popover.tpl.html'
                         });
                     }

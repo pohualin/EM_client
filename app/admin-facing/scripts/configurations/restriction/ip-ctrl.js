@@ -8,7 +8,7 @@ angular.module('emmiManager')
 .controller('IpRestrictConfigurationMainController', ['$alert', '$scope', '$controller', 'IpRestrictConfigurationsService',
     function ($alert, $scope, $controller, IpRestrictConfigurationsService) {
         var contentProperty = 'ipRestrictConfigurations';
-    
+
         /**
          * Fetch another set of existing ipRestrictConfigurations
          */
@@ -20,14 +20,14 @@ angular.module('emmiManager')
                 $scope.loading = false;
             });
         };
-        
+
         /**
          * Fetch the first set of existing ipRestrictConfigurations
          */
         $scope.listExisting = function(){
             getIpRestrict();
         };
-        
+
         /**
          * Remove one single ipRestrictConfiguration
          */
@@ -35,6 +35,7 @@ angular.module('emmiManager')
             IpRestrictConfigurationsService.remove(ipRestrictToRemove).then(function(response){
                 $alert({
                     content: '<b>' + $scope.client.name + '</b> has been updated successfully.',
+                    container: '#messages-container',
                     type: 'success',
                     placement: 'top',
                     show: true,
@@ -44,7 +45,7 @@ angular.module('emmiManager')
                 getIpRestrict();
             });
         };
-        
+
         /**
          * Sort the existing ipRestrictConfigurations
          */
@@ -52,7 +53,7 @@ angular.module('emmiManager')
             var sort = $scope.createSortProperty(property);
             getIpRestrict(sort);
         };
-        
+
         /**
          * init method called when page is loading
          */
@@ -60,7 +61,7 @@ angular.module('emmiManager')
             $controller('CommonSearch', {$scope: $scope});
             $scope.listExisting();
         }
-        
+
         /**
          * Utility method to call by sort and listExisting
          */
@@ -78,4 +79,4 @@ angular.module('emmiManager')
 
         init();
     }]);
- 
+

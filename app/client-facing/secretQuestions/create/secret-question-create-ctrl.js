@@ -5,9 +5,9 @@ angular.module('emmiManager')
 /**
  * This manages interactions when a user needs to select secret questions and responses.
  */
-    .controller('SecretQuestionCreateController', ['$scope', '$location', 'SecretQuestionService', '$alert',
-        function ($scope, $location, SecretQuestionService, $alert) { 	
-    	
+    .controller('SecretQuestionCreateController', ['$scope', '$location', 'SecretQuestionService', '$alert', 'account',
+        function ($scope, $location, SecretQuestionService, $alert, account) {
+
     	$scope.secretQuestionFormSubmitted = false;
     	$scope.duplicated = false;
     	/**
@@ -42,9 +42,9 @@ angular.module('emmiManager')
                     });
                 }
             }
-  	
+
     	};
-    	
+
     	/**
     	 * When the save button is clicked. Check if the user
     	 * selected 2 same questions or not
@@ -58,28 +58,29 @@ angular.module('emmiManager')
     	    	$scope.secretQuestionForm.secretQuestion2.$setValidity('duplicated', true);
     	    }
     	};
-    	 
+
         /**
          * Called when cancel is clicked.. takes the original
          * objects and copies them back into the bound objects.
          */
     	$scope.notNow = function () {
+            SecretQuestionService.notNow(account);
             $location.path('/');
-           
+
         };
-       
+
        function init(){
-                       
+
     		SecretQuestionService.getSecretQuestions().then(function(response) {
-          		$scope.secretQuestions = response.data.content; 
+          		$scope.secretQuestions = response.data.content;
        		});
-          	
+
           	$scope.question1 = SecretQuestionService.createNewResponse();
           	$scope.question2 = SecretQuestionService.createNewResponse();
         }
-        
+
         init();
-            
+
         }
     ])
 ;

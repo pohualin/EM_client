@@ -8,7 +8,7 @@ angular.module('emmiManager')
         function ($rootScope, $location, Session) {
             return {
                 routeUser: function () {
-                    if (!Session.email || !Session.emailValidated || !Session.secretQuestionCreated) {
+                    if (!Session.interruptLoginFlow &&(!Session.email || !Session.emailValidated || !Session.secretQuestionCreated)) {
                         //if email was not supplied
                         $location.path('/passwordInformation').replace();
                     } else if ($location.path() === '/login') {

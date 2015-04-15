@@ -38,6 +38,7 @@ angular.module('emmiManager')
                     }
                     $alert({
                         content: '<b>' + $scope.client.name + '</b> has been updated successfully.',
+                        container: '#messages-container',
                         type: 'success',
                         placement: 'top',
                         show: true,

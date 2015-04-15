@@ -110,30 +110,43 @@ angular.module('emmiManager')
                  * @param userClientSecretQuestionRepsonse
                  * @returns the promise
                  */
-                saveOrUpdateSecretQuestionResponse: function(userClientSecretQuestionRepsonse1, userClientSecretQuestionRepsonse2) {
-                	var deferred = $q.defer();
-                	var promise1 = $http.post(UriTemplate.create(Session.link.secretQuestionResponses)
-                    		.stringify(), userClientSecretQuestionRepsonse1);                            
-                            
-                	
-                	var promise2 = $http.post(UriTemplate.create(Session.link.secretQuestionResponses)
-                    		.stringify(), userClientSecretQuestionRepsonse2);                             
-                            
-                            
-                	$q.all([promise1, promise2])
-                	.then(
-                		 function(result){
-                	     deferred.resolve(result);
-                	     var secretQuestionsCreated = true;
-                	     $http.put(UriTemplate.create(Session.link.updateUserClientSecretQuestionFlag).stringify({secretQuestionsCreated: secretQuestionsCreated}))
-                				.then(function(response){
-                					deferred.resolve(response.data);
-                				});
-                		 });
-                                     	
-                		return deferred.promise;
-             }
-          };
+                saveOrUpdateSecretQuestionResponse: function (userClientSecretQuestionRepsonse1, userClientSecretQuestionRepsonse2) {
+                    var deferred = $q.defer();
+                    var promise1 = $http.post(UriTemplate.create(Session.link.secretQuestionResponses)
+                        .stringify(), userClientSecretQuestionRepsonse1);
+
+
+                    var promise2 = $http.post(UriTemplate.create(Session.link.secretQuestionResponses)
+                        .stringify(), userClientSecretQuestionRepsonse2);
+
+
+                    $q.all([promise1, promise2])
+                        .then(
+                        function (result) {
+                            deferred.resolve(result);
+                            var secretQuestionsCreated = true;
+                            $http.put(UriTemplate.create(Session.link.updateUserClientSecretQuestionFlag).stringify({secretQuestionsCreated: secretQuestionsCreated}))
+                                .then(function (response) {
+                                    deferred.resolve(response.data);
+                                });
+                        });
+
+                    return deferred.promise;
+                },
+
+                /**
+                 * dont ask user for information again until expiration date
+                 *
+                 * @param userClient current userClient
+                 * @returns the response
+                 *
+                 */
+                notNow: function (userClient) {
+                    $http.put(UriTemplate.create(userClient.link.notNow).stringify(), userClient).then(function (response) {
+                        return response;
+                    });
+                }
+            };
         }
     ])
 ;

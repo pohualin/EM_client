@@ -35,6 +35,7 @@ angular.module('emmiManager')
                     $alert({
                         content: 'A setup email has been sent to <strong>' + UsersClientService.getUserClient().entity.email +
                         '</strong>.',
+                        container: '#messages-container',
                         type: 'success',
                         placement: 'top',
                         show: true,

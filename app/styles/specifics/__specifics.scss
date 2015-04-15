@@ -4,6 +4,19 @@
 @import 'sample';
 @import 'popovers';
 
+.field-note {
+    margin-left: 14px;
+    &.field-optional {
+        color: $input-color-placeholder;
+        font-style: italic;
+        font-weight: 300;
+    }
+}
+
+.error-circle {
+    margin-left: 4px;
+}
+
 // miscellaneous rules
 .icon-size-xl { font-size: $font-size-h1; } // 24px
 .icon-size-lg { font-size: $font-size-h2; } // 20px
@@ -16,6 +29,10 @@
         padding-left: $padding-base-horizontal + 24;
         &:focus ~ .input-icon {
             color: $brand-secondary;
+        }
+        // Change color of input icon when valid data has been entered
+        &.ng-dirty.ng-valid + .input-icon {
+            color: $gray;
         }
     }
 }
@@ -59,6 +76,15 @@
     .input-group-btn {
         //display: none;
         //visibility: hidden;
+    }
+}
+
+// Make sure checkboxes and radios within tables don't get the margins
+td {
+    .radio,
+    .checkbox {
+        margin-top: 0;
+        margin-bottom: 0;
     }
 }
 
@@ -159,9 +185,9 @@
   color: #333;
 }
 
-.popover-text {
+/*.popover-text {
   font-size: 14px;
-}
+}*/
 
 div.masked {
   position: relative;
@@ -178,13 +204,37 @@ div.masked:before {
   border-radius: $border-radius-base;
 }
 
+.kill-grid-pad {
+    padding-left: 0;
+    padding-right: 0;
+    //margin-left: $grid-gutter-width/-2;
+    //@include make-md-column(6, 0);
+}
+
+hr.search-divider {
+    margin: 6px 0 26px;
+}
+
+.table-search-filters {
+    margin-bottom: 14px;
+    .form-inline label {
+        margin-right: 10px;
+    }
+}
+
+.table-results-count {
+    line-height: $input-height-small;
+}
 
 th.sort {
   cursor: pointer;
   .sort-icon {
-    font-size: 20px;
+    font-size: 18px;
     line-height: 10px;
-    vertical-align: text-top;
+    vertical-align: top;
+    position: relative;
+    top: 4px;
+    margin-left: 3px;
   }
 }
 
@@ -215,6 +265,7 @@ TR.nowrap TD, TH {
     border-color: #ddd;
 }
 
+/*
 .conflictingTeamForm{
   width: 15em;
 }
@@ -222,6 +273,7 @@ TR.nowrap TD, TH {
 .conflictingTeamRow{
   font-size: 14px;
 }
+*/
 
 .teamFilterSelect{
   padding-right: 0;

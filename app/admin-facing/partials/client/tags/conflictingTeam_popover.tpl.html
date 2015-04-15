@@ -1,27 +1,22 @@
-<form class='conflictingTeamForm'>
-    <div data-ng-if="conflictingTeamTags.length > 1">The following tags are in use and will be removed from teams:</div>
-    <div data-ng-if="conflictingTeamTags.length === 1">The following tags are in use and will be removed from 1 team:
-    </div>
+<form>
+	<div>The following tags will be removed:</div>
     <br>
     <table border="0" cellpadding="1px" cellspacing="0">
-        <tr data-ng-if="conflictingTeamTags.length > 1" class='conflictingTeamRow'
+        <tr class='conflictingTeamRow'
             data-ng-repeat="teamTag in conflictingTeamTags">
-            <td class="col-md-6">{{teamTag.tag}}: </td>
+            <td data-ng-if="teamTag.numberOfTeams == 0" class="col-md-6">{{teamTag.tag}}</td>
+            <td data-ng-if="teamTag.numberOfTeams > 0" class="col-md-6">{{teamTag.tag}}: </td>
             <td data-ng-if="teamTag.numberOfTeams == 1" class="col-md-6">{{teamTag.numberOfTeams}} team</td>
             <td data-ng-if="teamTag.numberOfTeams > 1 " class="col-md-6">{{teamTag.numberOfTeams}} teams</td>
         </tr>
-        <tr data-ng-if="conflictingTeamTags.length === 1" class='conflictingTeamRow'
-            data-ng-repeat="teamTag in conflictingTeamTags">
-            <td class="col-md-6">{{teamTag.tag}}</td>
-        </tr>
     </table>
     <br>
-    <div class="form-actions">
-        <button class="btn btn-primary" type="button" data-ng-click="hideConflictingTeamsPopover()"
-                data-translate="">No
-        </button>
-        <button class="btn btn-danger" data-ng-click="overrideConflictingTeamTags(clientForm.$valid)"
+    <div class="popover-footer">
+        <button class="btn btn-success" data-ng-click="overrideConflictingTeamTags(clientForm.$valid)"
                 data-translate="">Yes
+        </button>
+        <button class="btn btn-cancel" type="button" data-ng-click="hideConflictingTeamsPopover()"
+                data-translate="">Cancel
         </button>
     </div>
 

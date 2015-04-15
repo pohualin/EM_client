@@ -1,0 +1,89 @@
+<div class="container" data-ng-cloak>
+    <h2>
+        New Patient
+    </h2>
+    <form name="newPatientForm" class="form" novalidate unsaved-warning-form>
+        <div id="alerts-container" data-ng-show="newPatientForm.$invalid"></div>
+        <h2>Patient Information</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group"
+                     data-ng-class="{ 'has-error' : newPatientForm.firstName.$invalid && formSubmitted}">
+                    <label class="control-label" for="firstName">First Name</label>
+                    <div class="error-circle fa-exclamation-circle" data-ng-show="newPatientForm.firstName.$error.required && formSubmitted"
+                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                         data-title="Required"></div>
+                    <div class="error-circle fa-exclamation-circle" data-ng-show="newPatientForm.firstName.$error.pattern && formSubmitted"
+                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                         data-title="Please enter a valid first name."></div>
+                    <input class="form-control" data-ng-model="patient.firstName" id="firstName" name="firstName"
+                           type="text" required
+                           data-auto-focus data-ng-pattern="/^[\-\.a-zA-Z ']*$/" data-animation="am-flip-x"
+                           data-focus-on="firstName">
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group"
+                     data-ng-class="{ 'has-error' : newPatientForm.lastName.$invalid && formSubmitted}">
+                    <label class="control-label" for="lastName">Last Name</label>
+                    <div class="error-circle fa-exclamation-circle" data-ng-show="newPatientForm.lastName.$error.required && formSubmitted"
+                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                         data-title="Required"></div>
+                    <div class="error-circle fa-exclamation-circle" data-ng-show="newPatientForm.lastName.$error.pattern && formSubmitted"
+                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                         data-title="Please enter a valid last name."></div>
+                    <input class="form-control" data-ng-model="patient.lastName" id="lastName" name="lastName"
+                           type="text" required data-ng-pattern="/^[\-\.a-zA-Z ']*$/" data-animation="am-flip-x">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                    <label class="control-label" for="gender">Gender</label>
+                    <select
+                        class="form-control"
+                        data-placeholder="Select..."
+                        data-ng-model="patient.gender"
+                        data-ng-options="gender | translate for gender in genders"
+                        id="gender"
+                        name="gender">
+                        <option value="">Select...</option>
+                    </select>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group"
+                     data-ng-class="{ 'has-error' : newPatientForm.dateOfBirth.$invalid && formSubmitted }">
+                    <label class="control-label" for="dateOfBirth">Date of Birth</label>
+                    <div class="error-circle fa-exclamation-circle"
+                         data-ng-show="newPatientForm.dateOfBirth.$error.required && formSubmitted"
+                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                         data-title="Required"></div>
+                    <div class="error-circle fa-exclamation-circle" data-ng-show="newPatientForm.dateOfBirth.$error.date && formSubmitted"
+                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                         data-title="Please select a valid date of birth."></div>
+                    <input id="dateOfBirth" class="form-control" type="text" name="dateOfBirth"
+                           data-ng-model="patient.dateOfBirth" data-autoclose="true"
+                           data-dateType="iso" data-bs-datepicker data-max-date="today"
+                           data-min-date="{{minDate}}"
+                           required>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="actions pull-right">
+                    <div class="form-group">
+                        <a class="btn btn-link" href data-ng-click="cancel()" analytics-on analytics-category="Form Action" analytics-event="Patient Create" analytics-label="Cancel">cancel</a>
+                        <button class="btn btn-primary" type="button"
+                                data-ng-click="save(newPatientForm.$valid)">
+                            <span>Create</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
