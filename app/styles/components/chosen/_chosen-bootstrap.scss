@@ -3,13 +3,14 @@
     text-decoration: none;
     background-color: $dropdown-link-hover-bg;
     background-image: none;
+    font-weight: normal;
 }
 
 @mixin listItem {
     display: block;
     padding: 11px $padding-base-horizontal;
     clear: both;
-    font-weight: normal;
+    font-weight: 300;
     //line-height: 1.428571429;
     color: $dropdown-link-color;
     white-space: nowrap;
@@ -36,6 +37,7 @@ select.form-control {
                 height: $input-height-base; // Make inputs at least the height of their button counterpart (base line-height + padding + border)
                 padding: $padding-base-vertical $padding-base-horizontal;
                 font-size: $font-size-base;
+                font-weight: 300;
                 line-height: $line-height-base;
                 color: $input-color;
                 vertical-align: middle;
