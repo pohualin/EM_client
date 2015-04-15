@@ -5,10 +5,10 @@ angular.module('emmiManager')
 /**
  *   Manage Client Level roles for a client
  */
-    .controller('ClientRoleAdminCtrl', ['$scope', 'ManageUserRolesService', '$filter', 'focus', '$q',
-        function ($scope, ManageUserRolesService, $filter, focus, $q) {
+    .controller('ClientRoleAdminCtrl', ['$scope', 'ManageUserRolesService', '$filter', 'focus',
+        function ($scope, ManageUserRolesService, $filter, focus) {
 
-            ManageUserRolesService.referenceData().then(function (referenceData) {
+            ManageUserRolesService.referenceData($scope.clientResource).then(function (referenceData) {
                 $scope.clientReferenceData = referenceData;
                 $scope.libraries = referenceData.roleLibrary;
             });
@@ -17,7 +17,7 @@ angular.module('emmiManager')
              * Loads existing roles for the current client
              */
             $scope.loadExisting = function () {
-                ManageUserRolesService.loadClientRoles().then(function (rolesResources) {
+                ManageUserRolesService.loadClientRoles($scope.clientResource).then(function (rolesResources) {
                     $scope.existingClientRoles = rolesResources;
                     $scope.setHasExistingRoles();
                 });
@@ -78,7 +78,7 @@ angular.module('emmiManager')
              */
             $scope.saveNewRole = function (clientRoleEntity, form) {
                 form.$setPristine();
-                ManageUserRolesService.saveNewClientRole(clientRoleEntity).then(function () {
+                ManageUserRolesService.saveNewClientRole(clientRoleEntity, $scope.clientResource).then(function () {
                     delete $scope.newClientRole;
                     $scope.loadExisting();
                 });
@@ -164,9 +164,10 @@ angular.module('emmiManager')
              * called on click of the 'Add' button on the group library popup
              */
             $scope.addLibraries = function () {
-                ManageUserRolesService.saveSelectedLibraries($scope.clientReferenceData.roleLibrary).then(function (){
-                    $scope.loadExisting();
-                });
+                ManageUserRolesService.saveSelectedLibraries($scope.clientReferenceData.roleLibrary, $scope.clientResource)
+                    .then(function () {
+                        $scope.loadExisting();
+                    });
             };
 
             /**
@@ -188,7 +189,7 @@ angular.module('emmiManager')
             // start by loading the currently saved roles
             $scope.loadExisting();
         }
-    ]).config(['ivhTreeviewOptionsProvider', function(ivhTreeviewOptionsProvider) {
+    ]).config(['ivhTreeviewOptionsProvider', function (ivhTreeviewOptionsProvider) {
         ivhTreeviewOptionsProvider.set({
             idAttribute: 'name',
             labelAttribute: 'displayName',
@@ -202,6 +203,6 @@ angular.module('emmiManager')
             twistieExpandedTpl: '',
             twistieCollapsedTpl: '',
             twistieLeafTpl: ''
-          });
+        });
     }]);
 
