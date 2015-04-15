@@ -217,6 +217,13 @@ table {
 .dropdown-menu {
     @include remIt(font-size, 16);
     box-shadow: none;
+    > li > a {
+        font-weight: 300;
+        &:hover,
+        &:focus {
+            font-weight: normal;
+        }
+    }
 }
 
 .typeahead.dropdown-menu,
