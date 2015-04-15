@@ -313,6 +313,12 @@
     }
 
     /* _____ FORMS _____ */
+    .form-actions {
+        margin-top: 8px;
+        .form-group {
+            margin-bottom: 5px;
+        }
+    }
     label {
         font-size: $font-size-small;
         text-transform: uppercase;
@@ -331,7 +337,7 @@
         }
     }
     .form-group {
-        margin-bottom: 20px;
+        margin-bottom: 22px;
     }
     .form-control:focus {
         box-shadow: none !important;
@@ -559,7 +565,7 @@
         // overflow-x: hidden;
         // overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
         > .sidebar-wrapper {
-            padding: 25px 15px;
+            padding: 25px 12px;
         }
         .sidebar-heading {
             color: rgba(255,255,255,0.85);

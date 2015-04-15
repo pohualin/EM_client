@@ -134,6 +134,8 @@ angular.module('emmiManager')
 
                 $controller('CommonSort', {$scope: $scope});
 
+        $scope.searchDropdownOptions = [ 'Clients', 'Teams', 'Providers', 'Locations' ];
+
         // set the proper value in the search chooser based upon the path
         if ($location.path() === '/clients'){
             $scope.option = 'Clients';

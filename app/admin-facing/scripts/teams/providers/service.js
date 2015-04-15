@@ -91,6 +91,21 @@ angular.module('emmiManager')
             		 deferred.resolve(options);
             	 });
             	 return deferred.promise;
+             },
+             
+             /**
+              * Return two tabs with one being active
+              */
+             setAllTabs: function(addAnother){
+                 return {'activeTab' : addAnother ? 1 : 0, 'data' : [
+                     {
+                         'title': 'Client Providers',
+                         'template': 'admin-facing/partials/team/provider/tabs/team-client-providers-tab.html'
+                     },
+                     {
+                         'title': 'Search all providers',
+                         'template': 'admin-facing/partials/team/provider/tabs/team-search-providers-tab.html'
+                     }]};
              }
         };
     })
