@@ -81,6 +81,10 @@ select.form-control {
                     }
                 }
             }
+            .chosen-default {
+                color: $input-color-placeholder;
+                font-style: italic;
+            }
             &.chosen-container-active {
                 .chosen-single {
                     @include inputOutline;
@@ -266,6 +270,14 @@ select.form-control.input-sm {
                     padding: $padding-small-vertical 0;
                 }
             }
+        }
+    }
+}
+
+.has-error {
+    select.form-control + .chosen-container.chosen-container-single {
+        .chosen-single {
+            border-color: $state-danger-text;
         }
     }
 }
