@@ -187,6 +187,24 @@ div.masked:before {
   border-radius: $border-radius-base;
 }
 
+.kill-grid-pad {
+    padding-left: 0;
+    padding-right: 0;
+    //margin-left: $grid-gutter-width/-2;
+    //@include make-md-column(6, 0);
+}
+
+hr.search-divider {
+    margin: 6px 0 26px;
+}
+
+.table-search-filters {
+    margin-bottom: 14px;
+    .form-inline label {
+        margin-right: 10px;
+    }
+}
+
 .table-results-count {
     line-height: $input-height-small;
 }
@@ -199,6 +217,7 @@ th.sort {
     vertical-align: top;
     position: relative;
     top: 4px;
+    margin-left: 3px;
   }
 }
 
