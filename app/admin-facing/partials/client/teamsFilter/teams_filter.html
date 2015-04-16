@@ -12,28 +12,32 @@
         <form>
             <!--call updateState when groups is changed, disable this drop down if we are showing untagged teams-->
             <div class="form-group" data-ng-class="{'masked': showUntaggedTeams!=='false'&& showUntaggedTeams!==false}">
-                <!-- show this drop down if we are only showing active teams -->
                 <label>organize teams by:</label>
-                <select data-ng-hide="showInactiveTeams || !inactiveTeams" class="form-control"
-                        data-ng-model="selectedGroup"
-                        data-ng-options="group.entity.name for group in clientGroups track by group.entity.id | orderBy:'name'"
-                        data-ng-change="updateState()">
-                    <option value="">All Active Teams</option>
-                </select>
+                <!-- show this drop down if we are only showing active teams -->
+                <div data-ng-hide="showInactiveTeams || !inactiveTeams">
+                    <select class="form-control"
+                            data-ng-model="selectedGroup"
+                            data-ng-options="group.entity.name for group in clientGroups track by group.entity.id | orderBy:'name'"
+                            data-ng-change="updateState()" data-chosen data-disable-search="true">
+                        <option value="">All Active Teams</option>
+                    </select>
+                </div>
                 <!-- show this drop down if we are showing active and inactive teams -->
-                <select data-ng-show="showInactiveTeams || !inactiveTeams" class="form-control"
-                        data-ng-model="selectedGroup"
-                        data-ng-options="group.entity.name for group in clientGroups track by group.entity.id | orderBy:'name'"
-                        data-ng-change="updateState()">
-                    <option value="">All Teams</option>
-                </select>
+                <div data-ng-show="showInactiveTeams || !inactiveTeams">
+                    <select class="form-control"
+                            data-ng-model="selectedGroup"
+                            data-ng-options="group.entity.name for group in clientGroups track by group.entity.id | orderBy:'name'"
+                            data-ng-change="updateState()" data-chosen data-disable-search="true">
+                        <option value="">All Teams</option>
+                    </select>
+                </div>
             </div>
 
             <!--disable this drop down if we are showing untagged teams-->
             <div class="form-group" data-ng-class="{'masked': showUntaggedTeams!=='false' && showUntaggedTeams!==false}">
                 <label>show:</label>
                 <!--chosen widget controls selecting tags, calls updateState when changed, its populated by clientTagGroupToDisplay when the page first loads-->
-                <select data-chosen data-placeholder="Choose some tags" multiple
+                <select data-chosen data-placeholder="Choose tags" multiple
                         data-ng-model="filterTags" data-ng-change="updateState()"
                         data-ng-options="tag.text
                 group by tag.group.name
@@ -53,8 +57,8 @@
 
             <!--toggle what the show inactive teams link says and call toggleInactiveTeams-->
             <div class="form-group" data-ng-show="inactiveTeams">
-                <a class="text-uppercase" href="" data-ng-hide="showInactiveTeams" data-ng-click="toggleInactiveTeams()">show inactive teams</a>
-                <a class="text-uppercase" href="" data-ng-show="showInactiveTeams" data-ng-click="toggleInactiveTeams()">hide inactive teams</a>
+                <a class="text-uppercase filter-link" href="" data-ng-hide="showInactiveTeams" data-ng-click="toggleInactiveTeams()">show inactive teams</a>
+                <a class="text-uppercase filter-link" href="" data-ng-show="showInactiveTeams" data-ng-click="toggleInactiveTeams()">hide inactive teams</a>
             </div>
 
             <!--there is a display template that shows ungrouped teams and a display template that shows groups of teams-->
