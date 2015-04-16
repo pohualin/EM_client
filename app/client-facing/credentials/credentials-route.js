@@ -120,27 +120,6 @@ angular.module('emmiManager')
                     }]
                 }
             })
-            .when('/credentials/activation/failure', {
-                templateUrl: 'client-facing/credentials/activation/activation_failure.html',
-                title: 'Please Contact Support',
-                access: {
-                    authorizedRoles: '*'
-                }
-            })
-            .when('/credentials/expired/failure', {
-                templateUrl: 'client-facing/credentials/expired/expired_failure.html',
-                title: 'Please Contact Support',
-                access: {
-                    authorizedRoles: '*'
-                }
-            })
-            .when('/credentials/reset/failure', {
-                templateUrl: 'client-facing/credentials/reset/reset_failure.html',
-                title: 'Please Contact Support',
-                access: {
-                    authorizedRoles: '*'
-                }
-            })
         ;
     })
 ;

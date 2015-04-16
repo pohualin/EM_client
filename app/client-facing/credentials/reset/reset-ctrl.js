@@ -60,10 +60,8 @@ angular.module('emmiManager')
                                     }
                                 });
                             }
-                            else if (errorResponse.status === 403) {
-                                $location.path('/credentials/reset/failure').replace();
-                            } else {
-                                $location.path('/credentials/reset/failure').replace();
+                            else {
+                            	$location.path('/login').replace();
                             }
                         }
                     );
