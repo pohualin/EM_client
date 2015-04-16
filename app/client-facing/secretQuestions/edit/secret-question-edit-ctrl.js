@@ -67,38 +67,51 @@ angular.module('emmiManager')
             };
 
             $scope.promptPassword = function () {
-
                 promptPasswordModal.$promise.then(promptPasswordModal.show);
             };
 
-            $scope.validatePassword = function (password) {
+            $scope.validatePassword = function (passwordForm, password) {
                 $scope.passowrd = password;
-                SecretQuestionService.getAllUserSecretQuestionResponse(password).then(
-                    function success(response) {
-                        var existingResponse = response.data.content;
-                        $scope.question1 = existingResponse.length > 0 ? existingResponse[0] : SecretQuestionService.createNewResponse();
-                        $scope.question2 = existingResponse.length > 1 ? existingResponse[1] : SecretQuestionService.createNewResponse();
-                        promptPasswordModal.$promise.then(promptPasswordModal.hide);
-                    },
-                    function error(response) {
-                        if (response.status === 403) {
-                            if (!$scope.errorAlert) {
-                                $scope.errorAlert = $alert({
-                                    title: ' ',
-                                    content: 'Please check your password and try again.',
-                                    container: '#message-container',
-                                    type: 'danger',
-                                    show: true,
-                                    dismissable: false
-                                });
+                passwordForm.isSubmitted = true;
+                if (passwordForm.$valid) {
+                    // fetch the secret question responses using the password
+                    SecretQuestionService.getAllUserSecretQuestionResponse(password).then(
+                        function success(response) {
+                            var existingResponse = response.data.content;
+                            $scope.question1 = existingResponse.length > 0 ? existingResponse[0] : SecretQuestionService.createNewResponse();
+                            $scope.question2 = existingResponse.length > 1 ? existingResponse[1] : SecretQuestionService.createNewResponse();
+                            passwordForm.isSubmitted = false;
+                            promptPasswordModal.$promise.then(promptPasswordModal.hide);
+                        },
+                        function error(response) {
+                            if (response.status === 403) {
+                                passwordForm.password.$setValidity('correct', false);
+                                $scope.showError();
                             }
-                        }
-                    });
+                        });
+                } else {
+                    $scope.showError();
+                }
 
             };
 
-            $scope.cancelPassword = function () {
-                $location.path('/viewSecurityQuestions').replace();
+            $scope.onChange = function(passwordForm){
+                passwordForm.password.$setValidity('correct', true);
+            };
+
+            $scope.showError = function(){
+                if (!$scope.errorAlert) {
+                    $scope.errorAlert = $alert({
+                        title: ' ',
+                        content: 'Please check your password and try again.',
+                        container: '#password-message-container',
+                        type: 'danger',
+                        show: true,
+                        dismissable: false
+                    });
+                } else {
+                    $scope.errorAlert.show();
+                }
             };
 
             /**
@@ -106,16 +119,14 @@ angular.module('emmiManager')
              * objects and copies them back into the bound objects.
              */
             $scope.cancel = function () {
-                $location.path('/');
+                $location.path('/viewSecurityQuestions').replace();
             };
-
 
             function init() {
                 SecretQuestionService.getSecretQuestions().then(function (response) {
                     $scope.secretQuestions = response.data.content;
                 });
                 $scope.promptPassword();
-
             }
 
             init();
