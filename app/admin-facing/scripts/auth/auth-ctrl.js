@@ -2,8 +2,8 @@
 
 angular.module('emmiManager')
     .controller('LoginCtrl', ['$scope', '$location', 'AuthSharedService', '$rootScope','LoginErrorMessageFactory',
-        function ($scope, $location, AuthSharedService, $rootScope,LoginErrorMessageFactory) {
-        
+        function ($scope, $location, AuthSharedService, $rootScope, LoginErrorMessageFactory) {
+
             $scope.credentials = {
                 rememberMe: true,
                 username: $rootScope.username
@@ -19,9 +19,18 @@ angular.module('emmiManager')
              */
             $scope.login = function (credentials) {
                 $scope.loginForm.submitted = true;
+                LoginErrorMessageFactory.reset();
                 if ($scope.loginForm.$valid) {
                     AuthSharedService.login(credentials);
                 }
+            };
+
+            /**
+             * When cancel is clicked on the form go back to home
+             */
+            $scope.cancel = function (){
+                LoginErrorMessageFactory.reset();
+                $location.path('/');
             };
         }])
 
