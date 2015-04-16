@@ -52,7 +52,7 @@ angular.module('emmiManager', [
     .constant('PATTERN', {
         EMAIL: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$/
     })
-    
+
     .config(function ($httpProvider, $translateProvider, tmhDynamicLocaleProvider, HateoasInterceptorProvider, $datepickerProvider, API) {
 
         // Initialize angular-translate
@@ -219,7 +219,9 @@ angular.module('emmiManager', [
 
         // Call when the 401 response is returned by the server
         $rootScope.$on('event:auth-loginRequired', function (event, rejection) {
-            $rootScope.username = $rootScope.account.login;
+            if ($rootScope.account) {
+                $rootScope.username = $rootScope.account.login;
+            }
             Session.destroy();
             $rootScope.locationBeforeLogin = rejection.location;
             $location.path('/login').replace();

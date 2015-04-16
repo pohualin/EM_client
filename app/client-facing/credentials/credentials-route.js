@@ -71,18 +71,35 @@ angular.module('emmiManager')
                     authorizedRoles: [USER_ROLES.all]
                 },
                 resolve: {
-                    resetToken: ['$route', '$q', function ($route, $q) {
-                        var deferred = $q.defer();
-                        if ($route.current.params.resetToken) {
-                        	deferred.resolve($route.current.params.resetToken);
-                        } else {
-                        	deferred.reject();
-                        }
-                        return deferred.promise;
-                    }]
+                    resetToken: ['$route', '$q', 'SecretQuestionService', '$location', 'LoginErrorMessageFactory',
+                        function ($route, $q, SecretQuestionService, $location, LoginErrorMessageFactory) {
+                            var deferred = $q.defer(),
+                                resetToken = $route.current.params.resetToken;
+                            if (resetToken) {
+                                SecretQuestionService.validateUserSecurityResponse(resetToken).then(
+                                    function ok(response) {
+                                        if (angular.equals(response, 'true')) {
+                                            // don't need to answer questions
+                                            $location.url('/reset_password/reset/' + resetToken).replace();
+                                        } else {
+                                            deferred.resolve(resetToken);
+                                        }
+                                    },
+                                    function error() {
+                                        // problem with validate call
+                                        angular.extend(LoginErrorMessageFactory,{showResetPasswordTokenExpired:true});
+                                        $location.path('/login').replace();
+                                    }
+                                );
+                            } else {
+                                // no reset token
+                                deferred.reject();
+                            }
+                            return deferred.promise;
+                        }]
                 }
             })
-             .when('/reset_password/reset/:resetToken', {
+            .when('/reset_password/reset/:resetToken', {
                 templateUrl: 'client-facing/credentials/reset/reset.html',
                 controller: 'ResetClientUserPasswordController',
                 title: 'Reset Password',
@@ -90,45 +107,18 @@ angular.module('emmiManager')
                     authorizedRoles: [USER_ROLES.all]
                 },
                 resolve: {
-                	securityQuestions: ['$q', 'SecretQuestionService', function ($q, SecretQuestionService){
-                		var deferred = $q.defer();
-                        if (SecretQuestionService.getUserInputSecurityResponses()) {
-                        	deferred.resolve(SecretQuestionService.getUserInputSecurityResponses());
-                        } else {
-                        	deferred.reject();
-                        }
-                        return deferred.promise;
-                	}],
+                    securityQuestions: ['$q', 'SecretQuestionService', function ($q, SecretQuestionService) {
+                        return SecretQuestionService.getUserInputSecurityResponses();
+                    }],
                     resetToken: ['$route', '$q', function ($route, $q) {
-                    	var deferred = $q.defer();
+                        var deferred = $q.defer();
                         if ($route.current.params.resetToken) {
-                        	deferred.resolve($route.current.params.resetToken);
+                            deferred.resolve($route.current.params.resetToken);
                         } else {
-                        	deferred.reject();
+                            deferred.reject();
                         }
                         return deferred.promise;
                     }]
-                }
-            })
-            .when('/credentials/activation/failure', {
-                templateUrl: 'client-facing/credentials/activation/activation_failure.html',
-                title: 'Please Contact Support',
-                access: {
-                    authorizedRoles: '*'
-                }
-            })
-            .when('/credentials/expired/failure', {
-                templateUrl: 'client-facing/credentials/expired/expired_failure.html',
-                title: 'Please Contact Support',
-                access: {
-                    authorizedRoles: '*'
-                }
-            })
-            .when('/credentials/reset/failure', {
-                templateUrl: 'client-facing/credentials/reset/reset_failure.html',
-                title: 'Please Contact Support',
-                access: {
-                    authorizedRoles: '*'
                 }
             })
         ;

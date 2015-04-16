@@ -1,11 +1,11 @@
 <div class="popover-text">
-        <table border="0" cellpadding="0" cellspacing="0" class="table table-condensed">
+        <table border="0" cellpadding="0" cellspacing="0" class="popover-table">
             <tr>
-                <td><strong><span data-translate="client_edit_page.unique_popup_dialog.name"></span></strong></td>
+                <th><span>Name:</span></th>
                 <td><a href="#/clients/{{existsClient.entity.id}}">{{existsClient.entity.name}}</a></td>
             </tr>
             <tr>
-                <td><strong><span data-translate="client_edit_page.unique_popup_dialog.city"></span></strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <th><span>City/State:</span></th>
                 <td>
                     {{existsClient.entity.salesForceAccount.city}}<span
                         data-ng-show="existsClient.entity.salesForceAccount.city && existsClient.entity.salesForceAccount.state">,&nbsp;</span>{{

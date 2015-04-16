@@ -8,7 +8,7 @@ angular.module('emmiManager')
     	                return AuthSharedService.currentUser();
     	            }]
     	        };
-    	
+
     	 // Routes
         $routeProvider
         .when('/editSecurityQuestions', {
@@ -20,7 +20,7 @@ angular.module('emmiManager')
              },
              resolve: requiredResources
         });
-        
+
         // Routes
         $routeProvider
         .when('/viewSecurityQuestions', {
@@ -32,7 +32,7 @@ angular.module('emmiManager')
              },
              resolve: requiredResources
         });
-        
+
         // Routes
         $routeProvider
         .when('/createSecurityQuestions', {
@@ -44,19 +44,7 @@ angular.module('emmiManager')
              },
              resolve: requiredResources
         });
-        
-     // Routes
-        $routeProvider
-        .when('/securityQuestions', {
-            templateUrl: 'client-facing/secretQuestions/secret-question.html',
-            controller: 'SecretQuestionController',
-            title: 'Security Question',
-             access: {
-                 authorizedRoles: [USER_ROLES.all]
-             },
-             resolve: requiredResources
-        });
-      
+
     })
 ;
 

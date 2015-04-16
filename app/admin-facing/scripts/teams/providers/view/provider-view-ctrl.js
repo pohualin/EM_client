@@ -24,7 +24,11 @@ angular.module('emmiManager')
         });
 
         $scope.refreshLocationsAndProviders = function() {
+            $scope.teamProviders = {};
         	ProviderView.paginatedProvidersForTeam($scope.teamResource).then(function(response){
+        	    angular.forEach(response.content, function (teamProvider) {
+                    $scope.teamProviders[teamProvider.entity.provider.id] = angular.copy(teamProvider.entity.provider);
+                });
         		$scope.handleResponse(response, 'listOfTeamProviders');
         	});
         	TeamLocation.getTeamLocations($scope.teamResource.link.teamLocations).then(function(response){
@@ -91,11 +95,9 @@ angular.module('emmiManager')
         $scope.removeProvider = function (provider) {
         	ProviderView.removeProvider(provider, $scope.teamResource).then(function (){
                 $scope.refreshLocationsAndProviders();
-                var middleName = provider.entity.provider.middleName ? provider.entity.provider.middleName : '',
-                name = provider.entity.provider.firstName + ' ' + middleName + ' ' + provider.entity.provider.lastName;
                 $alert({
                     title: ' ',
-                    content: 'The provider <b>' + name + '</b> has been successfully removed.',
+                    content: 'The provider <b>' + provider.entity.provider.fullName + '</b> has been successfully removed.',
                     container: '#messages-container',
                     type: 'success',
                     placement: 'top',
@@ -107,12 +109,16 @@ angular.module('emmiManager')
             _paq.push(['trackEvent', 'Form Action', 'Team Provider', 'Remove']);
         };
 
-        $scope.addProviders = function () {
+        $scope.addProviders = function (addAnother) {
+            if($scope.providerErrorAlertForCreate){
+                $scope.providerErrorAlertForCreate.hide();
+            }
             $scope.associateRequestSubmitted = false;
         	TeamLocation.getTeamLocations($scope.teamResource.link.teamLocations).then(function(response){
                 $scope.allTeamLocations = TeamProviderService.buildMultiSelectData(response);
             });
        		$scope.addProvidersModalOnScope = {};
+       		$scope.addAnother = addAnother;
         	$scope.addProvidersModalOnScope =  $modal({
   			   scope: $scope,
   			   template: 'admin-facing/partials/team/provider/search.html', animation: 'none', backdropAnimation: 'emmi-fade', show: true, backdrop: 'static'});
@@ -291,9 +297,7 @@ angular.module('emmiManager')
 		        		$scope.refreshLocationsAndProviders();
                         var message;
                         if ($scope.teamProviderTeamLocationSaveRequest.length < 2) {
-                            var providerMiddleName = $scope.teamProviderTeamLocationSaveRequest[0].provider.middleName ? $scope.teamProviderTeamLocationSaveRequest[0].provider.middleName : '',
-                                providerFullName = $scope.teamProviderTeamLocationSaveRequest[0].provider.firstName + ' ' + providerMiddleName + ' ' + $scope.teamProviderTeamLocationSaveRequest[0].provider.lastName;
-                            message = 'The provider <b>'+ providerFullName +'</b> has been successfully added.';
+                            message = 'The provider <b>'+ $scope.teamProviderTeamLocationSaveRequest[0].provider.fullName +'</b> has been successfully added.';
                         } else {
                             message = 'The selected providers have been successfully added.';
                         }
@@ -301,18 +305,11 @@ angular.module('emmiManager')
 	                    $scope.hideaddprovidermodal();
 
 		        		if (addAnother) {
-	        				$scope.addProviders();
+	        				$scope.addProviders(true);
+	        				$scope.successAlert(message, '#modal-messages-container', addAnother);
+		        		} else {
+		        		    $scope.successAlert(message, '#messages-container');
 		        		}
-		        		$alert({
-							title: ' ',
-							content: message,
-							container: '#messages-container',
-							type: 'success',
-							placement: 'top',
-						    show: true,
-						    duration: 5,
-						    dismissable: true
-						});
 		        	});
         		}
         	}
@@ -354,27 +351,19 @@ angular.module('emmiManager')
 
         $scope.saveProvider = function (isValid, addAnother) {
             $scope.providerFormSubmitted = true;
-        	if (isValid) {
+        	if (isValid && (($scope.allTeamLocations.length > 0 && $scope.selectedItems.length > 0) || $scope.allTeamLocations.length == 0)) {
 	        	ProviderCreate.create($scope.provider, $scope.teamResource, $scope.selectedItems).then(function(response){
 	                ProviderCreate.associateTeamLocationsToProvider(response.data.entity, $scope.teamResource, $scope.selectedItems);
 	        		$scope.hideNewProviderModal();
 	                $scope.refreshLocationsAndProviders();
+	                var message = 'The provider <b>'+ response.data.entity.fullName +'</b> has been successfully added.';
+	                
                     if (addAnother) {
-                        $scope.addProviders();
+                        $scope.addProviders(true);
+                        $scope.successAlert(message, '#modal-messages-container', addAnother);
+                    } else {
+                        $scope.successAlert(message, '#messages-container');
                     }
-                    var providerMiddleName = response.data.entity.middleName ? response.data.entity.middleName : '',
-                        providerFullName = response.data.entity.firstName + ' ' + providerMiddleName + ' ' + response.data.entity.lastName;
-
-	                $alert({
-						title: ' ',
-						content: 'The provider <b>'+ providerFullName +'</b> has been successfully added.',
-						container: '#messages-container',
-						type: 'success',
-						placement: 'top',
-					    show: true,
-					    duration: 5,
-					    dismissable: true
-					});
 	        	});
                 _paq.push(['trackEvent', 'Form Action', 'Team Provider Create', 'Save']);
 	        } else{
@@ -382,6 +371,23 @@ angular.module('emmiManager')
             }
         };
 
+        /**
+         * Display success alert
+         */
+        $scope.successAlert = function(message, container, addAnother){
+            var placement = addAnother ? '': 'top';
+            $alert({
+                title: '',
+                content: message,
+                container: container,
+                type: 'success',
+                placement: placement,
+                show: true,
+                duration: 5,
+                dismissable: true
+            });
+        };
+        
         if($scope.teamResource){
 			ProviderView.specialtyRefData($scope.teamResource).then(function(response){
 	        	$scope.specialties = response;
@@ -394,8 +400,8 @@ angular.module('emmiManager')
         };
 
         $scope.showError = function () {
-            if (!$scope.errorAlert) {
-                $scope.errorAlert = $alert({
+            if (!$scope.providerErrorAlertForCreate) {
+                $scope.providerErrorAlertForCreate = $alert({
                     title: ' ',
                     content: 'Please correct the below information.',
                     container: '#modal-messages-container',
@@ -404,7 +410,7 @@ angular.module('emmiManager')
                     dismissable: false
                 });
             } else {
-                $scope.errorAlert.show();
+                $scope.providerErrorAlertForCreate.show();
             }
         };
 	})

@@ -57,7 +57,7 @@ angular.module('emmiManager')
                                     }
                                 });
                             } else {
-                                $location.path('/credentials/expired/failure').replace();
+                                $location.path('/login').replace();
                             }
                         }
                     );

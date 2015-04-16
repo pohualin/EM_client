@@ -5,140 +5,27 @@
                 <div class="row">
                     <div class="col-md-10 col-md-offset-1" id="modal-messages-container"></div>
                 </div>
-                <div class="row">
-                     <div class="col-md-9">
-                        <form name="searchForm" data-ng-submit="search(searchForm.providerQuery.$valid)" novalidate>
-                            <div class="form-group">
-                                <label class="sr-only" for="providerQuery">Search providers:</label>
-                                <div class="input-group has-input-icon has-input-icon-search">
-                                    <input class="form-control" id="providerQuery" name="providerQuery" data-ng-model="providerQuery"
-                                           type="text" data-reset-provider-search
-                                           placeholder="Search all providers" required data-auto-focus>
-                                    <span class="input-icon"><i class="icon-search"></i></span>
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-success" data-ng-click="search(searchForm.providerQuery.$valid)"
-                                         data-ng-disabled="searchForm.providerQuery.$invalid">Go</button>
-                                    </span>
-                                </div>
-                            </div>
-                        </form>
+                <div class="row" >
+                    <div class="col-md-12" data-bs-active-pane="tabs.activeTab" data-bs-tabs data-ng-if="clientProviders && clientProviders.length > 0">
+                        <div data-ng-repeat="tab in tabs.data" data-ng-include="tab.template" data-title="{{tab.title}}" data-bs-pane></div>
                     </div>
-                    <div class="col-md-3" data-ng-hide="noSearch">
-                        <button type="button" class="btn btn-link pull-right" data-ng-click="createNewProvider()">
-                            <i class="icon-plus"></i> add new provider
-                        </button>
-                        <span data-ng-class="{'search-spinner' : loading}"></span>
+                    <div class="col-md-12" data-ng-if="!clientProviders || clientProviders.length == 0">
+                        <div data-ng-include="'admin-facing/partials/team/provider/tabs/team-search-providers-tab.html'" data-title="Search all providers" ></div>
                     </div>
                 </div>
-                <div data-ng-hide="noSearch">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="pull-right">
-                                {{total}}
-                                <span data-ng-show="total != 1" data-translate="global.labels.total"> results</span>
-                                <span data-ng-show="total === 1"
-                                      data-translate="global.labels.totalSingular"> result</span>
-                            </div>
-                            <form class="form-inline">
-                                <div class="form-group">
-                                    <label for="status_filter" data-translate="global.labels.statusFilter">Show:</label>&nbsp;&nbsp;
-                                    <select class="form-control" id="status_filter" data-ng-model="status"
-                                            data-ng-options="status | translate for status in statuses"
-                                            data-ng-change="statusChange()">
-                                    </select>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <br/>
-                    <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0" cellspacing="0" data-ng-show="searchedProvidersList">
-                        <thead>
-                            <tr>
-                                <th class="sort col-sm-1">&nbsp;</th>
-                                <th class="sort col-sm-2" data-ng-click="sort('lastName')">
-                                    Name
-                                    <span data-ng-show="sortProperty.property === 'lastName'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
-                                </th>
-                                <th class="sort col-sm-3" data-ng-click="sort('specialty.name')">
-                                    Primary Specialty
-                                    <span data-ng-show="sortProperty.property === 'specialty.name'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
-                                </th>
-                                <th class="sort col-sm-3" data-ng-click="sort('email')">
-                                    Email
-                                    <span data-ng-show="sortProperty.property === 'email'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
-                                </th >
-                                <th data-ng-show="allTeamLocations.length > 0" class="sort col-sm-3">Use Locations
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr data-ng-repeat="teamProvider in searchedProvidersList"  data-ng-class="teamProvider.link.self ? 'text-muted' : ''">
-    							<td data-ng-hide="teamProvider.link.self">
-                                    <div class="checkbox">
-                                        <input type="checkbox" id="teamProviderSearchCb{{$index}}" data-ng-model="teamProvider.provider.entity.checked"  data-ng-change="onCheckboxChange(teamProvider.provider)">
-                                        <label for="teamProviderSearchCb{{$index}}"></label>
-                                    </div>
-    							</td>
-    							<td data-ng-show="teamProvider.link.self">
-                                    <div class="checkbox">
-                                        <input type="checkbox" id="teamProviderSearchOffCb{{$index}}" disabled="disabled" checked>
-                                        <label for="teamProviderSearchOffCb{{$index}}"></label>
-                                    </div>
-                                </td>
-    							<td>{{teamProvider.provider.entity.firstName}} {{teamProvider.provider.entity.middleName}} {{teamProvider.provider.entity.lastName}} <em>{{teamProvider.provider.entity.active ? '' : "(inactive)"}}</em></td>
-                                <td>{{teamProvider.provider.entity.specialty.name}}</td>
-                                <td>{{teamProvider.provider.entity.email}}</td>
-                            	<td data-ng-if="allTeamLocations.length > 0" >
-                                    <div data-ng-show="teamProvider.provider.entity.showLocations">
-                                        <div data-ng-class="{'has-error col-md-11': teamProvider.provider.entity.selectedTeamLocations < 1 && associateRequestSubmitted}" data-multi-select
-                                            name="allTeamLocations{{$index}}"
-                                            values="allTeamLocations"
-                                            model="teamProvider.provider.entity.selectedTeamLocations"
-                                            show-filters="true"
-                                            value-field="id"
-                                            label-field="label"
-                                            template-path = "admin-facing/partials/common/directives/multi-select/multi-select.html" >
-                                        </div>
-                                        <div class="error-circle fa-exclamation-circle glyphicon-form-inline-right"
-                         					data-ng-show="teamProvider.provider.entity.selectedTeamLocations < 1 && associateRequestSubmitted"
-                         					data-bs-tooltip data-placement="top" data-type="danger" data-container="body"
-                         					data-title="At least one location is required">
-                         				</div>
-    	                             </div>
-                        		</td>
-                            </tr>
-                            <tr class="no-hover">
-                                <td colspan="6" class="text-center" data-ng-show="links">
-                                    <ul class="pagination">
-                                        <li data-ng-repeat="link in links | orderBy:'order'" class="{{link.className}}" data-ng-class="{'active': link.name == currentPage}">
-                                            <a data-ng-click="fetchPage(link.href)">
-                                                <i class="fa-angle-left" data-ng-if="link.className === 'previous'"></i>
-                                                {{link.name}}
-                                                <i class="fa-angle-right" data-ng-if="link.className === 'next'"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div data-ng-hide="searchedProvidersList">
-                        <span data-translate="global.messages.search.no_results_found"></span>
-                    </div>
-                </div><!-- noSearch -->
-            </div><!-- .modal-body -->
+            </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-cancel" data-ng-click="cancel()">cancel</button>
                 <button type="button" class="btn btn-default"
-                        data-ng-hide="teamProviderTeamLocationSaveRequest.length < 1"
+                        data-ng-if="teamProviderTeamLocationSaveRequest.length > 0"
                         data-ng-click="saveAssociationAndAddAnotherProvider()">Save & Add Another
                 </button>
                 <button type="button" class="btn btn-success"
-                        data-ng-hide="teamProviderTeamLocationSaveRequest.length < 1"
+                        data-ng-if="teamProviderTeamLocationSaveRequest.length > 0"
                         data-ng-click="associateSelectedProvidersToTeam()">Save
                 </button>
             </div>
-        </div><!-- .modal-content -->
-    </div><!-- .modal-dialog -->
-</div><!-- .modal -->
+        </div>
+    </div>
+</div>
 
