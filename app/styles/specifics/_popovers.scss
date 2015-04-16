@@ -54,7 +54,6 @@
 
 .popover-table {
     th {
-        @include remIt(font-size, 16);
         font-weight: 300;
         width: 50%;
     }
