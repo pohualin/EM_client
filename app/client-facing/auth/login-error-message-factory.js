@@ -2,10 +2,13 @@
 
 angular.module('emmiManager')
     .factory('LoginErrorMessageFactory', function () {
-        var showAccountActivationTokenExpired = false,
-            showResetPasswordTokenExpired = false,
-            showTemporaryPasswordTokenExpired = false,
-            showEmailValidationTokenExpired = false;
-        return this;
+        this.reset = function () {
+            this.showAccountActivationTokenExpired = false;
+            this.showResetPasswordTokenExpired = false;
+            this.showTemporaryPasswordTokenExpired = false;
+            this.showEmailValidationTokenExpired = false;
+            return this;
+        };
+        return this.reset();
     })
 ;

@@ -5,8 +5,10 @@ angular.module('emmiManager')
 /**
  * This manages interactions when a user clicks an activation link
  */
-    .controller('ResetClientUserPasswordController', ['$scope', '$location', 'ResetClientUserPasswordService', 'resetToken', 'securityQuestions', 'SecretQuestionService', '$alert',
-        function ($scope, $location, ResetClientUserPasswordService, resetToken, securityQuestions, SecretQuestionService, $alert) {
+    .controller('ResetClientUserPasswordController', ['$scope', '$location', 'ResetClientUserPasswordService',
+        'resetToken', 'securityQuestions', 'SecretQuestionService', '$alert',
+        function ($scope, $location, ResetClientUserPasswordService,
+                  resetToken, securityQuestions, SecretQuestionService, $alert) {
 
             $scope.passwordChange = ResetClientUserPasswordService.createNewPasswordHolder();
             $scope.changePasswordFormSubmitted = false;
@@ -14,7 +16,7 @@ angular.module('emmiManager')
             /**
              * Load the password policy for display
              */
-            ResetClientUserPasswordService.loadPolicy(resetToken).then(function (response){
+            ResetClientUserPasswordService.loadPolicy(resetToken).then(function (response) {
                 $scope.policy = response.data;
             });
 
@@ -38,7 +40,7 @@ angular.module('emmiManager')
                 if (changePasswordForm.$valid) {
                     ResetClientUserPasswordService.reset(resetToken, $scope.passwordChange, securityQuestions)
                         .then(function () {
-                        	SecretQuestionService.setUserInputSecurityResponses(null);
+                            SecretQuestionService.setUserInputSecurityResponses(null);
                             $alert({
                                 content: 'Your password has been reset. Please login.',
                                 type: 'success',
@@ -50,14 +52,14 @@ angular.module('emmiManager')
                             $location.path('/').replace();
                         }, function error(errorResponse) {
                             if (errorResponse.status === 406 && errorResponse.data) {
-                                angular.forEach(errorResponse.data, function(validationError){
-                                	if (validationError.entity.reason === 'POLICY') {
+                                angular.forEach(errorResponse.data, function (validationError) {
+                                    if (validationError.entity.reason === 'POLICY') {
                                         changePasswordForm.password.$setValidity('policy', false);
                                     } else if (validationError.entity.reason === 'HISTORY') {
                                         changePasswordForm.password.$setValidity('history', false);
                                     }
                                 });
-                            } 
+                            }
                             else {
                             	$location.path('/login').replace();
                             }
