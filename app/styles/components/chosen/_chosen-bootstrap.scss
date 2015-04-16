@@ -144,7 +144,6 @@ select.form-control {
                     &:hover{
                         @include hover;
                     }
-                    @include listItem;
                 }
                 &.group-result {
                     color: $gray;
@@ -179,9 +178,12 @@ select.form-control {
                     margin: 4px;
                     input[type="text"] {
                         font-family: inherit;
+                        font-size: 14px;
+                        font-weight: 300;
+                        font-style: italic;
                         color: $gray;
                         height: auto;
-                        padding: .5em 0;
+                        //padding: .5em 0;
                     }
                 }
                 &.search-choice {
