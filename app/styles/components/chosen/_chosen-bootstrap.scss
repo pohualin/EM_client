@@ -133,9 +133,10 @@ select.form-control {
         .chosen-results {
             margin: 0;
             padding: 10px 0;
-            font-size: 16px;
+            font-size: 15px;
             list-style: none;
             background-color: $dropdown-bg;
+            border-radius: $input-border-radius;
             //margin-bottom: 5px;
             li {
                 @include listItem;

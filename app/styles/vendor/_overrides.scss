@@ -156,15 +156,15 @@ table {
     border-radius: 0;
 }
 .popover-content {
-    padding: 19px 19px 24px;
-    @include remIt(font-size, 16);
+    padding: 15px 19px 20px;
+    @include remIt(font-size, 15);
     font-weight: 300;
     &:empty {
         display: none;
     }
     // Popover footer can also be placed inside the content because of existing Popover usage (contentTemplate vs template)
     .popover-footer {
-        margin: 14px -14px -14px -14px
+        margin: 15px -19px -20px -19px;
     }
 }
 .popover-footer {
@@ -215,7 +215,7 @@ table {
 
 
 .dropdown-menu {
-    @include remIt(font-size, 16);
+    @include remIt(font-size, 15);
     box-shadow: none;
     > li > a {
         font-weight: 300;
@@ -260,6 +260,10 @@ table {
 .modal-header .close {
     margin-top: -5px;
 }
+.modal-footer .btn-link + .btn,
+.modal-footer .btn-cancel + .btn {
+    margin-left: 0;
+ }
 
 // Override Bootstrap Additions Fancy Tooltips to fit with our colors from our config
 .tooltip {
