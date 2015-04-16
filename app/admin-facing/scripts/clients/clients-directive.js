@@ -48,7 +48,6 @@ angular.module('emmiManager')
                                         var clientResource = Client.getClient();
                                         if (clientResource && clientResource.entity.id !== scope.existsClient.entity.id) {
                                             ngModel.$setValidity('unique', false);
-                                            scope.showError();
                                             _paq.push(['trackEvent', 'Validation Error', 'Client', 'clientName unique']);
                                             if (scope.uniquePopup) {
                                                 scope.uniquePopup.show();
