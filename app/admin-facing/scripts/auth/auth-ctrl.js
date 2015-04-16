@@ -25,10 +25,13 @@ angular.module('emmiManager')
                 }
             };
 
+            /**
+             * When cancel is clicked on the form go back to home
+             */
             $scope.cancel = function (){
                 LoginErrorMessageFactory.reset();
                 $location.path('/');
-            }
+            };
         }])
 
     .controller('LogoutCtrl', ['AuthSharedService', '$scope', 'API', '$sce',
