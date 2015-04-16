@@ -10,7 +10,7 @@ angular.module('emmiManager')
             };
 
             $rootScope.authenticationError = false;
-            $rootScope.loginErrorMessageFactory = LoginErrorMessageFactory;
+            $scope.loginErrorMessageFactory = LoginErrorMessageFactory;
 
             /**
              * Called when login button is clicked
