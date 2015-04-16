@@ -4,8 +4,8 @@ angular.module('emmiManager')
 /**
  * Service for change password
  */
-    .service('CredentialsExpiredService', ['$http', 'UriTemplate', 'API',
-        function ($http, UriTemplate, api) {
+    .service('CredentialsExpiredService', ['$http', 'UriTemplate', 'API','LoginErrorMessageFactory',
+        function ($http, UriTemplate, api, LoginErrorMessageFactory) {
             return {
                 /**
                  * Create the object used on a form.
@@ -33,6 +33,10 @@ angular.module('emmiManager')
                         newPassword: newPassword.password
                     })
                         .success(function (response) {
+                            return response;
+                        })
+                        .error(function (response) {
+                            angular.extend(LoginErrorMessageFactory,{showTemporaryPasswordTokenExpired:true});
                             return response;
                         });
                 },

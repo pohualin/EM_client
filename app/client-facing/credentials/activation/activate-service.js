@@ -4,8 +4,8 @@ angular.module('emmiManager')
 /**
  * Service for change password
  */
-    .service('ActivateClientUserService', ['$http', 'UriTemplate', 'API',
-        function ($http, UriTemplate, api) {
+    .service('ActivateClientUserService', ['$http', 'UriTemplate', 'API','LoginErrorMessageFactory',
+        function ($http, UriTemplate, api, LoginErrorMessageFactory) {
             return {
                 /**
                  * Create the object used on the form.
@@ -32,6 +32,10 @@ angular.module('emmiManager')
                         newPassword: newPassword.password
                     })
                         .success(function (response) {
+                            return response;
+                        })
+                        .error(function (response) {
+                            angular.extend(LoginErrorMessageFactory,{showAccountActivationTokenExpired:true});
                             return response;
                         });
                 },

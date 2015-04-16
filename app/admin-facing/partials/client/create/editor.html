@@ -50,7 +50,7 @@
                     <select class="form-control" id="clientType" data-ng-model="clientToEdit.type"
                             data-ng-options="type.typeKey | translate for type in clientTypes track by type.id" name="clientType" required
                             data-ng-disabled="clientForm.clientName.$error.unique" data-chosen data-disable-search="true" data-placeholder="Select...">
-                        <option value="">Select...</option>
+                        <option value=""></option>
                     </select>
                 </div>
             </div>
@@ -61,7 +61,7 @@
                     <select class="form-control" id="region" data-ng-model="clientToEdit.region"
                             data-ng-options="region.typeKey | translate for region in clientRegions track by region.id" name="clientRegion"
                             data-ng-disabled="clientForm.clientName.$error.unique" data-chosen data-disable-search="true" data-placeholder="Select...">
-                        <option value="">Select...</option>
+                        <option value=""></option>
                     </select>
                 </div>
             </div>
@@ -72,7 +72,7 @@
                     <select class="form-control" id="tier" data-ng-model="clientToEdit.tier"
                             data-ng-options="tier.typeKey | translate for tier in clientTiers track by tier.id" name="clientTier"
                             data-ng-disabled="clientForm.clientName.$error.unique" data-chosen data-disable-search="true" data-placeholder="Select...">
-                        <option value="">Select...</option>
+                        <option value=""></option>
                     </select>
                 </div>
             </div>
@@ -92,7 +92,7 @@
                             data-ng-options="owner as owner | contractOwnerFilter for owner in contractOwners track by owner.id "
                             name="clientContractOwner" required
                             data-ng-disabled="clientForm.clientName.$error.unique" data-chosen data-disable-search="true" data-placeholder="Select...">
-                        <option value="">Select...</option>
+                        <option value=""></option>
                     </select>
                 </div>
             </div>

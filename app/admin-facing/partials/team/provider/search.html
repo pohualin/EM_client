@@ -6,10 +6,10 @@
                     <div class="col-md-10 col-md-offset-1" id="modal-messages-container"></div>
                 </div>
                 <div class="row" >
-                    <div class="col-md-12" data-bs-active-pane="tabs.activeTab" data-bs-tabs data-ng-show="clientProviders && clientProviders.length > 0">
+                    <div class="col-md-12" data-bs-active-pane="tabs.activeTab" data-bs-tabs data-ng-if="clientProviders && clientProviders.length > 0">
                         <div data-ng-repeat="tab in tabs.data" data-ng-include="tab.template" data-title="{{tab.title}}" data-bs-pane></div>
                     </div>
-                    <div class="col-md-12" data-ng-show="!clientProviders || clientProviders.length == 0">
+                    <div class="col-md-12" data-ng-if="!clientProviders || clientProviders.length == 0">
                         <div data-ng-include="'admin-facing/partials/team/provider/tabs/team-search-providers-tab.html'" data-title="Search all providers" ></div>
                     </div>
                 </div>
@@ -17,11 +17,11 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-cancel" data-ng-click="cancel()">cancel</button>
                 <button type="button" class="btn btn-default"
-                        data-ng-hide="teamProviderTeamLocationSaveRequest.length < 1"
+                        data-ng-if="teamProviderTeamLocationSaveRequest.length > 0"
                         data-ng-click="saveAssociationAndAddAnotherProvider()">Save & Add Another
                 </button>
                 <button type="button" class="btn btn-success"
-                        data-ng-hide="teamProviderTeamLocationSaveRequest.length < 1"
+                        data-ng-if="teamProviderTeamLocationSaveRequest.length > 0"
                         data-ng-click="associateSelectedProvidersToTeam()">Save
                 </button>
             </div>

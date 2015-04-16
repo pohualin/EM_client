@@ -8,7 +8,7 @@
 .datepicker.dropdown-menu {
   width: 250px;
   height: auto !important; // non-static height because our thead buttons are taller (EM-993)
-  border-color: #6CC5DC;
+  border-color: $dropdown-border;
 }
 
 // Day of week label row

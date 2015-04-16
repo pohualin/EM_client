@@ -4,93 +4,102 @@ angular.module('emmiManager')
 /**
  * Service for Secret Question Responses
  */
-    .service('SecretQuestionService', ['$http', 'UriTemplate','$q', 'Session', 'API',
+    .service('SecretQuestionService', ['$http', 'UriTemplate', '$q', 'Session', 'API',
         function ($http, UriTemplate, $q, Session, API) {
-    	 var validateResponsesForResetPw;
-              return {
-            
+            var validateResponsesForResetPw;
+            return {
+
                 /**
                  * Calls the back end get Secret Questions list
                  *
                  * @returns All available secret question
                  */
                 getSecretQuestions: function () {
-                   return $http.get(API.secretQuestions);
+                    return $http.get(API.secretQuestions);
                 },
-                
+
                 getUserInputSecurityResponses: function () {
                     return validateResponsesForResetPw;
                 },
                 setUserInputSecurityResponses: function (userInputSecurityResponses) {
-                	validateResponsesForResetPw = userInputSecurityResponses;
-                 },
-                
+                    validateResponsesForResetPw = userInputSecurityResponses;
+                },
+
                 /**
                  * Creates a new object for the response
                  */
                 createNewResponse: function () {
-                	return {
-            		   	entity:{
-            		   		secretQuestion:null,
-					 		response:null
-					 	}
-                	};
+                    return {
+                        entity: {
+                            secretQuestion: null,
+                            response: null
+                        }
+                    };
                 },
-                                              
+
                 /**
-                 * Calls the back end to get all question and responses with asterisks 
+                 * Calls the back end to get all question and responses with asterisks
                  * @param client user id
                  * @returns all questions and the responses with asterisks
                  */
-                getAllUserSecretQuestionAsteriskResponse: function() {
-                	return $http.get(UriTemplate.create(Session.link.secretQuestionAsteriskResponses).stringify({size: 2}))
-                    		.then(function(response) {
+                getAllUserSecretQuestionAsteriskResponse: function () {
+                    return $http.get(UriTemplate.create(Session.link.secretQuestionAsteriskResponses).stringify({size: 2}))
+                        .then(function (response) {
                             return response;
                         });
                 },
-                
-               
+
+
                 /**
-                 * Calls the back end to get all questions for a user with reset password token 
+                 * Calls the back end to get all questions for a user with reset password token
                  * @param resetToken password token
                  * @returns all questions and empty response
                  */
-                getUserExistingSecurityQuestion: function(resetToken) {
-                	return $http.get(UriTemplate.create(API.getSecretQuestionWithResetToken).stringify({size: 2, token: resetToken}))
-                    		.then(function(response) {
-                    		return response;
+                getUserExistingSecurityQuestion: function (resetToken) {
+                    return $http.get(UriTemplate.create(API.getSecretQuestionWithResetToken).stringify({
+                        size: 2,
+                        token: resetToken
+                    }))
+                        .then(function (response) {
+                            return response;
                         });
                 },
-                
-                
+
+
                 /**
-                 * Calls the back end to get all questions for a user with reset password token 
+                 * Calls the back end to get all questions for a user with reset password token
                  * @param reset password token
+                 * @param userClientSecretQuestionResponse to be checked
                  * @returns all questions and empty response
                  */
-                validateUserSecurityResponse: function(resetToken, questionResponses) {
-                	return $http.put(UriTemplate.create(API.validateSecretResponses).stringify({token: resetToken}), questionResponses)
-                    		.then(function(response) {
-                    	    return response;
+                validateUserSecurityResponse: function (resetToken, userClientSecretQuestionResponse) {
+                    userClientSecretQuestionResponse = userClientSecretQuestionResponse || {};
+                    return $http.put(UriTemplate.create(API.validateSecurityResponse).stringify({token: resetToken}),
+                        userClientSecretQuestionResponse)
+                        .then(function (response) {
+                            return response.data;
                         });
                 },
-                                        		      
-                 /**
+
+                /**
                  * Calls the back end to get all question and response for a client user
                  *
                  * @param password
                  * @returns all questions and responses for a client user
                  */
-                getAllUserSecretQuestionResponse: function(password) {
-                	            
-                	    return $http.get(UriTemplate.create(Session.link.secretQuestionResponses).stringify({size: 2, password: password}),
-                    		{override403: true})
-                    		.then(function(response) {
+                getAllUserSecretQuestionResponse: function (password) {
+
+                    return $http.get(UriTemplate.create(Session.link.secretQuestionResponses).stringify({
+                            size: 2,
+                            password: password
+                        }),
+                        {override403: true})
+                        .then(function (response) {
                             return response;
                         });
                 },
-                
-                
+
+
                 /**
                  * Calls the back end to make sure user has permission for add security question
                  *
@@ -98,40 +107,37 @@ angular.module('emmiManager')
                  * @returns true or false
                  */
                 validatePassword: function (password) {
-                    return $http.get(UriTemplate.create(Session.link.verifyPassword).stringify({size: 2, password: password}),
+                    return $http.get(UriTemplate.create(Session.link.verifyPassword).stringify({
+                            size: 2,
+                            password: password
+                        }),
                         {override403: true})
-                        .then(function(response) {
+                        .then(function (response) {
                             return response;
                         });
                 },
-                
+
                 /**
                  * Calls the back end to save or update a client user's question and responses
                  * @param userClientSecretQuestionRepsonse
                  * @returns the promise
                  */
-                saveOrUpdateSecretQuestionResponse: function (userClientSecretQuestionRepsonse1, userClientSecretQuestionRepsonse2) {
-                    var deferred = $q.defer();
-                    var promise1 = $http.post(UriTemplate.create(Session.link.secretQuestionResponses)
-                        .stringify(), userClientSecretQuestionRepsonse1);
-
-
-                    var promise2 = $http.post(UriTemplate.create(Session.link.secretQuestionResponses)
-                        .stringify(), userClientSecretQuestionRepsonse2);
-
-
-                    $q.all([promise1, promise2])
-                        .then(
-                        function (result) {
-                            deferred.resolve(result);
-                            var secretQuestionsCreated = true;
-                            $http.put(UriTemplate.create(Session.link.updateUserClientSecretQuestionFlag).stringify({secretQuestionsCreated: secretQuestionsCreated}))
-                                .then(function (response) {
-                                    deferred.resolve(response.data);
-                                });
-                        });
-
-                    return deferred.promise;
+                saveOrUpdateSecretQuestionResponse: function (userClientSecretQuestionResponse1,
+                                                              userClientSecretQuestionResponse2) {
+                    // save both responses and wait for both to finish
+                    return $q.all([
+                        $http.post(UriTemplate.create(Session.link.secretQuestionResponses)
+                            .stringify(), userClientSecretQuestionResponse1, {override500: true}),
+                        $http.post(UriTemplate.create(Session.link.secretQuestionResponses)
+                            .stringify(), userClientSecretQuestionResponse2, {override500: true})
+                    ]).then(
+                        function ok(result) {
+                            // update the creation flag to true if the saves were both successful
+                            $http.put(UriTemplate.create(Session.link.updateUserClientSecretQuestionFlag)
+                                .stringify({secretQuestionsCreated: true}));
+                            return result;
+                        }
+                    );
                 },
 
                 /**

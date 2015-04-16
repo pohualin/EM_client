@@ -25,7 +25,7 @@
                             <a data-ng-href="#/login" data-translate="global.menu.login">Login</a>
                         </li>
                         <li data-ng-switch-when="true" data-ng-hide="isSecretQuestion">
-                            <a data-ng-href="#/securityQuestions">My Security Questions</a>
+                            <a data-ng-href="#/createSecurityQuestions">My Security Questions</a>
                         </li>
                         <li data-ng-switch-when="true" data-ng-show="isSecretQuestion">
                             <a data-ng-href="#/viewSecurityQuestions">My Security Questions</a>
@@ -43,7 +43,7 @@
                             <a data-ng-href="#/docs">Documentation</a>
                         </li>
                         <li data-ng-show="account.link.adminApp">
-                            <a data-ng-href="{{account.link.adminApp}}">Back to Administration Application</a>
+                            <a data-ng-href="#/logout">Logout</a>
                         </li>
                     </ul>
                 </div>
