@@ -71,8 +71,8 @@ angular.module('emmiManager')
                     authorizedRoles: [USER_ROLES.all]
                 },
                 resolve: {
-                    resetToken: ['$route', '$q', 'SecretQuestionService', '$location',
-                        function ($route, $q, SecretQuestionService, $location) {
+                    resetToken: ['$route', '$q', 'SecretQuestionService', '$location', 'LoginErrorMessageFactory',
+                        function ($route, $q, SecretQuestionService, $location, LoginErrorMessageFactory) {
                             var deferred = $q.defer(),
                                 resetToken = $route.current.params.resetToken;
                             if (resetToken) {
@@ -87,7 +87,8 @@ angular.module('emmiManager')
                                     },
                                     function error() {
                                         // problem with validate call
-                                        $location.path('/credentials/reset/failure').replace();
+                                        angular.extend(LoginErrorMessageFactory,{showResetPasswordTokenExpired:true});
+                                        $location.path('/login').replace();
                                     }
                                 );
                             } else {

@@ -35,7 +35,7 @@
             <div class="alert alert-danger error-circle fa-exclamation-circle" data-ng-show="username">
                 <strong>&nbsp;</strong>Your session has timed out. Please login again.
             </div>
-			
+
             <form class="form" name="loginForm" data-ng-submit="login(credentials)" novalidate>
                 <div class="form-group"
                      data-ng-class="{ 'has-error' : loginForm.username.$invalid && loginForm.submitted}">
@@ -67,6 +67,7 @@
                         <span data-translate="login.form.rememberme">Remember me on this computer.</span>
                     </label>
                 </div>
+                <a name="cancel" type="button" class="btn btn-link" data-ng-click="cancel()">cancel</a>
                 <button name="submit" type="submit" class="btn btn-primary" data-translate="login.form.button">Login
                 </button>
             </form>

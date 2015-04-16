@@ -7,8 +7,9 @@ angular.module('emmiManager')
  */
     .controller('ValidateSecurityQuestionController', ['$rootScope', '$scope', 'Session', '$location',
         'ResetClientUserPasswordService', 'resetToken', '$alert', 'SecretQuestionService', '$q',
+        'LoginErrorMessageFactory',
         function ($rootScope, $scope, Session, $location, ResetClientUserPasswordService,
-                  resetToken, $alert, SecretQuestionService, $q) {
+                  resetToken, $alert, SecretQuestionService, $q, LoginErrorMessageFactory) {
             $scope.countFailed = 0;
 
             /**
@@ -101,7 +102,8 @@ angular.module('emmiManager')
                         $scope.question1.entity.secretQuestion = angular.copy($scope.secretQuestions[0].entity);
                         $scope.question2.entity.secretQuestion = angular.copy($scope.secretQuestions[1].entity);
                     }, function error() {
-                        $location.path('/credentials/reset/failure').replace();
+                        angular.extend(LoginErrorMessageFactory,{showResetPasswordTokenExpired:true});
+                        $location.path('/login').replace();
                     });
             }
 
