@@ -353,7 +353,7 @@ angular.module('emmiManager')
 
         $scope.saveProvider = function (isValid, addAnother) {
             $scope.providerFormSubmitted = true;
-        	if (isValid && $scope.selectedItems.length > 0) {
+        	if (isValid && (($scope.allTeamLocations.length > 0 && $scope.selectedItems.length > 0) || $scope.allTeamLocations.length == 0)) {
 	        	ProviderCreate.create($scope.provider, $scope.teamResource, $scope.selectedItems).then(function(response){
 	                ProviderCreate.associateTeamLocationsToProvider(response.data.entity, $scope.teamResource, $scope.selectedItems);
 	        		$scope.hideNewProviderModal();
