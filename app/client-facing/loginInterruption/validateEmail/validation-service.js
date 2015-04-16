@@ -72,7 +72,7 @@ angular.module('emmiManager')
                         })
                         .error(function (response) {
                             angular.extend(LoginErrorMessageFactory,{showEmailValidationTokenExpired:true});
-                            deferred.resolve(response);
+                            deferred.reject(response);
                         });
                     return deferred.promise;
                 },
