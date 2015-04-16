@@ -20,7 +20,8 @@ angular.module('emmiManager')
                     });
                     $location.path('/').replace();
                 }, function error() {
-                    $location.path('/credentials/validateEmail/failure').replace();
+                    $location.path('/login').replace();
+
                 });
 
             }
