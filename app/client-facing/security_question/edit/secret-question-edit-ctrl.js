@@ -5,13 +5,15 @@ angular.module('emmiManager')
 /**
  * This manages interactions when a user needs to select secret questions and responses.
  */
-    .controller('SecretQuestionEditController', ['$scope', '$location', 'SecretQuestionService', '$alert', '$modal',
-        function ($scope, $location, SecretQuestionService, $alert, $modal) {
+    .controller('SecretQuestionEditController', ['$scope', '$location', 'SecretQuestionService',
+        '$alert', '$modal', 'Session',
+        function ($scope, $location, SecretQuestionService, $alert, $modal, Session) {
 
             $scope.secretQuestionFormSubmitted = false;
+
             var promptPasswordModal = $modal({
                 scope: $scope,
-                template: 'client-facing/secretQuestions/promptPassword.html',
+                template: 'client-facing/security_question/promptPassword.html',
                 animation: 'none',
                 backdropAnimation: 'emmi-fade',
                 show: false,
@@ -26,18 +28,36 @@ angular.module('emmiManager')
             $scope.saveOrUpdateSecretQuestion = function (valid) {
                 $scope.secretQuestionFormSubmitted = true;
                 if (valid) {
-                    SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.question1.entity, $scope.question2.entity);
-                    $alert({
-                        title: ' ',
-                        content: 'Your security questions have been updated successfully.',
-                        container: 'body',
-                        type: 'success',
-                        placement: 'top',
-                        show: true,
-                        duration: 5,
-                        dismissable: true
-                    });
-                    $location.path('/viewSecurityQuestions').replace();
+                    SecretQuestionService
+                        .saveOrUpdateSecretQuestionResponse($scope.question1.entity, $scope.question2.entity).then(
+                        function ok() {
+                            $alert({
+                                title: ' ',
+                                content: 'Your security questions have been updated successfully.',
+                                container: 'body',
+                                type: 'success',
+                                placement: 'top',
+                                show: true,
+                                duration: 5,
+                                dismissable: true
+                            });
+                            $location.path('/viewSecurityQuestions').replace();
+                        },
+                        function notOk() {
+                            $alert({
+                                title: ' ',
+                                content: 'There was a problem saving your security questions.',
+                                container: 'body',
+                                type: 'success',
+                                placement: 'top',
+                                show: true,
+                                duration: 5,
+                                dismissable: true
+                            });
+                            $location.path('/viewSecurityQuestions').replace();
+                        }
+                    );
+
                 } else {
                     if (!$scope.formAlert) {
                         $scope.formAlert = $alert({
@@ -60,8 +80,7 @@ angular.module('emmiManager')
             $scope.onChange = function () {
                 if (angular.equals($scope.question1.entity.secretQuestion, $scope.question2.entity.secretQuestion) && !(angular.isUndefined($scope.question1.entity.secretQuestion))) {
                     $scope.secretQuestionForm.secretQuestion2.$setValidity('duplicated', false);
-                }
-                else {
+                } else {
                     $scope.secretQuestionForm.secretQuestion2.$setValidity('duplicated', true);
                 }
             };
@@ -95,11 +114,12 @@ angular.module('emmiManager')
 
             };
 
-            $scope.onChange = function(passwordForm){
+            $scope.onChangePassword = function (passwordForm) {
                 passwordForm.password.$setValidity('correct', true);
+                passwordForm.isSubmitted = false;
             };
 
-            $scope.showError = function(){
+            $scope.showError = function () {
                 if (!$scope.errorAlert) {
                     $scope.errorAlert = $alert({
                         title: ' ',
@@ -119,7 +139,11 @@ angular.module('emmiManager')
              * objects and copies them back into the bound objects.
              */
             $scope.cancel = function () {
-                $location.path('/viewSecurityQuestions').replace();
+                if (Session.secretQuestionCreated) {
+                    $location.path('/viewSecurityQuestions').replace();
+                } else {
+                    $location.path('/').replace();
+                }
             };
 
             function init() {

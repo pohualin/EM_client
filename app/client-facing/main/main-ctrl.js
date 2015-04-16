@@ -17,11 +17,6 @@ angular.module('emmiManager')
                 // user is logged in
                 $scope.page.setTitle(account.clientResource.entity.name + ' Home');
 
-                // determine if secret questions have been answered
-                if(Session.secretQuestionCreated){
-                	$scope.isSecretQuestion = true;
-           		}
-
                 // see if the password is going to expire soon
                 MainService.checkPasswordExpiration(account).then(function (response) {
                     if (response.showReminder) {

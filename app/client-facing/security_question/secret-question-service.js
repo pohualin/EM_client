@@ -133,9 +133,10 @@ angular.module('emmiManager')
                     ]).then(
                         function ok(result) {
                             // update the creation flag to true if the saves were both successful
-                            $http.put(UriTemplate.create(Session.link.updateUserClientSecretQuestionFlag)
-                                .stringify({secretQuestionsCreated: true}));
-                            return result;
+                            return $http.put(UriTemplate.create(Session.link.updateUserClientSecretQuestionFlag)
+                                .stringify({secretQuestionsCreated: true})).then(function (){
+                                 return result;
+                            });
                         }
                     );
                 },

@@ -163,7 +163,8 @@ angular.module('emmiManager', [
         $rootScope.emailPattern = PATTERN.EMAIL;
 
         /**
-         * Special routes that are system level.
+         * Special routes that are system level need
+         * alerts closed when they are navigated to.
          *
          * @returns {boolean}
          */
@@ -174,6 +175,7 @@ angular.module('emmiManager', [
                 path === '/error' ||
                 path === '/403' ||
                 path === '/500' ||
+                path === '/editSecurityQuestions' ||
                 path === '/unauthorized';
         };
 

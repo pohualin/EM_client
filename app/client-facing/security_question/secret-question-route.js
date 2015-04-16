@@ -12,7 +12,7 @@ angular.module('emmiManager')
     	 // Routes
         $routeProvider
         .when('/editSecurityQuestions', {
-            templateUrl: 'client-facing/secretQuestions/edit/secret-question-edit.html',
+            templateUrl: 'client-facing/security_question/edit/secret-question-edit.html',
             controller: 'SecretQuestionEditController',
             title: 'Edit security Question',
              access: {
@@ -24,21 +24,9 @@ angular.module('emmiManager')
         // Routes
         $routeProvider
         .when('/viewSecurityQuestions', {
-            templateUrl: 'client-facing/secretQuestions/edit/secret-question-view.html',
+            templateUrl: 'client-facing/security_question/edit/secret-question-view.html',
             controller: 'SecretQuestionViewController',
             title: 'Create or View Security Question',
-             access: {
-                 authorizedRoles: [USER_ROLES.all]
-             },
-             resolve: requiredResources
-        });
-
-        // Routes
-        $routeProvider
-        .when('/createSecurityQuestions', {
-            templateUrl: 'client-facing/secretQuestions/create/secret-question-create.html',
-            controller: 'SecretQuestionCreateController',
-            title: 'Create security Question',
              access: {
                  authorizedRoles: [USER_ROLES.all]
              },
