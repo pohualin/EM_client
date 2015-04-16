@@ -3,6 +3,7 @@
     <div class="row" data-ng-show="editMode">
         <div class="col-md-12">
             <div id="validation-container" data-ng-show="teamForm.$invalid || !teamToSave.salesForceAccount"></div>
+            <h1><span data-translate="team_edit_page.information.title">Team Information</span></h1>
             <form name="teamForm" class="form" novalidate unsaved-warning-form>
                 <div data-ng-include="'admin-facing/partials/team/team_form.html'"></div>
                 <div class="pull-right">
