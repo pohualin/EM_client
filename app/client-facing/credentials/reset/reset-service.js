@@ -43,12 +43,13 @@ angular.module('emmiManager')
                 },
 
                 /**
-                 * Calls the back end to locked out a user with reset password token
+                 * Calls the back end to lock out a user with reset password token
+                 *
                  * @param resetToken
                  * @returns userClient
                  */
-                lockedOutUserByResetToken: function (resetToken) {
-                    return $http.put(UriTemplate.create(api.lockedOutUserByResetToken).stringify({token: resetToken}))
+                lockOutUserWithResetToken: function (resetToken) {
+                    return $http.put(UriTemplate.create(api.lockOutUserWithResetToken).stringify({token: resetToken}))
                         .then(function (response) {
                             return response;
                         });

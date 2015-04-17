@@ -97,10 +97,13 @@ angular.module('emmiManager')
                     SecretQuestionService.getAllUserSecretQuestionResponse(password).then(
                         function success(response) {
                             var existingResponse = response.data.content;
+                            // create the questions
                             $scope.question1 = existingResponse.length > 0 ? existingResponse[0] : SecretQuestionService.createNewResponse();
-                            $scope.question1Original = angular.copy($scope.question1);
                             $scope.question2 = existingResponse.length > 1 ? existingResponse[1] : SecretQuestionService.createNewResponse();
-                            $scope.question2Original = angular.copy($scope.question2);
+                            // make sure question2 is not in the list of question 1 possibilities, ensures no deadlocks
+                            $scope.question1Choices = SecretQuestionService.trimChoices(secretQuestionChoices, $scope.question2);
+                            // make sure question1 is not in the list of question 2 possibilities, ensures no deadlocks
+                            $scope.question2Choices = SecretQuestionService.trimChoices(secretQuestionChoices, $scope.question2);
                             passwordForm.isSubmitted = false;
                             promptPasswordModal.$promise.then(promptPasswordModal.hide);
                         },
@@ -146,35 +149,6 @@ angular.module('emmiManager')
                 } else {
                     $location.path('/').replace();
                 }
-            };
-
-            /**
-             * Filter question 2 choices so that the original question 1
-             * choice is not present. This prevents switching of question 1
-             * and question 2 to stop the db deadlock that would happen on save.
-             *
-             * @param option to be checked
-             * @returns {boolean}
-             */
-            $scope.secretQuestion2Choices = function (option) {
-                if ($scope.question1Original) {
-                    return !angular.equals(option, $scope.question1Original.entity.secretQuestion);
-                }
-            };
-
-            /**
-             * Filter question 1 choices so that the original question 2
-             * choice is not present. This prevents switching of question 1
-             * and question 2 to stop the db deadlock that would happen on save.
-             *
-             * @param option to be checked
-             * @returns {boolean}
-             */
-            $scope.secretQuestion1Choices = function (option) {
-                if ($scope.question2Original) {
-                    return !angular.equals(option, $scope.question2Original.entity.secretQuestion);
-                }
-                return option;
             };
 
             $scope.secretQuestions = secretQuestionChoices;
