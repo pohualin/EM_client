@@ -13,6 +13,11 @@ angular.module('emmiManager')
         $scope.editMode = true;
 
         $scope.clientToEdit = Client.newClient().entity;
+        
+        // Fill in name with search query
+        if($location.search()['q']){
+            $scope.clientToEdit.name = $location.search()['q'];
+        }
 
         $scope.cancel = function () {
             $scope.editMode = false;
@@ -49,6 +54,7 @@ angular.module('emmiManager')
             }
         };
 
+        
     }])
 
 ;
