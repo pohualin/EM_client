@@ -4,8 +4,8 @@ angular.module('emmiManager')
 /**
  * Service for Secret Question Responses
  */
-    .service('SecretQuestionService', ['$http', 'UriTemplate', '$q', 'Session', 'API',
-        function ($http, UriTemplate, $q, Session, API) {
+    .service('SecretQuestionService', ['$http', 'UriTemplate', '$q', 'Session', 'API', '$filter',
+        function ($http, UriTemplate, $q, Session, API, $filter) {
             var validateResponsesForResetPw;
             return {
 
@@ -118,24 +118,42 @@ angular.module('emmiManager')
                 },
 
                 /**
-                 * Calls the back end to save or update a client user's question and responses
-                 * @param userClientSecretQuestionRepsonse
-                 * @returns the promise
+                 * Calls the back end to save or update a client user's question and responses.
+                 * It does this a bit differently for 'create' vs 'update'. Create calls are
+                 * chained to allow for ordering by id, update calls are concurrent.
+                 *
+                 * @param userClientSecretQuestionResponse1 the first response
+                 * @param userClientSecretQuestionResponse2 the second response
+                 * @returns {*} the promise
                  */
                 saveOrUpdateSecretQuestionResponse: function (userClientSecretQuestionResponse1,
                                                               userClientSecretQuestionResponse2) {
+                    var saveCall;
+                    if (Session.secretQuestionsCreated){
+                        // save concurrently because we already have IDs
+                        saveCall = $q.all([
+                            $http.post(UriTemplate.create(Session.link.secretQuestionResponses)
+                                .stringify(), userClientSecretQuestionResponse1, {override500: true}),
+                            $http.post(UriTemplate.create(Session.link.secretQuestionResponses)
+                                .stringify(), userClientSecretQuestionResponse2, {override500: true})
+                        ]);
+                    } else {
+                        // save staggered, so that the first response has the lower id
+                        saveCall = $http.post(UriTemplate.create(Session.link.secretQuestionResponses)
+                            .stringify(), userClientSecretQuestionResponse1, {override500: true}).then(function (){
+                            return $http.post(UriTemplate.create(Session.link.secretQuestionResponses)
+                                .stringify(), userClientSecretQuestionResponse2, {override500: true});
+                        });
+                    }
                     // save both responses and wait for both to finish
-                    return $q.all([
-                        $http.post(UriTemplate.create(Session.link.secretQuestionResponses)
-                            .stringify(), userClientSecretQuestionResponse1, {override500: true}),
-                        $http.post(UriTemplate.create(Session.link.secretQuestionResponses)
-                            .stringify(), userClientSecretQuestionResponse2, {override500: true})
-                    ]).then(
+                    return saveCall.then(
                         function ok(result) {
                             // update the creation flag to true if the saves were both successful
                             return $http.put(UriTemplate.create(Session.link.updateUserClientSecretQuestionFlag)
-                                .stringify({secretQuestionsCreated: true})).then(function (){
-                                 return result;
+                                .stringify({secretQuestionsCreated: true})).then(function () {
+                                // also apply to the calling Session in case, a route change doesn't happen
+                                angular.extend(Session, {secretQuestionsCreated: true});
+                                return result;
                             });
                         }
                     );
@@ -152,6 +170,23 @@ angular.module('emmiManager')
                     $http.put(UriTemplate.create(userClient.link.notNow).stringify(), userClient).then(function (response) {
                         return response;
                     });
+                },
+
+                /**
+                 * Returns allChoices - withoutThisQuestion as an array
+                 *
+                 * @param allChoices to trim
+                 * @param withoutThisQuestion to remove from the list
+                 * @returns {Array}
+                 */
+                trimChoices: function(allChoices, withoutThisQuestion){
+                    var trimmed = [];
+                    $filter('filter')(allChoices, function (aChoice){
+                        if (!angular.equals(aChoice, withoutThisQuestion)) {
+                            trimmed.push(aChoice);
+                        }
+                    });
+                    return trimmed;
                 }
             };
         }
