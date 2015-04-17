@@ -10,6 +10,7 @@ angular.module('emmiManager')
         $controller('LocationCommon', {$scope: $scope});
 
         $scope.location = Location.newLocation();
+        $scope.newLocation = true;
         $scope.title = 'New Location';
         $scope.location.providersSelected =  angular.copy($scope.providersData);
         $scope.saveAndAddAnother = function (isValid) {
