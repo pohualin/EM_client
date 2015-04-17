@@ -20,18 +20,21 @@ angular.module('emmiManager')
                 // see if the password is going to expire soon
                 MainService.checkPasswordExpiration(account).then(function (response) {
                     if (response.showReminder) {
-                        if (!$scope.passwordAlert) {
-                            $scope.passwordAlert = $alert({
-                                content: 'Your password will expire in ' + response.passwordExpiresInDays + ' days.',
-                                template: 'client-facing/main/password-reminder-alert.tpl.html',
-                                type: 'warning',
-                                placement: 'top',
-                                show: true,
-                                dismissable: true
-                            });
-                        } else {
-                            $scope.passwordAlert.show();
-                        }
+                    	var expiredAlertMessage = response.passwordExpiresInDays === 1 ? 'Your password will expire in ' + response.passwordExpiresInDays + ' day.'
+                    			                                                       : 'Your password will expire in ' + response.passwordExpiresInDays + ' days.';
+                    	if (!$scope.passwordAlert) {
+                    		$scope.passwordAlert = $alert({
+                    			content: expiredAlertMessage,
+                    			template: 'client-facing/main/password-reminder-alert.tpl.html',
+                    			type: 'warning',
+                    			placement: 'top',
+                    			show: true,
+                    			dismissable: true
+                    		});
+                    	} else {
+                    		$scope.passwordAlert.show();
+                    	}
+                    	
                     }
                 });
 
