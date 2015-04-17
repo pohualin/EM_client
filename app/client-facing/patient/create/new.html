@@ -6,6 +6,9 @@
         <div id="alerts-container" data-ng-show="newPatientForm.$invalid"></div>
         <h2>Patient Information</h2>
         <div class="row">
+            <div class="col-md-12" id="modal-messages-container"></div>
+        </div>
+        <div class="row">
             <div class="col-md-4">
                 <div class="form-group"
                      data-ng-class="{ 'has-error' : newPatientForm.firstName.$invalid && formSubmitted}">

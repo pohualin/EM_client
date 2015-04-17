@@ -15,7 +15,17 @@ angular.module('emmiManager')
                 $scope.formSubmitted = true;
                 if (valid) {
                     CreatePatientService.save(client, $scope.patient).then(function (response) {
-                        $location.path('/patients/' + response.data.entity.id).replace();
+                        $alert({
+                            title: ' ',
+                            content: 'The patient <b>'+ response.data.entity.firstName + ' ' + response.data.entity.lastName +'</b> has been successfully added.',
+                            container: '#modal-messages-container',
+                            type: 'success',
+                            placement: 'top',
+                            show: true,
+                            duration: 5,
+                            dismissable: true
+                        });
+                        $scope.clearForm();
                     });
                 } else {
                     $scope.showError();
@@ -39,6 +49,11 @@ angular.module('emmiManager')
 
             $scope.cancel = function () {
                 $location.path('/patients/').replace();
+            };
+
+            $scope.clearForm = function (){
+                $scope.formSubmitted = false;
+                $scope.patient = {};
             };
         }
     ])
