@@ -13,6 +13,8 @@ angular.module('emmiManager')
 
         $scope.title = 'New Location';
 
+        $scope.newLocation = true;
+
         $scope.saveAndAddAnother = function (isValid) {
             $scope.saveLocation(isValid, true);
         };
