@@ -58,7 +58,7 @@ angular.module('emmiManager')
                             $scope.countFailed++;
                             if ($scope.countFailed >= 4) {
                                 $rootScope.lockError = true;
-                                ResetClientUserPasswordService.lockedOutUserByResetToken(resetToken).then(function (response) {
+                                ResetClientUserPasswordService.lockOutUserWithResetToken(resetToken).then(function (response) {
                                     if (response.data) {
                                         $rootScope.lockExpirationDateTime = response.data.replace(/"/g, '') + 'Z';
                                     }
@@ -99,8 +99,8 @@ angular.module('emmiManager')
                 SecretQuestionService.getUserExistingSecurityQuestion(resetToken)
                     .then(function (response) {
                         $scope.secretQuestions = response.data.content;
-                        $scope.question1.entity.secretQuestion = angular.copy($scope.secretQuestions[0].entity);
-                        $scope.question2.entity.secretQuestion = angular.copy($scope.secretQuestions[1].entity);
+                        $scope.question1.entity.secretQuestion = angular.copy($scope.secretQuestions[0].entity.secretQuestion);
+                        $scope.question2.entity.secretQuestion = angular.copy($scope.secretQuestions[1].entity.secretQuestion);
                     }, function error() {
                         angular.extend(LoginErrorMessageFactory,{showResetPasswordTokenExpired:true});
                         $location.path('/login').replace();

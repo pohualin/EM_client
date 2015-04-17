@@ -6,8 +6,8 @@ angular.module('emmiManager')
  * This manages interactions when a user needs to select secret questions and responses.
  */
     .controller('SecretQuestionEditController', ['$scope', '$location', 'SecretQuestionService',
-        '$alert', '$modal', 'Session',
-        function ($scope, $location, SecretQuestionService, $alert, $modal, Session) {
+        '$alert', '$modal', 'Session', 'secretQuestionChoices',
+        function ($scope, $location, SecretQuestionService, $alert, $modal, Session, secretQuestionChoices) {
 
             $scope.secretQuestionFormSubmitted = false;
 
@@ -97,8 +97,13 @@ angular.module('emmiManager')
                     SecretQuestionService.getAllUserSecretQuestionResponse(password).then(
                         function success(response) {
                             var existingResponse = response.data.content;
+                            // create the questions
                             $scope.question1 = existingResponse.length > 0 ? existingResponse[0] : SecretQuestionService.createNewResponse();
                             $scope.question2 = existingResponse.length > 1 ? existingResponse[1] : SecretQuestionService.createNewResponse();
+                            // make sure question2 is not in the list of question 1 possibilities, ensures no deadlocks
+                            $scope.question1Choices = SecretQuestionService.trimChoices(secretQuestionChoices, $scope.question2);
+                            // make sure question1 is not in the list of question 2 possibilities, ensures no deadlocks
+                            $scope.question2Choices = SecretQuestionService.trimChoices(secretQuestionChoices, $scope.question2);
                             passwordForm.isSubmitted = false;
                             promptPasswordModal.$promise.then(promptPasswordModal.hide);
                         },
@@ -146,15 +151,10 @@ angular.module('emmiManager')
                 }
             };
 
-            function init() {
-                SecretQuestionService.getSecretQuestions().then(function (response) {
-                    $scope.secretQuestions = response.data.content;
-                });
-                $scope.promptPassword();
-            }
-
-            init();
+            $scope.secretQuestions = secretQuestionChoices;
+            $scope.promptPassword();
         }])
+
 ;
 
 

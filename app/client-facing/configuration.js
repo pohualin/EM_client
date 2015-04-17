@@ -163,8 +163,8 @@ angular.module('emmiManager', [
         $rootScope.emailPattern = PATTERN.EMAIL;
 
         /**
-         * Special routes that are system level need
-         * alerts closed when they are navigated to.
+         * Special routes that are system level.
+         * These routes are not authorized.
          *
          * @returns {boolean}
          */
@@ -175,8 +175,19 @@ angular.module('emmiManager', [
                 path === '/error' ||
                 path === '/403' ||
                 path === '/500' ||
-                path === '/editSecurityQuestions' ||
                 path === '/unauthorized';
+        };
+
+        /**
+         * These are routes where alerts should be closed
+         * when navigating to them, these routes are authorized
+         *
+         * @returns {boolean}
+         */
+        $rootScope.shouldCloseAlertsRoute = function () {
+            var path = $location.path();
+            return path === '/editSecurityQuestions' ||
+                path === '/viewSecurityQuestions';
         };
 
         $rootScope.$on('$routeChangeStart', function (event, next) {
@@ -196,7 +207,7 @@ angular.module('emmiManager', [
             $rootScope.currentRouteQueryString = arrays.toQueryString(current.params);
             // hide all modals
             $rootScope.killAllModals();
-            if ($rootScope.isSystemRoute()) {
+            if ($rootScope.isSystemRoute() || $rootScope.shouldCloseAlertsRoute()) {
                 $rootScope.killAllAlerts();
             }
             var pageTitle = current && current.$$route && current.$$route.title;
