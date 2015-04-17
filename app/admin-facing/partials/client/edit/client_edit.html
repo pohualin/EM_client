@@ -160,7 +160,7 @@
                 <span>{{clientToEdit.salesForceAccount.city}}<span
                         data-ng-show="clientToEdit.salesForceAccount.city && clientToEdit.salesForceAccount.state">,&nbsp;</span>{{clientToEdit.salesForceAccount.state}}
                 </span>
-            <button class="btn btn-link" type="button" data-ng-click="changeClientSfAccount()" required
+            <button class="btn btn-link btn-salesforce-update" type="button" data-ng-click="changeClientSfAccount()" required
                     data-ng-disabled="metadataForm.clientName.$error.unique">update
             </button>
         </div>
