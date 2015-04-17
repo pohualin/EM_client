@@ -18,7 +18,7 @@ angular.module('emmiManager')
             this.interruptLoginFlow = user.interruptLoginFlow;
             this.securityQuestionsNotRequiredForReset = user.securityQuestionsNotRequiredForReset;
             if(user.notNowExpirationTime){
-                this.notNowExpirationTime = user.notNowExpirationTime + 'Z';
+                this.notNowExpirationTime = user.notNowExpirationTime;
             }
             if (user.passwordExpirationTime) {
                 this.passwordExpirationTime = user.passwordExpirationTime + 'Z';
