@@ -133,6 +133,7 @@ angular.module('emmiManager')
                                         show: true,
                                         trigger: 'manual',
                                         placement: placement,
+                                        container: 'body',
                                         contentTemplate: 'admin-facing/partials/team/deactivate_popover.tpl.html'
                                     });
                                 });
