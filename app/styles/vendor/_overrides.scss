@@ -17,8 +17,10 @@
 
 .alert-dismissable,
 .alert-dismissible {
+    padding-right: 30px;
     .close {
-        //top: -4px;
+        font-size: 20px;
+        top: 0;
         @include opacity(.75);
         .icon-delete {
             font-weight: bold;

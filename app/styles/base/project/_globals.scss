@@ -524,6 +524,11 @@
         margin: 0 0 12px;
         padding: 28px 28px 30px;
         @include clearfix;
+        border: 1px solid transparent;
+        transition: border-color 0.25s ease-in-out;
+        &.outlined {
+            border: 1px solid $brand-secondary;
+        }
     }
 
     .app-content-with-sidebar {

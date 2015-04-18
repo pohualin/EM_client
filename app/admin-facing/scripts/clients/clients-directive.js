@@ -59,6 +59,7 @@ angular.module('emmiManager')
                                                         scope: scope,
                                                         trigger: 'manual',
                                                         show: true,
+                                                        container: 'body',
                                                         contentTemplate: 'admin-facing/partials/client/unique_client_popover.tpl.html'
                                                     });
                                                 });
@@ -119,6 +120,7 @@ angular.module('emmiManager')
                                     trigger: 'manual',
                                     show: true,
                                     placement: 'bottom',
+                                    container: 'body',
                                     contentTemplate: 'admin-facing/partials/client/deactivate_popover.tpl.html'
                                 });
                             });
