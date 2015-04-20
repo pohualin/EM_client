@@ -11,15 +11,13 @@
 			        	 data-ng-click="panelStateChange(clientTeamRole)"
 			             data-start-collapsed="true"
 			             data-bs-collapse>
-			            <div class="panel panel-default" >
+			            <div class="panel panel-default"
+                             data-ng-class="{ 'panel-open': clientTeamRole.activePanel === 1 }">
 			                <div class="panel-heading">
 			                    <div class="row panel-title">
                                     <button type="button" class="btn-link" data-ng-click="togglePanel(clientTeamRole)"
                                             data-bs-collapse-toggle>
-			                            <span class="icon-caret-right"
-                                              data-ng-hide="clientTeamRole.activePanel === 1"></span>
-                                        <span class="icon-caret-right rotate-90"
-                                              data-ng-show="clientTeamRole.activePanel === 1"></span>
+                                        <span class="icon-caret-right"></span>
                                         {{ clientTeamRole.entity.name}}
 			                            <span data-ng-show="clientTeamRole.existingTeams">({{clientTeamRole.existingTeams.length}}
 			                            	<span data-ng-show="clientTeamRole.existingTeams.length == 1">team)</span>
