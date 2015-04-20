@@ -15,8 +15,8 @@ angular.module('emmiManager')
         $scope.clientToEdit = Client.newClient().entity;
         
         // Fill in name with search query
-        if($location.search()['q']){
-            $scope.clientToEdit.name = $location.search()['q'];
+        if($location.search().q){
+            $scope.clientToEdit.name = $location.search().q;
         }
 
         $scope.cancel = function () {
