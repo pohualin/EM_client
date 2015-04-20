@@ -63,7 +63,7 @@
                 <tr
                     data-ng-repeat="patient in patients | orderBy:'patient.sortIdx'">
                     <td>{{patient.entity.lastName}}, {{patient.entity.firstName}}</td>
-                    <td>{{patient.entity.dateOfBirth}}</td>
+                    <td>{{patient.entity.dateOfBirth |  date:"MM/dd/yyyy" }}</td>
                     <td><a href="#/patients/{{patient.entity.id}}">view</a></td>
                 </tr>
             </table>
