@@ -166,6 +166,7 @@ table {
     }
     // Popover footer can also be placed inside the content because of existing Popover usage (contentTemplate vs template)
     .popover-footer {
+        @include clearfix();
         margin: 15px -19px -20px -19px;
     }
 }
@@ -187,6 +188,10 @@ table {
 }
 .popover.left > .arrow:after {
     border-left-color: #fff;
+}
+
+.popover > .arrow.gray:after {
+    border-top-color: #F0F1F3;
 }
 
 // Exotic placements from Bootstrap Additions

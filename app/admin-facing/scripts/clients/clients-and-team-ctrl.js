@@ -37,6 +37,10 @@ angular.module('emmiManager')
                 $scope.currentRouteQueryString = $rootScope.currentRouteQueryString.replace(/(&team=)\w+/, '');
             }
 
+            $scope.flagTagChanges = function (value) {
+                $scope.tagsUpdated = value;
+            };
+
             // Listen for changes to the Route. When the route
             // changes, load the relative controller
             $scope.$on(
