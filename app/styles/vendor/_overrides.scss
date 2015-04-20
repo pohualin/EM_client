@@ -268,7 +268,9 @@ table {
     margin-top: -5px;
 }
 .modal-footer .btn-link + .btn,
-.modal-footer .btn-cancel + .btn {
+.modal-footer .btn-cancel + .btn,
+.modal-footer .btn + .btn-link,
+.modal-footer .btn + .btn-cancel {
     margin-left: 0;
  }
 
@@ -325,6 +327,20 @@ table {
             @include alert-variant($alert-danger-bg, $alert-danger-border, $alert-danger-text);
         }
     }
+}
+
+// Modal overrides
+.modal-title {
+    font-size: $font-size-h1;
+    font-weight: normal;
+    color: $headings-color;
+    text-transform: none;
+}
+
+.modal-footer {
+    background: #f0f1f3;
+    border-radius: 0 0 3px 3px;
+    text-align: left;
 }
 
 // Bootstrap Additions modal

@@ -352,6 +352,10 @@
     }
     .form-group {
         margin-bottom: 22px;
+        .checkbox:first-child,
+        .radio:first-child {
+            margin-top: 0;
+        }
     }
     .form-control:focus {
         box-shadow: none !important;
