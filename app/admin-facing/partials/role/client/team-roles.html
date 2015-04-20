@@ -7,7 +7,7 @@
                 <div class="panel-group" data-ng-model="role.activePanel"
                      data-ng-change="panelStateChange(role, existingClientTeamRoleForm_{{$index}})" data-start-collapsed="true"
                      data-bs-collapse>
-                    <div class="panel panel-default">
+                    <div class="panel panel-default"  data-ng-class="{ 'panel-open': role.activePanel === 0 }">
                         <div class="panel-heading">
                             <div class="row panel-title" data-ng-hide="role.activePanel === 0">
                                 <button type="button" class="btn-link" data-bs-collapse-toggle>
@@ -27,7 +27,7 @@
 
                             <div class="row panel-title" data-ng-show="role.activePanel === 0">
                                 <button type="button" class="btn-link" data-ng-hide="role.editName" data-sglclick="collapseButDontCancel(role)" data-ng-dblclick="startEditName(role)">
-                                    <span class="icon-caret-right rotate-90"></span>
+                                    <span class="icon-caret-right"></span>
                                     {{ role.entity.name }}
                                 </button>
                                 <div class="col-md-9" data-ng-show="role.editName">
