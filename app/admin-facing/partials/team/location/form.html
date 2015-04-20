@@ -102,7 +102,7 @@
                             <label class="sr-only" for="belongsTo">Belongs To:</label>
                             <input type="checkbox" name="belongsTo" id="belongsTo"
                                    data-ng-model="location.belongsToCheckbox"
-                                   data-ng-show="location.belongsToMutable">
+                                   data-ng-if="location.belongsToMutable">
                             <label for="belongsTo" data-ng-if="!location.belongsToMutable && location.belongsTo">Location belongs to {{location.belongsTo.name}}</label>
                             <label for="belongsTo" data-ng-if="location.belongsToMutable">Location belongs to
                                 <span data-ng-show="client.entity.name"> {{client.entity.name}}</span>
