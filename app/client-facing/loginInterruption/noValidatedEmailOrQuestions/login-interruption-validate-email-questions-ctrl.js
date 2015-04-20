@@ -10,22 +10,22 @@ angular.module('emmiManager')
                 $scope.secretQuestions = response.data.content;
             });
 
-            $scope.account.question1 = SecretQuestionService.createNewResponse();
-            $scope.account.question2 = SecretQuestionService.createNewResponse();
+            $scope.userClientReqdResource.question1 = SecretQuestionService.createNewResponse();
+            $scope.userClientReqdResource.question2 = SecretQuestionService.createNewResponse();
 
             $scope.saveNonValidatedEmailAndQuestions = function (isValid) {
                 $scope.notValidatedEmailNoQuestionFormSubmitted = true;
                 $scope.notValidatedEmailNoQuestionForm.validateEmail.$setValidity('duplicate', true);
 
                 if (isValid) {
-                    ValidationService.saveEmail($scope.account).then(function () {
+                    ValidationService.saveEmail($scope.userClientReqdResource).then(function () {
                         //send validation email
-                        ValidationService.sendValidationEmail($scope.account).then(function () {
-                            SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.account.question1.entity, $scope.account.question2.entity).then(
+                        ValidationService.sendValidationEmail($scope.userClientReqdResource).then(function () {
+                            SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.userClientReqdResource.question1.entity, $scope.userClientReqdResource.question2.entity).then(
                                 function () {
                                     $location.path($scope.locationBeforeLogin).replace();
                                     $alert({
-                                        content: 'Please check your email. A link has been sent to <strong>' + $scope.account.email +
+                                        content: 'Please check your email. A link has been sent to <strong>' + $scope.userClientReqdResource.email +
                                             '</strong> to finish setting up your account.',
                                         type: 'success',
                                         placement: 'top',
@@ -95,7 +95,7 @@ angular.module('emmiManager')
              * selected 2 same questions or not
              */
             $scope.onNotValidatedEmailAndQuestionsChange = function () {
-                if (angular.equals($scope.account.question1.entity.secretQuestion, $scope.account.question2.entity.secretQuestion) && !(angular.isUndefined($scope.account.question1.entity.secretQuestion))) {
+                if (angular.equals($scope.userClientReqdResource.question1.entity.secretQuestion, $scope.userClientReqdResource.question2.entity.secretQuestion) && !(angular.isUndefined($scope.userClientReqdResource.question1.entity.secretQuestion))) {
                     $scope.notValidatedEmailNoQuestionForm.secretQuestion2.$setValidity('duplicated', false);
                 } else {
                     $scope.notValidatedEmailNoQuestionForm.secretQuestion2.$setValidity('duplicated', true);
@@ -107,7 +107,7 @@ angular.module('emmiManager')
              * functionality if user clicks not now
              */
             $scope.notNow = function () {
-                ValidationService.notNow($scope.account);
+                ValidationService.notNow($scope.userClientReqdResource);
                 $location.path($scope.locationBeforeLogin).replace();
             };
         }])

@@ -4,8 +4,8 @@ angular.module('emmiManager')
     .controller('sendValidationEmail', ['$scope', 'ValidationService', '$alert', '$location', 'EmailRestrictConfigurationsService',
         function ($scope, ValidationService, $alert, $location, EmailRestrictConfigurationsService) {
             //store original email
-            ValidationService.get($scope.account).then(function (accountWithOriginalEmail) {
-                $scope.account.originalUserClientEmail = accountWithOriginalEmail.originalUserClientEmail;
+            ValidationService.get($scope.userClientReqdResource).then(function (accountWithOriginalEmail) {
+                $scope.userClientReqdResource.originalUserClientEmail = accountWithOriginalEmail.originalUserClientEmail;
             });
 
             $scope.validateEmailFormSubmitted = false;
@@ -18,14 +18,14 @@ angular.module('emmiManager')
                 $scope.validateEmailForm.validateEmail.$setValidity('duplicate', true);
                 if (isValid) {
                     //check if email is already in use and save email
-                    ValidationService.saveEmail($scope.account).then(
+                    ValidationService.saveEmail($scope.userClientReqdResource).then(
                         function () {
                             //send validation email
-                            ValidationService.sendValidationEmail($scope.account).then(function () {
+                            ValidationService.sendValidationEmail($scope.userClientReqdResource).then(function () {
                                 $location.path($scope.locationBeforeLogin).replace();
 
                                 $alert({
-                                    content: 'Please check your email. A link has been sent to <strong>' + $scope.account.email +
+                                    content: 'Please check your email. A link has been sent to <strong>' + $scope.userClientReqdResource.email +
                                         '</strong> to finish setting up your account.',
                                     type: 'success',
                                     placement: 'top',
@@ -85,7 +85,7 @@ angular.module('emmiManager')
              * functionality if user clicks not now
              */
             $scope.notNow = function () {
-                ValidationService.notNow($scope.account);
+                ValidationService.notNow($scope.userClientReqdResource);
                 $location.path($scope.locationBeforeLogin).replace();
             };
         }])

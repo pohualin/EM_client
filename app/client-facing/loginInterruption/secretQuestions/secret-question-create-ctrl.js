@@ -14,8 +14,8 @@ angular.module('emmiManager')
                 $scope.secretQuestions = response.data.content;
             });
 
-            $scope.account.question1 = SecretQuestionService.createNewResponse();
-            $scope.account.question2 = SecretQuestionService.createNewResponse();
+            $scope.userClientReqdResource.question1 = SecretQuestionService.createNewResponse();
+            $scope.userClientReqdResource.question2 = SecretQuestionService.createNewResponse();
 
             /**
              * When the save button is clicked. Sends all updates
@@ -25,7 +25,7 @@ angular.module('emmiManager')
             $scope.saveOrUpdateSecretQuestion = function (valid) {
                 $scope.secretQuestionFormSubmitted = true;
                 if (valid) {
-                    SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.account.question1.entity, $scope.account.question2.entity).then(function (response) {
+                    SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.userClientReqdResource.question1.entity, $scope.userClientReqdResource.question2.entity).then(function (response) {
                         $location.path($scope.locationBeforeLogin).replace();
                         $alert({
                             title: ' ',
@@ -55,7 +55,7 @@ angular.module('emmiManager')
              * selected 2 same questions or not
              */
             $scope.onChange = function () {
-                if (angular.equals($scope.account.question1.entity.secretQuestion, $scope.account.question2.entity.secretQuestion) && !(angular.isUndefined($scope.account.question1.entity.secretQuestion))) {
+                if (angular.equals($scope.userClientReqdResource.question1.entity.secretQuestion, $scope.userClientReqdResource.question2.entity.secretQuestion) && !(angular.isUndefined($scope.userClientReqdResource.question1.entity.secretQuestion))) {
                     $scope.secretQuestionForm.secretQuestion2.$setValidity('duplicated', false);
                 } else {
                     $scope.secretQuestionForm.secretQuestion2.$setValidity('duplicated', true);
@@ -67,7 +67,7 @@ angular.module('emmiManager')
              * objects and copies them back into the bound objects.
              */
             $scope.notNow = function () {
-                SecretQuestionService.notNow($scope.account);
+                SecretQuestionService.notNow($scope.userClientReqdResource);
                 $location.path($scope.locationBeforeLogin).replace();
             };
         }

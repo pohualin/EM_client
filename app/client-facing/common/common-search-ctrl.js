@@ -39,7 +39,9 @@ angular.module('emmiManager')
         };
 
         $scope.handleResponse = function (responsePage, contentProperty) {
+
             if (responsePage && responsePage.content) {
+
                 // sort the rows the way they exist on the response page
                 for (var sort = 0, size = responsePage.content.length; sort < size; sort++) {
                     var content = responsePage.content[sort];
