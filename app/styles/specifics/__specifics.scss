@@ -4,6 +4,13 @@
 @import 'sample';
 @import 'popovers';
 
+label.empty {
+    // Custom checkboxes without labels dont need right margin
+    &:before {
+        margin-right: 0 !important;
+    }
+}
+
 .table-no-results {
     font-style: italic;
     color: #999;
@@ -14,6 +21,15 @@
     a {
         display: inline-block;
     }
+}
+
+.col-checkbox {
+    width: 42px;
+    padding-right: 0 !important;
+}
+
+.col-phone {
+    width: 132px;
 }
 
 .parent-entity {
