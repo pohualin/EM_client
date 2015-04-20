@@ -4,6 +4,23 @@
 @import 'sample';
 @import 'popovers';
 
+.table-no-results {
+    font-style: italic;
+    color: #999;
+}
+
+.col-edit {
+    width: 80px;
+    a {
+        display: inline-block;
+    }
+}
+
+.parent-entity {
+    font-style: italic;
+    color: #ABABAB;
+}
+
 .field-note {
     margin-left: 14px;
     &.field-optional {

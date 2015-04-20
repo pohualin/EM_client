@@ -7,7 +7,7 @@
         </div>
     </div>
     <h2>Providers</h2>
-    <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0"
+    <table class="table table-bordered table-striped table-hover table-condensed" border="0" cellpadding="0"
            cellspacing="0" data-ng-show="clientProviders" data-ng-controller="ClientCurrentProvidersOperationController">
         <thead>
         <tr>
@@ -19,10 +19,10 @@
         </thead>
         <tbody>
         <tr data-ng-repeat="clientProvider in clientProviders">
-            <td class="col-sm-4">{{clientProvider.provider.entity.firstName}} {{clientProvider.provider.entity.middleName}} {{clientProvider.provider.entity.lastName}} <em>{{clientProvider.provider.entity.active ? '' : "(inactive)"}}</em></td>
+            <td>{{clientProvider.provider.entity.firstName}} {{clientProvider.provider.entity.middleName}} {{clientProvider.provider.entity.lastName}} <em>{{clientProvider.provider.entity.active ? '' : "(inactive)"}}</em></td>
             <td class="col-sm-2">{{clientProvider.provider.entity.specialty.name}}</td>
-            <td class="col-sm-3">{{clientProvider.provider.entity.email}}</td>
-            <td class="col-sm-3 text-center">
+            <td class="col-sm-4">{{clientProvider.provider.entity.email}}</td>
+            <td class="col-edit text-center">
                 <a href data-ng-click="editProvider(clientProvider)" data-ng-hide="clientProvider.provider.entity.deleting"><i class="icon-compose icon-size-xl"></i></a>
                 <a href data-to-remove="clientProvider"
                    data-on-ok="removeExistingProvider(clientProvider)"
@@ -31,7 +31,7 @@
                    data-client-provider-delete-warning=""><i class="icon-trashcan icon-size-xl"></i></a>
             </td>
         </tr>
-        <tr class="no-hover">
+        <tr class="pagination-row no-hover">
             <td colspan="5" class="text-center" data-ng-show="links">
                 <ul class="pagination">
                     <li data-ng-repeat="link in links | orderBy:'order'" class="{{link.className}}" data-ng-class="{'active': link.name == currentPage}">
@@ -46,7 +46,7 @@
         </tr>
         </tbody>
     </table>
-    <div data-ng-hide="clientProviders">
-        <span>There are no existing providers.</span>
+    <div class="table-no-results" data-ng-hide="clientProviders">
+        <span><em>There are no existing providers.</em></span>
     </div>
 </div>
