@@ -1,7 +1,7 @@
 // Custom Popover code
 // Tag library popover
-.btn-tag-library + .popover {
-    width: 316px;
+.popover.popover-tag-library {
+    width: 355px;
 }
 .popover {
     .btn-close {
@@ -20,23 +20,21 @@
     .toggle-trigger {
         cursor: pointer;
         margin-left: -6px;
-        .caret {
-            margin: 0 4px 0 0;
-            content: "";
-            border-top: 4px solid transparent;
-            border-bottom: 4px solid transparent;
-            border-left: 4px solid;
+        .icon-caret-right {
+            font-size: 12px;
+            color: #6E7C88;
+            vertical-align: top;
+            margin: 6px 4px 0 0;
         }
-        &.open .caret {
-            border-top: 4px solid;
-            border-right: 4px solid transparent;
-            border-left: 4px solid transparent;
+        &.open .icon-caret-right {
+            margin: 5px 2px 0 2px;
+            transform: rotate(90deg);
         }
     }
     .toggle-content {
         display: none;
-        margin-left: 35px;
-        color: #999;
+        margin-left: 58px;
+        color: #8A8C8F;
         &.open {
             display: block;
         }
@@ -44,11 +42,12 @@
             display: block;
         }
     }
-    .form-actions {
-        margin: 0;
-        .info {
-            display: block;
-        }
+    .popover-footer .btn.pull-left {
+        margin-right: 18px;
+    }
+    .popover-footer .info {
+        line-height: 17px;
+        padding: 6px 0;
     }
 }
 
