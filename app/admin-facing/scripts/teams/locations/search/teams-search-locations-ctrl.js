@@ -143,9 +143,10 @@ angular.module('emmiManager')
 
         $scope.statusChange = function () {
             $scope.loading = true;
-            Location.findWithoutCL(Client.getClient(), $scope.locationQuery, $scope.status, $scope.sortProperty, $scope.currentPageSize).then(function (locationPage) {
-                $scope.handleResponse(locationPage, managedLocationList);
-                $scope.setLocationChecked();
+            Location.findWithoutCL(Client.getClient(), $scope.locationQuery, $scope.status, null, $scope.currentPageSize).then(function (locationPage) {
+                    var locPage = angular.isObject(locationPage) ? angular.extend({}, locationPage) : {statusFromReq:$scope.status};
+                    $scope.handleResponse(locPage, managedLocationList);
+                    $scope.setLocationChecked();
             }, function () {
                 // error happened
                 $scope.loading = false;

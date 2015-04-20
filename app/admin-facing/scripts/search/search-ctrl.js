@@ -97,7 +97,6 @@ angular.module('emmiManager')
                 // page numbers
                 $scope.currentPage = responsePage.page.number + 1;
                 $scope.currentPageSize = responsePage.page.size;
-
                 // status filter on response
                 if (responsePage.filter) {
                     $scope.status = responsePage.filter.status;
@@ -113,6 +112,7 @@ angular.module('emmiManager')
             } else {
                 $scope.total = 0;
                 $scope[contentProperty] = null;
+                $scope.status = responsePage.statusFromReq ? responsePage.statusFromReq : 'ACTIVE_ONLY';
             }
             $scope.searchPerformed = true;
             $scope.loading = false;
