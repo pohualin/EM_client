@@ -62,8 +62,8 @@
                 </tr>
                 <tr
                     data-ng-repeat="patient in patients | orderBy:'patient.sortIdx'">
-                    <td>{{patient.entity.firstName}} {{patient.entity.lastName}}</td>
-                    <td>{{patient.entity.dateOfBirth}}</td>
+                    <td>{{patient.entity.lastName}}, {{patient.entity.firstName}}</td>
+                    <td>{{patient.entity.dateOfBirth |  date:"MM/dd/yyyy" }}</td>
                     <td><a href="#/patients/{{patient.entity.id}}">view</a></td>
                 </tr>
             </table>
@@ -79,7 +79,7 @@
                 </div>
             </div>
             <div data-ng-hide="patients">
-                <span data-translate="global.messages.search.no_results_found"></span>
+                <span>No results found, please try again or create a new patient.</span>
             </div>
         </div>
     </div>
