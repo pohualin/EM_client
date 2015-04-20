@@ -44,7 +44,20 @@
             display: block;
         }
     }
-    .form-actions .info {
-        display: block;
+    .form-actions {
+        margin: 0;
+        .info {
+            display: block;
+        }
+    }
+}
+
+.popover-table {
+    th {
+        font-weight: 300;
+        width: 50%;
+    }
+    th, td {
+        padding: 2px 0;
     }
 }

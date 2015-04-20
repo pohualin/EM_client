@@ -5,9 +5,9 @@
 }
 
 .alert {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    @include remIt(font-size, 16);
+    padding-top: 8px;
+    padding-bottom: 8px;
+    @include remIt(font-size, 15);
     font-weight: 300;
     box-shadow: 3px 3px 0px 0px rgba(110,124,136,0.10);
     strong {
@@ -17,8 +17,10 @@
 
 .alert-dismissable,
 .alert-dismissible {
+    padding-right: 30px;
     .close {
-        //top: -4px;
+        font-size: 20px;
+        top: 0;
         @include opacity(.75);
         .icon-delete {
             font-weight: bold;
@@ -150,21 +152,21 @@ table {
     border-radius: $border-radius-base;
 }
 .popover-title {
-    padding: 12px 14px;
+    padding: 12px 19px;
     padding-right: 32px; // Make sure there's enough room for close button
     color: #fff;
     border-radius: 0;
 }
 .popover-content {
-    padding: 14px;
-    @include remIt(font-size, 16);
+    padding: 15px 19px 20px;
+    @include remIt(font-size, 15);
     font-weight: 300;
     &:empty {
         display: none;
     }
     // Popover footer can also be placed inside the content because of existing Popover usage (contentTemplate vs template)
     .popover-footer {
-        margin: 14px -14px -14px -14px
+        margin: 15px -19px -20px -19px;
     }
 }
 .popover-footer {
@@ -215,8 +217,15 @@ table {
 
 
 .dropdown-menu {
-    @include remIt(font-size, 16);
+    @include remIt(font-size, 15);
     box-shadow: none;
+    > li > a {
+        font-weight: 300;
+        &:hover,
+        &:focus {
+            font-weight: normal;
+        }
+    }
 }
 
 .typeahead.dropdown-menu,
@@ -253,6 +262,10 @@ table {
 .modal-header .close {
     margin-top: -5px;
 }
+.modal-footer .btn-link + .btn,
+.modal-footer .btn-cancel + .btn {
+    margin-left: 0;
+ }
 
 // Override Bootstrap Additions Fancy Tooltips to fit with our colors from our config
 .tooltip {

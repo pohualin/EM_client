@@ -359,13 +359,13 @@ angular.module('emmiManager')
 
         $scope.saveProvider = function (isValid, addAnother) {
             $scope.providerFormSubmitted = true;
-        	if (isValid && $scope.selectedItems.length > 0) {
+        	if (isValid && (($scope.allTeamLocations.length > 0 && $scope.selectedItems.length > 0) || $scope.allTeamLocations.length === 0)) {
 	        	ProviderCreate.create($scope.provider, $scope.teamResource, $scope.selectedItems).then(function(response){
 	                ProviderCreate.associateTeamLocationsToProvider(response.data.entity, $scope.teamResource, $scope.selectedItems);
 	        		$scope.hideNewProviderModal();
 	                $scope.refreshLocationsAndProviders();
 	                var message = 'The provider <b>'+ response.data.entity.fullName +'</b> has been successfully added.';
-	                
+
                     if (addAnother) {
                         $scope.addProviders(true);
                         $scope.successAlert(message, '#modal-messages-container', addAnother);
@@ -395,7 +395,7 @@ angular.module('emmiManager')
                 dismissable: true
             });
         };
-        
+
         if($scope.teamResource){
 			ProviderView.specialtyRefData($scope.teamResource).then(function(response){
 	        	$scope.specialties = response;

@@ -52,7 +52,7 @@ angular.module('emmiManager', [
     .constant('PATTERN', {
         EMAIL: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$/
     })
-    
+
     .config(function ($httpProvider, $translateProvider, tmhDynamicLocaleProvider, HateoasInterceptorProvider, $datepickerProvider, API) {
 
         // Initialize angular-translate
@@ -164,6 +164,7 @@ angular.module('emmiManager', [
 
         /**
          * Special routes that are system level.
+         * These routes are not authorized.
          *
          * @returns {boolean}
          */
@@ -175,6 +176,18 @@ angular.module('emmiManager', [
                 path === '/403' ||
                 path === '/500' ||
                 path === '/unauthorized';
+        };
+
+        /**
+         * These are routes where alerts should be closed
+         * when navigating to them, these routes are authorized
+         *
+         * @returns {boolean}
+         */
+        $rootScope.shouldCloseAlertsRoute = function () {
+            var path = $location.path();
+            return path === '/editSecurityQuestions' ||
+                path === '/viewSecurityQuestions';
         };
 
         $rootScope.$on('$routeChangeStart', function (event, next) {
@@ -194,7 +207,7 @@ angular.module('emmiManager', [
             $rootScope.currentRouteQueryString = arrays.toQueryString(current.params);
             // hide all modals
             $rootScope.killAllModals();
-            if ($rootScope.isSystemRoute()) {
+            if ($rootScope.isSystemRoute() || $rootScope.shouldCloseAlertsRoute()) {
                 $rootScope.killAllAlerts();
             }
             var pageTitle = current && current.$$route && current.$$route.title;
@@ -219,7 +232,9 @@ angular.module('emmiManager', [
 
         // Call when the 401 response is returned by the server
         $rootScope.$on('event:auth-loginRequired', function (event, rejection) {
-            $rootScope.username = $rootScope.account.login;
+            if ($rootScope.account) {
+                $rootScope.username = $rootScope.account.login;
+            }
             Session.destroy();
             $rootScope.locationBeforeLogin = rejection.location;
             $location.path('/login').replace();

@@ -30,6 +30,7 @@ angular.module('emmiManager')
             };
 
             $scope.editMode = true;
+            $scope.createMode = true; // flag for hiding the active checkbox on the new team form (EM-994)
 
             $controller('SalesForceCtrl', {$scope: $scope, team: $scope.teamToSave});
 

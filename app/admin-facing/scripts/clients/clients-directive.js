@@ -48,7 +48,6 @@ angular.module('emmiManager')
                                         var clientResource = Client.getClient();
                                         if (clientResource && clientResource.entity.id !== scope.existsClient.entity.id) {
                                             ngModel.$setValidity('unique', false);
-                                            scope.showError();
                                             _paq.push(['trackEvent', 'Validation Error', 'Client', 'clientName unique']);
                                             if (scope.uniquePopup) {
                                                 scope.uniquePopup.show();
@@ -60,6 +59,7 @@ angular.module('emmiManager')
                                                         scope: scope,
                                                         trigger: 'manual',
                                                         show: true,
+                                                        container: 'body',
                                                         contentTemplate: 'admin-facing/partials/client/unique_client_popover.tpl.html'
                                                     });
                                                 });
@@ -120,6 +120,7 @@ angular.module('emmiManager')
                                     trigger: 'manual',
                                     show: true,
                                     placement: 'bottom',
+                                    container: 'body',
                                     contentTemplate: 'admin-facing/partials/client/deactivate_popover.tpl.html'
                                 });
                             });

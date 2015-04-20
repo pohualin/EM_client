@@ -113,9 +113,9 @@ $border-radius-large:       5px !default;
 $border-radius-small:       2px !default;
 
 //** Global color for active items (e.g., navs or dropdowns).
-$component-active-color:    #fff !default;
+$component-active-color:    $gray !default;
 //** Global background color for active items (e.g., navs or dropdowns).
-$component-active-bg:       $brand-primary !default;
+$component-active-bg:       rgba(108,197,220,0.15) !default;
 
 //** Width of the `border` for generating carets that indicator dropdowns.
 $caret-width-base:          4px !default;
@@ -235,14 +235,14 @@ $cursor-disabled:                not-allowed !default;
 //** Background for the dropdown menu.
 $dropdown-bg:                    #fff !default;
 //** Dropdown menu `border-color`.
-$dropdown-border:                #EBEBEB !default;
+$dropdown-border:                #CFD2D5 !default;
 //** Dropdown menu `border-color` **for IE8**.
-$dropdown-fallback-border:       #EBEBEB !default;
+$dropdown-fallback-border:       #CFD2D5 !default;
 //** Divider color for between dropdown items.
 $dropdown-divider-bg:            #e5e5e5 !default;
 
 //** Dropdown link text color.
-$dropdown-link-color:            #B0B1B2 !default;
+$dropdown-link-color:            $gray !default;
 //** Hover color for dropdown links.
 $dropdown-link-hover-color:      $gray !default;
 //** Hover background for dropdown links.
@@ -325,7 +325,7 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
 //** Number of columns in the grid.
 $grid-columns:              12 !default;
 //** Padding between columns. Gets divided in half for the left and right.
-$grid-gutter-width:         30px !default;
+$grid-gutter-width:         26px !default;
 // Navbar collapse
 //** Point at which the navbar becomes uncollapsed.
 $grid-float-breakpoint:     $screen-sm-min !default;
@@ -358,7 +358,7 @@ $container-lg:                 $container-large-desktop !default;
 //##
 
 // Basics of a navbar
-$navbar-height:                    52px !default;
+$navbar-height:                    48px !default;
 $navbar-margin-bottom:             0px !default;
 $navbar-border-radius:             $border-radius-base !default;
 $navbar-padding-horizontal:        floor(($grid-gutter-width / 2)) !default;
@@ -457,7 +457,7 @@ $pagination-hover-bg:                  $gray-lighter !default;
 $pagination-hover-border:              transparent !default;
 
 $pagination-active-color:              #fff !default;
-$pagination-active-bg:                 $brand-primary !default;
+$pagination-active-bg:                 $brand-secondary !default;
 $pagination-active-border:             transparent !default;
 
 $pagination-disabled-color:            $gray-light !default;
@@ -620,7 +620,7 @@ $modal-sm:                    300px !default;
 //
 //## Define alert colors, border radius, and padding.
 
-$alert-padding:               15px !default;
+$alert-padding:               10px !default;
 $alert-border-radius:         $border-radius-base !default;
 $alert-link-font-weight:      bold !default;
 

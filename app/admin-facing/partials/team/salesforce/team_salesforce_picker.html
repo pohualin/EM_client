@@ -1,12 +1,11 @@
     <div class="col-md-8"
-        data-ng-show="updatingSalesForceAccount || teamToSave.salesForceAccount == null"
-        data-ng-class="{'masked': teamForm.teamName.$error.unique}" >
+        data-ng-show="updatingSalesForceAccount || teamToSave.salesForceAccount == null">
         <div class="form-group has-feedback" data-ng-class="{ 'has-error' : formSubmitted && !teamToSave.salesForceAccount }">
             <label class="control-label" for="salesForceAccount">Salesforce Account:</label>
             <div class="error-circle fa-exclamation-circle" data-ng-show="!teamToSave.salesForceAccount && formSubmitted"
                  data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                  data-title="Please enter an associated Salesforce account"></div>
-            <div id="teamSalesforceAccount" class="typeahead" data-id="salesForceAccount" data-emmi-typeahead data-items="sfResult.account" data-term="sfSearch.searchQuery" data-search="findAccount(term)" data-select="chooseAccount(item)" data-placeholder="Start typing..." data-blur="revertSfAccount()" data-focus="TeamSfSearch" data-min-length="5">
+            <div id="teamSalesforceAccount" class="typeahead" data-id="salesForceAccount" data-emmi-typeahead data-items="sfResult.account" data-term="sfSearch.searchQuery" data-search="findAccount(term)" data-select="chooseAccount(item)" data-placeholder="Start typing to search..." data-blur="revertSfAccount()" data-focus="TeamSfSearch" data-min-length="5">
                 <div class="menu typeahead-menu dropdown-menu bottom-left container-fluid">
                     <li class="header" data-ng-show="sfResult.account.length">
                         <div class="col-md-6 account-name">Account Name</div>
@@ -28,26 +27,31 @@
     </div>
 
     <div class="col-md-12"
-        data-ng-hide="updatingSalesForceAccount || teamToSave.salesForceAccount == null"
-        data-ng-class="{'masked': teamForm.teamName.$error.unique}" >
+        data-ng-hide="updatingSalesForceAccount || teamToSave.salesForceAccount == null">
         <div class="row">
             <div class="col-md-6">
-                <label class="control-label">Salesforce Account:</label>
-                <div>
-                    {{teamToSave.salesForceAccount.name}}&nbsp;&nbsp;&nbsp;&nbsp;
-                    <span>
-                        {{teamToSave.salesForceAccount.city}}<span data-ng-show="teamToSave.salesForceAccount.city && teamToSave.salesForceAccount.state">,&nbsp;{{teamToSave.salesForceAccount.state}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                    </span>
-                    <button class="btn btn-link btn-link-nopad" type="button" data-ng-click="changeSfAccount(teamToSave.salesForceAccount)" required >update</button>
+                <div class="form-group">
+                    <label class="control-label">Salesforce Account:</label>
+                    <div>
+                        {{teamToSave.salesForceAccount.name}}&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span>
+                            {{teamToSave.salesForceAccount.city}}<span data-ng-show="teamToSave.salesForceAccount.city && teamToSave.salesForceAccount.state">,&nbsp;{{teamToSave.salesForceAccount.state}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                        </span>
+                        <button class="btn btn-link btn-link-nopad btn-salesforce-update" type="button" data-ng-click="changeSfAccount(teamToSave.salesForceAccount)">update</button>
+                    </div>
                 </div>
             </div>
             <div class="col-md-2" data-ng-show="teamToSave.salesForceAccount.phoneNumber">
-                <label class="control-label" data-translate="team_edit_page.information.phone">Phone</label>
-                <div>{{ teamToSave.salesForceAccount.phoneNumber }}</div>
+                <div class="form-group">
+                    <label class="control-label" data-translate="team_edit_page.information.phone">Phone</label>
+                    <div>{{ teamToSave.salesForceAccount.phoneNumber }}</div>
+                </div>
             </div>
             <div class="col-md-2" data-ng-show="teamToSave.salesForceAccount.fax">
-                <label class="control-label" data-translate="team_edit_page.information.fax">Fax</label>
-                <div>{{ teamToSave.salesForceAccount.fax }}</div>
+                <div class="form-group">
+                    <label class="control-label" data-translate="team_edit_page.information.fax">Fax</label>
+                    <div>{{ teamToSave.salesForceAccount.fax }}</div>
+                </div>
             </div>
         </div>
     </div>

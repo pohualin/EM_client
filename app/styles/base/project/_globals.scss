@@ -313,6 +313,12 @@
     }
 
     /* _____ FORMS _____ */
+    .form-actions {
+        margin-top: 8px;
+        .form-group {
+            margin-bottom: 5px;
+        }
+    }
     label {
         font-size: $font-size-small;
         text-transform: uppercase;
@@ -331,7 +337,7 @@
         }
     }
     .form-group {
-        margin-bottom: 20px;
+        margin-bottom: 22px;
     }
     .form-control:focus {
         box-shadow: none !important;
@@ -518,6 +524,11 @@
         margin: 0 0 12px;
         padding: 28px 28px 30px;
         @include clearfix;
+        border: 1px solid transparent;
+        transition: border-color 0.25s ease-in-out;
+        &.outlined {
+            border: 1px solid $brand-secondary;
+        }
     }
 
     .app-content-with-sidebar {
@@ -559,7 +570,7 @@
         // overflow-x: hidden;
         // overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
         > .sidebar-wrapper {
-            padding: 25px 15px;
+            padding: 25px 12px;
         }
         .sidebar-heading {
             color: rgba(255,255,255,0.85);
@@ -578,12 +589,14 @@
             }
         }
         label {
+            color: rgba(235,235,235,0.75);
             font-weight: normal;
         }
         hr {
             border-color: rgba(255,255,255,0.25);
         }
         select.form-control,
+        select.form-control + .chosen-container.chosen-container-single .chosen-single,
         select.form-control + .chosen-container .chosen-choices {
             background: #9fa6ab;
             background: rgba(250,251,251,0.40);
@@ -594,8 +607,35 @@
         .chosen-container-multi .chosen-choices li.search-field input[type="text"] {
             color: rgba(255,255,255,0.85) !important;
         }
+        select.form-control + .chosen-container .chosen-drop {
+            background-color: #f2f2f2;
+        }
+        select.form-control + .chosen-container-multi .chosen-choices li.search-choice {
+            background-color: #eaeaea;
+            color: $gray;
+            .search-choice-close {
+                color: $gray;
+            }
+        }
+        select.form-control + .chosen-container-multi .chosen-results {
+            font-size: 14px;
+            padding-top: 2px;
+            padding-bottom: 2px;
+            li {
+                padding: 8px;
+            }
+            li.group-result {
+                font-weight: normal;
+                color: #a8a9aa;
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+            li.group-option {
+                padding-left: 25px;
+            }
+        }
         .teams-filter-heading {
-            color: rgba(255,255,255,0.85);
+            color: rgba(235,235,235,0.75);
             .team-count {
                 margin-left: 10px;
                 opacity: 0.8;
@@ -612,6 +652,9 @@
                 color: $link-color;
                 text-decoration: underline;
             }
+        }
+        .filter-link {
+            @include remIt(font-size, 13);
         }
     }
 
