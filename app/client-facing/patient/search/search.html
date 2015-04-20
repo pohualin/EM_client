@@ -7,8 +7,8 @@
             <div class="col-md-6 col-sm-5">
                 <div class="input-group">
                     <input class="form-control" id="query" name="query"
-                        data-ng-model="query" type="text" placeholder="Search..." required
-                        data-auto-focus>
+                           data-ng-model="query" type="text" placeholder="Search..." required
+                           data-auto-focus>
                     <div class="input-group-addon">
                         <span class="icon-search"></span>
                     </div>
@@ -16,8 +16,8 @@
             </div>
             <div class="col-md-2 col-sm-3">
                 <button class="btn btn-default pull-left" data-ng-click="search()"
-                    data-ng-disabled="searchForm.query.$invalid || loading"
-                    data-translate="global.buttons.search"></button>
+                        data-ng-disabled="searchForm.query.$invalid || loading"
+                        data-translate="global.buttons.search"></button>
                 <span data-ng-class="{'search-spinner' : loading}"></span>
             </div>
             <div data-ng-show="searchPerformed">
@@ -38,15 +38,15 @@
                 <div class="col-md-12">
                     <div class="pull-right">
                         {{total}} <span data-ng-show="total != 1"
-                            data-translate="global.labels.total"> results</span> <span
-                            data-ng-show="total === 1"
-                            data-translate="global.labels.totalSingular"> result</span>
+                                        data-translate="global.labels.total"> results</span> <span
+                        data-ng-show="total === 1"
+                        data-translate="global.labels.totalSingular"> result</span>
                     </div>
                 </div>
             </div>
             <br>
             <table class="table table-bordered table-striped table-hover"
-                border="0" cellpadding="0" cellspacing="0" data-ng-show="patients">
+                   border="0" cellpadding="0" cellspacing="0" data-ng-show="patients">
                 <tr>
                     <th class="sort col-sm-3" data-ng-click="sort('lastName')">Name
                         <span data-ng-show="sortProperty.property === 'lastName'"><span
@@ -84,3 +84,4 @@
         </div>
     </div>
 </div>
+
