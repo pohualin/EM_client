@@ -337,6 +337,12 @@ table {
     text-transform: none;
 }
 
+.modal-body .row:last-child .form-group,
+.modal-body .row:last-child .checkbox,
+.modal-body .row:last-child .radio {
+    margin-bottom: 0;
+}
+
 .modal-footer {
     background: #f0f1f3;
     border-radius: 0 0 3px 3px;

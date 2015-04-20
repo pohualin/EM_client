@@ -75,14 +75,14 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-8">
                     <div class="form-group">
                         <div class="checkbox">
                             <label class="sr-only" for="belongsTo">Belongs To</label>
                             <input type="checkbox" name="belongsTo" id="belongsTo"
                                data-ng-model="location.belongsToCheckbox"
                                    data-ng-if="location.belongsToMutable">
-                            <label for="belongsTo" data-ng-if="!location.belongsToMutable && location.belongsTo">Location belongs to {{location.belongsTo.name}}</label>
+                            <label class="belongs-to" for="belongsTo" data-ng-if="!location.belongsToMutable && location.belongsTo">Location belongs to {{location.belongsTo.name}}</label>
                             <label for="belongsTo" data-ng-if="location.belongsToMutable">Location belongs to
                                 <span data-ng-show="client.entity.name"> {{client.entity.name}}</span>
                                 <span data-ng-hide="client.entity.name"> this client</span>
@@ -90,10 +90,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row" data-ng-hide="newLocation">
-                <div class="col-md-12">
-                    <div class="form-group">
+                <div class="col-md-4" data-ng-hide="newLocation">
+                    <div class="form-group pull-right">
                         <div class="checkbox">
                             <input type="checkbox" name="active" id="activeCkbox"
                                data-ng-model="location.active">
