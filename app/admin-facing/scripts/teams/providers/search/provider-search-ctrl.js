@@ -18,8 +18,9 @@ angular.module('emmiManager')
 
         $scope.statusChange = function () {
             $scope.loading = true;
-            ProviderSearch.search($scope.allTeamLocations, $scope.teamResource, $scope.providerQuery, $scope.status, $scope.sortProperty, $scope.currentPageSize).then(function (providerPage) {
-                $scope.handleResponse(providerPage, 'searchedProvidersList');
+            ProviderSearch.search($scope.allTeamLocations, $scope.teamResource, $scope.providerQuery, $scope.status, null, $scope.currentPageSize).then(function (providerPage) {
+                var provPage = angular.isObject(providerPage) ? angular.extend({}, providerPage) : {statusFromReq:$scope.status};
+                $scope.handleResponse(provPage, 'searchedProvidersList');
                 $scope.setCheckboxesForChanged($scope[searchedProvidersList]);
             }, function () {
                 // error happened
@@ -37,7 +38,7 @@ angular.module('emmiManager')
                 $scope.loading = false;
             });
         };
-        
+
         /**
          * Fetch next/previous page in Client Providers tab
          */
@@ -147,9 +148,9 @@ angular.module('emmiManager')
                 });
             });
         };
-        
+
         /**
-         * Method to manipulate check boxes in Client Providers tab 
+         * Method to manipulate check boxes in Client Providers tab
          */
         $scope.setClientProviderSelected = function (providers) {
             angular.forEach(providers, function (provider) {
@@ -164,7 +165,7 @@ angular.module('emmiManager')
                 }
             });
         };
-        
+
 
         var managedClientProviderList = 'clientProviders';
         ClientProviderService.findForClient(Client.getClient()).then(function (clientProviders) {
