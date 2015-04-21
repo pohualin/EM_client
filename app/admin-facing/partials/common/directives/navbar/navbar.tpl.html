@@ -73,11 +73,20 @@
                             Help
                         </a>
                     </li>
-                    <li class="section-nav-item">
-                        <a href="#/settings" class="section-nav-link">
+                    <li class="section-nav-item dropdown" data-ng-show="isAuthorized([userRoles.god, userRoles.admin])">
+                        <a href class="section-nav-link dropdown-toggle" data-toggle="dropdown">
                             <i class="icon-settings"></i>
                             Settings
                         </a>
+                        <ul class="dropdown-menu">
+                            <li data-ng-if="isAuthorized([userRoles.god, userRoles.admin])"><a
+                                data-ng-href="#/users"><i class="icon-group"></i> Emmi Users</a></li>
+                            <li data-ng-if="account.link.referenceTags"><a data-ng-href="#/admin">
+                                <i class="icon-command-line"></i> Admin Functions</a></li>
+                            <li data-ng-if="isAuthorized([userRoles.god]) || (isAuthorized([userRoles.admin]) && account.webApiUser)">
+                                <a data-ng-href="#/docs"><i class="icon-text-doc"></i> Technical Documentation</a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
                 <div class="section-nav-search">

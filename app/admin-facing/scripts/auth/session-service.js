@@ -10,6 +10,7 @@ angular.module('emmiManager')
             this.email = user.email;
             this.userRoles = user.permission;
             this.link = user.link;
+            this.webApiUser = user.webApiUser;
             return this;
         };
         this.destroy = function () {
@@ -20,6 +21,7 @@ angular.module('emmiManager')
             this.email = null;
             this.userRoles = null;
             this.link = null;
+            this.webApiUser = null;
         };
         return this;
     }])
