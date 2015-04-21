@@ -20,45 +20,45 @@
             </div>
             <div class="col-md-3" data-ng-show="allLocationsSearch">
                 <br/>
-                <button type="button" class="btn btn-link pull-right" data-ng-click="createNewTeamLocation()">
+                <button type="button" class="btn btn-default pull-right" data-ng-click="createNewTeamLocation()">
                     <i class="icon-plus"></i> <span data-translate="team_locations_search_page.add_new.label"></span>
                 </button>
                 <span data-ng-class="{'search-spinner' : loading}"></span>
             </div>
         </div>
         <div data-ng-show="allLocationsSearch">
-            <div class="row">
+            <div class="row table-search-filters">
                 <div class="col-md-12">
-                    <div class="pull-right">
+                    <br/>
+                    <div class="pull-right table-results-count">
                         {{total}}
-                        <span data-ng-show="total != 1" data-translate="global.labels.total"> results</span>
-                        <span data-ng-show="total === 1"
+                        <span data-ng-if="total != 1" data-translate="global.labels.total"> results</span>
+                        <span data-ng-if="total === 1"
                               data-translate="global.labels.totalSingular"> result</span>
                     </div>
                     <form class="form-inline">
                         <div class="form-group">
-                            <label for="status_filter" data-translate="global.labels.statusFilter">Show:</label>&nbsp;&nbsp;
-                            <select class="form-control" id="status_filter" data-ng-model="status"
+                            <label for="status_filter" data-translate="global.labels.statusFilter">Show:</label>
+                            <select class="form-control input-sm" style="width:110px;" id="status_filter" data-ng-model="status"
                                     data-ng-options="status | translate for status in statuses"
-                                    data-ng-change="statusChange()">
+                                    data-ng-change="statusChange()" data-chosen data-disable-search="true">
                             </select>
                         </div>
                     </form>
                 </div>
             </div>
-            <br/>
             <div class="row">
                 <div class="col-md-12">
-                    <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0"
+                    <table class="table table-bordered table-striped table-hover table-condensed" border="0" cellpadding="0"
                            cellspacing="0" data-ng-show="locations">
                         <thead>
                         <tr>
-                            <th class="sort col-sm-0">&nbsp;</th>
-                            <th data-ng-class="sizeClass" data-ng-click="sortTeam('name')" >
+                            <th class="sort col-checkbox">&nbsp;</th>
+                            <th class="sort" data-ng-click="sortTeam('name')" >
                                 Name
                                 <span data-ng-show="sortProperty.property === 'name'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span>
                             </th>
-                            <th data-ng-class="sizeClass" data-ng-click="sortTeam('belongsTo.name')" >
+                            <th class="sort col-sm-2" data-ng-click="sortTeam('belongsTo.name')" >
                                 Client Owner
                                 <span data-ng-show="sortProperty.property === 'belongsTo.name'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span>
                             </th>
@@ -66,18 +66,18 @@
                                 City/State
                                 <span data-ng-show="sortProperty.property === 'city'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span>
                             </th>
-                            <th class="sort col-sm-2" data-ng-click="sortTeam('phone')">
+                            <th class="sort col-phone" data-ng-click="sortTeam('phone')">
                                 Phone
                                 <span data-ng-show="sortProperty.property === 'phone'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span>
                             </th>
-                            <th class="sort col-sm-3" data-ng-show="providersData">
+                            <th class="sort col-sm-3" data-ng-if="providersData">
                                 Add to Providers
                             </th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr data-ng-repeat="location in locations" data-ng-class="location.location.entity.disabled ? 'text-muted' : ''">
-                            <td>
+                            <td class="col-checkbox">
                                 <div class="checkbox">
                                     <input type="checkbox" id="locationSearchCb{{$index}}" data-ng-model="location.location.entity.checked"  data-ng-disabled="location.location.entity.disabled" ng-change="onCheckboxChange(location)">
                                     <label for="locationSearchCb{{$index}}"></label>
@@ -91,7 +91,7 @@
                                     data-ng-show="location.location.entity.city && location.location.entity.state">,&nbsp;</span>{{location.location.entity.state}}
                             </td>
                             <td>{{location.location.entity.phone}}</td>
-                            <td data-ng-show="providersData">
+                            <td data-ng-if="providersData">
                                 <div data-ng-if="providersData && location.location.entity.checked && !location.location.entity.disabled">
                                        <div data-multi-select
                                         name="providersData{{$index}}"
@@ -120,7 +120,7 @@
                         </tr>
                         </tbody>
                     </table>
-                    <div data-ng-hide="!allLocationsSearch || locations">
+                    <div class="table-no-results" data-ng-hide="!allLocationsSearch || locations">
                         <span data-translate="global.messages.search.no_results_found"></span>
                     </div>
                 </div><!-- .col-md-12 -->

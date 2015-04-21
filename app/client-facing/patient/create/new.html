@@ -3,7 +3,7 @@
         New Patient
     </h2>
     <form name="newPatientForm" class="form" novalidate unsaved-warning-form>
-        <div id="alerts-container" data-ng-show="newPatientForm.$invalid"></div>
+        <div id="alerts-container" data-ng-show="formSubmitted && newPatientForm.$invalid"></div>
         <div class="row">
             <div class="col-md-12" id="modal-messages-container"></div>
         </div>
