@@ -130,7 +130,7 @@ $caret-width-large:         5px !default;
 //** Padding for `<th>`s and `<td>`s.
 $table-cell-padding:            16px !default;
 //** Padding for cells in `.table-condensed`.
-$table-condensed-cell-padding:  8px !default;
+$table-condensed-cell-padding:  10px 16px 9px !default;
 
 //** Default background color used for all tables.
 $table-bg:                      transparent !default;
@@ -588,12 +588,12 @@ $label-link-hover-color:      #fff !default;
 //##
 
 //** Padding applied to the modal body
-$modal-inner-padding:         15px !default;
+$modal-inner-padding:         25px 30px !default;
 
 //** Padding applied to the modal title
-$modal-title-padding:         15px !default;
+$modal-title-padding:         30px 30px 0 !default;
 //** Modal title line-height
-$modal-title-line-height:     $line-height-base !default;
+$modal-title-line-height:     1 !default;
 
 //** Background color of modal content area
 $modal-content-bg:                             #fff !default;
@@ -607,9 +607,9 @@ $modal-backdrop-bg:           #000 !default;
 //** Modal backdrop opacity
 $modal-backdrop-opacity:      .5 !default;
 //** Modal header border color
-$modal-header-border-color:   #e5e5e5 !default;
+$modal-header-border-color:   #fff !default;
 //** Modal footer border color
-$modal-footer-border-color:   $modal-header-border-color !default;
+$modal-footer-border-color:   #f0f1f3 !default;
 
 $modal-lg:                    900px !default;
 $modal-md:                    600px !default;

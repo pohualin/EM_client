@@ -92,6 +92,7 @@ angular.module('emmiManager')
                         $scope.client.savedGroups = clientGroups || [];
                         $scope.client.tagGroups = angular.copy($scope.client.savedGroups);
                         $scope.clientTagsHaveChanges = false;
+                        $scope.flagTagChanges(false);
                         $scope.saving = false;
                         delete $scope.removedTags;
                         if ($scope.team) {
@@ -123,6 +124,7 @@ angular.module('emmiManager')
 
         $scope.tagsChanged = function () {
             $scope.clientTagsHaveChanges = true;
+            $scope.flagTagChanges(true);
             Tag.removedTags($scope.client).then(function(response){
                 $scope.removedTags = response;
             });
@@ -132,6 +134,7 @@ angular.module('emmiManager')
         $scope.cancelTagChanges = function () {
             $scope.client.tagGroups = angular.copy($scope.client.savedGroups);
             $scope.clientTagsHaveChanges = false;
+            $scope.flagTagChanges(false);
             delete $scope.removedTags;
             $scope.disableLibrary();
         };

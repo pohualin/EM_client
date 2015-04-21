@@ -5,7 +5,7 @@
         </button>
     </div>
     <h2>Locations</h2>
-    <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0"
+    <table class="table table-bordered table-striped table-hover table-condensed" border="0" cellpadding="0"
            cellspacing="0" data-ng-show="locations">
         <thead>
         <tr>
@@ -18,20 +18,20 @@
         </thead>
         <tbody>
         <tr data-ng-class="{highlight: location.highlight}"  data-ng-repeat="location in locations" >
-            <td class="col-sm-4">
+            <td>
                 {{location.entity.location.name}} <em>{{location.entity.location.active ? '' : "(inactive)"}}</em>
-                <span data-ng-show="location.entity.location.belongsTo && location.entity.location.belongsTo.id !== team.entity.id"> <em>({{location.entity.location.belongsTo.name}})</em></span>
-                <span data-ng-show="!location.entity.location.belongsTo"> <em>(<span data-translate="client_edit_page.locations.no_client_owner"></span>)</em></span>
+                <span class="parent-entity" data-ng-show="location.entity.location.belongsTo && location.entity.location.belongsTo.id !== team.entity.id"> <em>({{location.entity.location.belongsTo.name}})</em></span>
+                <span class="parent-entity" data-ng-show="!location.entity.location.belongsTo"> <em>(<span data-translate="client_edit_page.locations.no_client_owner"></span>)</em></span>
             </td>
             <td class="col-sm-3">{{location.entity.location.phone}}</td>
             <td class="col-sm-2">{{location.entity.location.city}}</td>
             <td class="col-sm-1 text-center">{{location.entity.location.state}}</td>
-            <td class="col-sm-2 text-center">
+            <td class="col-edit text-center">
                 <a href data-ng-click="editLocation(location)"><i class="icon-compose icon-size-xl"></i></a>
                 <a href data-ng-click="removeExistingLocation(location)"><i class="icon-trashcan icon-size-xl"></i></a>
             </td>
         </tr>
-        <tr class="no-hover">
+        <tr class="pagination-row no-hover">
             <td colspan="5" class="text-center" data-ng-show="links">
                 <ul class="pagination">
                     <li data-ng-repeat="link in links | orderBy:'order'" class="{{link.className}}" data-ng-class="{'active': link.name == currentPage}">
@@ -46,8 +46,8 @@
         </tr>
         </tbody>
     </table>
-    <div data-ng-hide="locations">
-        <span>There are no existing locations<span data-ng-show="team.name">&nbsp;for {{team.name}}</span>.</span>
+    <div class="table-no-results" data-ng-hide="locations">
+        <span><em>There are no existing locations<span data-ng-show="team.name">&nbsp;for {{team.name}}</span>.</em></span>
     </div>
 </div>
 

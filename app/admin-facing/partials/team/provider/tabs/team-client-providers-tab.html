@@ -29,7 +29,7 @@
               <label for="clientProviderCb{{$index}}"></label>
           </div>
       </td>
-      <td>{{teamProvider.provider.entity.firstName}} {{teamProvider.provider.entity.middleName}} {{teamProvider.provider.entity.lastName}} 
+      <td>{{teamProvider.provider.entity.firstName}} {{teamProvider.provider.entity.middleName}} {{teamProvider.provider.entity.lastName}}
         <em>{{teamProvider.provider.entity.active ? '' : "(inactive)"}}</em>
       </td>
       <td>{{teamProvider.provider.entity.specialty.name}}</td>
@@ -53,7 +53,7 @@
         </div>
       </td>
     </tr>
-    <tr class="no-hover">
+    <tr class="pagination-row no-hover">
       <td colspan="6" class="text-center" data-ng-show="links">
         <ul class="pagination">
           <li data-ng-repeat="link in links | orderBy:'order'" class="{{link.className}}" data-ng-class="{'active': link.name == currentPage}">
