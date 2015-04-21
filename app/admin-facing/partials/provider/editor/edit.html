@@ -6,16 +6,8 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6 pull-left">
-                <h2>Provider Information</h2>
-            </div>
-            <div class="col-md-6" data-ng-show="showCancelSave()">
-                <div class="pull-right">
-                    <h2></h2>
-                    <a class="btn btn-link" data-ng-click="cancel(providerForm)">cancel</a> |
-                    <a class="btn btn-link" type="button" data-provider-deactivate-warning><span>save edits</span>
-                    </a>
-                </div>
+            <div class="col-md-12">
+                <h1>Provider Information</h1>
             </div>
         </div>
         <div class="row">
@@ -23,8 +15,7 @@
                 <div class="form-group"
                     data-ng-class="{ 'has-error' : providerForm.providerFirstName.$invalid && providerFormSubmitted }">
                     <label class="control-label" for="providerFirstName">First
-                        Name:</label>
-
+                        Name</label>
                     <div class="error-circle fa-exclamation-circle"
                         data-ng-show="providerForm.providerFirstName.$error.required && providerFormSubmitted"
                         data-bs-tooltip data-placement="right" data-type="danger"
@@ -40,17 +31,12 @@
                         data-ng-pattern="/^[a-zA-Z '-(),.]*$/">
                 </div>
             </div>
-
             <div class="col-md-4">
                 <div class="form-group"
                     data-ng-class="{ 'has-error' : providerForm.providerMiddleName.$invalid && providerFormSubmitted }">
                     <label class="control-label" for="providerMiddleName">Middle
-                        Name:</label>
-
-                    <div class="error-circle fa-exclamation-circle"
-                        data-ng-show="providerForm.providerMiddleName.$error.required && providerFormSubmitted"
-                        data-bs-tooltip data-placement="right" data-type="danger"
-                        data-container="body" data-title="Required"></div>
+                        Name</label>
+                    <span class="field-note field-optional">optional</span>
                     <div class="error-circle fa-exclamation-circle"
                         data-ng-show="providerForm.providerMiddleName.$error.pattern && providerFormSubmitted"
                         data-bs-tooltip data-placement="right" data-type="danger"
@@ -62,13 +48,11 @@
                         data-ng-pattern="/^[a-zA-Z '-(),.]*$/">
                 </div>
             </div>
-
             <div class="col-md-4">
                 <div class="form-group"
                     data-ng-class="{ 'has-error' : providerForm.providerLastName.$invalid && providerFormSubmitted }">
                     <label class="control-label" for="providerLastName">Last
-                        Name:</label>
-
+                        Name</label>
                     <div class="error-circle fa-exclamation-circle"
                         data-ng-show="providerForm.providerLastName.$error.required && providerFormSubmitted"
                         data-bs-tooltip data-placement="right" data-type="danger"
@@ -84,14 +68,12 @@
                 </div>
             </div>
         </div>
-
-
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group"
                       data-ng-class="{ 'has-error' : providerForm.specialty.$invalid && providerFormSubmitted }">
-                     <label class="control-label" for="specialty">Primary Specialty:</label>
-
+                     <label class="control-label" for="specialty">Primary Specialty</label>
+                     <span class="field-note field-optional">optional</span>
                      <div class="error-circle fa-exclamation-circle"
                           data-ng-show="providerForm.specialty.$error.pattern && providerFormSubmitted"
                           data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
@@ -99,7 +81,8 @@
                      <select class="form-control" id="specialty" data-ng-model="providerToEdit.specialty"
                              data-ng-options="specialty.name for specialty in specialties track by specialty.id | orderBy:'name'"
                              name="specialty"
-                             data-ng-disabled="providerForm.specialty.$error.unique">
+                             data-ng-disabled="providerForm.specialty.$error.unique"
+                             data-chosen data-disable-search="true" data-placeholder="Select...">
                          <option value="">Select...</option>
                      </select>
                  </div>
@@ -107,8 +90,8 @@
             <div class="col-md-4">
                 <div class="form-group"
                     data-ng-class="{ 'has-error' : providerForm.email.$invalid && providerFormSubmitted }">
-                    <label class="control-label" for="email">Email:</label>
-
+                    <label class="control-label" for="email">Email</label>
+                    <span class="field-note field-optional">optional</span>
                     <div class="error-circle fa-exclamation-circle"
                         data-ng-show="providerForm.email.$error.pattern && providerFormSubmitted"
                         data-bs-tooltip data-placement="right" data-type="danger"
@@ -119,15 +102,24 @@
                         data-ng-pattern="emailPattern" />
                 </div>
             </div>
-        </div>
-        <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
+                    <label>&nbsp;</label><!-- for spacing purposes -->
                     <div class="checkbox">
                         <input id="providerActive"
                             type="checkbox"
                             data-ng-model="providerToEdit.active" />
                         <label for="providerActive"> Active</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" data-ng-if="showCancelSave()">
+            <div class="col-md-12">
+                <div class="form-actions">
+                    <div class="form-group">
+                        <button class="btn btn-success" type="button" data-provider-deactivate-warning><span>save edits</span></button>
+                        <a class="btn btn-cancel" data-ng-click="cancel(providerForm)">cancel</a>
                     </div>
                 </div>
             </div>

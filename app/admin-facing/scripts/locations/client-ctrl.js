@@ -4,7 +4,7 @@ angular
     .module('emmiManager')
 
 /**
- * Controls the existing providers section
+ * Controls the existing locations section
  */
 .controller(
     'LocationClientController', [
@@ -21,7 +21,7 @@ angular
 
             $scope.pageSizes = [5, 10, 15, 25];
 
-            var contentProperty = 'clientProviders';
+            var contentProperty = 'clientLocations';
 
             $scope.performSearch = function(pageSize) {
                 $scope.loading = true;
@@ -30,15 +30,15 @@ angular
                         $scope.$parent.locationResource,
                         pageSize)
                     .then(
-                        function(clientProviderPage) {
+                        function(clientLocationPage) {
                             $scope.handleResponse(
-                                clientProviderPage,
+                                clientLocationPage,
                                 contentProperty);
                         },
                         function() {
                             // error happened
                             console
-                                .log('Error loading clients for a provider');
+                                .log('Error loading clients for a location');
                             $scope.loading = false;
                         });
             };
@@ -47,9 +47,9 @@ angular
             $scope.fetchPage = function(href) {
                 $scope.loading = true;
                 CommonService.fetchPage(href).then(
-                    function(clientProviderPage) {
+                    function(clientLocationPage) {
                         $scope.handleResponse(
-                            clientProviderPage,
+                            clientLocationPage,
                             contentProperty);
                     }, function() {
                         // error happened
