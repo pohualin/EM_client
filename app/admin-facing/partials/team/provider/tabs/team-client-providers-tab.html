@@ -4,15 +4,15 @@
   <thead>
     <tr>
       <th class="sort col-sm-1">&nbsp;</th>
-      <th class="sort col-sm-2" data-ng-click="sort('lastName')">
+      <th class="sort col-sm-2" data-ng-click="sortClientProviders('provider.lastName')">
          Name
-         <span data-ng-show="sortProperty.property === 'lastName'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
+         <span data-ng-show="sortProperty.property === 'provider.lastName'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
       </th>
-      <th class="sort col-sm-3" data-ng-click="sort('specialty.name')">
+      <th class="sort col-sm-3" data-ng-click="sortClientProviders('provider.specialty.name')">
          Primary Specialty
-         <span data-ng-show="sortProperty.property === 'specialty.name'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
+         <span data-ng-show="sortProperty.property === 'provider.specialty.name'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
       </th>
-      <th class="sort col-sm-3" data-ng-click="sort('email')">
+      <th class="sort col-sm-3" data-ng-click="sortClientProviders('provider.email')">
          Email
          <span data-ng-show="sortProperty.property === 'email'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
       </th >

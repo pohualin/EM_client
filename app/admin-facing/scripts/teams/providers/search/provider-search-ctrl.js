@@ -7,18 +7,26 @@ angular.module('emmiManager')
 
         var searchedProvidersList = 'searchedProvidersList';
 
+        /**
+         * Called when search button is clicked from search all provider tab
+         */
         $scope.search = function (isValid) {
             if (isValid) {
                 $scope.noSearch = false;
-                ClientProviderService.findWithoutCL($scope.allTeamLocations, Client.getClient(), $scope.providerQuery, $scope.status).then(function (providerPage) {
+                ClientProviderService.findPossibleProvidersNotUsingClient($scope.allTeamLocations, Client.getClient(), $scope.providerQuery, $scope.status)
+                .then(function (providerPage) {
                     $scope.handleResponse(providerPage, 'searchedProvidersList');
                 });
             }
         };
 
+        /**
+         * Called when status changed
+         */
         $scope.statusChange = function () {
             $scope.loading = true;
-            ProviderSearch.search($scope.allTeamLocations, $scope.teamResource, $scope.providerQuery, $scope.status, null, $scope.currentPageSize).then(function (providerPage) {
+            ClientProviderService.findPossibleProvidersNotUsingClient($scope.allTeamLocations, Client.getClient(), $scope.providerQuery, $scope.status)
+            .then(function (providerPage) {
                 var provPage = angular.isObject(providerPage) ? angular.extend({}, providerPage) : {statusFromReq:$scope.status};
                 $scope.handleResponse(provPage, 'searchedProvidersList');
                 $scope.setCheckboxesForChanged($scope[searchedProvidersList]);
@@ -28,6 +36,9 @@ angular.module('emmiManager')
             });
         };
 
+        /**
+         * Called to fetch another page of possible providers by given href
+         */
         $scope.fetchPage = function (href) {
             $scope.loading = true;
             ProviderSearch.fetchPageLink(href).then(function (providerPage) {
@@ -48,17 +59,6 @@ angular.module('emmiManager')
                 $scope.handleResponse(providerPage, 'clientProviders');
                 $scope.setClientProviderSelected($scope.clientProviders);
             }, function () {
-                $scope.loading = false;
-            });
-        };
-
-        $scope.changePageSize = function (pageSize) {
-            $scope.loading = true;
-            ProviderSearch.search($scope.allTeamLocations, $scope.teamResource, $scope.providerQuery, $scope.status, $scope.sortProperty, pageSize).then(function (providerPage) {
-                $scope.handleResponse(providerPage, 'searchedProvidersList');
-                $scope.setCheckboxesForChanged($scope[searchedProvidersList]);
-            }, function () {
-                // error happened
                 $scope.loading = false;
             });
         };
@@ -92,7 +92,9 @@ angular.module('emmiManager')
             }
         };
 
-        // when a column header is clicked
+        /**
+         * Called when a column header in search all provider result table is clicked.
+         */
         $scope.sort = function (property) {
             var sort = $scope.sortProperty || {};
             if (sort && sort.property === property) {
@@ -110,7 +112,8 @@ angular.module('emmiManager')
                 sort.ascending = true;
             }
             $scope.loading = true;
-            ProviderSearch.search($scope.allTeamLocations, $scope.teamResource, $scope.providerQuery, $scope.status, sort, $scope.currentPageSize).then(function (providerPage) {
+            ClientProviderService.findPossibleProvidersNotUsingClient($scope.allTeamLocations, Client.getClient(), $scope.providerQuery, $scope.status, sort, $scope.currentPageSize)
+            .then(function (providerPage) {
                 $scope.handleResponse(providerPage, 'searchedProvidersList');
                 $scope.setCheckboxesForChanged($scope[searchedProvidersList]);
             }, function () {
@@ -118,7 +121,39 @@ angular.module('emmiManager')
                 $scope.loading = false;
             });
         };
+        
+        /**
+         * Called when a column header in client providers result table is clicked.
+         */
+        $scope.sortClientProviders = function (property) {
+            var sort = $scope.sortProperty || {};
+            if (sort && sort.property === property) {
+                // same property was clicked
+                if (!sort.ascending) {
+                    // third click removes sort
+                    sort = null;
+                } else {
+                    // switch to descending
+                    sort.ascending = false;
+                }
+            } else {
+                // change sort property
+                sort.property = property;
+                sort.ascending = true;
+            }
+            $scope.loading = true;
+            ClientProviderService.findForClient(Client.getClient(), sort).then(function (clientProviders) {
+                $scope.handleResponse(clientProviders, managedClientProviderList);
+                $scope.setClientProviderSelected($scope.clientProviders);
+            }, function(){
+                // error happened
+                $scope.loading = false;
+            });
+        };
 
+        /**
+         * Called when check box checked or unchecked from both tabs
+         */
         $scope.onCheckboxChange = function (provider) {
             var request = {};
             request.teamLocations = [];
@@ -165,7 +200,6 @@ angular.module('emmiManager')
                 }
             });
         };
-
 
         var managedClientProviderList = 'clientProviders';
         ClientProviderService.findForClient(Client.getClient()).then(function (clientProviders) {
