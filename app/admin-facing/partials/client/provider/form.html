@@ -91,6 +91,7 @@
                     <div class="form-group"
                          data-ng-class="{ 'has-error' : providerForm.providerId.$invalid && providerFormSubmitted }">
                         <label class="control-label" for="providerId">Provider ID</label>
+                        <span class="field-note field-optional">optional</span>
                         <input class="form-control" data-ng-model="clientProvider.externalId" id="providerId" name="providerId" type="text"
                                maxlength="255"/>
                     </div>
