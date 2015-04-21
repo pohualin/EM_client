@@ -38,8 +38,8 @@
                         <div class="col-md-12">
                             <div class="pull-right table-results-count">
                                 {{total}}
-                                <span data-ng-show="total != 1" data-translate="global.labels.total"> results</span>
-                                <span data-ng-show="total === 1"
+                                <span data-ng-if="total != 1" data-translate="global.labels.total"> results</span>
+                                <span data-ng-if="total === 1"
                                       data-translate="global.labels.totalSingular"> result</span>
                             </div>
                             <form class="form-inline">
@@ -77,7 +77,6 @@
                                         Phone
                                         <span data-ng-show="sortProperty.property === 'phone'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span>
                                     </th>
-
                                 </tr>
                                 </thead>
                                 <tbody>

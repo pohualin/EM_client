@@ -1,10 +1,10 @@
 <br/>
-<table class="table table-bordered table-striped table-hover" border="0" cellpadding="0"
+<table class="table table-bordered table-striped table-hover table-condensed" border="0" cellpadding="0"
         cellspacing="0" data-ng-show="clientProviders">
   <thead>
     <tr>
-      <th class="sort col-sm-1">&nbsp;</th>
-      <th class="sort col-sm-2" data-ng-click="sort('lastName')">
+      <th class="sort col-checkbox">&nbsp;</th>
+      <th class="sort" data-ng-click="sort('lastName')">
          Name
          <span data-ng-show="sortProperty.property === 'lastName'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
       </th>
@@ -16,13 +16,12 @@
          Email
          <span data-ng-show="sortProperty.property === 'email'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
       </th >
-      <th data-ng-show="allTeamLocations.length > 0" class="sort col-sm-3">Use Locations</th>
+      <th class="col-sm-3" data-ng-if="allTeamLocations.length > 0">Use Locations</th>
     </tr>
   </thead>
-
   <tbody>
     <tr data-ng-repeat="teamProvider in clientProviders" data-ng-class="teamProvider.provider.entity.disabled ? 'text-muted' : ''">
-      <td>
+      <td class="col-checkbox">
           <div class="checkbox">
               <input type="checkbox" id="clientProviderCb{{$index}}" data-ng-model="teamProvider.provider.entity.checked"  data-ng-disabled="teamProvider.provider.entity.disabled"
                  ng-change="onCheckboxChange(teamProvider.provider)">
