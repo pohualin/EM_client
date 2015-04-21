@@ -10,7 +10,7 @@ angular.module('emmiManager')
         $scope.search = function (isValid) {
             if (isValid) {
                 $scope.noSearch = false;
-                ProviderSearch.search($scope.allTeamLocations, $scope.teamResource, $scope.providerQuery, $scope.status).then(function (providerPage) {
+                ClientProviderService.findWithoutCL($scope.allTeamLocations, Client.getClient(), $scope.providerQuery, $scope.status).then(function (providerPage) {
                     $scope.handleResponse(providerPage, 'searchedProvidersList');
                 });
             }

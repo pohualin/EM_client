@@ -1,6 +1,16 @@
 'use strict';
 angular.module('emmiManager')
     .service('ClientProviderService', function ($http, $q, Session, UriTemplate, arrays) {
+        function addSortIndex(entityPage, sort) {
+            sort = sort || 0;
+            if (entityPage && entityPage.content) {
+                for (var size = entityPage.content.length; sort < size; sort++) {
+                    var content = entityPage.content[sort];
+                    content.sortIdx = sort;
+                }
+            }
+            return sort;
+        }
         function convertPageContentLinks(page){
             if (page) {
                 angular.forEach(page, function (clientProviderResource) {
@@ -17,7 +27,27 @@ angular.module('emmiManager')
                         size: pageSize
                     }
                 )).then(function (response) {
+                    addSortIndex(response.data);
                     convertPageContentLinks(response.data.content);
+                    return response.data;
+                });
+            },
+            findWithoutCL: function (allTeamLocations, clientResource, query, status, sort, pageSize) {
+                var teams = angular.copy(allTeamLocations);
+                console.log(clientResource);
+                var uri = clientResource.link.possibleProvidersWithoutCL;
+                return $http.get(UriTemplate.create(uri).stringify({
+                        name: query,
+                        status: status,
+                        sort: sort && sort.property ? sort.property + ',' + (sort.ascending ? 'asc' : 'desc') : '',
+                        size: pageSize
+                    }
+                )).then(function (response) {
+                    addSortIndex(response.data);
+                    convertPageContentLinks(response.data.content);
+                    angular.forEach(response.data.content, function (provider) {
+                        provider.provider.entity.selectedTeamLocations = angular.copy(teams);
+                    });
                     return response.data;
                 });
             },
