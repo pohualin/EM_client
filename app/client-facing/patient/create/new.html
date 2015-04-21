@@ -47,7 +47,7 @@
                         class="form-control"
                         data-placeholder="Select..."
                         data-ng-model="patient.gender"
-                        data-ng-options="gender for gender in genders | orderBy:'toString()' "
+                        data-ng-options="gender | translate for gender in genders"
                         id="gender"
                         name="gender">
                         <option value="">Unknown</option>
