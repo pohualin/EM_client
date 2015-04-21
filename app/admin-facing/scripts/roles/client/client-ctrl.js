@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  *   Manage Client Level roles for a client
  */
-    .controller('ClientRoleAdminCtrl', ['$scope', 'ManageUserRolesService', '$filter', 'focus',
-        function ($scope, ManageUserRolesService, $filter, focus) {
+    .controller('ClientRoleAdminCtrl', ['$scope', '$alert', 'ManageUserRolesService', '$filter', 'focus',
+        function ($scope, $alert, ManageUserRolesService, $filter, focus) {
 
             ManageUserRolesService.referenceData($scope.clientResource).then(function (referenceData) {
                 $scope.clientReferenceData = referenceData;
@@ -81,6 +81,7 @@ angular.module('emmiManager')
                 ManageUserRolesService.saveNewClientRole(clientRoleEntity, $scope.clientResource).then(function () {
                     delete $scope.newClientRole;
                     $scope.loadExisting();
+                    $scope.successAlert(clientRoleEntity);
                 });
             };
 
@@ -167,6 +168,12 @@ angular.module('emmiManager')
                 ManageUserRolesService.saveSelectedLibraries($scope.clientReferenceData.roleLibrary, $scope.clientResource)
                     .then(function () {
                         $scope.loadExisting();
+                        window.roles = $scope.clientReferenceData.roleLibrary;
+                        angular.forEach($scope.clientReferenceData.roleLibrary, function(role){
+                            if(role.checked && !role.disabled){
+                                $scope.successAlert(role.entity);
+                            }
+                        });
                     });
             };
 
@@ -185,6 +192,21 @@ angular.module('emmiManager')
             $scope.$on('tooltip.hide', function () {
                 ManageUserRolesService.deselectAllLibraries($scope.clientReferenceData.roleLibrary);
             });
+            
+            /**
+             * Success alert to show when a client role is added.
+             */
+            $scope.successAlert = function(clientRole){
+                $alert({
+                    content: '<b>' + clientRole.name + '</b> has been added successfully.',
+                    container: '#messages-container',
+                    type: 'success',
+                    placement: 'top',
+                    show: true,
+                    duration: 5,
+                    dismissable: true
+                });
+            };
 
             // start by loading the currently saved roles
             $scope.loadExisting();

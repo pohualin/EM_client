@@ -1,19 +1,24 @@
 .multi-select > .multi-select-container[readonly] {
-  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAECAMAAAB1GNVPAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA69pVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wUmlnaHRzPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvcmlnaHRzLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcFJpZ2h0czpNYXJrZWQ9IkZhbHNlIiB4bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ9InV1aWQ6NDA2MDE4RjNGMTY4REYxMTlGMzE5N0QxMzkyN0VFNEQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RUE0NTc4RjVCRUQwMTFERkI5MTQ4MDIzMjU2NDg2QUIiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RUE0NTc4RjRCRUQwMTFERkI5MTQ4MDIzMjU2NDg2QUIiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDowMjRCRUQ2RUI2MjA2ODExOEY2MkZFMTkwMUI1RUNCRSIgc3RSZWY6ZG9jdW1lbnRJRD0idXVpZDo0MDYwMThGM0YxNjhERjExOUYzMTk3RDEzOTI3RUU0RCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PjwRas0AAAAGUExURXFxdOv3/5a+PqkAAAACdFJOU/8A5bcwSgAAABdJREFUeNpiYIACRijJCGIwgmgwBggwAACQAA3KWolpAAAAAElFTkSuQmCC);
-  background-repeat: no-repeat;
-  background-position: 97% center;
-  background-color: $input-bg;
+  background: $input-bg url('../images/icon-multi-select-arrow.png') no-repeat 94% center;
+  background-position: right 12px center; // fixed positioning from right for modern browsers
   cursor: pointer;
   //height: 34px; // height will be received from Bootstrap .form-control
+}
+
+// Control should be smaller in the condensed table
+.table-condensed {
+    .multi-select > .multi-select-container[readonly] {
+        @extend .input-sm;
+    }
 }
 
 .multi-select > .multi-select-dropdown {
   background-color: #fff;
   position: absolute;
   z-index: 999;
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  border: 1px solid $dropdown-border;
   border-radius: $border-radius-base;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  //box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
   background-clip: padding-box;
   margin-top: -1px;
   padding: 0;
@@ -32,7 +37,7 @@
 
 .multi-select > .multi-select-dropdown > .multi-select-filters > .multi-select-filter {
   display: block;
-  padding: 6px $padding-base-horizontal;
+  padding: 11px $padding-base-horizontal 6px;
   font-weight: 400;
   color: $gray;
   white-space: nowrap;

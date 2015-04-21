@@ -1,4 +1,17 @@
 <div class="app-header with-breadcrumbs" data-emmi-navbar>
+    <!-- Secondary menu for transclusion -->
+    <ul class="secondary-nav" data-ng-if="!team.id">
+        <li><a href="#/clients/{{client.id}}/password_policy">Client Configurations</a></li>
+        <li>
+            <a data-ng-if="existingClientRoles.length > 0 || existingClientTeamRoles.length > 0" href="#/clients/{{client.id}}/users">Manage Users</a>
+            <a data-ng-if="existingClientRoles.length === 0 && existingClientTeamRoles.length === 0" data-ng-class="{'disabled':(existingClientRoles.length === 0 && existingClientTeamRoles.length === 0)}">Manage Users</a>
+        </li>
+        <li><a href="#/clients/{{client.id}}/roles">Manage Roles</a></li>
+    </ul>
+    <ul class="secondary-nav" data-ng-if="team.id">
+        <li><a target="schedule_program" href="{{clientBaseUrl}}#/impersonate/{{client.id}}/teams/{{team.id}}/schedule">Schedule Program</a></li>
+        <li><a target="create_patient" href="{{clientBaseUrl}}#/impersonate/{{client.id}}/patients">Create Patient</a></li>
+    </ul>
     <!-- Breadcrumb for transclusion -->
     <ol class="breadcrumb">
         <li><a href="#/">Emmi Manager</a></li>

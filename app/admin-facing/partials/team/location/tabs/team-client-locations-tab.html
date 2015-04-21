@@ -1,14 +1,14 @@
         <br/>
-        <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0"
+        <table class="table table-bordered table-striped table-hover table-condensed" border="0" cellpadding="0"
                cellspacing="0" data-ng-show="clientLocations">
             <thead>
             <tr>
-                <th class="sort col-sm-0">&nbsp;</th>
-                <th data-ng-class="sizeClass" data-ng-click="sortClient('name')">
+                <th class="sort col-checkbox">&nbsp;</th>
+                <th class="sort" data-ng-click="sortClient('name')">
                     Name
                     <span data-ng-show="sortProperty.property === 'name'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span>
                 </th>
-                <th data-ng-class="sizeClass" data-ng-click="sortClient('belongsTo.name')">
+                <th class="sort col-sm-2" data-ng-click="sortClient('belongsTo.name')">
                     Client Owner
                     <span data-ng-show="sortProperty.property === 'belongsTo.name'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span>
                 </th>
@@ -16,7 +16,7 @@
                     City/State
                     <span data-ng-show="sortProperty.property === 'city'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span>
                 </th>
-                <th class="sort col-sm-2" data-ng-click="sortClient('phone')">
+                <th class="sort col-phone" data-ng-click="sortClient('phone')">
                     Phone
                     <span data-ng-show="sortProperty.property === 'phone'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span>
                 </th>
@@ -27,7 +27,7 @@
             </thead>
             <tbody>
             <tr data-ng-repeat="location in clientLocations" data-ng-class="location.location.entity.disabled ? 'text-muted' : ''">
-                <td>
+                <td class="col-checkbox">
                     <div class="checkbox">
                         <input type="checkbox" id="clientLocationCb{{$index}}" data-ng-model="location.location.entity.checked"  data-ng-disabled="location.location.entity.disabled"
                            ng-change="onClientCheckboxChange(location)">

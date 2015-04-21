@@ -249,6 +249,8 @@
             if ($dropdown.hasClass('hide')) {
               // close all other dropdowns on the page before showing the selected one
               ng.element('body').find('.multi-select-dropdown').removeClass('show').addClass('hide');
+              // set the min-width of the dropdown equal to the width of the control/container
+              $dropdown.css('min-width', element.outerWidth());
               $dropdown.removeClass('hide').addClass('show');
             } else {
               $dropdown.removeClass('show').addClass('hide');
