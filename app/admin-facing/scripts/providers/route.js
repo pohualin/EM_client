@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('emmiManager').config(
-    function($routeProvider, USER_ROLES) {
+    function($routeProvider, USER_ROLES, MENU) {
 
         var requiredResources = {
             'account': ['AuthSharedService',
@@ -42,11 +42,13 @@ angular.module('emmiManager').config(
                 authorizedRoles: USER_ROLES.all
             },
             title: 'Provider Search',
+            activeMenu: MENU.setup,
             reloadOnSearch: false,
             resolve: requiredResources
         }).when('/providers/:id', {
             templateUrl: 'admin-facing/partials/provider/editor/editor.html',
             controller: 'ProviderEditorController',
+            activeMenu: MENU.setup,
             access: {
                 authorizedRoles: USER_ROLES.all
             },
