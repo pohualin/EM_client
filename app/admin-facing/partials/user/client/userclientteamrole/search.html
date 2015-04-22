@@ -2,40 +2,42 @@
     <div class="modal-dialog modal-dialog-large container-fluid">
         <div class="modal-content">
             <div class="modal-header">
+                <h4 class="modal-title">Role: {{selectedClientTeamRole.entity.name}}</h4>
+            </div>
+            <div class="modal-body">
                 <div class="row">
-                    <div class="col-md-1"></div>
-                    <div class="col-md-10" id="modal-messages-container"></div>
-                    <div class="col-md-1"></div>
+                    <div class="col-md-10 col-md-offset-1" id="modal-messages-container"></div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12">
-                    	<h3>Role: {{selectedClientTeamRole.entity.name}}</h3>
-                    </div>
-                </div>
-                <div class="row">
-                    <form name="searchForm" novalidate data-ng-show="hasTeams && !loading">
-                        <div class="col-md-6">
-                            <div class="form-inline">
-                                <label class="control-label" for="query">Search teams:</label>
-
-                                <div class="input-group col-md-8">
+                <form name="searchForm" novalidate data-ng-show="hasTeams && !loading">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div class="form-group">
+                                <label class="sr-only" for="locationQuery">Search locations:</label>
+                                <div class="input-group has-input-icon has-input-icon-search">
                                     <input class="form-control" name="query" id="query" data-ng-model="teamQuery"
-                                           type="text"
-                                           placeholder="Teams..." required data-auto-focus
-                                           data-focus-on="LocationSearchFocus">
+                                           type="text" placeholder="Search teams..." required data-auto-focus data-focus-on="LocationSearchFocus">
+                                    <span class="input-icon"><i class="icon-search"></i></span>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-success" data-ng-click="search(searchForm.query.$valid)"
+                                                data-ng-disabled="searchForm.query.$invalid || loading">Go
+                                        </button>
+                                    </span>
                                 </div>
-                                <button class="btn btn-default" data-ng-click="search(searchForm.query.$valid)"
-                                        data-ng-disabled="searchForm.query.$invalid || loading">Go
-                                </button>
                             </div>
-                        </div>
-
-                        <div class="col-md-6">
+                        </div><!-- .col-md-9 -->
+                    </div><!-- .row -->
+                    <div class="row table-search-filters">
+                        <div class="col-md-12">
+                            <div class="pull-right table-results-count" data-ng-hide="removeStatusFilterAndTotal">
+                                {{total}} <span data-ng-show="total != 1"
+                                    data-translate="global.labels.total"> results</span> <span
+                                    data-ng-show="total === 1"
+                                    data-translate="global.labels.totalSingular"> result</span>
+                            </div>
                             <div class="form-inline">
-                                <label class="control-label" for="tagFilter">Show teams by tag:</label>
-
-                                <div class="input-group col-md-8">
-                                    <select id="tagFilter" name="tagFilter" class="form-control"
+                                <div class="form-group">
+                                    <label class="control-label" for="tagFilter">Show teams by tag:</label>
+                                    <select id="tagFilter" name="tagFilter" class="form-control input-sm" style="width:400px;"
                                             data-ng-disabled="loading"
                                             data-ng-model="tagFilter.tag" data-ng-change="onTagFilterChange()"
                                             data-ng-options="tag.text group by tag.group.name for tag in clientTagGroupToDisplay | orderBy:'text'
@@ -49,77 +51,65 @@
                                 </div>
                             </div>
                         </div>
-                    </form>
-                    <div class="col-md-12" data-ng-show="!hasTeams && !loading">No teams available.</div>
-                </div>
-            </div>
-            <div class="modal-body" data-ng-show="searchPerformed">
-	            <div>
-				<div class="row" data-ng-hide="removeStatusFilterAndTotal">
-					<div class="col-md-12">
-						<div class="pull-right">
-							{{total}} <span data-ng-show="total != 1"
-								data-translate="global.labels.total"> results</span> <span
-								data-ng-show="total === 1"
-								data-translate="global.labels.totalSingular"> result</span>
-						</div>
-					</div>
-				</div>
-				<br>
-				<table class="table table-bordered table-striped table-hover"
-					border="0" cellpadding="0" cellspacing="0" data-ng-show="userClientUserClientTeamRoles">
-					<tr>
-						<th class="sort col-sm-1">&nbsp;</th>
-						<th class="sort col-sm-3" data-ng-click="sort('name')">Name
-							<span data-ng-show="sortProperty.property === 'name'"><span
-								class="sort-icon"
-								data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
-						</th>
-					</tr>
-					<tr data-ng-repeat="userClientUserClientTeamRole in userClientUserClientTeamRoles">
-						<td data-ng-show="!userClientUserClientTeamRole.link.self || userClientUserClientTeamRole.entity.warning">
-                            <div class="checkbox">
-                                <input type="checkbox" id="userClientTeamRoleCb{{$index}}" data-ng-model="userClientUserClientTeamRole.entity.selected"
-                                       data-ng-change="onCheckboxChange(userClientUserClientTeamRole.entity)">
-                                <label for="userClientTeamRoleCb{{$index}}"></label>
-                            </div>
-                        </td>
-                        <td data-ng-show="userClientUserClientTeamRole.link.self && !userClientUserClientTeamRole.entity.warning">
-                            <div class="checkbox">
-                                <input type="checkbox" id="userClientTeamRoleOffCb{{$index}}" disabled="disabled" checked>
-                                <label for="userClientTeamRoleOffCb{{$index}}"></label>
-                            </div>
-                        </td>
-						<td>{{userClientUserClientTeamRole.entity.team.name}}
-							<div class="error-circle fa-exclamation-circle"
-					             data-ng-show="userClientUserClientTeamRole.entity.warning"
-					             data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-					             data-title={{userClientUserClientTeamRole.entity.warning}}></div>
-						</td>
-					</tr>
-				</table>
-				<div class="row" data-ng-show="userClientUserClientTeamRoles">
-					<div data-ng-show="links" class="col-md-8 col-sm-8">
-						<ul class="pagination">
-							<li data-ng-repeat="link in links | orderBy:'order'"
-								data-ng-class="{'active': link.name == currentPage}"><a
-								data-ng-show="link.name != currentPage" href
-								data-ng-click="fetchPage(link.href)">{{link.name}}</a> <span
-								data-ng-hide="link.name != currentPage">{{link.name}}</span></li>
-						</ul>
-					</div>
-				</div>
-				<div data-ng-hide="userClientUserClientTeamRoles">
-					<span data-translate="global.messages.search.no_results_found"></span>
-				</div>
-				</div>
-            </div>
+                    </div><!-- .row -->
+                </form>
+                <div data-ng-show="!hasTeams && !loading">No teams available.</div>
+                <div data-ng-show="searchPerformed">
+    				<table class="table table-bordered table-striped table-hover"
+    					border="0" cellpadding="0" cellspacing="0" data-ng-show="userClientUserClientTeamRoles">
+                        <thead>
+    					<tr>
+    						<th class="sort col-checkbox">&nbsp;</th>
+    						<th class="sort" data-ng-click="sort('name')">Name
+    							<span data-ng-show="sortProperty.property === 'name'"><span
+    								class="sort-icon"
+    								data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
+    						</th>
+    					</tr>
+                        </thead>
+                        <tbody>
+    					<tr data-ng-repeat="userClientUserClientTeamRole in userClientUserClientTeamRoles">
+    						<td class="col-checkbox">
+                                <div class="checkbox">
+                                    <input type="checkbox" id="userClientTeamRoleCb{{$index}}" data-ng-model="userClientUserClientTeamRole.entity.selected"
+                                           data-ng-change="onCheckboxChange(userClientUserClientTeamRole.entity)"
+                                           data-ng-disabled="userClientUserClientTeamRole.link.self && !userClientUserClientTeamRole.entity.warning"
+                                           data-ng-checked="userClientUserClientTeamRole.link.self && !userClientUserClientTeamRole.entity.warning">
+                                    <label for="userClientTeamRoleCb{{$index}}"></label>
+                                </div>
+                            </td>
+    						<td>{{userClientUserClientTeamRole.entity.team.name}}
+    							<div class="error-circle fa-exclamation-circle"
+    					             data-ng-show="userClientUserClientTeamRole.entity.warning"
+    					             data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+    					             data-title="{{userClientUserClientTeamRole.entity.warning}}"></div>
+    						</td>
+    					</tr>
+                        <tr class="pagination-row no-hover">
+                            <td colspan="2" class="text-center" data-ng-show="links">
+                                <ul class="pagination">
+                                    <li data-ng-repeat="link in links | orderBy:'order'" class="{{link.className}}" data-ng-class="{'active': link.name == currentPage}">
+                                        <a data-ng-click="fetchPage(link.href)">
+                                            <i class="fa-angle-left" data-ng-if="link.className === 'previous'"></i>
+                                            {{link.name}}
+                                            <i class="fa-angle-right" data-ng-if="link.className === 'next'"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                        </tbody>
+    				</table>
+    				<div class="table-no-results" data-ng-hide="userClientUserClientTeamRoles">
+    					<span data-translate="global.messages.search.no_results_found"></span>
+    				</div>
+                </div><!-- searchPerformed -->
+            </div><!-- .modal-body -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-link" data-ng-click="cancel()">cancel</button>
-                <input type="submit" id="submit" class="btn btn-primary" data-ng-hide="isEmpty(selectedTeamRoles)" value="Save" data-add-team-roles-warning/>
-                </button>
+                <button type="submit" id="submit" class="btn btn-success" data-ng-hide="isEmpty(selectedTeamRoles)" data-add-team-roles-warning>Save</button>
+                <button type="button" class="btn btn-cancel" data-ng-click="cancel()">cancel</button>
             </div>
-        </div>
-    </div>
-</div>
+        </div><!-- .modal-content -->
+    </div><!-- .modal-dialog -->
+</div><!-- .modal -->
 

@@ -1,49 +1,41 @@
+<div class="app-header with-breadcrumbs" data-emmi-navbar>
+    <!-- Secondary menu for transclusion -->
+    <ul class="secondary-nav">
+        <li><a href="#/clients/{{client.id}}/password_policy">Client Configurations</a></li>
+        <li><a href="#/clients/{{client.id}}/roles">Manage Roles</a></li>
+    </ul>
+    <!-- Breadcrumb for transclusion -->
+    <ol class="breadcrumb">
+        <li><a href="#/">Emmi Manager</a></li>
+        <li><a href="#/clients/{{client.entity.id}}">{{client.entity.name}}</a></li>
+        <li class="active">Manage Users</li>
+    </ol>
+</div>
 <div class="container" data-ng-cloak>
-
     <div class="row">
         <div class="col-md-12">
-            <ol class="breadcrumb h3">
-                <li><a href="#/">Emmi Manager</a></li>
-                <li><a href="#/clients/{{client.entity.id}}">{{client.entity.name}}</a></li>
-                <li class="active">Manage Users</li>
-                <li class="pull-right"><a class="btn btn-link" href="#/clients/{{client.entity.id}}/roles">manage
-                    user roles</a></li>
-            </ol>
-        </div>
-    </div>
-    <form name="searchForm" data-ng-submit="!loading ? search() : false" novalidate>
-        <div class="row">
-            <div class="col-md-4 col-sm-4">
-                <h2>Manage Users</h2>
-            </div>
-            <div class="col-md-2 col-sm-2 pull-right" data-ng-show="searchPerformed || !hasUsers">
+            <div class="layout-card">
                 <div class="pull-right">
-                    <h2></h2>
-                    <a class="btn btn-primary"
-                       data-ng-href="#clients/{{client.entity.id}}/users/new?{{currentRouteQueryString}}">Create
-                        New
-                        User</a>
+                    <a data-ng-href="#clients/{{client.entity.id}}/users/new?{{currentRouteQueryString}}" class="btn btn-link btn-link-nopad btn-heading">
+                        <i class="icon-plus"></i> Create New User
+                    </a>
                 </div>
-            </div>
-        </div>
+                <h1>Manage Users</h1>
+    <form name="searchForm" data-ng-submit="!loading ? search() : false" novalidate>
         <div class="row">
             <div class="col-md-4" data-ng-show="hasUsers">
                 <label class="control-label" for="query">Search:</label>
-
                 <div class="input-group">
                     <input class="form-control" id="query" name="query" data-ng-model="query" type="text"
                            placeholder="First/last name, email, user ID" data-auto-focus>
-
                     <div class="input-group-addon btn" data-ng-click="!loading ? search() : false"
                          data-ng-disabled="loading">
                         Go
                     </div>
                 </div>
             </div>
-
             <div class="col-md-4" data-ng-show="hasUsers && !teamTagFilter.tag">
                 <label class="control-label" for="teamFilter">Team:</label>
-
                 <select id="teamFilter" name="teamFilter" class="form-control"
                         data-ng-disabled="searchForm.query.$invalid || loading || allTeams.length == 0"
                         data-ng-model="teamTagFilter.team" data-ng-change="onTeamFilterChange()"
@@ -57,7 +49,6 @@
             </div>
             <div class="col-md-4" data-ng-show="hasUsers && teamTagFilter.tag">
                 <label class="control-label" for="teamWithinTagFilter">Team:</label>
-
                 <select id="teamWithinTagFilter" name="teamWithinTagFilter" class="form-control"
                         data-ng-disabled="searchForm.query.$invalid || loading || teamsWithinTag.length == 0"
                         data-ng-model="teamTagFilter.teamWithinTag" data-ng-change="onTeamFilterChange()"
@@ -88,7 +79,6 @@
         <input class="pull-right" type="submit" style="border: 0; padding: 0;" value=""/>
     </form>
     <hr>
-
     <div class="row" data-ng-show="lookedForUsers && !hasUsers">
         <div class="col-md-12">
             <span>There are no existing users for {{client.entity.name}}.</span>
@@ -180,6 +170,10 @@
             <div data-ng-hide="usersClient">
                 <span data-translate="global.messages.search.no_results_found"></span>
             </div>
-        </div>
-    </div>
-</div>
+        </div><!-- .col-md-12 -->
+    </div><!-- .row -->
+            </div><!-- .layout-card -->
+        </div><!-- .col-md-12 -->
+    </div><!-- .row -->
+</div><!-- .container -->
+<footer class="footer" data-ng-include="'admin-facing/partials/common/footer.tpl.html'"></footer>
