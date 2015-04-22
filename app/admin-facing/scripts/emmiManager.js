@@ -135,7 +135,7 @@ angular.module('emmiManager', [
 
     .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, PATTERN, arrays, $document, $modal) {
 
-        var modals = [];
+        var modals = [], tooltips = [];
 
         $rootScope.$on('modal.show', function (e, $modal) {
             // if modal is not already in list
@@ -155,6 +155,42 @@ angular.module('emmiManager', [
             }
         });
 
+        $rootScope.$on('tooltip.show', function (e, $tooltip) {
+            // if tooltip is not already in list
+            if (tooltips.indexOf($tooltip) === -1) {
+                tooltips.push($tooltip);
+            }
+        });
+
+        $rootScope.$on('tooltip.hide', function (e, $tooltip) {
+            var tooltipIndex = tooltips.indexOf($tooltip);
+            tooltips.splice(tooltipIndex, 1);
+        });
+
+        /**
+         * Hide all $tooltip/$popover windows
+         */
+        $rootScope.killAllToolTips = function () {
+            if (tooltips.length) {
+                angular.forEach(tooltips, function ($tooltip) {
+                    $tooltip.$promise.then($tooltip.hide);
+                });
+                tooltips = [];
+            }
+        };
+
+        /**
+         * Hide all $modal windows
+         */
+        $rootScope.killAllModals = function () {
+            if (modals.length) {
+                angular.forEach(modals, function ($modal) {
+                    $modal.$promise.then($modal.hide);
+                });
+                modals = [];
+            }
+        };
+
         $rootScope.page = {
             setTitle: function (title) {
                 if (title) {
@@ -173,6 +209,7 @@ angular.module('emmiManager', [
         $rootScope.emailPattern = PATTERN.EMAIL;
 
         $rootScope.$on('$routeChangeStart', function (event, next) {
+            $rootScope.killAllToolTips();
             $rootScope.userRoles = USER_ROLES;
             $rootScope.isAuthorized = AuthSharedService.isAuthorized;
             if ($location.path() !== '/logout' && $location.path() !== '/login') {
@@ -186,13 +223,7 @@ angular.module('emmiManager', [
 
         $rootScope.$on('$routeChangeSuccess', function (e, current) {
             $rootScope.currentRouteQueryString = arrays.toQueryString(current.params);
-            // hide all modals
-            if (modals.length) {
-                angular.forEach(modals, function ($modal) {
-                    $modal.$promise.then($modal.hide);
-                });
-                modals = [];
-            }
+            $rootScope.killAllModals();
             var pageTitle = current && current.$$route && current.$$route.title;
             $rootScope.page.setTitle(pageTitle);
             $rootScope.activeMenu = current && current.$$route && current.$$route.activeMenu;
