@@ -51,6 +51,7 @@ select.form-control {
                 box-shadow: none;
                 transition: border-color ease-in-out .15s;
                 background-image: none;
+                abbr,
                 div {
                     width: 25px;
                     font-size: 18px;
@@ -78,6 +79,25 @@ select.form-control {
                     }
                     b {
                         display: none;
+                    }
+                }
+                abbr {
+                    background: none;
+                    position: absolute;
+                    top: 0;
+                    right: 25px;
+                    height: 100%;
+
+                    font-family: 'ui-font-solid';
+                    /* Enable Ligatures ================ */
+                    -webkit-font-feature-settings: "liga";
+                    -moz-font-feature-settings: "liga=1";
+                    -moz-font-feature-settings: "liga";
+                    -ms-font-feature-settings: "liga" 1;
+                    -o-font-feature-settings: "liga";
+                    font-feature-settings: "liga";
+                    &:before {
+                        content: '\E436'; // icon-delete
                     }
                 }
             }
@@ -269,6 +289,7 @@ select.form-control.input-sm {
             .chosen-single {
                 height: $input-height-small; // Make inputs at least the height of their button counterpart (base line-height + padding + border)
                 padding: $padding-small-vertical $padding-small-horizontal;
+                abbr:before,
                 div:before {
                     padding: $padding-small-vertical 0;
                 }

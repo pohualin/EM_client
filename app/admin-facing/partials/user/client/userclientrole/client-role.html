@@ -1,27 +1,25 @@
 <div data-ng-controller="UsersClientUserClientRolesListController">
     <div class="col-md-12" data-ng-show="existingUserClientUserClientRoles">
-        <h3>Client Roles:</h3>
+        <h2>Client Roles</h2>
         <div class="row" data-ng-repeat="existingUserClientUserClientRole in existingUserClientUserClientRoles">
             <div class="col-md-5">
                 <form name="existingUserClientUserClientRoleForm_{{existingUserClientUserClientRole.entity.id}}" class="form" novalidate>
                     <div class="panel-group"
                          data-start-collapsed="true"
                          data-bs-collapse>
-                        <div class="panel panel-default"
-                             data-ng-class="{ 'panel-open': existingUserClientUserClientRole.activePanel === 1 }"
-                             data-ng-click="toggleUserClientUserClienRolePanel(existingUserClientUserClientRole)">
-                            <div class="panel-heading">
-                                <div class="row panel-title">
-                                    <button type="button" class="btn-link" data-bs-collapse-toggle>
+                        <div class="panel panel-secondary" data-ng-class="{ 'panel-open': existingUserClientUserClientRole.activePanel === 1 }">
+                            <div class="panel-heading" data-ng-click="toggleUserClientUserClienRolePanel(existingUserClientUserClientRole)">
+                                <h4 class="panel-title">
+                                    <a data-bs-collapse-toggle>
                                         <span class="icon-caret-right"></span>
                                         {{ existingUserClientUserClientRole.entity.userClientRole.name}}
-                                    </button>
+                                    </a>
                                     <div class="pull-right">
-                                        <button type="button" class="btn-link" data-ng-click="removeUserClientRole(existingUserClientUserClientRole)">
-                                            <small>remove</small>
+                                        <button type="button" class="btn btn-icon btn-inherit" data-ng-click="removeUserClientRole(existingUserClientUserClientRole)">
+                                            <i class="icon-trashcan"></i>
                                         </button>
                                     </div>
-                                </div>
+                                </h4>
                             </div>
                             <div class="panel-collapse" data-bs-collapse-target>
                                 <div class="panel-body">
@@ -33,16 +31,16 @@
                                     </small>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                        </div><!-- .panel -->
+                    </div><!-- .panel-group -->
                 </form>
             </div>
-        </div>
-    </div>
-    <div data-ng-show="!existingUserClientUserClientRoles && clientRoles">
-        <button class="btn-lg btn-link" type="button" title="Select a client role to add:"
-                data-placement="right" data-content-template="admin-facing/partials/user/client/userclientrole/add-client-role.html"
-                data-trigger="click" data-bs-popover data-popover-dismiss>Add client role
+        </div><!-- .row -->
+    </div><!-- .col-md-12 -->
+    <div class="col-md-12" data-ng-show="!existingUserClientUserClientRoles && clientRoles">
+        <button class="btn btn-default" type="button" title="Select a client role to add:"
+                data-placement="right" data-template="admin-facing/partials/user/client/userclientrole/add-client-role.html"
+                data-trigger="click" data-bs-popover data-auto-close="1" data-popover-dismiss data-container="body"><i class="icon-plus"></i> Add client role
         </button>
     </div>
 </div>

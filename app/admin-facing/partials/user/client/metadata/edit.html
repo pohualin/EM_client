@@ -1,15 +1,11 @@
 <div class="col-md-12">
+    <h1>User Information</h1>
     <div id="validation-container" data-ng-show="userClientForm.$invalid"></div>
+    <div class="row" data-ng-include="'admin-facing/partials/user/client/metadata/form.html'"></div>
     <div class="row">
-        <div class="col-md-6 pull-left">
-            <h2>User Information</h2>
-        </div>
-        <div class="col-md-6">
-            <div class="pull-right">
-                <h2></h2>
-                <a class="btn btn-link" data-ng-click="cancel()">cancel</a>
-                |
-                <button class="btn btn-link" type="submit"
+        <div class="col-md-12">
+            <div>
+                <button class="btn btn-success" type="submit"
                         data-user-client="userClientEdit"
                         data-on-ok="save(userClientForm)"
                         data-on-cancel="makeActive()"
@@ -20,8 +16,8 @@
                         data-toggle-user-client-active>
                     save edits
                 </button>
+                <a class="btn btn-cancel" data-ng-click="cancel()">cancel</a>
             </div>
         </div>
     </div>
-    <div class="row" data-ng-include="'admin-facing/partials/user/client/metadata/form.html'"></div>
 </div>

@@ -1,38 +1,32 @@
 <div class="col-md-12" data-ng-cloak>
-	<div class="row">
-		<div class="col-md-6 pull-left">
-			<h2>User Information</h2>
-		</div>
-		<div class="col-md-6">
-			<div class="actions pull-right">
-	            <h2 class="form-group">
-					<button class="btn btn-link"  type="button" data-ng-click="edit()">edit</button>
-					<a class="btn btn-primary" type="button" data-ng-click="createAnotherUserClient()">
-	                    <span>Create Another User</span>
-	                </a>
-	            </h2>
-			</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-2">
-			<span>Name: </span>
+    <div class="row">
+        <div class="col-md-6 pull-left">
+            <h1>
+                <span>User Information</span>
+                <span><a class="btn btn-icon icon-size-lg" data-ng-click="edit()"><i class="icon-compose"></i></a></span>
+            </h1>
+        </div>
+        <div class="col-md-6">
+            <div class="actions pull-right">
+                <a class="btn btn-link btn-link-nopad btn-heading" data-ng-click="createAnotherUserClient()">
+                    <i class="icon-plus"></i> <span>Create Another User</span>
+                </a>
+            </div>
+        </div>
+    </div>
+	<div class="row entity-info">
+		<div class="col-md-4">
+			<h5 class="entity-value-label">Name</h5>
+			<div class="entity-value">{{userClientView.entity.firstName}} {{userClientView.entity.lastName}}
+            <em>({{userClientView.entity.active ? "active" : "inactive"}})</em></div>
 		</div>
 		<div class="col-md-4">
-			{{userClientView.entity.firstName}} {{userClientView.entity.lastName}}
-            <em>({{userClientView.entity.active ? "active" : "inactive"}})</em>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-2">
-			<span>Email: </span>
-		</div>
-		<div class="col-md-4">{{userClientView.entity.email}}</div>
-	</div>
-	<div class="row">
-		<div class="col-md-2">
-			<span>User ID: </span>
-		</div>
-		<div class="col-md-4">{{userClientView.entity.login}}</div>
+			<h5 class="entity-value-label">Email</h5>
+            <div class="entity-value">{{userClientView.entity.email}}</div>
+        </div>
+		<div class="col-md-4">
+			<h5 class="entity-value-label">User ID</h5>
+            <div class="entity-value">{{userClientView.entity.login}}</div>
+        </div>
 	</div>
 </div>

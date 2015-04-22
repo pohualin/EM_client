@@ -5,16 +5,18 @@
             <span class="icon-delete"></span>
         </button>
     </h3>
-    <div class="popover-content popover-text">
-        <table border="0" cellpadding="0" cellspacing="0">
-            <tr class="nowrap">
-                <td>User ID:</td>
-                <td><strong>{{selectedUser.login}}</strong></td>
-            </tr>
-            <tr class="nowrap">
-                <td>Password:&nbsp;&nbsp;&nbsp;</td>
-                <td><strong>{{selectedUser.password}}</strong></td>
-            </tr>
-        </table>
+    <div class="popover-content">
+        <div class="popover-text">
+            <table border="0" cellpadding="0" cellspacing="0" class="popover-table">
+                <tr class="nowrap">
+                    <th>User ID:</th>
+                    <td>{{selectedUser.login}}</td>
+                </tr>
+                <tr class="nowrap">
+                    <th>Password:</th>
+                    <td>{{selectedUser.password}}</td>
+                </tr>
+            </table>
+        </div>
     </div>
 </div>
