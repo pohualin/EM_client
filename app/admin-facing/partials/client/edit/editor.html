@@ -13,21 +13,3 @@
             <div class="row" data-ng-include="'admin-facing/partials/client/provider/current.html'"
                  data-ng-class="{'masked': metadataForm.clientName.$error.unique || editMode}"></div>
         </div>
-        <div class="layout-card">
-            <div class="row">
-                <div class="col-md-6">
-                    <a href="#/clients/{{client.id}}/roles">Manage Roles</a>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <a data-ng-if="existingClientRoles.length > 0 || existingClientTeamRoles.length > 0" href="#/clients/{{client.id}}/users">Manage Users</a>
-                    <a data-ng-if="existingClientRoles.length === 0 && existingClientTeamRoles.length === 0">Manage Users</a>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <a href="#/clients/{{client.id}}/password_policy">Configurations</a>
-                </div>
-            </div>
-        </div>

@@ -28,6 +28,7 @@ angular.module('emmiManager')
              * @param clientTeamRoleResource to be put in edit name mode
              */
             $scope.startEditName = function (clientTeamRoleResource) {
+                clientTeamRoleResource.activePanel = 0;
                 clientTeamRoleResource.editName = true;
                 focus('focus-' + clientTeamRoleResource.entity.id);
             };

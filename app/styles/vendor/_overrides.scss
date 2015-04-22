@@ -356,3 +356,7 @@ table {
 .modal.center .modal-dialog-large {
     width: 85%;
 }
+
+.panel-collapse.am-collapse {
+    overflow: hidden; // make sure the contents are hidden for the animation otherwise they break out of the container
+}

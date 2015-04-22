@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('emmiManager')
-    .config(function ($routeProvider, USER_ROLES) {
+    .config(function ($routeProvider, USER_ROLES, MENU) {
 
         var requiredResources = {
             'account': ['AuthSharedService', function (AuthSharedService) {
@@ -15,6 +15,7 @@ angular.module('emmiManager')
                 templateUrl: 'admin-facing/partials/admin/index.html',
                 controller: 'AdminFuncsCtrl',
                 title: 'Admin Functions',
+                activeMenu: MENU.settings,
                 access: {
                     authorizedRoles: USER_ROLES.all
                 }
@@ -22,6 +23,7 @@ angular.module('emmiManager')
             	templateUrl: 'admin-facing/partials/admin/tags/editor.html',
                 controller: 'AdminTagsCtrl',
                 title: 'Emmi Groups & Tags Library',
+                activeMenu: MENU.settings,
                 resolve: requiredResources,
                 access: {
                     authorizedRoles: USER_ROLES.all

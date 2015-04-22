@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('emmiManager')
-    .config(function ($routeProvider, USER_ROLES) {
+    .config(function ($routeProvider, USER_ROLES, MENU) {
 
         var requiredResources = {
             'account': ['AuthSharedService', function (AuthSharedService) {
@@ -62,6 +62,7 @@ angular.module('emmiManager')
             .when('/docs', {
                 templateUrl: 'admin-facing/partials/doc/docs.html',
                 title: 'Documentation',
+                activeMenu: MENU.settings,
                 access: {
                     authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
                 }

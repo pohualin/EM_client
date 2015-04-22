@@ -167,6 +167,21 @@ angular.module('emmiManager')
                     TeamsFilter.getTeamsForTags(filteredTeamTags, tags).then(function (listOfTeamsByTag) {
                         //show the teams that match the filtered teamtags from filter by and the tags that were selected and in the organize by group
                         $scope.listOfTeamsByTag = listOfTeamsByTag;
+
+                    });
+                });
+
+                /**
+                 * get teams to show in not now
+                 */
+                TeamsFilter.getActiveOrAllTeamTagsForFilteredTags([], $scope.showInactiveTeams).then(function (clientTeamTags) {
+                    //get all team tags for the client that are active or inactive based on $scope.showInactiveTeams
+                    TeamsFilter.getTeamsForTags(clientTeamTags, tags).then(function (listOfTeamsByTag) {
+                        //organize teams into an object with team name as the key and a list of tags as the values i.e. {teamName :[tag1,tag2,tag3], teamName2: [tag1]]}
+                        TeamsFilter.getTeamsNotInGroup(clientTeamTags, listOfTeamsByTag).then(function (teamsNotInGroup) {
+                            //teams to show in the 'not in this group' section
+                            $scope.teamsNotInGroup = teamsNotInGroup;
+                        });
                     });
                 });
             });

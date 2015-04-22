@@ -142,11 +142,17 @@ angular.module('emmiManager', [
             if (modals.indexOf($modal) === -1) {
                 modals.push($modal);
             }
+            if (modals.length >= 0) {
+                $document.find('body').addClass('modal-open');
+            }
         });
 
         $rootScope.$on('modal.hide', function (e, $modal) {
             var modalIndex = modals.indexOf($modal);
             modals.splice(modalIndex, 1);
+            if (modals.length === 0) {
+                $document.find('body').removeClass('modal-open');
+            }
         });
 
         $rootScope.page = {
@@ -189,6 +195,7 @@ angular.module('emmiManager', [
             }
             var pageTitle = current && current.$$route && current.$$route.title;
             $rootScope.page.setTitle(pageTitle);
+            $rootScope.activeMenu = current && current.$$route && current.$$route.activeMenu;
         });
 
         // Call when the the client is confirmed
