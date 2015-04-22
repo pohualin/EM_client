@@ -5,13 +5,14 @@ angular.module('emmiManager')
 /**
  * Route definitions for roles
  */
-    .config(function ($routeProvider, USER_ROLES) {
+    .config(function ($routeProvider, USER_ROLES, MENU) {
 
         // Routes
         $routeProvider
             .when('/clients/:clientId/roles', {
                 templateUrl: 'admin-facing/partials/role/client/main.html',
                 controller: 'ManageClientRolesMainCtrl',
+                activeMenu: MENU.setup,
                 access: {
                     authorizedRoles: USER_ROLES.all
                 },
