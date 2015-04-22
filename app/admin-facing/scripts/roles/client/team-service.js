@@ -1,8 +1,8 @@
 'use strict';
 angular.module('emmiManager')
 
-    .service('ManageUserTeamRolesService', ['$filter', '$q', '$http', 'UriTemplate', 'CommonService',
-        function ($filter, $q, $http, UriTemplate, CommonService) {
+    .service('ManageUserTeamRolesService', ['$filter', '$q', '$http', '$translate', 'UriTemplate', 'CommonService',
+        function ($filter, $q, $http, $translate, UriTemplate, CommonService) {
             var referenceData;
             var existingClientTeamRoles = [];
             return {
@@ -84,11 +84,35 @@ angular.module('emmiManager')
                             angular.forEach(response.data, function (savedPermission) {
                                 // set 'active' on the template permission
                                 angular.forEach(clientTeamRoleResource.entity.userClientTeamPermissions, function (templatePerm) {
-                                    if (!templatePerm.active) {
-                                        templatePerm.active = templatePerm.name === savedPermission.name;
+                                    if(!templatePerm.children){
+                                        if(!templatePerm.selected){
+                                            templatePerm.selected = templatePerm.name === savedPermission.name;
+                                        }
+                                    } else {
+                                        angular.forEach(templatePerm.children, function(child){
+                                            if(!child.selected){
+                                                child.selected = child.name === savedPermission.name;
+                                            }
+                                        });
                                     }
                                 });
                             });
+
+                            angular.forEach(clientTeamRoleResource.entity.userClientTeamPermissions, function (group) {
+                                var selectedChildren = 0;
+                                angular.forEach(group.children, function(child){
+                                    if(child.selected){
+                                        selectedChildren++;
+                                    }
+                                });
+                                // Half check or check on group checkbox
+                                if(selectedChildren !== 0 && group.children.length !== selectedChildren){
+                                    group.__ivhTreeviewIndeterminate = true;
+                                } else if(selectedChildren !== 0 && group.children.length === selectedChildren) {
+                                    group.selected = true;
+                                }
+                            });
+
                             clientTeamRoleResource.original = angular.copy(clientTeamRoleResource);
                             return response.data;
                         });
@@ -101,7 +125,7 @@ angular.module('emmiManager')
                  * @returns a promise that resolves into the saved role
                  */
                 saveNewClientTeamRole: function (clientTeamRoleEntity, clientResource) {
-                    var active = $filter('filter')(clientTeamRoleEntity.userClientTeamPermissions, {active: true}, true);
+                    var active = this.selectedPermissions(clientTeamRoleEntity.userClientTeamPermissions);
                     return $http.post(UriTemplate.create(clientResource.link.teamRoles).stringify(), {
                         name: clientTeamRoleEntity.name,
                         userClientTeamPermissions: active
@@ -119,7 +143,7 @@ angular.module('emmiManager')
                  */
                 saveExistingClientTeamRole: function (clientTeamRoleResource) {
                     var role = clientTeamRoleResource.entity,
-                        active = $filter('filter')(role.userClientTeamPermissions, {active: true}, true);
+                        active = this.selectedPermissions(clientTeamRoleResource.entity.userClientTeamPermissions);
                     return $http.put(UriTemplate.create(clientTeamRoleResource.link.self).stringify(), {
                         id: role.id,
                         version: role.version,
@@ -156,9 +180,13 @@ angular.module('emmiManager')
                  */
                 referenceData: function (clientResource) {
                     var deferred = $q.defer();
+                    var self = this;
                     if (!referenceData) {
                         $http.get((clientResource.link.teamRolesReferenceData)).then(function (response) {
                             referenceData = response.data;
+                            self.composePermissionArray(referenceData.permission).then(function(perm){
+                                referenceData.permission = perm;
+                            });
                             referenceData.roleLibrary = [];
                             // load library roles for reference data
                             $http.get(UriTemplate.create(referenceData.link.roles).stringify()).then(function load(roleResponse) {
@@ -254,6 +282,76 @@ angular.module('emmiManager')
                     angular.forEach(libraries, function (library) {
                         library.checked = false;
                     });
+                },
+                /**
+                 * This method will compose permission tree from an array of permissions with group
+                 * It will translate permission name and sort the return array by group rank.
+                 */
+                composePermissionArray: function(permissions){
+                    var deferred = $q.defer();
+                    var promises = [];
+                    var map = {};
+                    angular.forEach(permissions, function(aPermission){
+                        var group = aPermission.group;
+                        var deferred = $q.defer();
+                        delete aPermission.group;
+                        if(!map[group.rank]){
+                            group.children = [];
+                            group.children.push(aPermission);
+                            map[group.rank] = group;
+                            // translate group name calls
+                            $translate(group.name).then(function(translated){
+                                group.displayName = translated;
+                                deferred.resolve(group);
+                            }, function(error){
+                                group.displayName = group.name;
+                                deferred.resolve(group);
+                            });
+                            promises.push(deferred.promise);
+                        } else {
+                            map[group.rank].children.push(aPermission);
+                        }
+                        // translate permission name calls
+                        $translate(aPermission.name).then(function(translated){
+                            aPermission.displayName = translated;
+                            deferred.resolve(aPermission);
+                        }, function(error){
+                            aPermission.displayName = aPermission.name;
+                            deferred.resolve(aPermission);
+                        });
+                        promises.push(deferred.promise);
+                    });
+
+                    $q.all(promises).then(function(){
+                        var perm = [];
+                        angular.forEach(map, function(group){
+                            // Promote the only child to group
+                            if(group.children.length === 1){
+                                perm.push(group.children[0]);
+                            } else if(group.children.length > 1) {
+                                perm.push(group);
+                            }
+                        });
+                        deferred.resolve(perm);
+                    });
+
+                    return deferred.promise;
+                },
+                /**
+                 * Collect all selected permissions
+                 */
+                selectedPermissions: function(userClientTeamPermissions){
+                    var perms = [];
+                    angular.forEach(userClientTeamPermissions, function(group){
+                        if (!group.children){
+                            perms.push(group);
+                        } else {
+                            angular.forEach(group.children, function(child){
+                                perms.push(child);
+                            });
+                        }
+                    });
+                    return $filter('filter')(perms, {selected: true}, true);
                 }
             };
         }])

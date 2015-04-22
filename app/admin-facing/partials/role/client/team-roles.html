@@ -34,14 +34,7 @@
                         </div>
                         <div class="panel-collapse" data-bs-collapse-target>
                             <div class="panel-body">
-                                <div class="checkbox"
-                                        data-ng-repeat="permission in role.entity.userClientTeamPermissions  | orderBy:'rank'">
-                                    <input id="{{role.entity.id}}_perm_{{permission.name}}" type="checkbox"
-                                        data-ng-model="permission.active"/>
-                                    <label for="{{role.entity.id}}_perm_{{permission.name}}">
-                                        {{permission.name | translate}}
-                                    </label>
-                                </div>
+                                <div data-ivh-treeview="role.entity.userClientTeamPermissions" class="ivh-treeview-container" id="clientTeamRoleTV_{{role.entity.id}}"></div>
                             </div>
                             <div class="panel-footer">
                                 <button class="btn btn-success" data-ng-click="update(role, existingClientTeamRoleForm_{{$index}})"
@@ -74,14 +67,7 @@
                         </div>
                         <div class="panel-collapse">
                             <div class="panel-body">
-                                <div class="checkbox"
-                                     data-ng-repeat="permission in newClientTeamRole.userClientTeamPermissions  | orderBy:'rank'">
-                                    <input id="perm_{{permission.name}}" type="checkbox"
-                                           data-ng-model="permission.active"/>
-                                    <label for="perm_{{permission.name}}">
-                                        {{permission.name | translate}}
-                                    </label>
-                                </div>
+                                <div data-ng-if="newClientTeamRole.userClientTeamPermissions" data-ivh-treeview="newClientTeamRole.userClientTeamPermissions" class="ivh-treeview-container" id="newClientTeamRoleTV"></div>
                             </div>
                             <div class="panel-footer">
                                 <button class="btn btn-success" data-ng-click="saveNewRole(newClientTeamRole, newClientTeamRoleForm)"
