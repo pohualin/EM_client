@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('emmiManager')
-    .factory('AuthSharedService', ['$rootScope', '$http', 'authService', 'Session', 'API', '$q', '$location', 'arrays',
-        function ($rootScope, $http, authService, Session, API, $q, $location, arrays) {
+    .factory('AuthSharedService', ['$rootScope', '$http', 'authService', 'Session', 'API', '$q', '$location', 'arrays','LoginErrorMessageFactory',
+        function ($rootScope, $http, authService, Session, API, $q, $location, arrays, LoginErrorMessageFactory) {
             var makingCurrentUserCall = false, currentUserCallQueue = [];
             return {
                 login: function (creds) {
@@ -131,6 +131,8 @@ angular.module('emmiManager')
                                 credentials: creds,
                                 client: error.clientResource
                             });
+                        } else if (error.entity.reason === 'EXPIRED_CANT_CHANGE'){
+                            angular.extend(LoginErrorMessageFactory,{showTemporaryPasswordTokenExpired:true});
                         }
                     } else {
                         $rootScope.authenticationError = true;
