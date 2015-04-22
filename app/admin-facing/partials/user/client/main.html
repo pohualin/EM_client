@@ -24,61 +24,69 @@
     <form name="searchForm" data-ng-submit="!loading ? search() : false" novalidate>
         <div class="row">
             <div class="col-md-4" data-ng-show="hasUsers">
-                <label class="control-label" for="query">Search:</label>
-                <div class="input-group">
-                    <input class="form-control" id="query" name="query" data-ng-model="query" type="text"
-                           placeholder="First/last name, email, user ID" data-auto-focus>
-                    <div class="input-group-addon btn" data-ng-click="!loading ? search() : false"
-                         data-ng-disabled="loading">
-                        Go
+                <div class="form-group">
+                    <label class="control-label" for="query">Search:</label>
+                    <div class="input-group has-input-icon has-input-icon-search">
+                        <input class="form-control" id="query" name="query" data-ng-model="query" type="text"
+                               placeholder="First/last name, email, user ID" data-auto-focus>
+                        <span class="input-icon"><i class="icon-search"></i></span>
+                        <span class="input-group-btn">
+                            <button class="btn btn-success" data-ng-click="!loading ? search() : false"
+                                    data-ng-disabled="loading">Go
+                            </button>
+                        </span>
                     </div>
                 </div>
             </div>
             <div class="col-md-4" data-ng-show="hasUsers && !teamTagFilter.tag">
-                <label class="control-label" for="teamFilter">Team:</label>
-                <select id="teamFilter" name="teamFilter" class="form-control"
-                        data-ng-disabled="searchForm.query.$invalid || loading || allTeams.length == 0"
-                        data-ng-model="teamTagFilter.team" data-ng-change="onTeamFilterChange()"
-                        data-ng-options="team.name for team in allTeams | orderBy:'name' track by team.id"
-                        data-disable-search-threshold="10" data-allow-single-deselect="true"
-                        data-no-results-text="'All Teams'"
-                        data-placeholder="All Teams"
-                        data-chosen>
-                    <option></option>
-                </select>
+                <div class="form-group">
+                    <label class="control-label" for="teamFilter">Team:</label>
+                    <select id="teamFilter" name="teamFilter" class="form-control"
+                            data-ng-disabled="searchForm.query.$invalid || loading || allTeams.length == 0"
+                            data-ng-model="teamTagFilter.team" data-ng-change="onTeamFilterChange()"
+                            data-ng-options="team.name for team in allTeams | orderBy:'name' track by team.id"
+                            data-disable-search-threshold="10" data-allow-single-deselect="true"
+                            data-no-results-text="'All Teams'"
+                            data-placeholder="All Teams"
+                            data-chosen>
+                        <option></option>
+                    </select>
+                </div>
             </div>
             <div class="col-md-4" data-ng-show="hasUsers && teamTagFilter.tag">
-                <label class="control-label" for="teamWithinTagFilter">Team:</label>
-                <select id="teamWithinTagFilter" name="teamWithinTagFilter" class="form-control"
-                        data-ng-disabled="searchForm.query.$invalid || loading || teamsWithinTag.length == 0"
-                        data-ng-model="teamTagFilter.teamWithinTag" data-ng-change="onTeamFilterChange()"
-                        data-ng-options="team.name for team in teamsWithinTag | orderBy:'name' track by team.id"
-                        data-disable-search-threshold="10" data-allow-single-deselect="true"
-                        data-no-results-text="'Teams with Selected Tag'"
-                        data-placeholder="Teams with Selected Tag"
-                        data-chosen>
-                    <option></option>
-                </select>
+                <div class="form-group">
+                    <label class="control-label" for="teamWithinTagFilter">Team:</label>
+                    <select id="teamWithinTagFilter" name="teamWithinTagFilter" class="form-control"
+                            data-ng-disabled="searchForm.query.$invalid || loading || teamsWithinTag.length == 0"
+                            data-ng-model="teamTagFilter.teamWithinTag" data-ng-change="onTeamFilterChange()"
+                            data-ng-options="team.name for team in teamsWithinTag | orderBy:'name' track by team.id"
+                            data-disable-search-threshold="10" data-allow-single-deselect="true"
+                            data-no-results-text="'Teams with Selected Tag'"
+                            data-placeholder="Teams with Selected Tag"
+                            data-chosen>
+                        <option></option>
+                    </select>
+                </div>
             </div>
-
             <div class="col-md-4" data-ng-show="hasUsers">
-                <label class="control-label" for="tagFilter">Tags:</label>
-                <select id="tagFilter" name="tagFilter" class="form-control"
-                        data-ng-disabled="searchForm.query.$invalid || loading || teamTagFilter.team || allTeams.length == 0 || clientTags.length == 0"
-                        data-ng-model="teamTagFilter.tag" data-ng-change="onTagFilterChange()"
-                        data-ng-options="tag.text group by tag.group.name for tag in clientTags | orderBy:'text'
-				                                   track by tag.id"
-                        data-disable-search-threshold="10" data-allow-single-deselect="true"
-                        data-no-results-text="'All Tags'"
-                        data-placeholder="All Tags"
-                        data-chosen>
-                    <option></option>
-                </select>
+                <div class="form-group">
+                    <label class="control-label" for="tagFilter">Tags:</label>
+                    <select id="tagFilter" name="tagFilter" class="form-control"
+                            data-ng-disabled="searchForm.query.$invalid || loading || teamTagFilter.team || allTeams.length == 0 || clientTags.length == 0"
+                            data-ng-model="teamTagFilter.tag" data-ng-change="onTagFilterChange()"
+                            data-ng-options="tag.text group by tag.group.name for tag in clientTags | orderBy:'text'
+    				                                   track by tag.id"
+                            data-disable-search-threshold="10" data-allow-single-deselect="true"
+                            data-no-results-text="'All Tags'"
+                            data-placeholder="All Tags"
+                            data-chosen>
+                        <option></option>
+                    </select>
+                </div>
             </div>
         </div>
-        <input class="pull-right" type="submit" style="border: 0; padding: 0;" value=""/>
     </form>
-    <hr>
+    <hr class="search-divider" />
     <div class="row" data-ng-show="lookedForUsers && !hasUsers">
         <div class="col-md-12">
             <span>There are no existing users for {{client.entity.name}}.</span>
@@ -86,19 +94,17 @@
     </div>
     <div class="row" data-ng-show="searchPerformed && hasUsers">
         <div class="col-md-12">
-            <div class="row" data-ng-hide="removeStatusFilterAndTotal">
-                <div class="col-md-6 pull-right">
-                    <div class="pull-right">
+            <div class="row table-search-filters" data-ng-hide="removeStatusFilterAndTotal">
+                <div class="col-md-12">
+                    <div class="pull-right table-results-count">
                         {{total}} <span data-ng-show="total != 1"
                                         data-translate="global.labels.total"> results</span> <span
                         data-ng-show="total === 1"
                         data-translate="global.labels.totalSingular"> result</span>
                     </div>
-                </div>
-                <div class="col-md-6 pull-left">
                     <div class="form-inline">
                         <label for="status_filter" data-translate="global.labels.statusFilter">Show:</label>
-                        <select style="width: 105px" class="form-control" id="status_filter" data-ng-model="status"
+                        <select style="width: 105px" class="form-control input-sm" style="width:110px;" id="status_filter" data-ng-model="status"
                                 data-ng-options="status | translate for status in statuses"
                                 data-ng-change="statusChange()"
                                 disable-search="true"
@@ -107,11 +113,11 @@
                     </div>
                 </div>
             </div>
-            <br>
             <table class="table table-bordered table-striped table-hover"
                    border="0" cellpadding="0" cellspacing="0" data-ng-show="usersClient">
+                <thead>
                 <tr>
-                    <th class="sort col-sm-2" data-ng-click="sort('lastName')">Last Name
+                    <th class="sort col-sm-3" data-ng-click="sort('lastName')">Last Name
 						<span data-ng-show="sortProperty.property === 'lastName'"><span
                             class="sort-icon"
                             data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
@@ -131,42 +137,46 @@
                             class="sort-icon"
                             data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
                     </th>
-                    <th class="col-sm-2">&nbsp;</th>
+                    <th class="col-sm-1">&nbsp;</th>
                 </tr>
+                </thead>
+                <tbody>
                 <tr
                     data-ng-repeat="userClient in usersClient">
                     <td>{{userClient.entity.lastName}}</td>
                     <td>{{userClient.entity.firstName}}</td>
                     <td>{{userClient.entity.login}}</td>
                     <td>{{userClient.entity.email}}</td>
-                    <td>
-                        <span data-ng-hide="userClient.deactivationPopoverOpen">
-                            <a class="btn-link"
-                               href="#/clients/{{client.entity.id}}/users/{{userClient.entity.id}}?{{currentRouteQueryString}}">edit</a>
-                            |
-                        </span>
+                    <td class="text-center">
+                        <a class="btn-link" data-ng-hide="userClient.deactivationPopoverOpen"
+                               href="#/clients/{{client.entity.id}}/users/{{userClient.entity.id}}?{{currentRouteQueryString}}"><i class="icon-compose icon-size-xl"></i></a>
                         <a href
                            data-on-ok="toggleActivation(userClient)"
                            data-is-currently-active="userClient.entity.active"
-                           data-placement="top"
+                           data-placement="bottom"
                            data-on-open-popover="deactivationPopoverOpen(userClient, true)"
                            data-on-close-popover="deactivationPopoverOpen(userClient, false)"
-                           data-toggle-user-client-active>{{userClient.entity.active ? 'deactivate' : 'activate'}}
+                           data-toggle-user-client-active>
+                                <i title="activate" data-ng-if="!userClient.entity.active" class="icon-check-circle icon-size-xl"></i>
+                                <i title="deactivate" data-ng-if="userClient.entity.active" class="icon-delete-circle icon-size-xl"></i>
                         </a>
                     </td>
                 </tr>
+                <tr class="pagination-row no-hover">
+                    <td colspan="5" class="text-center" data-ng-show="links">
+                        <ul class="pagination">
+                            <li data-ng-repeat="link in links | orderBy:'order'" class="{{link.className}}" data-ng-class="{'active': link.name == currentPage}">
+                                <a data-ng-click="fetchPage(link.href)">
+                                    <i class="fa-angle-left" data-ng-if="link.className === 'previous'"></i>
+                                    {{link.name}}
+                                    <i class="fa-angle-right" data-ng-if="link.className === 'next'"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+                </tbody>
             </table>
-            <div class="row" data-ng-show="usersClient">
-                <div data-ng-show="links" class="col-md-8 col-sm-8">
-                    <ul class="pagination">
-                        <li data-ng-repeat="link in links | orderBy:'order'"
-                            data-ng-class="{'active': link.name == currentPage}"><a
-                            data-ng-show="link.name != currentPage" href
-                            data-ng-click="fetchPage(link.href)">{{link.name}}</a> <span
-                            data-ng-hide="link.name != currentPage">{{link.name}}</span></li>
-                    </ul>
-                </div>
-            </div>
             <div data-ng-hide="usersClient">
                 <span data-translate="global.messages.search.no_results_found"></span>
             </div>
