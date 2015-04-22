@@ -1,14 +1,22 @@
+<div class="app-header with-breadcrumbs" data-emmi-navbar>
+    <!-- Secondary menu for transclusion -->
+    <ul class="secondary-nav">
+        <li><a href="#/clients/{{client.id}}/password_policy">Client Configurations</a></li>
+        <li><a href="#/clients/{{client.id}}/users">Manage Users</a></li>
+        <li><a href="#/clients/{{client.id}}/roles">Manage Roles</a></li>
+    </ul>
+    <!-- Breadcrumb for transclusion -->
+    <ol class="breadcrumb">
+        <li><a href="#/">Emmi Manager</a></li>
+        <li><a href="#/clients/{{client.entity.id}}">{{client.entity.name}}</a></li>
+        <li><a href="#/clients/{{client.entity.id}}/users">Manage Users</a></li>
+        <li class="active">View User</li>
+    </ol>
+</div>
 <div class="container" data-ng-cloak>
     <div class="row">
         <div class="col-md-12">
-            <ol class="breadcrumb h3">
-                <li><a href="#/">Emmi Manager</a></li>
-                <li><a href="#/clients/{{client.entity.id}}">{{client.entity.name}}</a></li>
-                <li><a href="#/clients/{{client.entity.id}}/users">Manage Users</a></li>
-                <li class="active">View User</li>
-            </ol>
-        </div>
-    </div>
+            <div class="layout-card">
 
     <form name="userClientForm" class="form" novalidate data-unsaved-warning-form>
         <div data-ng-switch="editMode" data-ng-controller="UserClientMetaDataController">
@@ -24,6 +32,7 @@
     <hr data-ng-show="selectedUserClient"/>
     <div data-ng-show="selectedUserClient">
         <div class="row" data-ng-include="'admin-facing/partials/user/client/userclientrole/client-role.html'"></div>
+        <hr/>
         <div class="row" data-ng-include="'admin-facing/partials/user/client/userclientteamrole/client-team-role.html'"></div>
     </div>
 
@@ -34,4 +43,8 @@
     <div data-ng-show="selectedUserClient && (clientRoles || (teamRoles | teamSetOnRole))"
          class="row" data-ng-include="'admin-facing/partials/user/client/activation/form.html'"></div>
 
-</div>
+            </div><!-- .layout-card -->
+        </div><!-- .col-md-12 -->
+    </div><!-- .row -->
+</div><!-- .container -->
+<footer class="footer" data-ng-include="'admin-facing/partials/common/footer.tpl.html'"></footer>
