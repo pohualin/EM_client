@@ -195,6 +195,7 @@ angular.module('emmiManager', [
             }
             var pageTitle = current && current.$$route && current.$$route.title;
             $rootScope.page.setTitle(pageTitle);
+            $rootScope.activeMenu = current && current.$$route && current.$$route.activeMenu;
         });
 
         // Call when the the client is confirmed
