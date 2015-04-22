@@ -35,7 +35,6 @@ angular.module('emmiManager')
      * 
      */
     $scope.handleSaveError = function (error, form) {
-    	console.log(error);
     	if (error.status === 406 && error.data && error.data.conflicts) {
         	var totalErrorCount = error.data.conflicts.length;
             angular.forEach(error.data.conflicts, function (conflict) {
@@ -59,7 +58,7 @@ angular.module('emmiManager')
             }
         }
     	else if (error.status === 406 && error.data.validationError.reason === 'EMAIL_RESTRICTION') {
-    	  	  $scope.emailMessage = $scope.validEmailEnding === 1 ? 'Only the following type of email address may be used:'
+    		  $scope.emailHeading = $scope.validEmailEnding.length === 1 ? 'Only the following type of email address may be used:'
     	  			  											: 'Only the following types of email addresses may be used:';
               error.data.validationError.validEmailEndings = $scope.validEmailEnding;
               $scope.emailError = error.data.validationError;

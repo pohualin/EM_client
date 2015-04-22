@@ -24,7 +24,8 @@ angular.module('emmiManager')
             return {
                 restrict: 'EA',
                 scope: {
-                    saveError: '=saveError'
+                    saveError: '=saveError',
+                    emailHeading: '=emailHeading'
                 },
                 require: 'ngModel',
                 link: function (scope, element, attributes, ngModelController) {

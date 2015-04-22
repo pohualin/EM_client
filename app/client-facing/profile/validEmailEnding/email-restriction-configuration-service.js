@@ -11,7 +11,6 @@ angular.module('emmiManager')
                  * Get EmailRestrictConfiguration by Client
                  */
                 getEmailRestrictConfiguration: function () {
-                	console.log(Session);
                 	return $http.get(UriTemplate.create(Session.clientResource.link.emailRestrictConfigurations).stringify({
                     	page: null,
                     	size: null,
