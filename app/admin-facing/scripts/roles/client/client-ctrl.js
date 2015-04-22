@@ -28,6 +28,7 @@ angular.module('emmiManager')
              * @param clientRoleResource to be put in edit name mode
              */
             $scope.startEditName = function (clientRoleResource) {
+                clientRoleResource.activePanel = 0;
                 clientRoleResource.editName = true;
                 focus('focus-' + clientRoleResource.entity.id);
             };
@@ -192,7 +193,7 @@ angular.module('emmiManager')
             $scope.$on('tooltip.hide', function () {
                 ManageUserRolesService.deselectAllLibraries($scope.clientReferenceData.roleLibrary);
             });
-            
+
             /**
              * Success alert to show when a client role is added.
              */
