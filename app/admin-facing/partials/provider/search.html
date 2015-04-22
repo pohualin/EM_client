@@ -78,7 +78,7 @@
                                     <td>{{provider.entity.firstName}} {{provider.entity.middleName}} {{provider.entity.lastName}} <em>{{provider.entity.active ? '' : "(inactive)"}}</em></td>
                                     <td>{{provider.entity.specialty.name}}</td>
                                     <td>{{provider.entity.email}}</td>
-                                    <td class="text-center"><a href="#/providers/{{provider.entity.id}}"><i class="icon-compose icon-size-xl"></i></a></td>
+                                    <td class="text-center"><a href="#/providers/{{provider.entity.id}}?{{currentRouteQueryString}}"><i class="icon-compose icon-size-xl"></i></a></td>
                                 </tr>
                                 <tr class="pagination-row no-hover">
                                     <td colspan="5" class="text-center" data-ng-show="links">
