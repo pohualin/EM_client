@@ -169,7 +169,6 @@ angular.module('emmiManager')
                 ManageUserRolesService.saveSelectedLibraries($scope.clientReferenceData.roleLibrary, $scope.clientResource)
                     .then(function () {
                         $scope.loadExisting();
-                        window.roles = $scope.clientReferenceData.roleLibrary;
                         angular.forEach($scope.clientReferenceData.roleLibrary, function(role){
                             if(role.checked && !role.disabled){
                                 $scope.successAlert(role.entity);
