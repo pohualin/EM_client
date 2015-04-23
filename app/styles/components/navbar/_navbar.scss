@@ -149,7 +149,7 @@
     &.active:focus {
         background: rgba(255,255,255,0.3);
     }
-    &.active:after {
+    .with-breadcrumbs &.active:after {
         content: '';
         display: block;
         position: absolute;
