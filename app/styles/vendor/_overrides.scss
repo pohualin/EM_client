@@ -83,7 +83,14 @@
         // padding: 0;
         background: url('../images/breadcrumb.png') no-repeat 50% 50%;
         padding: 0 4px;
-        margin: 0 7px;
+        margin: 0 8px 0 7px;
+    }
+    > .active a,
+    > .active a:hover,
+    > .active a:active,
+    > .active a:focus {
+        color: $breadcrumb-active-color;
+        text-decoration: none;
     }
 }
 

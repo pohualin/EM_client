@@ -1,12 +1,12 @@
 <div class="app-header with-breadcrumbs" data-emmi-navbar>
     <!-- Secondary menu for transclusion -->
     <ul class="secondary-nav">
-        <li><a href="#/clients/{{client.id}}/password_policy">Client Configurations</a></li>
-        <li><a href="#/clients/{{client.id}}/roles">Manage Roles</a></li>
+        <li><a href="#/clients/{{client.entity.id}}/password_policy">Client Configurations</a></li>
+        <li><a href="#/clients/{{client.entity.id}}/roles">Manage Roles</a></li>
     </ul>
     <!-- Breadcrumb for transclusion -->
     <ol class="breadcrumb">
-        <li><a href="#/">Emmi Manager</a></li>
+        <li><a href="#/clients">Search</a></li>
         <li><a href="#/clients/{{client.entity.id}}">{{client.entity.name}}</a></li>
         <li class="active">Manage Users</li>
     </ol>

@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  *   Manage Team Level roles for a client
  */
-    .controller('ClientTeamRoleAdminCtrl', ['$scope', 'ManageUserTeamRolesService', '$filter', 'focus',
-        function ($scope, ManageUserTeamRolesService, $filter, focus) {
+    .controller('ClientTeamRoleAdminCtrl', ['$scope', '$alert', 'ManageUserTeamRolesService', 'focus',
+        function ($scope, $alert, ManageUserTeamRolesService, focus) {
 
             ManageUserTeamRolesService.referenceData($scope.clientResource).then(function (referenceData) {
                 $scope.clientTeamReferenceData = referenceData;
@@ -83,6 +83,7 @@ angular.module('emmiManager')
                     .then(function () {
                         delete $scope.newClientTeamRole;
                         $scope.loadExisting();
+                        $scope.successAlert(clientTeamRoleEntity);
                     });
             };
 
@@ -169,6 +170,11 @@ angular.module('emmiManager')
                 ManageUserTeamRolesService.saveSelectedLibraries($scope.libraries, $scope.clientResource)
                     .then(function () {
                         $scope.loadExisting();
+                        angular.forEach($scope.libraries, function(role){
+                            if(role.checked && !role.disabled){
+                                $scope.successAlert(role.entity);
+                            }
+                        });
                     });
             };
 
@@ -188,6 +194,21 @@ angular.module('emmiManager')
                 ManageUserTeamRolesService.deselectAllLibraries($scope.libraries);
             });
 
+            /**
+             * Success alert to show when a team role is added.
+             */
+            $scope.successAlert = function(clientRole){
+                $alert({
+                    content: '<b>' + clientRole.name + '</b> has been added successfully.',
+                    container: '#messages-container',
+                    type: 'success',
+                    placement: 'top',
+                    show: true,
+                    duration: 5,
+                    dismissable: true
+                });
+            };
+            
             // start by loading the currently saved roles
             $scope.loadExisting();
         }
