@@ -1,22 +1,28 @@
-<form name="tagGroupLibraries" data-popover-toggle>
+<div class="popover popover-tag-library">
+    <div class="arrow gray"></div>
+    <h3 class="popover-title" ng-bind="title" ng-show="title"></h3>
+    <div class="popover-content">
+<form name="tagGroupLibraries" class="tag-library" data-popover-toggle>
     <div class="form-group">
         <div class="checkbox" data-ng-repeat="library in tagLibraries">
             <input type="checkbox" id="tagLibraryCb{{$index}}" value="" data-ng-model="library.checked" data-ng-disabled="library.disabled">&nbsp;&nbsp;
             <label for="tagLibraryCb{{$index}}"></label>
-            <span class="toggle-trigger">
-                <span data-ng-show="library.tags.length > 0"  class="caret"></span><span data-ng-class="{'text-muted': library.disabled}">{{ library.title }}</span>
+            <span class="toggle-trigger" data-ng-class="{'text-muted': library.disabled}">
+                <span data-ng-show="library.tags.length > 0"  class="icon-caret-right"></span><span>{{ library.title }}</span>
             </span>
             <div class="toggle-content">
-                <small class="text-muted">{{ library.tags | taglist }}</small>
+                <small>{{ library.tags | taglist }}</small>
             </div>
         </div>
     </div>
-    <hr/>
-    <div class="form-actions">
+    <div class="popover-footer">
         <button type="button" class="btn btn-default btn-xs btn-close" data-ng-click="$hide()">
             <span class="icon-delete"></span>
         </button>
-        <button type="button" class="btn btn-primary pull-right" data-ng-click="addLibraries();$hide()">Add</button>
-        <small class="info">You'll be able to edit tags after adding groups.</small>
+        <button type="button" class="btn btn-success pull-left" data-ng-click="addLibraries();$hide()">Add</button>
+        <div class="info"><small>You'll be able to edit tags after adding groups.</small></div>
     </div>
 </form>
+    </div>
+</div>
+

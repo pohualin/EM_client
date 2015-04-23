@@ -19,16 +19,18 @@
              </form>
          </div>
          <div class="col-md-3" data-ng-hide="noSearch">
-             <button type="button" class="btn btn-link pull-right" data-ng-click="createNewProvider()">
+             <br />
+             <button type="button" class="btn btn-default pull-right" data-ng-click="createNewProvider(searchForm)">
                  <i class="icon-plus"></i> add new provider
              </button>
              <span data-ng-class="{'search-spinner' : loading}"></span>
          </div>
      </div>
+     <br />
      <div data-ng-hide="noSearch">
-         <div class="row">
+         <div class="row table-search-filters">
              <div class="col-md-12">
-                 <div class="pull-right">
+                 <div class="pull-right table-results-count">
                      {{total}}
                      <span data-ng-show="total != 1" data-translate="global.labels.total"> results</span>
                      <span data-ng-show="total === 1"
@@ -37,20 +39,19 @@
                  <form class="form-inline">
                      <div class="form-group">
                          <label for="status_filter" data-translate="global.labels.statusFilter">Show:</label>&nbsp;&nbsp;
-                         <select class="form-control" id="status_filter" data-ng-model="status"
+                         <select class="form-control input-sm" style="width:110px;" id="status_filter" data-ng-model="status"
                                  data-ng-options="status | translate for status in statuses"
-                                 data-ng-change="statusChange()">
+                                 data-ng-change="statusChange()" data-chosen data-disable-search="true">
                          </select>
                      </div>
                  </form>
              </div>
          </div>
-         <br/>
-         <table class="table table-bordered table-striped table-hover" border="0" cellpadding="0" cellspacing="0" data-ng-show="searchedProvidersList">
+         <table class="table table-bordered table-striped table-hover table-condensed" border="0" cellpadding="0" cellspacing="0" data-ng-show="searchedProvidersList">
              <thead>
                  <tr>
-                     <th class="sort col-sm-1">&nbsp;</th>
-                     <th class="sort col-sm-2" data-ng-click="sort('lastName')">
+                     <th class="sort col-checkbox">&nbsp;</th>
+                     <th class="sort" data-ng-click="sort('lastName')">
                          Name
                          <span data-ng-show="sortProperty.property === 'lastName'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
                      </th>
@@ -62,28 +63,23 @@
                          Email
                          <span data-ng-show="sortProperty.property === 'email'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
                      </th >
-                     <th data-ng-show="allTeamLocations.length > 0" class="sort col-sm-3">Use Locations
+                     <th class="col-sm-3" data-ng-if="allTeamLocations.length > 0">Use Locations
                      </th>
                  </tr>
              </thead>
              <tbody>
                  <tr data-ng-repeat="teamProvider in searchedProvidersList"  data-ng-class="teamProvider.link.self ? 'text-muted' : ''">
-				 <td data-ng-hide="teamProvider.link.self">
-                         <div class="checkbox">
-                             <input type="checkbox" id="teamProviderSearchCb{{$index}}" data-ng-model="teamProvider.provider.entity.checked"  data-ng-change="onCheckboxChange(teamProvider.provider)">
-                             <label for="teamProviderSearchCb{{$index}}"></label>
-                         </div>
-				 </td>
-				 <td data-ng-show="teamProvider.link.self">
-                         <div class="checkbox">
-                             <input type="checkbox" id="teamProviderSearchOffCb{{$index}}" disabled="disabled" checked>
-                             <label for="teamProviderSearchOffCb{{$index}}"></label>
-                         </div>
-                 </td>
-				 <td>{{teamProvider.provider.entity.firstName}} {{teamProvider.provider.entity.middleName}} {{teamProvider.provider.entity.lastName}} <em>{{teamProvider.provider.entity.active ? '' : "(inactive)"}}</em></td>
+    				 <td class="col-checkbox">
+                             <div class="checkbox">
+                                 <input type="checkbox" id="teamProviderSearchCb{{$index}}" data-ng-model="teamProvider.provider.entity.checked"
+                                    data-ng-change="onCheckboxChange(teamProvider.provider)" data-ng-disabled="teamProvider.link.self" data-ng-checked="teamProvider.link.self">
+                                 <label for="teamProviderSearchCb{{$index}}"></label>
+                             </div>
+    				 </td>
+    				 <td>{{teamProvider.provider.entity.firstName}} {{teamProvider.provider.entity.middleName}} {{teamProvider.provider.entity.lastName}} <em>{{teamProvider.provider.entity.active ? '' : "(inactive)"}}</em></td>
                      <td>{{teamProvider.provider.entity.specialty.name}}</td>
                      <td>{{teamProvider.provider.entity.email}}</td>
-                 	<td data-ng-if="allTeamLocations.length > 0" >
+                     <td data-ng-if="allTeamLocations.length > 0" >
                          <div data-ng-show="teamProvider.provider.entity.showLocations">
                              <div data-ng-class="{'has-error col-md-11': teamProvider.provider.entity.selectedTeamLocations < 1 && associateRequestSubmitted}" data-multi-select
                                  name="allTeamLocations{{$index}}"
@@ -102,7 +98,7 @@
                        </div>
              		</td>
                  </tr>
-                 <tr class="no-hover">
+                 <tr class="pagination-row no-hover">
                      <td colspan="6" class="text-center" data-ng-show="links">
                          <ul class="pagination">
                              <li data-ng-repeat="link in links | orderBy:'order'" class="{{link.className}}" data-ng-class="{'active': link.name == currentPage}">
@@ -117,7 +113,7 @@
                  </tr>
              </tbody>
          </table>
-         <div data-ng-hide="searchedProvidersList">
+         <div class="table-no-results" data-ng-hide="searchedProvidersList">
              <span data-translate="global.messages.search.no_results_found"></span>
          </div>
      </div>

@@ -1,7 +1,7 @@
-        <div class="layout-card">
+        <div class="layout-card" data-ng-class="{'outlined':editMode}">
             <div class="row" data-ng-include="'admin-facing/partials/client/edit/metadata.html'"></div>
         </div>
-        <div class="layout-card">
+        <div class="layout-card" data-ng-class="{'outlined':tagsUpdated}">
             <div class="row" data-ng-include="'admin-facing/partials/client/tags/client_tags.html'"
                  data-ng-class="{'masked': metadataForm.clientName.$error.unique || editMode}">
             </div>
@@ -12,17 +12,4 @@
             <hr>
             <div class="row" data-ng-include="'admin-facing/partials/client/provider/current.html'"
                  data-ng-class="{'masked': metadataForm.clientName.$error.unique || editMode}"></div>
-        </div>
-        <div class="layout-card">
-            <div class="row">
-                <div class="col-md-6">
-                    <a data-ng-show="existingClientRoles.length > 0 || existingClientTeamRoles.length > 0" href="#/clients/{{client.id}}/users">Manage Users</a>
-                    <a data-ng-show="existingClientRoles.length === 0 && existingClientTeamRoles.length === 0" href="#/clients/{{client.id}}/roles">Manage Users</a>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <a href="#/clients/{{client.id}}/password_policy">Configurations</a>
-                </div>
-            </div>
         </div>

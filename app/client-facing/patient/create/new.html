@@ -3,8 +3,10 @@
         New Patient
     </h2>
     <form name="newPatientForm" class="form" novalidate unsaved-warning-form>
-        <div id="alerts-container" data-ng-show="newPatientForm.$invalid"></div>
-        <h2>Patient Information</h2>
+        <div id="alerts-container" data-ng-show="formSubmitted && newPatientForm.$invalid"></div>
+        <div class="row">
+            <div class="col-md-12" id="modal-messages-container"></div>
+        </div>
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group"
@@ -48,7 +50,7 @@
                         data-ng-options="gender | translate for gender in genders"
                         id="gender"
                         name="gender">
-                        <option value="">Select...</option>
+                        <option value="">Unknown</option>
                     </select>
             </div>
             <div class="col-md-4">

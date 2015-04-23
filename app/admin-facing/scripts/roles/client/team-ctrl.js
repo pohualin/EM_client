@@ -28,6 +28,7 @@ angular.module('emmiManager')
              * @param clientTeamRoleResource to be put in edit name mode
              */
             $scope.startEditName = function (clientTeamRoleResource) {
+                clientTeamRoleResource.activePanel = 0;
                 clientTeamRoleResource.editName = true;
                 focus('focus-' + clientTeamRoleResource.entity.id);
             };
@@ -48,7 +49,7 @@ angular.module('emmiManager')
              */
             $scope.hasAPermissionChecked = function (clientTeamRoleEntity) {
                 var ret = false;
-                var activePermissions = $filter('filter')(clientTeamRoleEntity.userClientTeamPermissions, {active: true}, true);
+                var activePermissions = ManageUserTeamRolesService.selectedPermissions(clientTeamRoleEntity.userClientTeamPermissions);
                 if (activePermissions && activePermissions.length > 0) {
                     ret = true;
                 }
@@ -190,5 +191,19 @@ angular.module('emmiManager')
             // start by loading the currently saved roles
             $scope.loadExisting();
         }
-    ])
-;
+    ]).config(['ivhTreeviewOptionsProvider', function (ivhTreeviewOptionsProvider) {
+        ivhTreeviewOptionsProvider.set({
+            idAttribute: 'name',
+            labelAttribute: 'displayName',
+            childrenAttribute: 'children',
+            selectedAttribute: 'selected',
+            useCheckboxes: true,
+            expandToDepth: 1,
+            indeterminateAttribute: '__ivhTreeviewIndeterminate',
+            defaultSelectedState: false,
+            validate: true,
+            twistieExpandedTpl: '',
+            twistieCollapsedTpl: '',
+            twistieLeafTpl: ''
+        });
+    }]);

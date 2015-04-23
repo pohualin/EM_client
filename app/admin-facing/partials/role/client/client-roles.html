@@ -1,69 +1,51 @@
 <div class="col-md-12" data-ng-controller="ClientRoleAdminCtrl">
-    <h3>Client Roles:</h3>
-
+    <h2>Client Roles</h2>
     <div class="row" data-ng-show="existingClientRoles" data-ng-repeat="role in existingClientRoles">
-        <div class="col-md-5">
+        <div class="col-md-6">
             <form name="existingRoleForm_{{$index}}" class="form" novalidate unsaved-warning-form>
                 <div class="panel-group" data-ng-model="role.activePanel"
                      data-ng-change="panelStateChange(role, existingRoleForm_{{$index}})" data-start-collapsed="true"
                      data-bs-collapse>
-                    <div class="panel panel-default">
+                    <div class="panel panel-secondary" data-ng-class="{ 'panel-open': role.activePanel === 0 }">
                         <div class="panel-heading">
-                            <div class="row panel-title" data-ng-hide="role.activePanel === 0">
-                                <button type="button" class="btn-link" data-bs-collapse-toggle>
+                            <h4 class="panel-title">
+                                <a data-bs-collapse-toggle data-ng-hide="role.editName" data-ng-dblclick="startEditName(role)">
                                     <span class="icon-caret-right"></span>
                                     {{ role.entity.name }}
-                                </button>
+                                </a>
                                 <div class="pull-right">
-                                    <button type="button" class="btn-link"
-                                            data-placement="top"
+                                    <button type="button" class="btn btn-icon btn-inherit"
+                                            data-placement="bottom"
+                                            data-container="body"
+                                            title="Are you sure?"
                                             data-content-template="admin-facing/partials/role/client/delete.tpl.html"
                                             data-auto-close="1"
                                             data-bs-popover>
-                                        <small>remove</small>
+                                        <i class="icon-trashcan"></i>
                                     </button>
                                 </div>
-                            </div>
-
-                            <div class="row panel-title" data-ng-show="role.activePanel === 0">
-                                <button type="button" class="btn-link" data-ng-hide="role.editName" data-sglclick="collapseButDontCancel(role)" data-ng-dblclick="startEditName(role)">
-                                    <span class="icon-caret-right rotate-90"></span>
-                                    {{ role.entity.name }}
-                                </button>
-                                <div class="col-md-9" data-ng-show="role.editName">
-                                    <input class="form-control" data-ng-model="role.entity.name"
+                                <div data-ng-show="role.editName" style="width:50%">
+                                    <input class="form-control input-sm" data-ng-model="role.entity.name"
                                            data-focus-on="focus-{{role.entity.id}}"
                                            maxlength="50"
                                            required>
                                 </div>
-                                <div class="pull-right">
-                                    <button type="button" class="btn-link"
-                                            data-placement="top"
-                                            data-content-template="admin-facing/partials/role/client/delete.tpl.html"
-                                            data-auto-close="1"
-                                            data-bs-popover>
-                                        <small>remove</small>
-                                    </button>
-                                </div>
-                            </div>
+                            </h4>
                         </div>
                         <div class="panel-collapse" data-bs-collapse-target>
                             <div class="panel-body">
-
                                 <div data-ivh-treeview="role.entity.userClientPermissions" class="ivh-treeview-container" id="clientRoleTV_{{role.entity.id}}"></div>
-
-                                <hr/>
-                                <div class="pull-right">
-                                    <button type="button" class="btn btn-link" data-ng-click="cancelExisting(role, existingRoleForm_{{$index}})"
-                                            data-bs-collapse-toggle>
-                                        cancel
-                                    </button>
-                                    <button class="btn btn-default" data-ng-click="update(role, existingRoleForm_{{$index}})"
-                                            data-bs-collapse-toggle
-                                            data-ng-show="existingRoleForm_{{$index}}.$valid && existingHasChanged(role) && hasAPermissionChecked(role.entity)">
-                                        Save Changes
-                                    </button>
-                                </div>
+                            </div>
+                            <div class="panel-footer">
+                                <button class="btn btn-success" data-ng-click="update(role, existingRoleForm_{{$index}})"
+                                        data-bs-collapse-toggle
+                                        data-ng-show="existingRoleForm_{{$index}}.$valid && existingHasChanged(role) && hasAPermissionChecked(role.entity)">
+                                    Save Changes
+                                </button>
+                                <button type="button" class="btn btn-cancel" data-ng-click="cancelExisting(role, existingRoleForm_{{$index}})"
+                                        data-bs-collapse-toggle>
+                                    cancel
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -72,29 +54,28 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-5">
+        <div class="col-md-6">
             <form name="newClientRoleForm" class="form"
                   novalidate unsaved-warning-form>
                 <div class="panel-group" data-ng-show="newClientRole">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
-                                <input class="form-control" data-ng-model="newClientRole.name"
+                                <input class="form-control input-sm" data-ng-model="newClientRole.name"
                                        data-focus-on="focus-new-role" maxlength="50" required>
                             </h4>
                         </div>
                         <div class="panel-collapse">
                             <div class="panel-body">
                                 <div data-ng-if="newClientRole.userClientPermissions" data-ivh-treeview="newClientRole.userClientPermissions" class="ivh-treeview-container" id="newClientRoleTV"></div>
-                                <hr/>
-                                <div class="pull-right">
-                                    <button type="button" class="btn btn-link" data-ng-click="cancelNew(newClientRoleForm)">cancel
-                                    </button>
-                                    <button class="btn btn-default" data-ng-click="saveNewRole(newClientRole, newClientRoleForm)"
-                                            data-ng-show="newClientRoleForm.$valid && hasAPermissionChecked(newClientRole)">
-                                        Save Role
-                                    </button>
-                                </div>
+                            </div>
+                            <div class="panel-footer">
+                                <button class="btn btn-success" data-ng-click="saveNewRole(newClientRole, newClientRoleForm)"
+                                        data-ng-show="newClientRoleForm.$valid && hasAPermissionChecked(newClientRole)">
+                                    Save Role
+                                </button>
+                                <button type="button" class="btn btn-cancel" data-ng-click="cancelNew(newClientRoleForm)">cancel
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -104,8 +85,9 @@
                         client role
                     </button>
                     <button class="btn btn-link btn-tag-library" type="button" title="Select roles to add:"
-                            data-placement="top" data-content-template="admin-facing/partials/role/client/role-library.html"
-                            data-trigger="click" data-bs-popover data-popover-dismiss>Add role from library
+                            data-placement="top" data-template="admin-facing/partials/role/client/role-library.html"
+                            data-trigger="click" data-bs-popover data-auto-close="1" data-popover-dismiss data-container="body">
+                            Add role from library
                     </button>
                 </div>
             </form>

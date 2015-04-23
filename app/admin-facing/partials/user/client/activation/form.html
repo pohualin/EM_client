@@ -15,21 +15,20 @@
                     <span data-ng-switch-when="true">Resend</span>
                     <span> User Setup Email</span>
                 </button>
-                <em data-ng-switch-when="true">
-                    <span class="icon-check-o-circle"></span>
-                    <small data-ng-show="!inThePast()">
-                        <span class="icon-check-circle green"></span>
-                        Email sent. Link will expire
+                <span data-ng-switch-when="true">
+                    <span data-ng-show="!inThePast()">
+                        <span class="icon-check-circle icon-size-xl green"></span>
+                        <em>Email sent. Link will expire
                         <span data-am-time-ago="selectedUserClient.entity.activationExpirationDateTime + 'Z'">
                             in time
                         </span>.
-                        (<a href data-ng-click="expireNow()">expire now</a>)
-                    </small>
-                    <small data-ng-hide="!inThePast()">
-                        <span class="icon-delete-circle red"></span>
-                        <span>User setup email has expired. User will not be able to log in.</span>
-                    </small>
-                </em>
+                        (<a href data-ng-click="expireNow()">expire now</a>)</em>
+                    </span>
+                    <span data-ng-hide="!inThePast()">
+                        <span class="icon-delete-circle icon-size-xl red"></span>
+                        <span><em>User setup email has expired. User will not be able to log in.</em></span>
+                    </span>
+                </span>
             </div>
             <div class="col-md-12"
                  data-ng-controller="UsersClientPasswordController">
@@ -39,47 +38,44 @@
                     <button class="btn btn-default" type="button" data-ng-click="passwordReset()">
                         <span>Resend Password Email</span>
                     </button>
-                    <em data-ng-switch-when="true">
-                        <span class="icon-check-o-circle"></span>
-                        <small data-ng-show="!inThePast()">
-                            <span class="icon-check-circle green"></span>
-                            Email sent. Link will expire
+                    <span data-ng-switch-when="true">
+                        <span data-ng-show="!inThePast()">
+                            <span class="icon-check-circle icon-size-xl green"></span>
+                            <em>Email sent. Link will expire
                             <span data-am-time-ago="selectedUserClient.entity.passwordResetExpirationDateTime + 'Z'">
                                 in time
                             </span>.
-                            (<a href data-ng-click="expireNow()">expire now</a>)
-                        </small>
-                        <small data-ng-hide="!inThePast()">
-                            <span class="icon-delete-circle red"></span>
-                            <span>Password reset email has expired. User can log in with existing password.</span>
-                        </small>
-                    </em>
+                            (<a href data-ng-click="expireNow()">expire now</a>)</em>
+                        </span>
+                        <span data-ng-hide="!inThePast()">
+                            <span class="icon-delete-circle icon-size-xl red"></span>
+                            <span><em>Password reset email has expired. User can log in with existing password.</em></span>
+                        </span>
+                    </span>
                 </div>
                 <div data-ng-hide="selectedUserClient.entity.email"
                      data-ng-switch="selectedUserClient.entity.passwordResetExpirationDateTime != null">
                     <button class="btn btn-default" type="button"
                             data-ng-disabled="passwordNotification"
                             data-ng-click="generatePassword($event)">
-                        <span data-ng-show="selectedUserClient.entity.neverLoggedIn">Show User Credentials</span>
-                        <span data-ng-hide="selectedUserClient.entity.neverLoggedIn">Reset Password</span>
+                        <span data-ng-if="selectedUserClient.entity.neverLoggedIn">Show User Credentials</span>
+                        <span data-ng-if="!selectedUserClient.entity.neverLoggedIn">Reset Password</span>
                     </button>
-                    &nbsp;
-                    <em data-ng-switch-when="true">
-                        <span class="icon-check-o-circle"></span>
-                        <small data-ng-show="!inThePast() && !passwordNotification">
-                            <span class="icon-check-circle green"></span>
-                            <span data-ng-show="selectedUserClient.entity.neverLoggedIn">Credentials expire</span>
+                    <span data-ng-switch-when="true">
+                        <span data-ng-show="!inThePast() && !passwordNotification">
+                            <span class="icon-check-circle icon-size-xl green"></span>
+                            <em><span data-ng-show="selectedUserClient.entity.neverLoggedIn">Credentials expire</span>
                             <span data-ng-hide="selectedUserClient.entity.neverLoggedIn">Reset password expires</span>
                             <span data-am-time-ago="selectedUserClient.entity.passwordResetExpirationDateTime + 'Z'">
                                 in time
                             </span>.
-                            (<a href data-ng-click="expireNow()">expire now</a>)
-                        </small>
-                        <small data-ng-hide="!inThePast()">
-                            <span class="icon-delete-circle red"></span>
-                            <span data-ng-hide="selectedUserClient.entity.neverLoggedIn">Reset password has expired. User will not be able to log in.</span>
-                            <span data-ng-show="selectedUserClient.entity.neverLoggedIn">Credentials have expired. User will not be able to log in.</span>
-                        </small>
+                            (<a href data-ng-click="expireNow()">expire now</a>)</em>
+                        </span>
+                        <span data-ng-hide="!inThePast()">
+                            <span class="icon-delete-circle icon-size-xl red"></span>
+                            <span data-ng-hide="selectedUserClient.entity.neverLoggedIn"><em>Reset password has expired. User will not be able to log in.</em></span>
+                            <span data-ng-show="selectedUserClient.entity.neverLoggedIn"><em>Credentials have expired. User will not be able to log in.</em></span>
+                        </span>
                     </em>
                 </div>
             </div>

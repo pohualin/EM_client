@@ -27,12 +27,13 @@ angular.module('emmiManager')
 
                             // pop a warning dialog
                             $popover(element, {
-                                title: '',
+                                title: 'Are you sure?',
                                 scope: scope,
                                 trigger: 'manual',
                                 autoClose: true,
                                 show: true,
                                 placement: scope.placement,
+                                container: 'body',
                                 contentTemplate: 'admin-facing/partials/user/client/deactivate_popover.tpl.html'
                             });
                         } else {

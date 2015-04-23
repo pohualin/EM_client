@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('emmiManager')
-    .config(function ($routeProvider, USER_ROLES) {
+    .config(function ($routeProvider, USER_ROLES, MENU) {
 
         var requiredResources = {
             'account': ['AuthSharedService', function (AuthSharedService) {
@@ -29,6 +29,7 @@ angular.module('emmiManager')
                 templateUrl: 'admin-facing/partials/team/team_new.html',
                 controller: 'ClientTeamCreateCtrl',
                 title: 'New Team',
+                activeMenu: MENU.setup,
                 access: {
                     authorizedRoles: USER_ROLES.all
                 },
@@ -40,6 +41,7 @@ angular.module('emmiManager')
                 templateUrl: 'admin-facing/partials/team/team_search.html',
                 controller: 'TeamSearchController',
                 title: 'Team Search',
+                activeMenu: MENU.setup,
                 resolve: requiredResources,
                 reloadOnSearch: false,
                 access: {

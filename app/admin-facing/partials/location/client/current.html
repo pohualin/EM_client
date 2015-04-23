@@ -1,38 +1,45 @@
 <div class="col-md-12" data-ng-controller="LocationClientController">
-	<h3>Clients</h3>
+	<h2>Clients</h2>
 	<table class="table table-bordered table-striped table-hover"
 		border="0" cellpadding="0" cellspacing="0"
-		data-ng-show="clientProviders">
+		data-ng-show="clientLocations">
+        <thead>
 		<tr>
 			<th>Name</th>
 			<th>Salesforce Account</th>
-			<th>Contract Owner</th>
+			<th class="col-sm-2">Contract Owner</th>
 			<th>Type</th>
 			<th>&nbsp;</th>
 		</tr>
-		<tr data-ng-repeat="clientProvider in clientProviders">
-			<td class="col-sm-4">{{clientProvider.client.entity.name}}</td>
-			<td>{{clientProvider.client.entity.salesForceAccount.name}}</td>
-			<td>{{clientProvider.client.entity.contractOwner.firstName}}
-				{{clientProvider.client.entity.contractOwner.lastName}}</td>
-			<td>{{clientProvider.client.entity.type.typeKey | translate}}</td>
+        </thead>
+        <tbody>
+		<tr data-ng-repeat="clientLocation in clientLocations">
+			<td class="col-sm-4">{{clientLocation.client.entity.name}}</td>
+			<td>{{clientLocation.client.entity.salesForceAccount.name}}</td>
+			<td>{{clientLocation.client.entity.contractOwner.firstName}}
+				{{clientLocation.client.entity.contractOwner.lastName}}</td>
+			<td>{{clientLocation.client.entity.type.typeKey | translate}}</td>
 			<td><a
-				href="#/clients/{{clientProvider.client.entity.id}}?{{currentRouteQueryString}}">view</a>
+				href="#/clients/{{clientLocation.client.entity.id}}?{{currentRouteQueryString}}">view</a>
 			</td>
 		</tr>
+        <tr class="pagination-row no-hover">
+            <td colspan="5" class="text-center" data-ng-show="links">
+                <ul class="pagination">
+                    <li data-ng-repeat="link in links | orderBy:'order'"
+                        class="{{link.className}}" data-ng-class="{'active': link.name == currentPage}">
+                            <a data-ng-click="fetchPage(link.href)">
+                                <i class="fa-angle-left" data-ng-if="link.className === 'previous'"></i>
+                                {{link.name}}
+                                <i class="fa-angle-right" data-ng-if="link.className === 'next'"></i>
+                            </a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        </tbody>
 	</table>
-	<div data-ng-hide="clientProviders">
+	<div class="table-no-results" data-ng-hide="clientLocations">
 		<span>This location is not associated to any clients.</span>
-	</div>
-	<div class="row" data-ng-show="clientProviders">
-		<div data-ng-show="links" class="col-md-8 col-sm-8">
-			<ul class="pagination">
-				<li data-ng-repeat="link in links | orderBy:'order'"
-					data-ng-class="{'active': link.name == currentPage}"><a
-					data-ng-show="link.name != currentPage" href
-					data-ng-click="fetchPage(link.href)">{{link.name}}</a> <span
-					data-ng-hide="link.name != currentPage">{{link.name}}</span></li>
-			</ul>
-		</div>
 	</div>
 </div>

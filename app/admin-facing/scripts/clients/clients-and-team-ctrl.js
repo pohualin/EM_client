@@ -37,11 +37,17 @@ angular.module('emmiManager')
                 $scope.currentRouteQueryString = $rootScope.currentRouteQueryString.replace(/(&team=)\w+/, '');
             }
 
+            $scope.flagTagChanges = function (value) {
+                $scope.tagsUpdated = value;
+            };
+
             // Listen for changes to the Route. When the route
             // changes, load the relative controller
             $scope.$on(
                 '$routeUpdate',
                 function (event, $next) {
+                    $scope.editMode = false;
+                    $scope.killAllToolTips(); // automatically closed when route changes.. but isn't changing here
                     if ($routeParams.team) {
                         // Make sure the team hasn't changed so it doesn't 'reload'
                         if ($routeParams.team !== $scope.currentTeam) {
@@ -52,6 +58,7 @@ angular.module('emmiManager')
                         }
                     } else {
                         $scope.showTeam = 'no';
+                        $scope.currentTeam = null;
                         // Reset page title
                         $scope.page.setTitle('Client ' + clientResource.entity.id + ' - ' + clientResource.entity.name);
                         // Reset team scope variables

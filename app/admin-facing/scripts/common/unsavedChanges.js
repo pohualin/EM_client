@@ -234,6 +234,7 @@ angular.module('unsavedChanges', ['resettable'])
                     $modal({
                         show: true,
                         scope: event.currentScope,
+                        title: 'Are you sure?',
                         content: 'If you leave this page, any unsaved changes will be lost.',
                         template: 'admin-facing/partials/common/cancel.tpl.html',
                         animation: 'none',

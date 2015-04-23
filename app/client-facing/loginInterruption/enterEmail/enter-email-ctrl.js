@@ -13,13 +13,13 @@ angular.module('emmiManager')
                 $scope.enterEmailForm.addEmail.$setValidity('duplicate', true);
                 if (isValid) {
                     //check if email is already in use and save email
-                    NewEmailService.saveEmail($scope.account).then(function () {
+                    NewEmailService.saveEmail($scope.userClientReqdResource).then(function () {
                         //send validation email
-                        ValidationService.sendValidationEmail($scope.account).then(function () {
+                        ValidationService.sendValidationEmail($scope.userClientReqdResource).then(function () {
                             $location.path($scope.locationBeforeLogin).replace();
 
                             $alert({
-                                content: 'Please check your email. A link has been sent to <strong>' + $scope.account.email +
+                                content: 'Please check your email. A link has been sent to <strong>' + $scope.userClientReqdResource.email +
                                     '</strong> to finish setting up your account.',
                                 type: 'success',
                                 placement: 'top',
@@ -80,7 +80,7 @@ angular.module('emmiManager')
              * functionality if user clicks not now
              */
             $scope.notNow = function () {
-                NewEmailService.notNow($scope.account);
+                NewEmailService.notNow($scope.userClientReqdResource);
                 $location.path($scope.locationBeforeLogin).replace();
             };
         }]);

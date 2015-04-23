@@ -75,6 +75,7 @@
     }
 
     h2, .h2 {
+        margin-bottom: 15px;
     }
 
     h3, .h3 {
@@ -138,6 +139,19 @@
         }
     }
 
+    .table-condensed {
+        /*> thead > tr > th {
+            padding: $table-condensed-cell-padding;
+        }*/
+        tr > td {
+            @include remIt(font-size, 15);
+        }
+        tr.pagination-row > td {
+            padding: 5px 0 0;
+        }
+    }
+
+    table tr.no-hover,
     table tr.no-hover:hover {
         background-color: $table-bg;
     }
@@ -338,6 +352,10 @@
     }
     .form-group {
         margin-bottom: 22px;
+        .checkbox:first-child,
+        .radio:first-child {
+            margin-top: 0;
+        }
     }
     .form-control:focus {
         box-shadow: none !important;
@@ -524,6 +542,11 @@
         margin: 0 0 12px;
         padding: 28px 28px 30px;
         @include clearfix;
+        border: 1px solid transparent;
+        transition: border-color 0.25s ease-in-out;
+        &.outlined {
+            border: 1px solid $brand-secondary;
+        }
     }
 
     .app-content-with-sidebar {

@@ -13,6 +13,10 @@ angular.module('emmiManager')
 
         $scope.title = 'New Location';
 
+        if($scope.locationQuery){
+            $scope.location.name = $scope.locationQuery;
+        }
+        
         $scope.newLocation = true;
 
         $scope.saveAndAddAnother = function (isValid) {

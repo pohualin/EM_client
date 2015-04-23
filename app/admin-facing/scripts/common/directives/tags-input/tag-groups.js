@@ -182,7 +182,7 @@ angular.module('emmiManager')
                             blankIndices.push(i);
                             $scope.groups[i].isValid = false;
                             $scope.groups[i].invalidDueToBlankTitle = true;
-                            $scope.groups[i].isValidMessage = 'Group titles cannot be blank.';
+                            $scope.groups[i].isValidMessage = 'Group titles cannot be blank';
                         } else {
                             $scope.groups[i].isValid = true;
                             delete $scope.groups[i].isValidMessage;
@@ -242,7 +242,7 @@ angular.module('emmiManager')
 
     .directive('tagGroupsItem', function($timeout) {
         return {
-            link: function(scope) {
+            link: function(scope, element) {
 
                 // when number of tags within a group changes
                 scope.$watchCollection('groups[$index].tags', function(newVal, oldVal) {
@@ -252,6 +252,23 @@ angular.module('emmiManager')
                             scope.formField.$setValidity('empty', !scope.hasEmpties()); // shared scope with parent controller (scope.$parent)
                         });
                     }
+                });
+
+                // Custom positioning of dropdown menu when opening
+                element.on('show.bs.dropdown', function () {
+                    var tagGroupContainer = element.parent();
+                    var tagGroupDropdown = element.find('.dropdown-menu');
+                    var paddingOffset = tagGroupContainer.innerWidth() - tagGroupContainer.width();
+                    tagGroupDropdown.css({
+                        width: tagGroupContainer.width(),
+                        left: (element.position().left*-1)+(paddingOffset/2)
+                    });
+                    var positionRelativeSizing = tagGroupContainer.height() + tagGroupDropdown.outerHeight();
+                    tagGroupContainer.height(positionRelativeSizing);
+                });
+                element.on('hide.bs.dropdown', function () {
+                    var tagGroupContainer = element.parent();
+                    tagGroupContainer.height('auto');
                 });
 
             }

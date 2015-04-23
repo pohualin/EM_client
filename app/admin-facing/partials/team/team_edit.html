@@ -31,11 +31,3 @@
     <div class="row" data-ng-include="'admin-facing/partials/team/provider/team_current.html'"
          data-ng-class="{'masked': teamForm.teamName.$error.unique || editMode}"></div>
 </div>
-<div class="layout-card">
-    <a target="schedule_program" href="{{clientBaseUrl}}#/impersonate/{{client.id}}/teams/{{team.id}}/schedule">
-        Schedule Program
-    </a><br/>
-    <a target="create_patient" href="{{clientBaseUrl}}#/impersonate/{{client.id}}/patients">
-        Create Patient
-    </a>
-</div>

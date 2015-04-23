@@ -98,9 +98,9 @@
 }
 
 .green {
-    color: green;
+    color: $state-success-text;
 }
 
 .red {
-    color: #d91a21;
+    color: $state-danger-text;
 }

@@ -19,6 +19,14 @@ angular.module('emmiManager')
             $scope.saveAndAddAnother = function (isValid) {
                 $scope.saveProvider(isValid, true);
             };
+            
+            if($scope.providerQuery){
+                var strings = $scope.providerQuery.split(',');
+                if(strings.length > 1){
+                    $scope.clientProvider.provider.entity.firstName = strings[1].trim();
+                }
+                $scope.clientProvider.provider.entity.lastName = strings[0].trim();
+            }
 
             $scope.saveProvider = function (isValid, addAnother) {
                 $scope.providerFormSubmitted = true;
@@ -68,5 +76,6 @@ angular.module('emmiManager')
                     }
                 }
             };
+            
         }])
 ;

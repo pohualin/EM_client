@@ -2,13 +2,11 @@
     <div class="arrow"></div>
     <div class="popover-content">
         Valid email endings for this client:
-        <small>
-            <table border="0" cellpadding="0" cellspacing="0">
-                <tr data-ng-repeat="validEmailEnding in saveError.validEmailEndings">
-                    <td>@{{validEmailEnding}}</td>
-                </tr>
-            </table>
-        </small>
+        <ul>
+            <li data-ng-repeat="validEmailEnding in saveError.validEmailEndings">
+                <small>@{{validEmailEnding}}</small>
+            </li>
+        </ul>
     </div>
 </div>
 
