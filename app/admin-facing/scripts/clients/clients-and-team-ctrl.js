@@ -34,7 +34,7 @@ angular.module('emmiManager')
             if ($routeParams.team) {
                 setupTeam();
                 // If the team is included in the $routeParams, filter it out so that subsequent routing on the page doesn't get messed up
-                $scope.currentRouteQueryString = $rootScope.currentRouteQueryString.replace(/(&team=)\w+/, '');
+                $scope.currentRouteQueryString = $scope.currentRouteQueryString.replace(/(team=)\w+/, '');
             }
 
             $scope.flagTagChanges = function (value) {
@@ -54,7 +54,7 @@ angular.module('emmiManager')
                             $scope.showTeam = 'loading';
                             setupTeam();
                             // If the team is included in the $routeParams, filter it out so that subsequent routing on the page doesn't get messed up
-                            $scope.currentRouteQueryString = $rootScope.currentRouteQueryString.replace(/(&team=)\w+/, '');
+                            $scope.currentRouteQueryString = $scope.currentRouteQueryString.replace(/(team=)\w+/, '');
                         }
                     } else {
                         $scope.showTeam = 'no';
