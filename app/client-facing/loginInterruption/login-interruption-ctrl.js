@@ -6,10 +6,6 @@ angular.module('emmiManager')
             $scope.account = account;
             $scope.userClientReqdResource = userClientReqdResource;
             $scope.locationBeforeLogin = locationBeforeLogin;
-
-            ValidationService.get($scope.userClientReqdResource).then(function (accountWithOriginalEmail) {
-                $scope.account.originalUserClientEmail = accountWithOriginalEmail.originalUserClientEmail;
-            });
         }])
 ;
 
