@@ -106,7 +106,7 @@
                 </div><!-- searchPerformed -->
             </div><!-- .modal-body -->
             <div class="modal-footer">
-                <button type="submit" id="submit" class="btn btn-success" data-ng-hide="isEmpty(selectedTeamRoles)" data-add-team-roles-warning>Save</button>
+                <button type="submit" id="submit" class="btn btn-success" data-ng-if="!isEmpty(selectedTeamRoles)" data-add-team-roles-warning>Save</button>
                 <button type="button" class="btn btn-cancel" data-ng-click="cancel()">cancel</button>
             </div>
         </div><!-- .modal-content -->

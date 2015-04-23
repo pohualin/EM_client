@@ -201,6 +201,10 @@
         @include button-size($padding-base-vertical, $padding-base-vertical*2, $font-size-base, $line-height-base, $border-radius-base);
         text-transform: uppercase;
         box-shadow: 2px 2px 0px 0px rgba(110,124,136,0.25);
+        // Icons inside of buttons
+        [class^="icon-"], [class*=" icon-"] {
+            vertical-align: text-top;
+        }
     }
 
     .btn-default,
@@ -286,6 +290,9 @@
         .open > &.dropdown-toggle {
             color: #21A4C7;
         }
+        [class^="icon-"], [class*=" icon-"] {
+            vertical-align: baseline;
+        }
     }
 
     .btn-link {
@@ -301,6 +308,8 @@
 
     .btn-cancel {
         @extend .btn-link;
+        padding-left: 20px;
+        padding-right: 20px;
         color: #BBC5CF;
         &:hover,
         &:focus {
@@ -333,7 +342,7 @@
             margin-bottom: 5px;
         }
         .btn + .btn {
-            margin-left: 5px;
+            margin-left: 12px;
             margin-bottom: 0;
         }
         .btn-link + .btn,
