@@ -16,6 +16,12 @@ label.empty {
     color: #999;
 }
 
+// utility class to make sure long table column content wraps to another line instead of breaking the table
+.col-wrap {
+    word-break: break-word;
+    hyphens: auto;
+}
+
 .col-edit {
     width: 80px;
     a {

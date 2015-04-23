@@ -1,12 +1,12 @@
 <div class="app-header with-breadcrumbs" data-emmi-navbar>
     <!-- Secondary menu for transclusion -->
     <ul class="secondary-nav">
-        <li><a href="#/clients/{{client.id}}/password_policy">Client Configurations</a></li>
-        <li><a href="#/clients/{{client.id}}/roles">Manage Roles</a></li>
+        <li><a href="#/clients/{{client.entity.id}}/password_policy">Client Configurations</a></li>
+        <li><a href="#/clients/{{client.entity.id}}/roles">Manage Roles</a></li>
     </ul>
     <!-- Breadcrumb for transclusion -->
     <ol class="breadcrumb">
-        <li><a href="#/">Emmi Manager</a></li>
+        <li><a href="#/clients">Search</a></li>
         <li><a href="#/clients/{{client.entity.id}}">{{client.entity.name}}</a></li>
         <li class="active">Manage Users</li>
     </ol>
@@ -117,7 +117,7 @@
                    border="0" cellpadding="0" cellspacing="0" data-ng-show="usersClient">
                 <thead>
                 <tr>
-                    <th class="sort col-sm-3" data-ng-click="sort('lastName')">Last Name
+                    <th class="sort col-sm-2" data-ng-click="sort('lastName')">Last Name
 						<span data-ng-show="sortProperty.property === 'lastName'"><span
                             class="sort-icon"
                             data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
@@ -127,17 +127,17 @@
                             class="sort-icon"
                             data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
                     </th>
-                    <th class="sort col-sm-3" data-ng-click="sort('login')">User ID
+                    <th class="sort" data-ng-click="sort('login')">User ID
 						<span data-ng-show="sortProperty.property === 'login'"><span
                             class="sort-icon"
                             data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
                     </th>
-                    <th class="sort col-sm-3" data-ng-click="sort('email')">Email
+                    <th class="sort" data-ng-click="sort('email')">Email
 						<span data-ng-show="sortProperty.property === 'email'"><span
                             class="sort-icon"
                             data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
                     </th>
-                    <th class="col-sm-1">&nbsp;</th>
+                    <th class="col-edit">&nbsp;</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -145,8 +145,8 @@
                     data-ng-repeat="userClient in usersClient">
                     <td>{{userClient.entity.lastName}}</td>
                     <td>{{userClient.entity.firstName}}</td>
-                    <td>{{userClient.entity.login}}</td>
-                    <td>{{userClient.entity.email}}</td>
+                    <td><span class="col-wrap">{{userClient.entity.login}}</span></td>
+                    <td><span class="col-wrap">{{userClient.entity.email}}</span></td>
                     <td class="text-right">
                         <a class="btn-link" data-ng-hide="userClient.deactivationPopoverOpen"
                                href="#/clients/{{client.entity.id}}/users/{{userClient.entity.id}}?{{currentRouteQueryString}}"><i class="icon-compose icon-size-xl"></i></a>

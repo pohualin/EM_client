@@ -3,11 +3,8 @@
     <ul class="secondary-nav" data-ng-if="!team.id">
         <li><a href="#/clients/{{client.id}}/password_policy">Client Configurations</a></li>
         <li>
-            <a data-ng-if="existingClientRoles.length > 0 || existingClientTeamRoles.length > 0"
-               href="#/clients/{{client.id}}/users">Manage Users</a>
-            <a data-ng-if="existingClientRoles.length === 0 && existingClientTeamRoles.length === 0"
-               data-ng-class="{'disabled':(existingClientRoles.length === 0 && existingClientTeamRoles.length === 0)}"
-               data-bs-tooltip data-type="info" data-title="Set up user roles before adding users">Manage Users</a>
+            <a data-ng-if="existingClientRoles.length > 0 || existingClientTeamRoles.length > 0" href="#/clients/{{client.id}}/users">Manage Users</a>
+            <a data-ng-if="existingClientRoles.length === 0 && existingClientTeamRoles.length === 0" data-ng-class="{'disabled':(existingClientRoles.length === 0 && existingClientTeamRoles.length === 0)}" data-bs-tooltip data-type="info" data-title="Set up user roles before adding users">Manage Users</a>
         </li>
         <li><a href="#/clients/{{client.id}}/roles">Manage Roles</a></li>
     </ul>
@@ -17,6 +14,9 @@
     </ul>
     <!-- Breadcrumb for transclusion -->
     <ol class="breadcrumb">
+        <li><a href="#/clients?{{currentRouteQueryString}}">Search</a></li>
+        <li data-ng-class="{'active': !team.id}"><a data-ng-href="#/clients/{{client.id}}?{{currentRouteQueryString}}">{{client.name}}</a></li>
+        <li data-ng-if="team.id" class="active">{{team.name}}</li>
         <li><a href="#/">Emmi Manager</a></li>
         <li data-ng-class="{'active': !team.id}">
             <a data-ng-href="#/clients/{{client.id}}?{{currentRouteQueryString}}">

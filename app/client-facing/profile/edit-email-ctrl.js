@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('emmiManager')
-	.controller('ProfileEditEmailCtrl', ['$scope', '$controller', '$modal', 'focus', 'ProfileService', 'ValidationService',
-        function($scope, $controller, $modal, $focus, ProfileService, ValidationService){
+	.controller('ProfileEditEmailCtrl', ['$scope', '$controller', '$modal', 'focus', 'ProfileService', 'ValidationService', 'ProfileEmailRestrictConfigurationsService', 
+        function($scope, $controller, $modal, $focus, ProfileService, ValidationService, ProfileEmailRestrictConfigurationsService){
 
-    /**
+   	/**
      * Called when save is clicked on editEmailForm
      * 
      */
@@ -25,7 +25,7 @@ angular.module('emmiManager')
                     });
                 }
             }, function error(err) {
-                $scope.handleSaveError(err, editEmailForm);
+            	$scope.handleSaveError(err, editEmailForm);
             });
         }
     };
@@ -35,8 +35,8 @@ angular.module('emmiManager')
      * 
      */
     $scope.handleSaveError = function (error, form) {
-        if (error.status === 406 && error.data && error.data.conflicts) {
-            var totalErrorCount = error.data.conflicts.length;
+    	if (error.status === 406 && error.data && error.data.conflicts) {
+        	var totalErrorCount = error.data.conflicts.length;
             angular.forEach(error.data.conflicts, function (conflict) {
                 if ('LOGIN' === conflict.reason) {
                     // login conflict
@@ -54,10 +54,16 @@ angular.module('emmiManager')
                 }
             });
             if (totalErrorCount > 0) {
-                // $scope.formValidationError();
+            	//$scope.formValidationError();
             }
         }
-    };
+    	else if (error.status === 406 && error.data.validationError.reason === 'EMAIL_RESTRICTION') {
+    		  $scope.emailHeading = $scope.validEmailEnding.length === 1 ? 'Only the following type of email address may be used:'
+    	  			  											: 'Only the following types of email addresses may be used:';
+              error.data.validationError.validEmailEndings = $scope.validEmailEnding;
+              $scope.emailError = error.data.validationError;
+        }
+      };
     
     /**
      * When the 'use email' box is changed set the focus when unchecked.
@@ -75,8 +81,11 @@ angular.module('emmiManager')
      *  Reset validity whenever user change any value in email or login field
      */
     $scope.resetValidity = function(){
-        $scope.editEmailForm.email.$setValidity('unique', true);
+    	$scope.editEmailForm.email.$setValidity('unique', true);
         $scope.editEmailForm.login.$setValidity('unique', true);
+        $scope.editEmailForm.email.$setValidity('pattern', true);
+        $scope.editEmailFormSubmitted = false;
+        $scope.hideErrorAlert();
     };
     
     /**
@@ -121,11 +130,28 @@ angular.module('emmiManager')
         });
     };
 
+    /**
+     * Handle clicked Cancel from the edit email page
+     */
     $scope.resetEditEmailForm = function () {
+    	$scope.editEmailFormSubmitted = false;
+    	ProfileService.get($scope.userClient).then(function(response){
+            angular.extend($scope.userClient, response);
         $scope.setEmailEditMode(false);
         $scope.passwordIsValidated = false;
-        $scope.editEmailFormSubmitted = false;
+        $scope.emailError = '';
         $scope.hideErrorAlert();
+    	});
     };
+    
+    /**
+     * Retrieve valid email ending for the client
+     */
+    function getValidEmailEnding() {
+    	ProfileEmailRestrictConfigurationsService.allValidEmailEndings().then(function(response){
+    		$scope.validEmailEnding = response;
+    	});
+     }
+    getValidEmailEnding();
 }])
 ;
