@@ -44,37 +44,43 @@
             <div class="container">
                 <ul class="section-nav-items">
                     <li class="section-nav-item">
-                        <a href="#" class="section-nav-link" data-ng-class="{ 'active': activeMenu === 'MENU_SETUP'}">
+                        <a data-ng-href="{{activeMenu === 'MENU_SETUP' ? '' : '#/'}}"
+                           class="section-nav-link" data-ng-class="{ 'active': activeMenu === 'MENU_SETUP'}">
                             <i class="icon-wrench"></i>
                             Setup
                         </a>
                     </li>
                     <li class="section-nav-item">
-                        <a href="#" class="section-nav-link" data-ng-class="{ 'active': activeMenu === 'MENU_SUPPORT'}">
+                        <a data-ng-href="{{activeMenu === 'MENU_SUPPORT' ? '' : ''}}"
+                           class="section-nav-link" data-ng-class="{ 'active': activeMenu === 'MENU_SUPPORT'}">
                             <i class="icon-user"></i>
                             Support
                         </a>
                     </li>
                     <li class="section-nav-item">
-                        <a href="#" class="section-nav-link" data-ng-class="{ 'active': activeMenu === 'MENU_REPORTS'}">
+                        <a data-ng-href="{{activeMenu === 'MENU_REPORTS' ? '' : ''}}"
+                           class="section-nav-link" data-ng-class="{ 'active': activeMenu === 'MENU_REPORTS'}">
                             <i class="icon-bar-chart"></i>
                             Reports
                         </a>
                     </li>
                     <li class="section-nav-item">
-                        <a href="#" class="section-nav-link" data-ng-class="{ 'active': activeMenu === 'MENU_MESSAGES'}">
+                        <a data-ng-href="{{activeMenu === 'MENU_MESSAGES' ? '' : ''}}"
+                           class="section-nav-link" data-ng-class="{ 'active': activeMenu === 'MENU_MESSAGES'}">
                             <i class="icon-text"></i>
                             Messages
                         </a>
                     </li>
                     <li class="section-nav-item">
-                        <a href="#" class="section-nav-link" data-ng-class="{ 'active': activeMenu === 'MENU_HELP'}">
+                        <a data-ng-href="{{activeMenu === 'MENU_HELP' ? '' : ''}}"
+                           class="section-nav-link" data-ng-class="{ 'active': activeMenu === 'MENU_HELP'}">
                             <i class="icon-info-circle"></i>
                             Help
                         </a>
                     </li>
                     <li class="section-nav-item dropdown" data-ng-show="isAuthorized([userRoles.god, userRoles.admin])">
-                        <a href class="section-nav-link dropdown-toggle" data-toggle="dropdown" data-ng-class="{ 'active': activeMenu === 'MENU_SETTINGS'}">
+                        <a href class="section-nav-link dropdown-toggle" data-toggle="dropdown"
+                           data-ng-class="{ 'active': activeMenu === 'MENU_SETTINGS'}">
                             <i class="icon-settings"></i>
                             Settings
                         </a>
