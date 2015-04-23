@@ -1,6 +1,4 @@
-<form>
 	<div>The following tags will be removed:</div>
-    <br>
     <table border="0" cellpadding="1px" cellspacing="0">
         <tr class='conflictingTeamRow'
             data-ng-repeat="teamTag in conflictingTeamTags">
@@ -10,7 +8,6 @@
             <td data-ng-if="teamTag.numberOfTeams > 1 " class="col-md-6">{{teamTag.numberOfTeams}} teams</td>
         </tr>
     </table>
-    <br>
     <div class="popover-footer">
         <button class="btn btn-success" data-ng-click="overrideConflictingTeamTags(clientForm.$valid)"
                 data-translate="">Yes
@@ -19,5 +16,3 @@
                 data-translate="">Cancel
         </button>
     </div>
-
-</form>
