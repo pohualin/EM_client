@@ -131,6 +131,7 @@ angular.module('emmiManager')
                                         title: title,
                                         scope: scope,
                                         show: true,
+                                        autoClose: true,
                                         trigger: 'manual',
                                         placement: placement,
                                         container: 'body',
