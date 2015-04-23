@@ -6,24 +6,15 @@
             </div>
         </div>
 		<div class="row">
-			<div class="col-md-6 pull-left">
-				<h3>Location Information</h3>
-			</div>
-			<div class="col-md-6" data-ng-show="showCancelSave()">
-				<div class="pull-right">
-					<h3></h3>
-					<a class="btn btn-link" data-ng-click="cancel(locationForm)">cancel</a> |
-					<a class="btn btn-link" type="button" data-ng-click="saveLocation(locationForm)"><span>save</span>
-					</a>
-				</div>
+			<div class="col-md-12">
+				<h1>Location Information</h1>
 			</div>
 		</div>
 		<div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="form-group"
                      data-ng-class="{ 'has-error' : locationForm.locationName.$invalid && locationFormSubmitted }">
-                    <label class="control-label" for="locationName">Name:</label>
-
+                    <label class="control-label" for="locationName">Name</label>
                     <div class="error-circle fa-exclamation-circle"
                          data-ng-show="locationForm.locationName.$error.required && locationFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
@@ -37,18 +28,13 @@
                            data-ng-pattern="/^[\-\.a-zA-Z0-9 '=_;:@#&,\(\)!]*$/">
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="form-group"
                      data-ng-class="{ 'has-error' : locationForm.phone.$invalid && locationFormSubmitted }">
-                    <label class="control-label" for="phone">Phone:</label>
+                    <label class="control-label" for="phone">Phone</label>
+                    <span class="field-note field-optional">optional</span>
                     <div class="error-circle fa-exclamation-circle"
-                         data-ng-show="locationForm.phone.$error.required && locationFormSubmitted"
-                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                         data-title="Required"></div>
-                    <div class="error-circle fa-exclamation-circle"
-                         data-ng-show="!locationForm.phone.$error.required && locationForm.phone.$error.pattern && locationFormSubmitted"
+                         data-ng-show="locationForm.phone.$error.pattern && locationFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Please enter a valid phone number."></div>
                     <input class="form-control" data-ng-model="locationToEdit.entity.phone" id="phone" name="phone" type="text"
@@ -58,15 +44,11 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="form-group"
                      data-ng-class="{ 'has-error' : locationForm.city.$invalid && locationFormSubmitted }">
-                    <label class="control-label" for="city">City:</label>
-
-                    <div class="error-circle fa-exclamation-circle"
-                         data-ng-show="locationForm.city.$error.required && locationFormSubmitted"
-                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                         data-title="Required"></div>
+                    <label class="control-label" for="city">City</label>
+                    <span class="field-note field-optional">optional</span>
                     <div class="error-circle fa-exclamation-circle"
                          data-ng-show="locationForm.city.$error.pattern && locationFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
@@ -75,31 +57,16 @@
                            maxlength="255" data-ng-pattern="/^[\-\.a-zA-Z0-9 '=_;:@#&,\(\)!]*$/">
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="form-group"
                      data-ng-class="{ 'has-error' : locationForm.state.$invalid && locationFormSubmitted }">
-                    <label class="control-label" for="state">State:</label>
-
-                    <div class="error-circle fa-exclamation-circle" data-ng-show="locationForm.state.$invalid && locationFormSubmitted"
-                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                         data-title="Required"></div>
+                    <label class="control-label" for="state">State</label>
+                    <span class="field-note field-optional">optional</span>
                     <select class="form-control" id="state" data-ng-model="locationToEdit.entity.state"
-                            data-ng-options="state for state in states" name="state">
+                            data-ng-options="state for state in states" name="state"
+                            data-chosen data-disable-search="true" data-placeholder="Select...">
                         <option value="">Select...</option>
                     </select>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label class="control-label" for="belongsTo">Belongs To:</label>
-                    <div>
-                    	<span data-ng-show="locationToEdit.entity.belongsTo"> {{locationToEdit.entity.belongsTo.name}}</span>
-            			<span data-ng-show="!locationToEdit.entity.belongsTo"> <span data-translate="client_edit_page.locations.no_client_owner"></span></span>
-                    </div>
                 </div>
             </div>
         </div>
@@ -110,6 +77,16 @@
                         <input type="checkbox" id="locationActiveCheckbox"
                                data-ng-model="locationToEdit.entity.active">
                         <label for="locationActiveCheckbox">Active</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" data-ng-if="showCancelSave()">
+            <div class="col-md-12">
+                <div class="form-actions">
+                    <div class="form-group">
+                        <button class="btn btn-success" type="button" data-ng-click="saveLocation(locationForm)"><span>save</span></button>
+                        <a class="btn btn-cancel" data-ng-click="cancel(locationForm)">cancel</a>
                     </div>
                 </div>
             </div>

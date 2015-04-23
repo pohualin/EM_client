@@ -44,40 +44,55 @@
             <div class="container">
                 <ul class="section-nav-items">
                     <li class="section-nav-item">
-                        <a href="#" class="section-nav-link">
+                        <a data-ng-href="{{activeMenu === 'MENU_SETUP' ? '' : '#/'}}"
+                           class="section-nav-link" data-ng-class="{ 'active': activeMenu === 'MENU_SETUP'}">
                             <i class="icon-wrench"></i>
                             Setup
                         </a>
                     </li>
                     <li class="section-nav-item">
-                        <a href="#" class="section-nav-link">
+                        <a data-ng-href="{{activeMenu === 'MENU_SUPPORT' ? '' : ''}}"
+                           class="section-nav-link" data-ng-class="{ 'active': activeMenu === 'MENU_SUPPORT'}">
                             <i class="icon-user"></i>
                             Support
                         </a>
                     </li>
                     <li class="section-nav-item">
-                        <a href="#" class="section-nav-link">
+                        <a data-ng-href="{{activeMenu === 'MENU_REPORTS' ? '' : ''}}"
+                           class="section-nav-link" data-ng-class="{ 'active': activeMenu === 'MENU_REPORTS'}">
                             <i class="icon-bar-chart"></i>
                             Reports
                         </a>
                     </li>
                     <li class="section-nav-item">
-                        <a href="#" class="section-nav-link">
+                        <a data-ng-href="{{activeMenu === 'MENU_MESSAGES' ? '' : ''}}"
+                           class="section-nav-link" data-ng-class="{ 'active': activeMenu === 'MENU_MESSAGES'}">
                             <i class="icon-text"></i>
                             Messages
                         </a>
                     </li>
                     <li class="section-nav-item">
-                        <a href="#" class="section-nav-link">
+                        <a data-ng-href="{{activeMenu === 'MENU_HELP' ? '' : ''}}"
+                           class="section-nav-link" data-ng-class="{ 'active': activeMenu === 'MENU_HELP'}">
                             <i class="icon-info-circle"></i>
                             Help
                         </a>
                     </li>
-                    <li class="section-nav-item">
-                        <a href="#/settings" class="section-nav-link">
+                    <li class="section-nav-item dropdown" data-ng-show="isAuthorized([userRoles.god, userRoles.admin])">
+                        <a href class="section-nav-link dropdown-toggle" data-toggle="dropdown"
+                           data-ng-class="{ 'active': activeMenu === 'MENU_SETTINGS'}">
                             <i class="icon-settings"></i>
                             Settings
                         </a>
+                        <ul class="dropdown-menu">
+                            <li data-ng-if="isAuthorized([userRoles.god, userRoles.admin])"><a
+                                data-ng-href="#/users"><i class="icon-group"></i> Emmi Users</a></li>
+                            <li data-ng-if="account.link.referenceTags"><a data-ng-href="#/admin">
+                                <i class="icon-command-line"></i> Admin Functions</a></li>
+                            <li data-ng-if="isAuthorized([userRoles.god]) || (isAuthorized([userRoles.admin]) && account.webApiUser)">
+                                <a data-ng-href="#/docs"><i class="icon-text-doc"></i> Technical Documentation</a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
                 <div class="section-nav-search">

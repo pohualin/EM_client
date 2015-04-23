@@ -1,68 +1,52 @@
-<div class="row">
-    <div class="col-md-12">
-        <ol class="breadcrumb h3">
-            <li><a href="#/">Emmi Manager</a></li>
-            <li><a href="#/users">Manage Emmi Users</a></li>
-            <li class="active">View User</li>
-        </ol>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-6 pull-left">
-        <h2>Emmi User Information</h2>
-    </div>
-    <div class="col-md-6">
-        <h2></h2>
-
-        <div class="actions pull-right">
-            <button class="btn btn-link" type="button" data-ng-click="edit()">edit</button>
-            <a class="btn btn-primary"
-               data-ng-href="#/users/new?{{currentRouteQueryString}}">Create New User</a>
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-6 pull-left">
+            <h1>
+                <span>Emmi User Information</span>
+                <span><a class="btn btn-icon icon-size-lg" data-ng-click="edit()"><i class="icon-compose"></i></a></span>
+            </h1>
+        </div>
+        <div class="col-md-6">
+            <div class="actions pull-right">
+                <a class="btn btn-link btn-link-nopad btn-heading" data-ng-href="#/users/new?{{currentRouteQueryString}}">
+                    <i class="icon-plus"></i> <span>Create New User</span>
+                </a>
+            </div>
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <span>Name: </span>
+    <div class="row entity-info">
+        <div class="col-md-4">
+            <h5 class="entity-value-label"><span>Name</span></h5>
+            <div class="entity-value">{{selectedUser.firstName}} {{selectedUser.lastName}}</div>
+        </div>
+        <div class="col-md-4">
+            <h5 class="entity-value-label"><span>Email</span></h5>
+            <div class="entity-value">{{selectedUser.email}}</div>
+        </div>
+        <div class="col-md-4">
+            <h5 class="entity-value-label"><span>User ID</span></h5>
+            <div class="entity-value">{{selectedUser.login}}</div>
+        </div>
     </div>
-    <div class="col-md-4">
-        {{selectedUser.firstName}} {{selectedUser.lastName}}
+    <hr/>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Roles Information</h2>
+            <ul>
+                <li data-ng-repeat="role in selectedUser.roles">
+                    {{role.name}}
+                </li>
+            </ul>
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <span>Email: </span>
-    </div>
-    <div class="col-md-4">{{selectedUser.email}}</div>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <span>User ID: </span>
-    </div>
-    <div class="col-md-4">{{selectedUser.login}}</div>
-</div>
-
-<div class="row">
-    <div class="col-md-6 pull-left">
-        <h2>Roles Information</h2>
-    </div>
-</div>
-<div class="row" data-ng-repeat="role in selectedUser.roles">
-    <div class="col-md-4">
-        <span>Role: </span>
-    </div>
-    <div class="col-md-4">
-        {{role.name}}
-    </div>
-</div>
-
-<div class="row" data-ng-show="selectedUser.webApiUser && selectedUser.link.password">
-    <div class="col-md-12">
-        <hr/>
-        <button class="btn btn-default" type="button"
-                data-ng-disabled="passwordNotification"
-                data-ng-click="generatePassword($event)">
-            <span>Generate API Credentials</span>
-        </button>
+    <div class="row" data-ng-show="selectedUser.webApiUser && selectedUser.link.password">
+        <div class="col-md-12">
+            <hr/>
+            <button class="btn btn-default" type="button"
+                    data-ng-disabled="passwordNotification"
+                    data-ng-click="generatePassword($event)">
+                <span>Generate API Credentials</span>
+            </button>
+        </div>
     </div>
 </div>

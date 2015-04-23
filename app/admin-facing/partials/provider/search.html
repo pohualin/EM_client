@@ -65,22 +65,22 @@
                                             class="sort-icon"
                                             data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
                                     </th>
-                                    <th class="sort col-sm-3" data-ng-click="sort('email')">Email
+                                    <th class="sort" data-ng-click="sort('email')">Email
                                         <span data-ng-show="sortProperty.property === 'email'"><span
                                             class="sort-icon"
                                             data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
                                     </th>
-                                    <th class="col-sm-1 text-center">Edit</th>
+                                    <th class="col-edit text-center">Edit</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr data-ng-repeat="provider in providers | orderBy:'provider.sortIdx'">
-                                    <td>{{provider.entity.firstName}} {{provider.entity.middleName}} {{provider.entity.lastName}} <em>{{provider.entity.active ? '' : "(inactive)"}}</em></td>
+                                    <td><span class="col-wrap">{{provider.entity.firstName}} {{provider.entity.middleName}} {{provider.entity.lastName}} <em>{{provider.entity.active ? '' : "(inactive)"}}</em></span></td>
                                     <td>{{provider.entity.specialty.name}}</td>
-                                    <td>{{provider.entity.email}}</td>
-                                    <td class="text-center"><a href="#/providers/{{provider.entity.id}}"><i class="icon-compose icon-size-xl"></i></a></td>
+                                    <td><span class="col-wrap">{{provider.entity.email}}</span></td>
+                                    <td class="text-center"><a href="#/providers/{{provider.entity.id}}?{{currentRouteQueryString}}"><i class="icon-compose icon-size-xl"></i></a></td>
                                 </tr>
-                                <tr class="no-hover">
+                                <tr class="pagination-row no-hover">
                                     <td colspan="5" class="text-center" data-ng-show="links">
                                         <ul class="pagination">
                                             <li data-ng-repeat="link in links | orderBy:'order'" class="{{link.className}}" data-ng-class="{'active': link.name == currentPage}">

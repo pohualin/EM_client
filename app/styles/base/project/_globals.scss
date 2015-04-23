@@ -75,6 +75,7 @@
     }
 
     h2, .h2 {
+        margin-bottom: 15px;
     }
 
     h3, .h3 {
@@ -138,6 +139,19 @@
         }
     }
 
+    .table-condensed {
+        /*> thead > tr > th {
+            padding: $table-condensed-cell-padding;
+        }*/
+        tr > td {
+            @include remIt(font-size, 15);
+        }
+        tr.pagination-row > td {
+            padding: 5px 0 0;
+        }
+    }
+
+    table tr.no-hover,
     table tr.no-hover:hover {
         background-color: $table-bg;
     }
@@ -318,6 +332,16 @@
         .form-group {
             margin-bottom: 5px;
         }
+        .btn + .btn {
+            margin-left: 5px;
+            margin-bottom: 0;
+        }
+        .btn-link + .btn,
+        .btn-cancel + .btn,
+        .btn + .btn-link,
+        .btn + .btn-cancel {
+            margin-left: 0;
+        }
     }
     label {
         font-size: $font-size-small;
@@ -338,6 +362,10 @@
     }
     .form-group {
         margin-bottom: 22px;
+        .checkbox:first-child,
+        .radio:first-child {
+            margin-top: 0;
+        }
     }
     .form-control:focus {
         box-shadow: none !important;
@@ -636,6 +664,7 @@
         }
         .teams-filter-heading {
             color: rgba(235,235,235,0.75);
+            margin-bottom: 7px;
             .team-count {
                 margin-left: 10px;
                 opacity: 0.8;
@@ -647,7 +676,11 @@
         .teams-filter-list {
             font-weight: 300;
             @include remIt(font-size, 16);
-            line-height: 1.875;
+            //line-height: 1.875;
+            line-height: 1;
+            li {
+                padding: 6px 0;
+            }
             a:hover, a:focus {
                 color: $link-color;
                 text-decoration: underline;

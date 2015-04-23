@@ -1,35 +1,34 @@
 <br/>
-<table class="table table-bordered table-striped table-hover" border="0" cellpadding="0"
+<table class="table table-bordered table-striped table-hover table-condensed" border="0" cellpadding="0"
         cellspacing="0" data-ng-show="clientProviders">
   <thead>
     <tr>
-      <th class="sort col-sm-1">&nbsp;</th>
-      <th class="sort col-sm-2" data-ng-click="sort('lastName')">
+      <th class="sort col-checkbox">&nbsp;</th>
+      <th class="sort" data-ng-click="sortClientProviders('provider.lastName')">
          Name
-         <span data-ng-show="sortProperty.property === 'lastName'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
+         <span data-ng-show="sortProperty.property === 'provider.lastName'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
       </th>
-      <th class="sort col-sm-3" data-ng-click="sort('specialty.name')">
+      <th class="sort col-sm-3" data-ng-click="sortClientProviders('provider.specialty.name')">
          Primary Specialty
-         <span data-ng-show="sortProperty.property === 'specialty.name'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
+         <span data-ng-show="sortProperty.property === 'provider.specialty.name'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
       </th>
-      <th class="sort col-sm-3" data-ng-click="sort('email')">
+      <th class="sort col-sm-3" data-ng-click="sortClientProviders('provider.email')">
          Email
          <span data-ng-show="sortProperty.property === 'email'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
       </th >
-      <th data-ng-show="allTeamLocations.length > 0" class="sort col-sm-3">Use Locations</th>
+      <th class="col-sm-3" data-ng-if="allTeamLocations.length > 0">Use Locations</th>
     </tr>
   </thead>
-
   <tbody>
     <tr data-ng-repeat="teamProvider in clientProviders" data-ng-class="teamProvider.provider.entity.disabled ? 'text-muted' : ''">
-      <td>
+      <td class="col-checkbox">
           <div class="checkbox">
               <input type="checkbox" id="clientProviderCb{{$index}}" data-ng-model="teamProvider.provider.entity.checked"  data-ng-disabled="teamProvider.provider.entity.disabled"
                  ng-change="onCheckboxChange(teamProvider.provider)">
               <label for="clientProviderCb{{$index}}"></label>
           </div>
       </td>
-      <td>{{teamProvider.provider.entity.firstName}} {{teamProvider.provider.entity.middleName}} {{teamProvider.provider.entity.lastName}} 
+      <td>{{teamProvider.provider.entity.firstName}} {{teamProvider.provider.entity.middleName}} {{teamProvider.provider.entity.lastName}}
         <em>{{teamProvider.provider.entity.active ? '' : "(inactive)"}}</em>
       </td>
       <td>{{teamProvider.provider.entity.specialty.name}}</td>
@@ -53,7 +52,7 @@
         </div>
       </td>
     </tr>
-    <tr class="no-hover">
+    <tr class="pagination-row no-hover">
       <td colspan="6" class="text-center" data-ng-show="links">
         <ul class="pagination">
           <li data-ng-repeat="link in links | orderBy:'order'" class="{{link.className}}" data-ng-class="{'active': link.name == currentPage}">

@@ -1,25 +1,33 @@
-<div class="container" data-ng-cloak>
-    <div class="row">
-        <div class="col-md-12">
-            <ol class="breadcrumb h3">
-                <li><a href="#/">Emmi Manager</a></li>
-                <li><a href="#/clients/{{client.id}}">{{client.name}}</a></li>
-                <li class="active">Manage Roles</li>
-                <li class="pull-right" data-ng-show="(hasExistingClientRoles || hasExistingClientTeamRoles) && !loading"><a class="btn btn-link"
-                    href="#/clients/{{client.id}}/users">manage users</a></li>
-            </ol>
-        </div>
-    </div>
-    <hr/>
-    <div class="row">
-        <div class="col-md-12">
-            <h3>Manage User Roles</h3>
-
-            <p data-ng-show="!hasExistingClientRoles && !hasExistingClientTeamRoles && !loading">Please choose user roles for this client before adding users.</p>
-        </div>
-    </div>
-    <hr/>
-    <div class="row" data-ng-include="'admin-facing/partials/role/client/client-roles.html'"></div>
-    <hr/>
-    <div class="row" data-ng-include="'admin-facing/partials/role/client/team-roles.html'"></div>
+<div class="app-header with-breadcrumbs" data-emmi-navbar>
+    <!-- Secondary menu for transclusion -->
+    <ul class="secondary-nav">
+        <li><a href="#/clients/{{client.id}}/password_policy">Client Configurations</a></li>
+        <li>
+            <a data-ng-if="hasExistingClientRoles || hasExistingClientTeamRoles" href="#/clients/{{client.id}}/users">Manage Users</a>
+            <a data-ng-if="!hasExistingClientRoles && !hasExistingClientTeamRoles" data-ng-class="{'disabled':(!hasExistingClientRoles && !hasExistingClientTeamRoles)}" data-bs-tooltip data-type="info" data-title="Set up user roles before adding users">Manage Users</a>
+        </li>
+    </ul>
+    <!-- Breadcrumb for transclusion -->
+    <ol class="breadcrumb">
+        <li><a href="#/clients">Search</a></li>
+        <li><a href="#/clients/{{client.id}}">{{client.name}}</a></li>
+        <li class="active">Manage Roles</li>
+    </ol>
 </div>
+<div class="app-content container" data-ng-cloak>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="layout-card">
+                <h1>Manage User Roles</h1>
+                <div data-ng-show="!hasExistingClientRoles && !hasExistingClientTeamRoles && !loading">
+                    <p>Please choose user roles for this client before adding users.</p>
+                    <hr/>
+                </div>
+                <div class="row" data-ng-include="'admin-facing/partials/role/client/client-roles.html'"></div>
+                <hr/>
+                <div class="row" data-ng-include="'admin-facing/partials/role/client/team-roles.html'"></div>
+            </div><!-- .layout-card -->
+        </div><!-- .col-md-12 -->
+    </div><!-- .row -->
+</div><!-- .container -->
+<footer class="footer" data-ng-include="'admin-facing/partials/common/footer.tpl.html'"></footer>

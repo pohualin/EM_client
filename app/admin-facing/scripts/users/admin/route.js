@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('emmiManager')
-    .config(function ($routeProvider, USER_ROLES) {
+    .config(function ($routeProvider, USER_ROLES, MENU) {
 
         var requiredResources = {
             'account' : [ 'AuthSharedService', function(AuthSharedService) {
@@ -41,6 +41,7 @@ angular.module('emmiManager')
                 access: {
                     authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
                 },
+                activeMenu: MENU.settings,
                 resolve: requiredResources,
                 reloadOnSearch: false
             }).when('/users/new', {
@@ -49,6 +50,7 @@ angular.module('emmiManager')
                 access: {
                     authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
                 },
+                activeMenu: MENU.settings,
                 resolve: requiredResources,
                 reloadOnSearch: false
             }).when('/users/:userId', {
@@ -57,6 +59,7 @@ angular.module('emmiManager')
                 access: {
                     authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
                 },
+                activeMenu: MENU.settings,
                 reloadOnSearch: false,
                 resolve: {
                     'userEditorResource': userEditorResources
@@ -65,6 +68,7 @@ angular.module('emmiManager')
                 templateUrl: 'admin-facing/partials/admin.html',
                 controller: 'MainCtrl',
                 title: 'Admin Functions',
+                activeMenu: MENU.settings,
                 resolve: requiredResources,
                 access: {
                     authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
@@ -73,6 +77,7 @@ angular.module('emmiManager')
             	templateUrl: 'admin-facing/partials/admin/tags/editor.html',
                 controller: 'MainCtrl',
                 title: 'Emmi Groups & Tags Library',
+                activeMenu: MENU.settings,
                 resolve: requiredResources,
                 access: {
                     authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]

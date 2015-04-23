@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('emmiManager').config(function($routeProvider, USER_ROLES) {
+angular.module('emmiManager').config(function($routeProvider, USER_ROLES, MENU) {
 
 	var requiredResources = {
 		'account' : [ 'AuthSharedService', function(AuthSharedService) {
@@ -36,6 +36,7 @@ angular.module('emmiManager').config(function($routeProvider, USER_ROLES) {
             authorizedRoles: USER_ROLES.all
         },
         title: 'Location Search',
+        activeMenu: MENU.setup,
         reloadOnSearch: false,
         resolve: requiredResources
 	}).when('/locations/:id', {
@@ -45,6 +46,7 @@ angular.module('emmiManager').config(function($routeProvider, USER_ROLES) {
             authorizedRoles: USER_ROLES.all
         },
         reloadOnSearch: false,
+        activeMenu: MENU.setup,
         resolve: locationRequiredResource
     });
 

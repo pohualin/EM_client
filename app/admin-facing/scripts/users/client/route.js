@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('emmiManager')
-    .config(function ($routeProvider, USER_ROLES) {
+    .config(function ($routeProvider, USER_ROLES, MENU) {
 
         /**
          * Loads the Client and UserClient if the userClientId parameter is available
@@ -53,6 +53,7 @@ angular.module('emmiManager')
                 access: {
                     authorizedRoles: USER_ROLES.all
                 },
+                activeMenu: MENU.setup,
                 reloadOnSearch: false,
                 resolve: {
                     'clientEditorResource': userClientEditorResources
@@ -63,6 +64,7 @@ angular.module('emmiManager')
                 access: {
                     authorizedRoles: USER_ROLES.all
                 },
+                activeMenu: MENU.setup,
                 reloadOnSearch: true,
                 resolve: {
                     'clientEditorResource': userClientEditorResources
@@ -73,6 +75,7 @@ angular.module('emmiManager')
                 access: {
                     authorizedRoles: USER_ROLES.all
                 },
+                activeMenu: MENU.setup,
                 reloadOnSearch: false,
                 resolve: {
                     'clientEditorResource': userClientEditorResources

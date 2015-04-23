@@ -1,51 +1,42 @@
+<div class="app-header with-breadcrumbs" data-emmi-navbar>
+    <!-- Secondary menu for transclusion -->
+    <ul class="secondary-nav">
+        <li><a href="#/clients/{{client.entity.id}}/password_policy">Client Configurations</a></li>
+        <li><a href="#/clients/{{client.entity.id}}/users">Manage Users</a></li>
+        <li><a href="#/clients/{{client.entity.id}}/roles">Manage Roles</a></li>
+    </ul>
+    <!-- Breadcrumb for transclusion -->
+    <ol class="breadcrumb">
+        <li><a href="#/clients">Search</a></li>
+        <li><a href="#/clients/{{client.entity.id}}">{{client.entity.name}}</a></li>
+        <li class="active">Create User</li>
+    </ol>
+</div>
 <div class="container" data-ng-cloak>
     <div class="row">
         <div class="col-md-12">
-            <ol class="breadcrumb h3">
-                <li><a href="#/">Emmi Manager</a></li>
-                <li><a href="#/clients/{{client.entity.id}}">{{client.entity.name}}</a></li>
-                <li class="active">Create User</li>
-            </ol>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12" data-ng-cloak>
+            <div class="layout-card">
+            <h1>New Client User</h1>
             <form name="userClientForm" class="form" novalidate unsaved-warning-form>
                 <div id="validation-container" data-ng-show="userClientForm.$invalid"></div>
-                <div class="row">
-                    <div class="col-md-6 pull-left">
-                        <h2>New User</h2>
-                    </div>
-                </div>
                 <div class="row" data-ng-include="'admin-facing/partials/user/client/metadata/form.html'"></div>
                 <div class="row">
                     <div class="col-md-12">
-                        <hr>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <span>You'll be able to add roles after saving this user.</span>
-
-                        <div class="actions pull-right">
+                        <div class="form-actions">
                             <div class="form-group">
-                                <a class="btn btn-default"
-                                   href="#/clients/{{client.entity.id}}/users?{{currentRouteQueryString}}">cancel</a>
-                                &nbsp;
-                                <button class="btn btn-default" type="button"
-                                        data-ng-click="save(userClientForm.$valid, $event, true)">
-                                    <span>Save & Add Another User</span>
-                                </button>
-                                &nbsp;
                                 <button class="btn btn-primary" type="submit"
                                         data-ng-click="save(userClientForm.$valid, $event, false)">
-                                    <span>Save</span>
+                                    <span>Save and Add Roles</span>
                                 </button>
+                                <a class="btn btn-cancel" href="#/clients/{{client.entity.id}}/users?{{currentRouteQueryString}}">cancel</a>
+                                <span>You'll be able to add roles after saving this user.</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </form>
-        </div>
-    </div>
-</div>
+            </div><!-- .layout-card -->
+        </div><!-- .col-md-12 -->
+    </div><!-- .row -->
+</div><!-- .container -->
+<footer class="footer" data-ng-include="'admin-facing/partials/common/footer.tpl.html'"></footer>

@@ -1,6 +1,9 @@
 <div class="modal" tabindex="-1" role="dialog" data-ng-controller="SearchTeamsLocationsController">
     <div class="modal-dialog modal-dialog-large container-fluid">
         <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Locations</h4>
+            </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-10 col-md-offset-1" id="modal-messages-container"></div>
@@ -15,12 +18,12 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-cancel" data-ng-click="hidePopupLocations()"><span data-translate="team_locations_search_page.cancel.label"></span></button>
+                <button type="button" class="btn btn-success" data-ng-if="hasLocationsAdded()" data-ng-click="savePopupLocations(false)"><span data-translate="team_locations_search_page.save.label"></span>
+                </button>
                 <button type="button" class="btn btn-default" data-ng-if="hasLocationsAdded()"
                         data-ng-click="saveAndAddAnother()"><span data-translate="team_locations_search_page.save_and_other.label"></span>
                 </button>
-                <button type="button" class="btn btn-success" data-ng-if="hasLocationsAdded()" data-ng-click="savePopupLocations(false)"><span data-translate="team_locations_search_page.save.label"></span>
-                </button>
+                <button type="button" class="btn btn-cancel" data-ng-click="hidePopupLocations()"><span data-translate="team_locations_search_page.cancel.label"></span></button>
             </div>
         </div>
     </div>

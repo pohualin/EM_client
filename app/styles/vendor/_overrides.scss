@@ -83,7 +83,14 @@
         // padding: 0;
         background: url('../images/breadcrumb.png') no-repeat 50% 50%;
         padding: 0 4px;
-        margin: 0 7px;
+        margin: 0 8px 0 7px;
+    }
+    > .active a,
+    > .active a:hover,
+    > .active a:active,
+    > .active a:focus {
+        color: $breadcrumb-active-color;
+        text-decoration: none;
     }
 }
 
@@ -166,6 +173,7 @@ table {
     }
     // Popover footer can also be placed inside the content because of existing Popover usage (contentTemplate vs template)
     .popover-footer {
+        @include clearfix();
         margin: 15px -19px -20px -19px;
     }
 }
@@ -187,6 +195,10 @@ table {
 }
 .popover.left > .arrow:after {
     border-left-color: #fff;
+}
+
+.popover > .arrow.gray:after {
+    border-top-color: #F0F1F3;
 }
 
 // Exotic placements from Bootstrap Additions
@@ -263,7 +275,9 @@ table {
     margin-top: -5px;
 }
 .modal-footer .btn-link + .btn,
-.modal-footer .btn-cancel + .btn {
+.modal-footer .btn-cancel + .btn,
+.modal-footer .btn + .btn-link,
+.modal-footer .btn + .btn-cancel {
     margin-left: 0;
  }
 
@@ -322,10 +336,34 @@ table {
     }
 }
 
+// Modal overrides
+.modal-title {
+    font-size: $font-size-h1;
+    font-weight: normal;
+    color: $headings-color;
+    text-transform: none;
+}
+
+.modal-body .row:last-child .form-group,
+.modal-body .row:last-child .checkbox,
+.modal-body .row:last-child .radio {
+    margin-bottom: 0;
+}
+
+.modal-footer {
+    background: #f0f1f3;
+    border-radius: 0 0 3px 3px;
+    text-align: left;
+}
+
 // Bootstrap Additions modal
 .modal.center .modal-dialog {
     max-width: none;
 }
 .modal.center .modal-dialog-large {
     width: 85%;
+}
+
+.panel-collapse.am-collapse {
+    overflow: hidden; // make sure the contents are hidden for the animation otherwise they break out of the container
 }

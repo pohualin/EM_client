@@ -1,4 +1,18 @@
-<div class="container" data-ng-cloak>
-    <div class="row" data-ng-hide="editMode" data-ng-include="'admin-facing/partials/user/create/view.html'"></div>
-    <div class="row" data-ng-show="editMode" data-ng-include="'admin-facing/partials/user/create/edit.html'"></div>
+<div class="app-header with-breadcrumbs" data-emmi-navbar>
+    <!-- Breadcrumb for transclusion -->
+    <ol class="breadcrumb">
+        <li><a href="#/users">Manage Emmi Users</a></li>
+        <li class="active">{{editMode ? 'Edit User' : 'View User'}}</li>
+    </ol>
 </div>
+<div class="container" data-ng-cloak>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="layout-card">
+                <div class="row" data-ng-if="!editMode" data-ng-include="'admin-facing/partials/user/create/view.html'"></div>
+                <div class="row" data-ng-if="editMode" data-ng-include="'admin-facing/partials/user/create/edit.html'"></div>
+            </div><!-- .layout-card -->
+        </div><!-- .col-md-12 -->
+    </div><!-- .row -->
+</div><!-- .container -->
+<footer class="footer" data-ng-include="'admin-facing/partials/common/footer.tpl.html'"></footer>

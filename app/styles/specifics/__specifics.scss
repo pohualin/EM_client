@@ -4,6 +4,50 @@
 @import 'sample';
 @import 'popovers';
 
+label.empty {
+    // Custom checkboxes without labels dont need right margin
+    &:before {
+        margin-right: 0 !important;
+    }
+}
+
+.table-no-results {
+    font-style: italic;
+    color: #999;
+}
+
+// utility class to make sure long table column content wraps to another line instead of breaking the table
+.col-wrap {
+    word-break: break-word;
+    hyphens: auto;
+}
+
+.col-edit {
+    width: 80px;
+    a {
+        display: inline-block;
+    }
+}
+
+.col-checkbox {
+    width: 42px;
+    padding-right: 0 !important;
+}
+
+.col-phone {
+    width: 132px;
+}
+
+.parent-entity {
+    font-style: italic;
+    color: #ABABAB;
+}
+
+.belongs-to {
+    font-style: italic;
+    color: #999;
+}
+
 .field-note {
     margin-left: 14px;
     &.field-optional {

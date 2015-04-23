@@ -139,7 +139,7 @@ angular.module('emmiManager')
         	$scope.hideaddprovidermodal();
         };
 
-        $scope.createNewProvider = function () {
+        $scope.createNewProvider = function (searchForm) {
         	TeamLocation.getTeamLocations($scope.teamResource.link.teamLocations).then(function(response){
                 $scope.potentialLocations = response;
                 $scope.selectedItems = TeamProviderService.buildMultiSelectData($scope.potentialLocations);
@@ -148,6 +148,14 @@ angular.module('emmiManager')
                 $scope.hideaddprovidermodal();
                 $scope.resetCreateNewProviderModalState();
                 newProviderModal.$promise.then(newProviderModal.show);
+                
+                if(searchForm.providerQuery){
+                    var strings = searchForm.providerQuery.$modelValue.split(',');
+                    if(strings.length > 1){
+                        $scope.provider.firstName = strings[1].trim();
+                    }
+                    $scope.provider.lastName = strings[0].trim();
+                }
             });
         };
 
