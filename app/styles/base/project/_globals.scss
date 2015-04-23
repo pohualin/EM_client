@@ -332,6 +332,16 @@
         .form-group {
             margin-bottom: 5px;
         }
+        .btn + .btn {
+            margin-left: 5px;
+            margin-bottom: 0;
+        }
+        .btn-link + .btn,
+        .btn-cancel + .btn,
+        .btn + .btn-link,
+        .btn + .btn-cancel {
+            margin-left: 0;
+        }
     }
     label {
         font-size: $font-size-small;
@@ -654,6 +664,7 @@
         }
         .teams-filter-heading {
             color: rgba(235,235,235,0.75);
+            margin-bottom: 7px;
             .team-count {
                 margin-left: 10px;
                 opacity: 0.8;
@@ -665,7 +676,11 @@
         .teams-filter-list {
             font-weight: 300;
             @include remIt(font-size, 16);
-            line-height: 1.875;
+            //line-height: 1.875;
+            line-height: 1;
+            li {
+                padding: 6px 0;
+            }
             a:hover, a:focus {
                 color: $link-color;
                 text-decoration: underline;
