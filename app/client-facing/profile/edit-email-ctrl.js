@@ -54,7 +54,7 @@ angular.module('emmiManager')
                 }
             });
             if (totalErrorCount > 0) {
-            	$scope.formValidationError();
+            	//$scope.formValidationError();
             }
         }
     	else if (error.status === 406 && error.data.validationError.reason === 'EMAIL_RESTRICTION') {
@@ -62,11 +62,8 @@ angular.module('emmiManager')
     	  			  											: 'Only the following types of email addresses may be used:';
               error.data.validationError.validEmailEndings = $scope.validEmailEnding;
               $scope.emailError = error.data.validationError;
-              $scope.formValidationError();
         }
-    	
-       
-    };
+      };
     
     /**
      * When the 'use email' box is changed set the focus when unchecked.
