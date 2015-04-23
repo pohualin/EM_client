@@ -14,9 +14,9 @@
         </thead>
         <tbody>
         <tr data-ng-repeat="clientLocation in clientLocations">
-            <td>{{clientLocation.location.entity.name}} <em>{{clientLocation.location.entity.active ? '' : "(inactive)"}}</em>
+            <td><div class="col-wrap">{{clientLocation.location.entity.name}} <em>{{clientLocation.location.entity.active ? '' : "(inactive)"}}</em>
                 <span class="parent-entity" data-ng-show="clientLocation.location.entity.belongsTo && clientLocation.location.entity.belongsTo.id !== client.entity.id"> <em>({{clientLocation.location.entity.belongsTo.name}})</em></span>
-                <span class="parent-entity" data-ng-show="!clientLocation.location.entity.belongsTo"> <em>(<span data-translate="client_edit_page.locations.no_client_owner"></span>)</em></span>
+                <span class="parent-entity" data-ng-show="!clientLocation.location.entity.belongsTo"> <em>(<span data-translate="client_edit_page.locations.no_client_owner"></span>)</em></span></div>
             </td>
             <td class="col-sm-3">{{clientLocation.location.entity.phone}}</td>
             <td class="col-sm-2">{{clientLocation.location.entity.city}}</td>
