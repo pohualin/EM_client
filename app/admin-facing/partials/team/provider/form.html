@@ -31,11 +31,11 @@
                     <div class="form-group"
                          data-ng-class="{ 'has-error' : providerForm.providerMiddleName.$invalid && providerFormSubmitted }">
                         <label class="control-label" for="providerMiddleName">Middle Name</label>
-                        <span class="field-note field-optional">optional</span>
                         <div class="error-circle fa-exclamation-circle"
                              data-ng-show="providerForm.providerMiddleName.$error.pattern && providerFormSubmitted"
                              data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                              data-title="Please enter a valid middle name"></div>
+                        <span class="field-note field-optional">optional</span>
                         <input class="form-control" id="providerMiddleName" data-ng-model="teamProviderToBeEdit.entity.provider.middleName"
                                name="providerMiddleName"
                                type="text" maxlength="255"
@@ -81,11 +81,11 @@
                     <div class="form-group"
                          data-ng-class="{ 'has-error' : providerForm.email.$invalid && providerFormSubmitted }">
                         <label class="control-label" for="email">Email</label>
-                        <span class="field-note field-optional">optional</span>
                         <div class="error-circle fa-exclamation-circle"
                              data-ng-show="providerForm.email.$error.pattern && providerFormSubmitted"
                              data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                              data-title="Please enter a valid email"></div>
+                        <span class="field-note field-optional">optional</span>
                         <input class="form-control" data-ng-model="teamProviderToBeEdit.entity.provider.email" name="email" type="text"
                                maxlength="255" data-ng-pattern="emailPattern" />
                     </div>
@@ -131,7 +131,7 @@
         </div>
         <div class="modal-footer">
             <button type="submit" id="submit" class="btn btn-success" data-client-provider-deactivate-warning>Save</button>
-            <button type="button" class="btn btn-default" data-ng-show="saveAndAddAnother"
+            <button type="button" class="btn btn-default" data-ng-if="saveAndAddAnother"
                     data-ng-click="saveAndAddAnother(providerForm.$valid)">Save & Add Another
             </button>
             <button type="button" class="btn btn-cancel" data-ng-click="cancelProviderSave();$hide()">cancel</button>

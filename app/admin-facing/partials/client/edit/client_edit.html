@@ -19,10 +19,6 @@
                      data-ng-show="metadataForm.clientName.$error.pattern && metadataSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                      data-title="Please enter a valid client name."></div>
-                <div class="error-circle fa-exclamation-circle"
-                     data-ng-show="metadataSubmitted && metadataForm.clientName.$invalid && metadataForm.clientName.$error.unique"
-                     data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                     data-title="{{'client_edit_page.unique_popup_dialog.message' | translate}}"></div>
                 <input class="form-control" data-ng-model="clientToEdit.name" id="clientName" name="clientName"
                        type="text" data-unique-url="findNormalizedNameLink" data-unique-client required
                        data-auto-focus

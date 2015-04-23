@@ -30,10 +30,12 @@ angular.module('emmiManager')
 
                 $scope.exitCreateMode = function (){
                     $scope.createMode = false;
+                    $scope.taggingMode = false;
                 };
 
                 $scope.newTagGroup = function (){
                     var me = this;
+                    $scope.taggingMode = true; // Need to trigger tagging mode here instead of bs.dropdown because of $timeouts to prevent flicker of show/hide elements
                     $timeout(function () {
                         // will be executed after ngClick function in case of click
                         if (!$scope.createMode) {
