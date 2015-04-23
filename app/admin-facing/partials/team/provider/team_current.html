@@ -9,17 +9,17 @@
 					<th>Name </th>
 					<th>Primary Specialty </th>
 					<th>Email </th>
-					<th><div data-ng-show="allTeamLocations.length > 0" >Locations</div></th>
+					<th data-ng-if="allTeamLocations.length > 0">Locations</th>
 		            <th class="text-center">Edit</th>
 				</tr>
                 </thead>
                 <tbody>
 				<tr data-ng-repeat="teamProvider in listOfTeamProviders">
-                    <td>{{teamProvider.entity.provider.firstName}} {{teamProvider.entity.provider.middleName}} {{teamProvider.entity.provider.lastName}} <em>{{teamProvider.entity.provider.active ? '' : "(inactive)"}}</em></td>
+                    <td><span class="col-wrap">{{teamProvider.entity.provider.firstName}} {{teamProvider.entity.provider.middleName}} {{teamProvider.entity.provider.lastName}} <em>{{teamProvider.entity.provider.active ? '' : "(inactive)"}}</em></span></td>
 			    	<td class="col-sm-2">{{teamProvider.entity.provider.specialty.name}}</td>
-			    	<td class="col-sm-3">{{teamProvider.entity.provider.email}}</td>
-			    	<td class="col-sm-2">
-                        <div data-ng-show="allTeamLocations.length > 0">
+			    	<td class="col-sm-3"><span class="col-wrap">{{teamProvider.entity.provider.email}}</span></td>
+			    	<td class="col-sm-2" data-ng-if="allTeamLocations.length > 0">
+                        <div>
     						<div data-placement="top" class="pointer" data-ng-show="teamProvider.entity.locations && teamProvider.entity.locations.length > locationsColumnCharLimit" data-content=" {{teamProvider.entity.locations}} " data-trigger="hover" data-delay="200" data-bs-popover data-popover-dismiss>
                             	{{teamProvider.entity.locations | characters:locationsColumnCharLimit }}
     						</div>
