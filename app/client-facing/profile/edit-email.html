@@ -1,6 +1,9 @@
 <div class="col-md-12" data-ng-show="passwordIsValidated" >
-
-    <div class="row">
+    <div class="container" data-ng-cloak >
+	<div class="row" data-ng-show="editEmailForm.$invalid">
+              <div class="col-md-12" id="message-container"></div>
+    </div>
+	<div class="row">
         <div class="col-md-12">
             <div class="form-group"
                  data-ng-class="{ 'has-error' : editEmailFormSubmitted && editEmailForm.email.$invalid}">
@@ -20,6 +23,7 @@
                 <input class="form-control" id="email" data-ng-model="userClient.email"
                        name="email" type="text" data-ng-required="userClient.useEmail"
                        maxlength="255" data-focus-on="email"
+                       data-popover-save-email-error data-save-error="emailError" data-email-heading="emailHeading"
                        data-ng-pattern="emailPattern" data-ng-change="resetValidity()" />
             </div>
         </div>
@@ -42,7 +46,7 @@
                 <div data-ng-hide="userClient.useEmail">
                 <input class="form-control" id="userId" data-ng-model="userClient.login"
                        name="login" type="text" data-ng-required="!userClient.useEmail"
-                       maxlength="255" data-popover-save-error data-save-error="loginError"
+                       maxlength="255" data-popover-save-email-error data-save-error="loginError"
                        data-ng-change="resetValidity()" data-focus-on="login"/>
                 </div>
             </div>
@@ -76,6 +80,7 @@
                 <button class="btn btn-default" data-ng-click="updateEmail(userClient, editEmailForm)">Save</button>
             </div>
         </div>
+    </div>
     </div>
 </div>
 
