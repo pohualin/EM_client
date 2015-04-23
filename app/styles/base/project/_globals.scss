@@ -332,6 +332,16 @@
         .form-group {
             margin-bottom: 5px;
         }
+        .btn + .btn {
+            margin-left: 5px;
+            margin-bottom: 0;
+        }
+        .btn-link + .btn,
+        .btn-cancel + .btn,
+        .btn + .btn-link,
+        .btn + .btn-cancel {
+            margin-left: 0;
+        }
     }
     label {
         font-size: $font-size-small;
