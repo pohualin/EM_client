@@ -1,24 +1,24 @@
 <div class="col-md-12">
         <div class="row"
-             data-ng-show="!account.originalUserClientEmail && !account.emailValidated && account.secretQuestionCreated"
+             data-ng-if="!account.originalUserClientEmail && !account.emailValidated && account.secretQuestionCreated"
              data-ng-include="'client-facing/loginInterruption/enterEmail/enter_email.html'"></div>
 
         <div class="row"
-             data-ng-show="account.originalUserClientEmail && !account.emailValidated && account.secretQuestionCreated"
+             data-ng-if="account.email && !account.emailValidated && account.secretQuestionCreated"
              data-ng-include="'client-facing/loginInterruption/validateEmail/validate_email.html'"></div>
 
         <div class="row"
-             data-ng-show="account.originalUserClientEmail && account.emailValidated && !account.secretQuestionCreated"
+             data-ng-if="account.email && account.emailValidated && !account.secretQuestionCreated"
              data-ng-include="'client-facing/loginInterruption/secretQuestions/secret-question-create.html'">
         </div>
 
         <div class="row"
-             data-ng-show="!account.originalUserClientEmail && !account.secretQuestionCreated"
+             data-ng-if="!account.email && !account.emailValidated && !account.secretQuestionCreated"
              data-ng-include="'client-facing/loginInterruption/noEmailOrQuestions/add_email_questions.html'">
         </div>
 
         <div class="row"
-             data-ng-show="account.originalUserClientEmail && !account.emailValidated && !account.secretQuestionCreated"
+             data-ng-if="account.email && !account.emailValidated && !account.secretQuestionCreated"
              data-ng-include="'client-facing/loginInterruption/noValidatedEmailOrQuestions/validate_email_questions.html'">
         </div>
 </div>
