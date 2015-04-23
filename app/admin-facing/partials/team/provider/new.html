@@ -32,11 +32,11 @@
                             <div class="form-group"
                                  data-ng-class="{ 'has-error' : providerForm.providerMiddleName.$invalid && providerFormSubmitted }">
                                 <label class="control-label" for="providerMiddleName">Middle Name</label>
-                                <span class="field-note field-optional">optional</span>
                                 <div class="error-circle fa-exclamation-circle"
                                      data-ng-show="providerForm.providerMiddleName.$error.pattern && providerFormSubmitted"
                                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                                      data-title="Please enter a valid middle name"></div>
+                                <span class="field-note field-optional">optional</span>
                                 <input class="form-control" id="providerMiddleName" data-ng-model="provider.middleName" name="providerMiddleName"
                                        type="text" maxlength="255"
                                        data-ng-pattern="/^[a-zA-Z '-(),.]*$/">
@@ -65,11 +65,11 @@
                     	<div class="col-md-4">
         	                <div class="form-group" data-ng-class="{ 'has-error' : providerForm.specialty.$invalid && providerFormSubmitted }">
         	                    <label class="control-label" for="specialty">Primary Specialty</label>
-                                <span class="field-note field-optional">optional</span>
         						<div class="error-circle fa-exclamation-circle"
                                      data-ng-show="providerForm.specialty.$error.pattern && providerFormSubmitted"
                                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                                      data-title="Please enter a specialty"></div>
+                                <span class="field-note field-optional">optional</span>
         	                    <select class="form-control" id="specialty" data-ng-model="provider.specialty"
         	                            data-ng-options="specialty.name for specialty in specialties | orderBy:'name'" name="specialty"
         	                            data-ng-disabled="providerForm.specialty.$error.unique"
@@ -82,11 +82,11 @@
                             <div class="form-group"
                                  data-ng-class="{ 'has-error' : providerForm.email.$invalid && providerFormSubmitted }">
                                 <label class="control-label" for="email">Email</label>
-                                <span class="field-note field-optional">optional</span>
                                 <div class="error-circle fa-exclamation-circle"
                                      data-ng-show="providerForm.email.$error.pattern && providerFormSubmitted"
                                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                                      data-title="Please enter a valid email"></div>
+                                <span class="field-note field-optional">optional</span>
                                 <input class="form-control" data-ng-model="provider.email" name="email" type="text"
                                        maxlength="255" data-ng-pattern="emailPattern" />
                             </div>

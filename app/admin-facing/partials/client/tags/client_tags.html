@@ -27,13 +27,13 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12" data-ng-show="clientTagsHaveChanges && !saving">
+            <div class="col-md-12" data-ng-show="!tagInputMode && clientTagsHaveChanges && !saving">
                 <div class="pull-right">
                     <button class="btn btn-cancel" data-ng-click="cancelTagChanges()" data-ng-hide="hideCancelButton">cancel</button>
                     <button class="btn btn-success" type="button"
                             data-conflicting-team-tags="conflictingTeamTags"
                             data-ng-click="checkForConflicts(clientForm.$valid);"
-                            data-ng-disabled="tagInputMode || !clientForm.$valid"
+                            data-ng-disabled="!clientForm.$valid"
                             data-popover-dismiss
                             data-team-conflict-popover>
                         <span>save changes</span>

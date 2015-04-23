@@ -36,7 +36,8 @@
 /*
  * Alerts placements from Bootstrap Additions (need to override and we'll handle with our global alerts cotainer)
  */
-.global-messages-container {
+.global-messages-container,
+#modal-messages-container {
     position: fixed;
     width: 80%;
     max-width: 1056px;
@@ -49,7 +50,11 @@
     right: 0;
     // center the auto-width alert
     .alert {
-        display: inline-block !important; // Angularstrap sets this to block, so auto widths won't work
+        display: none !important;
+        // only ever display the latest alert
+        &:last-child {
+            display: inline-block !important; // Angularstrap sets this to block, so auto widths won't work
+        }
     }
     // override bootstrap additions classes
     .alert.top,
@@ -67,6 +72,10 @@
         bottom: auto;
         left: auto;
     }
+}
+#modal-messages-container {
+    position: absolute;
+    margin-top: -30px;
 }
 
 .breadcrumb {
@@ -274,11 +283,17 @@ table {
 .modal-header .close {
     margin-top: -5px;
 }
-.modal-footer .btn-link + .btn,
-.modal-footer .btn-cancel + .btn,
-.modal-footer .btn + .btn-link,
-.modal-footer .btn + .btn-cancel {
-    margin-left: 0;
+
+.modal-footer {
+    .btn + .btn {
+        margin-left: 12px;
+    }
+    .btn-link + .btn,
+    .btn-cancel + .btn,
+    .btn + .btn-link,
+    .btn + .btn-cancel {
+        margin-left: 0;
+    }
  }
 
 // Override Bootstrap Additions Fancy Tooltips to fit with our colors from our config
