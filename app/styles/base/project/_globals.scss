@@ -654,23 +654,6 @@
                 color: $gray;
             }
         }
-        select.form-control + .chosen-container-multi .chosen-results {
-            font-size: 14px;
-            padding-top: 2px;
-            padding-bottom: 2px;
-            li {
-                padding: 8px;
-            }
-            li.group-result {
-                font-weight: normal;
-                color: #a8a9aa;
-                padding-left: 10px;
-                padding-right: 10px;
-            }
-            li.group-option {
-                padding-left: 25px;
-            }
-        }
         .teams-filter-heading {
             color: rgba(235,235,235,0.75);
             margin-bottom: 7px;
