@@ -11,6 +11,10 @@
     <ul class="secondary-nav" data-ng-if="team.id">
         <li><a target="schedule_program" href="{{clientBaseUrl}}#/impersonate/{{client.id}}/teams/{{team.id}}/schedule">Schedule Program</a></li>
         <li><a target="create_patient" href="{{clientBaseUrl}}#/impersonate/{{client.id}}/patients">Create Patient</a></li>
+        <li>
+            <a data-ng-if="existingClientRoles.length > 0 || existingClientTeamRoles.length > 0" href="#/clients/{{client.id}}/users">Manage Users</a>
+            <a data-ng-if="existingClientRoles.length === 0 && existingClientTeamRoles.length === 0" data-ng-class="{'disabled':(existingClientRoles.length === 0 && existingClientTeamRoles.length === 0)}" data-bs-tooltip data-type="info" data-title="Set up user roles before adding users">Manage Users</a>
+        </li>
     </ul>
     <!-- Breadcrumb for transclusion -->
     <ol class="breadcrumb">
