@@ -13,7 +13,7 @@
                     <div class="entity-value">{{team.name}} <em>({{team.active ? "active" : "inactive"}})</em></div>
                 </div>
             </div>
-            <div class="row entity-info">
+            <div class="row entity-info" data-ng-if="team.description">
                 <div class="col-md-12">
                     <h5 class="entity-value-label" data-translate="team_view_page.information.description"></h5>
                     <div class="entity-value">{{team.description}}</div>
@@ -24,11 +24,11 @@
                     <h5 class="entity-value-label" data-translate="team_view_page.information.salesforce"></h5>
                     <div class="entity-value">{{team.salesForceAccount.name}}</div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3" data-ng-if="team.salesForceAccount.phoneNumber">
                     <h5 class="entity-value-label" data-translate="team_view_page.information.phone"></h5>
                     <div class="entity-value">{{team.salesForceAccount.phoneNumber}}</div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3" data-ng-if="team.salesForceAccount.fax">
                     <h5 class="entity-value-label" data-translate="team_view_page.information.fax"></h5>
                     <div class="entity-value">{{team.salesForceAccount.fax}}</div>
                 </div>

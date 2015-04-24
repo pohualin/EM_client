@@ -22,6 +22,11 @@ label.empty {
     hyphens: auto;
 }
 
+.col-has-multiselect {
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+}
+
 .col-edit {
     width: 80px;
     a {
@@ -141,6 +146,7 @@ h3 .btn-icon, .h3 .btn-icon {
         &:focus {
             padding-left: $padding-base-horizontal;
             ~ .input-icon {
+                color: #C7D0D8; // don't animate the color
                 opacity: 0;
                 //display: none;
             }
