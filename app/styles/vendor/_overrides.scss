@@ -10,7 +10,7 @@
     @include remIt(font-size, 15);
     font-weight: 300;
     box-shadow: 3px 3px 0px 0px rgba(110,124,136,0.10);
-    strong {
+    .alert-title {
         text-transform: uppercase;
     }
 }
