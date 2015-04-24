@@ -31,7 +31,11 @@ angular.module('emmiManager')
                         AuthSharedService.currentUser().then(function (loggedInUser) {
                             ProfileService.get(loggedInUser).then(function (refreshedUserResponse) {
                                 deferred.resolve(refreshedUserResponse);
+                            }, function(){
+                                deferred.reject();
                             });
+                        },function(){
+                            deferred.reject();
                         });
                         return deferred.promise;
                     }]
