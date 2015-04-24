@@ -18,9 +18,9 @@
     </ul>
     <!-- Breadcrumb for transclusion -->
     <ol class="breadcrumb">
-        <li><a href="#/">Emmi Manager</a></li>
-        <li data-ng-class="{'active': !team.id}"><a data-ng-href="#/clients/{{client.id}}?{{currentRouteQueryString}}"><span data-bs-tooltip="'id: {{client.id}}'" data-placement="right">{{client.name}}</span></a></li>
-        <li data-ng-if="team.id" class="active"><span data-bs-tooltip="'id: {{team.id}}'" data-placement="right">{{team.name}}</span></li>
+        <li><a href="#/clients?{{currentRouteQueryString}}">Search</a></li>
+        <li data-ng-class="{'active': !team.id}"><a data-ng-href="#/clients/{{client.id}}?{{currentRouteQueryString}}">{{client.name}}</a></li>
+        <li data-ng-if="team.id" class="active">{{team.name}}</li>
     </ol>
 </div>
 <div class="app-content app-content-with-sidebar container" data-ng-cloak>

@@ -35,7 +35,7 @@
                     </div>
                 </div>
                 <div data-ng-show="searchPerformed">
-                    <div class="row table-search-filters" data-ng-hide="removeStatusFilterAndTotal">
+                    <div class="row table-search-filters" >
                         <div class="col-md-12">
                             <div class="pull-right table-results-count">
                                 {{total}}
@@ -114,9 +114,9 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-ng-hide="isEmpty(changedProviders)" data-ng-click="save()">Save
+                <button type="button" class="btn btn-success" data-ng-if="!isEmpty(changedProviders)" data-ng-click="save()">Save
                 </button>
-                <button type="button" class="btn btn-default" data-ng-hide="isEmpty(changedProviders)"
+                <button type="button" class="btn btn-default" data-ng-if="!isEmpty(changedProviders)"
                         data-ng-click="saveAndAddAnother()"><i class="icon-plus"></i> Save & Add Another
                 </button>
                 <button type="button" class="btn btn-cancel" data-ng-click="cancel()">cancel</button>

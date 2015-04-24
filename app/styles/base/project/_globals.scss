@@ -201,6 +201,10 @@
         @include button-size($padding-base-vertical, $padding-base-vertical*2, $font-size-base, $line-height-base, $border-radius-base);
         text-transform: uppercase;
         box-shadow: 2px 2px 0px 0px rgba(110,124,136,0.25);
+        // Icons inside of buttons
+        [class^="icon-"], [class*=" icon-"] {
+            vertical-align: text-top;
+        }
     }
 
     .btn-default,
@@ -286,6 +290,9 @@
         .open > &.dropdown-toggle {
             color: #21A4C7;
         }
+        [class^="icon-"], [class*=" icon-"] {
+            vertical-align: baseline;
+        }
     }
 
     .btn-link {
@@ -301,6 +308,8 @@
 
     .btn-cancel {
         @extend .btn-link;
+        padding-left: 20px;
+        padding-right: 20px;
         color: #BBC5CF;
         &:hover,
         &:focus {
@@ -331,6 +340,16 @@
         margin-top: 8px;
         .form-group {
             margin-bottom: 5px;
+        }
+        .btn + .btn {
+            margin-left: 12px;
+            margin-bottom: 0;
+        }
+        .btn-link + .btn,
+        .btn-cancel + .btn,
+        .btn + .btn-link,
+        .btn + .btn-cancel {
+            margin-left: 0;
         }
     }
     label {
@@ -635,25 +654,9 @@
                 color: $gray;
             }
         }
-        select.form-control + .chosen-container-multi .chosen-results {
-            font-size: 14px;
-            padding-top: 2px;
-            padding-bottom: 2px;
-            li {
-                padding: 8px;
-            }
-            li.group-result {
-                font-weight: normal;
-                color: #a8a9aa;
-                padding-left: 10px;
-                padding-right: 10px;
-            }
-            li.group-option {
-                padding-left: 25px;
-            }
-        }
         .teams-filter-heading {
             color: rgba(235,235,235,0.75);
+            margin-bottom: 7px;
             .team-count {
                 margin-left: 10px;
                 opacity: 0.8;
@@ -665,7 +668,11 @@
         .teams-filter-list {
             font-weight: 300;
             @include remIt(font-size, 16);
-            line-height: 1.875;
+            //line-height: 1.875;
+            line-height: 1;
+            li {
+                padding: 6px 0;
+            }
             a:hover, a:focus {
                 color: $link-color;
                 text-decoration: underline;

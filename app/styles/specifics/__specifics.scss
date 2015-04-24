@@ -16,6 +16,17 @@ label.empty {
     color: #999;
 }
 
+// utility class to make sure long table column content wraps to another line instead of breaking the table
+.col-wrap {
+    word-break: break-word;
+    hyphens: auto;
+}
+
+.col-has-multiselect {
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+}
+
 .col-edit {
     width: 80px;
     a {
@@ -43,7 +54,11 @@ label.empty {
 }
 
 .field-note {
-    margin-left: 14px;
+    margin-left: 0;
+    // If validation error-circle is hidden, make it seem like it's still there (could also overwrite ng-hide on .error-circle and set visibility to hidden...)
+    .error-circle.ng-hide + & {
+        margin-left: 18px;
+    }
     &.field-optional {
         color: $input-color-placeholder;
         font-style: italic;
@@ -54,7 +69,12 @@ label.empty {
 .error-circle {
     margin-left: 4px;
 }
-
+// Icon buttons next to headings
+h1 .btn-icon, .h1 .btn-icon,
+h2 .btn-icon, .h2 .btn-icon,
+h3 .btn-icon, .h3 .btn-icon {
+    vertical-align: baseline;
+}
 .btn-salesforce-update {
     font-size: 13px;
     vertical-align: baseline;
@@ -63,6 +83,20 @@ label.empty {
     font-size: 13px;
     vertical-align: baseline;
     line-height: 2;
+    &.btn-heading-h1 {
+        line-height: 2.5;
+    }
+}
+
+.btn-cancel {
+    .modal-footer &:only-child,
+    .panel-footer &:only-child,
+    .popover-footer &:only-child {
+        padding-left: 0;
+    }
+    .panel-footer .btn.ng-hide + & {
+        padding-left: 0;
+    }
 }
 
 // miscellaneous rules
@@ -79,7 +113,7 @@ label.empty {
             color: $brand-secondary;
         }
         // Change color of input icon when valid data has been entered
-        &.ng-dirty.ng-valid + .input-icon {
+        &.ng-valid + .input-icon {
             color: $gray;
         }
     }
@@ -112,6 +146,7 @@ label.empty {
         &:focus {
             padding-left: $padding-base-horizontal;
             ~ .input-icon {
+                color: #C7D0D8; // don't animate the color
                 opacity: 0;
                 //display: none;
             }

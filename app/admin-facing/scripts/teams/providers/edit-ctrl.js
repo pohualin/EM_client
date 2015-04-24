@@ -11,6 +11,8 @@ angular.module('emmiManager')
                 $scope.specialties = response;
             });
 
+            $scope.title = 'Edit Provider';
+
             $scope.saveProvider = function (isValid) {
             	$scope.providerFormSubmitted = true;
                 if (isValid && (($scope.potentialLocations.length > 0 && $scope.selectedItems.length > 0) || $scope.potentialLocations.length < 1)) {

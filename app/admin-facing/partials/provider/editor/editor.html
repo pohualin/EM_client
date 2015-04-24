@@ -1,4 +1,10 @@
-<div class="app-header" data-emmi-navbar></div>
+<div class="app-header with-breadcrumbs" data-emmi-navbar>
+    <!-- Breadcrumb for transclusion -->
+    <ol class="breadcrumb">
+        <li><a href="#/providers?{{currentRouteQueryString}}">Search</a></li>
+        <li class="active">{{providerResource.entity.firstName}} {{providerResource.entity.middleName}} {{providerResource.entity.lastName}}</li>
+    </ol>
+</div>
 <div class="container" data-ng-cloak>
 	<div class="row">
 		<div class="col-md-12">

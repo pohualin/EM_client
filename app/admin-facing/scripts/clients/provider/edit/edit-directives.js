@@ -21,7 +21,7 @@ angular.module('emmiManager')
                             trigger: 'manual',
                             autoClose: true,
                             show: true,
-                            placement: 'bottom',
+                            placement: 'right',
                             target: element,
                             container: 'body',
                             contentTemplate: 'admin-facing/partials/client/provider/deactivate_popover.tpl.html'

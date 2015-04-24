@@ -272,6 +272,21 @@ select.form-control {
             }
         }
         .chosen-results {
+            font-size: 14px;
+            padding-top: 2px;
+            padding-bottom: 2px;
+            li {
+                padding: 8px;
+            }
+            li.group-result {
+                font-weight: normal;
+                color: #a8a9aa;
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+            li.group-option {
+                padding-left: 25px;
+            }
             li.result-selected {
                 display: list-item;
                 color: $dropdown-link-disabled-color;
