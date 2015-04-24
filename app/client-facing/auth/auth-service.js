@@ -41,11 +41,16 @@ angular.module('emmiManager')
                     });
                 },
                 currentUser: function (deferred) {
+                    var me = this;
                     deferred = deferred || $q.defer();
                     if (makingCurrentUserCall) {
                         currentUserCallQueue.push(deferred);
                     } else {
                         deferred.resolve($rootScope.account);
+                        var nextCall = currentUserCallQueue.shift();
+                        if (nextCall) {
+                            me.currentUser(nextCall);
+                        }
                     }
                     return deferred.promise;
                 },
