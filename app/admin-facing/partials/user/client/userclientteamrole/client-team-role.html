@@ -1,6 +1,6 @@
 <div data-ng-controller="UsersClientUserClientTeamRolesListController">
 	<div class="col-md-12" data-ng-show="isSuperUser && !loading">
-        <p>Team roles aren't required for users with Super User permissions.</p>
+        <p>Team roles aren't required because this user has been given all permissions at this client (including all teams within this client).</p>
     </div>
 	<div class="col-md-12" data-ng-show="clientTeamRoles && clientTeamRoles.length > 0 && !isSuperUser">
 		<h2>Team Roles</h2>
