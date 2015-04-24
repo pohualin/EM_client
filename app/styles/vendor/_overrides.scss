@@ -351,6 +351,28 @@ table {
     }
 }
 
+// Tabs overrides
+.nav-tabs {
+    & > li > a:hover,
+    & > li > a:focus {
+        text-decoration: underline;
+        background-color: $nav-tabs-active-link-hover-bg;
+    }
+    & > li.active > a {
+      &,
+      &:hover,
+      &:focus {
+        text-decoration: none;
+      }
+    }
+}
+.tab-content {
+    border-left: 1px solid $nav-tabs-border-color;
+    border-right: 1px solid $nav-tabs-border-color;
+    border-bottom: 1px solid $nav-tabs-border-color;
+    padding: 0 18px;
+}
+
 // Modal overrides
 .modal-title {
     font-size: $font-size-h1;

@@ -1,8 +1,8 @@
 <div class="popover popover-tag-library">
-    <div class="arrow gray"></div>
+    <div class="arrow"></div>
     <h3 class="popover-title" ng-bind="title" ng-show="title"></h3>
-    <div class="popover-content">
-        <form name="tagGroupLibraries" class="tag-library" data-popover-toggle>
+    <div class="popover-content" style="max-height: 200px;overflow: auto;">
+        <form name="tagGroupLibraries" class="tag-library" data-popover-right-toggle>
             <div class="form-group">
                 <div class="checkbox" data-ng-repeat="library in tagLibraries">
                     <input type="checkbox" id="tagLibraryCb{{$index}}" value="" data-ng-model="library.checked" data-ng-disabled="library.disabled">&nbsp;&nbsp;
