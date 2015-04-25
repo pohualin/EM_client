@@ -22,7 +22,7 @@
                     <div class="error-circle fa-exclamation-circle"
                          data-ng-show="locationForm.locationName.$error.pattern && locationFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                         data-title="Please enter a valid name."></div>
+                         data-title="Please enter a valid name"></div>
                     <input class="form-control" id="locationName" data-ng-model="locationToEdit.entity.name" name="locationName"
                            type="text" maxlength="255" required data-focus-on="locationName" data-auto-focus
                            data-ng-pattern="/^[\-\.a-zA-Z0-9 '=_;:@#&,\(\)!]*$/">
@@ -35,7 +35,7 @@
                     <div class="error-circle fa-exclamation-circle"
                          data-ng-show="locationForm.phone.$error.pattern && locationFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                         data-title="Please enter a valid phone number."></div>
+                         data-title="Please enter a valid phone number"></div>
                     <span class="field-note field-optional">optional</span>
                     <input class="form-control" data-ng-model="locationToEdit.entity.phone" id="phone" name="phone" type="text"
                            maxlength="12" data-input-mask="999-999-9999"
@@ -51,7 +51,7 @@
                     <div class="error-circle fa-exclamation-circle"
                          data-ng-show="locationForm.city.$error.pattern && locationFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                         data-title="Please enter a valid city."></div>
+                         data-title="Please enter a valid city"></div>
                     <span class="field-note field-optional">optional</span>
                     <input class="form-control" data-ng-model="locationToEdit.entity.city" id="city" name="city" type="text"
                            maxlength="255" data-ng-pattern="/^[\-\.a-zA-Z0-9 '=_;:@#&,\(\)!]*$/">
