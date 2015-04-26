@@ -1,4 +1,8 @@
-'use strict';
+/* global angular */
+
+(function () {
+    'use strict';
+
 angular.module('emmiManager')
 
     .service('TeamsFilter', function ($http, $q, UriTemplate, TeamTag, Tag, Client, CommonService) {
@@ -42,7 +46,11 @@ angular.module('emmiManager')
              */
             getClientTagsInGroups: function (groups) {
                 //get tags for all groups on client
-                var clientTagsInGroups = [];
+                var clientTagsInGroups = [{
+                    text: 'Untagged Teams',
+                    id: -99999,
+                    isUntaggedTag: true
+                }];
                 angular.forEach(groups, function (group) {
                     var localGroup = angular.copy(group.entity);
                     localGroup.title = group.name;
@@ -159,7 +167,17 @@ angular.module('emmiManager')
              */
             getActiveOrAllTeamTagsForFilteredTags: function (filterTags, getInactive) {
                 var deferred = $q.defer();
-                var teamTags = [];
+                var teamTags = [{
+                    text: 'Untagged Teams',
+                    isUntaggedTag: true,
+                    team: {
+                        name: 'untagged team'
+                    },
+                    tag: {
+                        id: -99999,
+                        isUntaggedTag: true
+                    }
+                }];
                 var tagIds = [];
                 var status;
 
@@ -170,7 +188,9 @@ angular.module('emmiManager')
                 }
 
                 angular.forEach(filterTags, function (filterTag) {
-                    tagIds.push(filterTag.id);
+                    if (!filterTag.isUntaggedTag) {
+                        tagIds.push(filterTag.id);
+                    }
                 });
 
                 //get teams tags with the tagIds from the filter by tags
@@ -189,6 +209,7 @@ angular.module('emmiManager')
                                 load(response);
                             });
                         }
+
                         deferred.resolve(teamTags);
                     });
                 return deferred.promise;
@@ -197,7 +218,7 @@ angular.module('emmiManager')
             /**
              * get the teams from the teamtags
              * @param teamTags to parse
-             * @returns {} teams object
+             * @returns {*} teams object
              */
             getTeamsFromTeamTags: function (teamTags) {
                 var teams = {};
@@ -327,20 +348,22 @@ angular.module('emmiManager')
 
                 if (listOfTeamsByTagFromSelectedGroup !== null && typeof listOfTeamsByTagFromSelectedGroup === 'object') {
                     angular.forEach(teamTags, function (teamTag) {
-                        //build the list of tags a team has
-                        if (listOfTagsByTeams[teamTag.team.name]) {
-                            //if this team is already in our list get its list of tags and add the current tag to the list
-                            tags = listOfTagsByTeams[teamTag.team.name];
-                            tags.push(teamTag.tag);
-                        } else {
-                            //this team will only have the current tag in its list
-                            tags.push(teamTag.tag);
+                        if (!teamTag.isUntaggedTag) {
+                            //build the list of tags a team has
+                            if (listOfTagsByTeams[teamTag.team.name]) {
+                                //if this team is already in our list get its list of tags and add the current tag to the list
+                                tags = listOfTagsByTeams[teamTag.team.name];
+                                tags.push(teamTag.tag);
+                            } else {
+                                //this team will only have the current tag in its list
+                                tags.push(teamTag.tag);
+                            }
+                            //assign the current team its list of tags
+                            listOfTagsByTeams[teamTag.team.name] = tags;
+                            tags = [];
+                            //keep track of the teams
+                            teams[teamTag.team.name] = teamTag.team;
                         }
-                        //assign the current team its list of tags
-                        listOfTagsByTeams[teamTag.team.name] = tags;
-                        tags = [];
-                        //keep track of the teams
-                        teams[teamTag.team.name] = teamTag.team;
                     });
 
                     //get teams that don't have tags in selected group
@@ -408,3 +431,4 @@ angular.module('emmiManager')
         };
     })
 ;
+}());
