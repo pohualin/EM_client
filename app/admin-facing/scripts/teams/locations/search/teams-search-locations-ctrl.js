@@ -133,8 +133,8 @@ angular.module('emmiManager')
         $scope.sortClient = function (property) {
             $scope.loading = true;
             Location.findForClient(Client.getClient(), $scope.currentPageSize, $scope.sort(property)).then(function (locationPage) {
-                $scope.handleResponse(locationPage, managedLocationList);
-                $scope.setLocationChecked();
+                $scope.handleResponse(locationPage, managedClientLocationList);
+                $scope.setClientLocationSelected($scope.clientLocations);
             }, function () {
                 // error happened
                 $scope.loading = false;
