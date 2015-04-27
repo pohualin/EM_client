@@ -69,4 +69,12 @@
     th, td {
         padding: 2px 0;
     }
+    .popover-flex & {
+        // If it's a flex popover, there's no max-width and the th would always be 50% wide,
+        // so it will match the data in 2nd column (generate API cred popover)
+        th {
+            width: auto;
+            padding-right: 30px;
+        }
+    }
 }
