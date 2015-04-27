@@ -39,25 +39,33 @@
 			                <div class="panel-collapse" data-bs-collapse-target>
 			                    <div class="panel-body">
                                     Permissions:<br/>
-			                        <small class="text-muted">
+			                        <div class="permissions-list">
 				                        <span data-ng-repeat="permission in clientTeamRole.entity.permissions | orderBy:'permission.rank'">
 			                    			{{permission.name  | translate }}{{!$last ? ',' : ''}}&nbsp;
 			                    		</span>
-			                        </small>
+			                        </div>
 			                    </div>
 			                    <div class="panel-body" data-ng-show="clientTeamRole.existingTeams">
                                     Teams:</br>
-			                        <ul>
-										<li data-ng-repeat="existingTeam in clientTeamRole.existingTeams">
-                                            <span class="pull-right" data-ng-hide="">
+			                        <table class="permissions-teams-list" cellspacing="0" cellpadding="0">
+										<tr data-ng-repeat="existingTeam in clientTeamRole.existingTeams">
+											<td>{{existingTeam.entity.team.name}}</td>
+                                            <td class="pull-right">
                                                 <button class="btn btn-icon" data-ng-click="removeUserClientUserClientTeamRole(clientTeamRole, existingTeam)">
                                                     <i class="icon-delete"></i>
                                                 </button>
-                                            </span>
-											<span>{{existingTeam.entity.team.name}}</span>
-										</li>
-									</ul>
-                                    <div data-ng-show="clientTeamRole.existingTeams" data-ng-include="'admin-facing/partials/user/client/userclientteamrole/add-teams.html'"></div>
+                                            </td>
+										</tr>
+                                        <tr>
+                                            <td>one very very very long team name</td>
+                                            <td class="pull-right">
+                                                <button class="btn btn-icon">
+                                                    <i class="icon-delete"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+									</table>
+                                    <div class="panel-misaligned-button" data-ng-show="clientTeamRole.existingTeams" data-ng-include="'admin-facing/partials/user/client/userclientteamrole/add-teams.html'"></div>
 			                    </div>
 			                </div><!-- .panel-collapse -->
 			            </div><!-- .panel -->

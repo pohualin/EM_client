@@ -262,9 +262,9 @@ table {
 }
 
 // Max out panel groups at 460px per Angela (EM-1003)
-.col-md-6 .panel-group {
+/*.col-md-6 .panel-group {
     max-width: 460px;
-}
+}*/
 
 .panel-secondary {
     @include panel-variant($panel-secondary-border, $panel-secondary-text, $panel-secondary-heading-bg, $panel-secondary-heading-bg);
@@ -294,6 +294,12 @@ table {
         color: #fff;
         padding: 5px 10px 0;
     }
+}
+
+.panel-misaligned-button {
+    position: relative;
+    margin-left: -16px;
+    margin-top: 20px;
 }
 
 .panel-group .panel + .panel {

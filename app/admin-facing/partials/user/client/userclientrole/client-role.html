@@ -24,11 +24,11 @@
                             <div class="panel-collapse" data-bs-collapse-target>
                                 <div class="panel-body">
                                     Permissions:</br>
-                                    <small class="text-muted">
+                                    <div class="permissions-list">
                                         <span data-ng-repeat="permission in existingUserClientUserClientRole.entity.permissions | orderBy:'permission.rank'">
                                             {{permission.name  | translate }}{{!$last ? ',' : ''}}&nbsp;
                                         </span>
-                                    </small>
+                                    </div>
                                 </div>
                             </div>
                         </div><!-- .panel -->

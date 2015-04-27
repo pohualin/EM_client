@@ -58,6 +58,27 @@ label.empty {
     color: #999;
 }
 
+.permissions-list {
+    @include remIt(font-size, 13);
+    color: #908688;
+    margin-top: 2px;
+}
+
+.permissions-teams-list {
+    @include remIt(font-size, 13);
+    margin-top: 2px;
+    td {
+        padding: 0;
+        &:first-child {
+            padding-right: 50px;
+        }
+    }
+    .btn-icon {
+        font-size: 18px;
+        line-height: 1;
+    }
+}
+
 .field-note {
     margin-left: 0;
     // If validation error-circle is hidden, make it seem like it's still there (could also overwrite ng-hide on .error-circle and set visibility to hidden...)
