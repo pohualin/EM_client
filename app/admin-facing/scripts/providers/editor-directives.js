@@ -19,12 +19,12 @@ angular.module('emmiManager')
                     if(scope.provider && scope.provider.active && scope.providerToEdit && !scope.providerToEdit.active) {
                     	if (!scope.saveClientProviderWarning) {
                             scope.saveClientProviderWarning = $popover(element, {
-                                title: '',
+                                title: 'Are you sure?',
                                 scope: scope,
                                 trigger: 'manual',
                                 container: 'body',
                                 show: true,
-                                placement: 'bottom',
+                                placement: 'right',
                                 target: element,
                                 contentTemplate: 'admin-facing/partials/client/provider/deactivate_popover.tpl.html'
                             });
