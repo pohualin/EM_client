@@ -4,7 +4,7 @@
         <div class="col-md-12">
             <div class="layout-card">
                 <div class="pull-right">
-                    <a data-ng-href="#/users/new?{{currentRouteQueryString}}" class="btn btn-link btn-link-nopad btn-heading">
+                    <a data-ng-href="#/users/new?{{currentRouteQueryString}}" class="btn btn-default">
                         <i class="icon-plus"></i> Create New User
                     </a>
                 </div>
@@ -12,14 +12,7 @@
                 <div class="row" data-ng-show="searchPerformed">
                     <div class="col-md-12">
                         <div class="row table-search-filters" data-ng-hide="removeStatusFilterAndTotal">
-                            <div class="col-md-12">
-                                <div class="pull-right table-results-count">
-                                    {{total}} <span data-ng-show="total != 1"
-                                                    data-translate="global.labels.total"> results</span> <span
-                                    data-ng-show="total === 1"
-                                    data-translate="global.labels.totalSingular"> result</span>
-                                </div>
-                            </div>
+                            <div class="col-md-12"></div>
                         </div>
                         <table class="table table-bordered table-striped table-hover"
                                border="0" cellpadding="0" cellspacing="0" data-ng-show="users">
@@ -65,8 +58,8 @@
                                        data-on-open-popover="deactivationPopoverOpen(user, true)"
                                        data-on-close-popover="deactivationPopoverOpen(user, false)"
                                        data-toggle-user-client-active>
-                                        <i title="activate" data-ng-if="!user.active" class="icon-check-circle icon-size-xl"></i>
-                                        <i title="deactivate" data-ng-if="user.active" class="icon-delete-circle icon-size-xl"></i>
+                                        <i title="activate" data-ng-if="!user.active" class="icon-check-o-circle icon-size-xl"></i>
+                                        <i title="deactivate" data-ng-if="user.active" class="icon-trashcan icon-size-xl"></i>
                                     </a>
                                 </td>
                             </tr>
