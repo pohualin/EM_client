@@ -3,7 +3,7 @@
         <div class="col-md-4">
             <div class="form-group"
                  data-ng-class="{ 'has-error' : userClientForm.firstName.$invalid && userClientFormSubmitted }">
-                <label class="control-label" for="firstName">First Name:</label>
+                <label class="control-label" for="firstName">First Name</label>
                 <div class="error-circle fa-exclamation-circle"
                      data-ng-show="userClientForm.firstName.$error.required && userClientFormSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
@@ -21,7 +21,7 @@
         <div class="col-md-4">
             <div class="form-group"
                  data-ng-class="{ 'has-error' : userClientForm.lastName.$invalid && userClientFormSubmitted }">
-                <label class="control-label" for="lastName">Last Name:</label>
+                <label class="control-label" for="lastName">Last Name</label>
                 <div class="error-circle fa-exclamation-circle"
                      data-ng-show="userClientForm.lastName.$error.required && userClientFormSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
@@ -39,7 +39,7 @@
         <div class="col-md-4">
             <div class="form-group"
                  data-ng-class="{ 'has-error' : userClientForm.email.$invalid && userClientFormSubmitted }">
-                <label class="control-label" for="email">Email:</label>
+                <label class="control-label" for="email">Email</label>
                 <div class="error-circle fa-exclamation-circle"
                      data-ng-show="userClientForm.email.$error.required && userClientFormSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
@@ -58,7 +58,7 @@
     <div class="row">
         <div class="col-md-8" data-ng-show="userClientEdit.useEmail">
             <div class="form-group">
-                <label class="control-label" for="useEmail">User ID:</label>
+                <label class="control-label" for="useEmail">User ID</label>
                 <div class="checkbox">
                     <input id="useEmail" type="checkbox" checked data-ng-model="userClientEdit.useEmail"
                            data-ng-change="useEmailChange()"/>
@@ -69,7 +69,7 @@
         <div class="col-md-4" data-ng-hide="userClientEdit.useEmail">
             <div class="form-group"
                  data-ng-class="{ 'has-error' : userClientForm.login.$invalid && userClientFormSubmitted && !userClientEdit.useEmail}">
-                <label class="control-label" for="userId">User ID:</label>
+                <label class="control-label" for="userId">User ID</label>
                 <div class="error-circle fa-exclamation-circle"
                      data-ng-show="userClientForm.login.$error.required && userClientFormSubmitted && !userClientEdit.useEmail"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
