@@ -2,7 +2,7 @@
     <div class="col-md-12" data-ng-show="existingUserClientUserClientRoles">
         <h2>Client Roles</h2>
         <div class="row" data-ng-repeat="existingUserClientUserClientRole in existingUserClientUserClientRoles">
-            <div class="col-md-5">
+            <div class="col-md-6">
                 <form name="existingUserClientUserClientRoleForm_{{existingUserClientUserClientRole.entity.id}}" class="form" novalidate>
                     <div class="panel-group"
                          data-start-collapsed="true"
@@ -12,7 +12,7 @@
                                 <h4 class="panel-title">
                                     <a data-bs-collapse-toggle>
                                         <span class="icon-caret-right"></span>
-                                        {{ existingUserClientUserClientRole.entity.userClientRole.name}}
+                                        <span class="panel-title-text">{{ existingUserClientUserClientRole.entity.userClientRole.name}}</span>
                                     </a>
                                     <div class="pull-right">
                                         <button type="button" class="btn btn-icon btn-inherit" data-ng-click="removeUserClientRole(existingUserClientUserClientRole)">
