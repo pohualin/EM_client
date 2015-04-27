@@ -92,9 +92,14 @@ label.empty {
     }
 }
 
+.info-circle,
 .error-circle {
     margin-left: 4px;
 }
+.info-circle {
+    color: $brand-secondary;
+}
+
 // Icon buttons next to headings
 h1 .btn-icon, .h1 .btn-icon,
 h2 .btn-icon, .h2 .btn-icon,
@@ -196,6 +201,10 @@ td {
     .checkbox {
         margin-top: 0;
         margin-bottom: 0;
+        input[type="checkbox"] + label:before,
+        input[type="radio"] + label:before {
+            margin-right: 0;
+        }
     }
 }
 
