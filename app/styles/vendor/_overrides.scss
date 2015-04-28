@@ -266,6 +266,11 @@ table {
     max-width: 460px;
 }*/
 
+// Override for repeated panel groups like on Roles page
+.panel-group + .panel-group {
+    margin-top: -10px;
+}
+
 .panel-secondary {
     @include panel-variant($panel-secondary-border, $panel-secondary-text, $panel-secondary-heading-bg, $panel-secondary-heading-bg);
 }

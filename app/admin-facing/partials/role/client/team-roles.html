@@ -8,15 +8,15 @@
                         <i class="icon-plus"></i> Add role from library
                 </button>
             </div>
-            <h2>Team Roles</h2>
+            <h2 style="margin-bottom:11px">Team Roles</h2>
         </div>
     </div>
-    <div class="row" data-ng-show="existingClientTeamRoles" data-ng-repeat="role in existingClientTeamRoles">
+    <div class="row" data-ng-show="existingClientTeamRoles">
         <div class="col-md-6">
-            <form name="existingClientTeamRoleForm_{{$index}}" class="form" novalidate unsaved-warning-form>
-                <div class="panel-group" data-ng-model="role.activePanel"
-                     data-ng-change="panelStateChange(role, existingClientTeamRoleForm_{{$index}})" data-start-collapsed="true"
-                     data-bs-collapse>
+            <div class="panel-group" data-ng-model="role.activePanel" data-ng-repeat="role in existingClientTeamRoles"
+                 data-ng-change="panelStateChange(role, existingClientTeamRoleForm_{{$index}})" data-start-collapsed="true"
+                 data-bs-collapse>
+                <form name="existingClientTeamRoleForm_{{$index}}" class="form" novalidate unsaved-warning-form>
                     <div class="panel panel-secondary" data-ng-class="{ 'panel-open': role.activePanel === 0 }">
                         <div class="panel-heading">
                             <h4 class="panel-title">
@@ -42,31 +42,26 @@
                                            required>
                                 </div>
                             </h4>
-                        </div>
+                        </div><!-- .panel-heading -->
                         <div class="panel-collapse" data-bs-collapse-target>
                             <div class="panel-body">
                                 <div data-ivh-treeview="role.entity.userClientTeamPermissions" class="ivh-treeview-container" id="clientTeamRoleTV_{{role.entity.id}}"></div>
                             </div>
                             <div class="panel-footer" data-ng-show="existingClientTeamRoleForm_{{$index}}.$valid && existingHasChanged(role) && hasAPermissionChecked(role.entity)">
                                 <button class="btn btn-success" data-ng-click="update(role, existingClientTeamRoleForm_{{$index}})"
-                                        data-bs-collapse-toggle>
-                                    Save
-                                </button>
+                                        data-bs-collapse-toggle>Save</button>
                                 <button type="button" class="btn btn-cancel" data-ng-click="cancelExisting(role, existingClientTeamRoleForm_{{$index}})"
-                                        data-bs-collapse-toggle>
-                                    cancel
-                                </button>
+                                        data-bs-collapse-toggle>cancel</button>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
+                        </div><!-- .panel-collapse -->
+                    </div><!-- .panel -->
+                </form>
+            </div><!-- .panel-group -->
         </div>
     </div>
     <div class="row">
         <div class="col-md-6">
-            <form name="newClientTeamRoleForm" class="form"
-                  novalidate unsaved-warning-form>
+            <form name="newClientTeamRoleForm" class="form" novalidate unsaved-warning-form>
                 <div class="panel-group" data-ng-show="newClientTeamRole">
                     <div class="panel panel-default">
                         <div class="panel-heading panel-heading-form">
@@ -83,19 +78,14 @@
                                 <div data-ng-if="newClientTeamRole.userClientTeamPermissions" data-ivh-treeview="newClientTeamRole.userClientTeamPermissions" class="ivh-treeview-container" id="newClientTeamRoleTV"></div>
                             </div>
                             <div class="panel-footer" data-ng-show="newClientTeamRoleForm.$valid && hasAPermissionChecked(newClientTeamRole)">
-                                <button class="btn btn-success" data-ng-click="saveNewRole(newClientTeamRole, newClientTeamRoleForm)">
-                                    Save
-                                </button>
-                                <button type="button" class="btn btn-cancel" data-ng-click="cancelNew(newClientTeamRoleForm)">cancel
-                                </button>
+                                <button class="btn btn-success" data-ng-click="saveNewRole(newClientTeamRole, newClientTeamRoleForm)">Save</button>
+                                <button type="button" class="btn btn-cancel" data-ng-click="cancelNew(newClientTeamRoleForm)">cancel</button>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div data-ng-hide="newClientTeamRole">
-                    <button type="button" class="btn btn-default" data-ng-click="createNewClientTeamRole()">Create new
-                        team role
-                    </button>
+                    <button type="button" class="btn btn-default" data-ng-click="createNewClientTeamRole()">Create new team role</button>
                 </div>
             </form>
         </div>
