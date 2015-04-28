@@ -109,7 +109,7 @@ angular.module('emmiManager')
             };
 
             $scope.search = function (validForm) {
-                if (validForm) {
+            	if (validForm) {
                     $scope.changedProviders = {};
                     $scope.loading = true;
                     ClientProviderService.find(Client.getClient(), $scope.providerQuery).then(function (providerPage) {
@@ -125,11 +125,12 @@ angular.module('emmiManager')
             $scope.statusChange = function () {
                 $scope.loading = true;
                 ClientProviderService.find(Client.getClient(), $scope.providerQuery, $scope.status, $scope.sortProperty, $scope.currentPageSize).then(function (providerPage) {
-                    $scope.handleResponse(providerPage, managedProviderList);
-                    $scope.setCheckboxesForChanged($scope[managedProviderList]);
+                	$scope.handleResponse(providerPage, managedProviderList);
+                	$scope.setCheckboxesForChanged($scope[managedProviderList]);
+                	
                 }, function () {
-                    // error happened
-                    $scope.loading = false;
+                	// error happened
+                	$scope.loading = false;
                 });
             };
 
@@ -154,10 +155,10 @@ angular.module('emmiManager')
                     $scope.loading = false;
                 });
             };
-
+            
             // when a column header is clicked
             $scope.sort = function (property) {
-                var sort = $scope.sortProperty || {};
+            	var sort = $scope.sortProperty || {};
                 if (sort && sort.property === property) {
                     // same property was clicked
                     if (!sort.ascending) {
@@ -181,6 +182,16 @@ angular.module('emmiManager')
                     $scope.loading = false;
                 });
             };
+            
+            function init() {
+            	$scope.providerQuery = null;
+                $scope.status = 'ACTIVE_ONLY';
+                $scope.searchPerformed = false;
+                $scope.changedProviders = {};
+                $scope[managedProviderList] = null;
+                $scope.sortProperty =  null;
+            }
+            init();
 
         }])
 ;
