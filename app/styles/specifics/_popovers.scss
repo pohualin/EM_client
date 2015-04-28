@@ -2,7 +2,14 @@
 // Tag library popover
 .popover.popover-tag-library {
     width: 355px;
+    .form-group {
+        margin-bottom: 0;
+        .checkbox:last-child {
+            margin-bottom: 0;
+        }
+    }
 }
+
 .popover {
     .btn-close {
         position: absolute;
@@ -46,6 +53,8 @@
         margin-right: 18px;
     }
     .popover-footer .info {
+        font-size: 15px;
+        font-weight: 300;
         line-height: 17px;
         padding: 6px 0;
     }
@@ -55,8 +64,17 @@
     th {
         font-weight: 300;
         width: 50%;
+        white-space: normal;
     }
     th, td {
         padding: 2px 0;
+    }
+    .popover-flex & {
+        // If it's a flex popover, there's no max-width and the th would always be 50% wide,
+        // so it will match the data in 2nd column (generate API cred popover)
+        th {
+            width: auto;
+            padding-right: 30px;
+        }
     }
 }

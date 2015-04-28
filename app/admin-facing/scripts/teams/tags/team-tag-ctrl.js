@@ -2,8 +2,8 @@
 
 angular.module('emmiManager')
 
-    .controller('TeamTagsController',['$scope', 'Client', 'TeamTag', 'Tag', '$modal',
-      function ($scope, Client, TeamTag, Tag, $modal) {
+    .controller('TeamTagsController',['$scope', '$alert', 'Client', 'TeamTag', 'Tag', '$modal',
+      function ($scope, $alert, Client, TeamTag, Tag, $modal) {
 
         Tag.loadGroups($scope.teamClientResource.clientResource).then(function (tagGroups) {
             var tagGroupToDisplay = [];
@@ -41,13 +41,38 @@ angular.module('emmiManager')
                 $scope.hideRemoveTagPopover();
             });
         };
+        
+        /**
+         * Show alert after a tag has been added
+         */
+        $scope.alertAfterTagAdded = function(){
+            var existingTagIds = [];
+            angular.forEach($scope.existingTags, function(tag) {
+               existingTagIds.push(tag.id); 
+            });
+            
+            angular.forEach($scope.teamClientResource.teamResource.tags, function(tag){
+                if(existingTagIds.indexOf(tag.id) === -1){
+                    $alert({
+                        content: '<b>' + tag.name + '</b> has been added successfully.',
+                        container: '#messages-container',
+                        type: 'success',
+                        placement: 'top',
+                        show: true,
+                        duration: 5,
+                        dismissable: true
+                    });
+                    return;
+                }
+            });
+        };
 
         $scope.hideRemoveTagPopover = function () {
             if($scope.removeTagWarning){
                 $scope.removeTagWarning.hide();
             }
         };
-
+        
         var showClientTagsModal = $modal({scope: $scope, template: 'admin-facing/partials/team/tags/client_tags_modal.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, placement: 'center', backdrop: 'static'});
         $scope.client = $scope.teamClientResource.clientResource.entity;
         Client.setClient($scope.teamClientResource.clientResource);
@@ -70,6 +95,7 @@ angular.module('emmiManager')
                         .then(function(response){
                         if(!response){
                             scope.saveTagState();
+                            scope.alertAfterTagAdded();
                             return;
                         }
 

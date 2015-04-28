@@ -48,7 +48,7 @@ angular.module('emmiManager')
                  */
                 validateActivationToken: function (activationToken) {
                     return $http.get(UriTemplate.create(api.activate).stringify(), {
-                        activationToken: activationToken
+                        params: { activationToken: activationToken}
                     })
                     .success(function (response) {
                         return response;

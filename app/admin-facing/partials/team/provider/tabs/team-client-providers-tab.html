@@ -33,7 +33,7 @@
       </td>
       <td>{{teamProvider.provider.entity.specialty.name}}</td>
       <td>{{teamProvider.provider.entity.email}}</td>
-      <td data-ng-if="allTeamLocations.length > 0" >
+      <td class="col-has-multiselect" data-ng-if="allTeamLocations.length > 0" >
         <div data-ng-show="teamProvider.provider.entity.showLocations">
           <div data-ng-class="{'has-error col-md-11': teamProvider.provider.entity.selectedTeamLocations < 1 && associateRequestSubmitted}" data-multi-select
              name="allTeamLocations{{$index}}"

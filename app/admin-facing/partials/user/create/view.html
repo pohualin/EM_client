@@ -28,15 +28,10 @@
             <div class="entity-value">{{selectedUser.login}}</div>
         </div>
     </div>
-    <hr/>
-    <div class="row">
+    <div class="row entity-info">
         <div class="col-md-12">
-            <h2>Roles Information</h2>
-            <ul>
-                <li data-ng-repeat="role in selectedUser.roles">
-                    {{role.name}}
-                </li>
-            </ul>
+            <h5 class="entity-value-label"><span>Roles Information</span></h5>
+            <div class="entity-value" data-ng-repeat="role in selectedUser.roles">{{role.name}}</div>
         </div>
     </div>
     <div class="row" data-ng-show="selectedUser.webApiUser && selectedUser.link.password">
