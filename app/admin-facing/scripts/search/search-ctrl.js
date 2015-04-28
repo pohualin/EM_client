@@ -22,7 +22,7 @@ angular.module('emmiManager')
  * Sorting helper functions
  */
     .controller('CommonSort', ['$scope', function ($scope) {
-        $scope.createSortProperty = function (property) {
+    	$scope.createSortProperty = function (property) {
             var sort = $scope.sortProperty || {};
             if (sort && sort.property === property) {
                 // same property was clicked
@@ -57,7 +57,7 @@ angular.module('emmiManager')
         };
 
         $scope.handleResponse = function (responsePage, contentProperty) {
-            if (responsePage && responsePage.content) {
+        	if (responsePage && responsePage.content) {
                 // sort the rows the way they exist on the response page
                 for (var sort = 0, size = responsePage.content.length; sort < size; sort++ ){
                     var content = responsePage.content[sort];
@@ -101,18 +101,16 @@ angular.module('emmiManager')
                 if (responsePage.filter) {
                     $scope.status = responsePage.filter.status;
                 }
-
                 // handle sort response object
                 if (responsePage.sort) {
-                    $scope.sortProperty = {
+                	    $scope.sortProperty = {
                         property: responsePage.sort[0].property,
                         ascending: responsePage.sort[0].direction === 'ASC'
                     };
                 }
             } else {
-                $scope.total = 0;
+            	$scope.total = 0;
                 $scope[contentProperty] = null;
-                $scope.status = responsePage.statusFromReq ? responsePage.statusFromReq : 'ACTIVE_ONLY';
             }
             $scope.searchPerformed = true;
             $scope.loading = false;

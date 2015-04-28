@@ -110,8 +110,10 @@ angular.module('emmiManager')
                 }
                 return deferred.promise;
             },
-            findForClient: function (clientResource, pageSize) {
-                return $http.get(UriTemplate.create(clientResource.link.locations).stringify({size: pageSize}))
+            findForClient: function (clientResource, pageSize, sort) {
+                return $http.get(UriTemplate.create(clientResource.link.locations).stringify({size: pageSize,
+                    sort: sort && sort.property ? sort.property + ',' + (sort.ascending ? 'asc' : 'desc') : ''
+                }))
                     .then(function pageResponse(response) {
                         convertPageContentLinks(response.data.content);
                         return response.data;

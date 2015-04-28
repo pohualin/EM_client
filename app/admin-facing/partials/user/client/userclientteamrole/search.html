@@ -1,5 +1,5 @@
 <div class="modal" tabindex="-1" role="dialog" data-ng-controller="UsersClientUserClientTeamRolesSearchController">
-    <div class="modal-dialog modal-dialog-large container-fluid">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Role: {{selectedClientTeamRole.entity.name}}</h4>
@@ -10,9 +10,9 @@
                 </div>
                 <form name="searchForm" novalidate data-ng-show="hasTeams && !loading">
                     <div class="row">
-                        <div class="col-md-9">
+                        <div class="col-md-7">
                             <div class="form-group">
-                                <label class="sr-only" for="locationQuery">Search teams:</label>
+                                <label class="control-label invisible" for="query">Search:</label>
                                 <div class="input-group has-input-icon has-input-icon-search">
                                     <input class="form-control" name="query" id="query" data-ng-model="teamQuery"
                                            type="text" placeholder="Search teams..." required data-auto-focus data-focus-on="LocationSearchFocus">
@@ -24,31 +24,31 @@
                                     </span>
                                 </div>
                             </div>
-                        </div><!-- .col-md-9 -->
+                        </div><!-- .col-md-7 -->
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label class="control-label" for="tagFilter">Show teams by tag:</label>
+                                <select id="tagFilter" name="tagFilter" class="form-control"
+                                        data-ng-disabled="loading"
+                                        data-ng-model="tagFilter.tag" data-ng-change="onTagFilterChange()"
+                                        data-ng-options="tag.text group by tag.group.name for tag in clientTagGroupToDisplay | orderBy:'text'
+                                           track by tag.id"
+                                        data-disable-search-threshold="10" data-allow-single-deselect="true"
+                                        data-no-results-text="'All Tags'"
+                                        data-placeholder="All Tags"
+                                        data-chosen>
+                                    <option></option>
+                                </select>
+                            </div>
+                        </div><!-- .col-md-5 -->
                     </div><!-- .row -->
-                    <div class="row table-search-filters">
+                    <div class="row">
                         <div class="col-md-12">
                             <div class="pull-right table-results-count" data-ng-hide="removeStatusFilterAndTotal">
                                 {{total}} <span data-ng-show="total != 1"
                                     data-translate="global.labels.total"> results</span> <span
                                     data-ng-show="total === 1"
                                     data-translate="global.labels.totalSingular"> result</span>
-                            </div>
-                            <div class="form-inline">
-                                <div class="form-group">
-                                    <label class="control-label" for="tagFilter">Show teams by tag:</label>
-                                    <select id="tagFilter" name="tagFilter" class="form-control input-sm" style="width:400px;"
-                                            data-ng-disabled="loading"
-                                            data-ng-model="tagFilter.tag" data-ng-change="onTagFilterChange()"
-                                            data-ng-options="tag.text group by tag.group.name for tag in clientTagGroupToDisplay | orderBy:'text'
-			                                   track by tag.id"
-                                            data-disable-search-threshold="10" data-allow-single-deselect="true"
-                                            data-no-results-text="'All Tags'"
-                                            data-placeholder="All Tags"
-                                            data-chosen>
-                                        <option></option>
-                                    </select>
-                                </div>
                             </div>
                         </div>
                     </div><!-- .row -->
@@ -79,9 +79,9 @@
                                 </div>
                             </td>
     						<td>{{userClientUserClientTeamRole.entity.team.name}}
-    							<div class="error-circle fa-exclamation-circle"
+    							<div class="info-circle fa-exclamation-circle"
     					             data-ng-show="userClientUserClientTeamRole.entity.warning"
-    					             data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+    					             data-bs-tooltip data-placement="right" data-type="info" data-container="body"
     					             data-title="{{userClientUserClientTeamRole.entity.warning}}"></div>
     						</td>
     					</tr>

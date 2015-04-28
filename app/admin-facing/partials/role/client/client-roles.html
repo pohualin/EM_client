@@ -1,17 +1,28 @@
 <div class="col-md-12" data-ng-controller="ClientRoleAdminCtrl">
-    <h2>Client Roles</h2>
-    <div class="row" data-ng-show="existingClientRoles" data-ng-repeat="role in existingClientRoles">
+    <div class="row">
         <div class="col-md-6">
-            <form name="existingRoleForm_{{$index}}" class="form" novalidate unsaved-warning-form>
-                <div class="panel-group" data-ng-model="role.activePanel"
-                     data-ng-change="panelStateChange(role, existingRoleForm_{{$index}})" data-start-collapsed="true"
-                     data-bs-collapse>
+            <div class="pull-right">
+                <button class="btn btn-link btn-link-nopad btn-heading btn-tag-library" type="button" title="Select client roles to add:"
+                        data-placement="right" data-template="admin-facing/partials/role/client/role-library.html"
+                        data-trigger="click" data-bs-popover data-auto-close="1" data-popover-dismiss data-container="body">
+                        <i class="icon-plus"></i> Add role from library
+                </button>
+            </div>
+            <h2 style="margin-bottom:11px">Client Roles</h2>
+        </div>
+    </div>
+    <div class="row" data-ng-show="existingClientRoles">
+        <div class="col-md-6">
+            <div class="panel-group" data-ng-model="role.activePanel" data-ng-repeat="role in existingClientRoles"
+                 data-ng-change="panelStateChange(role, existingRoleForm_{{$index}})" data-start-collapsed="true"
+                 data-bs-collapse>
+                <form name="existingRoleForm_{{$index}}" class="form" novalidate unsaved-warning-form>
                     <div class="panel panel-secondary" data-ng-class="{ 'panel-open': role.activePanel === 0 }">
                         <div class="panel-heading">
                             <h4 class="panel-title">
                                 <a data-bs-collapse-toggle data-ng-hide="role.editName" data-ng-dblclick="startEditName(role)">
                                     <span class="icon-caret-right"></span>
-                                    {{ role.entity.name }}
+                                    <span class="panel-title-text">{{ role.entity.name }}</span>
                                 </a>
                                 <div class="pull-right">
                                     <button type="button" class="btn btn-icon btn-inherit"
@@ -31,64 +42,50 @@
                                            required>
                                 </div>
                             </h4>
-                        </div>
+                        </div><!-- .panel-heading -->
                         <div class="panel-collapse" data-bs-collapse-target>
                             <div class="panel-body">
                                 <div data-ivh-treeview="role.entity.userClientPermissions" class="ivh-treeview-container" id="clientRoleTV_{{role.entity.id}}"></div>
                             </div>
-                            <div class="panel-footer">
+                            <div class="panel-footer" data-ng-show="existingRoleForm_{{$index}}.$valid && existingHasChanged(role) && hasAPermissionChecked(role.entity)">
                                 <button class="btn btn-success" data-ng-click="update(role, existingRoleForm_{{$index}})"
-                                        data-bs-collapse-toggle
-                                        data-ng-show="existingRoleForm_{{$index}}.$valid && existingHasChanged(role) && hasAPermissionChecked(role.entity)">
-                                    Save Changes
-                                </button>
+                                        data-bs-collapse-toggle>Save</button>
                                 <button type="button" class="btn btn-cancel" data-ng-click="cancelExisting(role, existingRoleForm_{{$index}})"
-                                        data-bs-collapse-toggle>
-                                    cancel
-                                </button>
+                                        data-bs-collapse-toggle>cancel</button>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
+                        </div><!-- .panel-collapse -->
+                    </div><!-- .panel -->
+                </form>
+            </div><!-- .panel-group -->
         </div>
     </div>
     <div class="row">
         <div class="col-md-6">
-            <form name="newClientRoleForm" class="form"
-                  novalidate unsaved-warning-form>
+            <form name="newClientRoleForm" class="form" novalidate unsaved-warning-form>
                 <div class="panel-group" data-ng-show="newClientRole">
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <input class="form-control input-sm" data-ng-model="newClientRole.name"
-                                       data-focus-on="focus-new-role" maxlength="50" required>
-                            </h4>
+                        <div class="panel-heading panel-heading-form">
+                            <div class="panel-title">
+                                <div class="role-group-create form-inline">
+                                    <input class="form-control input-sm" data-ng-model="newClientRole.name"
+                                           data-focus-on="focus-new-role" maxlength="50" required placeholder="Enter a title for new role">
+                                    <button class="btn btn-sm btn-icon" data-ng-click="cancelNew(newClientRoleForm)"><span class="icon-delete icon-size-lg"></span></button>
+                                </div>
+                            </div>
                         </div>
                         <div class="panel-collapse">
                             <div class="panel-body">
                                 <div data-ng-if="newClientRole.userClientPermissions" data-ivh-treeview="newClientRole.userClientPermissions" class="ivh-treeview-container" id="newClientRoleTV"></div>
                             </div>
-                            <div class="panel-footer">
-                                <button class="btn btn-success" data-ng-click="saveNewRole(newClientRole, newClientRoleForm)"
-                                        data-ng-show="newClientRoleForm.$valid && hasAPermissionChecked(newClientRole)">
-                                    Save Role
-                                </button>
-                                <button type="button" class="btn btn-cancel" data-ng-click="cancelNew(newClientRoleForm)">cancel
-                                </button>
+                            <div class="panel-footer" data-ng-show="newClientRoleForm.$valid && hasAPermissionChecked(newClientRole)">
+                                <button class="btn btn-success" data-ng-click="saveNewRole(newClientRole, newClientRoleForm)">Save</button>
+                                <button type="button" class="btn btn-cancel" data-ng-click="cancelNew(newClientRoleForm)">cancel</button>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div data-ng-hide="newClientRole">
-                    <button type="button" class="btn btn-default" data-ng-click="createNewClientRole()">Create new
-                        client role
-                    </button>
-                    <button class="btn btn-link btn-tag-library" type="button" title="Select roles to add:"
-                            data-placement="top" data-template="admin-facing/partials/role/client/role-library.html"
-                            data-trigger="click" data-bs-popover data-auto-close="1" data-popover-dismiss data-container="body">
-                            Add role from library
-                    </button>
+                    <button type="button" class="btn btn-default" data-ng-click="createNewClientRole()">Create new client role</button>
                 </div>
             </form>
         </div>

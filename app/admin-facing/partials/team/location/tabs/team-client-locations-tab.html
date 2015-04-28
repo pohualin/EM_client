@@ -4,21 +4,21 @@
             <thead>
             <tr>
                 <th class="sort col-checkbox">&nbsp;</th>
-                <th class="sort" data-ng-click="sortClient('name')">
+                <th class="sort" data-ng-click="sortClient('location.name')">
                     Name
-                    <span data-ng-show="sortProperty.property === 'name'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span>
+                    <span data-ng-show="sortProperty.property === 'location.name'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span>
                 </th>
-                <th class="sort col-sm-2" data-ng-click="sortClient('belongsTo.name')">
+                <th class="sort col-sm-2" data-ng-click="sortClient('location.belongsTo.name')">
                     Client Owner
-                    <span data-ng-show="sortProperty.property === 'belongsTo.name'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span>
+                    <span data-ng-show="sortProperty.property === 'location.belongsTo.name'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span>
                 </th>
-                <th class="sort col-sm-2" data-ng-click="sortClient('city')">
+                <th class="sort col-sm-2" data-ng-click="sortClient('location.city')">
                     City/State
-                    <span data-ng-show="sortProperty.property === 'city'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span>
+                    <span data-ng-show="sortProperty.property === 'location.city'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span>
                 </th>
-                <th class="sort col-phone" data-ng-click="sortClient('phone')">
+                <th class="sort col-phone" data-ng-click="sortClient('location.phone')">
                     Phone
-                    <span data-ng-show="sortProperty.property === 'phone'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span>
+                    <span data-ng-show="sortProperty.property === 'location.phone'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span>
                 </th>
                 <th class="sort col-sm-3" data-ng-if="providersData">
                     Add to Providers
