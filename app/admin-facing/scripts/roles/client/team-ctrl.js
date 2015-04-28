@@ -214,7 +214,7 @@ angular.module('emmiManager')
              */
             $scope.successAlert = function(clientRole){
                 $alert({
-                    content: '<b>' + clientRole.name + '</b> has been added successfully.',
+                    content: 'The role <b>' + clientRole.name + '</b> has been added successfully.',
                     container: '#messages-container',
                     type: 'success',
                     placement: 'top',
@@ -223,7 +223,7 @@ angular.module('emmiManager')
                     dismissable: true
                 });
             };
-            
+
             // start by loading the currently saved roles
             $scope.loadExisting();
         }

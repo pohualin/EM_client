@@ -2,10 +2,13 @@
     margin: auto;
     list-style-type: none;
     padding-left: 0;
+    .ivh-treeview {
+        padding-left: 38px;
+    }
+    .checkbox {
+        display: inline-block;
+        margin-top: 7px;
+        margin-bottom: 7px;
+    }
 }
-.ivh-treeview .ivh-treeview {
-    padding-left: 35px;
-}
-.ivh-treeview .checkbox {
-    display: inline-block;
-}
+
