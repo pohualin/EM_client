@@ -2,80 +2,77 @@
 
 angular.module('emmiManager')
 
-    .controller('TeamsFilterUrlPersistence', ['$scope', '$location', 'URL_PARAMETERS', 'arrays', '$rootScope', 'TeamsFilter', '$q',
-        function ($scope, $location, URL_PARAMETERS, arrays, $rootScope, TeamsFilter, $q) {
+    .controller('TeamsFilterUrlPersistence', ['$scope', '$location', 'URL_PARAMETERS',
+        'arrays', '$rootScope', 'TeamsFilter', '$q', '$filter',
+        function ($scope, $location, URL_PARAMETERS, arrays, $rootScope, TeamsFilter, $q, $filter) {
             var searchObject = $location.search();
-            $scope.getGroupUrlParameter = function () {
+
+            /**
+             * The method searches the $scope.clientGroups variable and sets the
+             * $scope.selectedGroup if the client group id is present in the query
+             * string
+             */
+            $scope.setSelectedGroupFromQueryString = function () {
                 if (searchObject[URL_PARAMETERS.SELECTED_GROUP] && searchObject[URL_PARAMETERS.SELECTED_GROUP] !== '') {
-                    var deferred = $q.defer();
-                    TeamsFilter.getClientGroups().then(function (groups) {
-                        angular.forEach(groups, function (clientGroup) {
-                            //find the group entity for the group id in the URL
-                            if (searchObject && clientGroup.entity.id === parseInt(searchObject[URL_PARAMETERS.SELECTED_GROUP])) {
-                                $scope.selectedGroup = clientGroup;
-                            }
-                        });
-                        deferred.resolve($scope.selectedGroup);
+                    var found = false;
+                    angular.forEach($scope.clientGroups, function (clientGroup) {
+                        //find the group entity for the group id in the URL
+                        if (!found &&
+                            angular.equals(clientGroup.entity.id, parseInt(searchObject[URL_PARAMETERS.SELECTED_GROUP]))) {
+                            found = true;
+                            $scope.selectedGroup = clientGroup;
+                        }
                     });
-
-                    return deferred.promise;
                 }
             };
 
-            $scope.getTagsUrlParameter = function () {
-                if (searchObject && searchObject[URL_PARAMETERS.SELECTED_TAGS] && searchObject[URL_PARAMETERS.SELECTED_TAGS] !== '') {
-                    var deferred = $q.defer();
+            /**
+             * This method takes the selected tag id's from the query string
+             * then updates the $scope.filterTags object, selecting all values
+             * from $scope.clientTagGroupToDisplay where the id in the url matches
+             * the id in the tag.
+             */
+            $scope.setSelectedTagsFromQueryString = function () {
+                if (searchObject &&
+                    searchObject[URL_PARAMETERS.SELECTED_TAGS] &&
+                    searchObject[URL_PARAMETERS.SELECTED_TAGS] !== '') {
                     var selectedTags = (searchObject[URL_PARAMETERS.SELECTED_TAGS]).split(',');
-                    TeamsFilter.getActiveOrAllTeamTagsForFilteredTags({}, $scope.showInactiveTeams).then(function (teamTags) {
-                        angular.forEach(selectedTags, function (tagToLoadFromURLid) {
-                            //for each tag id in the url...
 
-                            var keepGoing = true;
-                            angular.forEach(teamTags, function (teamTag) {
-                                //check each team tag...
-                                if (keepGoing && teamTag.tag.id === parseInt(tagToLoadFromURLid)) {
-                                    $scope.filterTags.push(teamTag.tag);
-                                    keepGoing = false;
-                                }
-                            });
-                            deferred.resolve($scope.filterTags);
-                        });
+                    var unTaggedTagInList = false;
+                    angular.forEach(selectedTags, function (tagToLoadFromURLid) {
+
+                        if (angular.equals(tagToLoadFromURLid, '-1')) {
+                            // special tag for 'untagged teams only'
+                            $scope.filterTags = [{
+                                text: 'Untagged Teams Only',
+                                id: -1,
+                                untaggedOnly: true
+                            }];
+                            unTaggedTagInList = true;
+                        } else if (!unTaggedTagInList) {
+                            $scope.filterTags.push.apply(
+                                $scope.filterTags,
+                                $filter('filter')($scope.clientTagGroupToDisplay, {id: tagToLoadFromURLid})
+                            );
+                        }
                     });
-
-                    return deferred.promise;
                 }
             };
 
-            $scope.getInactiveAndUntaggedUrlParameters = function () {
-                var deferred = $q.defer();
+            /**
+             * Sets the $scope.showInactiveItems variable to true or false
+             * based upon the query string
+             */
+            $scope.setShowInactiveFromQueryString = function () {
                 if (searchObject[URL_PARAMETERS.INACTIVE_TEAMS]) {
                     $scope.showInactiveTeams = searchObject[URL_PARAMETERS.INACTIVE_TEAMS];
                     //change from String to boolean
                     $scope.showInactiveTeams = $scope.showInactiveTeams !== 'false';
                 }
-
-                if (searchObject[URL_PARAMETERS.UNTAGGED_TEAMS] && searchObject[URL_PARAMETERS.UNTAGGED_TEAMS] !== '') {
-                    $scope.showUntaggedTeams = searchObject[URL_PARAMETERS.UNTAGGED_TEAMS];
-                    if ($scope.showUntaggedTeams === 'false') {
-                        //change from String to boolean
-                        $scope.showUntaggedTeams = false;
-                    } else {
-                        TeamsFilter.getActiveOrAllTeamsWithNoTeamTags($scope.showInactiveTeams).then(function (teams) {
-                            $scope.teamsWithNoTeamTags = true;
-                            $scope.checkUnTaggedTeams = true;
-                            $scope.showUntaggedTeams = true;
-                            $scope.clientTeams = teams;
-
-                        });
-
-                    }
-                }
-                deferred.resolve($scope.clientTeams);
-                return deferred.promise;
             };
 
             $scope.setGroupUrlParameter = function () {
-                var groupIdForURL = '0';
+                var groupIdForURL = null;
                 if ($scope.selectedGroup && $scope.selectedGroup.entity && $scope.selectedGroup.entity.id) {
                     groupIdForURL = $scope.selectedGroup.entity.id;
                 }
@@ -88,18 +85,16 @@ angular.module('emmiManager')
                 angular.forEach($scope.filterTags, function (filteredTag) {
                     tagIds.push(filteredTag.id);
                 });
-                tagIds = tagIds.join(',');
-                $location.search(URL_PARAMETERS.SELECTED_TAGS, tagIds).replace();
+                if (tagIds.length > 0) {
+                    $location.search(URL_PARAMETERS.SELECTED_TAGS, tagIds.join(',')).replace();
+                } else {
+                    $location.search(URL_PARAMETERS.SELECTED_TAGS, null).replace();
+                }
                 $rootScope.currentRouteQueryString = arrays.toQueryString($location.search());
             };
 
             $scope.setInactiveTeamsURLParameter = function () {
-                $location.search(URL_PARAMETERS.INACTIVE_TEAMS, $scope.showInactiveTeams).replace();
-                $rootScope.currentRouteQueryString = arrays.toQueryString($location.search());
-            };
-
-            $scope.setUntaggedTeamsURLParameter = function () {
-                $location.search(URL_PARAMETERS.UNTAGGED_TEAMS, $scope.showUntaggedTeams).replace();
+                $location.search(URL_PARAMETERS.INACTIVE_TEAMS, $scope.showInactiveTeams ? true : null).replace();
                 $rootScope.currentRouteQueryString = arrays.toQueryString($location.search());
             };
 

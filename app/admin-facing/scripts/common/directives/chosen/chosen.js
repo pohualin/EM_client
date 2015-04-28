@@ -71,11 +71,9 @@ angular.module('emmi.chosen', [])
                 initOrUpdate = function () {
                     if (chosen) {
                         element.trigger('chosen:updated');
-                        console.log('element[' + element.context.id + '] chosen:updated');
                     } else {
                         chosen = element.chosen(options).data('chosen');
                         defaultText = chosen[defaultTextAttribute];
-                        console.log('element[' + element.context.id + '] chosen:init');
                     }
                 };
                 removeEmptyMessage = function () {
@@ -90,7 +88,6 @@ angular.module('emmi.chosen', [])
                 if (ngModel) {
                     origRender = ngModel.$render;
                     ngModel.$render = function () {
-                        console.log('element[' + element.context.id + '] render()');
                         origRender();
 
                         // disable options if the model is disabled
@@ -100,7 +97,6 @@ angular.module('emmi.chosen', [])
                                 var ngModelObject = ngModel._inValueMap[option.value];
                                 if (ngModelObject) {
                                     // found the model, set disabled
-                                    console.log('element[' + element.context.id + '].option[' + option.value + '].disabled: ' + ngModelObject.disabled);
                                     option.disabled = ngModelObject.disabled ? 'disabled' : '';
                                 }
                             });
@@ -131,7 +127,6 @@ angular.module('emmi.chosen', [])
                 if (attr.ngOptions && ngModel) {
                     match = attr.ngOptions.match(NG_OPTIONS_REGEXP);
                     if (match && match.length > 7) {
-                        console.log('match length=' + match.length);
                         valuesExpr = match[7];
                         var timer;
                         scope.$watchCollection(valuesExpr, function (newVal) {
@@ -161,7 +156,6 @@ angular.module('emmi.chosen', [])
                                                     ngModel._inValueMap[trackByGetter(item)] = item;
                                                 }
                                             });
-                                            console.log('element[' + element.context.id + '] model map synchronized');
                                         }
                                     }
                                 }

@@ -7,118 +7,123 @@ angular.module('emmiManager')
  * from the back-end to display things properly. This code is not meant to be used in a
  * stand-alone way. It is in this file for organizational purposes only.
  */
-    .controller('TeamsFilterInitialization', ['$scope', '$q', '$controller', 'TeamsFilter', 'Client',
-        function ($scope, $q, $controller, TeamsFilter, Client) {
+    .controller('TeamsFilterInitialization', ['$scope', '$q', '$controller', 'TeamsFilter', 'Client', '$filter',
+        function ($scope, $q, $controller, TeamsFilter, Client, $filter) {
 
             $controller('TeamsFilterUrlPersistence', {
                 $scope: $scope
             });
 
-            $scope.clientId = Client.getClient().entity.id;
-            $scope.filterTags = [];
-            $scope.clientId = Client.getClient().entity.id;
-            $scope.showInactiveTeams = false;
-            $scope.inactiveTeams = true;
-            $scope.showUntaggedTeams = false;
-            $scope.clientTeams = {};
-            $scope.teamsExistForClient = true;
-            $scope.teamsWithNoTeamTags = true;
+            /**
+             * This function re-loads the component completely.
+             */
+            $scope.initialState = function () {
 
+                // load reference data
+                var loadAllTagsForClient = TeamsFilter.getClientGroups().then(function (groups) {
+                    $scope.clientGroups = groups;
+                    $scope.clientTagGroupToDisplay = TeamsFilter.getClientTagsInGroups(groups);
+                });
+                var seeIfTeamsExist = TeamsFilter.doTeamsExistForClient().then(function (page) {
+                    $scope.teamsExistForClient = !!page;
+                });
+                var lookForInactiveTeams = TeamsFilter.doInactiveTeamsExistForClient().then(function (page) {
+                    $scope.inactiveTeams = !!page;
+                });
+                var lookForUntaggedTeams = TeamsFilter.doUntaggedTeamsExist().then(function (page) {
+                    $scope.teamsWithNoTeamTags = !!page;
+                });
 
-            $scope.init = function () {
-
+                // make reference data is fully loaded
                 $q.all([
-                    // parse url parameters
-                    $scope.getGroupUrlParameter(),
-                    $scope.getTagsUrlParameter(),
-                    $scope.getInactiveAndUntaggedUrlParameters()
-                ]).then(function () {
+                    loadAllTagsForClient,
+                    seeIfTeamsExist,
+                    lookForInactiveTeams,
+                    lookForUntaggedTeams]).then(function () {
 
-                    /**
-                     * get groups for clients to fill the group by dropdown
-                     *  and the tags to fill the  filter by box
-                     */
-                    var loadAllTagsForClient = TeamsFilter.getClientGroups().then(function (groups) {
-                        $scope.clientGroups = groups;
-                        $scope.clientTagGroupToDisplay = TeamsFilter.getClientTagsInGroups(groups);
-                    });
+                    // set inactive from url
+                    $scope.setShowInactiveFromQueryString();
 
-                    /**
-                     * check if there are teams on the client, if not, dont show filtered teams widget
-                     */
-                    var seeIfTeamsExist = TeamsFilter.doTeamsExistForClient().then(function (page) {
-                        $scope.teamsExistForClient = page;
-                    });
+                    // set selected group from url
+                    $scope.setSelectedGroupFromQueryString();
 
-                    /**
-                     * check if there are inactive teams on the client, if not, dont show the 'show inactive teams' link
-                     */
-                    var lookForInactiveTeams = TeamsFilter.doInactiveTeamsExistForClient().then(function (page) {
-                        if (!page) {
-                            $scope.inactiveTeams = page;
-                        }
-                    });
+                    // set tags selected from url
+                    $scope.setSelectedTagsFromQueryString();
 
-                    /**
-                     * check if there are teams without tags if not dont show the untagged teams checkbox
-                     */
-                    var lookForUntaggedTeams = TeamsFilter.doUntaggedTeamsExist().then(function (page) {
-                        if (!page) {
-                            $scope.teamsWithNoTeamTags = false;
-                        }
-                    });
-
-                    $q.all([
-                        loadAllTagsForClient,
-                        seeIfTeamsExist,
-                        lookForInactiveTeams,
-                        lookForUntaggedTeams]).then(function () {
-                        // after url is parsed and data is loaded, update the state of the widget
-                        console.log('updating state');
-                        $scope.updateState();
-                    });
+                    // refresh the data based upon the state of the widget
+                    $scope.updateState();
 
                 });
+
             };
 
             /**
-             * determine the states of the 'group by' box and 'filter by' drop down
+             * determine the states of the 'group by' box and 'filter by' drop down,
+             * then loads the data from the service that is appropriate to the state.
              */
             $scope.updateState = function () {
                 //if we only want to show teams with no tags
-                if (!$scope.showUntaggedTeams) {
-                    //set the selected tags or group to filter by in the url params
-                    $scope.setTagsUrlParameter();
-                    $scope.setGroupUrlParameter();
+                var unTaggedSelected = $filter('filter')($scope.filterTags, {untaggedOnly: true});
 
-                    if ($scope.filterTags.length === 0 && !$scope.selectedGroup) {
-                        //if no tags are selected and no group is selected
+                if (unTaggedSelected.length === 0) {
+                    // enable all tags for selection
+                    angular.forEach($scope.clientTagGroupToDisplay, function (tag) {
+                        tag.disabled = false;
+                    });
+                    // turn of untagged-only state
+                    $scope.showUntaggedTeams = false;
+
+                    if ((!$scope.filterTags || $scope.filterTags.length === 0) && !$scope.selectedGroup) {
+                        // no tags are selected and no group is selected
                         $scope.showClientTeams();
                         $scope.listOfTeamsByTag = null;
-                    } else if ($scope.filterTags.length === 0 && $scope.selectedGroup) {
-                        //if there are no tags to filter and a group is selected
+                    } else if ((!$scope.filterTags || $scope.filterTags.length === 0) && $scope.selectedGroup) {
+                        // group is selected, no tags selected
                         $scope.getTeamsToShowForGroup();
-                    } else if ($scope.filterTags.length !== 0 && !$scope.selectedGroup) {
-                        //there are only tags to filter by and no group is selected
+                    } else if ($scope.filterTags && $scope.filterTags.length !== 0 && !$scope.selectedGroup) {
+                        // tags are selected, no group is selected
                         $scope.showFilteredTeams();
                     } else {
-                        //if there are tags to filter and a group is selected
+                        // tags and groups are both selected
                         $scope.showFilteredAndGroupedTeams();
                     }
                 } else {
-                    // disable the tags
+                    // set the selected filter to the un-tagged tag
+                    $scope.filterTags = unTaggedSelected;
+
+                    // show only teams with no tags
+                    $scope.showUntaggedTeams = true;
+
+                    // disable group display
+                    $scope.useGroupDisplay = false;
+
+                    // disable all tags that are not the 'untagged team' tag
                     angular.forEach($scope.clientTagGroupToDisplay, function (tag) {
-                        console.log('disabling tag[' + tag.id + ']');
-                        tag.disabled = true;
+                        tag.disabled = !tag.untaggedOnly;
+                    });
+                    // deselect any 'organize by'
+                    $scope.selectedGroup = '';
+
+                    //load all of the active or inactive teams that do not have tags assigned to them
+                    TeamsFilter.getActiveOrAllTeamsWithNoTeamTags($scope.showInactiveTeams).then(function (teams) {
+                        $scope.clientTeams = teams;
                     });
                 }
+
+                // update the query string to indicate the new state
+                $scope.setTagsUrlParameter();
+                $scope.setGroupUrlParameter();
             };
 
             $scope.$on('refresh-team-filter', function () {
-                console.log('in here');
-                $scope.init();
+                $scope.initialState();
             });
-            $scope.init();
+
+            $scope.filterTags = []; // initialize the 'selected filters' to blank
+            $scope.clientId = Client.getClient().entity.id;
+            // temporarily set this to true so the ui doesn't show 'no teams' while loading
+            $scope.teamsExistForClient = true;
+            $scope.initialState();
 
         }])
 ;

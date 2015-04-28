@@ -43,7 +43,11 @@ angular.module('emmiManager')
              */
             getClientTagsInGroups: function (groups) {
                 //get tags for all groups on client
-                var clientTagsInGroups = [];
+                var clientTagsInGroups = [{
+                    text: 'Untagged Teams Only',
+                    id: -1,
+                    untaggedOnly: true
+                }];
                 angular.forEach(groups, function (group) {
                     var localGroup = angular.copy(group.entity);
                     localGroup.title = group.name;

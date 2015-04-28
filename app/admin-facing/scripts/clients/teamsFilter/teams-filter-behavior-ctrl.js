@@ -111,51 +111,8 @@ angular.module('emmiManager')
                 //toggle showing inactive teams, and update the url parameter
                 $scope.showInactiveTeams = !$scope.showInactiveTeams;
                 $scope.setInactiveTeamsURLParameter();
-                if ($scope.showUntaggedTeams) {
-                    TeamsFilter.getActiveOrAllTeamsWithNoTeamTags($scope.showInactiveTeams).then(function (teams) {
-                        //get all of the active or inactive teams that do not have tags assigned to them
-                        $scope.clientTeams = teams;
-                    });
-                } else {
-                    $scope.updateState();
-                }
+                $scope.updateState();
             };
 
-            /**
-             * called when user checks or unchecks show untagged teams box
-             */
-            $scope.toggleUntaggedTeams = function () {
-                if (!$scope.showUntaggedTeams) {
-                    //show only teams with no tags, remove all filtered by tags and reset the organize by group
-                    $scope.showUntaggedTeams = true;
-                    $scope.useGroupDisplay = false;
-
-                    console.log('disabling tags...');
-                    angular.forEach($scope.clientTagGroupToDisplay, function (tag) {
-                        tag.disabled = true;
-                    });
-
-                    $scope.selectedGroup = '';
-                    //set the url parameters to have no group or tags selected
-                    $scope.setGroupUrlParameter();
-                    $scope.setTagsUrlParameter();
-                    // set the url parameter to show untagged teams only
-                    $scope.setUntaggedTeamsURLParameter();
-                    TeamsFilter.getActiveOrAllTeamsWithNoTeamTags($scope.showInactiveTeams).then(function (teams) {
-                        //get all of the active or inactive teams that do not have tags assigned to them
-                        $scope.clientTeams = teams;
-                    });
-                } else {
-
-                    console.log('enabling tags');
-                    angular.forEach($scope.clientTagGroupToDisplay, function (tag) {
-                        tag.disabled = false;
-                    });
-                    $scope.showUntaggedTeams = false;
-                    $scope.setUntaggedTeamsURLParameter();
-                    $scope.showClientTeams();
-                    //show all the teams on the client
-                }
-            };
         }])
 ;

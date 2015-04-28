@@ -40,21 +40,19 @@
             </div>
 
             <!--show only teams without tags assigned to them when this is checked-->
-            <div class="form-group" data-ng-show="teamsWithNoTeamTags">
-                <div class="checkbox">
-                    <input type="checkbox" id="teamsFilterUntaggedCb" data-ng-model="showUnTaggedTeams"
-                           data-ng-checked="checkUnTaggedTeams"
-                           data-ng-change="toggleUntaggedTeams()">
-                    <label for="teamsFilterUntaggedCb">Show Untagged Teams</label>
-                </div>
-            </div>
+            <!--<div class="form-group" data-ng-show="teamsWithNoTeamTags">-->
+                <!--<div class="checkbox">-->
+                    <!--<input type="checkbox" id="teamsFilterUntaggedCb" data-ng-model="showUnTaggedTeams"-->
+                           <!--data-ng-checked="checkUnTaggedTeams"-->
+                           <!--data-ng-change="toggleUntaggedTeams()">-->
+                    <!--<label for="teamsFilterUntaggedCb">Show Untagged Teams</label>-->
+                <!--</div>-->
+            <!--</div>-->
 
             <!--toggle what the show inactive teams link says and call toggleInactiveTeams-->
             <div class="form-group" data-ng-show="inactiveTeams">
-                <a class="text-uppercase filter-link" href="" data-ng-hide="showInactiveTeams"
-                   data-ng-click="toggleInactiveTeams()">show inactive teams</a>
-                <a class="text-uppercase filter-link" href="" data-ng-show="showInactiveTeams"
-                   data-ng-click="toggleInactiveTeams()">hide inactive teams</a>
+                <a class="text-uppercase filter-link" href
+                   data-ng-click="toggleInactiveTeams()">{{showInactiveTeams ? 'hide' : 'show'}} inactive teams</a>
             </div>
 
             <!--there is a display template that shows ungrouped teams and a display template that shows groups of teams-->
