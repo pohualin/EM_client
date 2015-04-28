@@ -65,11 +65,6 @@
                                             class="sort-icon"
                                             data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
                                     </th>
-                                    <th class="sort col-phone" data-ng-click="sort('phone')">Phone
-                                        <span data-ng-show="sortProperty.property === 'phone'"><span
-                                            class="sort-icon"
-                                            data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
-                                    </th>
                                     <th class="sort" data-ng-click="sort('city')">City <span
                                         data-ng-show="sortProperty.property === 'city'"><span
                                             class="sort-icon"
@@ -80,6 +75,11 @@
                                             class="sort-icon"
                                             data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
                                     </th>
+                                    <th class="sort col-phone" data-ng-click="sort('phone')">Phone
+                                        <span data-ng-show="sortProperty.property === 'phone'"><span
+                                            class="sort-icon"
+                                            data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
+                                    </th>
                                     <th class="col-sm-1 text-center">Edit</th>
                                 </tr>
                             </thead>
@@ -87,9 +87,9 @@
                                 <tr data-ng-repeat="location in locations | orderBy:'location.sortIdx'">
                                     <td>{{location.entity.name}} <em>{{location.entity.active ? '' : "(inactive)"}}</em></td>
                                     <td>{{location.entity.belongsTo.name}}</td>
-                                    <td>{{location.entity.phone}}</td>
                                     <td>{{location.entity.city}}</td>
                                     <td>{{location.entity.state}}</td>
+                                    <td>{{location.entity.phone}}</td>
                                     <td class="text-center"><a href="#/locations/{{location.entity.id}}?{{currentRouteQueryString}}"><i class="icon-compose icon-size-xl"></i></a></td>
                                 </tr>
                                 <tr class="pagination-row no-hover">

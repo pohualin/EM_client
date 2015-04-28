@@ -170,11 +170,26 @@ angular.module('emmiManager')
                 ManageUserTeamRolesService.saveSelectedLibraries($scope.libraries, $scope.clientResource)
                     .then(function () {
                         $scope.loadExisting();
+                        var added = [];
                         angular.forEach($scope.libraries, function(role){
                             if(role.checked && !role.disabled){
-                                $scope.successAlert(role.entity);
+                                added.push(role.entity);
                             }
                         });
+                        
+                        if(added.length === 1){
+                            $scope.successAlert(added[0]);
+                        } else {
+                            $alert({
+                                content: 'The selected roles have been added successfully.',
+                                container: '#messages-container',
+                                type: 'success',
+                                placement: 'top',
+                                show: true,
+                                duration: 5,
+                                dismissable: true
+                            });
+                        }
                     });
             };
 
