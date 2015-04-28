@@ -10,9 +10,9 @@
         <thead>
         <tr>
             <th>Name</th>
-            <th>Phone</th>
             <th>City</th>
             <th class="text-center">State</th>
+            <th>Phone</th>
             <th class="text-center">Edit</th>
         </tr>
         </thead>
@@ -23,9 +23,9 @@
                 <span class="parent-entity" data-ng-show="location.entity.location.belongsTo && location.entity.location.belongsTo.id !== team.entity.id"> <em>({{location.entity.location.belongsTo.name}})</em></span>
                 <span class="parent-entity" data-ng-show="!location.entity.location.belongsTo"> <em>(<span data-translate="client_edit_page.locations.no_client_owner"></span>)</em></span></div>
             </td>
-            <td class="col-sm-3">{{location.entity.location.phone}}</td>
             <td class="col-sm-2">{{location.entity.location.city}}</td>
             <td class="col-sm-1 text-center">{{location.entity.location.state}}</td>
+            <td class="col-sm-3">{{location.entity.location.phone}}</td>
             <td class="col-edit text-center">
                 <a href data-ng-click="editLocation(location)"><i class="icon-compose icon-size-xl"></i></a>
                 <a href data-ng-click="removeExistingLocation(location)"><i class="icon-trashcan icon-size-xl"></i></a>
