@@ -43,6 +43,11 @@ label.empty {
     width: 132px;
 }
 
+.disclaimer {
+    font-style: italic;
+    color: #999;
+}
+
 .parent-entity {
     font-style: italic;
     color: #ABABAB;
@@ -51,6 +56,27 @@ label.empty {
 .belongs-to {
     font-style: italic;
     color: #999;
+}
+
+.permissions-list {
+    @include remIt(font-size, 13);
+    color: #908688;
+    margin-top: 2px;
+}
+
+.permissions-teams-list {
+    @include remIt(font-size, 13);
+    margin-top: 2px;
+    td {
+        padding: 0;
+        &:first-child {
+            padding-right: 50px;
+        }
+    }
+    .btn-icon {
+        font-size: 18px;
+        line-height: 1;
+    }
 }
 
 .field-note {
@@ -66,9 +92,14 @@ label.empty {
     }
 }
 
+.info-circle,
 .error-circle {
     margin-left: 4px;
 }
+.info-circle {
+    color: $brand-secondary;
+}
+
 // Icon buttons next to headings
 h1 .btn-icon, .h1 .btn-icon,
 h2 .btn-icon, .h2 .btn-icon,
@@ -143,14 +174,16 @@ h3 .btn-icon, .h3 .btn-icon {
 .has-input-icon-search {
     .form-control {
         transition: padding 0.3s ease-in-out;
+        + .input-icon {
+            color: #C7D0D8 !important; // search icon should always be light gray
+        }
         &:focus {
             padding-left: $padding-base-horizontal;
-            ~ .input-icon {
-                color: #C7D0D8; // don't animate the color
+            + .input-icon {
                 opacity: 0;
                 //display: none;
             }
-            ~ .input-group-btn {
+            + .input-group-btn {
                 //display: inline-block;
                 //visibility: visible;
             }
@@ -168,6 +201,10 @@ td {
     .checkbox {
         margin-top: 0;
         margin-bottom: 0;
+        input[type="checkbox"] + label:before,
+        input[type="radio"] + label:before {
+            margin-right: 0;
+        }
     }
 }
 
