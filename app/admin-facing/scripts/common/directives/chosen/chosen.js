@@ -104,12 +104,13 @@ angular.module('emmi.chosen', [])
                         initOrUpdate();
 
                     };
-                    //if (attr.multiple) {
-                    // check for changes on the model, fire $render when a change is detected
-                    scope.$watch(function () {
-                        return ngModel;
-                    }, ngModel.$render, true);
-                    //}
+                    if (attr.multiple) {
+                        viewWatch = function() {
+                            return ngModel.$viewValue;
+                        };
+                        scope.$watch(viewWatch, ngModel.$render, true);
+                    }
+
                 } else {
                     initOrUpdate();
                 }
@@ -156,6 +157,7 @@ angular.module('emmi.chosen', [])
                                                     ngModel._inValueMap[trackByGetter(item)] = item;
                                                 }
                                             });
+                                            ngModel.$render();
                                         }
                                     }
                                 }
