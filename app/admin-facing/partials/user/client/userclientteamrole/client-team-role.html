@@ -1,25 +1,25 @@
 <div data-ng-controller="UsersClientUserClientTeamRolesListController">
 	<div class="col-md-12" data-ng-show="isSuperUser && !loading">
-        <p>Team roles aren't required because this user has been given all permissions at this client (including all teams within this client).</p>
+        <p class="disclaimer">Team roles aren't required because this user has been given all permissions at this client (including all teams within this client).</p>
     </div>
 	<div class="col-md-12" data-ng-show="clientTeamRoles && clientTeamRoles.length > 0 && !isSuperUser">
 		<h2>Team Roles</h2>
 		<div class="row" data-ng-repeat="clientTeamRole in clientTeamRoles">
-			<div class="col-md-5" >
+			<div class="col-md-6" >
 			    <form name="clientTeamRoleForm_{{clientTeamRole.entity.id}}" class="form" novalidate>
                     <div class="panel-group"
 			             data-start-collapsed="true"
 			             data-bs-collapse>
-			            <div class="panel panel-secondary" data-ng-class="{ 'panel-open': clientTeamRole.activePanel === 1 }">
+			            <div class="panel panel-secondary" data-ng-class="{ 'panel-open': clientTeamRole.activePanel === 1, 'panel-muted': !clientTeamRole.existingTeams.length }">
 			                <div class="panel-heading" data-ng-click="panelStateChange(clientTeamRole)">
 			                    <h4 class="panel-title">
                                     <a data-bs-collapse-toggle data-ng-click="togglePanel(clientTeamRole)">
                                         <span class="icon-caret-right"></span>
-                                        {{ clientTeamRole.entity.name}}
+                                        <span class="panel-title-text">{{ clientTeamRole.entity.name}}
 			                            <span data-ng-show="clientTeamRole.existingTeams">({{clientTeamRole.existingTeams.length}}
 			                            	<span data-ng-show="clientTeamRole.existingTeams.length == 1">team)</span>
 			                            	<span data-ng-show="clientTeamRole.existingTeams.length > 1">teams)</span>
-			                            </span>
+			                            </span></span>
 			                        </a>
 			                        <div class="pull-right">
                                         <button type="button" class="btn btn-icon btn-inherit"
@@ -27,37 +27,45 @@
 			                            	data-ng-click="removeAllUserClientUserClientTeamRole(clientTeamRole)">
 			                                <i class="icon-trashcan"></i>
 			                            </button>
-                                        <button type="button" class="btn btn-icon btn-inherit"
-                                                data-ng-hide="clientTeamRole.existingTeams"
+                                        <a href class="panel-title-link"
+                                            data-ng-hide="clientTeamRole.existingTeams"
 			                            	data-ng-controller="UsersClientUserClientTeamRolesAddTeamsController"
 			                            	data-ng-click="addTeams(clientTeamRole)">
-			                                <i class="icon-group"></i>
-			                            </button>
+			                                add teams for this role
+			                            </a>
 			                        </div>
 			                    </h4>
 			                </div><!-- .panel-heading -->
 			                <div class="panel-collapse" data-bs-collapse-target>
 			                    <div class="panel-body">
                                     Permissions:<br/>
-			                        <small class="text-muted">
+			                        <div class="permissions-list">
 				                        <span data-ng-repeat="permission in clientTeamRole.entity.permissions | orderBy:'permission.rank'">
 			                    			{{permission.name  | translate }}{{!$last ? ',' : ''}}&nbsp;
 			                    		</span>
-			                        </small>
+			                        </div>
 			                    </div>
 			                    <div class="panel-body" data-ng-show="clientTeamRole.existingTeams">
                                     Teams:</br>
-			                        <ul>
-										<li data-ng-repeat="existingTeam in clientTeamRole.existingTeams">
-                                            <span class="pull-right" data-ng-hide="">
+			                        <table class="permissions-teams-list" cellspacing="0" cellpadding="0">
+										<tr data-ng-repeat="existingTeam in clientTeamRole.existingTeams">
+											<td>{{existingTeam.entity.team.name}}</td>
+                                            <td class="pull-right">
                                                 <button class="btn btn-icon" data-ng-click="removeUserClientUserClientTeamRole(clientTeamRole, existingTeam)">
                                                     <i class="icon-delete"></i>
                                                 </button>
-                                            </span>
-											<span>{{existingTeam.entity.team.name}}</span>
-										</li>
-									</ul>
-                                    <div data-ng-show="clientTeamRole.existingTeams" data-ng-include="'admin-facing/partials/user/client/userclientteamrole/add-teams.html'"></div>
+                                            </td>
+										</tr>
+                                        <tr>
+                                            <td>one very very very long team name</td>
+                                            <td class="pull-right">
+                                                <button class="btn btn-icon">
+                                                    <i class="icon-delete"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+									</table>
+                                    <div class="panel-misaligned-button" data-ng-show="clientTeamRole.existingTeams" data-ng-include="'admin-facing/partials/user/client/userclientteamrole/add-teams.html'"></div>
 			                    </div>
 			                </div><!-- .panel-collapse -->
 			            </div><!-- .panel -->
