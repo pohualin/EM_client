@@ -1,12 +1,9 @@
-/* global angular */
-
-(function () {
-    'use strict';
+'use strict';
 
 angular.module('emmiManager')
 
     .service('TeamsFilter', function ($http, $q, UriTemplate, TeamTag, Tag, Client, CommonService) {
-        return{
+        return {
             /**
              * get groups for clients to fill the group by dropdown
              * and the tags to fill the  filter by box
@@ -46,11 +43,7 @@ angular.module('emmiManager')
              */
             getClientTagsInGroups: function (groups) {
                 //get tags for all groups on client
-                var clientTagsInGroups = [{
-                    text: 'Untagged Teams',
-                    id: -99999,
-                    isUntaggedTag: true
-                }];
+                var clientTagsInGroups = [];
                 angular.forEach(groups, function (group) {
                     var localGroup = angular.copy(group.entity);
                     localGroup.title = group.name;
@@ -167,17 +160,7 @@ angular.module('emmiManager')
              */
             getActiveOrAllTeamTagsForFilteredTags: function (filterTags, getInactive) {
                 var deferred = $q.defer();
-                var teamTags = [{
-                    text: 'Untagged Teams',
-                    isUntaggedTag: true,
-                    team: {
-                        name: 'untagged team'
-                    },
-                    tag: {
-                        id: -99999,
-                        isUntaggedTag: true
-                    }
-                }];
+                var teamTags = [];
                 var tagIds = [];
                 var status;
 
@@ -188,9 +171,7 @@ angular.module('emmiManager')
                 }
 
                 angular.forEach(filterTags, function (filterTag) {
-                    if (!filterTag.isUntaggedTag) {
-                        tagIds.push(filterTag.id);
-                    }
+                    tagIds.push(filterTag.id);
                 });
 
                 //get teams tags with the tagIds from the filter by tags
@@ -209,7 +190,6 @@ angular.module('emmiManager')
                                 load(response);
                             });
                         }
-
                         deferred.resolve(teamTags);
                     });
                 return deferred.promise;
@@ -348,22 +328,20 @@ angular.module('emmiManager')
 
                 if (listOfTeamsByTagFromSelectedGroup !== null && typeof listOfTeamsByTagFromSelectedGroup === 'object') {
                     angular.forEach(teamTags, function (teamTag) {
-                        if (!teamTag.isUntaggedTag) {
-                            //build the list of tags a team has
-                            if (listOfTagsByTeams[teamTag.team.name]) {
-                                //if this team is already in our list get its list of tags and add the current tag to the list
-                                tags = listOfTagsByTeams[teamTag.team.name];
-                                tags.push(teamTag.tag);
-                            } else {
-                                //this team will only have the current tag in its list
-                                tags.push(teamTag.tag);
-                            }
-                            //assign the current team its list of tags
-                            listOfTagsByTeams[teamTag.team.name] = tags;
-                            tags = [];
-                            //keep track of the teams
-                            teams[teamTag.team.name] = teamTag.team;
+                        //build the list of tags a team has
+                        if (listOfTagsByTeams[teamTag.team.name]) {
+                            //if this team is already in our list get its list of tags and add the current tag to the list
+                            tags = listOfTagsByTeams[teamTag.team.name];
+                            tags.push(teamTag.tag);
+                        } else {
+                            //this team will only have the current tag in its list
+                            tags.push(teamTag.tag);
                         }
+                        //assign the current team its list of tags
+                        listOfTagsByTeams[teamTag.team.name] = tags;
+                        tags = [];
+                        //keep track of the teams
+                        teams[teamTag.team.name] = teamTag.team;
                     });
 
                     //get teams that don't have tags in selected group
@@ -431,4 +409,3 @@ angular.module('emmiManager')
         };
     })
 ;
-}());

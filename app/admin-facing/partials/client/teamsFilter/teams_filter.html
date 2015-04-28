@@ -25,9 +25,8 @@
                 </select>
             </div>
 
-            Show Untagged: {{showUntaggedTeams}}
             <!--disable this drop down if we are showing untagged teams-->
-            <div class="form-group" data-ng-hide="showUntaggedTeams">
+            <div class="form-group">
                 <label for="tagFilter">show:</label>
                 <select
                     id="tagFilter"
@@ -40,27 +39,15 @@
                 </select>
             </div>
 
-            <div class="form-group" data-ng-show="showUntaggedTeams">
-                <label for="untaggedFilter">show:</label>
-                <select
-                    id="untaggedFilter"
-                    data-chosen data-placeholder="All Tags"
-                    data-ng-model="filterTags" data-ng-change="updateState()"
-                    class="form-control">
-                    <option value="-9999">Untagged Teams</option>
-                </select>
-            </div>
-
-
             <!--show only teams without tags assigned to them when this is checked-->
-            <!--<div class="form-group" data-ng-show="teamsWithNoTeamTags">-->
-                <!--<div class="checkbox">-->
-                    <!--<input type="checkbox" id="teamsFilterUntaggedCb" data-ng-model="showUnTaggedTeams"-->
-                           <!--data-ng-checked="checkUnTaggedTeams"-->
-                           <!--data-ng-change="toggleUntaggedTeams()">-->
-                    <!--<label for="teamsFilterUntaggedCb">Show Untagged Teams</label>-->
-                <!--</div>-->
-            <!--</div>-->
+            <div class="form-group" data-ng-show="teamsWithNoTeamTags">
+                <div class="checkbox">
+                    <input type="checkbox" id="teamsFilterUntaggedCb" data-ng-model="showUnTaggedTeams"
+                           data-ng-checked="checkUnTaggedTeams"
+                           data-ng-change="toggleUntaggedTeams()">
+                    <label for="teamsFilterUntaggedCb">Show Untagged Teams</label>
+                </div>
+            </div>
 
             <!--toggle what the show inactive teams link says and call toggleInactiveTeams-->
             <div class="form-group" data-ng-show="inactiveTeams">

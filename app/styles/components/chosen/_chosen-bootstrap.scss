@@ -278,6 +278,12 @@ select.form-control {
                 cursor: default;
                 background-color: $gray-lighter;
             }
+            li.disabled-result {
+                display: list-item;
+                color: $dropdown-link-disabled-color;
+                cursor: default;
+                background-color: $gray-lighter;
+            }
         }
     }
 }

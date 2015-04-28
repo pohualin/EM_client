@@ -1,11 +1,9 @@
-/* global angular */
+'use strict';
 
-(function () {
-    'use strict';
+angular.module('emmiManager')
 
-    angular.module('emmiManager')
-
-        .controller('TeamsFilterCommon', function ($scope, $location, URL_PARAMETERS, arrays, $rootScope, TeamsFilter, $q) {
+    .controller('TeamsFilterUrlPersistence', ['$scope', '$location', 'URL_PARAMETERS', 'arrays', '$rootScope', 'TeamsFilter', '$q',
+        function ($scope, $location, URL_PARAMETERS, arrays, $rootScope, TeamsFilter, $q) {
             var searchObject = $location.search();
             $scope.getGroupUrlParameter = function () {
                 if (searchObject[URL_PARAMETERS.SELECTED_GROUP] && searchObject[URL_PARAMETERS.SELECTED_GROUP] !== '') {
@@ -110,5 +108,5 @@
                 $rootScope.currentRouteQueryString = arrays.toQueryString($location.search());
             };
 
-        });
-}());
+        }]);
+
