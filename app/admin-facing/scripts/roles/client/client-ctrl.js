@@ -198,7 +198,7 @@ angular.module('emmiManager')
              */
             $scope.successAlert = function(clientRole){
                 $alert({
-                    content: '<b>' + clientRole.name + '</b> has been added successfully.',
+                    content: 'The role <b>' + clientRole.name + '</b> has been added successfully.',
                     container: '#messages-container',
                     type: 'success',
                     placement: 'top',
