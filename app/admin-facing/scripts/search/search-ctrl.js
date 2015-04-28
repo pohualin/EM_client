@@ -111,9 +111,6 @@ angular.module('emmiManager')
             } else {
             	$scope.total = 0;
                 $scope[contentProperty] = null;
-                if(!$scope.status){
-                	$scope.status = responsePage.statusFromReq ? responsePage.statusFromReq : 'ACTIVE_ONLY';
-                }
             }
             $scope.searchPerformed = true;
             $scope.loading = false;

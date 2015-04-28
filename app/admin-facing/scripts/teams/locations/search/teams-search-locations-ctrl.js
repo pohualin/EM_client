@@ -144,8 +144,7 @@ angular.module('emmiManager')
         $scope.statusChange = function () {
             $scope.loading = true;
             Location.findWithoutCL(Client.getClient(), $scope.locationQuery, $scope.status, null, $scope.currentPageSize).then(function (locationPage) {
-                    var locPage = angular.isObject(locationPage) ? angular.extend({}, locationPage) : {statusFromReq:$scope.status};
-                    $scope.handleResponse(locPage, managedLocationList);
+                    $scope.handleResponse(locationPage, managedLocationList);
                     $scope.setLocationChecked();
             }, function () {
                 // error happened
@@ -216,5 +215,10 @@ angular.module('emmiManager')
         $scope.teamClientLocations = {};
         $scope.cleanSearch();
         $scope.tabs = TeamSearchLocation.setAllTabs($scope.addAnother);
+        
+        function init() {
+        	$scope.status = 'ACTIVE_ONLY';
+        }
+        init();
     })
 ;
