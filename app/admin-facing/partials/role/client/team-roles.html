@@ -47,10 +47,9 @@
                             <div class="panel-body">
                                 <div data-ivh-treeview="role.entity.userClientTeamPermissions" class="ivh-treeview-container" id="clientTeamRoleTV_{{role.entity.id}}"></div>
                             </div>
-                            <div class="panel-footer">
+                            <div class="panel-footer" data-ng-show="existingClientTeamRoleForm_{{$index}}.$valid && existingHasChanged(role) && hasAPermissionChecked(role.entity)">
                                 <button class="btn btn-success" data-ng-click="update(role, existingClientTeamRoleForm_{{$index}})"
-                                        data-bs-collapse-toggle
-                                        data-ng-show="existingClientTeamRoleForm_{{$index}}.$valid && existingHasChanged(role) && hasAPermissionChecked(role.entity)">
+                                        data-bs-collapse-toggle>
                                     Save
                                 </button>
                                 <button type="button" class="btn btn-cancel" data-ng-click="cancelExisting(role, existingClientTeamRoleForm_{{$index}})"
@@ -70,19 +69,21 @@
                   novalidate unsaved-warning-form>
                 <div class="panel-group" data-ng-show="newClientTeamRole">
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <input class="form-control input-sm" data-ng-model="newClientTeamRole.name"
-                                       data-focus-on="focus-new-role" maxlength="50" required placeholder="Enter a title for new role">
-                            </h4>
+                        <div class="panel-heading panel-heading-form">
+                            <div class="panel-title">
+                                <div class="role-group-create form-inline">
+                                    <input class="form-control input-sm" data-ng-model="newClientTeamRole.name"
+                                           data-focus-on="focus-new-role" maxlength="50" required placeholder="Enter a title for new role">
+                                    <button class="btn btn-sm btn-icon" data-ng-click="cancelNew(newClientTeamRoleForm)"><span class="icon-delete icon-size-lg"></span></button>
+                                </div>
+                            </div>
                         </div>
                         <div class="panel-collapse">
                             <div class="panel-body">
                                 <div data-ng-if="newClientTeamRole.userClientTeamPermissions" data-ivh-treeview="newClientTeamRole.userClientTeamPermissions" class="ivh-treeview-container" id="newClientTeamRoleTV"></div>
                             </div>
-                            <div class="panel-footer">
-                                <button class="btn btn-success" data-ng-click="saveNewRole(newClientTeamRole, newClientTeamRoleForm)"
-                                        data-ng-show="newClientTeamRoleForm.$valid && hasAPermissionChecked(newClientTeamRole)">
+                            <div class="panel-footer" data-ng-show="newClientTeamRoleForm.$valid && hasAPermissionChecked(newClientTeamRole)">
+                                <button class="btn btn-success" data-ng-click="saveNewRole(newClientTeamRole, newClientTeamRoleForm)">
                                     Save
                                 </button>
                                 <button type="button" class="btn btn-cancel" data-ng-click="cancelNew(newClientTeamRoleForm)">cancel
