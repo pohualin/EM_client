@@ -1,8 +1,9 @@
 'use strict';
+
 angular.module('emmiManager')
 
     .service('TeamsFilter', function ($http, $q, UriTemplate, TeamTag, Tag, Client, CommonService) {
-        return{
+        return {
             /**
              * get groups for clients to fill the group by dropdown
              * and the tags to fill the  filter by box
@@ -42,7 +43,11 @@ angular.module('emmiManager')
              */
             getClientTagsInGroups: function (groups) {
                 //get tags for all groups on client
-                var clientTagsInGroups = [];
+                var clientTagsInGroups = [{
+                    text: 'Untagged Teams Only',
+                    id: -1,
+                    untaggedOnly: true
+                }];
                 angular.forEach(groups, function (group) {
                     var localGroup = angular.copy(group.entity);
                     localGroup.title = group.name;
@@ -197,7 +202,7 @@ angular.module('emmiManager')
             /**
              * get the teams from the teamtags
              * @param teamTags to parse
-             * @returns {} teams object
+             * @returns {*} teams object
              */
             getTeamsFromTeamTags: function (teamTags) {
                 var teams = {};

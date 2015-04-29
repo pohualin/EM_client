@@ -41,6 +41,10 @@ angular.module('emmiManager')
                 $scope.tagsUpdated = value;
             };
 
+            $scope.fireUpdatedEvent = function (){
+                $scope.$broadcast('refresh-team-filter');
+            };
+
             // Listen for changes to the Route. When the route
             // changes, load the relative controller
             $scope.$on(

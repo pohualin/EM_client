@@ -65,7 +65,11 @@ angular.module('emmiManager')
                     angular.extend($scope.teamResource, team.data);
                     setTitle();
                     $scope.teamClientResource.teamResource = $scope.teamResource;
-                    $scope.team.currentlyActive =team.data.entity.active;
+                    if ($scope.team.currentlyActive !== team.data.entity.active){
+                        // update for the left nav
+                        $scope.fireUpdatedEvent();
+                    }
+                    $scope.team.currentlyActive = team.data.entity.active;
                     $scope.editMode = false;
                 });
                 _paq.push(['trackEvent', 'Form Action', 'Team Edit', 'Save']);

@@ -1,4 +1,4 @@
-    <div class="col-md-12" data-ng-controller="TeamTagsController" data-ng-show="teamClientResource.teamResource.link.teamLocations">
+    <div class="col-md-12" data-ng-controller="TeamTagsController" data-ng-show="teamClientResource.teamResource.link.tags">
         <div class="row">
             <div class="col-md-6 pull-left">
                 <h2>Tags</h2>
@@ -13,14 +13,13 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <select data-chosen data-placeholder="Choose tags" multiple
+                <select id="team_tags" class="form-control" multiple
+                        data-placeholder="Choose tags"
+                        data-ng-change="saveTagState()"
                         data-ng-model="teamClientResource.teamResource.tags"
-                        data-remove-tag-popover
-                        data-single-backstroke-delete="false"
-                        data-ng-options="tag.text
-                group by tag.group.title
-                for tag in team.tags | orderBy:'text'
-                track by tag.id" class="form-control">
+                        data-ng-options="tag.text group by tag.group.title for tag in team.tags | orderBy:'text'
+                        track by tag.id" data-chosen>
+                    <option></option>
                 </select>
             </div>
         </div>

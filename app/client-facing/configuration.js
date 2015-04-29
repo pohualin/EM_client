@@ -45,8 +45,7 @@ angular.module('emmiManager', [
         SORT: 'sort',
         DIRECTION: 'dir',
         SIZE: 'size',
-        INACTIVE_TEAMS: 'i',
-        UNTAGGED_TEAMS: 'ut'
+        INACTIVE_TEAMS: 'i'
     })
 
     .constant('PATTERN', {
