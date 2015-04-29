@@ -80,10 +80,13 @@ label.empty {
 }
 
 .field-note {
-    margin-left: 0;
+    margin-left: 30px;
+    .error-circle + & {
+        margin-left: 12px;
+    }
     // If validation error-circle is hidden, make it seem like it's still there (could also overwrite ng-hide on .error-circle and set visibility to hidden...)
     .error-circle.ng-hide + & {
-        margin-left: 18px;
+        margin-left: 30px;
     }
     &.field-optional {
         color: $input-color-placeholder;
@@ -297,14 +300,19 @@ td {
 
 .modal-confirm-exit {
     z-index: 1080;
-}
-
-.modal-confirm-exit + .modal-backdrop {
-    z-index: 1070;
-}
-
-.modal-confirm-exit .modal-dialog {
-    max-width: 400px;
+    + .modal-backdrop {
+        z-index: 1070;
+    }
+    .modal-dialog {
+        max-width: 400px;
+    }
+    // We essentially put a popover inside a modal for this because of design
+    .popover {
+        position: relative;
+        display: block;
+        max-width: none;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    }
 }
 
 .btn-today {
