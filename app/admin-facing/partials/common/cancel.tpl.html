@@ -1,12 +1,10 @@
 <div class="modal modal-confirm-exit" tabindex="-1" role="dialog">
     <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header" ng-show="title">
-                <button type="button" class="close" ng-click="unsavedFormCancel();$hide()">&times;</button>
-                <h4 class="modal-title" ng-bind="title"></h4>
-            </div>
-            <div class="modal-body" ng-bind="content"></div>
-            <div class="modal-footer">
+        <div class="popover">
+            <button type="button" class="btn btn-default btn-xs btn-close" data-ng-click="unsavedFormCancel();$hide()"><span class="icon-delete"></span></button>
+            <h3 class="popover-title" ng-bind="title"></h3>
+            <div class="popover-content" ng-bind="content"></div>
+            <div class="popover-footer">
                 <button type="button" class="btn btn-success" data-ng-click="unsavedFormOk();$hide()">OK</button>
                 <button type="button" class="btn btn-cancel" data-ng-click="unsavedFormCancel();$hide()">Cancel</button>
             </div>
