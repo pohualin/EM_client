@@ -93,12 +93,12 @@ angular.module('emmi.chosen', [])
                             var container = $document.find('#' + element.context.id + '_chosen');
 
                             if (container) {
-                                var search_field = angular.element(container.find('input').first());
-                                var searchFieldClone = search_field.clone(true);
+                                var searchField = angular.element(container.find('input').first());
+                                var searchFieldClone = searchField.clone(true);
 
                                 // take of normal keydown handler, so we can intercept backspace
-                                search_field.off('keydown.chosen').on('keydown.chosen', function (evt) {
-                                    var stroke = evt.which != null ? evt.which : evt.keyCode;
+                                searchField.off('keydown.chosen').on('keydown.chosen', function (evt) {
+                                    var stroke = evt.which !== null ? evt.which : evt.keyCode;
                                     if (stroke !== 8) {
                                         // send all other events but backspace to the original handler
                                         searchFieldClone.triggerHandler(evt);
@@ -125,7 +125,7 @@ angular.module('emmi.chosen', [])
                                                 choiceCloseClone.click();
                                             });
                                         });
-                                    })
+                                    });
                                 });
                             }
                         }
