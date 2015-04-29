@@ -109,6 +109,7 @@ angular.module('emmiManager')
                             $scope.team.tags = tagGroupToDisplay;
                             TeamTag.loadSelectedTags($scope.teamClientResource.teamResource);
                         }
+                        $scope.fireUpdatedEvent();
                     }, function () {
                         // error happened
                         $scope.saving = false;
