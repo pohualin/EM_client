@@ -33,6 +33,9 @@
             vertical-align: top;
             margin: 6px 4px 0 0;
         }
+        &.text-muted .icon-caret-right {
+            color: $gray-light;
+        }
         &.open .icon-caret-right {
             margin: 5px 2px 0 2px;
             transform: rotate(90deg);

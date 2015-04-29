@@ -25,10 +25,83 @@
 
 select.form-control {
     + .chosen-container {
-        .chosen-results {
-            li.highlighted {
-                @include hover;
+        .chosen-drop {
+            background-color: $dropdown-bg;
+            border: 1px solid $dropdown-fallback-border;
+            border: 1px solid $dropdown-border;
+            border-radius: $border-radius-base;
+            box-shadow: none;
+            background-clip: padding-box;
+            margin: -1px 0 0;
+        }
+        .chosen-search {
+            input[type=text] {
+                display: block;
+                width: 100%;
+                height: 34px;
+                padding: 6px 12px;
+                font-size: 14px;
+                line-height: 1.428571429;
+                color: $gray;
+                vertical-align: middle;
+                background-color: rgba(250,251,251,0.85);
+                border: 1px solid #CFD2D5;
+                border-radius: $border-radius-base;
+                box-shadow: none;
+                transition: border-color ease-in-out 0.15s;
+                background-image: none;
+                input[type=text] {
+                    :focus{
+                        @include inputOutline;
+                    }
+                }
             }
+        }
+        .chosen-results {
+            margin: 0;
+            padding: 2px 0;
+            font-size: 15px;
+            list-style: none;
+            background-color: $dropdown-bg;
+            border-radius: $input-border-radius;
+            //margin-bottom: 5px;
+            li {
+                @include listItem;
+                // For grouped (tags) dropdowns
+                &.group-result {
+                    font-size: 14px;
+                    font-weight: normal;
+                    color: #a8a9aa;
+                    padding: 8px 10px;
+                }
+                &.group-option {
+                    padding: 8px 10px 8px 25px;
+                }
+                &.highlighted {
+                    @include hover;
+                }
+                &.active-result {
+                    &:hover{
+                        @include hover;
+                    }
+                }
+            }
+        }
+        .chosen-choices {
+            display: block;
+            width: 100%;
+            min-height: 40px;
+            padding: 3px;
+            font-size: 12px;
+            line-height: 1.428571429;
+            color: $gray;
+            vertical-align: middle;
+            background: rgba(250,251,251,0.85);
+            border: 1px solid #CFD2D5;
+            border-radius: $border-radius-base;
+            box-shadow: none;
+            transition: border-color ease-in-out 0.15s;
+            background-image: none;
         }
         &.chosen-container-single {
             .chosen-single {
@@ -118,80 +191,27 @@ select.form-control {
                 }
             }
         }
-        .chosen-drop {
-            background-color: $dropdown-bg;
-            border: 1px solid $dropdown-fallback-border;
-            border: 1px solid $dropdown-border;
-            border-radius: $border-radius-base;
-            box-shadow: none;
-            background-clip: padding-box;
-            margin: -1px 0 0;
-        }
-        .chosen-search {
-            input[type=text] {
-                display: block;
-                width: 100%;
-                height: 34px;
-                padding: 6px 12px;
-                font-size: 14px;
-                line-height: 1.428571429;
-                color: $gray;
-                vertical-align: middle;
-                background-color: rgba(250,251,251,0.85);
-                border: 1px solid #CFD2D5;
-                border-radius: $border-radius-base;
-                box-shadow: none;
-                transition: border-color ease-in-out 0.15s;
-                background-image: none;
-                input[type=text] {
-                    :focus{
-                        @include inputOutline;
-                    }
-                }
+        &.chosen-container-single-nosearch {
+            .chosen-results {
+                padding: 10px 0;
             }
-        }
-        .chosen-results {
-            margin: 0;
-            padding: 10px 0;
-            font-size: 15px;
-            list-style: none;
-            background-color: $dropdown-bg;
-            border-radius: $input-border-radius;
-            //margin-bottom: 5px;
-            li {
-                @include listItem;
-                &.active-result {
-                    &:hover{
-                        @include hover;
-                    }
-                }
-                &.group-result {
-                    color: $gray;
-                    font-weight: bold;
-                }
-                &.group-option {
-                    padding-left: 35px;
-                }
-            }
-        }
-        .chosen-choices {
-            display: block;
-            width: 100%;
-            min-height: 40px;
-            padding: 3px;
-            font-size: 12px;
-            line-height: 1.428571429;
-            color: $gray;
-            vertical-align: middle;
-            background: rgba(250,251,251,0.85);
-            border: 1px solid #CFD2D5;
-            border-radius: $border-radius-base;
-            box-shadow: none;
-            transition: border-color ease-in-out 0.15s;
-            background-image: none;
         }
     }
     + .chosen-container-multi {
+        .chosen-results {
+            li.result-selected {
+                display: list-item;
+                color: $dropdown-link-disabled-color;
+                cursor: default;
+                background-color: $gray-lighter;
+            }
+            li.disabled-result {
+                display: list-item;
+                color: $dropdown-link-disabled-color;
+                cursor: default;
+                background-color: $gray-lighter;
+            }
+        }
         .chosen-choices {
             li {
                 &.search-field {
@@ -269,29 +289,6 @@ select.form-control {
         &.chosen-container-active {
             .chosen-choices{
                 @include inputOutline;
-            }
-        }
-        .chosen-results {
-            font-size: 14px;
-            padding-top: 2px;
-            padding-bottom: 2px;
-            li {
-                padding: 8px;
-            }
-            li.group-result {
-                font-weight: normal;
-                color: #a8a9aa;
-                padding-left: 10px;
-                padding-right: 10px;
-            }
-            li.group-option {
-                padding-left: 25px;
-            }
-            li.result-selected {
-                display: list-item;
-                color: $dropdown-link-disabled-color;
-                cursor: default;
-                background-color: $gray-lighter;
             }
         }
     }

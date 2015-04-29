@@ -169,11 +169,26 @@ angular.module('emmiManager')
                 ManageUserRolesService.saveSelectedLibraries($scope.clientReferenceData.roleLibrary, $scope.clientResource)
                     .then(function () {
                         $scope.loadExisting();
+                        var added = [];
                         angular.forEach($scope.clientReferenceData.roleLibrary, function(role){
                             if(role.checked && !role.disabled){
-                                $scope.successAlert(role.entity);
+                                added.push(role.entity);
                             }
                         });
+                        
+                        if(added.length === 1){
+                            $scope.successAlert(added[0]);
+                        } else {
+                            $alert({
+                                content: 'The selected roles have been added successfully.',
+                                container: '#messages-container',
+                                type: 'success',
+                                placement: 'top',
+                                show: true,
+                                duration: 5,
+                                dismissable: true
+                            });
+                        }
                     });
             };
 
@@ -198,7 +213,7 @@ angular.module('emmiManager')
              */
             $scope.successAlert = function(clientRole){
                 $alert({
-                    content: '<b>' + clientRole.name + '</b> has been added successfully.',
+                    content: 'The role <b>' + clientRole.name + '</b> has been added successfully.',
                     container: '#messages-container',
                     type: 'success',
                     placement: 'top',

@@ -18,13 +18,10 @@
     <div class="row">
         <div class="col-md-12">
             <div class="layout-card">
-                <h1>Manage User Roles</h1>
-                <div data-ng-show="!hasExistingClientRoles && !hasExistingClientTeamRoles && !loading">
-                    <p>Please choose user roles for this client before adding users.</p>
-                    <hr/>
-                </div>
+                <h1 style="margin-bottom:28px">Manage User Roles</h1>
+                <p data-ng-show="!hasExistingClientRoles && !hasExistingClientTeamRoles && !loading">Please choose user roles for this client before adding users.</p>
                 <div class="row" data-ng-include="'admin-facing/partials/role/client/client-roles.html'"></div>
-                <hr/>
+                <hr class="role-divider" />
                 <div class="row" data-ng-include="'admin-facing/partials/role/client/team-roles.html'"></div>
             </div><!-- .layout-card -->
         </div><!-- .col-md-12 -->

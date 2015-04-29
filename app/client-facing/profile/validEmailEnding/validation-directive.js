@@ -62,7 +62,7 @@ angular.module('emmiManager')
                                 ngModelController.$setValidity('unique', false);
                                 if (!scope.conflictingUserPopover) {
                                     scope.conflictingUserPopover = $popover(element, {
-                                        placement: 'top',
+                                        placement: 'auto',
                                         scope: scope,
                                         trigger: 'manual',
                                         template: 'client-facing/profile/validEmailEnding/user_already_exists_popover.tpl.html'
@@ -72,7 +72,7 @@ angular.module('emmiManager')
                                 ngModelController.$setValidity('restricted', false);
                                 if(!scope.restrictedEmailPopover) {
                                     scope.restrictedEmailPopover = $popover(element, {
-                                        placement: 'top',
+                                        placement: 'auto',
                                         scope: scope,
                                         trigger: 'manual',
                                         template: 'client-facing/profile/validEmailEnding/restricted_email_popover.tpl.html'

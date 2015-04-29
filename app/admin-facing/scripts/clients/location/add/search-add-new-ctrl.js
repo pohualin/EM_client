@@ -127,27 +127,27 @@ angular.module('emmiManager')
         };
 
         $scope.search = function (formValid) {
-            if (formValid) {
+        	if (formValid) {
                 $scope.changedLocations = {};
                 $scope.loading = true;
                 Location.find(Client.getClient(), $scope.locationQuery).then(function (locationPage) {
-                    $scope.handleResponse(locationPage, managedLocationList);
+                	$scope.handleResponse(locationPage, managedLocationList);
                     $scope.removeStatusFilterAndTotal = $scope.total <= 0;
                 }, function () {
-                    // error happened
+                	// error happened
                     $scope.loading = false;
                 });
             }
         };
 
         $scope.statusChange = function () {
-            $scope.loading = true;
+        	$scope.loading = true;
             Location.find(Client.getClient(), $scope.locationQuery, $scope.status, $scope.sortProperty, $scope.currentPageSize).then(function (locationPage) {
-                $scope.handleResponse(locationPage, managedLocationList);
+            	$scope.handleResponse(locationPage, managedLocationList);
                 $scope.setCheckboxesForChanged($scope[managedLocationList]);
             }, function () {
                 // error happened
-                $scope.loading = false;
+            	$scope.loading = false;
             });
         };
 
@@ -172,7 +172,7 @@ angular.module('emmiManager')
                 $scope.loading = false;
             });
         };
-
+        
         // when a column header is clicked
         $scope.sort = function (property) {
             var sort = $scope.sortProperty || {};
@@ -196,7 +196,7 @@ angular.module('emmiManager')
                 $scope.setCheckboxesForChanged($scope[managedLocationList]);
             }, function () {
                 // error happened
-                $scope.loading = false;
+            	$scope.loading = false;
             });
         };
 
@@ -210,6 +210,16 @@ angular.module('emmiManager')
         $scope.hideNewLocationModal = function () {
             newLocationModal.$promise.then(newLocationModal.destroy);
         };
+        
+        function init() {
+        	$scope.locationQuery = null;
+            $scope.status = 'ACTIVE_ONLY';
+            $scope.searchPerformed = false;
+            $scope[managedLocationList] = null;
+            $scope.sortProperty =  null;
+        }
+        
+        init();
 
     })
 ;

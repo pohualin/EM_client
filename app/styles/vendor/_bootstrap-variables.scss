@@ -611,7 +611,7 @@ $modal-header-border-color:   #fff !default;
 //** Modal footer border color
 $modal-footer-border-color:   #f0f1f3 !default;
 
-$modal-lg:                    900px !default;
+$modal-lg:                    1015px !default;
 $modal-md:                    600px !default;
 $modal-sm:                    300px !default;
 
@@ -628,9 +628,9 @@ $alert-success-bg:            $state-success-bg !default;
 $alert-success-text:          $state-success-text !default;
 $alert-success-border:        $state-success-border !default;
 
-$alert-info-bg:               $state-info-bg !default;
-$alert-info-text:             $state-info-text !default;
-$alert-info-border:           $state-info-border !default;
+$alert-info-bg:               $brand-secondary !default;
+$alert-info-text:             #fff !default;
+$alert-info-border:           $brand-secondary !default;
 
 $alert-warning-bg:            $state-warning-bg !default;
 $alert-warning-text:          $state-warning-text !default;
@@ -703,7 +703,7 @@ $list-group-link-heading-color: #333 !default;
 //##
 
 $panel-bg:                    #fff !default;
-$panel-body-padding:          15px !default;
+$panel-body-padding:          15px 40px !default;
 $panel-heading-padding:       10px 15px !default;
 $panel-footer-padding:        $panel-heading-padding !default;
 $panel-border-radius:         $border-radius-base !default;

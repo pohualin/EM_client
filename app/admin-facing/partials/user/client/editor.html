@@ -15,23 +15,22 @@
 <div class="container" data-ng-cloak>
     <div class="row">
         <div class="col-md-12">
-            <div class="layout-card">
 
     <form name="userClientForm" class="form" novalidate data-unsaved-warning-form>
-        <div data-ng-switch="editMode" data-ng-controller="UserClientMetaDataController">
+        <div class="layout-card" data-ng-class="{'outlined':editMode}" data-ng-switch="editMode" data-ng-controller="UserClientMetaDataController">
             <div class="row" data-ng-switch-default>
                 <div data-ng-include="'admin-facing/partials/user/client/metadata/view.html'"></div>
             </div>
             <div class="row" data-ng-switch-when="true">
                 <div data-ng-include="'admin-facing/partials/user/client/metadata/edit.html'"></div>
             </div>
-        </div>
+        </div><!-- .layout-card -->
     </form>
 
-    <hr data-ng-show="selectedUserClient"/>
+            <div class="layout-card">
+
     <div data-ng-show="selectedUserClient">
         <div class="row" data-ng-include="'admin-facing/partials/user/client/userclientrole/client-role.html'"></div>
-        <hr/>
         <div class="row" data-ng-include="'admin-facing/partials/user/client/userclientteamrole/client-team-role.html'"></div>
     </div>
 
