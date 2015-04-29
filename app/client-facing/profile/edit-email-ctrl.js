@@ -1,12 +1,12 @@
 'use strict';
 
 angular.module('emmiManager')
-	.controller('ProfileEditEmailCtrl', ['$scope', '$controller', '$modal', 'focus', 'ProfileService', 'ValidationService', 'ProfileEmailRestrictConfigurationsService', 
+	.controller('ProfileEditEmailCtrl', ['$scope', '$controller', '$modal', 'focus', 'ProfileService', 'ValidationService', 'ProfileEmailRestrictConfigurationsService',
         function($scope, $controller, $modal, $focus, ProfileService, ValidationService, ProfileEmailRestrictConfigurationsService){
 
    	/**
      * Called when save is clicked on editEmailForm
-     * 
+     *
      */
     $scope.updateEmail = function (userClient, editEmailForm) {
         $scope.editEmailFormSubmitted = true;
@@ -14,7 +14,7 @@ angular.module('emmiManager')
             userClient.login = userClient.email;
         }
         if (editEmailForm.$valid) {
-            ProfileService.update(userClient).then(function success(response) {
+            ProfileService.update(userClient, $scope.password).then(function success(response) {
                 angular.extend($scope.userClient, response);
                 $scope.resetEditEmailForm();
                 if (!response.emailValidated) {
@@ -29,10 +29,10 @@ angular.module('emmiManager')
             });
         }
     };
-    
+
     /**
      * Handle error coming back from server
-     * 
+     *
      */
     $scope.handleSaveError = function (error, form) {
     	if (error.status === 406 && error.data && error.data.conflicts) {
@@ -64,7 +64,7 @@ angular.module('emmiManager')
               $scope.emailError = error.data.validationError;
         }
       };
-    
+
     /**
      * When the 'use email' box is changed set the focus when unchecked.
      */
@@ -76,7 +76,7 @@ angular.module('emmiManager')
             $scope.editEmailForm.login.$setValidity('unique', true);
         }
     };
-    
+
     /**
      *  Reset validity whenever user change any value in email or login field
      */
@@ -87,13 +87,13 @@ angular.module('emmiManager')
         $scope.editEmailFormSubmitted = false;
         $scope.hideErrorAlert();
     };
-    
+
     /**
      * Called when edit mail link is clicked
      */
     $scope.editEmail = function () {
         $scope.promptPasswordModal = {};
-        $scope.promptPasswordModal = 
+        $scope.promptPasswordModal =
             $modal({scope: $scope, template: 'client-facing/profile/passwordPrompt.html', animation: 'none', backdropAnimation: 'emmi-fade', backdrop: 'static'});
     };
 
@@ -101,6 +101,7 @@ angular.module('emmiManager')
      * Called when submit is clicked on password validation form
      */
     $scope.verifyPassword = function (form, password){
+        $scope.password = password;
         ProfileService.verifyPassword($scope.userClient, password).then(function success(response){
             $scope.editEmailFormSubmitted = false;
             $scope.passwordValidationFormSubmitted = false;
@@ -113,11 +114,11 @@ angular.module('emmiManager')
             $scope.formValidationError('Please check your password and try again.');
         });
     };
-    
+
     $scope.resetPasswordFormValidity = function(form){
         form.password.$setValidity('match', true);
     };
-    
+
     /**
      * Called when cancel is clicked from password validation form
      */
@@ -143,7 +144,7 @@ angular.module('emmiManager')
         $scope.hideErrorAlert();
     	});
     };
-    
+
     /**
      * Retrieve valid email ending for the client
      */
