@@ -4,13 +4,13 @@
             <h1 data-translate="login.title">Authentication</h1>
 
             <div class="alert alert-danger error-circle fa-exclamation-circle" data-ng-if="loginErrorMessageFactory.showAccountActivationTokenExpired && !authenticationError">
-                We’re sorry, your activation link has expired. To finish setting up your account, please contact Emmi Support at 866-294-3664 or support@emmisolutions.com.
+                We’re sorry, your activation link has expired. To finish setting up your account, please contact Emmi Support at 866-294-3664 or <a href="mailto:support@emmisolutions.com?subject=Activation Link Has Expired">support@emmisolutions.com</a>.
             </div>
             <div class="alert alert-danger error-circle fa-exclamation-circle" data-ng-if="loginErrorMessageFactory.showResetPasswordTokenExpired && !authenticationError">
                 We’re sorry, your password reset link has expired, and your password has not been changed. If you would still like to reset your password, you can try again.
             </div>
             <div class="alert alert-danger error-circle fa-exclamation-circle" data-ng-if="loginErrorMessageFactory.showTemporaryPasswordTokenExpired && !authenticationError">
-                We’re sorry, your temporary password has expired and can no longer be changed. To finish setting up your account, please contact Emmi Support at 866-294-3664 or support@emmisolutions.com.
+                We’re sorry, your temporary password has expired and can no longer be changed. To finish setting up your account, please contact Emmi Support at 866-294-3664 or  <a href="mailto:support@emmisolutions.com?subject=Temporary Password Has Expired">support@emmisolutions.com</a>.
             </div>
             <div class="alert alert-danger error-circle fa-exclamation-circle" data-ng-if="loginErrorMessageFactory.showEmailValidationTokenExpired && !authenticationError">
                 We’re sorry, your validation link has expired. If you would still like to verify your email address, please try again.
