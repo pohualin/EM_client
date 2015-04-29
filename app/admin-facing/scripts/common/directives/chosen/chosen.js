@@ -3,9 +3,20 @@
  * Monkey patch for angular-chosen-localytics directive.
  *
  * Adds features:
- * ngDisabled functionality now works properly, instead of always 'enabling' whenever a load is complete
  *
- * dynamic placeholder, changes to the placeholder now reflect inside the dropdown immediately
+ * ngDisabled: functionality now works properly, instead of always 'enabling' whenever a load is complete
+ *
+ * dynamic placeholder: changes to the placeholder now reflect inside the dropdown immediately
+ *
+ * 'remove' confirmation: call the scope.chosenBeforeRemoveHook() method before a remove happens.
+ *      This only works for select elements that: 1. have an ID and 2. are multi-select
+ *
+ *      the method in the controller should be defined like:
+ *      $scope.chosenBeforeRemoveHook = function (element, performDelete) {
+ *          // do whatever you need to do,
+ *          // then call performDelete() to actually delete the item
+ *          performDelete();
+ *      }
  *
  */
 
@@ -22,10 +33,10 @@ var __indexOf = [].indexOf || function (item) {
 
 angular.module('emmi.chosen', [])
 
-    .directive('chosen', ['$timeout', '$parse', function ($timeout, $parse) {
+    .directive('chosen', ['$timeout', '$parse', '$document', function ($timeout, $parse, $document) {
         var CHOSEN_OPTION_WHITELIST, NG_OPTIONS_REGEXP, isEmpty, snakeCase;
         NG_OPTIONS_REGEXP = /^\s*(.*?)(?:\s+as\s+(.*?))?(?:\s+group\s+by\s+(.*))?\s+for\s+(?:([\$\w][\$\w]*)|(?:\(\s*([\$\w][\$\w]*)\s*,\s*([\$\w][\$\w]*)\s*\)))\s+in\s+(.*?)(?:\s+track\s+by\s+(.*?))(?:\s+|\s+(.*?))?$/;
-        CHOSEN_OPTION_WHITELIST = ['noResultsText', 'allowSingleDeselect', 'disableSearchThreshold', 'disableSearch', 'enableSplitWordSearch', 'inheritSelectClasses', 'maxSelectedOptions', 'placeholderTextMultiple', 'placeholderTextSingle', 'searchContains', 'singleBackstrokeDelete', 'displayDisabledOptions', 'displaySelectedOptions', 'width'];
+        CHOSEN_OPTION_WHITELIST = ['beforeRemove', 'noResultsText', 'allowSingleDeselect', 'disableSearchThreshold', 'disableSearch', 'enableSplitWordSearch', 'inheritSelectClasses', 'maxSelectedOptions', 'placeholderTextMultiple', 'placeholderTextSingle', 'searchContains', 'singleBackstrokeDelete', 'displayDisabledOptions', 'displaySelectedOptions', 'width'];
         snakeCase = function (input) {
             return input.replace(/[A-Z]/g, function ($1) {
                 return '_' + ($1.toLowerCase());
@@ -44,6 +55,7 @@ angular.module('emmi.chosen', [])
             }
             return true;
         };
+
         return {
             restrict: 'A',
             require: '?ngModel',
@@ -58,19 +70,65 @@ angular.module('emmi.chosen', [])
                         options[snakeCase(key)] = scope.$eval(value);
                     }
                 });
+
                 startLoading = function () {
                     return element.addClass('loading').attr('disabled', true).trigger('chosen:updated');
                 };
                 stopLoading = function () {
                     return element.removeClass('loading').attr('disabled', !!ngModel.disabledBeforeLoad).trigger('chosen:updated');
                 };
+
                 chosen = null;
                 defaultText = null;
                 empty = false;
                 var defaultTextAttribute = 'default_text';
                 initOrUpdate = function () {
                     if (chosen) {
+                        // make chosen update the DOM
                         element.trigger('chosen:updated');
+
+                        // override some chosen events for delete confirmations
+                        if (attr.multiple && scope.chosenBeforeRemoveHook) {
+
+                            var container = $document.find('#' + element.context.id + '_chosen');
+
+                            if (container) {
+                                var search_field = angular.element(container.find('input').first());
+                                var searchFieldClone = search_field.clone(true);
+
+                                // take of normal keydown handler, so we can intercept backspace
+                                search_field.off('keydown.chosen').on('keydown.chosen', function (evt) {
+                                    var stroke = evt.which != null ? evt.which : evt.keyCode;
+                                    if (stroke !== 8) {
+                                        // send all other events but backspace to the original handler
+                                        searchFieldClone.triggerHandler(evt);
+                                    }
+                                });
+
+                                // remove event that opens the dropdown when the 'x' is clicked
+                                var choices = container.find('ul.chosen-choices').first(),
+                                    choicesClone = choices.clone(true);
+                                choices.off('click.chosen').on('click.chosen', function(event){
+                                    var target = angular.element(event.target);
+                                    if (!target.hasClass('search-choice-close')){
+                                        choicesClone.triggerHandler(event);
+                                    }
+                                });
+
+                                // disable the 'close' event, so we can prompt
+                                angular.forEach(container.find('a.search-choice-close'), function (aTag) {
+                                    var choiceClose = angular.element(aTag);
+                                    var choiceCloseClone = choiceClose.clone(true);
+                                    choiceClose.off('click').on('click', function () {
+                                        scope.chosenBeforeRemoveHook(choiceClose, function () {
+                                            $timeout(function () {
+                                                choiceCloseClone.click();
+                                            });
+                                        });
+                                    })
+                                });
+                            }
+                        }
                     } else {
                         chosen = element.chosen(options).data('chosen');
                         defaultText = chosen[defaultTextAttribute];
@@ -102,10 +160,9 @@ angular.module('emmi.chosen', [])
                             });
                         }
                         initOrUpdate();
-
                     };
                     if (attr.multiple) {
-                        viewWatch = function() {
+                        viewWatch = function () {
                             return ngModel.$viewValue;
                         };
                         scope.$watch(viewWatch, ngModel.$render, true);
@@ -164,6 +221,7 @@ angular.module('emmi.chosen', [])
                             });
                         });
                     }
+
                     return scope.$on('$destroy', function () {
                         if (typeof timer !== 'undefined' && timer !== null) {
                             return $timeout.cancel(timer);

@@ -83,7 +83,9 @@ angular.module('emmiManager')
             $scope.setTagsUrlParameter = function () {
                 var tagIds = [];
                 angular.forEach($scope.filterTags, function (filteredTag) {
-                    tagIds.push(filteredTag.id);
+                    if (tagIds.indexOf(filteredTag.id) === -1){
+                        tagIds.push(filteredTag.id);
+                    }
                 });
                 if (tagIds.length > 0) {
                     $location.search(URL_PARAMETERS.SELECTED_TAGS, tagIds.join(',')).replace();
