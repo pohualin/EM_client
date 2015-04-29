@@ -13,7 +13,7 @@
     "angular-i18n": "~1.2.28",
     "angular-dynamic-locale": "~0.1.17",
     "angular-motion": "~0.3.3",
-    "angular-chosen-localytics": "~1.0.6",
+    "chosen": "1.4.2",
     "bootstrap-additions": "~0.2.3",
     "jquery.inputmask": "~3.1.57",
     "angular-moment": "~0.9.2",
@@ -29,9 +29,6 @@
     "angular-mocks": "~1.2.28"
   },
   "overrides": {
-    "chosen": {
-      "main": "chosen.jquery.js"
-    },
     "headroom.js": {
       "main": [
         "dist/headroom.js",
