@@ -16,8 +16,25 @@ angular.module('emmiManager')
             link: function (scope, element) {
                 element.on('click', function (event) {
                     console.log('crap');
-                    /*
+
                     event.stopPropagation();
+
+                    scope.onOpenPopover();
+                    if (popover){
+                        popover.hide();
+                    }
+                    popover = $popover(element, {
+                        title: 'Are you sure?',
+                        scope: scope,
+                        trigger: 'manual',
+                        show: true,
+                        autoClose: true,
+                        placement: 'bottom',
+                        target: element,
+                        container: 'body',
+                        contentTemplate: 'admin-facing/partials/client/location/delete_popover.tpl.html'
+                    });
+                    /*
                     ClientLocationService.findTeamsUsing(scope.toRemove).then(function(teams){
                         if (teams && teams.length > 0) {
                             scope.teamsBlocking = teams;
