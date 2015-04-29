@@ -14,7 +14,7 @@ angular.module('emmiManager', [
     'tmh.dynamicLocale',
     'emmi.navbar',
     'emmi.typeahead',
-    'localytics.directives',
+    'emmi.chosen',
     'ngTagsInput',
     'mgcrea.ngStrap',
     'emmi.inputMask',
@@ -45,8 +45,7 @@ angular.module('emmiManager', [
         SORT: 'sort',
         DIRECTION: 'dir',
         SIZE: 'size',
-        INACTIVE_TEAMS: 'i',
-        UNTAGGED_TEAMS: 'ut'
+        INACTIVE_TEAMS: 'i'
     })
 
     .constant('PATTERN', {

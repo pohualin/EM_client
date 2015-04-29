@@ -23,15 +23,19 @@ angular.module('emmiManager')
                 }
             },
             save: function (teamResource) {
-                var tags = teamResource.tags || [];
-                var tagsCopy = angular.copy(tags);
+                var tags = teamResource.tags || [],
+                    tagsCopy = angular.copy(tags),
+                    updated = [];
                 angular.forEach(tagsCopy, function(tag){
                     delete tag.text;
                     delete tag.group;
                 });
                 return $http.post(UriTemplate.create(teamResource.link.tags).stringify(), tagsCopy).
                     then(function (response) {
-                        return response;
+                        angular.forEach(response.data, function(teamTag){
+                            updated.push(teamTag.tag);
+                        });
+                        return updated;
                     });
             },
             deleteSingleTeamTag: function(teamResource){
@@ -39,25 +43,6 @@ angular.module('emmiManager')
                     then(function (response) {
                         return response;
                     });
-            },
-            isExistingTagRemoved: function(existingTags, updatedTags){
-                var deferred = $q.defer();
-                var updatedTagIds = [];
-                var isRemove = false;
-                angular.forEach(updatedTags, function(tag){
-                    if(tag.id){
-                        updatedTagIds.push(tag.id);
-                    }
-                });
-                
-                angular.forEach(existingTags, function(tag){
-                    if(updatedTagIds.indexOf(tag.id) === -1){
-                        isRemove = true;
-                    }
-                });
-                
-                deferred.resolve(isRemove);
-                return deferred.promise;
             }
         };
     })

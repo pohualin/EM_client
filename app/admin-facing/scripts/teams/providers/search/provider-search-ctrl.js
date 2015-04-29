@@ -149,5 +149,10 @@ angular.module('emmiManager')
             $scope.setClientProviderSelected($scope.clientProviders);
         });
         $scope.tabs = TeamProviderService.setAllTabs($scope.addAnother);
+        
+        function init() {
+        	$scope.status = 'ACTIVE_ONLY';
+        }
+        init();
     })
 ;
