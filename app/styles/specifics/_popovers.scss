@@ -31,7 +31,7 @@
             font-size: 12px;
             color: #6E7C88;
             vertical-align: top;
-            margin: 6px 4px 0 0;
+            margin: 5px 4px 0 0;
         }
         &.text-muted .icon-caret-right {
             color: $gray-light;
@@ -60,6 +60,32 @@
         font-weight: 300;
         line-height: 17px;
         padding: 6px 0;
+    }
+    // Custom checkboxes/radios need to be smaller in popovers
+    .radio label,
+    .radio-inline label,
+    .checkbox label,
+    .checkbox-inline label {
+        line-height: 20px;
+    }
+    input[type="checkbox"],
+    input[type="radio"] {
+        width: 20px;
+        height: 20px;
+    }
+    input[type="checkbox"] + label:before,
+    input[type="radio"] + label:before {
+        width: 20px;
+        height: 20px;
+        //margin-right: 8px;
+    }
+    input[type="radio"]:checked + label:before {
+        box-shadow: inset 0px 0px 0px 2px rgba(255,255,255,1);
+    }
+    input[type="checkbox"]:checked + label:before,
+    input[type="checkbox"]:indeterminate + label:before {
+        font-size: 19px;
+        line-height: .9;
     }
 }
 

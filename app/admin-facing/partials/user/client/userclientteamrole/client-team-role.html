@@ -4,12 +4,12 @@
     </div>
 	<div class="col-md-12" data-ng-show="clientTeamRoles && clientTeamRoles.length > 0 && !isSuperUser">
 		<h2>Team Roles</h2>
-		<div class="row" data-ng-repeat="clientTeamRole in clientTeamRoles">
+		<div class="row">
 			<div class="col-md-6" >
-			    <form name="clientTeamRoleForm_{{clientTeamRole.entity.id}}" class="form" novalidate>
-                    <div class="panel-group"
-			             data-start-collapsed="true"
-			             data-bs-collapse>
+                <div class="panel-group" data-ng-repeat="clientTeamRole in clientTeamRoles"
+		             data-start-collapsed="true"
+		             data-bs-collapse>
+                    <form name="clientTeamRoleForm_{{clientTeamRole.entity.id}}" class="form" novalidate>
 			            <div class="panel panel-secondary" data-ng-class="{ 'panel-open': clientTeamRole.activePanel === 1, 'panel-muted': !clientTeamRole.existingTeams.length }">
 			                <div class="panel-heading" data-ng-click="panelStateChange(clientTeamRole)">
 			                    <h4 class="panel-title">
@@ -69,8 +69,8 @@
 			                    </div>
 			                </div><!-- .panel-collapse -->
 			            </div><!-- .panel -->
-			        </div><!-- .panel-group -->
-			    </form>
+                    </form>
+                </div><!-- .panel-group -->
 			</div>
 		</div><!-- .row -->
 	</div><!-- .col-md-12 -->
