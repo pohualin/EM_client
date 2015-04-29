@@ -45,7 +45,7 @@
                 <td class="col-has-multiselect" data-ng-if="providersData">
                     <div data-ng-if="providersData && location.location.entity.checked && !location.location.entity.disabled">
                            <div data-multi-select
-                            name="providersData{{$index}}"
+                            name=".clientLocation[{{location.location.entity.id}}].providersData[{{$index}}]"
                             values="providersData"
                             model="location.location.entity.providersSelected"
                             show-filters="true"

@@ -9,6 +9,7 @@
 .table-condensed {
     .multi-select > .multi-select-container[readonly] {
         @extend .input-sm;
+        font-size: 13px;
     }
 }
 
@@ -26,7 +27,7 @@
   overflow-y: auto;
 }
 
-.multi-select > .multi-select-dropdown input[type=checkbox] {
+.multi-select > .multi-select-dropdown input[type=checkbox] + label:before {
   margin-right: 8px;
 }
 
@@ -54,6 +55,7 @@
 }
 
 .multi-select > .multi-select-dropdown > ul > li {
+  font-size: 13px;
   line-height: 1.9em;
   font-weight: 400;
   color: #666;
