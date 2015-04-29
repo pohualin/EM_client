@@ -6,6 +6,7 @@ angular.module('emmiManager')
         $controller('CommonSearch', {$scope: $scope});
 
         var searchedProvidersList = 'searchedProvidersList';
+        var managedClientProviderList = 'clientProviders';
 
         /**
          * Called when search button is clicked from search all provider tab
@@ -149,7 +150,6 @@ angular.module('emmiManager')
 
         function init() {
         	$scope.status = 'ACTIVE_ONLY';
-            var managedClientProviderList = 'clientProviders';
             ClientProviderService.findForClient(Client.getClient()).then(function (clientProviders) {
                 $scope.handleResponse(clientProviders, managedClientProviderList);
                 $scope.setClientProviderSelected($scope.clientProviders);
