@@ -1,12 +1,12 @@
 <div data-ng-controller="UsersClientUserClientRolesListController">
     <div class="col-md-12" data-ng-show="existingUserClientUserClientRoles">
         <h2>Client Roles</h2>
-        <div class="row" data-ng-repeat="existingUserClientUserClientRole in existingUserClientUserClientRoles">
+        <div class="row">
             <div class="col-md-6">
-                <form name="existingUserClientUserClientRoleForm_{{existingUserClientUserClientRole.entity.id}}" class="form" novalidate>
-                    <div class="panel-group"
-                         data-start-collapsed="true"
-                         data-bs-collapse>
+                <div class="panel-group" data-ng-repeat="existingUserClientUserClientRole in existingUserClientUserClientRoles"
+                     data-start-collapsed="true"
+                     data-bs-collapse>
+                    <form name="existingUserClientUserClientRoleForm_{{existingUserClientUserClientRole.entity.id}}" class="form" novalidate>
                         <div class="panel panel-secondary" data-ng-class="{ 'panel-open': existingUserClientUserClientRole.activePanel === 1 }">
                             <div class="panel-heading" data-ng-click="toggleUserClientUserClienRolePanel(existingUserClientUserClientRole)">
                                 <h4 class="panel-title">
@@ -32,8 +32,8 @@
                                 </div>
                             </div>
                         </div><!-- .panel -->
-                    </div><!-- .panel-group -->
-                </form>
+                    </form>
+                </div><!-- .panel-group -->
             </div>
         </div><!-- .row -->
     </div><!-- .col-md-12 -->
