@@ -52,7 +52,9 @@ angular.module('emmiManager')
                         } else if (!unTaggedTagInList) {
                             $scope.filterTags.push.apply(
                                 $scope.filterTags,
-                                $filter('filter')($scope.clientTagGroupToDisplay, {id: tagToLoadFromURLid})
+                                $filter('filter')($scope.clientTagGroupToDisplay, {id: tagToLoadFromURLid},function (left, right){
+                                    return angular.equals(parseInt(left, 10), parseInt(right, 10));
+                                })
                             );
                         }
                     });

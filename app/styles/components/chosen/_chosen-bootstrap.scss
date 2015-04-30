@@ -156,6 +156,7 @@ select.form-control {
                 }
                 abbr {
                     background: none;
+                    background-image: none !important;
                     position: absolute;
                     top: 0;
                     right: 25px;
@@ -243,6 +244,9 @@ select.form-control {
                     background-image: none;
                     border: 0;
                     box-shadow: none;
+                    .group-name:after{
+                        content: ": ";
+                    }
                     .search-choice-close {
                         display: none;
                         background: none;

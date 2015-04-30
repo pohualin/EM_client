@@ -2,7 +2,7 @@
     <div class="arrow"></div>
     <h3 class="popover-title" ng-bind="title" ng-show="title"></h3>
     <div class="popover-content" style="max-height: 200px;overflow: auto;">
-    	<div>The following tags will be removed:</div>
+    	<p>The following tags will be removed:</p>
         <table border="0" cellpadding="0" cellspacing="0" class="popover-table">
             <tr data-ng-repeat="teamTag in conflictingTeamTags">
                 <th data-ng-if="teamTag.numberOfTeams == 0">{{teamTag.tag}}</th>
