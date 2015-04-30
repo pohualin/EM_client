@@ -20,32 +20,34 @@
     </tr>
   </thead>
   <tbody>
-    <tr data-ng-repeat="teamProvider in clientProviders" data-ng-class="teamProvider.provider.entity.disabled ? 'text-muted' : ''">
+    <tr data-ng-repeat="clientProvider in clientProviders" data-ng-class="clientProvider.provider.entity.disabled ? 'text-muted' : ''">
       <td class="col-checkbox">
           <div class="checkbox">
-              <input type="checkbox" id="clientProviderCb{{$index}}" data-ng-model="teamProvider.provider.entity.checked"  data-ng-disabled="teamProvider.provider.entity.disabled"
-                 ng-change="onCheckboxChange(teamProvider.provider)">
+              <input type="checkbox" id="clientProviderCb{{$index}}" data-ng-model="clientProvider.provider.entity.checked"  data-ng-disabled="clientProvider.provider.entity.disabled"
+                 ng-change="onCheckboxChange(clientProvider.provider)">
               <label for="clientProviderCb{{$index}}"></label>
           </div>
       </td>
-      <td>{{teamProvider.provider.entity.firstName}} {{teamProvider.provider.entity.middleName}} {{teamProvider.provider.entity.lastName}}
-        <em>{{teamProvider.provider.entity.active ? '' : "(inactive)"}}</em>
+      <td>{{clientProvider.provider.entity.firstName}} {{clientProvider.provider.entity.middleName}} {{clientProvider.provider.entity.lastName}}
+        <em>{{clientProvider.provider.entity.active ? '' : "(inactive)"}}</em>
       </td>
-      <td>{{teamProvider.provider.entity.specialty.name}}</td>
-      <td>{{teamProvider.provider.entity.email}}</td>
+      <td>{{clientProvider.provider.entity.specialty.name}}</td>
+      <td>{{clientProvider.provider.entity.email}}</td>
       <td class="col-has-multiselect" data-ng-if="allTeamLocations.length > 0" >
-        <div data-ng-show="teamProvider.provider.entity.showLocations">
-          <div data-ng-class="{'has-error col-md-11': teamProvider.provider.entity.selectedTeamLocations < 1 && associateRequestSubmitted}" data-multi-select
-             name="allTeamLocations{{$index}}"
+        <div data-ng-show="clientProvider.provider.entity.showLocations"
+             data-ng-class="{'has-error': clientProvider.provider.entity.selectedTeamLocations < 1 && associateRequestSubmitted}">
+          <div data-multi-select
+               data-ng-class="{'col-md-11': clientProvider.provider.entity.selectedTeamLocations < 1 && associateRequestSubmitted}"
+             name=".clientProvider[{{clientProvider.provider.entity.id}}].allTeamLocations[{{$index}}]"
              values="allTeamLocations"
-             model="teamProvider.provider.entity.selectedTeamLocations"
+             model="clientProvider.provider.entity.selectedTeamLocations"
              show-filters="true"
              value-field="id"
              label-field="label"
              template-path = "admin-facing/partials/common/directives/multi-select/multi-select.html" >
           </div>
           <div class="error-circle fa-exclamation-circle glyphicon-form-inline-right"
-            data-ng-show="teamProvider.provider.entity.selectedTeamLocations < 1 && associateRequestSubmitted"
+            data-ng-show="clientProvider.provider.entity.selectedTeamLocations < 1 && associateRequestSubmitted"
             data-bs-tooltip data-placement="top" data-type="danger" data-container="body"
             data-title="At least one location is required">
           </div>
