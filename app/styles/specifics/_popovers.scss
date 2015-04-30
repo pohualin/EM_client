@@ -10,6 +10,19 @@
     }
 }
 
+.popover.popover-tags-conflicting-team {
+    .popover-table {
+        margin-left: 19px;
+        th {
+            width: 70%;
+            padding-right: 25px;
+        }
+        td {
+            vertical-align: bottom;
+        }
+    }
+}
+
 .popover {
     .btn-close {
         position: absolute;
