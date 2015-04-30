@@ -9,7 +9,6 @@
 .table-condensed {
     .multi-select > .multi-select-container[readonly] {
         @extend .input-sm;
-        font-size: 13px;
     }
 }
 
@@ -55,7 +54,6 @@
 }
 
 .multi-select > .multi-select-dropdown > ul > li {
-  font-size: 13px;
   line-height: 1.9em;
   font-weight: 400;
   color: #666;
@@ -85,6 +83,7 @@
 .multi-select > .multi-select-dropdown .multi-select-filters label,
 .multi-select > .multi-select-dropdown .multi-select-option label {
   display: block;
+  font-size: 13px;
 }
 
 .multi-select > .multi-select-dropdown > ul > li .multi-select-other-container {
