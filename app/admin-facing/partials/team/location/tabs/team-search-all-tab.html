@@ -26,10 +26,10 @@
                 <span data-ng-class="{'search-spinner' : loading}"></span>
             </div>
         </div>
+        <br />
         <div data-ng-show="allLocationsSearch">
             <div class="row table-search-filters">
                 <div class="col-md-12">
-                    <br/>
                     <div class="pull-right table-results-count">
                         {{total}}
                         <span data-ng-if="total != 1" data-translate="global.labels.total"> results</span>
@@ -121,7 +121,7 @@
                         </tbody>
                     </table>
                     <div class="table-no-results" data-ng-hide="!allLocationsSearch || locations">
-                        <span data-translate="global.messages.search.no_results_found"></span>
+                        <p><span data-translate="global.messages.search.no_results_found"></span></p>
                     </div>
                 </div><!-- .col-md-12 -->
             </div><!-- .row -->

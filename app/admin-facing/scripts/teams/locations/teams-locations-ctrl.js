@@ -34,7 +34,7 @@ angular.module('emmiManager')
         $scope.showRemovalSuccess = function (locationResource) {
             $alert({
                 title: ' ',
-                content: 'The location <b>' + locationResource.entity.location.name + '</b> has been successfully removed from ' + locationResource.entity.team.name,
+                content: 'The location <b>' + locationResource.entity.location.name + '</b> has been successfully removed.',
                 container: '#messages-container',
                 type: 'success',
                 show: true,
