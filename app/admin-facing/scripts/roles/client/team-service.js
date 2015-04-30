@@ -296,8 +296,9 @@ angular.module('emmiManager')
                         var deferred = $q.defer();
                         delete aPermission.group;
                         if(!map[group.rank]){
-                            group.children = [];
-                            group.children.push(aPermission);
+                            // Ensure children are sorted by rank
+                            group.childrenMap = {};
+                            group.childrenMap[aPermission.rank] = aPermission;
                             map[group.rank] = group;
                             // translate group name calls
                             $translate(group.name).then(function(translated){
@@ -309,7 +310,7 @@ angular.module('emmiManager')
                             });
                             promises.push(deferred.promise);
                         } else {
-                            map[group.rank].children.push(aPermission);
+                            map[group.rank].childrenMap[aPermission.rank] = aPermission;
                         }
                         // translate permission name calls
                         $translate(aPermission.name).then(function(translated){
@@ -324,6 +325,17 @@ angular.module('emmiManager')
 
                     $q.all(promises).then(function(){
                         var perm = [];
+                        
+                        // Turn children map to children
+                        angular.forEach(map, function(group){
+                            angular.forEach(group.childrenMap, function(child){
+                                if(!group.children){
+                                    group.children = [];
+                                } 
+                                group.children.push(child);
+                            })
+                        });
+                        
                         angular.forEach(map, function(group){
                             // Promote the only child to group
                             if(group.children.length === 1){
