@@ -344,7 +344,7 @@ angular.module('emmiManager')
                                     group.children = [];
                                 } 
                                 group.children.push(child);
-                            })
+                            });
                         });
                         
                         angular.forEach(map, function(group){
