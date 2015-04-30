@@ -20,10 +20,6 @@
                     <div class="panel panel-secondary" data-ng-class="{ 'panel-open': role.activePanel === 0 }">
                         <div class="panel-heading">
                             <h4 class="panel-title">
-                                <a data-bs-collapse-toggle data-ng-hide="role.editName" data-ng-dblclick="startEditName(role)">
-                                    <span class="icon-caret-right"></span>
-                                    <span class="panel-title-text">{{ role.entity.name }}</span>
-                                </a>
                                 <div class="pull-right">
                                     <button type="button" class="btn btn-icon btn-inherit"
                                             data-placement="bottom"
@@ -35,6 +31,10 @@
                                         <i class="icon-trashcan"></i>
                                     </button>
                                 </div>
+                                <a data-bs-collapse-toggle data-ng-hide="role.editName" data-ng-dblclick="startEditName(role)">
+                                    <span class="icon-caret-right"></span>
+                                    <span class="panel-title-text">{{ role.entity.name }}</span>
+                                </a>
                                 <div data-ng-show="role.editName" style="width:50%">
                                     <input class="form-control input-sm" data-ng-model="role.entity.name"
                                            data-focus-on="focus-{{role.entity.id}}"
