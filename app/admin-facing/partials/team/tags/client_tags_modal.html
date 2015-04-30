@@ -1,4 +1,4 @@
-<div class="modal" tabindex="-1" role="dialog">
+<div class="modal modal-client-tags" tabindex="-1" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <form name="clientForm" class="form"
@@ -24,7 +24,8 @@
                 <div class="modal-footer">
                     <button class="btn btn-success" type="button"
                             data-ng-click="checkForConflicts(clientForm.$valid);"
-                            data-ng-disabled="!clientForm.$valid || !clientTagsHaveChanges"
+                            data-ng-disabled="!clientForm.$valid"
+                            data-ng-show="!tagInputMode && clientTagsHaveChanges"
                             data-placement="right"
                             data-team-conflict-popover>Save
                     </button>
