@@ -243,6 +243,9 @@ select.form-control {
                     background-image: none;
                     border: 0;
                     box-shadow: none;
+                    .group-name:after{
+                        content: ": ";
+                    }
                     .search-choice-close {
                         display: none;
                         background: none;
