@@ -8,10 +8,9 @@ angular.module('emmiManager')
     .controller('ClientRoleAdminCtrl', ['$scope', '$alert', 'ManageUserRolesService', '$filter', 'focus',
         function ($scope, $alert, ManageUserRolesService, $filter, focus) {
 
-            ManageUserRolesService.referenceData($scope.clientResource).then(function (referenceData) {
-                $scope.clientReferenceData = referenceData;
-                $scope.libraries = referenceData.roleLibrary;
-            });
+            // these are loaded by the route/main controller
+            $scope.clientReferenceData = $scope.clientResource.ref.clientRoleReferenceData;
+            $scope.libraries = $scope.clientResource.ref.clientRoleLibraries;
 
             /**
              * Loads existing roles for the current client
@@ -170,13 +169,13 @@ angular.module('emmiManager')
                     .then(function () {
                         $scope.loadExisting();
                         var added = [];
-                        angular.forEach($scope.clientReferenceData.roleLibrary, function(role){
-                            if(role.checked && !role.disabled){
+                        angular.forEach($scope.clientReferenceData.roleLibrary, function (role) {
+                            if (role.checked && !role.disabled) {
                                 added.push(role.entity);
                             }
                         });
-                        
-                        if(added.length === 1){
+
+                        if (added.length === 1) {
                             $scope.successAlert(added[0]);
                         } else {
                             $alert({
@@ -211,7 +210,7 @@ angular.module('emmiManager')
             /**
              * Success alert to show when a client role is added.
              */
-            $scope.successAlert = function(clientRole){
+            $scope.successAlert = function (clientRole) {
                 $alert({
                     content: 'The role <b>' + clientRole.name + '</b> has been added successfully.',
                     container: '#messages-container',
