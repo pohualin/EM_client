@@ -23,15 +23,19 @@ angular.module('emmiManager')
                 var loadAllTagsForClient = TeamsFilter.getClientGroups().then(function (groups) {
                     $scope.clientGroups = groups;
                     $scope.clientTagGroupToDisplay = TeamsFilter.getClientTagsInGroups(groups);
+                    return groups;
                 });
                 var seeIfTeamsExist = TeamsFilter.doTeamsExistForClient().then(function (page) {
                     $scope.teamsExistForClient = !!page;
+                    return $scope.teamsExistForClient;
                 });
                 var lookForInactiveTeams = TeamsFilter.doInactiveTeamsExistForClient().then(function (page) {
                     $scope.inactiveTeams = !!page;
+                    return $scope.inactiveTeams;
                 });
                 var lookForUntaggedTeams = TeamsFilter.doUntaggedTeamsExist().then(function (page) {
                     $scope.teamsWithNoTeamTags = !!page;
+                    return $scope.teamsWithNoTeamTags;
                 });
 
                 // make reference data is fully loaded

@@ -12,11 +12,11 @@
                             <span class="fa-angle-down"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://twitter.com/fat">Action</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://twitter.com/fat">Another action</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://twitter.com/fat">Something else here</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
                             <li role="presentation" class="divider"></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://twitter.com/fat">Separated link</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
                         </ul>
                     </li>
                     <!-- <li>
@@ -85,12 +85,12 @@
                             Settings
                         </a>
                         <ul class="dropdown-menu">
-                            <li data-ng-if="isAuthorized([userRoles.god, userRoles.admin])"><a
-                                data-ng-href="#/users"><i class="icon-group"></i> Emmi Users</a></li>
-                            <li data-ng-if="account.link.referenceTags"><a data-ng-href="#/admin">
-                                <i class="icon-command-line"></i> Admin Functions</a></li>
+                            <li data-ng-if="isAuthorized([userRoles.god, userRoles.admin])">
+                                <a data-ng-href="#/users">Emmi Users</a></li>
+                            <li data-ng-if="account.link.referenceTags">
+                                <a data-ng-href="#/admin">Admin Functions</a></li>
                             <li data-ng-if="isAuthorized([userRoles.god]) || (isAuthorized([userRoles.admin]) && account.webApiUser)">
-                                <a data-ng-href="#/docs"><i class="icon-text-doc"></i> Technical Documentation</a>
+                                <a data-ng-href="#/docs">Technical Documentation</a>
                             </li>
                         </ul>
                     </li>
