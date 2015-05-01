@@ -69,8 +69,10 @@ angular.module('emmiManager')
             $scope.save = function(){
             	UserClientUserClientTeamRolesService.associateTeams($scope.selectedTeamRoles).then(function(response){
             		$scope.hideAddTeamsModal();
-            		UserClientUserClientTeamRolesService.refreshTeamRoleCard(UserClientUserClientTeamRolesService.getSelectedClientTeamRole());
+                    var clientTeamRole = UserClientUserClientTeamRolesService.getSelectedClientTeamRole();
+            		UserClientUserClientTeamRolesService.refreshTeamRoleCard(clientTeamRole);
             		UserClientUserClientTeamRolesService.refreshTeamRoleCards($scope.cardsToRefresh);
+                    clientTeamRole.activePanel = 0; // Open the panel after adding teams
             		_paq.push(['trackEvent', 'Form Action', 'User Team Role Search', 'Add']);
             	});
             };
