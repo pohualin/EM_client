@@ -17,7 +17,7 @@
                 <select class="form-control" id="teamFilter"
                         data-ng-model="selectedGroup"
                         data-placeholder="All {{!showInactiveTeams && inactiveTeams ? 'Active' : ''}} Teams"
-                        data-ng-disabled="showUntaggedTeams"
+                        data-ng-disabled="showUntaggedTeams || !clientGroups || clientGroups.length === 0"
                         data-ng-options="group.entity.name for group in clientGroups track by group.entity.id | orderBy:'name'"
                         data-allow-single-deselect="true"
                         data-ng-change="updateState()" data-chosen data-disable-search="true">

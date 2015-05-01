@@ -1,4 +1,4 @@
-/* global angular */
+/* global angular, console */
 /**
  * Monkey patch for angular-chosen-localytics directive.
  *
@@ -154,25 +154,27 @@ angular.module('emmi.chosen', [])
          * Ensures that the chosen data model and angular data model are the
          * same size
          *
-         * @param attr
-         * @param scope
-         * @param chosen
-         * @returns {boolean}
+         * @param attr attributes on the html elements
+         * @param scope of the directive
+         * @param chosen the javascript component
+         * @returns {boolean} true if they are out of sync, false if they are in-sync
          */
         var determineIfAngularIsDifferentThanChosen = function (attr, scope, chosen) {
-            var selectedModels = $parse(attr.ngModel)(scope),
-                selectedCount = 0;
 
-            if (chosen) {
+            var selectedModels = $parse(attr.ngModel)(scope),
+                chosenCount = 0,
+                angularCount = (selectedModels && selectedModels.length > 0) ? selectedModels.length : -1;
+
+            if (chosen && angularCount !== -1) {
+                // check the chosen side only if the angular side has some data
                 var resultsData = 'results_data';
                 angular.forEach(chosen[resultsData], function (data) {
                     if (data.selected) {
-                        selectedCount++;
+                        chosenCount++;
                     }
                 });
             }
-
-            return (selectedModels) ? selectedModels.length !== selectedCount : false;
+            return angularCount !== chosenCount;
         };
 
 
@@ -217,11 +219,11 @@ angular.module('emmi.chosen', [])
 
                 disableWithMessage = function () {
                     empty = true;
-                    return element.attr('disabled', true).trigger('chosen:updated');
+                    return element.attr('data-placeholder', defaultText).attr('disabled', true).trigger('chosen:updated');
                 };
                 if (ngModel) {
                     origRender = ngModel.$render;
-                    ngModel.$render = function (refreshChosen) {
+                    ngModel.$render = function (forceChosenRefresh) {
                         origRender();
 
                         var resultsNeedSync = determineIfAngularIsDifferentThanChosen(attr, scope, chosen);
@@ -229,7 +231,7 @@ angular.module('emmi.chosen', [])
                         // set the disabled attributes on the chosen side
                         var disabledHasChanged = synchronizeDisabledAttribute(ngModel, element);
 
-                        if (refreshChosen || disabledHasChanged || resultsNeedSync) {
+                        if (forceChosenRefresh || disabledHasChanged || resultsNeedSync) {
                             // the chosen side needs to be updated due to changes
                             initOrUpdate();
                         }
@@ -238,13 +240,13 @@ angular.module('emmi.chosen', [])
                         addBeforeDeleteHook(element, attr, scope);
                     };
                     if (attr.multiple) {
-                        viewWatch = function () {
+                        scope.$watch(function () {
                             return ngModel.$viewValue;
-                        };
-
-                        scope.$watch(viewWatch, function () {
+                        }, function () {
                             ngModel.$render(false);
-                        }, true);
+                        }, function (before, after) {
+                            return before.length === after.length;
+                        });
                     }
                 } else {
                     initOrUpdate();
@@ -258,7 +260,12 @@ angular.module('emmi.chosen', [])
                 attr.$observe('placeholder', function (changeValue) {
                     if (angular.isDefined(changeValue)) {
                         defaultText = changeValue;
-                        return element.trigger('chosen:updated');
+                        if (empty) {
+                            disableWithMessage();
+                        } else {
+                            return element.trigger('chosen:updated');
+                        }
+
                     }
                 });
                 if (attr.ngOptions && ngModel) {
@@ -293,11 +300,8 @@ angular.module('emmi.chosen', [])
                                                     ngModel._inValueMap[trackByGetter(item)] = item;
                                                 }
                                             });
-                                            $timeout(function () {
-                                                // all possible values are loaded, re-sync
-                                                ngModel.$render(true);
-                                            });
-
+                                            // all possible values are loaded, re-sync
+                                            ngModel.$render(true);
                                         }
                                     }
                                 }
