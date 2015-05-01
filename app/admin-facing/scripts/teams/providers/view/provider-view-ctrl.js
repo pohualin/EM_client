@@ -1,7 +1,7 @@
 'use strict';
 angular.module('emmiManager')
 
-	.controller('ProviderListController', function($scope, $modal, ProviderView, TeamLocation, TeamProviderService, ProviderSearch, $controller, arrays, ProviderCreate,  $alert){
+	.controller('ProviderListController', function($scope, $modal, ProviderView, TeamLocation, TeamProviderService, ProviderSearch, $controller, arrays, ProviderCreate, ClientProviderService, Client, $alert){
 
 		$controller('CommonPagination', {$scope: $scope});
 
@@ -119,11 +119,18 @@ angular.module('emmiManager')
             });
        		$scope.addProvidersModalOnScope = {};
        		$scope.addAnother = addAnother;
-        	$scope.addProvidersModalOnScope =  $modal({
-  			   scope: $scope,
-  			   template: 'admin-facing/partials/team/provider/search.html', animation: 'none', backdropAnimation: 'emmi-fade', show: true, backdrop: 'static'});
-
-
+       		ClientProviderService.findForClient(Client.getClient()).then(function (clientProviders) {
+       			if(clientProviders.content && clientProviders.content.length > 0){
+       				$scope.addProvidersModalOnScope =  $modal({
+       					scope: $scope,
+       					template: 'admin-facing/partials/team/provider/searchWCPTabs.html', animation: 'none', backdropAnimation: 'emmi-fade', show: true, backdrop: 'static'});
+       			}
+       			else{
+        	       	$scope.addProvidersModalOnScope =  $modal({
+        	       		scope: $scope,
+        	       		template: 'admin-facing/partials/team/provider/search.html', animation: 'none', backdropAnimation: 'emmi-fade', show: true, backdrop: 'static'});
+       			}
+       	   });
         };
 
         $scope.hideaddprovidermodal = function () {
