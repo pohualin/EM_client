@@ -72,19 +72,6 @@ angular.module('emmi.chosen', [])
         };
 
         /**
-         * This method ensures the number of chosen results mirrors the number
-         * of possible select options.
-         * @returns {boolean} true if they are in sync
-         */
-        var areChosenAndAngularInSync = function (element) {
-            var chosenOptionCount = $document.find('#' + element.context.id + '_chosen')
-                .find('ul.chosen-results')
-                .find('li[data-option-array-index]')
-                .length;
-            return element.find('option').length === chosenOptionCount;
-        };
-
-        /**
          * Allows for angular to do something prior to a delete event
          * initiated by chosen components. E.g. clicking on the 'x' of a selected option.
          */
@@ -210,16 +197,13 @@ angular.module('emmi.chosen', [])
                 };
                 if (ngModel) {
                     origRender = ngModel.$render;
-                    ngModel.$render = function () {
+                    ngModel.$render = function (refreshChosen) {
                         origRender();
-
-                        // see if the angular side is in sync with the chosen side
-                        var inSync = areChosenAndAngularInSync(element);
 
                         // set the disabled attributes on the chosen side
                         var disabledHasChanged = synchronizeDisabledAttribute(ngModel, element);
 
-                        if (!inSync || disabledHasChanged) {
+                        if (refreshChosen || disabledHasChanged) {
                             // the chosen side needs to be updated due to changes
                             initOrUpdate();
                         }
@@ -231,7 +215,9 @@ angular.module('emmi.chosen', [])
                         viewWatch = function () {
                             return ngModel.$viewValue;
                         };
-                        scope.$watch(viewWatch, ngModel.$render, true);
+                        scope.$watch(viewWatch, function () {
+                            ngModel.$render(false);
+                        }, true);
                     }
                 } else {
                     initOrUpdate();
@@ -280,8 +266,8 @@ angular.module('emmi.chosen', [])
                                                     ngModel._inValueMap[trackByGetter(item)] = item;
                                                 }
                                             });
-                                            $timeout(function (){
-                                                ngModel.$render();
+                                            $timeout(function () {
+                                                ngModel.$render(true);
                                             });
 
                                         }
