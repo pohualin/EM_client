@@ -32,7 +32,7 @@ angular.module('emmiManager')
                                 $rootScope.lockError = false;
                                 $rootScope.lockExpirationDateTime = null;
                                 $rootScope.username = null;
-                                loggedIn.password = creds.password;
+                                Session.password = creds.password;
                                 authService.loginConfirmed(loggedIn);
                             }
                         });

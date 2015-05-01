@@ -10,7 +10,7 @@ angular.module('emmiManager')
                 routeUser: function (data) {
                     if (!Session.interruptLoginFlow &&(!Session.email || !Session.emailValidated || !Session.secretQuestionCreated)) {
                         //if email was not supplied
-                        $rootScope.userData = data;
+                        Session.userData = data;
                         $location.path('/passwordInformation').replace();
                     } else if ($location.path() === '/login') {
                         var priorRequestPath = $rootScope.locationBeforeLogin;
