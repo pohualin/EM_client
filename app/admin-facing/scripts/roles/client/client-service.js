@@ -3,7 +3,7 @@ angular.module('emmiManager')
 
     .service('ManageUserRolesService', ['$filter', '$q', '$http', '$translate', 'UriTemplate', 'CommonService',
         function ($filter, $q, $http, $translate, UriTemplate, CommonService) {
-            var referenceData;
+            var cachedReferenceData;
             var existingClientRoles = [];
             return {
                 /**
@@ -14,8 +14,8 @@ angular.module('emmiManager')
                 hasExistingClientRoles: function (clientResource) {
                     var deferred = $q.defer();
                     var hasClientRoles = false;
-                    this.loadClientRoles(clientResource).then(function(){
-                        if(existingClientRoles.length > 0){
+                    this.loadClientRoles(clientResource).then(function () {
+                        if (existingClientRoles.length > 0) {
                             hasClientRoles = true;
                         }
                         deferred.resolve(hasClientRoles);
@@ -37,7 +37,7 @@ angular.module('emmiManager')
                             var page = response.data;
                             CommonService.convertPageContentLinks(page);
                             angular.forEach(page.content, function (content) {
-                                content.entity.userClientPermissions = (referenceData) ? angular.copy(referenceData.permission) : [];
+                                content.entity.userClientPermissions = (cachedReferenceData) ? angular.copy(cachedReferenceData.permission) : [];
                             });
                             roles.push.apply(roles, page.content);
                             if (page.link && page.link['page-next']) {
@@ -64,9 +64,9 @@ angular.module('emmiManager')
                             var page = response.data;
                             CommonService.convertPageContentLinks(page);
                             angular.forEach(page.content, function (content) {
-                            	$http.get(UriTemplate.create(content.link.permissions).stringify()).then(function(permissions){
-                            		content.entity.permissions = permissions.data;
-                            	});
+                                $http.get(UriTemplate.create(content.link.permissions).stringify()).then(function (permissions) {
+                                    content.entity.permissions = permissions.data;
+                                });
                             });
                             roles.push.apply(roles, page.content);
                             if (page.link && page.link['page-next']) {
@@ -93,13 +93,13 @@ angular.module('emmiManager')
                             angular.forEach(response.data, function (savedPermission) {
                                 // set 'active' on the template permission
                                 angular.forEach(clientRoleResource.entity.userClientPermissions, function (templatePerm) {
-                                    if(!templatePerm.children){
-                                        if(!templatePerm.selected){
+                                    if (!templatePerm.children) {
+                                        if (!templatePerm.selected) {
                                             templatePerm.selected = templatePerm.name === savedPermission.name;
                                         }
                                     } else {
-                                        angular.forEach(templatePerm.children, function(child){
-                                            if(!child.selected){
+                                        angular.forEach(templatePerm.children, function (child) {
+                                            if (!child.selected) {
                                                 child.selected = child.name === savedPermission.name;
                                             }
                                         });
@@ -109,15 +109,15 @@ angular.module('emmiManager')
 
                             angular.forEach(clientRoleResource.entity.userClientPermissions, function (group) {
                                 var selectedChildren = 0;
-                                angular.forEach(group.children, function(child){
-                                    if(child.selected){
+                                angular.forEach(group.children, function (child) {
+                                    if (child.selected) {
                                         selectedChildren++;
                                     }
                                 });
                                 // Half check or check on group checkbox
-                                if(selectedChildren !== 0 && group.children.length !== selectedChildren){
+                                if (selectedChildren !== 0 && group.children.length !== selectedChildren) {
                                     group.__ivhTreeviewIndeterminate = true;
-                                } else if(selectedChildren !== 0 && group.children.length === selectedChildren) {
+                                } else if (selectedChildren !== 0 && group.children.length === selectedChildren) {
                                     group.selected = true;
                                 }
                             });
@@ -162,7 +162,7 @@ angular.module('emmiManager')
                     }).then(function (response) {
                         var savedClientRoleResource = response.data;
                         // reset permissions to possible
-                        savedClientRoleResource.entity.userClientPermissions = (referenceData) ? angular.copy(referenceData.permission) : [];
+                        savedClientRoleResource.entity.userClientPermissions = (cachedReferenceData) ? angular.copy(cachedReferenceData.permission) : [];
                         angular.extend(clientRoleResource, savedClientRoleResource);
                         clientRoleResource.editName = false;
                         delete clientRoleResource.original;
@@ -188,33 +188,40 @@ angular.module('emmiManager')
                  * @returns a promise that resolves to the full reference data
                  */
                 referenceData: function (clientResource) {
-                    var deferred = $q.defer();
+
                     var external = this;
-                    if (!referenceData) {
+                    if (!cachedReferenceData) {
                         // load reference data
-                        $http.get(UriTemplate.create(clientResource.link.rolesReferenceData).stringify()).then(function (response) {
-                            referenceData = response.data;
-                            external.composePermissionArray(referenceData.permission).then(function(perm){
-                                referenceData.permission = perm;
+                        return $http.get(UriTemplate.create(clientResource.link.rolesReferenceData).stringify()).then(function (response) {
+                            var rolesReferenceData = response.data;
+                            var transformPermissions = external.composePermissionArray(rolesReferenceData.permission).then(function (perm) {
+                                return perm;
                             });
 
-                            referenceData.roleLibrary = [];
+                            var roleLibrary = [];
                             // load library roles for reference data
-                            $http.get(UriTemplate.create(referenceData.link.roles).stringify()).then(function load(roleResponse) {
+                            var loadRoles = $http.get(UriTemplate.create(rolesReferenceData.link.roles).stringify()).then(function load(roleResponse) {
                                 var rolePage = roleResponse.data;
-                                referenceData.roleLibrary.push.apply(referenceData.roleLibrary, rolePage.content);
+                                roleLibrary.push.apply(roleLibrary, rolePage.content);
                                 if (rolePage.link && rolePage.link['page-next']) {
-                                    $http.get(rolePage.link['page-next']).then(function (nextPage) {
-                                        load(nextPage);
+                                    return $http.get(rolePage.link['page-next']).then(function (nextPage) {
+                                        return load(nextPage);
                                     });
                                 }
-                                deferred.resolve(referenceData);
+                                return roleLibrary;
+                            });
+                            return $q.all([transformPermissions, loadRoles]).then(function (responses) {
+                                rolesReferenceData.permission = responses[0];
+                                rolesReferenceData.roleLibrary = responses[1];
+                                cachedReferenceData = rolesReferenceData;
+                                return cachedReferenceData;
                             });
                         });
                     } else {
-                        deferred.resolve(referenceData);
+                        var deferred = $q.defer();
+                        deferred.resolve(cachedReferenceData);
+                        return deferred.promise;
                     }
-                    return deferred.promise;
                 },
                 /**
                  * Creates a new clientRoleEntity object
@@ -224,7 +231,7 @@ angular.module('emmiManager')
                 newClientRoleEntity: function () {
                     return {
                         name: '',
-                        userClientPermissions: (referenceData) ? angular.copy(referenceData.permission) : []
+                        userClientPermissions: (cachedReferenceData) ? angular.copy(cachedReferenceData.permission) : []
                     };
                 },
                 /**
@@ -242,7 +249,7 @@ angular.module('emmiManager')
                         // save each selection
                         angular.forEach(selections, function (selection) {
                             var permissions = [];
-                            angular.forEach(selection.entity.permission, function(p){
+                            angular.forEach(selection.entity.permission, function (p) {
                                 permissions.push(p.permission);
                             });
                             saveFunctions.push(
@@ -298,24 +305,24 @@ angular.module('emmiManager')
                  * This method will compose permission tree from an array of permissions with group
                  * It will translate permission name and sort the return array by group rank.
                  */
-                composePermissionArray: function(permissions){
+                composePermissionArray: function (permissions) {
                     var deferred = $q.defer();
                     var promises = [];
                     var map = {};
-                    angular.forEach(permissions, function(aPermission){
+                    angular.forEach(permissions, function (aPermission) {
                         var group = aPermission.group;
                         var deferred = $q.defer();
                         delete aPermission.group;
-                        if(!map[group.rank]){
+                        if (!map[group.rank]) {
                             // Ensure children are sorted by rank
                             group.childrenMap = {};
                             group.childrenMap[aPermission.rank] = aPermission;
                             map[group.rank] = group;
                             // translate group name calls
-                            $translate(group.name).then(function(translated){
+                            $translate(group.name).then(function (translated) {
                                 group.displayName = translated;
                                 deferred.resolve(group);
-                            }, function(error){
+                            }, function (error) {
                                 group.displayName = group.name;
                                 deferred.resolve(group);
                             });
@@ -324,34 +331,34 @@ angular.module('emmiManager')
                             map[group.rank].childrenMap[aPermission.rank] = aPermission;
                         }
                         // translate permission name calls
-                        $translate(aPermission.name).then(function(translated){
+                        $translate(aPermission.name).then(function (translated) {
                             aPermission.displayName = translated;
                             deferred.resolve(aPermission);
-                        }, function(error){
+                        }, function (error) {
                             aPermission.displayName = aPermission.name;
                             deferred.resolve(aPermission);
                         });
                         promises.push(deferred.promise);
                     });
 
-                    $q.all(promises).then(function(){
+                    $q.all(promises).then(function () {
                         var perm = [];
-                        
+
                         // Turn children map to children
-                        angular.forEach(map, function(group){
-                            angular.forEach(group.childrenMap, function(child){
-                                if(!group.children){
+                        angular.forEach(map, function (group) {
+                            angular.forEach(group.childrenMap, function (child) {
+                                if (!group.children) {
                                     group.children = [];
-                                } 
+                                }
                                 group.children.push(child);
                             });
                         });
-                        
-                        angular.forEach(map, function(group){
+
+                        angular.forEach(map, function (group) {
                             // Promote the only child to group
-                            if(group.children.length === 1){
+                            if (group.children.length === 1) {
                                 perm.push(group.children[0]);
-                            } else if(group.children.length > 1) {
+                            } else if (group.children.length > 1) {
                                 perm.push(group);
                             }
                         });
@@ -363,13 +370,13 @@ angular.module('emmiManager')
                 /**
                  * Collect all selected permissions
                  */
-                selectedPermissions: function(userClientPermissions){
+                selectedPermissions: function (userClientPermissions) {
                     var perms = [];
-                    angular.forEach(userClientPermissions, function(group){
-                        if (!group.children){
+                    angular.forEach(userClientPermissions, function (group) {
+                        if (!group.children) {
                             perms.push(group);
                         } else {
-                            angular.forEach(group.children, function(child){
+                            angular.forEach(group.children, function (child) {
                                 perms.push(child);
                             });
                         }
