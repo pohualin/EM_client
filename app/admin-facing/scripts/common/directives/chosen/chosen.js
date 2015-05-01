@@ -164,7 +164,8 @@ angular.module('emmi.chosen', [])
                 selectedCount = 0;
 
             if (chosen) {
-                angular.forEach(chosen.results_data, function (data) {
+                var resultsData = 'results_data';
+                angular.forEach(chosen[resultsData], function (data) {
                     if (data.selected) {
                         selectedCount++;
                     }
