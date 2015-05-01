@@ -221,7 +221,7 @@ angular.module('emmi.chosen', [])
                 };
                 if (ngModel) {
                     origRender = ngModel.$render;
-                    ngModel.$render = function (refreshChosen) {
+                    ngModel.$render = function () {
                         origRender();
 
                         var resultsNeedSync = determineIfAngularIsDifferentThanChosen(attr, scope, chosen);
@@ -229,7 +229,7 @@ angular.module('emmi.chosen', [])
                         // set the disabled attributes on the chosen side
                         var disabledHasChanged = synchronizeDisabledAttribute(ngModel, element);
 
-                        if (refreshChosen || disabledHasChanged || resultsNeedSync) {
+                        if (disabledHasChanged || resultsNeedSync) {
                             // the chosen side needs to be updated due to changes
                             initOrUpdate();
                         }
@@ -243,7 +243,7 @@ angular.module('emmi.chosen', [])
                         };
 
                         scope.$watch(viewWatch, function () {
-                            ngModel.$render(false);
+                            ngModel.$render();
                         }, true);
                     }
                 } else {
@@ -293,11 +293,6 @@ angular.module('emmi.chosen', [])
                                                     ngModel._inValueMap[trackByGetter(item)] = item;
                                                 }
                                             });
-                                            $timeout(function () {
-                                                // all possible values are loaded, re-sync
-                                                ngModel.$render(true);
-                                            });
-
                                         }
                                     }
                                 }
