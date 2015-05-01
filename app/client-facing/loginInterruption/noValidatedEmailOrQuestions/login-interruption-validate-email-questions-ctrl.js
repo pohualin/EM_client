@@ -18,7 +18,7 @@ angular.module('emmiManager')
                 $scope.notValidatedEmailNoQuestionForm.validateEmail.$setValidity('duplicate', true);
 
                 if (isValid) {
-                    ValidationService.saveEmail($scope.userClientReqdResource).then(function () {
+                    ValidationService.saveEmail($scope.userClientReqdResource,$scope.userData.password).then(function () {
                         //send validation email
                         ValidationService.sendValidationEmail($scope.userClientReqdResource).then(function () {
                             SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.userClientReqdResource.question1.entity, $scope.userClientReqdResource.question2.entity).then(

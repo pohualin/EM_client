@@ -13,7 +13,7 @@ angular.module('emmiManager')
                 $scope.enterEmailForm.addEmail.$setValidity('duplicate', true);
                 if (isValid) {
                     //check if email is already in use and save email
-                    NewEmailService.saveEmail($scope.userClientReqdResource).then(function () {
+                    NewEmailService.saveEmail($scope.userClientReqdResource,$scope.userData.password).then(function () {
                         //send validation email
                         ValidationService.sendValidationEmail($scope.userClientReqdResource).then(function () {
                             $location.path($scope.locationBeforeLogin).replace();

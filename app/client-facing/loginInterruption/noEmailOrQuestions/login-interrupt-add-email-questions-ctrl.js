@@ -13,7 +13,7 @@ angular.module('emmiManager')
                 $scope.noEmailNoQuestionForm.addEmail.$setValidity('duplicate', true);
 
                 if (isValid) {
-                    NewEmailService.saveEmail($scope.userClientReqdResource).then(function () {
+                    NewEmailService.saveEmail($scope.userClientReqdResource,$scope.userData.password).then(function () {
                         SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.userClientReqdResource.question1.entity, $scope.userClientReqdResource.question2.entity).then(
                             function () {
                                 $location.path($scope.locationBeforeLogin).replace();

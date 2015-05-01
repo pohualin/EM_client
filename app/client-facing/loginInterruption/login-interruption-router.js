@@ -38,6 +38,10 @@ angular.module('emmiManager')
                             deferred.reject();
                         });
                         return deferred.promise;
+                    }],
+
+                    userData:['$rootScope', function ($rootScope) {
+                            return $rootScope.userData;
                     }]
 
                 }

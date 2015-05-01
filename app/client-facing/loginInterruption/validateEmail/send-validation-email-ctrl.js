@@ -18,7 +18,7 @@ angular.module('emmiManager')
                 $scope.validateEmailForm.validateEmail.$setValidity('duplicate', true);
                 if (isValid) {
                     //check if email is already in use and save email
-                    ValidationService.saveEmail($scope.userClientReqdResource).then(
+                    ValidationService.saveEmail($scope.userClientReqdResource,$scope.userData.password).then(
                         function () {
                             //send validation email
                             ValidationService.sendValidationEmail($scope.userClientReqdResource).then(function () {

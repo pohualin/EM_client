@@ -220,9 +220,9 @@ angular.module('emmiManager', [
         });
 
         // Call when the the client is confirmed
-        $rootScope.$on('event:auth-loginConfirmed', function () {
+        $rootScope.$on('event:auth-loginConfirmed', function (event, data) {
             $rootScope.authenticated = true;
-            ConfigurationService.routeUser();
+            ConfigurationService.routeUser(data);
         });
 
         $rootScope.$on('event:auth-credentialsExpired', function (event, rejection) {
