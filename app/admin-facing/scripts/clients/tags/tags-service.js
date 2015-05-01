@@ -1,3 +1,5 @@
+/* global angular, console */
+
 'use strict';
 angular.module('emmiManager')
     .factory('GroupSaveRequest', function () {
@@ -35,7 +37,7 @@ angular.module('emmiManager')
             },
             loadGroups: function (clientResource) {
                 if (clientResource.entity.id) {
-                    clientResource.tagGroups = [];
+                    var tags = [];
                     return $http.get(UriTemplate.create(clientResource.link.groups).stringify()).then(function load(response) {
                         var page = response.data;
                         angular.forEach(page.content, function (group) {
@@ -44,75 +46,69 @@ angular.module('emmiManager')
                             angular.forEach(group.entity.tags, function (tag) {
                                 tag.text = tag.name;
                             });
-                            clientResource.tagGroups.push(group.entity);
+                            tags.push(group.entity);
                         });
 
                         if (page.link && page.link['page-next']) {
-                            $http.get(page.link['page-next']).then(function (response) {
-                                load(response);
+                            return $http.get(page.link['page-next']).then(function (response) {
+                                return load(response);
                             });
                         }
-                        return clientResource.tagGroups;
+                        clientResource.tagGroups = tags;
+                        return tags;
                     });
                 }
             },
             loadReferenceTags: function (group) {
-            	var referenceTags = [];
-            	var deferred = $q.defer();
-            	$http.get(UriTemplate.create(group.link.refTagsForGroup).stringify()).then(function getTags(tagsResponse) {
+                var referenceTags = [];
+
+                return $http.get(UriTemplate.create(group.link.refTagsForGroup).stringify()).then(function getTags(tagsResponse) {
                     CommonService.convertPageContentLinks(tagsResponse.data);
                     angular.forEach(tagsResponse.data.content, function (tag) {
                         tag.text = tag.entity.name;
                         referenceTags.push(tag);
                     });
-            		if (tagsResponse.data.link && tagsResponse.data.link['page-next']) {
-                        $http.get(tagsResponse.data.link['page-next']).then(function (tagsResponsePage) {
-                        	getTags(tagsResponsePage);
+                    if (tagsResponse.data.link && tagsResponse.data.link['page-next']) {
+                        return $http.get(tagsResponse.data.link['page-next']).then(function (tagsResponsePage) {
+                            return getTags(tagsResponsePage);
                         });
                     }
-            		deferred.resolve(referenceTags);
-            	});
-            	return deferred.promise;
+                    return referenceTags;
+                });
             },
             loadReferenceData: function () {
-                var deferred = $q.defer();
-            	var responseArray = [];
-                $http.get(UriTemplate.create(Session.link.refDataGroups).stringify()).then(function iterateRefGroupPage(response) {
+                var responseArray = [];
+                return $http.get(UriTemplate.create(Session.link.refDataGroups).stringify()).then(function iterateRefGroupPage(response) {
                     CommonService.convertPageContentLinks(response.data);
                     angular.forEach(response.data.content, function (group) {
-                    	var newArray = [];
                         group.title = group.entity.name;
                         responseArray.push(group);
                     });
 
                     if (response.data.link && response.data.link['page-next']) {
-                        $http.get(response.data.link['page-next']).then(function (response) {
-                            iterateRefGroupPage(response);
+                        return $http.get(response.data.link['page-next']).then(function (response) {
+                            return iterateRefGroupPage(response);
                         });
                     }
-                    deferred.resolve(responseArray);
+                    return responseArray;
                 });
-                return deferred.promise;
             },
             loadActiveReferenceGroups: function () {
-                var deferred = $q.defer();
                 var responseArray = [];
-                $http.get(UriTemplate.create(Session.link.activeReferenceGroups).stringify()).then(function iterateRefGroupPage(response) {
+                return $http.get(UriTemplate.create(Session.link.activeReferenceGroups).stringify()).then(function iterateRefGroupPage(response) {
                     CommonService.convertPageContentLinks(response.data);
                     angular.forEach(response.data.content, function (group) {
-                        var newArray = [];
                         group.title = group.entity.name;
                         responseArray.push(group);
                     });
 
                     if (response.data.link && response.data.link['page-next']) {
-                        $http.get(response.data.link['page-next']).then(function (response) {
-                            iterateRefGroupPage(response);
+                        return $http.get(response.data.link['page-next']).then(function (response) {
+                            return iterateRefGroupPage(response);
                         });
                     }
-                    deferred.resolve(responseArray);
+                    return responseArray;
                 });
-                return deferred.promise;
             },
             createReferenceGroup: function (groupToSave) {
                 if (groupToSave) {
@@ -135,7 +131,9 @@ angular.module('emmiManager')
             updateReferenceGroup: function (groupToSave) {
                 if (groupToSave) {
                     angular.forEach(groupToSave.tags, function (t) {
-                        if (t.entity) { t.id = t.entity.id; }
+                        if (t.entity) {
+                            t.id = t.entity.id;
+                        }
                         t.name = t.text;
                     });
                     var data = {
@@ -154,14 +152,13 @@ angular.module('emmiManager')
                 }
             },
             checkForConflicts: function (clientResource, removedTags) {
-                var deferred = $q.defer();
+
                 var groupSaveRequests = GroupSaveRequest.create(clientResource);
                 var tagMap = {};
-                angular.forEach(removedTags, function(removedTag){
-                    var rt = {tag: removedTag.name, numberOfTeams: 0, conflictingTeamIds: []};
-                    tagMap[removedTag.name] = rt;
+                angular.forEach(removedTags, function (removedTag) {
+                    tagMap[removedTag.name] = {tag: removedTag.name, numberOfTeams: 0, conflictingTeamIds: []};
                 });
-                
+
                 return $http.post(UriTemplate.create(clientResource.link.invalidTeams).stringify(), groupSaveRequests).then(function (response) {
                     angular.forEach(response.data, function (teamTag) {
                         tagMap[teamTag.tag.name].conflictingTeamIds.push(teamTag.team.id);
@@ -171,85 +168,74 @@ angular.module('emmiManager')
                     angular.forEach(tagMap, function (removedTag) {
                         numberOfTeamForTagMap.push(removedTag);
                     });
-                    deferred.resolve(numberOfTeamForTagMap);
-                    return deferred.promise;
+                    return numberOfTeamForTagMap;
                 });
             },
             listTagsByGroupId: function (groupResource) {
-                if (groupResource) {
-                    var deferred = $q.defer();
-                    var tags = [];
+                var tags = [];
 
-                    $http.get(UriTemplate.create(groupResource.link.tags).stringify({
-                        sort:'name,asc'
-                    })).then(function load(response) {
-                        var page = response.data;
-                        CommonService.convertPageContentLinks(page);
+                return $http.get(UriTemplate.create(groupResource.link.tags).stringify({
+                    sort: 'name,asc'
+                })).then(function load(response) {
+                    var page = response.data;
+                    CommonService.convertPageContentLinks(page);
 
-                        angular.forEach(page.content, function (tag) {
-                            tags.push(tag);
-                        });
-
-                        if (page.link && page.link['page-next']) {
-                            $http.get(page.link['page-next']).then(function (response) {
-                                load(response);
-                            });
-                        }
-                        deferred.resolve(tags);
+                    angular.forEach(page.content, function (tag) {
+                        tags.push(tag);
                     });
-                    return deferred.promise;
-                }
+
+                    if (page.link && page.link['page-next']) {
+                        return $http.get(page.link['page-next']).then(function (response) {
+                            return load(response);
+                        });
+                    }
+                    return tags;
+                });
             },
             listTeamsForTagId: function (tagResource) {
-                if (tagResource) {
-                    var deferred = $q.defer();
-                    var teams = [];
+                var teams = [];
 
-                    $http.get(UriTemplate.create(tagResource.link.teamTags).stringify({
-                        sort:'name,asc'
-                    })).then(function load(response) {
-                        var page = response.data;
+                return $http.get(UriTemplate.create(tagResource.link.teamTags).stringify({
+                    sort: 'name,asc'
+                })).then(function load(response) {
+                    var page = response.data;
 
-                        angular.forEach(page.content, function (teamTag) {
-                            teams.push(teamTag.entity.team);
-                        });
-
-                        if (page.link && page.link['page-next']) {
-                            $http.get(page.link['page-next']).then(function (response) {
-                                load(response);
-                            });
-                        }
-                        deferred.resolve(teams);
+                    angular.forEach(page.content, function (teamTag) {
+                        teams.push(teamTag.entity.team);
                     });
-                    return deferred.promise;
-                }
+
+                    if (page.link && page.link['page-next']) {
+                        return $http.get(page.link['page-next']).then(function (response) {
+                            return load(response);
+                        });
+                    }
+                });
             },
-            removedTags: function(client){
+            removedTags: function (client) {
                 var deferred = $q.defer();
                 var tagGroups = [];
                 var tags = [];
                 var removedTags = [];
-                var isRemove = false;
-                angular.forEach(client.tagGroups, function(tagGroup){
-                    if(tagGroup.id){
+                angular.forEach(client.tagGroups, function (tagGroup) {
+                    if (tagGroup.id) {
                         tagGroups.push(tagGroup.id);
                     }
-                    
-                    angular.forEach(tagGroup.tags, function(tag){
-                        if(tag.id){
+
+                    angular.forEach(tagGroup.tags, function (tag) {
+                        if (tag.id) {
                             tags.push(tag.id);
                         }
                     });
                 });
-                
-                angular.forEach(client.savedGroups, function(savedGroup){
-                    if(tagGroups.indexOf(savedGroup.id) === -1){
-                        angular.forEach(savedGroup.tags, function(tag){
+
+                angular.forEach(client.savedGroups, function (savedGroup) {
+                    if (tagGroups.indexOf(savedGroup.id) === -1) {
+                        angular.forEach(savedGroup.tags, function (tag) {
                             removedTags.push(tag);
                         });
                     } else {
-                        angular.forEach(savedGroup.tags, function(tag){
-                            if(tags.indexOf(tag.id) === -1){
+                        angular.forEach(savedGroup.tags, function (tag) {
+                            if (tags.indexOf(tag.id) === -1) {
                                 removedTags.push(tag);
                             }
                         });
