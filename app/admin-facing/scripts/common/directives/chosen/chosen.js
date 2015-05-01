@@ -150,31 +150,6 @@ angular.module('emmi.chosen', [])
             return changed;
         };
 
-        /**
-         * Ensures that the chosen data model and angular data model are the
-         * same size
-         *
-         * @param attr
-         * @param scope
-         * @param chosen
-         * @returns {boolean}
-         */
-        var determineIfAngularIsDifferentThanChosen = function (attr, scope, chosen) {
-            var selectedModels = $parse(attr.ngModel)(scope),
-                selectedCount = 0;
-
-            if (chosen) {
-                var resultsData = 'results_data';
-                angular.forEach(chosen[resultsData], function (data) {
-                    if (data.selected) {
-                        selectedCount++;
-                    }
-                });
-            }
-
-            return (selectedModels) ? selectedModels.length !== selectedCount : false;
-        };
-
 
         return {
             restrict: 'A',
@@ -186,6 +161,7 @@ angular.module('emmi.chosen', [])
                 options = scope.$eval(attr.chosen) || {};
                 angular.forEach(attr, function (value, key) {
                     if (__indexOf.call(CHOSEN_OPTION_WHITELIST, key) >= 0) {
+                        //return options[snakeCase(key)] = scope.$eval(value);
                         options[snakeCase(key)] = scope.$eval(value);
                     }
                 });
@@ -224,15 +200,11 @@ angular.module('emmi.chosen', [])
                     ngModel.$render = function () {
                         origRender();
 
-                        var resultsNeedSync = determineIfAngularIsDifferentThanChosen(attr, scope, chosen);
-
                         // set the disabled attributes on the chosen side
-                        var disabledHasChanged = synchronizeDisabledAttribute(ngModel, element);
+                        synchronizeDisabledAttribute(ngModel, element);
 
-                        if (disabledHasChanged || resultsNeedSync) {
-                            // the chosen side needs to be updated due to changes
-                            initOrUpdate();
-                        }
+                        // update chosen
+                        initOrUpdate();
 
                         // ensure the 'before delete' hooks are attached
                         addBeforeDeleteHook(element, attr, scope);
@@ -241,10 +213,7 @@ angular.module('emmi.chosen', [])
                         viewWatch = function () {
                             return ngModel.$viewValue;
                         };
-
-                        scope.$watch(viewWatch, function () {
-                            ngModel.$render();
-                        }, true);
+                        scope.$watch(viewWatch, ngModel.$render, true);
                     }
                 } else {
                     initOrUpdate();
@@ -293,6 +262,10 @@ angular.module('emmi.chosen', [])
                                                     ngModel._inValueMap[trackByGetter(item)] = item;
                                                 }
                                             });
+                                            $timeout(function (){
+                                                ngModel.$render();
+                                            });
+
                                         }
                                     }
                                 }
