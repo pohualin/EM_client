@@ -10,10 +10,9 @@ angular.module('emmiManager')
              */
             getClientGroups: function () {
                 //get all of the groups for a client
-                var deferred = $q.defer();
                 var groups = [];
 
-                $http.get(UriTemplate.create(Client.getClient().link.groups).stringify({
+                return $http.get(UriTemplate.create(Client.getClient().link.groups).stringify({
                     sort: 'name,asc'
                 })).then(function load(response) {
                     var page = response.data;
@@ -26,14 +25,12 @@ angular.module('emmiManager')
                     });
 
                     if (page.link && page.link['page-next']) {
-                        $http.get(page.link['page-next']).then(function (response) {
-                            load(response);
+                        return $http.get(page.link['page-next']).then(function (response) {
+                            return load(response);
                         });
                     }
-                    deferred.resolve(groups);
+                    return groups;
                 });
-
-                return deferred.promise;
             },
 
             /**
@@ -69,16 +66,12 @@ angular.module('emmiManager')
              */
             doTeamsExistForClient: function () {
                 //check if there is at least one team on this client
-                var deferred = $q.defer();
-                $http.get(UriTemplate.create(Client.getClient().link.teams).stringify({
+                return $http.get(UriTemplate.create(Client.getClient().link.teams).stringify({
                     size: 1,
                     status: 'ALL'
                 })).then(function load(response) {
-                    var page = response.data;
-                    deferred.resolve(page);
+                    return response.data;
                 });
-
-                return deferred.promise;
             },
 
             /**
@@ -87,16 +80,12 @@ angular.module('emmiManager')
              */
             doInactiveTeamsExistForClient: function () {
                 //check if there is at least one inactive team on this client
-                var deferred = $q.defer();
-                $http.get(UriTemplate.create(Client.getClient().link.teams).stringify({
+                return $http.get(UriTemplate.create(Client.getClient().link.teams).stringify({
                     status: 'INACTIVE_ONLY',
                     size: 1
                 })).then(function load(response) {
-                    var page = response.data;
-                    deferred.resolve(page);
+                    return response.data;
                 });
-
-                return deferred.promise;
             },
 
             /**
@@ -105,17 +94,15 @@ angular.module('emmiManager')
              */
             doUntaggedTeamsExist: function () {
                 //check if there is at least one team with out a tag on this client
-                var deferred = $q.defer();
-                $http.get(UriTemplate.create(Client.getClient().link.teams).stringify({
+                return $http.get(UriTemplate.create(Client.getClient().link.teams).stringify({
                     size: 1,
                     status: 'ALL',
                     teamTagsType: 'UNTAGGED_ONLY'
                 })).then(function load(response) {
                     var page = response.data;
                     CommonService.convertPageContentLinks(page);
-                    deferred.resolve(page);
+                    return page;
                 });
-                return deferred.promise;
             },
 
             /**
