@@ -120,16 +120,16 @@ angular.module('emmiManager')
        		$scope.addProvidersModalOnScope = {};
        		$scope.addAnother = addAnother;
        		ClientProviderService.findForClient(Client.getClient()).then(function (clientProviders) {
-       			if(clientProviders.content && clientProviders.content.length > 0){
-       				$scope.addProvidersModalOnScope =  $modal({
-       					scope: $scope,
-       					template: 'admin-facing/partials/team/provider/searchWCPTabs.html', animation: 'none', backdropAnimation: 'emmi-fade', show: true, backdrop: 'static'});
-       			}
-       			else{
-        	       	$scope.addProvidersModalOnScope =  $modal({
-        	       		scope: $scope,
-        	       		template: 'admin-facing/partials/team/provider/search.html', animation: 'none', backdropAnimation: 'emmi-fade', show: true, backdrop: 'static'});
-       			}
+       			var providerTemplate = clientProviders.content && clientProviders.content.length > 0 ? 'admin-facing/partials/team/provider/search-with-client-provider-tabs.html'
+                                                                                                     : 'admin-facing/partials/team/provider/search-without-client-provider-tabs.html';
+
+       			$scope.addProvidersModalOnScope = $modal({
+       				                              scope: $scope, 
+       				                              template: providerTemplate, 
+       				                              animation: 'none', 
+       				                              backdropAnimation: 'emmi-fade',
+       				                              show: true,
+       				                              backdrop: 'static'});
        	   });
         };
 

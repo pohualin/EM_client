@@ -46,13 +46,17 @@ angular.module('emmiManager')
         
         $scope.addLocations = function (addAnother) {
         	$scope.addAnother = addAnother;
-            Location.findForClient(Client.getClient()).then(function (allLocations) {
-            	if(allLocations.content && allLocations.content.length > 0){
-                	$modal({scope: $scope, template: 'admin-facing/partials/team/location/searchWCLTabs.html', animation: 'none', backdropAnimation: 'emmi-fade', show: true, backdrop: 'static'});
-                }
-                else{
-                	$modal({scope: $scope, template: 'admin-facing/partials/team/location/search.html', animation: 'none', backdropAnimation: 'emmi-fade', show: true, backdrop: 'static'});
-                }
+        	Location.findForClient(Client.getClient()).then(function (allLocations) {
+            	var locationTemplate = allLocations.content && allLocations.content.length > 0 ? 'admin-facing/partials/team/location/search-with-client-location-tabs.html'
+            		                                                    : 'admin-facing/partials/team/location/search-without-client-location-tabs.html';
+            		
+               	$modal({
+            		scope: $scope, 
+            		template: locationTemplate, 
+            		animation: 'none', 
+            		backdropAnimation: 'emmi-fade',
+            		show: true,
+            		backdrop: 'static'});
             });
         	
         };

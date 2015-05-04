@@ -14,17 +14,7 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success"
-                        data-ng-if="teamProviderTeamLocationSaveRequest.length > 0"
-                        data-ng-click="associateSelectedProvidersToTeam()">Save
-                </button>
-                <button type="button" class="btn btn-default"
-                        data-ng-if="teamProviderTeamLocationSaveRequest.length > 0"
-                        data-ng-click="saveAssociationAndAddAnotherProvider()">Save & Add Another
-                </button>
-                <button type="button" class="btn btn-cancel" data-ng-click="cancel()">cancel</button>
-            </div>
+            <div data-ng-include="'admin-facing/partials/team/provider/search-footer-template.html'"></div>
         </div>
     </div>
 </div>
