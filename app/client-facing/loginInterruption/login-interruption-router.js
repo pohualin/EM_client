@@ -12,8 +12,16 @@ angular.module('emmiManager')
                     authorizedRoles: [USER_ROLES.all]
                 },
                 resolve: {
-                    account: ['AuthSharedService', function (AuthSharedService) {
-                        return AuthSharedService.currentUser();
+                    account: ['AuthSharedService','$q', function (AuthSharedService,$q) {
+                        var deferred = $q.defer();
+                        AuthSharedService.currentUser().then(function (loggedInUser) {
+                            if (loggedInUser.password) {
+                                deferred.resolve(loggedInUser);
+                            } else {
+                                deferred.reject();
+                            }
+                        });
+                        return deferred.promise;
                     }],
                     locationBeforeLogin: ['$rootScope', '$q',
                         function ($rootScope, $q) {
