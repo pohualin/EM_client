@@ -8,10 +8,9 @@ angular.module('emmiManager')
     .controller('ClientTeamRoleAdminCtrl', ['$scope', '$alert', 'ManageUserTeamRolesService', 'focus',
         function ($scope, $alert, ManageUserTeamRolesService, focus) {
 
-            ManageUserTeamRolesService.referenceData($scope.clientResource).then(function (referenceData) {
-                $scope.clientTeamReferenceData = referenceData;
-                $scope.libraries = referenceData.roleLibrary;
-            });
+            // these are loaded by the route/main controller
+            $scope.clientTeamReferenceData = $scope.clientResource.ref.clientTeamReferenceData;
+            $scope.libraries = $scope.clientResource.ref.clientTeamRoleLibraries;
 
             /**
              * Loads existing roles for the current client
@@ -176,7 +175,7 @@ angular.module('emmiManager')
                                 added.push(role.entity);
                             }
                         });
-                        
+
                         if(added.length === 1){
                             $scope.successAlert(added[0]);
                         } else {

@@ -119,6 +119,9 @@ angular.module('emmiManager')
                         .then(function (response) {
                             CommonService.convertPageContentLinks(response.data);
                             clientTeamRole.existingTeams = response.data.content;
+                            if (clientTeamRole.existingTeams.length === 0) {
+                                clientTeamRole.activePanel = -1; // Close the panel after removing all teams
+                            }
                         });
                 },
 
