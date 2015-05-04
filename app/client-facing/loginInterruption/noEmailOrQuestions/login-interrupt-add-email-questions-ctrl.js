@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('emmiManager')
-    .controller('addEmailQuestions', ['$scope', '$alert', '$location', '$controller', 'NewEmailService','SecretQuestionService','EmailRestrictConfigurationsService',
-        function ($scope, $alert, $location, $controller, NewEmailService, SecretQuestionService, EmailRestrictConfigurationsService) {
+    .controller('addEmailQuestions', ['$scope', '$alert', '$location', '$controller', 'NewEmailService','SecretQuestionService','EmailRestrictConfigurationsService','Session',
+        function ($scope, $alert, $location, $controller, NewEmailService, SecretQuestionService, EmailRestrictConfigurationsService, Session) {
             $controller('SecretQuestionCreateLoginController', {$scope: $scope});
             $controller('enterEmail', {$scope: $scope});
 
@@ -13,7 +13,7 @@ angular.module('emmiManager')
                 $scope.noEmailNoQuestionForm.addEmail.$setValidity('duplicate', true);
 
                 if (isValid) {
-                    NewEmailService.saveEmail($scope.userClientReqdResource).then(function () {
+                    NewEmailService.saveEmail($scope.userClientReqdResource,Session.password).then(function () {
                         SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.userClientReqdResource.question1.entity, $scope.userClientReqdResource.question2.entity).then(
                             function () {
                                 $location.path($scope.locationBeforeLogin).replace();

@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('emmiManager')
-    .controller('sendValidationEmail', ['$scope', 'ValidationService', '$alert', '$location', 'EmailRestrictConfigurationsService',
-        function ($scope, ValidationService, $alert, $location, EmailRestrictConfigurationsService) {
+    .controller('sendValidationEmail', ['$scope', 'ValidationService', '$alert', '$location', 'EmailRestrictConfigurationsService','Session',
+        function ($scope, ValidationService, $alert, $location, EmailRestrictConfigurationsService, Session) {
             //store original email
             ValidationService.get($scope.userClientReqdResource).then(function (accountWithOriginalEmail) {
                 $scope.userClientReqdResource.originalUserClientEmail = accountWithOriginalEmail.originalUserClientEmail;
@@ -18,7 +18,7 @@ angular.module('emmiManager')
                 $scope.validateEmailForm.validateEmail.$setValidity('duplicate', true);
                 if (isValid) {
                     //check if email is already in use and save email
-                    ValidationService.saveEmail($scope.userClientReqdResource).then(
+                    ValidationService.saveEmail($scope.userClientReqdResource,Session.password).then(
                         function () {
                             //send validation email
                             ValidationService.sendValidationEmail($scope.userClientReqdResource).then(function () {

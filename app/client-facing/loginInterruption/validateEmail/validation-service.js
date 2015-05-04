@@ -26,15 +26,16 @@ angular.module('emmiManager')
                  * validate an email
                  *
                  * @param user which has the email to validate
+                 * @param password user's password for security
                  * @returns the promise
                  *
                  */
-                saveEmail: function (user) {
+                saveEmail: function (user, password) {
                     var deferred = $q.defer();
                     if (user.email !== null && user.login !== null && user.login.toUpperCase() === user.originalUserClientEmail.toUpperCase()) {
                         user.login = user.email;
                     }
-                    $http.put(UriTemplate.create(user.link.self).stringify(), user)
+                    $http.put(UriTemplate.create(user.link.userClientEmail).stringify({password: password}), user)
                         .success(function (data) {
                             deferred.resolve(data);
                         })
