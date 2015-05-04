@@ -2,7 +2,7 @@
 
 angular.module('emmiManager')
 
-    .controller('TeamsLocationsController', ['$rootScope', '$scope', '$http', 'Session', 'UriTemplate', '$controller', '$modal', '$alert', 'Location', 'TeamLocation', function ($rootScope, $scope, $http, Session, UriTemplate, $controller, $modal, $alert, Location, TeamLocation) {
+    .controller('TeamsLocationsController', ['$rootScope', '$scope', '$http', 'Session', 'UriTemplate', '$controller', '$modal', '$alert', 'Location', 'TeamLocation', 'Client', function ($rootScope, $scope, $http, Session, UriTemplate, $controller, $modal, $alert, Location, TeamLocation, Client) {
 
         $controller('LocationCommon', {$scope: $scope});
 
@@ -43,10 +43,22 @@ angular.module('emmiManager')
                 placement: 'top'
             });
         };
-
+        
         $scope.addLocations = function (addAnother) {
-            $scope.addAnother = addAnother;
-        	$modal({scope: $scope, template: 'admin-facing/partials/team/location/search.html', animation: 'none', backdropAnimation: 'emmi-fade', show: true, backdrop: 'static'});
+        	$scope.addAnother = addAnother;
+        	Location.findForClient(Client.getClient()).then(function (allLocations) {
+            	var locationTemplate = allLocations.content && allLocations.content.length > 0 ? 'admin-facing/partials/team/location/search-with-client-location-tabs.html'
+            		                                                    : 'admin-facing/partials/team/location/search-without-client-location-tabs.html';
+            		
+               	$modal({
+            		scope: $scope, 
+            		template: locationTemplate, 
+            		animation: 'none', 
+            		backdropAnimation: 'emmi-fade',
+            		show: true,
+            		backdrop: 'static'});
+            });
+        	
         };
 
         $scope.cancelPopup = function() {
