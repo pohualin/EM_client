@@ -9,7 +9,14 @@ angular.module('emmiManager')
 
         $controller('LocationCommon', {$scope: $scope});
 
-        var addNewLocationsModal = $modal({scope: $scope, template: 'admin-facing/partials/client/location/search.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
+        var addNewLocationsModal = $modal({
+            scope: $scope,
+            template: 'admin-facing/partials/client/location/search.html',
+            animation: 'none',
+            backdropAnimation: 'emmi-fade',
+            show: false,
+            backdrop: 'static'
+        });
 
         $scope.addLocations = function () {
             $scope.searchPerformed = false;
@@ -49,8 +56,8 @@ angular.module('emmiManager')
             }
         };
 
-        $scope.setCheckboxesForChanged = function(clientLocationResources) {
-            angular.forEach(clientLocationResources, function(clientLocationResource){
+        $scope.setCheckboxesForChanged = function (clientLocationResources) {
+            angular.forEach(clientLocationResources, function (clientLocationResource) {
                 clientLocationResource.location.entity.newlocation = $scope.changedLocations[clientLocationResource.location.entity.id] ? true : false;
             });
         };
@@ -69,7 +76,7 @@ angular.module('emmiManager')
             // Reset changedLocations to empty
             $scope.changedLocations = {};
             // save the new locations
-            return Location.addLocationsToClient(Client.getClient(), newClientLocations).then(function(){
+            return Location.addLocationsToClient(Client.getClient(), newClientLocations).then(function () {
                 // reload the existing locations
                 $scope.performSearch();
 
@@ -83,7 +90,7 @@ angular.module('emmiManager')
                 if (!addAnother) {
                     $scope.$hide();
                     var message = ($scope.singleLocationAdded) ?
-                        ' <b>' + $scope.singleLocationAdded.name + '</b> has been added successfully.' :
+                    ' <strong>' + $scope.singleLocationAdded.name + '</strong> has been added successfully.' :
                         'The selected locations have been added successfully.';
                     $alert({
                         title: ' ',
@@ -100,15 +107,15 @@ angular.module('emmiManager')
         };
 
         $scope.saveAndAddAnother = function () {
-            $scope.save(true).then(function (){
+            $scope.save(true).then(function () {
                 $scope.locationQuery = null;
                 $scope.status = null;
                 $scope.searchPerformed = false;
                 $scope[managedLocationList] = null;
                 focus('LocationSearchFocus');
-                var clientName = (Client.getClient().entity.name) ? '<b>' + Client.getClient().entity.name + '</b>.' : 'the client.',
+                var clientName = (Client.getClient().entity.name) ? '<stong>' + Client.getClient().entity.name + '</strong>.' : 'the client.',
                     message = (!$scope.singleLocationAdded) ? 'The selected locations were successfully added to ' + clientName :
-                        'The location <b>' + $scope.singleLocationAdded.name + '</b> has been successfully added to ' + clientName;
+                    'The location <strong>' + $scope.singleLocationAdded.name + '</strong> has been successfully added to ' + clientName;
                 $alert({
                     title: ' ',
                     content: message,
@@ -127,27 +134,27 @@ angular.module('emmiManager')
         };
 
         $scope.search = function (formValid) {
-        	if (formValid) {
+            if (formValid) {
                 $scope.changedLocations = {};
                 $scope.loading = true;
                 Location.find(Client.getClient(), $scope.locationQuery).then(function (locationPage) {
-                	$scope.handleResponse(locationPage, managedLocationList);
+                    $scope.handleResponse(locationPage, managedLocationList);
                     $scope.removeStatusFilterAndTotal = $scope.total <= 0;
                 }, function () {
-                	// error happened
+                    // error happened
                     $scope.loading = false;
                 });
             }
         };
 
         $scope.statusChange = function () {
-        	$scope.loading = true;
+            $scope.loading = true;
             Location.find(Client.getClient(), $scope.locationQuery, $scope.status, $scope.sortProperty, $scope.currentPageSize).then(function (locationPage) {
-            	$scope.handleResponse(locationPage, managedLocationList);
+                $scope.handleResponse(locationPage, managedLocationList);
                 $scope.setCheckboxesForChanged($scope[managedLocationList]);
             }, function () {
                 // error happened
-            	$scope.loading = false;
+                $scope.loading = false;
             });
         };
 
@@ -172,7 +179,7 @@ angular.module('emmiManager')
                 $scope.loading = false;
             });
         };
-        
+
         // when a column header is clicked
         $scope.sort = function (property) {
             var sort = $scope.sortProperty || {};
@@ -196,11 +203,18 @@ angular.module('emmiManager')
                 $scope.setCheckboxesForChanged($scope[managedLocationList]);
             }, function () {
                 // error happened
-            	$scope.loading = false;
+                $scope.loading = false;
             });
         };
 
-        var newLocationModal = $modal({scope: $scope, template: 'admin-facing/partials/client/location/new.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
+        var newLocationModal = $modal({
+            scope: $scope,
+            template: 'admin-facing/partials/client/location/new.html',
+            animation: 'none',
+            backdropAnimation: 'emmi-fade',
+            show: false,
+            backdrop: 'static'
+        });
 
         $scope.createNewLocation = function () {
             $scope.hideAddLocationsModal();
@@ -208,17 +222,17 @@ angular.module('emmiManager')
         };
 
         $scope.hideNewLocationModal = function () {
-            newLocationModal.$promise.then(newLocationModal.destroy);
+            newLocationModal.hide();
         };
-        
+
         function init() {
-        	$scope.locationQuery = null;
+            $scope.locationQuery = null;
             $scope.status = 'ACTIVE_ONLY';
             $scope.searchPerformed = false;
             $scope[managedLocationList] = null;
-            $scope.sortProperty =  null;
+            $scope.sortProperty = null;
         }
-        
+
         init();
 
     })
