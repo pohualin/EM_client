@@ -24,7 +24,7 @@ angular.module('emmiManager')
             };
 
             $scope.hideNewProviderModal = function () {
-                newProviderModal.$promise.then(newProviderModal.destroy);
+                newProviderModal.hide();
             };
         }])
 ;
