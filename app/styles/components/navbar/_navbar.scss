@@ -162,6 +162,12 @@
         border-color: transparent transparent #fff transparent;
         margin: 0 -8px;
     }
+    &.inactive,
+    &.inactive:hover,
+    &.inactive:focus {
+        opacity: .5;
+        background: none;
+    }
 }
 
 .secondary-nav {

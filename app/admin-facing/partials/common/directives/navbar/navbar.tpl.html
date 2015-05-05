@@ -7,17 +7,7 @@
             <div class="collapse navbar-collapse bs-example-js-navbar-collapse">
                 <ul class="nav navbar-nav navbar-right" data-ng-switch="authenticated">
                     <li class="dropdown" data-ng-if="account">
-                        <a id="drop2" href="#" class="dropdown-toggle" aria-haspopup="true" role="button" aria-expanded="false" data-toggle="dropdown">
-                            {{ account.firstName + ' ' + account.lastName}}
-                            <span class="fa-angle-down"></span>
-                        </a>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
-                            <li role="presentation" class="divider"></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
-                        </ul>
+                        <a>{{ account.firstName + ' ' + account.lastName}}</a>
                     </li>
                     <!-- <li>
                         <a href="#" role="button">
@@ -52,28 +42,28 @@
                     </li>
                     <li class="section-nav-item">
                         <a data-ng-href="{{activeMenu === 'MENU_SUPPORT' ? '' : ''}}"
-                           class="section-nav-link" data-ng-class="{ 'active': activeMenu === 'MENU_SUPPORT'}">
+                           class="section-nav-link inactive" data-ng-class="{ 'active': activeMenu === 'MENU_SUPPORT'}">
                             <i class="icon-user"></i>
                             Support
                         </a>
                     </li>
                     <li class="section-nav-item">
                         <a data-ng-href="{{activeMenu === 'MENU_REPORTS' ? '' : ''}}"
-                           class="section-nav-link" data-ng-class="{ 'active': activeMenu === 'MENU_REPORTS'}">
+                           class="section-nav-link inactive" data-ng-class="{ 'active': activeMenu === 'MENU_REPORTS'}">
                             <i class="icon-bar-chart"></i>
                             Reports
                         </a>
                     </li>
                     <li class="section-nav-item">
                         <a data-ng-href="{{activeMenu === 'MENU_MESSAGES' ? '' : ''}}"
-                           class="section-nav-link" data-ng-class="{ 'active': activeMenu === 'MENU_MESSAGES'}">
+                           class="section-nav-link inactive" data-ng-class="{ 'active': activeMenu === 'MENU_MESSAGES'}">
                             <i class="icon-text"></i>
                             Messages
                         </a>
                     </li>
                     <li class="section-nav-item">
                         <a data-ng-href="{{activeMenu === 'MENU_HELP' ? '' : ''}}"
-                           class="section-nav-link" data-ng-class="{ 'active': activeMenu === 'MENU_HELP'}">
+                           class="section-nav-link inactive" data-ng-class="{ 'active': activeMenu === 'MENU_HELP'}">
                             <i class="icon-info-circle"></i>
                             Help
                         </a>
@@ -95,7 +85,7 @@
                         </ul>
                     </li>
                 </ul>
-                <div class="section-nav-search">
+                <!-- <div class="section-nav-search">
                     <form class="form" role="form">
                         <div class="form-group">
                             <div class="has-input-icon has-input-icon-search">
@@ -104,7 +94,7 @@
                             </div>
                         </div>
                     </form>
-                </div>
+                </div> -->
             </div>
         </nav>
         <nav class="app-breadcrumb"><div class="container" data-ng-transclude></div></nav>
