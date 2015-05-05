@@ -1,0 +1,21 @@
+<div class="modal" tabindex="-1" role="dialog" data-ng-controller="ProviderSearchController">
+    <div class="modal-dialog modal-dialog-large container-fluid">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Providers</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1" id="modal-messages-container"></div>
+                </div>
+                <div class="row" >
+                    <div class="col-md-12" data-bs-active-pane="tabs.activeTab" data-bs-tabs>
+                        <div data-ng-repeat="tab in tabs.data" data-ng-include="tab.template" data-title="{{tab.title}}" data-bs-pane></div>
+                    </div>
+                </div>
+            </div>
+            <div data-ng-include="'admin-facing/partials/team/provider/search-footer-template.html'"></div>
+        </div>
+    </div>
+</div>
+

@@ -5,7 +5,7 @@ angular.module('emmiManager')
         // Routes
         $routeProvider
             .when('/validateEmail/:validationKey', {
-                templateUrl: 'client-facing/main/main.html',
+                templateUrl: 'client-facing/auth/login.html',
                 controller: 'validateEmail',
                 title: 'Validate Email',
                 access: {
