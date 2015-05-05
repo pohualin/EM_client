@@ -3,21 +3,7 @@
     <h3 class="popover-title">{{saveError.reason | translate}}</h3>
 
     <div class="popover-content">
-        <small>
-            <table border="0" cellpadding="0" cellspacing="0">
-                <tr>
-                    <td nowrap>USER ID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                    <td>{{saveError.userClient.login | characters:25}}</td>
-                </tr>
-                <tr>
-                    <td><span>CLIENT: </span></td>
-                    <td>{{saveError.userClient.client.name | characters:25}}</td>
-                </tr>
-            </table>
-        </small>
-        <div class="clearfix pull-right">
-            <a href="#/clients/{{saveError.userClient.client.id}}/users/{{saveError.userClient.id}}">view</a>
-        </div>
+        This email is already in use. Please try another address or contact Emmi Support.
     </div>
 </div>
 

@@ -50,6 +50,7 @@ angular.module('emmiManager')
                         //server error
                         if (error.conflicts) {
                             $scope.notValidatedEmailNoQuestionForm.validateEmail.$setValidity('duplicate', false);
+                            $scope.emailError = error.conflicts[0];
                         }
                         if (error.validationError) {
                             EmailRestrictConfigurationsService.allValidEmailEndings($scope.account).then(function (response) {

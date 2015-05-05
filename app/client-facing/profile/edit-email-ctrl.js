@@ -51,6 +51,7 @@ angular.module('emmiManager')
                 } else if ('EMAIL' === conflict.reason && totalErrorCount === 1) {
                     // only show email error if there is not a login error
                     form.email.$setValidity('unique', false);
+                    $scope.emailError = conflict;
                 }
             });
             if (totalErrorCount > 0) {
