@@ -17,7 +17,7 @@
                 <select class="form-control" id="teamFilter"
                         data-ng-model="selectedGroup"
                         data-placeholder="All {{!showInactiveTeams && inactiveTeams ? 'Active' : ''}} Teams"
-                        data-ng-disabled="showUntaggedTeams"
+                        data-ng-disabled="showUntaggedTeams || !clientGroups || clientGroups.length === 0"
                         data-ng-options="group.entity.name for group in clientGroups track by group.entity.id | orderBy:'name'"
                         data-allow-single-deselect="true"
                         data-ng-change="updateState()" data-chosen data-disable-search="true">
@@ -38,16 +38,6 @@
                     <option></option>
                 </select>
             </div>
-
-            <!--show only teams without tags assigned to them when this is checked-->
-            <!--<div class="form-group" data-ng-show="teamsWithNoTeamTags">-->
-                <!--<div class="checkbox">-->
-                    <!--<input type="checkbox" id="teamsFilterUntaggedCb" data-ng-model="showUnTaggedTeams"-->
-                           <!--data-ng-checked="checkUnTaggedTeams"-->
-                           <!--data-ng-change="toggleUntaggedTeams()">-->
-                    <!--<label for="teamsFilterUntaggedCb">Show Untagged Teams</label>-->
-                <!--</div>-->
-            <!--</div>-->
 
             <!--toggle what the show inactive teams link says and call toggleInactiveTeams-->
             <div class="form-group" data-ng-show="inactiveTeams">

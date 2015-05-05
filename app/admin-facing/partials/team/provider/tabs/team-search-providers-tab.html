@@ -82,7 +82,7 @@
                      <td class="col-has-multiselect" data-ng-if="allTeamLocations.length > 0" >
                          <div data-ng-show="teamProvider.provider.entity.showLocations">
                              <div data-ng-class="{'has-error col-md-11': teamProvider.provider.entity.selectedTeamLocations < 1 && associateRequestSubmitted}" data-multi-select
-                                 name="allTeamLocations{{$index}}"
+                                 name=".nonClientProvider[{{teamProvider.provider.entity.id}}].allTeamLocations{{$index}}"
                                  values="allTeamLocations"
                                  model="teamProvider.provider.entity.selectedTeamLocations"
                                  show-filters="true"
@@ -114,7 +114,7 @@
              </tbody>
          </table>
          <div class="table-no-results" data-ng-hide="searchedProvidersList">
-             <span data-translate="global.messages.search.no_results_found"></span>
+             <p><span data-translate="global.messages.search.no_results_found"></span></p>
          </div>
      </div>
 </div>

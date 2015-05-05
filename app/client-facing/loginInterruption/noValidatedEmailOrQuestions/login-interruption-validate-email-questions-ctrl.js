@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('emmiManager')
-    .controller('validateEmailQuestions', ['$scope', '$alert', '$location', '$controller', 'ValidationService', 'SecretQuestionService', 'EmailRestrictConfigurationsService',
-        function ($scope, $alert, $location, $controller, ValidationService, SecretQuestionService, EmailRestrictConfigurationsService) {
+    .controller('validateEmailQuestions', ['$scope', '$alert', '$location', '$controller', 'ValidationService', 'SecretQuestionService', 'EmailRestrictConfigurationsService','Session',
+        function ($scope, $alert, $location, $controller, ValidationService, SecretQuestionService, EmailRestrictConfigurationsService, Session) {
 
             $scope.notValidatedEmailNoQuestionFormSubmitted = false;
 
@@ -18,7 +18,7 @@ angular.module('emmiManager')
                 $scope.notValidatedEmailNoQuestionForm.validateEmail.$setValidity('duplicate', true);
 
                 if (isValid) {
-                    ValidationService.saveEmail($scope.userClientReqdResource).then(function () {
+                    ValidationService.saveEmail($scope.userClientReqdResource,Session.password).then(function () {
                         //send validation email
                         ValidationService.sendValidationEmail($scope.userClientReqdResource).then(function () {
                             SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.userClientReqdResource.question1.entity, $scope.userClientReqdResource.question2.entity).then(

@@ -7,9 +7,13 @@ angular.module('emmiManager')
         $controller('LocationCommon', {$scope: $scope});
 
         $controller('CommonPagination', {$scope: $scope});
-
+        
+        $scope.teamClientLocations = {};
+        var managedLocationList = 'locations';
+        var managedClientLocationList = 'clientLocations';
+        
         $scope.hasLocationsAdded = function() {
-            var resp = false;
+        	var resp = false;
             angular.forEach( $scope.teamLocations , function (location) {
                 if (location.isNewAdd) {
                     resp = true;
@@ -25,9 +29,9 @@ angular.module('emmiManager')
 
         //set which the client locations are associated to the team
         $scope.setClientLocationSelected = function (locations) {
-            angular.forEach( locations , function (location) {
-                if ($scope.teamLocations[location.location.entity.id]) {
-                    $scope.teamLocations[location.location.entity.id].isNewAdd = false;
+        	angular.forEach( locations , function (location) {
+            	if ($scope.teamLocations[location.location.entity.id]) {
+                	$scope.teamLocations[location.location.entity.id].isNewAdd = false;
                     $scope.teamLocations[location.location.entity.id].disabled = true;
                     $scope.teamLocations[location.location.entity.id].checked = true;
                     $scope.teamLocations[location.location.entity.id].associated = true;
@@ -41,7 +45,7 @@ angular.module('emmiManager')
         };
 
         $scope.cleanSearch = function() {
-            $scope.allLocationsSearch = false;
+        	$scope.allLocationsSearch = false;
             $scope.locations = null;
             $scope.cancelPopup(); //clean the locations checked in other search
             if ($scope.locationQuery) {
@@ -49,16 +53,12 @@ angular.module('emmiManager')
             }
         };
 
-        $scope.clientHasLocations = function () {
-            return $scope.clientLocations && $scope.clientLocations.length > 0;
-        };
-
         $scope.saveAndAddAnother = function () {
             $scope.savePopupLocations(true);
         };
 
         $scope.savePopupLocations = function(addAnother) {
-            var req = TeamSearchLocation.getTeamProviderTeamLocationSaveRequest($scope.teamClientLocations, $scope.teamLocations, $scope.providersData);
+        	var req = TeamSearchLocation.getTeamProviderTeamLocationSaveRequest($scope.teamClientLocations, $scope.teamLocations, $scope.providersData);
             TeamSearchLocation.save($scope.teamClientResource.teamResource.link.teamLocations,req).then(function () {
                 $scope.$hide();
                 $scope.save(req,addAnother);
@@ -73,7 +73,7 @@ angular.module('emmiManager')
 
         //disabled the already selected and also search results will not contain associated client locations
         $scope.setLocationChecked = function () {
-            angular.forEach( $scope.locations , function (location) {
+        	angular.forEach( $scope.locations , function (location) {
                 if ($scope.teamLocations[location.location.entity.id]) {
                     location.location.entity.disabled = !$scope.teamLocations[location.location.entity.id].isNewAdd ;
                     location.location.entity.checked = true;
@@ -83,7 +83,7 @@ angular.module('emmiManager')
         };
 
         $scope.search = function (term) {
-            if (term.$valid){
+        	if (term.$valid){
                 $scope.loading = true;
                 $scope.locations = null;
                 $scope.cancelPopup(); //clean the locations checked in other search
@@ -99,7 +99,7 @@ angular.module('emmiManager')
 
         // when a column header is clicked
         $scope.sortTeam = function (property) {
-            $scope.loading = true;
+        	$scope.loading = true;
             Location.findWithoutCL(Client.getClient(), $scope.locationQuery, $scope.status, $scope.sort(property), $scope.currentPageSize).then(function (locationPage) {
                 $scope.handleResponse(locationPage, managedLocationList);
                 $scope.setLocationChecked();
@@ -164,7 +164,7 @@ angular.module('emmiManager')
         };
 
         $scope.fetchPageClientLocations = function (href) {
-            $scope.loading = true;
+        	$scope.loading = true;
             Location.fetchPageLink(href).then(function (locationPage) {
                 $scope.handleResponse(locationPage, managedClientLocationList);
                 $scope.setClientLocationSelected($scope.clientLocations);
@@ -201,24 +201,23 @@ angular.module('emmiManager')
             $modal({scope: $scope, template: 'admin-facing/partials/team/location/new.html', animation: 'none', backdropAnimation: 'emmi-fade', backdrop: 'static'});
         };
 
-
-        var managedLocationList = 'locations';
-        var managedClientLocationList = 'clientLocations';
-        TeamProviderService.buildMultiSelectProvidersData($scope.teamResource).then(function(response){
-        	$scope.providersData = response;
-        	$scope.sizeClass =  $scope.providersData.length === 0 ? 'sort col-sm-4' : 'sort col-sm-3';
-            Location.findForClient(Client.getClient()).then(function (allLocations) {
-                $scope.handleResponse(allLocations, managedClientLocationList);
-                $scope.setClientLocationSelected($scope.clientLocations);
-            });
-    	});
-        $scope.teamClientLocations = {};
-        $scope.cleanSearch();
-        $scope.tabs = TeamSearchLocation.setAllTabs($scope.addAnother);
+        
         
         function init() {
         	$scope.status = 'ACTIVE_ONLY';
+        	TeamProviderService.buildMultiSelectProvidersData($scope.teamResource).then(function(response){
+            	$scope.providersData = response;
+            	$scope.sizeClass =  $scope.providersData.length === 0 ? 'sort col-sm-4' : 'sort col-sm-3';
+                Location.findForClient(Client.getClient()).then(function (allLocations) {
+                    $scope.handleResponse(allLocations, managedClientLocationList);
+                    $scope.setClientLocationSelected($scope.clientLocations);
+                });
+        	});
+        	$scope.cleanSearch();
+        	$scope.tabs = TeamSearchLocation.setAllTabs($scope.addAnother);
+        	
         }
         init();
+        
     })
 ;

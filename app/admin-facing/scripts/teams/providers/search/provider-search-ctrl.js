@@ -6,6 +6,7 @@ angular.module('emmiManager')
         $controller('CommonSearch', {$scope: $scope});
 
         var searchedProvidersList = 'searchedProvidersList';
+        var managedClientProviderList = 'clientProviders';
 
         /**
          * Called when search button is clicked from search all provider tab
@@ -19,7 +20,7 @@ angular.module('emmiManager')
                 });
             }
         };
- 
+
         /**
          * Called when status changed
          */
@@ -77,7 +78,7 @@ angular.module('emmiManager')
                 $scope.loading = false;
             });
         };
-        
+
         /**
          * Called when a column header in client providers result table is clicked.
          */
@@ -139,19 +140,21 @@ angular.module('emmiManager')
                     provider.provider.entity.isNewAdd = false;
                     provider.provider.entity.disabled = true;
                     provider.provider.entity.checked = true;
+
+                    // check 'all' of the team locations
+                    provider.provider.entity.selectedTeamLocations = angular.copy($scope.allTeamLocations);
                 }
             });
         };
 
-        var managedClientProviderList = 'clientProviders';
-        ClientProviderService.findForClient(Client.getClient()).then(function (clientProviders) {
-            $scope.handleResponse(clientProviders, managedClientProviderList);
-            $scope.setClientProviderSelected($scope.clientProviders);
-        });
-        $scope.tabs = TeamProviderService.setAllTabs($scope.addAnother);
-        
+
         function init() {
         	$scope.status = 'ACTIVE_ONLY';
+            ClientProviderService.findForClient(Client.getClient()).then(function (clientProviders) {
+                $scope.handleResponse(clientProviders, managedClientProviderList);
+                $scope.setClientProviderSelected($scope.clientProviders);
+            });
+            $scope.tabs = TeamProviderService.setAllTabs($scope.addAnother);
         }
         init();
     })

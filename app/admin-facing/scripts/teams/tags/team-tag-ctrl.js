@@ -1,3 +1,4 @@
+/* global angular, console */
 'use strict';
 
 angular.module('emmiManager')
@@ -5,8 +6,8 @@ angular.module('emmiManager')
 /**
  * This controls the Tags panel when viewing a team.
  */
-    .controller('TeamTagsController', ['$scope', '$alert', 'Client', 'TeamTag', 'Tag', '$modal', '$popover', '$q',
-        function ($scope, $alert, Client, TeamTag, Tag, $modal, $popover, $q) {
+    .controller('TeamTagsController', ['$scope', '$alert', 'Client', 'TeamTag', 'Tag', '$modal', '$popover', '$q', 'arrays',
+        function ($scope, $alert, Client, TeamTag, Tag, $modal, $popover, $q, arrays) {
 
             var loadAllOptions = Tag.loadGroups($scope.teamClientResource.clientResource).then(function (tagGroups) {
                 var tagGroupToDisplay = [];
@@ -21,15 +22,40 @@ angular.module('emmiManager')
                         tagGroupToDisplay.push(tag);
                     });
                 });
-                return tagGroupToDisplay;
+                return tagGroupToDisplay; // must return something to not break the promise chain
             });
 
-            var loadCurrentlySelected = TeamTag.loadSelectedTags($scope.teamClientResource.teamResource);
+            var loadCurrentlySelected = TeamTag.loadSelectedTags($scope.teamClientResource.teamResource)
+                .then(function (tags) {
+                    $scope.teamClientResource.teamResource.tags = tags;
+                    $scope.teamClientResource.checkTagsForChanges = tags;
+                    return tags; // must return something to not break the promise chain
+                });
 
             // make sure we've loaded everything before 'enabling' the dropdown
             $q.all([loadAllOptions, loadCurrentlySelected]).then(function (results) {
                 $scope.team.tags = results[0];
                 $scope.existingTags = results[1];
+
+                // watch for changes to existing tags, if more are added post an alert
+                $scope.$watch('existingTags', function (current, old) {
+                    if (current && old && current.length > old.length) {
+                        var existingTags = arrays.convertToObject('id', 'name', old);
+                        angular.forEach(current, function (currentTag) {
+                            if (!existingTags[currentTag.id]) {
+                                $alert({
+                                    content: '<b>' + currentTag.name + '</b> has been added successfully.',
+                                    container: '#messages-container',
+                                    type: 'success',
+                                    placement: 'top',
+                                    show: true,
+                                    duration: 5,
+                                    dismissable: true
+                                });
+                            }
+                        });
+                    }
+                });
             });
 
             /**
@@ -59,33 +85,10 @@ angular.module('emmiManager')
              * Called when collection changes
              */
             $scope.saveTagState = function () {
+
                 TeamTag.save($scope.teamClientResource.teamResource).then(function (savedTags) {
-                    $scope.alertAfterTagAdded();
                     $scope.existingTags = savedTags;
                     $scope.fireUpdatedEvent();
-                });
-            };
-
-            /**
-             * Show alert after a tag has been added
-             */
-            $scope.alertAfterTagAdded = function () {
-                var existingTagIds = [];
-                angular.forEach($scope.existingTags, function (tag) {
-                    existingTagIds.push(tag.id);
-                });
-                angular.forEach($scope.teamClientResource.teamResource.tags, function (tag) {
-                    if (existingTagIds.indexOf(tag.id) === -1) {
-                        $alert({
-                            content: '<b>' + tag.name + '</b> has been added successfully.',
-                            container: '#messages-container',
-                            type: 'success',
-                            placement: 'top',
-                            show: true,
-                            duration: 5,
-                            dismissable: true
-                        });
-                    }
                 });
             };
 

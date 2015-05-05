@@ -26,7 +26,7 @@
   overflow-y: auto;
 }
 
-.multi-select > .multi-select-dropdown input[type=checkbox] {
+.multi-select > .multi-select-dropdown input[type=checkbox] + label:before {
   margin-right: 8px;
 }
 
@@ -83,6 +83,7 @@
 .multi-select > .multi-select-dropdown .multi-select-filters label,
 .multi-select > .multi-select-dropdown .multi-select-option label {
   display: block;
+  font-size: 13px;
 }
 
 .multi-select > .multi-select-dropdown > ul > li .multi-select-other-container {

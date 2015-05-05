@@ -18,7 +18,7 @@ angular.module('emmiManager')
                         duration: 5,
                         dismissable: true
                     });
-                    $location.path('/').replace();
+                    $location.path('/login').replace();
                 }, function error() {
                     $location.path('/login').replace();
 

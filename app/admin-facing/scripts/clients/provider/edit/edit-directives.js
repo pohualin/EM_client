@@ -16,7 +16,7 @@ angular.module('emmiManager')
                         scope.originalClientProvider && scope.originalClientProvider.provider.entity.active) {
                         // pop a warning dialog
                         $popover(element, {
-                            title: 'Are you sure you want to deactivate this provider?',
+                            title: 'Are you sure?',
                             scope: scope,
                             trigger: 'manual',
                             autoClose: true,
