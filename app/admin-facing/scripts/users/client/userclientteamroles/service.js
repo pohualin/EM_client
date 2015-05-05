@@ -23,6 +23,7 @@ angular.module('emmiManager')
                                 userClientTeamRole: selectedClientTeamRole.entity,
                                 userClient: userClient.entity
                             };
+                            userClientUserClientTeamRole.userClientTeamRole.userClientTeamPermissions = [];
                             userClientUserClientTeamRoles.push(userClientUserClientTeamRole);
                         }
                     });
