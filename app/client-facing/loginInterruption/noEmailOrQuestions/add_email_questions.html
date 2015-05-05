@@ -31,11 +31,7 @@
                          data-ng-show="noEmailNoQuestionForm.addEmail.$error.required && noEmailNoQuestionFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Required"></div>
-                    <div class="fa-exclamation-circle"
-                         data-ng-show="noEmailNoQuestionForm.addEmail.$error.duplicate && noEmailNoQuestionFormSubmitted"
-                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                         data-title="This email address is being used by another account"></div>
-                    <input class="form-control" required id="addEmail" data-popover-save-error data-save-error="emailError"
+                     <input class="form-control" required id="addEmail" data-popover-save-error data-save-error="emailError"
                            data-ng-model="userClientReqdResource.email" name="addEmail"
                            type="text" maxlength="255" data-ng-change="resetDuplicateValidityEmailAndQuestions ()"
                            placeholder="your email address"
