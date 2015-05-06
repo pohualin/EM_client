@@ -4,7 +4,7 @@
     <div class="popover-content">
 <form name="clientRolesSelection" class="tag-library" data-popover-right-toggle>
     <div class="form-group" >
-        <div class="radio" data-ng-repeat="clientRole in clientRoles" data-ng-click="checkSuperPermission(clientRole)" >
+        <div class="radio" data-ng-repeat="clientRole in clientRoles" data-ng-click="setSelectedRoleHasSuperPermission(clientRole)" >
             <input type="radio" id="clientRole{{$index}}" data-ng-model="$parent.clientRolesSelection.selectedClientRole" value="{{clientRole.entity.id}}" />&nbsp;&nbsp;
             <label for="clientRole{{$index}}"></label>
             <span class="toggle-trigger">
@@ -23,7 +23,7 @@
         <button type="button" class="btn btn-default btn-xs btn-close" data-ng-click="$hide()">
             <span class="icon-delete"></span>
         </button>
-        <div data-ng-if="hasSuperPermission">This role will replace existing team roles (the user will be given all permissions at all teams within this client).</div>
+        <div data-ng-if="selectedRoleHasSuperPermission">This role will replace existing team roles (the user will be given all permissions at all teams within this client).</div>
         <button type="button" class="btn btn-success" data-ng-click="associateClientRole(clientRolesSelection);$hide()">Add</button>
     </div>
 </form>

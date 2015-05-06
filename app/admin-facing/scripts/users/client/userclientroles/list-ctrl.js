@@ -12,7 +12,6 @@ angular.module('emmiManager')
     		 * Associate selected UserClientRole to selected UserClient
     		 */
     		$scope.associateClientRole = function (form) {
-                $scope.hasSuperPermission = null;
     			UserClientUserClientRolesService.associateUserClientUserClientRole($scope.selectedUserClient, form.selectedClientRole).then(function(){
     				$scope.loadExistingUserClientUserClientRoles();
     			});
@@ -79,14 +78,19 @@ angular.module('emmiManager')
     		};
 
             /**
-             * Called when a client role is selected. Set hasSuperPermission if client role has PERM_CLIENT_SUPER_USER permission
+             * Called when a client role is selected. Set selectedRoleHasSuperPermission 
+             * if client role has PERM_CLIENT_SUPER_USER permission
              */
-            $scope.checkSuperPermission = function(clientRole){
-                var rolePermissions = [];
-                angular.forEach(clientRole.entity.permissions, function(permission){
-                    rolePermissions.push(permission.name);
-                });
-                $scope.hasSuperPermission = rolePermissions.indexOf('PERM_CLIENT_SUPER_USER') !== -1;
+            $scope.setSelectedRoleHasSuperPermission = function(clientRole){
+                if(clientRole){
+                    var rolePermissions = [];
+                    angular.forEach(clientRole.entity.permissions, function(permission){
+                        rolePermissions.push(permission.name);
+                    });
+                    $scope.selectedRoleHasSuperPermission = rolePermissions.indexOf('PERM_CLIENT_SUPER_USER') !== -1;
+                } else {
+                    $scope.selectedRoleHasSuperPermission = false;
+                }
             };
 
             /**
