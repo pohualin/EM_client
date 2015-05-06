@@ -1,7 +1,12 @@
 <div class="popover">
     <div class="arrow"></div>
     <div class="popover-content">
-        Only the following types of email addresses may be used:
+        <ng-pluralize count="saveError.validEmailEndings.length"
+                      when="{
+                      'one': 'Only the following type of email address may be used:',
+                      'other': 'Only the following types of email addresses may be used:'}">
+        </ng-pluralize>
+
         <small>
             <table border="0" cellpadding="0" cellspacing="0">
                 <tr data-ng-repeat="validEmailEnding in saveError.validEmailEndings">
