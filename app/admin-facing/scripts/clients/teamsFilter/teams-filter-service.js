@@ -130,8 +130,8 @@ angular.module('emmiManager')
                         teams.push(team.entity);
                     });
                     if (page.link && page.link['page-next']) {
-                        $http.get(page.link['page-next']).then(function (response) {
-                            load(response);
+                        return $http.get(page.link['page-next']).then(function (response) {
+                            return load(response);
                         });
                     }
                     deferred.resolve(teams);
@@ -177,8 +177,8 @@ angular.module('emmiManager')
                             teamTags.push(teamTag.entity);
                         });
                         if (page.link && page.link['page-next']) {
-                            $http.get(page.link['page-next']).then(function (response) {
-                                load(response);
+                            return $http.get(page.link['page-next']).then(function (response) {
+                                return load(response);
                             });
                         }
                         deferred.resolve(teamTags);
@@ -255,7 +255,7 @@ angular.module('emmiManager')
                     tagList.push(tag);
                 });
                 tagList.sort(function (a, b) {
-                    return a.name.localeCompare(b.name);
+                    return a.id.localeCompare(b.id);
                 });
 
                 deferred.resolve(tagList);
@@ -290,7 +290,8 @@ angular.module('emmiManager')
                         }
                     });
                     if (teams.length > 0) {
-                        listOfTeamsByTag[tag.name] = teams;
+                        listOfTeamsByTag.tag = tag;
+                        listOfTeamsByTag.tag.teams = teams;
                     }
                     teams = [];
                 });
@@ -304,73 +305,34 @@ angular.module('emmiManager')
             },
 
             /**
-             * make a list of teams and which tags they have
-             * need to do it this way because we have to check all the team tags
-             * @param teamTags as candidate
-             * @param listOfTeamsByTagFromSelectedGroup a list of tags where each tag has a list of teams (see method above)
-             * @returns a list of teams that don't have a tag in the selected group
+             * This function is pretty specific, it filters the
+             * allTeams param with the second list parameter
+             * @param allTeams  to filter
+             * @param listOfTeamsByTag created by getTeamsForTags()
+             * @returns {*}
              */
-            getTeamsNotInGroup: function (teamTags, listOfTeamsByTagFromSelectedGroup) {
+            stripAllTeamsOfTeamsByTag: function (allTeams, listOfTeamsByTag) {
                 var deferred = $q.defer();
-                var listOfTagsByTeams = {};
-                var tags = [];
-                var teams = {};
-                var teamsWithTagNotInGroup = [];
-
-                if (listOfTeamsByTagFromSelectedGroup !== null && typeof listOfTeamsByTagFromSelectedGroup === 'object') {
-                    angular.forEach(teamTags, function (teamTag) {
-                        //build the list of tags a team has
-                        if (listOfTagsByTeams[teamTag.team.name]) {
-                            //if this team is already in our list get its list of tags and add the current tag to the list
-                            tags = listOfTagsByTeams[teamTag.team.name];
-                            tags.push(teamTag.tag);
-                        } else {
-                            //this team will only have the current tag in its list
-                            tags.push(teamTag.tag);
-                        }
-                        //assign the current team its list of tags
-                        listOfTagsByTeams[teamTag.team.name] = tags;
-                        tags = [];
-                        //keep track of the teams
-                        teams[teamTag.team.name] = teamTag.team;
-                    });
-
-                    //get teams that don't have tags in selected group
-                    angular.forEach(teams, function (team) {
-                        //for each team on the client
-                        var skip = false;
-                        angular.forEach(listOfTagsByTeams[team.name], function (tag) {
-                            //for each tag in this teams tag list
-                            angular.forEach(Object.keys(listOfTeamsByTagFromSelectedGroup), function (groupTagName) {
-                                //for each tag in the selected group
-
-                                if (tag.name === groupTagName) {
-                                    //if the team has any tag in it's 'tag list' that is also in the tags of the selected group
-                                    //don't add this team to the 'list of teams not in the selected group'
-                                    skip = true;
-                                }
-                            });
+                // figure out which teams are left
+                var teamsWhichMatchOrganizeBy = [];
+                // populate
+                if (listOfTeamsByTag) {
+                    Object.keys(listOfTeamsByTag).map(function (key) {
+                        angular.forEach(listOfTeamsByTag[key].teams, function (team) {
+                            if (teamsWhichMatchOrganizeBy.indexOf(team.id) === -1) {
+                                teamsWhichMatchOrganizeBy.push(team.id);
+                            }
                         });
-                        if (!skip) {
-                            //if we've made it this far then we wre not able to find any tags in this teams tag list that
-                            //were also in the tags of the selected group
-                            teamsWithTagNotInGroup.push(team);
-                        }
                     });
-
-                    //check if object is empty
-                    if (Object.keys(teamsWithTagNotInGroup).length === 0) {
-                        teamsWithTagNotInGroup = null;
-                    }
-                } else {
-                    var allClientTeams = {};
-                    angular.forEach(teamTags, function (teamTag) {
-                        allClientTeams[teamTag.team.name] = teamTag.team;
-                    });
-                    teamsWithTagNotInGroup = allClientTeams;
                 }
-
-                deferred.resolve(teamsWithTagNotInGroup);
+                var teamsNotInGroup = [];
+                angular.forEach(allTeams, function (aTeam) {
+                    if (teamsWhichMatchOrganizeBy.indexOf(aTeam.id) === -1) {
+                        // team is not in organize by
+                        teamsNotInGroup.push(aTeam);
+                    }
+                });
+                deferred.resolve(teamsNotInGroup);
                 return deferred.promise;
             },
 
@@ -388,7 +350,7 @@ angular.module('emmiManager')
 
                 angular.forEach(groupTags, function (groupTag) {
                     angular.forEach(filteredTags, function (filteredTag) {
-                        if (filteredTag.name === groupTag.name) {
+                        if (filteredTag.id === groupTag.id) {
                             tagsToReturn.push(groupTag);
                         }
                     });

@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  * This controller is where the behaviors for the TeamsFilter are living.
  */
-    .controller('TeamsFilterController', ['$scope', '$controller', 'TeamsFilter',
-        function ($scope, $controller, TeamsFilter) {
+    .controller('TeamsFilterController', ['$scope', '$controller', 'TeamsFilter', '$q',
+        function ($scope, $controller, TeamsFilter, $q) {
 
             $controller('TeamsFilterInitialization', {
                 $scope: $scope
@@ -35,25 +35,29 @@ angular.module('emmiManager')
             };
 
             /**
-             * show teams that have tags in the selected group
+             * This is a group only selected query. This method loads the data
+             * when an 'organize by' has been selected and the 'show' filter is
+             * 'all tags'.
              */
             $scope.getTeamsToShowForGroup = function () {
-                //a group is selected
-                $scope.useGroupDisplay = true;
-                TeamsFilter.getTagsForGroup($scope.selectedGroup).then(function (tags) {
-                    //get all tags for selected groups
-                    TeamsFilter.getActiveOrAllTeamTagsForFilteredTags([], $scope.showInactiveTeams).then(function (clientTeamTags) {
-                        //get all team tags for the client that are active or inactive based on $scope.showInactiveTeams
-                        TeamsFilter.getTeamsForTags(clientTeamTags, tags).then(function (listOfTeamsByTag) {
-                            //organize teams into an object with team name as the key and a list of tags as the values i.e. {teamName :[tag1,tag2,tag3], teamName2: [tag1]]}
-                            $scope.listOfTeamsByTag = listOfTeamsByTag;
-                            //above is the teams that will be shown under the bolded tag headers
-                            TeamsFilter.getTeamsNotInGroup(clientTeamTags, listOfTeamsByTag).then(function (teamsNotInGroup) {
-                                //teams to show in the 'not in this group' section
-                                $scope.teamsNotInGroup = teamsNotInGroup;
-                            });
-                        });
+                // get all teams
+                var allTeams = TeamsFilter.getActiveOrAllTeamsForClient($scope.showInactiveTeams);
+
+                //get all team tags for selected groups
+                var teamsThatMatchGroup = TeamsFilter.getTagsForGroup($scope.selectedGroup).then(function (tagsInTheSelectedGroup) {
+                    return TeamsFilter.getActiveOrAllTeamTagsForFilteredTags([], $scope.showInactiveTeams).then(function (clientTeamTags) {
+                        return TeamsFilter.getTeamsForTags(clientTeamTags, tagsInTheSelectedGroup);
                     });
+                });
+
+                $q.all([allTeams, teamsThatMatchGroup]).then(function (responses) {
+                    // trim the already matched teams from 'all teams'
+                    TeamsFilter.stripAllTeamsOfTeamsByTag(responses[0], responses[1])
+                        .then(function (teamsNotInGroup) {
+                            $scope.useGroupDisplay = true;
+                            $scope.listOfTeamsByTag = responses[1];
+                            $scope.teamsNotInGroup = teamsNotInGroup;
+                        });
                 });
             };
 
@@ -70,37 +74,38 @@ angular.module('emmiManager')
                 });
             };
 
-            /*
-             * show teams that are in the selected group and have the selected tags chosen in 'the filter by' box
+            /**
+             * This occurs when there is both a filter and an organize by.
              */
             $scope.showFilteredAndGroupedTeams = function () {
-                //a group and tags have been selected
-                $scope.useGroupDisplay = true;
-                $scope.teamsNotInGroup = [];
-                TeamsFilter.getTagsForFilteredTagsAndGroup($scope.filterTags, $scope.selectedGroup.entity.tag).then(function (tags) {
-                    //get the *tags* that are in the group by group and in the filtered tags the user selected
-                    TeamsFilter.getActiveOrAllTeamTagsForFilteredTags($scope.filterTags, $scope.showInactiveTeams).then(function (filteredTeamTags) {
-                        //get the *teamtags* that are returned from the filter by tags
-                        TeamsFilter.getTeamsForTags(filteredTeamTags, tags).then(function (listOfTeamsByTag) {
-                            //show the teams that match the filtered teamtags from filter by and the tags that were selected and in the organize by group
-                            $scope.listOfTeamsByTag = listOfTeamsByTag;
 
+                var matchingTeams = TeamsFilter
+                    .getActiveOrAllTeamTagsForFilteredTags($scope.filterTags, $scope.showInactiveTeams)
+                    .then(function (clientTeamTagsMatchingFilter) {
+                        var allTeams = [];
+                        angular.forEach(clientTeamTagsMatchingFilter, function (teamTag) {
+                            allTeams.push(teamTag.team);
                         });
+                        return allTeams;
                     });
 
-                    /**
-                     * get teams to show in not now
-                     */
-                    TeamsFilter.getActiveOrAllTeamTagsForFilteredTags([], $scope.showInactiveTeams).then(function (clientTeamTags) {
-                        //get all team tags for the client that are active or inactive based on $scope.showInactiveTeams
-                        TeamsFilter.getTeamsForTags(clientTeamTags, tags).then(function (listOfTeamsByTag) {
-                            //organize teams into an object with team name as the key and a list of tags as the values i.e. {teamName :[tag1,tag2,tag3], teamName2: [tag1]]}
-                            TeamsFilter.getTeamsNotInGroup(clientTeamTags, listOfTeamsByTag).then(function (teamsNotInGroup) {
-                                //teams to show in the 'not in this group' section
-                                $scope.teamsNotInGroup = teamsNotInGroup;
-                            });
-                        });
+
+                // teams for the group
+                var teamsThatMatchGroup = TeamsFilter.getTagsForGroup($scope.selectedGroup).then(function (tagsInTheSelectedGroup) {
+                    return TeamsFilter.getActiveOrAllTeamTagsForFilteredTags([], $scope.showInactiveTeams).then(function (clientTeamTags) {
+                        return TeamsFilter.getTeamsForTags(clientTeamTags, tagsInTheSelectedGroup);
                     });
+                });
+
+                $q.all([matchingTeams, teamsThatMatchGroup]).then(function (responses) {
+
+                    // trim the already matched teams from 'all teams'
+                    TeamsFilter.stripAllTeamsOfTeamsByTag(responses[0], responses[1])
+                        .then(function (teamsNotInGroup) {
+                            $scope.useGroupDisplay = true;
+                            $scope.listOfTeamsByTag = responses[0];
+                            $scope.teamsNotInGroup = teamsNotInGroup;
+                        });
                 });
             };
 
@@ -115,4 +120,5 @@ angular.module('emmiManager')
             };
 
         }])
+
 ;

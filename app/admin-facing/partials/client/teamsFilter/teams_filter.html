@@ -61,24 +61,27 @@
             <!--show teams in groups-->
             <div class="form-group" data-ng-show="useGroupDisplay">
                 <hr>
-                <div class="teams-filter-group" data-ng-repeat="(tag,teamList) in listOfTeamsByTag">
+                <div class="teams-filter-group" data-ng-repeat="tag in listOfTeamsByTag">
                     <!--show the tag with the number of teams -->
                     <h4 class="h4 teams-filter-heading">
-                        {{tag}}
+                        {{tag.name}}
                         <span class="team-count">
-                            <data-ng-pluralize count="teamList.length"
-                                               when="{'1': '{{teamList.length}} team','other':'{{teamList.length}} teams'}"></data-ng-pluralize>
+                            <data-ng-pluralize count="tag.teams.length"
+                                               when="{'1': '{{tag.teams.length}} team','other':'{{tag.teams.length}} teams'}"></data-ng-pluralize>
                         </span>
                     </h4>
                     <ul class="teams-filter-list list-unstyled">
                         <!--show the teams that have the above tag-->
-                        <li data-ng-repeat="team in teamList">
+                        <li data-ng-repeat="team in tag.teams">
                             <!--take user to the team's page when the link is clicked-->
                             <a data-ng-click="selectTeam(team.id)">{{team.name}}</a>
                         </li>
                     </ul>
                 </div>
-                <div data-ng-show="listOfTeamsByTag===null">No teams exist for this search.</div>
+                <h4 class="h4 teams-filter-heading" data-ng-show="!listOfTeamsByTag">
+                    Teams with a '{{selectedGroup.entity.name}}' tag
+                </h4>
+                <div data-ng-show="!listOfTeamsByTag">No matches found.</div>
             </div>
 
             <div class="form-group" data-ng-show="useGroupDisplay && teamsNotInGroup">
