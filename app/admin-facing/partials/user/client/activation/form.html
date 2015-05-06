@@ -8,12 +8,19 @@
                  data-ng-show="selectedUserClient.entity.email && !selectedUserClient.entity.activated"
                  data-ng-switch="selectedUserClient.entity.activationExpirationDateTime != null &&
                      selectedUserClient.entity.activationKey != null">
-                <button class="btn btn-default" type="button"
+                <button class="btn btn-primary" type="button"
                         data-ng-show="selectedUserClient.entity.email"
                         data-ng-click="sendActivationEmail()">
                     <span data-ng-switch-when="false">Send</span>
                     <span data-ng-switch-when="true">Resend</span>
                     <span> User Setup Email</span>
+                </button>
+                <button class="btn btn-default" type="button"
+                        data-ng-show="selectedUserClient.entity.email"
+                        data-ng-click="sendActivationEmail(true)">
+                    <span data-ng-switch-when="false">Send</span>
+                    <span data-ng-switch-when="true">Resend</span>
+                    <span> Email & Add Another User</span>
                 </button>
                 <div class="user-setup-status" data-ng-switch-when="true">
                     <span data-ng-show="!inThePast()">

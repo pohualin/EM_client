@@ -29,7 +29,7 @@ angular.module('emmiManager')
             /**
              * Send an activation email to the user
              */
-            $scope.sendActivationEmail = function () {
+            $scope.sendActivationEmail = function (addAnother) {
                 ActivationService.sendActivationEmail(UsersClientService.getUserClient()).then(function () {
                     $scope.metadataChanged();
                     $alert({
@@ -42,6 +42,9 @@ angular.module('emmiManager')
                         duration: 5,
                         dismissable: true
                     });
+                    if(addAnother){
+                        $scope.createAnotherUserClient();
+                    }
                 });
             };
         }
