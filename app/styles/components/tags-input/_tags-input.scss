@@ -55,7 +55,6 @@
 }
 
 .dropdown-toggle {
-    .btn-tag-group:focus ~ &,
     .selected & {
         display: none;
     }
@@ -68,7 +67,6 @@
     padding-top: 4px;
     padding-bottom: 6px;
     display: none;
-    .btn-tag-group:focus ~ &,
     .selected &,
     .invalid & {
         display: inline-block;
