@@ -65,13 +65,8 @@
                                             class="sort-icon"
                                             data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
                                     </th>
-                                    <th class="sort" data-ng-click="sort('city')">City <span
+                                    <th class="sort" data-ng-click="sort('city')">City/State <span
                                         data-ng-show="sortProperty.property === 'city'"><span
-                                            class="sort-icon"
-                                            data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
-                                    </th>
-                                    <th class="sort col-sm-1" data-ng-click="sort('state')">State
-                                        <span data-ng-show="sortProperty.property === 'state'"><span
                                             class="sort-icon"
                                             data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
                                     </th>
@@ -87,8 +82,9 @@
                                 <tr data-ng-repeat="location in locations | orderBy:'location.sortIdx'">
                                     <td>{{location.entity.name}} <em>{{location.entity.active ? '' : "(inactive)"}}</em></td>
                                     <td>{{location.entity.belongsTo.name}}</td>
-                                    <td>{{location.entity.city}}</td>
-                                    <td>{{location.entity.state}}</td>
+                                    <td>{{location.entity.city}}<span 
+                                        data-ng-if="location.entity.city && location.entity.state">,&nbsp;</span>
+                                        {{location.entity.state}}</td>
                                     <td>{{location.entity.phone}}</td>
                                     <td class="text-center"><a href="#/locations/{{location.entity.id}}?{{currentRouteQueryString}}"><i class="icon-compose icon-size-xl"></i></a></td>
                                 </tr>
