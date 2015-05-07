@@ -5,12 +5,11 @@
         </span>
         {{client.name}}
     </h2>
-
     <div data-ng-show="!teamsExistForClient">
         <p>No teams exist for this client.</p>
     </div>
     <div data-ng-show="teamsExistForClient" data-ng-cloak>
-        <form>
+        <div class="sidebar-filters">
             <div class="form-group">
                 <!--call updateState when groups is changed, disable this drop down if we are showing untagged teams-->
                 <label for="teamFilter">organize teams by:</label>
@@ -45,10 +44,14 @@
                    data-ng-click="toggleInactiveTeams()">{{showInactiveTeams ? 'hide' : 'show'}} inactive teams</a>
             </div>
 
+            <hr/>
+
+        </div><!-- .sidebar-filters -->
+        <div class="sidebar-scroll-content" data-scrollbar>
+
             <!--there is a display template that shows ungrouped teams and a display template that shows groups of teams-->
             <!-- show teams un-grouped -->
             <div class="form-group" data-ng-hide="useGroupDisplay">
-                <hr>
                 <ul class="teams-filter-list list-unstyled">
                     <li data-ng-repeat="team in clientTeams">
                         <!--when a user clicks on a team they are taken to that team's page-->
@@ -60,7 +63,6 @@
 
             <!--show teams in groups-->
             <div class="form-group" data-ng-show="useGroupDisplay">
-                <hr>
                 <div class="teams-filter-group" data-ng-repeat="(tag,teamList) in listOfTeamsByTag">
                     <!--show the tag with the number of teams -->
                     <h4 class="h4 teams-filter-heading">
@@ -82,7 +84,6 @@
             </div>
 
             <div class="form-group" data-ng-show="useGroupDisplay && teamsNotInGroup">
-                <hr>
                 <h4 class="h4 teams-filter-heading">Teams without a '{{selectedGroup.entity.name}}' tag</h4>
                 <ul class="teams-filter-list list-unstyled">
                     <li data-ng-repeat="team in teamsNotInGroup">
@@ -91,6 +92,6 @@
                     </li>
                 </ul>
             </div>
-        </form>
-    </div>
+        </div><!-- .sidebar-scroll-content -->
+    </div><!-- teamsExistForClient -->
 </div><!-- .sidebar-wrapper -->
