@@ -312,7 +312,7 @@ angular.module('emmiManager')
                     if (!filteredTeamsMap[filteredTeamTag.team.id]){
                         filteredTeamsMap[filteredTeamTag.team.id] = {
                             team: filteredTeamTag.team
-                        }
+                        };
                     }
                 });
 
@@ -402,7 +402,7 @@ angular.module('emmiManager')
                 return {
                     listOfTeamsByTag: listOfTeamsByTag,
                     listOfTeamsNotInGroup: listOfTeamsNotInGroup
-                }
+                };
             }
         };
     })

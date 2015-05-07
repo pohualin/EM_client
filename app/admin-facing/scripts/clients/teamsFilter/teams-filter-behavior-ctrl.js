@@ -61,13 +61,13 @@ angular.module('emmiManager')
                             var allTeams = responses[0],
                                 filteredTeamTags = responses[1];
 
-                            if (filteredTeamTags != null && filteredTeamTags.length === 0) {
+                            if (filteredTeamTags !== null && filteredTeamTags.length === 0) {
                                 // trying to filter but no matches are found
                                 $scope.useGroupDisplay = false;
                                 $scope.clientTeams = null;
                             } else {
                                 // determine if we are categorizing 'all teams' or 'filtered teams'
-                                var teamsToSegment = filteredTeamTags == null ? allTeams :
+                                var teamsToSegment = filteredTeamTags === null ? allTeams :
                                     TeamsFilter.filteredTeamsAsAllTeams(filteredTeamTags, allTeams);
 
                                 // categorize the teams that match
