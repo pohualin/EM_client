@@ -2,6 +2,9 @@
 
 angular.module('emmiManager')
 
+/**
+ * Various functions to load data for the teams filter component.
+ */
     .service('TeamsFilter', function ($http, $q, UriTemplate, TeamTag, Tag, Client, CommonService) {
         return {
             /**
@@ -106,36 +109,73 @@ angular.module('emmiManager')
             },
 
             /**
-             * //get all of the teams including teams with no tags
+             * Get all of the teams including teams with no tags as well
+             * as all of the tags on each team.
+             *
              * @param getInactive if true return inactive and active teams
-             * @returns teams that match
+             * @param loadTags load all tags for each team or not
+             * @returns * teams array with .currentTags as the list of tags
              */
-            getActiveOrAllTeamsForClient: function (getInactive) {
-                var deferred = $q.defer();
-                var teams = [];
-                var status;
+            getActiveOrAllTeamsForClient: function (getInactive, loadTags) {
 
-                if (getInactive) {
-                    status = 'ALL';
-                } else {
-                    status = 'ACTIVE_ONLY';
-                }
+                var teams = [],
+                    teamResources = [],
+                    loadTagCallsToWaitFor = [],
+                    status = getInactive ? 'ALL' : 'ACTIVE_ONLY',
+                    deferred = $q.defer();
 
                 $http.get(UriTemplate.create(Client.getClient().link.teams).stringify({
                     status: status,
                     teamTagsType: 'ALL'
                 })).then(function load(response) {
                     var page = response.data;
-                    angular.forEach(page.content, function (team) {
-                        teams.push(team.entity);
+                    CommonService.convertPageContentLinks(page);
+                    angular.forEach(page.content, function (teamResource) {
+                        teamResources.push(teamResource);
                     });
+                    // load next page of teams, serially
                     if (page.link && page.link['page-next']) {
                         return $http.get(page.link['page-next']).then(function (response) {
                             return load(response);
                         });
                     }
-                    deferred.resolve(teams);
+
+                }).then(function () {
+                    // teams all loaded, load tags for each team
+                    angular.forEach(teamResources, function (teamResource) {
+                        teamResource.entity.tags = {};
+                        teamResource.entity.tagIds = [];
+                        // add team entity to result
+                        teams.push(teamResource.entity);
+
+                        if (loadTags) {
+                            var loadTagCall = $http.get(UriTemplate.create(teamResource.link.tags).stringify())
+                                .then(function tagResponse(response) {
+                                    var pageOfTags = response.data;
+                                    CommonService.convertPageContentLinks(pageOfTags);
+                                    // tags came back, push them into the teamResource
+                                    angular.forEach(pageOfTags.content, function (teamTagResource) {
+                                        teamResource.entity.tags[teamTagResource.entity.tag.id] = teamTagResource.entity.tag;
+                                        teamResource.entity.tagIds.push(teamTagResource.entity.tag.id);
+                                    });
+
+                                    if (pageOfTags.link && pageOfTags.link['page-next']) {
+                                        // load next page of team tags serially
+                                        return $http.get(pageOfTags.link['page-next']).then(function (response) {
+                                            return tagResponse(response);
+                                        });
+                                    }
+
+                                });
+                            loadTagCallsToWaitFor.push(loadTagCall);
+                        }
+                    });
+
+                    $q.all(loadTagCallsToWaitFor).then(function () {
+                        deferred.resolve(teams);
+                    });
                 });
+
 
                 return deferred.promise;
             },
@@ -192,10 +232,9 @@ angular.module('emmiManager')
              * @returns {*} teams object
              */
             getTeamsFromTeamTags: function (teamTags) {
-                var teams = {};
+                var teams = teamTags && teamTags.length > 0 ? {} : null;
                 angular.forEach(teamTags, function (teamTag) {
-                    //teams to show as results, using the object notation (i.e clientTeams[teamName]) to remove duplicates
-                    teams[teamTag.team.name] = teamTag.team;
+                    teams[teamTag.team.id] = teamTag.team;
                 });
                 return teams;
             },
@@ -226,11 +265,10 @@ angular.module('emmiManager')
                         teams[team.entity.name] = team.entity;
                     });
                     if (page.link && page.link['page-next']) {
-                        $http.get(page.link['page-next']).then(function (response) {
-                            load(response);
+                        return $http.get(page.link['page-next']).then(function (response) {
+                            return load(response);
                         });
                     }
-
                     deferred.resolve(teams);
                 });
                 return deferred.promise;
@@ -254,110 +292,117 @@ angular.module('emmiManager')
                 angular.forEach(selectedGroup.entity.tag, function (tag) {
                     tagList.push(tag);
                 });
-                tagList.sort(function (a, b) {
-                    return a.id.localeCompare(b.id);
-                });
 
                 deferred.resolve(tagList);
                 return deferred.promise;
             },
 
             /**
-             * organize tags by which team have them
-             * @param teamTags as candidates
-             * @param tags to match
-             * @returns a list of tags where each tag has a list of teams
+             * Takes the response that comes back from a fetch for
+             * team tags, into the same structure that comes back from
+             * a fetch for getActiveOrAllTeamsForClient() call.
+             *
+             * @param filteredTeamTags the filtered response
+             * @param allTeams all possible teams with tags
+             * @returns {Array}
              */
-            getTeamsForTags: function (teamTags, tags) {
-                var deferred = $q.defer();
-                var listOfTeamsByTag = {};
-                var teams = [];
-
-                //get all the teams that have a tag in tags
-                angular.forEach(tags, function (tag) {
-                    angular.forEach(teamTags, function (teamTag) {
-                        if (teamTag.tag.id === tag.id) {
-                            teams.push(teamTag.team);
+            filteredTeamsAsAllTeams: function (filteredTeamTags, allTeams) {
+                var filteredTeamsMap = {};
+                angular.forEach(filteredTeamTags, function (filteredTeamTag) {
+                    if (!filteredTeamsMap[filteredTeamTag.team.id]){
+                        filteredTeamsMap[filteredTeamTag.team.id] = {
+                            team: filteredTeamTag.team
                         }
-                    });
-                    teams.sort(function (a, b) {
-                        if (a.name > b.name) {
-                            return 1;
-                        } else if (a.name < b.name) {
-                            return -1;
-                        } else {
-                            return 0;
-                        }
-                    });
-                    if (teams.length > 0) {
-                        listOfTeamsByTag.tag = tag;
-                        listOfTeamsByTag.tag.teams = teams;
                     }
-                    teams = [];
                 });
 
-                //check if object is empty
-                if (Object.keys(listOfTeamsByTag).length === 0) {
-                    listOfTeamsByTag = null;
-                }
-                deferred.resolve(listOfTeamsByTag);
-                return deferred.promise;
+                // add the tags from the matching 'allTeam' to the filtered tags
+                angular.forEach(allTeams, function (allTeam){
+                    if (filteredTeamsMap[allTeam.id]){
+                        filteredTeamsMap[allTeam.id].tagIds = allTeam.tagIds;
+                        filteredTeamsMap[allTeam.id].tags = allTeam.tags;
+                    }
+                });
+
+                // make an array of the filtered teams in the 'allTeam' structure
+                var filteredTeamsList = [];
+                angular.forEach(filteredTeamsMap, function (filteredTeam){
+                    filteredTeamsList.push({
+                        id: filteredTeam.team.id,
+                        name: filteredTeam.team.name,
+                        tagIds: filteredTeam.tagIds,
+                        tags: filteredTeam.tags
+                    });
+                });
+                return filteredTeamsList;
             },
 
             /**
-             * This function is pretty specific, it filters the
-             * allTeams param with the second list parameter
-             * @param allTeams  to filter
-             * @param listOfTeamsByTag created by getTeamsForTags()
-             * @returns {*}
+             * This method takes an array of teams with tags and splits/categorizes
+             * those teams based upon the tagsForGroup.
+             *
+             * @param teamsWithTags an Array of {name: 'group name', tagIds: [id], tags: {id: tag}}
+             * @param tagsForGroup an Array of {id: groupId, name: groupName, group: {theGroup}}
+             * @returns {{listOfTeamsByTag: Array, listOfTeamsNotInGroup: Array}}
              */
-            stripAllTeamsOfTeamsByTag: function (allTeams, listOfTeamsByTag) {
-                var deferred = $q.defer();
-                // figure out which teams are left
-                var teamsWhichMatchOrganizeBy = [];
-                // populate
-                if (listOfTeamsByTag) {
-                    Object.keys(listOfTeamsByTag).map(function (key) {
-                        angular.forEach(listOfTeamsByTag[key].teams, function (team) {
-                            if (teamsWhichMatchOrganizeBy.indexOf(team.id) === -1) {
-                                teamsWhichMatchOrganizeBy.push(team.id);
+            categorizeTagsByGroup: function(teamsWithTags, tagsForGroup){
+                var teamsInGroup = {},
+                    teamsNotInGroup = {};
+                // first segment teams by ones that are in the group vs. not in the group
+                angular.forEach(teamsWithTags, function (aTeam) {
+                    var teamHasTagWithinGroup = false;
+                    angular.forEach(tagsForGroup, function (groupTag) {
+                        if (aTeam.tagIds.indexOf(groupTag.id) !== -1) {
+                            teamHasTagWithinGroup = true;
+                        }
+                    });
+                    if (teamHasTagWithinGroup) {
+                        teamsInGroup[aTeam.id] = aTeam;
+                    } else {
+                        teamsNotInGroup[aTeam.id] = aTeam;
+                    }
+                });
+
+                // from the teams in group, build tag centric model
+                var teamsByTags = {};
+                angular.forEach(teamsInGroup, function (teamInGroup) {
+                    angular.forEach(teamInGroup.tags, function (tagInTeam) {
+                        // make sure tag is in group tag
+                        var tagIsInGroup = false;
+                        angular.forEach(tagsForGroup, function (groupTag) {
+                            if (tagInTeam.id === groupTag.id) {
+                                tagIsInGroup = true;
                             }
                         });
-                    });
-                }
-                var teamsNotInGroup = [];
-                angular.forEach(allTeams, function (aTeam) {
-                    if (teamsWhichMatchOrganizeBy.indexOf(aTeam.id) === -1) {
-                        // team is not in organize by
-                        teamsNotInGroup.push(aTeam);
-                    }
-                });
-                deferred.resolve(teamsNotInGroup);
-                return deferred.promise;
-            },
-
-            /**
-             * get all tags that are in both the selected group and in the filtered by tags
-             * 2 Tags selected within the same group will produce teams that have EITHER tag 1 or tag 2
-             * 2 tags selected from within different groups will produce teams that have BOTH tag 1 and tag 2
-             * @param filteredTags selected
-             * @param groupTags tags from selected group
-             * @returns list of tags
-             */
-            getTagsForFilteredTagsAndGroup: function (filteredTags, groupTags) {
-                var deferred = $q.defer();
-                var tagsToReturn = [];
-
-                angular.forEach(groupTags, function (groupTag) {
-                    angular.forEach(filteredTags, function (filteredTag) {
-                        if (filteredTag.id === groupTag.id) {
-                            tagsToReturn.push(groupTag);
+                        if (tagIsInGroup) {
+                            // tag is in group, add team to that tag
+                            if (!teamsByTags[tagInTeam.id]) {
+                                teamsByTags[tagInTeam.id] = {
+                                    tag: tagInTeam,
+                                    teams: []
+                                };
+                            }
+                            teamsByTags[tagInTeam.id].teams.push(teamInGroup);
                         }
                     });
                 });
 
-                deferred.resolve(tagsToReturn);
-                return deferred.promise;
+                // convert objects to arrays for easier rendering/sorting
+                var listOfTeamsByTag = [],
+                    listOfTeamsNotInGroup = [];
+                angular.forEach(teamsByTags, function (teamsByTag) {
+                    listOfTeamsByTag.push({
+                        name: teamsByTag.tag.name,
+                        teams: teamsByTag.teams
+                    });
+                });
+                angular.forEach(teamsNotInGroup, function (teamNotInGroup) {
+                    listOfTeamsNotInGroup.push(teamNotInGroup);
+                });
+                return {
+                    listOfTeamsByTag: listOfTeamsByTag,
+                    listOfTeamsNotInGroup: listOfTeamsNotInGroup
+                }
             }
         };
     })
