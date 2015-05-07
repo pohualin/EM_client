@@ -40,7 +40,8 @@
     <div class="col-md-12" data-ng-show="!existingUserClientUserClientRoles && clientRoles">
         <button class="btn btn-default" type="button" title="Select a client role to add:"
                 data-placement="right" data-template="admin-facing/partials/user/client/userclientrole/add-client-role.html"
-                data-trigger="click" data-bs-popover data-auto-close="1" data-popover-dismiss data-container="body"><i class="icon-plus"></i> Add client role
+                data-trigger="click" data-bs-popover data-auto-close="1" data-popover-dismiss data-container="body"
+                data-ng-click="setSelectedRoleHasSuperPermission()"><i class="icon-plus"></i> Add client role
         </button>
     </div>
 </div>

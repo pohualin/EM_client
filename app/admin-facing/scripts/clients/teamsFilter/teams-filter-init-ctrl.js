@@ -77,19 +77,14 @@ angular.module('emmiManager')
                     // turn of untagged-only state
                     $scope.showUntaggedTeams = false;
 
-                    if ((!$scope.filterTags || $scope.filterTags.length === 0) && !$scope.selectedGroup) {
-                        // no tags are selected and no group is selected
-                        $scope.showClientTeams();
-                        $scope.listOfTeamsByTag = null;
-                    } else if ((!$scope.filterTags || $scope.filterTags.length === 0) && $scope.selectedGroup) {
-                        // group is selected, no tags selected
-                        $scope.getTeamsToShowForGroup();
-                    } else if ($scope.filterTags && $scope.filterTags.length !== 0 && !$scope.selectedGroup) {
-                        // tags are selected, no group is selected
-                        $scope.showFilteredTeams();
+                    if (!$scope.selectedGroup){
+                        if ($scope.filterTags && $scope.filterTags.length !== 0) {
+                            $scope.showFilteredTeams();
+                        } else {
+                            $scope.showClientTeams();
+                        }
                     } else {
-                        // tags and groups are both selected
-                        $scope.showFilteredAndGroupedTeams();
+                        $scope.getTeamsToShowForGroup();
                     }
                 } else {
                     // set the selected filter to the un-tagged tag

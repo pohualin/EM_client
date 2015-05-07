@@ -78,6 +78,22 @@ angular.module('emmiManager')
     		};
 
             /**
+             * Called when a client role is selected. Set selectedRoleHasSuperPermission 
+             * if client role has PERM_CLIENT_SUPER_USER permission
+             */
+            $scope.setSelectedRoleHasSuperPermission = function(clientRole){
+                if(clientRole){
+                    var rolePermissions = [];
+                    angular.forEach(clientRole.entity.permissions, function(permission){
+                        rolePermissions.push(permission.name);
+                    });
+                    $scope.selectedRoleHasSuperPermission = rolePermissions.indexOf('PERM_CLIENT_SUPER_USER') !== -1;
+                } else {
+                    $scope.selectedRoleHasSuperPermission = false;
+                }
+            };
+
+            /**
 	         * init method called when the page is loading
 	         */
             function init(){
