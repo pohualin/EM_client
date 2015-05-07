@@ -18,6 +18,7 @@ angular.module('emmiManager')
             transclude: false,
             templateUrl: 'admin-facing/partials/common/directives/tags-input/tag-groups.tpl.html',
             controller: ['$scope', function ($scope) {
+                var storedTagTitle = '';
                 $scope.createMode = false;
                 $scope.selectedTagGroupIndex = -1;
                 $scope.groups = $scope.groups || [];
@@ -60,8 +61,8 @@ angular.module('emmiManager')
 
                 $scope.selectTagGroup = function (groupIndex) {
                     if ($scope.selectedTagGroupIndex === groupIndex) {
+                        storedTagTitle = $scope.groups[groupIndex].title;
                         $scope.groups[groupIndex].editMode = true;
-                        //$scope.selectedTagGroupIndex = -1;
                         focus('editMode');
                     } else {
                         $scope.selectedTagGroupIndex = groupIndex;
@@ -81,11 +82,13 @@ angular.module('emmiManager')
 
                 $scope.changeTagGroupTitle = function (groupIndex) {
                     $scope.formField.$setValidity('empty', !$scope.hasEmpties());
-
                     // Title already gets changed from data binding, so really just need to hide the edit form
                     $scope.groups[groupIndex].editMode = false;
                     $scope.selectedTagGroupIndex = -1;
-                    $scope.onChange('change group title');
+                    // EM-1296: only trigger a change if the tag group has actually changed
+                    if (storedTagTitle !== $scope.groups[groupIndex].title) {
+                        $scope.onChange('change group title');
+                    }
                 };
 
                 $scope.tagExists = function (tag, groupIndex) {
@@ -200,6 +203,18 @@ angular.module('emmiManager')
 
                 var addBtn = element.find('.btn-add-group'),
                     origAddBtnText = addBtn.text();
+
+                // EM-1296: add code to 'deselect' tag group when clicking outside of it
+                angular.element(window.document).on('click', function(e) {
+                    var selectedTagGroup = element.find('.tag-group.selected'); // should really only be 1
+                    // Detect if click was made on already selected tag group or not
+                    if ( selectedTagGroup !== e.target &&
+                         !selectedTagGroup.has(e.target).length ) {
+                        scope.$apply(function () {
+                            scope.selectedTagGroupIndex = -1;
+                        });
+                    }
+                });
 
                 // watch for removed tags and re-check for uniqueness
                 scope.$watchCollection('groups', function (newVal) {

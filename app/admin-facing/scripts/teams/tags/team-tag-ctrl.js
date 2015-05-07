@@ -98,7 +98,6 @@ angular.module('emmiManager')
                 animation: 'none',
                 backdropAnimation: 'emmi-fade',
                 show: false,
-                placement: 'center',
                 backdrop: 'static'
             });
             $scope.client = $scope.teamClientResource.clientResource.entity;
