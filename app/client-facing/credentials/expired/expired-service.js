@@ -36,7 +36,9 @@ angular.module('emmiManager')
                             return response;
                         })
                         .error(function (response) {
-                            angular.extend(LoginErrorMessageFactory,{showTemporaryPasswordTokenExpired:true});
+                            if (response[0].entity.reason === 'EXPIRED_CANT_CHANGE'){
+                                angular.extend(LoginErrorMessageFactory,{showTemporaryPasswordTokenExpired:true});
+                            }
                             return response;
                         });
                 },
