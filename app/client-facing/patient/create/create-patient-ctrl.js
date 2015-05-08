@@ -6,6 +6,9 @@ angular.module('emmiManager')
 
             var today = new Date();
             $scope.minDate = new Date().setFullYear(today.getFullYear() - 125);
+            $scope.defaultGender = 'U';
+            $scope.patient = {};
+            $scope.patient.gender = $scope.defaultGender;
 
             CreatePatientService.refData().then(function (response) {
                 $scope.genders = response;
