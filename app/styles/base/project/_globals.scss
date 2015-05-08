@@ -607,10 +607,16 @@
         // overflow-x: hidden;
         // overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
         > .sidebar-wrapper {
-            padding: 25px 12px;
+            padding: 25px 12px 0;
         }
         .sidebar-heading {
             color: rgba(255,255,255,0.85);
+        }
+        .sidebar-scroll-content {
+            //overflow: auto;
+            // .scroll-viewport {
+            //     height: 200px;
+            // }
         }
         .configure {
             a {

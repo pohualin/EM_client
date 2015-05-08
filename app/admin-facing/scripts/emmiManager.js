@@ -24,7 +24,8 @@ angular.module('emmiManager', [
     'emmi.noDirtyCheck',
     'unsavedChanges',
     'ivh.treeview',
-    'headroom'
+    'headroom',
+    'ngTinyScrollbar'
 ])
 
     .constant('USER_ROLES', {
@@ -124,6 +125,12 @@ angular.module('emmiManager', [
                     }
                 };
             };
+            return $delegate;
+        });
+
+        $provide.decorator('scrollbarDirective', function($delegate) {
+            var directive = $delegate[0];
+            directive.template = '<div class="scroll-bar"><div class="scroll-thumb"></div></div><div class="scroll-viewport" sidebar-scroller><div class="scroll-overview" ng-transclude></div></div>';
             return $delegate;
         });
 
