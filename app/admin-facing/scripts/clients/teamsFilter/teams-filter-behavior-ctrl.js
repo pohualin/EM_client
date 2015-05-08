@@ -42,7 +42,7 @@ angular.module('emmiManager')
              * of the teams (and tags) for the client, and then segmenting the teams
              * by 'in group' or 'out of group'
              */
-            $scope.getTeamsToShowForGroup = function () {
+            $scope.getTeamsToShowForGroup = function (focusOnFilter) {
 
                 $scope.loading = true;
 
@@ -92,6 +92,9 @@ angular.module('emmiManager')
                     // update the display with the selected group
                     $scope.selectedGroupDisplay = $scope.selectedGroup;
                     $scope.loading = false;
+                    if (focusOnFilter) {
+                        $scope.activateLeftNavFilter();
+                    }
                 });
             };
 
@@ -102,7 +105,7 @@ angular.module('emmiManager')
              * 2 Tags selected within the same group will produce teams that have EITHER tag 1 or tag 2
              * 2 tags selected from within different groups will produce teams that have BOTH tag 1 and tag 2
              */
-            $scope.showFilteredTeams = function () {
+            $scope.showFilteredTeams = function (focusOnFilter) {
                 $scope.loading = true;
                 TeamsFilter.getActiveOrAllTeamTagsForFilteredTags($scope.filterTags, $scope.showInactiveTeams).then(function (teamTags) {
                     //get the teamtags on the client that match the filter by tags the user picked
@@ -110,6 +113,9 @@ angular.module('emmiManager')
                 }).finally(function () {
                     $scope.useGroupDisplay = false;
                     $scope.loading = false;
+                    if (focusOnFilter) {
+                        $scope.activateLeftNavFilter();
+                    }
                 });
             };
 
@@ -121,7 +127,7 @@ angular.module('emmiManager')
                 if (!$scope.loading) {
                     $scope.showInactiveTeams = !$scope.showInactiveTeams;
                     $scope.setInactiveTeamsURLParameter();
-                    $scope.updateState();
+                    $scope.updateState(true);
                 }
             };
 
