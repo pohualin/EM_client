@@ -18,6 +18,8 @@
  *          performDelete();
  *      }
  *
+ * added scope function hooks for activate, open and close using data-chosen-activate, data-chosen-open,
+ * and data-chosen-close
  */
 
 'use strict';
@@ -176,7 +178,7 @@ angular.module('emmi.chosen', [])
             }
             return angularCount !== chosenCount;
         };
-
+        var eventHasPriority;
 
         return {
             restrict: 'A',
@@ -248,13 +250,34 @@ angular.module('emmi.chosen', [])
                             return before.length === after.length;
                         });
                     }
+                    if (attr.chosenClose){
+                       scope[attr.chosenClose] = function(){
+                           $timeout(function (){
+                               element.trigger('chosen:close');
+                           });
+                       };
+                    }
+                    if (attr.chosenOpen){
+                        scope[attr.chosenOpen] = function(){
+                            $timeout(function (){
+                                element.trigger('chosen:open');
+                            });
+                        };
+                    }
+                    if (attr.chosenActivate){
+                        scope[attr.chosenActivate] = function(){
+                            $timeout(function (){
+                                element.trigger('chosen:activate');
+                            });
+                        };
+                    }
                 } else {
                     initOrUpdate();
                 }
                 attr.$observe('disabled', function (changeValue) {
                     if (angular.isDefined(changeValue)) {
                         ngModel.disabledBeforeLoad = changeValue;
-                        return element.trigger('chosen:updated');
+                        ngModel.$render(true);
                     }
                 });
                 attr.$observe('placeholder', function (changeValue) {

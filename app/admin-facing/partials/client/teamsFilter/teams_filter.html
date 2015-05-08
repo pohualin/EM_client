@@ -31,8 +31,9 @@
                         id="tagFilter"
                         data-chosen data-placeholder="All Tags"
                         data-ng-disabled="loading"
+                        data-chosen-activate="activateLeftNavFilter"
                         multiple
-                        data-ng-model="filterTags" data-ng-change="updateState()"
+                        data-ng-model="filterTags" data-ng-change="updateState(true)"
                         data-ng-options="tag.text group by tag.group.name for tag in clientTagGroupToDisplay | orderBy:'text'
                             track by tag.id" class="form-control">
                     <option></option>

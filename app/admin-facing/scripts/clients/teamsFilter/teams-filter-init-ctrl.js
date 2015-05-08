@@ -17,7 +17,7 @@ angular.module('emmiManager')
             /**
              * This function re-loads the component completely.
              */
-            $scope.initialState = function () {
+            $scope.initialState = function (focusOnFilter) {
 
                 // load reference data
                 var loadAllTagsForClient = TeamsFilter.getClientGroups().then(function (groups) {
@@ -55,7 +55,7 @@ angular.module('emmiManager')
                     $scope.setSelectedTagsFromQueryString();
 
                     // refresh the data based upon the state of the widget
-                    $scope.updateState();
+                    $scope.updateState(focusOnFilter);
 
                 });
 
@@ -65,7 +65,7 @@ angular.module('emmiManager')
              * determine the states of the 'group by' box and 'filter by' drop down,
              * then loads the data from the service that is appropriate to the state.
              */
-            $scope.updateState = function () {
+            $scope.updateState = function (focusOnFilter) {
                 //if we only want to show teams with no tags
                 var unTaggedSelected = $filter('filter')($scope.filterTags, {untaggedOnly: true});
 
@@ -79,12 +79,12 @@ angular.module('emmiManager')
 
                     if (!$scope.selectedGroup){
                         if ($scope.filterTags && $scope.filterTags.length !== 0) {
-                            $scope.showFilteredTeams();
+                            $scope.showFilteredTeams(focusOnFilter);
                         } else {
                             $scope.showClientTeams();
                         }
                     } else {
-                        $scope.getTeamsToShowForGroup();
+                        $scope.getTeamsToShowForGroup(focusOnFilter);
                     }
                 } else {
                     // set the selected filter to the un-tagged tag
@@ -115,14 +115,14 @@ angular.module('emmiManager')
             };
 
             $scope.$on('refresh-team-filter', function () {
-                $scope.initialState();
+                $scope.initialState(false);
             });
 
             $scope.filterTags = []; // initialize the 'selected filters' to blank
             $scope.clientId = Client.getClient().entity.id;
             // temporarily set this to true so the ui doesn't show 'no teams' while loading
             $scope.teamsExistForClient = true;
-            $scope.initialState();
+            $scope.initialState(true);
 
         }])
 ;
