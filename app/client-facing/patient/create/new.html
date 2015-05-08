@@ -48,7 +48,8 @@
                         data-ng-model="patient.gender"
                         data-ng-options="gender | translate for gender in genders"
                         id="gender"
-                        name="gender">
+                        name="gender" data-chosen data-disable-search="true">
+                        <option value=""></option>
                     </select>
             </div>
             <div class="col-md-4">
