@@ -57,9 +57,7 @@ angular.module('emmiManager')
                 $scope.patient = {};
                 $scope.defaultGender = 'U';
                 $scope.patient.gender = $scope.defaultGender;
-
             };
-
             $scope.clearForm();
         }
     ])
