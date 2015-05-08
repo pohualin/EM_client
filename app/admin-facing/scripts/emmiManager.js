@@ -139,7 +139,7 @@ angular.module('emmiManager', [
 
     })
 
-    .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, PATTERN, arrays, $document, $modal) {
+    .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, PATTERN, arrays, $document, $modal, API) {
 
         var modals = [], tooltips = [];
 
@@ -213,6 +213,7 @@ angular.module('emmiManager', [
         };
 
         $rootScope.emailPattern = PATTERN.EMAIL;
+        $rootScope.isProduction = !!API.production;
 
         $rootScope.$on('$routeChangeStart', function (event, next) {
             $rootScope.killAllToolTips();
