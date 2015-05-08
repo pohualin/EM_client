@@ -1,30 +1,55 @@
 'use strict';
 
 angular.module('ngTinyScrollbar')
-    .directive('sidebarScroller', function ($window, $timeout) {
+    .directive('sidebarScroller', ['$window', '$timeout', function ($window, $timeout) {
         return {
             restrict: 'AE', // E = Element, A = Attribute, C = Class, M = Comment
             link: function (scope, element, attrs, controller) {
-                var setMaxHeight = function() {
-                    var windowEl = angular.element($window),
+                var setMaxHeight = function () {
+                    var mainContentEl = angular.element('.app-content-with-sidebar .main-content'),
                         sidebarEl = angular.element('.app-content-with-sidebar .sidebar');
-                    if (sidebarEl.length) {
-                        var calcHeight = 0,
-                            ignoreHeight = 100, // start at (top nav bar + sidebar top/bottom padding)
+                    if (mainContentEl.length && sidebarEl.length) {
+                        var ignoreHeight = 0, // start at (top nav bar + sidebar top/bottom padding)
                             ignoreHeightEls = sidebarEl.find('.sidebar-heading, .sidebar-filters');
-                        ignoreHeightEls.each(function(index, el) {
+                        ignoreHeightEls.each(function (index, el) {
                             ignoreHeight += angular.element(el).outerHeight(true);
                         });
-                        calcHeight = windowEl.outerHeight(true) - ignoreHeight;
-                        //element.find('scroll-viewport').css('max-height', calcHeight);
-                        element.height(calcHeight);
+                        element.height(mainContentEl.outerHeight(true) - ignoreHeight);
+                        $timeout(function () {
+                            angular.element($window).triggerHandler('resize');
+                        });
                     }
                 };
-                setMaxHeight();
-                $timeout(function() {
-                    angular.element($window).trigger('resize');
-                }, 1000);
+                // watch for right side height changes
+                scope.$watch(function () {
+                    var mainContentEl = angular.element('.app-content-with-sidebar .main-content');
+                    if (mainContentEl.length) {
+                        return mainContentEl.outerHeight(true);
+                    }
+                }, function onHeightChange(before, after) {
+                    if (scope.pendingHeightChange) {
+                        $timeout.cancel(scope.pendingHeightChange);
+                    }
+                    scope.pendingHeightChange = $timeout(function () {
+                        setMaxHeight();
+                    }, 500);
+                });
+
+                // watch for left side height changes
+                scope.$watch(function () {
+                    var sidebarEl = element.find('.scroll-overview');
+                    if (sidebarEl.length) {
+                        return angular.element(sidebarEl[0]).height();
+                    }
+                }, function onElementHeightChange() {
+                    if (scope.resizeTrigger) {
+                        $timeout.cancel(scope.resizeTrigger);
+                    }
+                    scope.resizeTrigger = $timeout(function () {
+                        setMaxHeight();
+                    }, 500);
+                });
             }
         };
-    })
+    }])
 ;
