@@ -92,7 +92,7 @@ angular.module('emmiManager')
                     // update the display with the selected group
                     $scope.selectedGroupDisplay = $scope.selectedGroup;
                     $scope.loading = false;
-                    if (focusOnFilter) {
+                    if (focusOnFilter && $scope.filterTags && $scope.filterTags.length > 0) {
                         $scope.activateLeftNavFilter();
                     }
                 });

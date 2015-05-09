@@ -16,7 +16,7 @@
                 <select class="form-control" data-ng-class="{'loading': loading}" id="teamFilter"
                         data-ng-model="selectedGroup"
                         data-placeholder="All {{!showInactiveTeams && inactiveTeams ? 'Active' : ''}} Teams"
-                        data-ng-disabled="showUntaggedTeams || !clientGroups || clientGroups.length === 0 || loading"
+                        data-ng-disabled="showUntaggedTeams || !clientGroups || clientGroups.length === 0"
                         data-ng-options="group.entity.name for group in clientGroups track by group.entity.id | orderBy:'name'"
                         data-allow-single-deselect="true"
                         data-ng-change="updateState()" data-chosen data-disable-search="true">
@@ -30,7 +30,7 @@
                 <select data-ng-class="{'loading': loading}"
                         id="tagFilter"
                         data-chosen data-placeholder="All Tags"
-                        data-ng-disabled="loading"
+                        data-ng-disabled="!clientTagGroupToDisplay || clientTagGroupToDisplay.length === 0"
                         data-chosen-activate="activateLeftNavFilter"
                         multiple
                         data-ng-model="filterTags" data-ng-change="updateState(true)"
