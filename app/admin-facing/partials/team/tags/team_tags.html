@@ -13,9 +13,9 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <select id="team_tags" class="form-control" multiple
-                        data-ng-disabled="saving"
+                <select id="team_tags" class="form-control"  data-ng-class="{'loading': saving}" multiple
                         data-chosen-activate="activateTeamTags"
+                        data-no-results-placeholder="no client tags available"
                         data-placeholder="Choose tags"
                         data-ng-change="saveTagState()"
                         data-ng-model="teamClientResource.teamResource.tags"
