@@ -1,7 +1,7 @@
 <div class="app-header with-breadcrumbs" data-emmi-navbar>
     <!-- Secondary menu for transclusion -->
     <ul class="secondary-nav">
-        <li><a href="#/clients/{{client.id}}/password_policy">Client Configurations</a></li>
+        <li data-ng-if="!isProduction"><a href="#/clients/{{client.id}}/password_policy">Client Configurations</a></li>
         <li>
             <a data-ng-if="hasExistingClientRoles || hasExistingClientTeamRoles" href="#/clients/{{client.id}}/users">Manage Users</a>
             <a data-ng-if="!hasExistingClientRoles && !hasExistingClientTeamRoles" data-ng-class="{'disabled':(!hasExistingClientRoles && !hasExistingClientTeamRoles)}" data-bs-tooltip data-type="info" data-placement="bottom" data-title="Set up user roles before adding users">Manage Users</a>

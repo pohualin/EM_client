@@ -38,18 +38,18 @@ angular.module('emmiManager', [
     .constant('URL_PARAMETERS', {
         SELECTED_GROUP: 'g',
         SELECTED_TAGS: 'st',
-        CLIENT:'c',
-        TEAM:'t',
-        PROVIDER:'p',
-        LOCATION:'l',
-        USER:'u',
-        QUERY:'q',
-        PAGE:'p',
-        STATUS:'status',
-        SORT:'sort',
-        DIRECTION:'dir',
-        SIZE:'size',
-        INACTIVE_TEAMS:'i'
+        CLIENT: 'c',
+        TEAM: 't',
+        PROVIDER: 'p',
+        LOCATION: 'l',
+        USER: 'u',
+        QUERY: 'q',
+        PAGE: 'p',
+        STATUS: 'status',
+        SORT: 'sort',
+        DIRECTION: 'dir',
+        SIZE: 'size',
+        INACTIVE_TEAMS: 'i'
     })
 
     .constant('PATTERN', {
@@ -57,7 +57,7 @@ angular.module('emmiManager', [
     })
 
     .config(
-        function ($provide, $httpProvider, $translateProvider, tmhDynamicLocaleProvider, HateoasInterceptorProvider, $datepickerProvider, $alertProvider, API, unsavedWarningsConfigProvider) {
+    function ($provide, $httpProvider, $translateProvider, tmhDynamicLocaleProvider, HateoasInterceptorProvider, $datepickerProvider, $alertProvider, API, unsavedWarningsConfigProvider) {
 
         // Initialize angular-translate
         $translateProvider.useUrlLoader(API.messages);
@@ -106,17 +106,17 @@ angular.module('emmiManager', [
         });
 
         // extend ivh.treeview ivhTreeviewCheckbox directive so we can skin the checkboxes (EM-1046)
-        $provide.decorator('ivhTreeviewCheckboxDirective', function($delegate) {
+        $provide.decorator('ivhTreeviewCheckboxDirective', function ($delegate) {
             var directive = $delegate[0];
             var link = directive.link;
             directive.template = [
                 '<span class="checkbox"><input id="ivhTreeviewCheckbox_{{elementId}}_{{node.name}}" type="checkbox"',
-                    'ng-model="isSelected"',
-                    'ng-change="ctrl.select(node, isSelected)" />',
+                'ng-model="isSelected"',
+                'ng-change="ctrl.select(node, isSelected)" />',
                 '<label for="ivhTreeviewCheckbox_{{elementId}}_{{node.name}}"></label></span>'
             ].join('\n');
-            directive.compile = function() {
-                return function(scope, element, attrs) {
+            directive.compile = function () {
+                return function (scope, element, attrs) {
                     link.apply(this, arguments);
                     // get the closest treeview container id
                     var elementId = angular.element(element).closest('.ivh-treeview-container').attr('id');
@@ -128,9 +128,26 @@ angular.module('emmiManager', [
             return $delegate;
         });
 
-        $provide.decorator('scrollbarDirective', function($delegate) {
+        $provide.decorator('scrollbarDirective', function ($delegate) {
             var directive = $delegate[0];
             directive.template = '<div class="scroll-bar"><div class="scroll-thumb"></div></div><div class="scroll-viewport" sidebar-scroller><div class="scroll-overview" ng-transclude></div></div>';
+            var compile = directive.compile;
+            directive.compile = function (tElement, tAttrs) {
+                var _me = this;
+                var link = compile.apply(_me, arguments);
+                return function (scope, elem, attrs) {
+                    link.apply(this, arguments);
+                    // extend the controller after link() has run
+                    var controller = arguments[3];
+                    if (!!attrs.rebuildOn) {
+                        attrs.rebuildOn.split(' ').forEach(function (eventName) {
+                            scope.$on(eventName, function () {
+                                controller.update();
+                            });
+                        });
+                    }
+                };
+            };
             return $delegate;
         });
 
@@ -139,7 +156,7 @@ angular.module('emmiManager', [
 
     })
 
-    .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, PATTERN, arrays, $document, $modal) {
+    .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, PATTERN, arrays, $document, $modal, API) {
 
         var modals = [], tooltips = [];
 
@@ -213,6 +230,7 @@ angular.module('emmiManager', [
         };
 
         $rootScope.emailPattern = PATTERN.EMAIL;
+        $rootScope.isProduction = !!API.production;
 
         $rootScope.$on('$routeChangeStart', function (event, next) {
             $rootScope.killAllToolTips();
@@ -274,7 +292,8 @@ angular.module('emmiManager', [
                 animation: 'none',
                 backdropAnimation: 'emmi-fade',
                 backdrop: 'static',
-                show: true});
+                show: true
+            });
         });
 
         // Call when the 500 response is returned by the server
