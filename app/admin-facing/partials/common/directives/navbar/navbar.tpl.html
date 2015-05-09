@@ -77,7 +77,7 @@
                         <ul class="dropdown-menu">
                             <li data-ng-if="isAuthorized([userRoles.god, userRoles.admin])">
                                 <a data-ng-href="#/users">Emmi Users</a></li>
-                            <li data-ng-if="account.link.referenceTags">
+                            <li data-ng-if="account.link.referenceTags && !isProduction">
                                 <a data-ng-href="#/admin">Admin Functions</a></li>
                             <li data-ng-if="isAuthorized([userRoles.god]) || (isAuthorized([userRoles.admin]) && account.webApiUser)">
                                 <a data-ng-href="#/docs">Technical Documentation</a>

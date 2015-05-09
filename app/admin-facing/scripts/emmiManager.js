@@ -128,9 +128,21 @@ angular.module('emmiManager', [
             return $delegate;
         });
 
-        $provide.decorator('scrollbarDirective', function($delegate) {
+        $provide.decorator('scrollbarDirective', function($delegate, $controller) {
             var directive = $delegate[0];
+            var origController = directive.controller[directive.controller.length-1];
             directive.template = '<div class="scroll-bar"><div class="scroll-thumb"></div></div><div class="scroll-viewport" sidebar-scroller><div class="scroll-overview" ng-transclude></div></div>';
+            directive.controller = function($scope, $element, $attrs) {
+                var _this = this;
+                origController.apply(_this, arguments);
+                if (!!$attrs.rebuildOn) {
+                    $attrs.rebuildOn.split(' ').forEach(function (eventName) {
+                        $scope.$on(eventName, function(){
+                            _this.update();
+                        });
+                    });
+                }
+            };
             return $delegate;
         });
 
@@ -139,7 +151,7 @@ angular.module('emmiManager', [
 
     })
 
-    .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, PATTERN, arrays, $document, $modal) {
+    .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, PATTERN, arrays, $document, $modal, API) {
 
         var modals = [], tooltips = [];
 
@@ -213,6 +225,7 @@ angular.module('emmiManager', [
         };
 
         $rootScope.emailPattern = PATTERN.EMAIL;
+        $rootScope.isProduction = !!API.production;
 
         $rootScope.$on('$routeChangeStart', function (event, next) {
             $rootScope.killAllToolTips();

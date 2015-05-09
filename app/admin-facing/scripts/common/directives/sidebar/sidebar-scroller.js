@@ -17,7 +17,7 @@
                             });
                             element.height(mainContentEl.outerHeight(true) - ignoreHeight);
                             $timeout(function () {
-                                angular.element($window).triggerHandler('resize');
+                                scope.$broadcast('scrollbar:update');
                             });
                         }
                     };
@@ -44,7 +44,7 @@
                         }
                     }, function onLeftSideHeightChange() {
                         $timeout(function () {
-                            angular.element($window).triggerHandler('resize');
+                            scope.$broadcast('scrollbar:update');
                         });
                     });
                 }
