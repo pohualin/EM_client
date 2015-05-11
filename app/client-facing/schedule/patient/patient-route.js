@@ -33,15 +33,15 @@ angular.module('emmiManager')
         $routeProvider
             .when('/patients/new', {
 
-                templateUrl: 'client-facing/patient/create/new.html',
+                templateUrl: 'client-facing/schedule/patient/create/new.html',
                 controller: 'CreatePatientController',
                 access: {
                     authorizedRoles: [USER_ROLES.admin]
                 },
                 resolve: requiredUserClientResources
             })
-            .when('/patients', {
-                templateUrl: 'client-facing/patient/search/search.html',
+            .when('/teams/:teamId/schedule/patients', {
+                templateUrl: 'client-facing/schedule/patient/search/search.html',
                 controller: 'SearchPatientController',
                 access: {
                     authorizedRoles: [USER_ROLES.all]
@@ -49,7 +49,7 @@ angular.module('emmiManager')
                 resolve: requiredUserClientResources
             })
             .when('/patients/:patientId', {
-                templateUrl: 'client-facing/patient/view/view.html',
+                templateUrl: 'client-facing/schedule/patient/view/view.html',
                 controller: 'ViewPatientController',
                 access: {
                     authorizedRoles: [USER_ROLES.all]
