@@ -45,11 +45,10 @@
                     <label class="control-label" for="gender">Gender</label>
                     <select
                         class="form-control"
-                        data-placeholder="Select..."
                         data-ng-model="patient.gender"
                         data-ng-options="gender | translate for gender in genders"
                         id="gender"
-                        name="gender">
+                        name="gender" data-chosen data-disable-search="true">
                         <option value="">Unknown</option>
                     </select>
             </div>
