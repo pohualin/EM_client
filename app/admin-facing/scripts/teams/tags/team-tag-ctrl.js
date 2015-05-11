@@ -85,10 +85,15 @@ angular.module('emmiManager')
              * Called when collection changes
              */
             $scope.saveTagState = function () {
-
+                $scope.saving = true;
                 TeamTag.save($scope.teamClientResource.teamResource).then(function (savedTags) {
                     $scope.existingTags = savedTags;
                     $scope.fireUpdatedEvent();
+                }).finally(function () {
+                    $scope.saving = false;
+                    if ($scope.existingTags && $scope.existingTags.length > 0) {
+                        $scope.activateTeamTags(); //re-focus chosen element after save
+                    }
                 });
             };
 
