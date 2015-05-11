@@ -19,12 +19,12 @@
             </div>
         </div>
     </div>
-    <div class="popover-footer">
+    <div class="popover-footer popover-footer-with-info">
         <button type="button" class="btn btn-default btn-xs btn-close" data-ng-click="$hide()">
             <span class="icon-delete"></span>
         </button>
-        <div data-ng-if="selectedRoleHasSuperPermission">This role will replace existing team roles (the user will be given all permissions at all teams within this client).</div>
-        <button type="button" class="btn btn-success" data-ng-click="associateClientRole(clientRolesSelection);$hide()">Add</button>
+        <button type="button" class="btn btn-success pull-left" data-ng-click="associateClientRole(clientRolesSelection);$hide()">Add</button>
+        <div data-ng-if="selectedRoleHasSuperPermission" class="info"><small>This role will replace existing team roles (the user will be given all permissions at all teams within this client).</small></div>
     </div>
 </form>
     </div><!-- .popover-content -->
