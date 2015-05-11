@@ -9,7 +9,6 @@ angular.module('emmiManager')
 
             CreatePatientService.refData().then(function (response) {
                 $scope.genders = response;
-                $scope.genders.push('U');
             });
 
             $scope.save = function (valid) {
@@ -55,10 +54,7 @@ angular.module('emmiManager')
             $scope.clearForm = function (){
                 $scope.formSubmitted = false;
                 $scope.patient = {};
-                $scope.defaultGender = 'U';
-                $scope.patient.gender = $scope.defaultGender;
             };
-            $scope.clearForm();
         }
     ])
 ;
