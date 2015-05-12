@@ -26,15 +26,6 @@ angular.module('emmiManager')
                     UsersClientService.createUserClient($scope.client, $scope.userClientEdit).then(
                         function success(response) {
                             var savedUserClientResource = response.data;
-                            // go to the view/edit page, if the save is successful
-                            if (!addAnother) {
-                                $location.path(
-                                    '/clients/' + savedUserClientResource.entity.client.id +
-                                    '/users/' + savedUserClientResource.entity.id
-                                );
-                            } else {
-                                $location.search('rnd', savedUserClientResource.entity.id);
-                            }
                             $alert({
                                 content: 'User <b>' + savedUserClientResource.entity.login + '</b> has been successfully created.',
                                 container: '#messages-container',
@@ -44,6 +35,15 @@ angular.module('emmiManager')
                                 duration: 5,
                                 dismissable: true
                             });
+                            // go to the view/edit page, if the save is successful
+                            if (!addAnother) {
+                                $location.path(
+                                    '/clients/' + savedUserClientResource.entity.client.id +
+                                    '/users/' + savedUserClientResource.entity.id
+                                );
+                            } else {
+                                $location.search('rnd', savedUserClientResource.entity.id);
+                            }
                             _paq.push(['trackEvent', 'Form Action', 'Create User', 'Save']);
                         }, function error(response) {
                             $scope.handleSaveError(response, angular.element(event.currentTarget));
