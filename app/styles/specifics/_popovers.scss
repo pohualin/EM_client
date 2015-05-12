@@ -76,6 +76,10 @@
             top: 50%;
             transform: translateY(-50%);
         }
+        .btn.pull-left {
+            position: relative;
+            z-index: 1;
+        }
     }
     .popover-footer .info {
         font-size: 15px;

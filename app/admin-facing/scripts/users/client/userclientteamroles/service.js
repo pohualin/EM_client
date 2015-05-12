@@ -4,6 +4,7 @@ angular.module('emmiManager')
     .service('UserClientUserClientTeamRolesService', ['$q', '$http', 'UriTemplate', 'Client', 'CommonService', 'UsersClientService',
         function ($q, $http, UriTemplate, Client, CommonService, UsersClientService) {
             var selectedClientTeamRole;
+            var cardsToRefresh;
             return {
                 /**
                  * Call server to save all selected Teams
@@ -148,6 +149,20 @@ angular.module('emmiManager')
                  */
                 getSelectedClientTeamRole: function () {
                     return selectedClientTeamRole;
+                },
+                
+                /**
+                 * Set cardsToRefresh when user select some teams already associated with other team role
+                 */
+                setCardsToRefresh: function(cards){
+                    cardsToRefresh = cards;
+                },
+                
+                /**
+                 * Return cardsToRefresh
+                 */
+                getCardsToRefresh: function(){
+                    return cardsToRefresh;
                 }
             };
         }])
