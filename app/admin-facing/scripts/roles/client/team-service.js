@@ -265,7 +265,7 @@ angular.module('emmiManager')
                         var type = existingClientTeamRole.entity ? existingClientTeamRole.entity.type : null;
                         if (type && libraryRole.entity.type.id === type.id) {
                             libraryRole.disabled = true;
-                        } else if(libraryRole.entity.name === existingClientTeamRole.entity.name){
+                        } else if(libraryRole.entity.normalizedName === existingClientTeamRole.entity.normalizedName){
                             libraryRole.disableNameMatch = true;
                             libraryRole.disabled = true;
                         }
