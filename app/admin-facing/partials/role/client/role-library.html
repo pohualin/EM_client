@@ -9,6 +9,10 @@
             <label for="roleLibraryCb{{$index}}"></label>
             <span class="toggle-trigger" data-ng-class="{'text-muted': library.disabled}">
                 <span data-ng-show="library.entity.permission.length > 0" class="icon-caret-right"></span><span>{{ library.entity.name }}</span>
+                <div class="error-circle fa-exclamation-circle"
+                   data-ng-show="library.disableNameMatch"
+                   data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                   data-title="A role with this name already exists"></div>
             </span>
             <div class="toggle-content">
                 <small>

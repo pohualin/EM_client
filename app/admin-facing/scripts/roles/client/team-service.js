@@ -259,16 +259,19 @@ angular.module('emmiManager')
                  * @returns libraryRole modified
                  */
                 disableSelectedLibraries: function (savedClientTeamRoles, libraryRole) {
-                    var match = false;
+                    libraryRole.disableNameMatch = false;
+                    libraryRole.disabled = false;
                     angular.forEach(savedClientTeamRoles, function (existingClientTeamRole) {
                         var type = existingClientTeamRole.entity ? existingClientTeamRole.entity.type : null;
                         if (type && libraryRole.entity.type.id === type.id) {
-                            match = true;
+                            libraryRole.disabled = true;
+                        } else if(libraryRole.entity.name === existingClientTeamRole.entity.name){
+                            libraryRole.disableNameMatch = true;
+                            libraryRole.disabled = true;
                         }
                     });
                     // if there were a match, disable and select the library group
-                    libraryRole.disabled = match;
-                    if (libraryRole.disabled) {
+                    if (libraryRole.disabled && !libraryRole.disableNameMatch) {
                         libraryRole.checked = true;
                     }
                     return libraryRole;

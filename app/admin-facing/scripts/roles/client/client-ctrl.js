@@ -78,11 +78,18 @@ angular.module('emmiManager')
              */
             $scope.saveNewRole = function (clientRoleEntity, form) {
                 form.$setPristine();
-                ManageUserRolesService.saveNewClientRole(clientRoleEntity, $scope.clientResource).then(function () {
-                    delete $scope.newClientRole;
-                    $scope.loadExisting();
-                    $scope.successAlert(clientRoleEntity);
-                });
+                $scope.newClientRoleFormSubmitted = true;
+                if(form.$valid){
+                    ManageUserRolesService.saveNewClientRole(clientRoleEntity, $scope.clientResource).then(function () {
+                        delete $scope.newClientRole;
+                        $scope.newClientRoleFormSubmitted = false;
+                        $scope.resetValidity(form);
+                        $scope.loadExisting();
+                        $scope.successAlert(clientRoleEntity);
+                    }, function(error){
+                        form.name.$setValidity('unique', false);
+                    });
+                }
             };
 
             /**
@@ -92,6 +99,8 @@ angular.module('emmiManager')
              */
             $scope.cancelNew = function (form) {
                 form.$setPristine();
+                $scope.resetValidity(form);
+                $scope.newClientRoleFormSubmitted = false;
                 delete $scope.newClientRole;
             };
 
@@ -105,6 +114,7 @@ angular.module('emmiManager')
                 form.$setPristine();
                 clientRoleResource.editName = false;
                 angular.extend(clientRoleResource, clientRoleResource.original);
+                $scope.resetValidity(form);
                 delete clientRoleResource.original;
             };
 
@@ -147,7 +157,11 @@ angular.module('emmiManager')
              */
             $scope.update = function (clientRoleResource, form) {
                 form.$setPristine();
-                ManageUserRolesService.saveExistingClientRole(clientRoleResource);
+                ManageUserRolesService.saveExistingClientRole(clientRoleResource).then(function(){
+                    clientRoleResource.activePanel = 1;
+                }, function(error){
+                    form.name.$setValidity('unique', false);
+                });
             };
 
             /**
@@ -220,6 +234,13 @@ angular.module('emmiManager')
                     duration: 5,
                     dismissable: true
                 });
+            };
+            
+            /**
+             * Reset all validity
+             */
+            $scope.resetValidity = function(form){
+                form.name.$setValidity('unique', true);
             };
 
             // start by loading the currently saved roles
