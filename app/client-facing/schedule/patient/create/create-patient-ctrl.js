@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('emmiManager')
-    .controller('CreatePatientController', ['client', '$scope', 'CreatePatientService', '$alert', '$location',
-        function (client, $scope, CreatePatientService, $alert, $location) {
+    .controller('CreatePatientController', ['$scope', 'CreatePatientService', '$alert', '$location', '$rootScope',
+        function ($scope, CreatePatientService, $alert, $location, $rootScope) {
 
             var today = new Date();
             $scope.minDate = new Date().setFullYear(today.getFullYear() - 125);
@@ -11,22 +11,30 @@ angular.module('emmiManager')
                 $scope.genders = response;
             });
 
-            $scope.save = function (valid) {
+            $scope.saveOrUpdate = function (valid) {
+                console.log('in save or update');
+                console.log($scope);
                 $scope.formSubmitted = true;
                 if (valid) {
-                    CreatePatientService.save(client, $scope.patient).then(function (response) {
-                        $alert({
-                            title: ' ',
-                            content: 'The patient <b>'+ response.data.entity.firstName + ' ' + response.data.entity.lastName +'</b> has been successfully added.',
-                            container: '#modal-messages-container',
-                            type: 'success',
-                            placement: 'top',
-                            show: true,
-                            duration: 5,
-                            dismissable: true
+                    if ($scope.patientResource) {
+                        //update
+                    } else {
+                        CreatePatientService.save($scope.client, $scope.patient).then(function (response) {
+                            $alert({
+                                title: ' ',
+                                content: 'The patient <b>' + response.data.entity.firstName + ' ' + response.data.entity.lastName + '</b> has been successfully added.',
+                                container: '#modal-messages-container',
+                                type: 'success',
+                                placement: 'top',
+                                show: true,
+                                duration: 5,
+                                dismissable: true
+                            });
+                            //$scope.editMode = false; //switch to a view mode html
+                            $scope.editMode = false;
+                            $scope.patientResource = response.data.entity;
                         });
-                        $scope.clearForm();
-                    });
+                    }
                 } else {
                     $scope.showError();
                 }
@@ -48,13 +56,17 @@ angular.module('emmiManager')
             };
 
             $scope.cancel = function () {
-                $location.path('/patients/').replace();
+                $location.path('/teams/' + $scope.team.entity.id +'/schedule/patients/').replace();
             };
 
             $scope.clearForm = function (){
                 $scope.formSubmitted = false;
                 $scope.patient = {};
             };
+
+            $rootScope.$on('event:update-patient-and-programs', function(){
+                $scope.saveOrUpdate($scope.newPatientForm.$valid);
+            });
         }
     ])
 ;
