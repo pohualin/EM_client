@@ -71,7 +71,7 @@ angular.module('emmiManager')
             		$scope.hideAddTeamsModal();
                     var clientTeamRole = UserClientUserClientTeamRolesService.getSelectedClientTeamRole();
             		UserClientUserClientTeamRolesService.refreshTeamRoleCard(clientTeamRole);
-            		UserClientUserClientTeamRolesService.refreshTeamRoleCards($scope.cardsToRefresh);
+            		UserClientUserClientTeamRolesService.refreshTeamRoleCards(UserClientUserClientTeamRolesService.getCardsToRefresh());
                     clientTeamRole.activePanel = 0; // Open the panel after adding teams
             		_paq.push(['trackEvent', 'Form Action', 'User Team Role Search', 'Add']);
             	});
