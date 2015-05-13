@@ -5,7 +5,7 @@ angular.module('emmiManager')
 /**
  *  Controls the create new location popup (admin-facing/partials/location/new.html) from a Team search page
  */
-    .controller('TeamLocationCreateController', function ($rootScope, $scope, $controller, Location, TeamSearchLocation, $alert, Client, TeamLocation) {
+    .controller('TeamLocationCreateController', function ($rootScope, $scope, $controller, Location, TeamSearchLocation, $alert, Client, TeamLocation, $timeout) {
 
         $controller('LocationCommon', {$scope: $scope});
 
@@ -13,11 +13,11 @@ angular.module('emmiManager')
         $scope.newLocation = true;
         $scope.title = 'New Location';
         $scope.location.providersSelected =  angular.copy($scope.providersData);
-        
+
         if($scope.locationQuery){
-            $scope.location.name = $scope.locationQuery;
+            $scope.location.name = $scope.locationQuery.$viewValue;
         }
-        
+
         $scope.saveAndAddAnother = function (isValid) {
             $scope.saveLocation(isValid, true);
         };
@@ -26,6 +26,7 @@ angular.module('emmiManager')
             $scope.locationFormSubmitted = true;
             if (isValid) {
                 var toBeSaved = $scope.location;
+                _paq.push(['trackEvent', 'Form Action', 'Team Location Create', 'Save']);
                 Location.create(Client.getClient(), toBeSaved).then(function (location) {
                     var teamProviderTeamLocationSaveRequest = [];
                     var req = {};
@@ -37,32 +38,24 @@ angular.module('emmiManager')
                     }
                     teamProviderTeamLocationSaveRequest.push(req);
 
-                    TeamSearchLocation.save($scope.teamClientResource.teamResource.link.teamLocations,teamProviderTeamLocationSaveRequest).then(function (page) {
-
+                    return TeamSearchLocation.save($scope.teamClientResource.teamResource.link.teamLocations,teamProviderTeamLocationSaveRequest).then(function (page) {
+                        // close the modal
                         $scope.$hide();
-                        $scope.refresh();
-                        var container = '#messages-container';
-                        var locationResource = location.data.location;
-
-                        if (addAnother) {
-                            $scope.addLocations(true);
-                            container = '#modal-messages-container';
+                        if (!addAnother) {
+                            // refresh the parent scope locations in the background
+                            $scope.refresh();
+                            $scope.displaySuccessfull(teamProviderTeamLocationSaveRequest, '#messages-container');
+                        } else {
+                            $scope.refresh().then(function () {
+                                $scope.addLocations().then(function () {
+                                    $scope.displaySuccessfull(teamProviderTeamLocationSaveRequest, '#modal-messages-container');
+                                });
+                            });
                         }
-
-                        $alert({
-                            title: ' ',
-                            content: 'The location <b>' + locationResource.entity.name + '</b> has been successfully created.',
-                            container: container,
-                            type: 'success',
-                            show: true,
-                            duration: 5,
-                            dismissable: true
-                        });
                         $rootScope.$broadcast('event:teamLocationSavedWithProvider');
+                        return teamProviderTeamLocationSaveRequest;
                     });
-
                 });
-                _paq.push(['trackEvent', 'Form Action', 'Team Location Create', 'Save']);
             } else {
                 $scope.showErrorBanner();
             }
