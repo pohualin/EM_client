@@ -9,6 +9,7 @@ angular.module('emmiManager')
         $controller('CommonPagination', {$scope: $scope});
 
         $scope.teamClientLocations = {};
+        $scope.searchAll = {};
         var managedLocationList = 'locations';
         var managedClientLocationList = 'clientLocations';
 
@@ -47,7 +48,7 @@ angular.module('emmiManager')
         $scope.cleanSearch = function() {
         	$scope.allLocationsSearch = false;
             $scope.locations = null;
-            $scope.locationQuery = null;
+            $scope.searchAll.locationQuery = null;
             $scope.cancelPopup(); //clean the locations checked in other search
         };
 
@@ -104,7 +105,7 @@ angular.module('emmiManager')
                 $scope.loading = true;
                 $scope.locations = null;
                 $scope.cancelPopup(); //clean the locations checked in other search
-                Location.findWithoutCL(Client.getClient(), $scope.locationQuery, $scope.status).then(function (locationPage) {
+                Location.findWithoutCL(Client.getClient(), $scope.searchAll.locationQuery, $scope.status).then(function (locationPage) {
                     $scope.handleResponse(locationPage, managedLocationList);
                     $scope.setLocationChecked();
                     $scope.allLocationsSearch = true;
@@ -117,7 +118,7 @@ angular.module('emmiManager')
         // when a column header is clicked
         $scope.sortTeam = function (property) {
         	$scope.loading = true;
-            Location.findWithoutCL(Client.getClient(), $scope.locationQuery, $scope.status, $scope.sort(property), $scope.currentPageSize).then(function (locationPage) {
+            Location.findWithoutCL(Client.getClient(), $scope.searchAll.locationQuery, $scope.status, $scope.sort(property), $scope.currentPageSize).then(function (locationPage) {
                 $scope.handleResponse(locationPage, managedLocationList);
                 $scope.setLocationChecked();
             }, function () {
@@ -160,7 +161,7 @@ angular.module('emmiManager')
 
         $scope.statusChange = function () {
             $scope.loading = true;
-            Location.findWithoutCL(Client.getClient(), $scope.locationQuery, $scope.status, null, $scope.currentPageSize).then(function (locationPage) {
+            Location.findWithoutCL(Client.getClient(), $scope.searchAll.locationQuery, $scope.status, null, $scope.currentPageSize).then(function (locationPage) {
                     $scope.handleResponse(locationPage, managedLocationList);
                     $scope.setLocationChecked();
             }, function () {
@@ -213,9 +214,8 @@ angular.module('emmiManager')
             }
         };
 
-        $scope.createNewTeamLocation = function (query) {
+        $scope.createNewTeamLocation = function () {
             $scope.$hide();
-            $scope.locationQuery = query;
             $modal({scope: $scope, template: 'admin-facing/partials/team/location/new.html', animation: 'none', backdropAnimation: 'emmi-fade', backdrop: 'static'});
         };
 

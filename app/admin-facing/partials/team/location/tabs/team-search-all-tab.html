@@ -5,7 +5,7 @@
                     <div class="form-group">
                         <label class="sr-only" for="locationQuery">Search locations:</label>
                         <div class="input-group has-input-icon has-input-icon-search">
-                            <input class="form-control" name="locationQuery" id="locationQuery" data-ng-model="locationQuery"
+                            <input class="form-control" name="locationQuery" id="locationQuery" data-ng-model="searchAll.locationQuery"
                                type="text" placeholder="{{'team_locations_search_page.search_dialog.placeholder_label' | translate}}" required data-auto-focus data-focus-on="LocationSearchFocus">
                             <span class="input-icon"><i class="icon-search"></i></span>
                             <span class="input-group-btn">
@@ -18,7 +18,7 @@
             </div>
             <div class="col-md-5" data-ng-show="allLocationsSearch">
                 <br/>
-                <button type="button" class="btn btn-default pull-right" data-ng-click="createNewTeamLocation(searchForm.locationQuery)">
+                <button type="button" class="btn btn-default pull-right" data-ng-click="createNewTeamLocation()">
                     <i class="icon-plus"></i> <span data-translate="team_locations_search_page.add_new.label"></span>
                 </button>
                 <span data-ng-class="{'search-spinner' : loading}"></span>

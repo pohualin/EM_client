@@ -10,7 +10,9 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12" data-bs-active-pane="tabs.activeTab" data-bs-tabs>
-                        <div data-ng-repeat="tab in tabs.data" data-ng-include="tab.template" data-title="{{tab.title}}" data-bs-pane></div>
+                        <div data-ng-repeat="tab in tabs.data" data-title="{{tab.title}}" data-bs-pane>
+                            <div data-ng-include="tab.template"></div>
+                        </div>
                     </div>
                 </div>
             </div>

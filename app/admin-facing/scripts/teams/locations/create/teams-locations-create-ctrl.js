@@ -14,9 +14,7 @@ angular.module('emmiManager')
         $scope.title = 'New Location';
         $scope.location.providersSelected =  angular.copy($scope.providersData);
 
-        if($scope.locationQuery){
-            $scope.location.name = $scope.locationQuery.$viewValue;
-        }
+        $scope.location.name = $scope.searchAll.locationQuery;
 
         $scope.saveAndAddAnother = function (isValid) {
             $scope.saveLocation(isValid, true);
