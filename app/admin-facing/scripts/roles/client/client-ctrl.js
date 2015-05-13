@@ -87,7 +87,9 @@ angular.module('emmiManager')
                         $scope.loadExisting();
                         $scope.successAlert(clientRoleEntity);
                     }, function(error){
-                        form.name.$setValidity('unique', false);
+                        if (error.status === 406) {
+                            form.name.$setValidity('unique', false);
+                        }
                     });
                 }
             };
@@ -160,7 +162,9 @@ angular.module('emmiManager')
                 ManageUserRolesService.saveExistingClientRole(clientRoleResource).then(function(){
                     clientRoleResource.activePanel = 1;
                 }, function(error){
-                    form.name.$setValidity('unique', false);
+                    if (error.status === 406) {
+                        form.name.$setValidity('unique', false);
+                    }
                 });
             };
 

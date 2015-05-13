@@ -16,6 +16,13 @@
             <div class="panel-group" data-ng-model="role.activePanel" data-ng-repeat="role in existingClientTeamRoles"
                  data-ng-change="panelStateChange(role, existingClientTeamRoleForm_{{$index}})" data-start-collapsed="true"
                  data-bs-collapse>
+                <div class="row">
+                  <div class="col-md-6">
+                      <div class="alert alert-danger" data-ng-show="existingClientTeamRoleForm_{{$index}}.name.$error.unique">
+                          <strong>&nbsp;</strong>This role already exists
+                      </div>
+                  </div>
+                </div>
                 <form name="existingClientTeamRoleForm_{{$index}}" class="form" novalidate unsaved-warning-form>
                     <div class="panel panel-secondary" data-ng-class="{ 'panel-open': role.activePanel === 0 }">
                         <div class="panel-heading  panel-heading-form">
@@ -36,14 +43,11 @@
                                     <span class="panel-title-text">{{ role.entity.name }}</span>
                                 </a>
                                 <div data-ng-class="{ 'has-error' : existingClientTeamRoleForm_{{$index}}.name.$invalid}">
-                                  <div class="error-circle fa-exclamation-circle"
-                                       data-ng-show="existingClientTeamRoleForm_{{$index}}.name.$error.unique"
-                                       data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                                       data-title="This role already exists"></div>
                                   <div data-ng-show="role.editName" style="width:50%">
                                       <input class="form-control input-sm" data-ng-model="role.entity.name"
                                              name="name"
                                              data-focus-on="focus-{{role.entity.id}}"
+                                             data-ng-pattern="/^[\-\.a-zA-Z0-9 '=_;:`!@#&,\(\)\/]*$/"
                                              data-ng-change="resetValidity(existingClientTeamRoleForm_{{$index}})"
                                              maxlength="50"
                                              required>
@@ -69,20 +73,24 @@
     </div>
     <div class="row">
         <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-6">
+                  <div class="alert alert-danger" data-ng-show="newClientTeamRoleForm.name.$error.unique">
+                      <strong>&nbsp;</strong>This role already exists
+                  </div>
+              </div>
+            </div>
             <form name="newClientTeamRoleForm" class="form" novalidate unsaved-warning-form>
                 <div class="panel-group" data-ng-show="newClientTeamRole">
                     <div class="panel panel-default">
                         <div class="panel-heading panel-heading-form">
                           <div class="form-group"
                             data-ng-class="{ 'has-error' : newClientTeamRoleForm.name.$invalid && newClientTeamRoleFormSubmitted }">
-                            <div class="error-circle fa-exclamation-circle"
-                                 data-ng-show="newClientTeamRoleForm.name.$error.unique"
-                                 data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                                 data-title="This role already exists"></div>
                             <div class="panel-title">
                                 <div class="role-group-create form-inline">
                                     <input class="form-control input-sm" data-ng-model="newClientTeamRole.name"
                                            name="name" data-focus-on="focus-new-role" maxlength="50" required placeholder="Enter a title for new role"
+                                           data-ng-pattern="/^[\-\.a-zA-Z0-9 '=_;:`!@#&,\(\)\/]*$/"
                                            data-ng-change="resetValidity(newClientTeamRoleForm)">
                                     <button class="btn btn-sm btn-icon" data-ng-click="cancelNew(newClientTeamRoleForm)"><span class="icon-delete icon-size-lg"></span></button>
                                 </div>

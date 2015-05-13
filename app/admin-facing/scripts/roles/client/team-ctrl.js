@@ -86,7 +86,9 @@ angular.module('emmiManager')
                             $scope.loadExisting();
                             $scope.successAlert(clientTeamRoleEntity);
                         }, function(error){
-                            form.name.$setValidity('unique', false);
+                            if (error.status === 406) {
+                                form.name.$setValidity('unique', false);
+                            }
                         });
                 }
             };
@@ -159,7 +161,9 @@ angular.module('emmiManager')
                 ManageUserTeamRolesService.saveExistingClientTeamRole(clientTeamRoleResource).then(function(){
                     clientTeamRoleResource.activePanel = 1;
                 }, function(error){
-                    form.name.$setValidity('unique', false);
+                    if (error.status === 406) {
+                        form.name.$setValidity('unique', false);
+                    }
                 });
             };
 
