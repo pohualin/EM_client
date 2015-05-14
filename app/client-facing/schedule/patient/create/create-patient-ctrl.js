@@ -1,9 +1,8 @@
 'use strict';
 
 angular.module('emmiManager')
-    .controller('CreatePatientController', ['$scope', 'CreatePatientService', '$alert', '$location', '$rootScope',
-        'ScheduledProgramFactory', '$q',
-        function ($scope, CreatePatientService, $alert, $location, $rootScope, ScheduledProgramFactory, $q) {
+    .controller('CreatePatientController', ['$scope', 'CreatePatientService', '$alert', '$location', 'ScheduledProgramFactory', '$q',
+        function ($scope, CreatePatientService, $alert, $location, ScheduledProgramFactory, $q) {
 
             var today = new Date();
             $scope.minDate = new Date().setFullYear(today.getFullYear() - 125);
@@ -76,7 +75,7 @@ angular.module('emmiManager')
             /**
              * On click of 'Finish Scheduling' button, kicks off the save of the patient.
              */
-            $rootScope.$on('event:update-patient-and-programs', function () {
+            $scope.$on('event:update-patient-and-programs', function () {
                 $scope.saveOrUpdate($scope.newPatientForm.$valid).then(function () {
                     $scope.saveScheduledProgramForPatient();
                 });

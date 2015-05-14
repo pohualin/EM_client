@@ -2,8 +2,8 @@
 
 angular.module('emmiManager')
     .controller('AddProgramController', ['$scope', '$controller', 'AddProgramService',
-        'moment', '$alert', '$timeout','$rootScope', 'ScheduledProgramFactory',
-        function ($scope, $controller, AddProgramService, moment, $alert, $timeout, $rootScope, ScheduledProgramFactory) {
+        'moment', '$alert', '$timeout', 'ScheduledProgramFactory',
+        function ($scope, $controller, AddProgramService, moment, $alert, $timeout, ScheduledProgramFactory) {
 
             // add common pagination and sorting functions
             $controller('CommonPagination', {$scope: $scope});
@@ -21,7 +21,7 @@ angular.module('emmiManager')
             });
 
 
-            $rootScope.$on('event:update-patient-and-programs', function(){
+            $scope.$on('event:update-patient-and-programs', function(){
                 $scope.saveScheduledProgram($scope.addProgramForm);
             });
 

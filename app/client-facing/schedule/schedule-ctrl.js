@@ -14,7 +14,7 @@ angular.module('emmiManager')
              * Broadcasts event so that Patient save and Program save are kicked off
              */
             $scope.savePatientAndProgram = function () {
-                $scope.$emit('event:update-patient-and-programs');
+                $scope.$broadcast('event:update-patient-and-programs');
             };
 
             /**
