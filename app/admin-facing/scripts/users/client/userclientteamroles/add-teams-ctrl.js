@@ -31,6 +31,7 @@ angular.module('emmiManager')
 			 * Call when cancel button is clicked
 			 */
 			$scope.cancel = function(){
+			    $scope.$broadcast('hide_add_team_roles_warning');
 				$scope.hideAddTeamsModal();
 				_paq.push(['trackEvent', 'Form Action', 'User Team Role Search', 'Cancel']);
 			};
