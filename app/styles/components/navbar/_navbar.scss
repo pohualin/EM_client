@@ -58,6 +58,10 @@
         font-size: 16px;
         vertical-align: text-bottom;
     }
+    > li a.non-link:hover {
+        background: none;
+        color: #D4D8DC
+    }
     .badge {
         box-shadow: 1px 1px 0px 0px rgba(0, 0, 0, 0.2);
         font-weight: normal;

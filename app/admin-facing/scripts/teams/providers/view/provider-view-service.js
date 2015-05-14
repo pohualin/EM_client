@@ -61,7 +61,7 @@ angular.module('emmiManager')
 	                        }
                  });
                  return deferred.promise;
-             },            
+             },
              fetchPageLink: function (href) {
                  return $http.get(href)
                      .then(function (response) {
@@ -91,12 +91,4 @@ angular.module('emmiManager')
         };
     })
 
-    .directive('resetProviderSearch', [function () {
-          return {
-            restrict: 'A',
-            link: function (scope, element, attrs, ngModel) {
-                scope.providerQuery=null;
-            }
-          };    
-    }]) 
-    ;
+;
