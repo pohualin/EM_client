@@ -15,6 +15,12 @@ angular.module('emmiManager')
                     return $http.get(UriTemplate.create(API.patientReferenceData).stringify()).then(function (response) {
                         return response.data.genders;
                     });
+                },
+                update: function (client, patient){
+                    return $http.put(UriTemplate.create(client.link.patient).stringify(), patient).then(function (response){
+                       console.log(response);
+                        return response;
+                    });
                 }
             };
         }])

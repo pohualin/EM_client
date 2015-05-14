@@ -2,7 +2,8 @@
 
 angular.module('emmiManager')
     .controller('CreatePatientController', ['$scope', 'CreatePatientService', '$alert', '$location', '$rootScope',
-        function ($scope, CreatePatientService, $alert, $location, $rootScope) {
+        'ScheduledProgramFactory', '$q',
+        function ($scope, CreatePatientService, $alert, $location, $rootScope, ScheduledProgramFactory, $q) {
 
             var today = new Date();
             $scope.minDate = new Date().setFullYear(today.getFullYear() - 125);
@@ -12,12 +13,15 @@ angular.module('emmiManager')
             });
 
             $scope.saveOrUpdate = function (valid) {
-                console.log('in save or update');
-                console.log($scope);
+                var deferred = $q.defer();
                 $scope.formSubmitted = true;
                 if (valid) {
-                    if ($scope.patientResource) {
-                        //update
+                    if ($scope.patient.id) {
+                        CreatePatientService.update($scope.client, $scope.patient).then(function (response) {
+                            $scope.patient = response.data.entity;
+                            ScheduledProgramFactory.patient = response.data.entity;
+                            deferred.resolve(ScheduledProgramFactory.patient);
+                        });
                     } else {
                         CreatePatientService.save($scope.client, $scope.patient).then(function (response) {
                             $alert({
@@ -30,14 +34,17 @@ angular.module('emmiManager')
                                 duration: 5,
                                 dismissable: true
                             });
-                            //$scope.editMode = false; //switch to a view mode html
                             $scope.editMode = false;
-                            $scope.patientResource = response.data.entity;
+                            $scope.patient = response.data.entity;
+                            ScheduledProgramFactory.patient = response.data.entity;
+                            deferred.resolve(ScheduledProgramFactory.patient);
                         });
                     }
                 } else {
+                    deferred.reject();
                     $scope.showError();
                 }
+                return deferred.promise;
             };
 
             $scope.showError = function () {
@@ -56,16 +63,18 @@ angular.module('emmiManager')
             };
 
             $scope.cancel = function () {
-                $location.path('/teams/' + $scope.team.entity.id +'/schedule/patients/').replace();
+                $location.path('/teams/' + $scope.team.entity.id + '/schedule/patients/').replace();
             };
 
-            $scope.clearForm = function (){
+            $scope.clearForm = function () {
                 $scope.formSubmitted = false;
                 $scope.patient = {};
             };
 
-            $rootScope.$on('event:update-patient-and-programs', function(){
-                $scope.saveOrUpdate($scope.newPatientForm.$valid);
+            $rootScope.$on('event:update-patient-and-programs', function () {
+                $scope.saveOrUpdate($scope.newPatientForm.$valid).then(function () {
+                    $scope.saveScheduledProgramForPatient();
+                });
             });
         }
     ])

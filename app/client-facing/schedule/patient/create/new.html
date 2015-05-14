@@ -1,8 +1,8 @@
 <div class="container" data-ng-cloak data-ng-controller="CreatePatientController">
-    <h3 data-ng-hide="patientResource">
+    <h3 data-ng-hide="patient.id">
         New Patient
     </h3>
-    <h3 data-ng-show="patientResource">
+    <h3 data-ng-show="patient.id">
         Edit Patient
     </h3>
     <form name="newPatientForm" class="form" novalidate unsaved-warning-form>
@@ -74,8 +74,7 @@
                 </div>
             </div>
         </div>
-       <hr>
-        <div class="row" data-ng-hide="patientResource">
+        <div class="row" data-ng-hide="patient.id">
             <div class="col-md-8">
                 <div class="actions pull-right">
                     <div class="form-group">
@@ -87,6 +86,5 @@
                 </div>
             </div>
         </div>
-
     </form>
 </div>

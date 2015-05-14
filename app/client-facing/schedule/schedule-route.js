@@ -4,22 +4,25 @@ angular.module('emmiManager')
     .config(function ($routeProvider, USER_ROLES) {
 
       var requiredResources = {
-            'team' : ['AuthSharedService', 'ScheduleService', '$q', '$route',
-            function (AuthSharedService, ScheduleService, $q, $route) {
-                var deferred = $q.defer();
-                AuthSharedService.currentUser().then(function (loggedInUser) {
-                    ScheduleService.loadTeam(loggedInUser.clientResource, $route.current.params.teamId)
-                        .then(function (response) {
-                            deferred.resolve(response.data);
-                        }, function error() {
-                            deferred.reject();
-                        });
-                });
-                return deferred.promise;
-            }],
           /**
-           * Load the client from the logged in user
+           * Load the current team for the client
            */
+            'team' : ['AuthSharedService', 'ScheduleService', '$q', '$route',
+                function (AuthSharedService, ScheduleService, $q, $route) {
+                    var deferred = $q.defer();
+                    AuthSharedService.currentUser().then(function (loggedInUser) {
+                        ScheduleService.loadTeam(loggedInUser.clientResource, $route.current.params.teamId)
+                            .then(function (response) {
+                                deferred.resolve(response.data);
+                            }, function error() {
+                                deferred.reject();
+                            });
+                    });
+                    return deferred.promise;
+                }],
+            /**
+            * Load the client from the logged in user
+            */
             'client': ['AuthSharedService', '$q', '$route', function (AuthSharedService, $q) {
                     var deferred = $q.defer();
                     AuthSharedService.currentUser().then(function (loggedInUser) {
@@ -38,6 +41,7 @@ angular.module('emmiManager')
                     authorizedRoles: [USER_ROLES.teamScheduler, USER_ROLES.admin]
                 },
                 resolve: requiredResources
+
             })
             .when('/teams/:teamId/schedule/patients', {
                 templateUrl: 'client-facing/schedule/patient/search/search.html',

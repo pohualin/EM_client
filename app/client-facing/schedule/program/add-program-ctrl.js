@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('emmiManager')
-    .controller('AddProgramController', ['$scope', '$controller', 'AddProgramService', 'moment', '$alert', '$timeout',
-        function ($scope, $controller, AddProgramService, moment, $alert, $timeout) {
+    .controller('AddProgramController', ['$scope', '$controller', 'AddProgramService',
+        'moment', '$alert', '$timeout','$rootScope', 'ScheduledProgramFactory',
+        function ($scope, $controller, AddProgramService, moment, $alert, $timeout, $rootScope, ScheduledProgramFactory) {
 
             // add common pagination and sorting functions
             $controller('CommonPagination', {$scope: $scope});
@@ -19,6 +20,12 @@ angular.module('emmiManager')
                 $scope.providers = providers;
             });
 
+
+            $rootScope.$on('event:update-patient-and-programs', function(){
+                $scope.saveScheduledProgram($scope.addProgramForm);
+            });
+
+
             /**
              * When the 'finish scheduling' button is clicked
              * @param addProgramForm to save
@@ -27,7 +34,7 @@ angular.module('emmiManager')
                 $scope.addProgramFormSubmitted = true;
                 if ($scope.scheduledProgram.program && addProgramForm.$valid) {
                     // save the scheduled program
-
+                    ScheduledProgramFactory.scheduledProgram = $scope.scheduledProgram;
                 } else {
                     $scope.showError();
                 }
