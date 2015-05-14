@@ -62,6 +62,7 @@ angular.module('emmiManager', [
         // Initialize angular-translate
         $translateProvider.useUrlLoader(API.messages);
         $translateProvider.preferredLanguage('en');
+        $translateProvider.useSanitizeValueStrategy(null);
         $translateProvider.useCookieStorage();
 
         tmhDynamicLocaleProvider.localeLocationPattern('bower_components/angular-i18n/angular-locale_{{locale}}.js');
