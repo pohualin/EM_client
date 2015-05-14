@@ -4,8 +4,9 @@
     <div class="popover-content">
 <form name="clientRolesSelection" class="tag-library" data-popover-right-toggle>
     <div class="form-group" >
-        <div class="radio" data-ng-repeat="clientRole in clientRoles" data-ng-click="setSelectedRoleHasSuperPermission(clientRole)" >
-            <input type="radio" id="clientRole{{$index}}" data-ng-model="$parent.clientRolesSelection.selectedClientRole" value="{{clientRole.entity.id}}" />&nbsp;&nbsp;
+        <div class="radio" data-ng-repeat="clientRole in clientRoles" >
+            <input type="radio" id="clientRole{{$index}}" data-ng-model="$parent.clientRolesSelection.selectedClientRole" value="{{clientRole.entity.id}}" 
+              data-ng-click="setSelectedRoleHasSuperPermission(clientRole)"/>&nbsp;&nbsp;
             <label for="clientRole{{$index}}"></label>
             <span class="toggle-trigger">
                 <span data-ng-show="clientRole.entity.permissions.length > 0" class="icon-caret-right"></span><span>{{ clientRole.entity.name }}</span>
