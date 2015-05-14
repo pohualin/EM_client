@@ -18,7 +18,7 @@ angular.module('emmiManager')
                     UserClientUserClientTeamRolesService.checkSelectedTeamRoles(scope.selectedTeamRoles, scope.clientTeamRoles).then(function(response){
                     	if (response.length > 0) {
                             // pop a warning dialog
-                    		scope.$parent.$parent.cardsToRefresh = response;
+                    	    UserClientUserClientTeamRolesService.setCardsToRefresh(response);
                             if (!scope.addTeamRolesWarning) {
                                 scope.addTeamRolesWarning = $popover(element, {
                                     title: 'Are you sure?',

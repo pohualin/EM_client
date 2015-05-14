@@ -78,7 +78,7 @@ angular.module('emmiManager')
     		};
 
             /**
-             * Called when a client role is selected. Set selectedRoleHasSuperPermission 
+             * Called when a client role is selected. Set selectedRoleHasSuperPermission
              * if client role has PERM_CLIENT_SUPER_USER permission
              */
             $scope.setSelectedRoleHasSuperPermission = function(clientRole){
@@ -87,7 +87,15 @@ angular.module('emmiManager')
                     angular.forEach(clientRole.entity.permissions, function(permission){
                         rolePermissions.push(permission.name);
                     });
-                    $scope.selectedRoleHasSuperPermission = rolePermissions.indexOf('PERM_CLIENT_SUPER_USER') !== -1;
+                    var existingTeamRole = false;
+                    if ($scope.teamRoles && $scope.teamRoles.length) {
+                        angular.forEach($scope.teamRoles, function(teamRole) {
+                            if (teamRole.existingTeams && teamRole.existingTeams.length) {
+                                existingTeamRole = true;
+                            }
+                        });
+                    }
+                    $scope.selectedRoleHasSuperPermission = rolePermissions.indexOf('PERM_CLIENT_SUPER_USER') !== -1 && existingTeamRole;
                 } else {
                     $scope.selectedRoleHasSuperPermission = false;
                 }
