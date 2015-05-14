@@ -65,6 +65,10 @@ angular.module('emmiManager')
         			scope.okAddTeamsPopover = function(){
         				scope.save();
         			};
+        			
+    			    scope.$on('hide_add_team_roles_warning', function(){
+    			        scope.cancelAddTeamsPopover();
+    			    });
                 });
             }
         };
