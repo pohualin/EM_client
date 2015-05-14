@@ -5,14 +5,12 @@
             <li class="active">Schedule an Emmi Program - {{team.entity.name}}</li>
         </ol>
     </div>
-    <div class="row">
+    <div class="row" data-ng-include="'client-facing/schedule/patient/main.html'"></div>
+    <div class="row container" data-ng-if="scheduledProgram.patient.id">
         <h3>Choose Programs:</h3>
-        <hr/>
+        <div class="row container" data-ng-include="'client-facing/schedule/program/program_chooser.html'"></div>
     </div>
-
-
-    <div class="row" data-ng-include="'client-facing/schedule/program/program_chooser.html'"
-         data-ng-controller="AddProgramController"></div>
-
+    <br/>
+    <div class="row" data-ng-if="scheduledProgram.patient.id" data-ng-include="'client-facing/schedule/schedule_buttons.html'"></div>
     <br/>
 </div>

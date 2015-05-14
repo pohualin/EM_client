@@ -1,13 +1,13 @@
 'use strict';
 
 angular.module('emmiManager')
-    .controller('SearchPatientController', ['$scope', '$controller', 'SearchPatientService', 'client',
-        function ($scope, $controller, SearchPatientService, client) {
+    .controller('SearchPatientController', ['$scope', '$controller', 'SearchPatientService', 'client', 'team',
+        function ($scope, $controller, SearchPatientService, client, team) {
 
             $controller('ClientCommonSearch', {$scope: $scope});
 
             var contentProperty = 'patients';
-
+            $scope.team = team;
             $scope.removeStatusFilterAndTotal = false;
 
             $scope.search = function () {
