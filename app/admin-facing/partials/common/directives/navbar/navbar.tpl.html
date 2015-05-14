@@ -6,7 +6,7 @@
             </div>
             <div class="collapse navbar-collapse bs-example-js-navbar-collapse">
                 <ul class="nav navbar-nav navbar-right" data-ng-switch="authenticated">
-                    <li class="dropdown" data-ng-if="account">
+                    <li class="dropdown" data-ng-if="account.id">
                         <a class="non-link">{{ account.firstName + ' ' + account.lastName}}</a>
                     </li>
                     <!-- <li>
