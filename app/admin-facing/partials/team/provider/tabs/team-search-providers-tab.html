@@ -1,4 +1,3 @@
-<div data-ng-controller="ProviderSearchController">
      <div class="row">
           <div class="col-md-7">
           	 <br />
@@ -6,9 +5,8 @@
                  <div class="form-group">
                      <label class="sr-only" for="providerQuery">Search providers:</label>
                      <div class="input-group has-input-icon has-input-icon-search">
-                         <input class="form-control" id="providerQuery" name="providerQuery" data-ng-model="providerQuery"
-                                type="text" data-reset-provider-search
-                                placeholder="Search all providers" required data-auto-focus>
+                         <input class="form-control" id="providerQuery" name="providerQuery" data-ng-model="searchAll.providerQuery"
+                                type="text" placeholder="Search all providers" required data-auto-focus data-focus-on="ProviderSearchFocus">
                          <span class="input-icon"><i class="icon-search"></i></span>
                          <span class="input-group-btn">
                              <button class="btn btn-success" data-ng-click="search(searchForm.providerQuery.$valid)"
@@ -117,4 +115,3 @@
              <p><span data-translate="global.messages.search.no_results_found"></span></p>
          </div>
      </div>
-</div>
