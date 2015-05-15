@@ -41,8 +41,8 @@ angular.module('emmiManager')
                             });
                             roles.push.apply(roles, page.content);
                             if (page.link && page.link['page-next']) {
-                                $http.get(page.link['page-next']).then(function (response) {
-                                    load(response);
+                                return $http.get(page.link['page-next']).then(function (response) {
+                                    return load(response);
                                 });
                             }
                             existingClientTeamRoles = roles;
@@ -328,17 +328,17 @@ angular.module('emmiManager')
 
                     $q.all(promises).then(function(){
                         var perm = [];
-                        
+
                         // Turn children map to children
                         angular.forEach(map, function(group){
                             angular.forEach(group.childrenMap, function(child){
                                 if(!group.children){
                                     group.children = [];
-                                } 
+                                }
                                 group.children.push(child);
                             });
                         });
-                        
+
                         angular.forEach(map, function(group){
                             // Promote the only child to group
                             if(group.children.length === 1){
