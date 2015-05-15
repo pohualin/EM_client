@@ -72,14 +72,15 @@ angular.module('emmiManager')
                 // refresh the team background info
                 $scope.refresh().then(function () {
                     $scope.displaySuccessfull(locationsToAdd, '#modal-messages-container');
-                    // if on the search tab
-                    if ($scope.tabs.activeTab === 1) {
-                        $scope.cleanSearch();
-                        focus('LocationSearchFocus');
-                    } else {
+                    // if on the client locations tab
+                    if ($scope.tabs.activeTab === 0) {
                         // disable previously selected locations
                         $scope.setClientLocationSelected($scope.clientLocations);
                     }
+                    // set the active tab to search per UAT ticket EM-1029
+                    $scope.tabs.activeTab = 1;
+                    $scope.cleanSearch();
+                    focus('LocationSearchFocus');
                 });
             });
         };
