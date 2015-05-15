@@ -11,6 +11,7 @@ angular.module('emmiManager')
             $scope.client = Client.getClient();
             $scope.selectedUserClient = UsersClientService.getUserClient();
             $scope.page.setTitle('View User - ' + $scope.client.entity.name);
+            $scope.isSuperUser = false;
 
             /**
              * Allows the top level editor to evaluate conditions
@@ -20,6 +21,10 @@ angular.module('emmiManager')
              */
             $scope.setClientRoles = function (roles) {
                 $scope.clientRoles = roles;
+            };
+
+            $scope.clientRolesChanged = function (){
+                $scope.$broadcast('client-roles-changed');
             };
 
             /**
