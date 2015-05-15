@@ -70,8 +70,8 @@ angular.module('emmiManager')
                             });
                             roles.push.apply(roles, page.content);
                             if (page.link && page.link['page-next']) {
-                                $http.get(page.link['page-next']).then(function (response) {
-                                    load(response);
+                                return $http.get(page.link['page-next']).then(function (response) {
+                                    return load(response);
                                 });
                             }
                             deferred.resolve(roles);

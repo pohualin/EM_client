@@ -195,6 +195,9 @@ table {
 // Arrow colors for certain placements needs to change
 .popover.top > .arrow:after {
     border-top-color: #fff;
+    @-moz-document url-prefix() {
+        border-bottom-width: 1px;  // FF doesn't show arrow outline if set to 0
+    }
 }
 .popover.right > .arrow:after {
     border-right-color: #fff;
@@ -215,12 +218,19 @@ table {
     border-top-color: $popover-border-color;
     &:after {
         border-top-color: #fff;
+        @-moz-document url-prefix() {
+            border-bottom-width: 1px;  // FF doesn't show arrow outline if set to 0
+        }
+
     }
 }
 .popover.top-right .arrow {
     border-top-color: $popover-border-color;
     &:after {
         border-top-color: #fff;
+        @-moz-document url-prefix() {
+            border-bottom-width: 1px;  // FF doesn't show arrow outline if set to 0
+        }
     }
 }
 .popover.bottom-left .arrow {

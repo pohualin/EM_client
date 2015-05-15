@@ -158,12 +158,15 @@ angular.module('emmiManager')
                 $scope.refreshLocationsAndProviders().then(function () {
                     $scope.successAlert(providersToAdd, '#modal-messages-container');
                     $scope.resetState();
-                    if ($scope.tabs.activeTab === 1) {
-                        $scope.cleanSearch();
-                        focus('ProviderSearchFocus');
-                    } else {
+                    // if on the client providers tab
+                    if ($scope.tabs.activeTab === 0) {
+                        // disable previously selected providers
                         $scope.setClientProviderSelected($scope.clientProviders);
                     }
+                    // set the active tab to search per UAT ticket EM-1029
+                    $scope.tabs.activeTab = 1;
+                    $scope.cleanSearch();
+                    focus('ProviderSearchFocus');
                 });
             });
         };
