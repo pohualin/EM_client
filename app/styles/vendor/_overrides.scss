@@ -195,24 +195,22 @@ table {
 // Arrow colors for certain placements needs to change
 .popover.top > .arrow:after {
     border-top-color: #fff;
-    border-bottom-width: 1px;
+    @-moz-document url-prefix() {
+        border-bottom-width: 1px;  // FF doesn't show arrow outline if set to 0
+    }
 }
 .popover.right > .arrow:after {
     border-right-color: #fff;
-    border-left-width: 1px;
 }
 .popover.bottom > .arrow:after {
     border-bottom-color: #6E7C88;
-    border-top-width: 1px;
 }
 .popover.left > .arrow:after {
     border-left-color: #fff;
-    border-right-width: 1px;
 }
 
 .popover > .arrow.gray:after {
     border-top-color: #F0F1F3;
-    border-bottom-width: 1px;
 }
 
 // Exotic placements from Bootstrap Additions
@@ -220,28 +218,31 @@ table {
     border-top-color: $popover-border-color;
     &:after {
         border-top-color: #fff;
-        border-bottom-width: 1px;
+        @-moz-document url-prefix() {
+            border-bottom-width: 1px;  // FF doesn't show arrow outline if set to 0
+        }
+
     }
 }
 .popover.top-right .arrow {
     border-top-color: $popover-border-color;
     &:after {
         border-top-color: #fff;
-        border-bottom-width: 1px;
+        @-moz-document url-prefix() {
+            border-bottom-width: 1px;  // FF doesn't show arrow outline if set to 0
+        }
     }
 }
 .popover.bottom-left .arrow {
     border-bottom-color: $popover-border-color;
     &:after {
         border-bottom-color: $popover-arrow-color;
-        border-top-width: 1px;
     }
 }
 .popover.bottom-right .arrow {
     border-bottom-color: $popover-border-color;
     &:after {
         border-bottom-color: $popover-arrow-color;
-        border-top-width: 1px;
     }
 }
 
