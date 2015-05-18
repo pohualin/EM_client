@@ -11,13 +11,18 @@ angular.module('emmiManager')
 
             // initial loading
             var contentProperty = 'programs';
-            $scope.specialties = null;
+            $scope.programSearch = {
+                specialty: ''
+            };
             $scope.scheduledProgram = AddProgramService.newScheduledProgram();
             AddProgramService.loadLocations($scope.team).then(function (locations) {
                 $scope.locations = locations;
             });
             AddProgramService.loadProviders($scope.team).then(function (providers) {
                 $scope.providers = providers;
+            });
+            AddProgramService.loadSpecialties($scope.team).then(function (specialties) {
+                $scope.specialties = specialties;
             });
 
 
@@ -45,10 +50,12 @@ angular.module('emmiManager')
              * @param show true means show all, false means show top 10 only
              */
             $scope.showAllResults = function (show) {
-                $scope.showAll = show;
-                if (!show) {
-                    performSearch();
-                }
+                var search = !show ? performSearch() :
+                    performSearch($scope.sortProperty,
+                        $scope.currentPageSize, $scope.programSearch.specialty);
+                search.finally(function () {
+                    $scope.showAll = show;
+                });
             };
 
             /**
@@ -138,6 +145,13 @@ angular.module('emmiManager')
             };
 
             /**
+             * When a specialty has been chosen or un-chosen
+             */
+            $scope.onSpecialtyFilterChange = function () {
+                $scope.showAllResults(true);
+            };
+
+            /**
              * Called when the program has already been selected and the
              * user hits 'edit'
              *
@@ -146,7 +160,7 @@ angular.module('emmiManager')
             $scope.editProgram = function (form) {
                 $scope.selectProgram(null, form);
                 $scope.addProgramFormSubmitted = false;
-                $scope.showAllResults(false);
+                $scope.showAllResults(!!$scope.programSearch.specialty);
             };
 
             /**
@@ -154,14 +168,14 @@ angular.module('emmiManager')
              *
              * @param sort the sort component
              * @param size the size of the page
+             * @param specialty to filter the results on
              */
-            var performSearch = function (sort, size) {
-                AddProgramService.findPrograms($scope.team, sort, size).then(function (programPage) {
-                    $scope.handleResponse(programPage, contentProperty);
-                });
-                // turn off the sort after the search request has been made, the response will rebuild
-                $scope.sortProperty = null;
+            var performSearch = function (sort, size, specialty) {
                 $scope.scheduledProgram.program = '';
+                return AddProgramService.findPrograms($scope.team, sort, size, specialty).then(function (programPage) {
+                    $scope.handleResponse(programPage, contentProperty);
+                    return programPage;
+                });
             };
 
             /**
@@ -171,7 +185,7 @@ angular.module('emmiManager')
              */
             $scope.sort = function (property) {
                 var sort = $scope.createSortProperty(property);
-                performSearch(sort, $scope.currentPageSize);
+                performSearch(sort, $scope.currentPageSize, $scope.programSearch.specialty);
             };
 
             /**

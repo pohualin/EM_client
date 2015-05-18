@@ -31,6 +31,7 @@ angular.module('emmiManager')
 			 * Call when cancel button is clicked
 			 */
 			$scope.cancel = function(){
+			    $scope.$broadcast('hide_add_team_roles_warning');
 				$scope.hideAddTeamsModal();
 				_paq.push(['trackEvent', 'Form Action', 'User Team Role Search', 'Cancel']);
 			};
@@ -71,7 +72,7 @@ angular.module('emmiManager')
             		$scope.hideAddTeamsModal();
                     var clientTeamRole = UserClientUserClientTeamRolesService.getSelectedClientTeamRole();
             		UserClientUserClientTeamRolesService.refreshTeamRoleCard(clientTeamRole);
-            		UserClientUserClientTeamRolesService.refreshTeamRoleCards($scope.cardsToRefresh);
+            		UserClientUserClientTeamRolesService.refreshTeamRoleCards(UserClientUserClientTeamRolesService.getCardsToRefresh());
                     clientTeamRole.activePanel = 0; // Open the panel after adding teams
             		_paq.push(['trackEvent', 'Form Action', 'User Team Role Search', 'Add']);
             	});

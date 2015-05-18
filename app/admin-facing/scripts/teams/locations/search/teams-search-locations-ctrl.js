@@ -2,16 +2,17 @@
 
 angular.module('emmiManager')
 
-    .controller('SearchTeamsLocationsController', function ($rootScope, $scope, $modal, $controller,TeamSearchLocation, Location, Client, ProviderView, TeamProviderService) {
+    .controller('SearchTeamsLocationsController', function ($rootScope, $scope, $modal, $controller,TeamSearchLocation, Location, Client, ProviderView, TeamProviderService, focus) {
 
         $controller('LocationCommon', {$scope: $scope});
 
         $controller('CommonPagination', {$scope: $scope});
-        
+
         $scope.teamClientLocations = {};
+        $scope.searchAll = {};
         var managedLocationList = 'locations';
         var managedClientLocationList = 'clientLocations';
-        
+
         $scope.hasLocationsAdded = function() {
         	var resp = false;
             angular.forEach( $scope.teamLocations , function (location) {
@@ -21,7 +22,7 @@ angular.module('emmiManager')
             });
             if (!resp) {
                 angular.forEach( $scope.teamClientLocations , function (location) {
-                        resp = true;
+                    resp = true;
                 });
             }
             return resp ;
@@ -47,22 +48,40 @@ angular.module('emmiManager')
         $scope.cleanSearch = function() {
         	$scope.allLocationsSearch = false;
             $scope.locations = null;
+            $scope.searchAll.locationQuery = null;
             $scope.cancelPopup(); //clean the locations checked in other search
-            if ($scope.locationQuery) {
-                $scope.locationQuery = '';
-            }
-        };
-
-        $scope.saveAndAddAnother = function () {
-            $scope.savePopupLocations(true);
         };
 
         $scope.savePopupLocations = function(addAnother) {
-        	var req = TeamSearchLocation.getTeamProviderTeamLocationSaveRequest($scope.teamClientLocations, $scope.teamLocations, $scope.providersData);
-            TeamSearchLocation.save($scope.teamClientResource.teamResource.link.teamLocations,req).then(function () {
-                $scope.$hide();
-                $scope.save(req,addAnother);
+        	var locationsToAdd = TeamSearchLocation.getTeamProviderTeamLocationSaveRequest($scope.teamClientLocations, $scope.teamLocations, $scope.providersData);
+            return TeamSearchLocation.save($scope.teamClientResource.teamResource.link.teamLocations, locationsToAdd).then(function () {
+                // close the modal and show the message
+                if (!addAnother) {
+                    $scope.$hide();
+                    // refresh the parent scope locations in the background
+                    $scope.refresh();
+                    $scope.displaySuccessfull(locationsToAdd, '#messages-container');
+                }
                 $rootScope.$broadcast('event:teamLocationSavedWithProvider');
+                return locationsToAdd;
+            });
+        };
+
+        $scope.saveAndAddAnother = function () {
+            $scope.savePopupLocations(true).then(function (locationsToAdd) {
+                // refresh the team background info
+                $scope.refresh().then(function () {
+                    $scope.displaySuccessfull(locationsToAdd, '#modal-messages-container');
+                    // if on the client locations tab
+                    if ($scope.tabs.activeTab === 0) {
+                        // disable previously selected locations
+                        $scope.setClientLocationSelected($scope.clientLocations);
+                    }
+                    // set the active tab to search per UAT ticket EM-1029
+                    $scope.tabs.activeTab = 1;
+                    $scope.cleanSearch();
+                    focus('LocationSearchFocus');
+                });
             });
         };
 
@@ -87,7 +106,7 @@ angular.module('emmiManager')
                 $scope.loading = true;
                 $scope.locations = null;
                 $scope.cancelPopup(); //clean the locations checked in other search
-                Location.findWithoutCL(Client.getClient(), $scope.locationQuery, $scope.status).then(function (locationPage) {
+                Location.findWithoutCL(Client.getClient(), $scope.searchAll.locationQuery, $scope.status).then(function (locationPage) {
                     $scope.handleResponse(locationPage, managedLocationList);
                     $scope.setLocationChecked();
                     $scope.allLocationsSearch = true;
@@ -100,7 +119,7 @@ angular.module('emmiManager')
         // when a column header is clicked
         $scope.sortTeam = function (property) {
         	$scope.loading = true;
-            Location.findWithoutCL(Client.getClient(), $scope.locationQuery, $scope.status, $scope.sort(property), $scope.currentPageSize).then(function (locationPage) {
+            Location.findWithoutCL(Client.getClient(), $scope.searchAll.locationQuery, $scope.status, $scope.sort(property), $scope.currentPageSize).then(function (locationPage) {
                 $scope.handleResponse(locationPage, managedLocationList);
                 $scope.setLocationChecked();
             }, function () {
@@ -143,7 +162,7 @@ angular.module('emmiManager')
 
         $scope.statusChange = function () {
             $scope.loading = true;
-            Location.findWithoutCL(Client.getClient(), $scope.locationQuery, $scope.status, null, $scope.currentPageSize).then(function (locationPage) {
+            Location.findWithoutCL(Client.getClient(), $scope.searchAll.locationQuery, $scope.status, null, $scope.currentPageSize).then(function (locationPage) {
                     $scope.handleResponse(locationPage, managedLocationList);
                     $scope.setLocationChecked();
             }, function () {
@@ -201,8 +220,6 @@ angular.module('emmiManager')
             $modal({scope: $scope, template: 'admin-facing/partials/team/location/new.html', animation: 'none', backdropAnimation: 'emmi-fade', backdrop: 'static'});
         };
 
-        
-        
         function init() {
         	$scope.status = 'ACTIVE_ONLY';
         	TeamProviderService.buildMultiSelectProvidersData($scope.teamResource).then(function(response){
@@ -214,10 +231,10 @@ angular.module('emmiManager')
                 });
         	});
         	$scope.cleanSearch();
-        	$scope.tabs = TeamSearchLocation.setAllTabs($scope.addAnother);
-        	
+        	$scope.tabs = TeamSearchLocation.setAllTabs();
+
         }
         init();
-        
+
     })
 ;

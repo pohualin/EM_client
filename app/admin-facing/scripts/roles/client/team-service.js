@@ -41,8 +41,8 @@ angular.module('emmiManager')
                             });
                             roles.push.apply(roles, page.content);
                             if (page.link && page.link['page-next']) {
-                                $http.get(page.link['page-next']).then(function (response) {
-                                    load(response);
+                                return $http.get(page.link['page-next']).then(function (response) {
+                                    return load(response);
                                 });
                             }
                             existingClientTeamRoles = roles;
@@ -259,16 +259,19 @@ angular.module('emmiManager')
                  * @returns libraryRole modified
                  */
                 disableSelectedLibraries: function (savedClientTeamRoles, libraryRole) {
-                    var match = false;
+                    libraryRole.disableNameMatch = false;
+                    libraryRole.disabled = false;
                     angular.forEach(savedClientTeamRoles, function (existingClientTeamRole) {
                         var type = existingClientTeamRole.entity ? existingClientTeamRole.entity.type : null;
                         if (type && libraryRole.entity.type.id === type.id) {
-                            match = true;
+                            libraryRole.disabled = true;
+                        } else if(libraryRole.entity.normalizedName === existingClientTeamRole.entity.normalizedName){
+                            libraryRole.disableNameMatch = true;
+                            libraryRole.disabled = true;
                         }
                     });
                     // if there were a match, disable and select the library group
-                    libraryRole.disabled = match;
-                    if (libraryRole.disabled) {
+                    if (libraryRole.disabled && !libraryRole.disableNameMatch) {
                         libraryRole.checked = true;
                     }
                     return libraryRole;
@@ -325,17 +328,17 @@ angular.module('emmiManager')
 
                     $q.all(promises).then(function(){
                         var perm = [];
-                        
+
                         // Turn children map to children
                         angular.forEach(map, function(group){
                             angular.forEach(group.childrenMap, function(child){
                                 if(!group.children){
                                     group.children = [];
-                                } 
+                                }
                                 group.children.push(child);
                             });
                         });
-                        
+
                         angular.forEach(map, function(group){
                             // Promote the only child to group
                             if(group.children.length === 1){

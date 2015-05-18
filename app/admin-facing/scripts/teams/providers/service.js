@@ -92,12 +92,12 @@ angular.module('emmiManager')
             	 });
             	 return deferred.promise;
              },
-             
+
              /**
               * Return two tabs with one being active
               */
-             setAllTabs: function(addAnother){
-                 return {'activeTab' : addAnother ? 1 : 0, 'data' : [
+             setAllTabs: function(){
+                 return {'activeTab' : 0, 'data' : [
                      {
                          'title': 'Client Providers',
                          'template': 'admin-facing/partials/team/provider/tabs/team-client-providers-tab.html'

@@ -70,8 +70,8 @@ angular.module('emmiManager')
                             });
                             roles.push.apply(roles, page.content);
                             if (page.link && page.link['page-next']) {
-                                $http.get(page.link['page-next']).then(function (response) {
-                                    load(response);
+                                return $http.get(page.link['page-next']).then(function (response) {
+                                    return load(response);
                                 });
                             }
                             deferred.resolve(roles);
@@ -277,16 +277,19 @@ angular.module('emmiManager')
                  * @returns libraryRole modified
                  */
                 disableSelectedLibraries: function (savedClientRoles, libraryRole) {
-                    var match = false;
+                    libraryRole.disableNameMatch = false;
+                    libraryRole.disabled = false;
                     angular.forEach(savedClientRoles, function (existingClientRole) {
                         var type = existingClientRole.entity ? existingClientRole.entity.type : null;
                         if (type && libraryRole.entity.type.id === type.id) {
-                            match = true;
+                            libraryRole.disabled = true;
+                        } else if(libraryRole.entity.normalizedName === existingClientRole.entity.normalizedName){
+                            libraryRole.disableNameMatch = true;
+                            libraryRole.disabled = true;
                         }
                     });
                     // if there were a match, disable and select the library group
-                    libraryRole.disabled = match;
-                    if (libraryRole.disabled) {
+                    if (libraryRole.disabled && !libraryRole.disableNameMatch) {
                         libraryRole.checked = true;
                     }
                     return libraryRole;

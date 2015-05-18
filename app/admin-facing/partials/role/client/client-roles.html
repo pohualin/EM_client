@@ -16,9 +16,16 @@
             <div class="panel-group" data-ng-model="role.activePanel" data-ng-repeat="role in existingClientRoles"
                  data-ng-change="panelStateChange(role, existingRoleForm_{{$index}})" data-start-collapsed="true"
                  data-bs-collapse>
+                <div class="row">
+                  <div class="col-md-6">
+                      <div class="label label-danger" data-ng-show="existingRoleForm_{{$index}}.name.$error.unique">
+                          <strong>&nbsp;</strong>This role already exists
+                      </div>
+                  </div>
+                </div>
                 <form name="existingRoleForm_{{$index}}" class="form" novalidate unsaved-warning-form>
                     <div class="panel panel-secondary" data-ng-class="{ 'panel-open': role.activePanel === 0 }">
-                        <div class="panel-heading">
+                        <div class="panel-heading panel-heading-form">
                             <h4 class="panel-title">
                                 <div class="pull-right">
                                     <button type="button" class="btn btn-icon btn-inherit"
@@ -35,11 +42,15 @@
                                     <span class="icon-caret-right"></span>
                                     <span class="panel-title-text">{{ role.entity.name }}</span>
                                 </a>
-                                <div data-ng-show="role.editName" style="width:50%">
-                                    <input class="form-control input-sm" data-ng-model="role.entity.name"
-                                           data-focus-on="focus-{{role.entity.id}}"
-                                           maxlength="50"
-                                           required>
+                                <div data-ng-class="{ 'has-error' : existingRoleForm_{{$index}}.name.$invalid}">
+                                  <div class="form-inline" data-ng-if="role.editName" style="width:50%">
+                                      <input class="form-control input-sm" data-ng-model="role.entity.name"
+                                             name="name" data-focus-on="focus-{{role.entity.id}}"
+                                             maxlength="50"
+                                             data-ng-pattern="/^[\-\.a-zA-Z0-9 '=_;:`!@#&,\(\)\/]*$/"
+                                             data-ng-change="resetValidity(existingRoleForm_{{$index}})"
+                                             required>
+                                  </div>
                                 </div>
                             </h4>
                         </div><!-- .panel-heading -->
@@ -49,7 +60,7 @@
                             </div>
                             <div class="panel-footer" data-ng-show="existingRoleForm_{{$index}}.$valid && existingHasChanged(role) && hasAPermissionChecked(role.entity)">
                                 <button class="btn btn-success" data-ng-click="update(role, existingRoleForm_{{$index}})"
-                                        data-bs-collapse-toggle>Save</button>
+                                        >Save</button>
                                 <button type="button" class="btn btn-cancel" data-ng-click="cancelExisting(role, existingRoleForm_{{$index}})"
                                         data-bs-collapse-toggle>cancel</button>
                             </div>
@@ -61,17 +72,29 @@
     </div>
     <div class="row">
         <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-6">
+                  <div class="label label-danger" data-ng-show="newClientRoleForm.name.$error.unique">
+                      <strong>&nbsp;</strong>This role already exists
+                  </div>
+              </div>
+            </div>
             <form name="newClientRoleForm" class="form" novalidate unsaved-warning-form>
                 <div class="panel-group" data-ng-show="newClientRole">
                     <div class="panel panel-default">
                         <div class="panel-heading panel-heading-form">
+                        <div class="form-group"
+                            data-ng-class="{ 'has-error' : newClientRoleForm.name.$invalid && newClientRoleFormSubmitted }">
                             <div class="panel-title">
                                 <div class="role-group-create form-inline">
                                     <input class="form-control input-sm" data-ng-model="newClientRole.name"
-                                           data-focus-on="focus-new-role" maxlength="50" required placeholder="Enter a title for new role">
+                                           name="name" data-focus-on="focus-new-role" maxlength="50" required placeholder="Enter a title for new role"
+                                           data-ng-pattern="/^[\-\.a-zA-Z0-9 '=_;:`!@#&,\(\)\/]*$/"
+                                           data-ng-change="resetValidity(newClientRoleForm)">
                                     <button class="btn btn-sm btn-icon" data-ng-click="cancelNew(newClientRoleForm)"><span class="icon-delete icon-size-lg"></span></button>
                                 </div>
                             </div>
+                        </div>
                         </div>
                         <div class="panel-collapse">
                             <div class="panel-body">

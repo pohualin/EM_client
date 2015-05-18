@@ -14,10 +14,11 @@ angular.module('emmiManager')
                  * @param pageSize how many per page
                  * @returns {*}
                  */
-                findPrograms: function (teamResource, sort, pageSize) {
+                findPrograms: function (teamResource, sort, pageSize, specialty) {
                     return $http.get(UriTemplate.create(teamResource.link.programs).stringify({
                             sort: sort && sort.property ? sort.property + ',' + (sort.ascending ? 'asc' : 'desc') : '',
-                            size: pageSize
+                            size: pageSize,
+                            s: specialty ? specialty.entity.id : ''
                         }
                     )).then(function (response) {
                         return response.data;
@@ -47,6 +48,7 @@ angular.module('emmiManager')
                         provider: '',
                         location: '',
                         program: '',
+                        specialty: '',
                         viewByDate: moment().add(30, 'days').format('YYYY-MM-DD')
                     };
                 },
@@ -67,8 +69,8 @@ angular.module('emmiManager')
                         var page = response.data;
                         locations.push.apply(locations, page.content);
                         if (page.link && page.link['page-next']) {
-                            $http.get(page.link['page-next']).then(function (response) {
-                                success(response);
+                            return $http.get(page.link['page-next']).then(function (response) {
+                                return success(response);
                             });
                         }
                         return locations;
@@ -91,12 +93,33 @@ angular.module('emmiManager')
                         var page = response.data;
                         providers.push.apply(providers, page.content);
                         if (page.link && page.link['page-next']) {
-                            $http.get(page.link['page-next']).then(function (response) {
-                                success(response);
+                            return $http.get(page.link['page-next']).then(function (response) {
+                                return success(response);
                             });
                         }
                         return providers;
                     });
+                },
+
+                /**
+                 * Loads all possible program specialties
+                 *
+                 * @param teamResource to find the providers link
+                 * @returns {*}
+                 */
+                loadSpecialties: function (teamResource) {
+                    var specialties = [];
+                    return $http.get(UriTemplate.create(teamResource.link.specialties).stringify())
+                        .then(function success(response) {
+                            var page = response.data;
+                            specialties.push.apply(specialties, page.content);
+                            if (page.link && page.link['page-next']) {
+                                return $http.get(page.link['page-next']).then(function (response) {
+                                    return success(response);
+                                });
+                            }
+                            return specialties;
+                        });
                 }
             };
         }])

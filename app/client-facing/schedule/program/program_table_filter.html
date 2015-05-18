@@ -20,8 +20,8 @@
         </label>
         <select id="specialtyFilter" name="specialtyFilter" class="form-control"
                 data-ng-disabled="!specialties || specialties.length == 0"
-                data-ng-model="specialty" data-ng-change="onSpecialtyFilterChange()"
-                data-ng-options="specialty.name for specialty in specialties | orderBy:'name' track by specialty.id"
+                data-ng-model="programSearch.specialty" data-ng-change="onSpecialtyFilterChange()"
+                data-ng-options="specialty.entity.name for specialty in specialties | orderBy:'entity.name' track by specialty.entity.id"
                 data-disable-search-threshold="10" data-allow-single-deselect="true"
                 data-no-results-text="'All Specialties'"
                 data-placeholder="Choose Specialty"

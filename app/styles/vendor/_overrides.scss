@@ -182,7 +182,6 @@ table {
     }
     // Popover footer can also be placed inside the content because of existing Popover usage (contentTemplate vs template)
     .popover-footer {
-        @include clearfix();
         margin: 15px -19px -20px -19px;
     }
 }
@@ -190,11 +189,15 @@ table {
     padding: 12px 14px;
     background: #F0F1F3;
     border-radius: $border-radius-base;
+    @include clearfix();
 }
 
 // Arrow colors for certain placements needs to change
 .popover.top > .arrow:after {
     border-top-color: #fff;
+    @-moz-document url-prefix() {
+        border-bottom-width: 1px;  // FF doesn't show arrow outline if set to 0
+    }
 }
 .popover.right > .arrow:after {
     border-right-color: #fff;
@@ -215,12 +218,19 @@ table {
     border-top-color: $popover-border-color;
     &:after {
         border-top-color: #fff;
+        @-moz-document url-prefix() {
+            border-bottom-width: 1px;  // FF doesn't show arrow outline if set to 0
+        }
+
     }
 }
 .popover.top-right .arrow {
     border-top-color: $popover-border-color;
     &:after {
         border-top-color: #fff;
+        @-moz-document url-prefix() {
+            border-bottom-width: 1px;  // FF doesn't show arrow outline if set to 0
+        }
     }
 }
 .popover.bottom-left .arrow {
