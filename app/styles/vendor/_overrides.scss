@@ -338,6 +338,26 @@ table {
     }
  }
 
+// Overrides for Bootstrap labels
+.label {
+    //font-size: 92.8571429%;
+    font-size: 85%;
+    font-weight: normal;
+    padding: .2em .5em .2em;
+}
+.label-success {
+    color: $state-success-text;
+}
+.label-info {
+    color: $state-info-text;
+}
+.label-warning {
+    color: $state-warning-text;
+}
+.label-danger {
+    color: $state-danger-text;
+}
+
 // Override Bootstrap Additions Fancy Tooltips to fit with our colors from our config
 .tooltip {
     &.tooltip-info {
