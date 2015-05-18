@@ -340,10 +340,10 @@ table {
 
 // Overrides for Bootstrap labels
 .label {
-    //@include remIt(font-size, 13);
-    font-size: 92.8571429%;
+    //font-size: 92.8571429%;
+    font-size: 85%;
     font-weight: normal;
-    padding: .2em .6em .3em;
+    padding: .2em .5em .2em;
 }
 .label-success {
     color: $state-success-text;
