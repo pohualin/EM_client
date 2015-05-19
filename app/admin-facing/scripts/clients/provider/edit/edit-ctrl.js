@@ -19,10 +19,19 @@ angular.module('emmiManager')
                     var toBeSaved = $scope.clientProvider;
                     ClientProviderService.update(Client.getClient(), toBeSaved).then(function (response) {
                         var clientProviderResource = response.data;
-
                         // overwrite original provider with saved one
                         angular.copy(clientProviderResource, $scope.originalClientProvider);
                         $scope.$hide();
+                        $alert({
+                            title: '',
+                            content: 'The provider <b>'+response.data.provider.entity.fullName+'</b> has been successfully updated.',
+                            container: '#messages-container',
+                            type: 'success',
+                            placement: 'top',
+                            show: true,
+                            duration: 5,
+                            dismissable: true
+                        });
                     });
                     _paq.push(['trackEvent', 'Form Action', 'Client Provider Edit', 'Save']);
                 } else {
