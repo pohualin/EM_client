@@ -161,6 +161,15 @@ angular.module('emmiManager')
                 form.$setPristine();
                 ManageUserRolesService.saveExistingClientRole(clientRoleResource).then(function(){
                     clientRoleResource.activePanel = 1;
+                    $alert({
+                        content: 'The role <b>' + clientRoleResource.entity.name + '</b> has been updated successfully.',
+                        container: '#messages-container',
+                        type: 'success',
+                        placement: 'top',
+                        show: true,
+                        duration: 5,
+                        dismissable: true
+                    });
                 }, function(error){
                     if (error.status === 406) {
                         form.name.$setValidity('unique', false);
@@ -175,6 +184,15 @@ angular.module('emmiManager')
              */
             $scope.remove = function (clientRoleResource) {
                 ManageUserRolesService.deleteExistingClientRole(clientRoleResource).then(function () {
+                    $alert({
+                        content: 'The role <b>' + clientRoleResource.entity.name + '</b> has been successfully removed.',
+                        container: '#messages-container',
+                        type: 'success',
+                        placement: 'top',
+                        show: true,
+                        duration: 5,
+                        dismissable: true
+                    });
                     $scope.loadExisting();
                 });
             };
@@ -239,7 +257,7 @@ angular.module('emmiManager')
                     dismissable: true
                 });
             };
-            
+
             /**
              * Reset all validity
              */
