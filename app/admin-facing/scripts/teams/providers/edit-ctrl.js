@@ -25,11 +25,21 @@ angular.module('emmiManager')
                 			$scope.clientProvider);
                 	// Call update service
                 	TeamProviderService.updateTeamProvider($scope.teamProviderToBeEdit.link.updateTeamProvider,
-            			$scope.teamProviderTeamLocationSaveRequest).then(function(){
+            			$scope.teamProviderTeamLocationSaveRequest).then(function(savedProvider){
             				ProviderView.paginatedProvidersForTeam($scope.teamResource).then(function(response){
             	        		$scope.handleResponse(response, 'listOfTeamProviders');
             	        	});
                 		$scope.$hide();
+                        $alert({
+                            title: '',
+                            content: 'The provider <b>'+savedProvider.data.entity.provider.fullName+'</b> has been successfully updated.',
+                            container: '#messages-container',
+                            type: 'success',
+                            placement: 'top',
+                            show: true,
+                            duration: 5,
+                            dismissable: true
+                        });
                 	});
                     _paq.push(['trackEvent', 'Form Action', 'Team Provider Edit', 'Save']);
                 } else {
