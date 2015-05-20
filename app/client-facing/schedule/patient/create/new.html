@@ -45,31 +45,39 @@
         </div>
         <div class="row">
             <div class="col-md-4">
-                    <label class="control-label" for="gender">Gender</label>
-                    <select
+                <label class="control-label" for="gender">Gender</label>
+                <select
                         class="form-control"
                         data-ng-model="patient.gender"
                         data-ng-options="gender | translate for gender in genders"
                         id="gender"
                         name="gender" data-chosen data-disable-search="true">
-                        <option value="">Unknown</option>
-                    </select>
+                    <option value="">Unknown</option>
+                </select>
             </div>
             <div class="col-md-4">
                 <div class="form-group"
                      data-ng-class="{ 'has-error' : newPatientForm.dateOfBirth.$invalid && formSubmitted }">
                     <label class="control-label" for="dateOfBirth">Date of Birth</label>
                     <div class="error-circle fa-exclamation-circle"
-                         data-ng-show="newPatientForm.dateOfBirth.$error.required && formSubmitted"
+                         data-ng-show="newPatientForm.dateOfBirth.$error.required &&
+                                      !newPatientForm.dateOfBirth.$error.date && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Required"></div>
-                    <div class="error-circle fa-exclamation-circle" data-ng-show="newPatientForm.dateOfBirth.$error.date && formSubmitted"
+                    <div class="error-circle fa-exclamation-circle"
+                         data-ng-show="newPatientForm.dateOfBirth.$error.date &&
+                                      !newPatientForm.dateOfBirth.$error.min && formSubmitted"
+                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                         data-title="Dates must be in the format MM/DD/YYYY"></div>
+                    <div class="error-circle fa-exclamation-circle"
+                         data-ng-show="newPatientForm.dateOfBirth.$error.date &&
+                                       newPatientForm.dateOfBirth.$error.min && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Please select a valid date of birth."></div>
                     <input id="dateOfBirth" class="form-control" type="text" name="dateOfBirth"
                            data-ng-model="patient.dateOfBirth" data-autoclose="true"
                            data-dateType="iso" data-bs-datepicker data-max-date="today"
-                           data-min-date="{{minDate}}"
+                           data-min-date="{{minDate}}" data-date-format="M/d/yyyy" placeholder="MM/DD/YYYY"
                            required>
                 </div>
             </div>
