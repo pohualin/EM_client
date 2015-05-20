@@ -31,6 +31,9 @@ angular.module('emmiManager')
                 $scope.showErrorBanner();
             }
         };
-
+        
+        $scope.doNotDeactivateLocation = function(){
+            $scope.location.active = true;
+        };
     })
 ;
