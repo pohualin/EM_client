@@ -385,6 +385,56 @@ angular.module('emmiManager')
                         }
                     });
                     return $filter('filter')(perms, {selected: true}, true);
+                },
+                
+                hasAdministratorPermission: function(savedPermissions){
+                    var deferred = $q.defer();
+                    var hasAdministratorPermission = false;
+                    angular.forEach(savedPermissions.data, function(savedPermission){
+                        if(savedPermission.name === 'PERM_CLIENT_SUPER_USER'){
+                            hasAdministratorPermission = true;
+                        }
+                        deferred.resolve(hasAdministratorPermission);
+                    });
+                    return deferred.promise;
+                },
+                /**
+                 *  Disable all other group/children permission checkboxes if PERM_CLIENT_SUPER_USER is selected.
+                 *  Enable in the opposite way.
+                 */
+                togglePermissionSelectable: function (clientRoleEntity) {
+                    var disable = false;
+                    angular.forEach(clientRoleEntity.userClientPermissions, function(permission){
+                        if(permission.name === 'PERM_CLIENT_SUPER_USER' && permission.selected){
+                            disable = true;
+                        }
+                    });
+                    
+                    if (disable) {
+                        angular.forEach(clientRoleEntity.userClientPermissions, function(permission){
+                            if(permission.name !== 'PERM_CLIENT_SUPER_USER'){
+                                permission.selected = false;
+                                permission.disabled = disable;
+                                if (permission.children && permission.children.length > 0) {
+                                    angular.forEach(permission.children, function (child) {
+                                        child.selected = false;
+                                        child.disabled = disable;
+                                    });
+                                }
+                            }
+                        });
+                    } else {
+                        angular.forEach(clientRoleEntity.userClientPermissions, function(permission){
+                            if(permission.name !== 'PERM_CLIENT_SUPER_USER'){
+                                permission.disabled = disable;
+                                if (permission.children && permission.children.length > 0) {
+                                    angular.forEach(permission.children, function (child) {
+                                        child.disabled = disable;
+                                    });
+                                }
+                            }
+                        });
+                    }
                 }
             };
         }])

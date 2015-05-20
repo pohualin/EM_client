@@ -54,6 +54,13 @@ angular.module('emmiManager')
                 }
                 return ret;
             };
+            
+            $scope.togglePermissionSelectable = function (clientRoleEntity) {
+                if(clientRoleEntity){
+                    ManageUserRolesService.togglePermissionSelectable(clientRoleEntity);
+                }
+                return true;
+            };
 
             /**
              * Evaluates if an existing client role resource has changed
@@ -244,7 +251,9 @@ angular.module('emmiManager')
              * Reset all validity
              */
             $scope.resetValidity = function(form){
-                form.name.$setValidity('unique', true);
+                if(form.name){
+                    form.name.$setValidity('unique', true);
+                }
             };
 
             // start by loading the currently saved roles
@@ -263,7 +272,8 @@ angular.module('emmiManager')
             validate: true,
             twistieExpandedTpl: '',
             twistieCollapsedTpl: '',
-            twistieLeafTpl: ''
+            twistieLeafTpl: '',
+            userOptions: {disabledAttribute: 'disabled'}
         });
     }]);
 
