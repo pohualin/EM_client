@@ -18,7 +18,7 @@ angular.module('emmiManager')
                         login: null,
                         useEmail: true,
                         webApiUser: false,
-                        active: true,
+                        active: true
                     };
                     return newUser;
                 },

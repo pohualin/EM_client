@@ -31,25 +31,18 @@ angular.module('emmiManager')
             	        	});
                 		$scope.$hide();
                         $alert({
-                            title: '',
-                            content: 'The provider <b>'+savedProvider.data.entity.provider.fullName+'</b> has been successfully updated.',
-                            container: '#messages-container',
-                            type: 'success',
-                            placement: 'top',
-                            show: true,
-                            duration: 5,
-                            dismissable: true
+                            content: 'The provider <b>'+savedProvider.data.entity.provider.fullName+'</b> has been successfully updated.'
                         });
                 	});
                     _paq.push(['trackEvent', 'Form Action', 'Team Provider Edit', 'Save']);
                 } else {
                     if (!$scope.providerErrorAlert) {
                         $scope.providerErrorAlert = $alert({
-                            title: ' ',
                             content: 'Please correct the below information.',
                             container: '#modal-messages-container',
                             type: 'danger',
-                            show: true,
+                            placement: '',
+                            duration: false,
                             dismissable: false
                         });
                     }

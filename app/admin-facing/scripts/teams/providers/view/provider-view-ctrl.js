@@ -96,14 +96,7 @@ angular.module('emmiManager')
         	ProviderView.removeProvider(provider, $scope.teamResource).then(function () {
                 $scope.refreshLocationsAndProviders();
                 $alert({
-                    title: ' ',
-                    content: 'The provider <b>' + provider.entity.provider.fullName + '</b> has been successfully removed.',
-                    container: '#messages-container',
-                    type: 'success',
-                    placement: 'top',
-                    show: true,
-                    duration: 5,
-                    dismissable: true
+                    content: 'The provider <b>' + provider.entity.provider.fullName + '</b> has been successfully removed.'
                 });
         	});
             _paq.push(['trackEvent', 'Form Action', 'Team Provider', 'Remove']);
@@ -320,14 +313,8 @@ angular.module('emmiManager')
                 ' <b>' + providersToAdd[0].provider.fullName + '</b> has been successfully added.' :
                 'The selected providers have been successfully added.';
             $alert({
-                title: '',
                 content: message,
-                container: container,
-                type: 'success',
-                show: true,
-                duration: 5,
-                dismissable: true,
-                placement: 'top'
+                container: container
             });
         };
 
@@ -346,11 +333,11 @@ angular.module('emmiManager')
         $scope.showError = function () {
             if (!$scope.providerErrorAlertForCreate) {
                 $scope.providerErrorAlertForCreate = $alert({
-                    title: ' ',
                     content: 'Please correct the below information.',
                     container: '#modal-messages-container',
                     type: 'danger',
-                    show: true,
+                    placement: '',
+                    duration: false,
                     dismissable: false
                 });
             } else {
