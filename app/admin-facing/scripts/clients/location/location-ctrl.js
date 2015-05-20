@@ -33,6 +33,8 @@ angular.module('emmiManager')
                     content: 'Please correct the below information.',
                     container: '#modal-messages-container',
                     type: 'danger',
+                    placement: '',
+                    duration: false,
                     dismissable: false
                 });
             }
