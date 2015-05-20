@@ -104,17 +104,25 @@
                  data-ng-class="{ 'has-error' : metadataForm.clientContractStart.$invalid && metadataSubmitted }">
                 <label class="control-label" for="contractStart">Contract Start</label>
                 <div class="error-circle fa-exclamation-circle"
-                     data-ng-show="!metadataForm.clientContractStart.$error.date && metadataForm.clientContractStart.$error.required && metadataSubmitted"
+                     data-ng-show="!metadataForm.clientContractStart.$error.date &&
+                                    metadataForm.clientContractStart.$error.required &&
+                                   !metadataForm.clientContractStart.$error.max && metadataSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                      data-title="Required"></div>
                 <div class="error-circle fa-exclamation-circle"
-                     data-ng-show="metadataForm.clientContractStart.$error.date && metadataSubmitted"
+                     data-ng-show="metadataForm.clientContractStart.$error.date &&
+                                  !metadataForm.clientContractStart.$error.max && metadataSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                      data-title="Dates must be in the format MM/DD/YYYY"></div>
+                <div class="error-circle fa-exclamation-circle"
+                     data-ng-show="metadataForm.clientContractStart.$error.date &&
+                                   metadataForm.clientContractStart.$error.max && metadataSubmitted"
+                     data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                     data-title="Please select a valid date"></div>
                 <div class="has-input-icon has-input-icon-calendar">
                     <input id="contractStart" class="form-control" placeholder="MM/DD/YYYY" type="text" name="clientContractStart"
                            data-ng-model="clientToEdit.contractStart" data-autoclose="true"
-                           data-dateType="iso" data-bs-datepicker required data-date-format="M/d/yyyy"
+                           data-dateType="string" data-bs-datepicker required data-date-format="M/d/yyyy"
                            data-max-date="{{clientToEdit.contractEnd}}">
                     <span class="input-icon"><i class="icon-calendar"></i></span>
                 </div>
@@ -125,13 +133,21 @@
                  data-ng-class="{ 'has-error' : metadataForm.clientContractEnd.$invalid && metadataSubmitted }">
                 <label class="control-label" for="contractEnd">Contract End</label>
                 <div class="error-circle fa-exclamation-circle"
-                     data-ng-show="!metadataForm.clientContractEnd.$error.date && metadataForm.clientContractEnd.$error.required && metadataSubmitted"
+                     data-ng-show="!metadataForm.clientContractEnd.$error.date &&
+                                    metadataForm.clientContractEnd.$error.required &&
+                                   !metadataForm.clientContractEnd.$error.min && metadataSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                      data-title="Required"></div>
                 <div class="error-circle fa-exclamation-circle"
-                     data-ng-show="metadataForm.clientContractEnd.$error.date && metadataSubmitted"
+                     data-ng-show="metadataForm.clientContractEnd.$error.date &&
+                                  !metadataForm.clientContractEnd.$error.min && metadataSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                      data-title="Dates must be in the format MM/DD/YYYY"></div>
+                <div class="error-circle fa-exclamation-circle"
+                     data-ng-show="metadataForm.clientContractEnd.$error.date &&
+                                   metadataForm.clientContractEnd.$error.min && metadataSubmitted"
+                     data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                     data-title="Please select a valid date"></div>
                 <div class="has-input-icon has-input-icon-calendar">
                     <input id="contractEnd" class="form-control" placeholder="MM/DD/YYYY" type="text" name="clientContractEnd"
                            data-ng-model="clientToEdit.contractEnd" data-autoclose="true"

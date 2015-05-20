@@ -17,9 +17,9 @@
                  data-ng-change="panelStateChange(role, existingRoleForm_{{$index}})" data-start-collapsed="true"
                  data-bs-collapse>
                 <div class="row">
-                  <div class="col-md-6">
-                      <div class="alert alert-danger" data-ng-show="existingRoleForm_{{$index}}.name.$error.unique">
-                          <strong>&nbsp;</strong>This role already exists
+                  <div class="col-md-12">
+                      <div class="label label-danger role-error" data-ng-show="existingRoleForm_{{$index}}.name.$error.unique">
+                          This role already exists
                       </div>
                   </div>
                 </div>
@@ -73,9 +73,9 @@
     <div class="row">
         <div class="col-md-6">
             <div class="row">
-              <div class="col-md-6">
-                  <div class="alert alert-danger" data-ng-show="newClientRoleForm.name.$error.unique">
-                      <strong>&nbsp;</strong>This role already exists
+              <div class="col-md-12">
+                  <div class="label label-danger role-error" data-ng-show="newClientRoleForm.name.$error.unique">
+                      This role already exists
                   </div>
               </div>
             </div>

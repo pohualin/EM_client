@@ -24,13 +24,13 @@ angular.module('emmiManager')
                 $scope.formSubmitted = true;
                 if (valid) {
                     if ($scope.patient.id) {
-                        CreatePatientService.update($scope.client, $scope.patient).then(function (response) {
+                        CreatePatientService.update($scope.team, $scope.patient).then(function (response) {
                             $scope.patient = response.data.entity;
                             ScheduledProgramFactory.patient = response.data.entity;
                             deferred.resolve(ScheduledProgramFactory.patient);
                         });
                     } else {
-                        CreatePatientService.save($scope.client, $scope.patient).then(function (response) {
+                        CreatePatientService.save($scope.team, $scope.patient).then(function (response) {
                             $alert({
                                 title: ' ',
                                 content: 'The patient <b>' + response.data.entity.firstName + ' ' + response.data.entity.lastName + '</b> has been successfully added.',

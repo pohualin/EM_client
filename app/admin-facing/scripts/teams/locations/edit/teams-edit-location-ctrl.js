@@ -5,7 +5,7 @@ angular.module('emmiManager')
 /**
  *  Controls the edit location popup (admin-facing/partials/location/edit.html)
  */
-    .controller('TeamLocationEditController', function ($scope, $controller, Location, Client, TeamLocation) {
+    .controller('TeamLocationEditController', function ($scope, $controller, $alert, Location, Client, TeamLocation) {
 
         $controller('LocationCommon', {$scope: $scope});
 
@@ -27,11 +27,25 @@ angular.module('emmiManager')
                     // overwrite original location with saved one
                     angular.copy(locationResource.entity, $scope.originalLocation);
                     $scope.$hide();
+                    $alert({
+                        title: '',
+                        content: 'The location <b>'+response.data.entity.name+'</b> has been successfully updated.',
+                        container: '#messages-container',
+                        type: 'success',
+                        placement: 'top',
+                        show: true,
+                        duration: 5,
+                        dismissable: true
+                    });
                 });
                 _paq.push(['trackEvent', 'Form Action', 'Team Location Edit', 'Save']);
             } else {
                 $scope.showErrorBanner();
             }
+        };
+        
+        $scope.doNotDeactivateLocation = function(){
+            $scope.location.active = true;
         };
 
     })
