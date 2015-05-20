@@ -160,6 +160,15 @@ angular.module('emmiManager')
                 form.$setPristine();
                 ManageUserTeamRolesService.saveExistingClientTeamRole(clientTeamRoleResource).then(function(){
                     clientTeamRoleResource.activePanel = 1;
+                    $alert({
+                        content: 'The role <b>' + clientTeamRoleResource.entity.name + '</b> has been updated successfully.',
+                        container: '#messages-container',
+                        type: 'success',
+                        placement: 'top',
+                        show: true,
+                        duration: 5,
+                        dismissable: true
+                    });
                 }, function(error){
                     if (error.status === 406) {
                         form.name.$setValidity('unique', false);
@@ -174,6 +183,15 @@ angular.module('emmiManager')
              */
             $scope.remove = function (clientTeamRoleResource) {
                 ManageUserTeamRolesService.deleteExistingClientTeamRole(clientTeamRoleResource).then(function () {
+                    $alert({
+                        content: 'The role <b>' + clientTeamRoleResource.entity.name + '</b> has been successfully removed.',
+                        container: '#messages-container',
+                        type: 'success',
+                        placement: 'top',
+                        show: true,
+                        duration: 5,
+                        dismissable: true
+                    });
                     $scope.loadExisting();
                 });
             };
@@ -245,7 +263,7 @@ angular.module('emmiManager')
             $scope.resetValidity = function(form){
                 form.name.$setValidity('unique', true);
             };
-            
+
             // start by loading the currently saved roles
             $scope.loadExisting();
         }
