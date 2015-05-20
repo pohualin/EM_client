@@ -13,17 +13,22 @@ angular.module('emmiManager').controller(
 
         $scope.edit = function() {
             $scope.editMode = true;
-            $scope.locationToEdit = angular.copy($scope.locationResource);
+            $scope.locationToEdit = angular.copy($scope.location);
             focus('locationName');
             _paq.push(['trackEvent', 'Form Action', 'Location Edit', 'Edit']);
+        };
+        
+        $scope.doNotDeactivateLocation = function(){
+            $scope.locationToEdit.active = true;
         };
 
         $scope.saveLocation = function(locationForm) {
             var isValid = locationForm.$valid;
         	$scope.locationFormSubmitted = true;
         	if (isValid) {
-                LocationService.updateLocation($scope.locationToEdit.entity).then(function(response) {
-                    $scope.locationResource = response.data;
+                LocationService.updateLocation($scope.locationToEdit).then(function(response) {
+                    angular.copy(response.data, $scope.locationResource);
+                    angular.copy(response.data.entity, $scope.location);
                     $scope.cancel(locationForm);
                     $alert({
                         title: '',
@@ -41,7 +46,7 @@ angular.module('emmiManager').controller(
         };
 
         $scope.showCancelSave = function(){
-        	return !angular.equals($scope.locationResource, $scope.locationToEdit);
+        	return !angular.equals($scope.location, $scope.locationToEdit);
         };
 
         Location.getReferenceData().then(function (refData) {
@@ -50,6 +55,7 @@ angular.module('emmiManager').controller(
         });
 
         $scope.locationResource = locationResource;
+        $scope.location = locationResource.entity;
         $scope.edit();
 
     });
