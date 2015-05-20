@@ -29,12 +29,33 @@ angular.module('emmiManager')
                         deferred.resolve(loggedInUser.clientResource);
                     });
                     return deferred.promise;
+                }],
+            'patientResource': ['AuthSharedService', 'ViewPatientService', '$q', '$route', 'ScheduleService',
+                function (AuthSharedService, ViewPatientService, $q, $route, ScheduleService) {
+                    var deferred = $q.defer();
+                    if($route.current.params.patientId){
+                        AuthSharedService.currentUser().then(function (loggedInUser) {
+                            ScheduleService.loadTeam(loggedInUser.clientResource, $route.current.params.teamId).then(function (teamResource) {
+                                ViewPatientService.loadPatient(teamResource.data, $route.current.params.patientId).then(function (patientResponse) {
+                                    deferred.resolve(patientResponse.data);
+                                }, function error() {
+                                    deferred.reject();
+                                });
+                            }, function error() {
+
+                            });
+                        });
+                    return deferred.promise;
+                    }
+                    else {
+                        deferred.reject();
+                    }
                 }]
-        };
+            };
 
         // Routes
         $routeProvider
-            .when('/teams/:teamId/schedule/patient', {
+            .when('/teams/:teamId/schedule/patient/:patientId?', {
                 templateUrl: 'client-facing/schedule/main.html',
                 controller: 'ScheduleController',
                 access: {

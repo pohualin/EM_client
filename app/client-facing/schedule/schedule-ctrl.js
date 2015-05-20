@@ -4,11 +4,13 @@ angular.module('emmiManager')
 /**
  * Controller for Patient-Program Scheduling
  */
-    .controller('ScheduleController', ['$scope', '$controller', 'team', 'client','ScheduledProgramFactory','$alert',
-        function ($scope, $controller, team, client, ScheduledProgramFactory, $alert) {
+    .controller('ScheduleController', ['$scope', '$controller', 'team', 'client','ScheduledProgramFactory','$alert','patientResource',
+        function ($scope, $controller, team, client, ScheduledProgramFactory, $alert, patientResource) {
             $scope.team = team;
             $scope.page.setTitle('Schedule Emmi Program - ' + team.entity.name);
             $scope.client = client;
+            $scope.patient = patientResource.entity;
+            ScheduledProgramFactory.patient = patientResource.entity;
 
             /**
              * Broadcasts event so that Patient save and Program save are kicked off
