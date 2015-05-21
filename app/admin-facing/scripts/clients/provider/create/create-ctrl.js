@@ -19,7 +19,7 @@ angular.module('emmiManager')
             $scope.saveAndAddAnother = function (isValid) {
                 $scope.saveProvider(isValid, true);
             };
-            
+
             if($scope.providerQuery){
                 var strings = $scope.providerQuery.split(',');
                 if(strings.length > 1){
@@ -41,24 +41,12 @@ angular.module('emmiManager')
                         if (addAnother) {
                             $scope.associateProviders();
                             $alert({
-                                title: ' ',
                                 content: 'The provider <b>' + providerResource.entity.fullName + '</b> has been successfully created.',
-                                container: '#modal-messages-container',
-                                type: 'success',
-                                show: true,
-                                duration: 5,
-                                dismissable: true
+                                container: '#modal-messages-container'
                             });
                         } else {
                             $alert({
-                                title: ' ',
-                                content: ' <b>' + providerResource.entity.fullName + '</b> has been added successfully.',
-                                container: '#messages-container',
-                                type: 'success',
-                                placement: 'top',
-                                show: true,
-                                duration: 5,
-                                dismissable: true
+                                content: '<b>' + providerResource.entity.fullName + '</b> has been added successfully.'
                             });
                         }
                     });
@@ -66,16 +54,16 @@ angular.module('emmiManager')
                 } else {
                     if (!$scope.providerErrorAlert) {
                         $scope.providerErrorAlert = $alert({
-                            title: ' ',
                             content: 'Please correct the below information.',
                             container: '#modal-messages-container',
                             type: 'danger',
-                            show: true,
+                            placement: '',
+                            duration: false,
                             dismissable: false
                         });
                     }
                 }
             };
-            
+
         }])
 ;

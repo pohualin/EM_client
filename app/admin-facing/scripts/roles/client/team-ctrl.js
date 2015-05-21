@@ -160,6 +160,9 @@ angular.module('emmiManager')
                 form.$setPristine();
                 ManageUserTeamRolesService.saveExistingClientTeamRole(clientTeamRoleResource).then(function(){
                     clientTeamRoleResource.activePanel = 1;
+                    $alert({
+                        content: 'The role <b>' + clientTeamRoleResource.entity.name + '</b> has been updated successfully.'
+                    });
                 }, function(error){
                     if (error.status === 406) {
                         form.name.$setValidity('unique', false);
@@ -174,6 +177,9 @@ angular.module('emmiManager')
              */
             $scope.remove = function (clientTeamRoleResource) {
                 ManageUserTeamRolesService.deleteExistingClientTeamRole(clientTeamRoleResource).then(function () {
+                    $alert({
+                        content: 'The role <b>' + clientTeamRoleResource.entity.name + '</b> has been successfully removed.'
+                    });
                     $scope.loadExisting();
                 });
             };
@@ -196,13 +202,7 @@ angular.module('emmiManager')
                             $scope.successAlert(added[0]);
                         } else {
                             $alert({
-                                content: 'The selected roles have been added successfully.',
-                                container: '#messages-container',
-                                type: 'success',
-                                placement: 'top',
-                                show: true,
-                                duration: 5,
-                                dismissable: true
+                                content: 'The selected roles have been added successfully.'
                             });
                         }
                     });
@@ -229,13 +229,7 @@ angular.module('emmiManager')
              */
             $scope.successAlert = function(clientRole){
                 $alert({
-                    content: 'The role <b>' + clientRole.name + '</b> has been added successfully.',
-                    container: '#messages-container',
-                    type: 'success',
-                    placement: 'top',
-                    show: true,
-                    duration: 5,
-                    dismissable: true
+                    content: 'The role <b>' + clientRole.name + '</b> has been added successfully.'
                 });
             };
 
@@ -243,9 +237,11 @@ angular.module('emmiManager')
              * Reset all validity
              */
             $scope.resetValidity = function(form){
-                form.name.$setValidity('unique', true);
+                if(form.name){
+                    form.name.$setValidity('unique', true);
+                }
             };
-            
+
             // start by loading the currently saved roles
             $scope.loadExisting();
         }

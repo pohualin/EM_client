@@ -30,14 +30,7 @@ angular.module('emmiManager')
 
             $scope.showRemovalSuccess = function (providerResource) {
                 $alert({
-                    title: ' ',
-                    content: 'The provider <b>' + providerResource.provider.entity.fullName + '</b> has been successfully removed.',
-                    container: '#messages-container',
-                    type: 'success',
-                    placement: 'top',
-                    show: true,
-                    duration: 5,
-                    dismissable: true
+                    content: 'The provider <b>' + providerResource.provider.entity.fullName + '</b> has been successfully removed.'
                 });
             };
 
