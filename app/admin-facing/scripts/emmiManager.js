@@ -133,9 +133,9 @@ angular.module('emmiManager', [
                         scope.elementId = elementId;
                     }
                     
-                    var node = scope.node
-                        , opts = ctrl.opts()
-                        , disabledAttr = opts.userOptions.disabledAttribute;
+                    var node = scope.node;
+                    var opts = ctrl.opts();
+                    var disabledAttr = opts.userOptions.disabledAttribute;
                     scope.isDisabled = node[disabledAttr];
                     
                     scope.$watch(function() {
