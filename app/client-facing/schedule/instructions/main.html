@@ -1,0 +1,46 @@
+<div class="container" data-ng-cloak>
+    <div class="row">
+        <ol class="breadcrumb h3">
+            <li><a href="#/">Emmi Manager</a></li>
+            <li class="active">Patient Instructions</li>
+        </ol>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Patient Instructions</h2>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-6">
+            <table>
+                <tr>
+                    <th class="col-md-3">Patient:</th>
+                    <td class="col-md-5">{{scheduledProgram.entity.patient.firstName}} {{scheduledProgram.entity.patient.lastName}}</td>
+                </tr>
+                <tr>
+                    <th class="col-md-3">Access Code:</th>
+                    <td class="col-md-5">{{scheduledProgram.entity.accessCode}}</td>
+                </tr>
+                <tr>
+                    <th class="col-md-3">Program:</th>
+                    <td class="col-md-5">{{scheduledProgram.entity.program.name}}</td>
+                </tr>
+                <tr>
+                    <th class="col-md-3">Provider:</th>
+                    <td class="col-md-5">{{scheduledProgram.entity.provider.fullName}}</td>
+                </tr>
+                <tr>
+                    <th class="col-md-3">Location:</th>
+                    <td class="col-md-5">{{scheduledProgram.entity.location.name}}</td>
+                </tr>
+                <tr>
+                    <th class="col-md-3">View By Date:</th>
+                    <td class="col-md-5">{{scheduledProgram.entity.viewByDate | localDate:'MM/DD/YYYY'}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
