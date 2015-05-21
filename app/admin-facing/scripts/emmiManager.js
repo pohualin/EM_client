@@ -120,17 +120,29 @@ angular.module('emmiManager', [
             directive.template = [
                 '<span class="checkbox"><input id="ivhTreeviewCheckbox_{{elementId}}_{{node.name}}" type="checkbox"',
                 'ng-model="isSelected"',
+                'ng-disabled="isDisabled"',
                 'ng-change="ctrl.select(node, isSelected)" />',
                 '<label for="ivhTreeviewCheckbox_{{elementId}}_{{node.name}}"></label></span>'
             ].join('\n');
             directive.compile = function () {
-                return function (scope, element, attrs) {
+                return function (scope, element, attrs, ctrl) {
                     link.apply(this, arguments);
                     // get the closest treeview container id
                     var elementId = angular.element(element).closest('.ivh-treeview-container').attr('id');
                     if (elementId) {
                         scope.elementId = elementId;
                     }
+                    
+                    var node = scope.node;
+                    var opts = ctrl.opts();
+                    var disabledAttr = opts.userOptions.disabledAttribute;
+                    scope.isDisabled = node[disabledAttr];
+                    
+                    scope.$watch(function() {
+                      return scope.node[disabledAttr];
+                    }, function(newVal, oldVal) {
+                      scope.isDisabled = newVal;
+                    });
                 };
             };
             return $delegate;

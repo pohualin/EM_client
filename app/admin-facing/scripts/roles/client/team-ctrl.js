@@ -237,7 +237,9 @@ angular.module('emmiManager')
              * Reset all validity
              */
             $scope.resetValidity = function(form){
-                form.name.$setValidity('unique', true);
+                if(form.name){
+                    form.name.$setValidity('unique', true);
+                }
             };
 
             // start by loading the currently saved roles
