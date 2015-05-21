@@ -55,6 +55,9 @@ angular.module('emmiManager')
                 return ret;
             };
             
+            /**
+             * Make all other permissions disabled when Administrator permission is checked
+             */
             $scope.togglePermissionSelectable = function (clientRoleEntity) {
                 if(clientRoleEntity){
                     ManageUserRolesService.togglePermissionSelectable(clientRoleEntity);
