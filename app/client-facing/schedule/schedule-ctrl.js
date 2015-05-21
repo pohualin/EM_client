@@ -38,12 +38,9 @@
                                         scheduleId: scheduledProgramResource.entity.id
                                     }));
 
-                                var message = 'Program has been scheduled for patient' +
-                                    scheduledProgramResource.entity.patient.firstName + ' ' +
-                                    scheduledProgramResource.entity.patient.lastName;
                                 $alert({
                                     title: '',
-                                    content: message,
+                                    content: 'Program has been scheduled successfully',
                                     type: 'success',
                                     placement: 'top',
                                     show: true,
