@@ -34,7 +34,6 @@ angular.module('emmiManager')
                  */
                 update: function (client, patient){
                     return $http.put(UriTemplate.create(client.link.patient).stringify(), patient).then(function (response){
-                       console.log(response);
                         return response;
                     });
                 }
