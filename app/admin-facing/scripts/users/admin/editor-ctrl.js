@@ -80,7 +80,6 @@ angular.module('emmiManager')
                         $scope.selectedUser = response.data;
                         $scope.userToBeEdit = response.data;
                         $scope.editMode = false;
-                        var placement = 'top';
                         userForm.$setPristine();
                         _paq.push(['trackEvent', 'Form Action', 'Emmi User Edit', 'Save']);
                         if (addAnother) {
@@ -97,26 +96,13 @@ angular.module('emmiManager')
                                 message += ' has been deactivated.';
                             }
                             $alert({
-                                content: message,
-                                container: '#messages-container',
-                                type: 'success',
-                                placement: placement,
-                                show: true,
-                                duration: 5,
-                                dismissable: true
+                                content: message
                             });
-                            placement += ' second-line';
                         }
 
                         if (formDirty) {
                             $alert({
-                                content: 'User <b>' + $scope.userToBeEdit.login + '</b> has been successfully updated.',
-                                container: '#messages-container',
-                                type: 'success',
-                                placement: placement,
-                                show: true,
-                                duration: 5,
-                                dismissable: true
+                                content: 'User <b>' + $scope.userToBeEdit.login + '</b> has been successfully updated.'
                             });
                         }
 
@@ -126,11 +112,11 @@ angular.module('emmiManager')
                             userForm.email.$setValidity('unique', false);
                             if (!$scope.errorAlert) {
                                 $scope.errorAlert = $alert({
-                                    title: ' ',
                                     content: 'Please correct the below information.',
                                     container: '#validation-container',
                                     type: 'danger',
-                                    show: true,
+                                    placement: '',
+                                    duration: false,
                                     dismissable: false
                                 });
                             }
@@ -139,11 +125,11 @@ angular.module('emmiManager')
                 } else {
                     if (!$scope.errorAlert) {
                         $scope.errorAlert = $alert({
-                            title: ' ',
                             content: 'Please correct the below information.',
                             container: '#validation-container',
                             type: 'danger',
-                            show: true,
+                            placement: '',
+                            duration: false,
                             dismissable: false
                         });
                     }

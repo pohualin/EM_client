@@ -31,14 +31,7 @@ angular.module('emmiManager').controller(
                     angular.copy(response.data.entity, $scope.location);
                     $scope.cancel(locationForm);
                     $alert({
-                        title: '',
-                        content: 'The location <b>'+response.data.entity.name+'</b> has been successfully updated.',
-                        container: '#messages-container',
-                        type: 'success',
-                        placement: 'top',
-                        show: true,
-                        duration: 5,
-                        dismissable: true
+                        content: 'The location <b>'+response.data.entity.name+'</b> has been successfully updated.'
                     });
                 });
                 _paq.push(['trackEvent', 'Form Action', 'Location Edit', 'Save']);

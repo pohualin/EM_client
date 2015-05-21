@@ -16,7 +16,7 @@ angular.module('emmiManager')
         if($scope.locationQuery){
             $scope.location.name = $scope.locationQuery;
         }
-        
+
         $scope.newLocation = true;
 
         $scope.saveAndAddAnother = function (isValid) {
@@ -36,24 +36,13 @@ angular.module('emmiManager')
                     if (addAnother) {
                         $scope.addLocations();
                         $alert({
-                            title: ' ',
                             content: 'The location <b>' + locationResource.entity.name + '</b> has been successfully created.',
-                            container: '#modal-messages-container',
-                            type: 'success',
-                            show: true,
-                            duration: 5,
-                            dismissable: true
+                            container: '#modal-messages-container'
                         });
                     } else {
                         $alert({
-                            title: ' ',
-                            content: ' <b>' +locationResource.entity.name + '</b> has been added successfully.',
-                            container: '#messages-container',
-                            type: 'success',
-                            placement: 'top',
-                            show: true,
-                            duration: 5,
-                            dismissable: true
+                            content: '<b>' +locationResource.entity.name + '</b> has been added successfully.',
+                            container: '#messages-container'
                         });
                     }
                 });

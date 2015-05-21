@@ -33,14 +33,7 @@ angular.module('emmiManager').controller(
                     angular.copy(response.data.entity, $scope.provider);
                     $scope.cancel(providerForm);
                     $alert({
-                        title: '',
-                        content: 'The provider <b>'+response.data.entity.fullName+'</b> has been successfully updated.',
-                        container: '#messages-container',
-                        type: 'success',
-                        placement: 'top',
-                        show: true,
-                        duration: 5,
-                        dismissable: true
+                        content: 'The provider <b>'+response.data.entity.fullName+'</b> has been successfully updated.'
                     });
                 });
                 _paq.push(['trackEvent', 'Form Action', 'Provider Edit', 'Save']);

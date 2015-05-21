@@ -93,14 +93,7 @@ angular.module('emmiManager')
                     ' <strong>' + $scope.singleLocationAdded.name + '</strong> has been added successfully.' :
                         'The selected locations have been added successfully.';
                     $alert({
-                        title: ' ',
-                        content: message,
-                        container: '#messages-container',
-                        type: 'success',
-                        placement: 'top',
-                        show: true,
-                        duration: 5,
-                        dismissable: true
+                        content: message
                     });
                 }
             });
@@ -117,13 +110,8 @@ angular.module('emmiManager')
                     message = (!$scope.singleLocationAdded) ? 'The selected locations were successfully added to ' + clientName :
                     'The location <strong>' + $scope.singleLocationAdded.name + '</strong> has been successfully added to ' + clientName;
                 $alert({
-                    title: ' ',
                     content: message,
-                    container: '#modal-messages-container',
-                    type: 'success',
-                    show: true,
-                    duration: 5,
-                    dismissable: true
+                    container: '#modal-messages-container'
                 });
             });
         };
