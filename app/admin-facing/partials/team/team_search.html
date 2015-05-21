@@ -67,7 +67,7 @@
                             </thead>
                             <tbody>
                                 <tr data-ng-repeat="team in teams | orderBy:'team.sortIdx'">
-                                    <td>{{team.entity.name}}</td>
+                                    <td>{{team.entity.name}} <span data-ng-if="!team.active">(inactive)</span></td>
                                     <td>{{team.entity.salesForceAccount.name}}</td>
                                     <td>{{team.entity.client.name}}</td>
                                     <td class="text-center">
