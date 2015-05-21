@@ -386,18 +386,6 @@ angular.module('emmiManager')
                     });
                     return $filter('filter')(perms, {selected: true}, true);
                 },
-                
-                hasAdministratorPermission: function(savedPermissions){
-                    var deferred = $q.defer();
-                    var hasAdministratorPermission = false;
-                    angular.forEach(savedPermissions.data, function(savedPermission){
-                        if(savedPermission.name === 'PERM_CLIENT_SUPER_USER'){
-                            hasAdministratorPermission = true;
-                        }
-                        deferred.resolve(hasAdministratorPermission);
-                    });
-                    return deferred.promise;
-                },
                 /**
                  *  Disable all other group/children permission checkboxes if PERM_CLIENT_SUPER_USER is selected.
                  *  Enable in the opposite way.
