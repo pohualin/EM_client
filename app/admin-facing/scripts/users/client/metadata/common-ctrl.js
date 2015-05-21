@@ -65,11 +65,11 @@ angular.module('emmiManager')
             $scope.formValidationError = function () {
                 if (!$scope.errorAlert) {
                     $scope.errorAlert = $alert({
-                        title: ' ',
                         content: 'Please correct the below information.',
                         container: '#validation-container',
                         type: 'danger',
-                        show: true,
+                        placement: '',
+                        duration: false,
                         dismissable: false
                     });
                 }
