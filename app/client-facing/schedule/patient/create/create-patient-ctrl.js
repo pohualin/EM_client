@@ -34,7 +34,6 @@ angular.module('emmiManager')
                             $alert({
                                 title: ' ',
                                 content: 'The patient <b>' + response.data.entity.firstName + ' ' + response.data.entity.lastName + '</b> has been successfully added.',
-                                container: '#modal-messages-container',
                                 type: 'success',
                                 placement: 'top',
                                 show: true,
