@@ -102,6 +102,13 @@ angular.module('emmiManager', [
 
         // custom global angularstrap configurations
         angular.extend($alertProvider.defaults, {
+            show: true,
+            title: '',
+            container: '#messages-container',
+            type: 'success',
+            // placement: 'top',
+            duration: 5,
+            dismissable: true,
             animation: 'am-fade-and-slide-top',
             template: 'admin-facing/partials/common/directives/alert/alert.tpl.html'
         });

@@ -10,9 +10,9 @@ angular.module('emmiManager')
                  * @param patient to save
                  * @returns {*}
                  */
-                save: function (client, patient) {
+                save: function (team, patient) {
                     var deferred = $q.defer();
-                    $http.post(UriTemplate.create(client.link.patient).stringify(), patient).then(function (response) {
+                    $http.post(UriTemplate.create(team.link.patient).stringify(), patient).then(function (response) {
                         deferred.resolve(response);
                     });
                     return deferred.promise;
