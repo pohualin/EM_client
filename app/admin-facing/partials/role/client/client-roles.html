@@ -100,7 +100,7 @@
                             <div class="panel-body">
                                 <div data-ng-if="newClientRole.userClientPermissions" data-ivh-treeview="newClientRole.userClientPermissions" class="ivh-treeview-container" id="newClientRoleTV"></div>
                             </div>
-                            <div class="panel-footer" data-ng-show="toggleMethod(newClientRole) && newClientRoleForm.$valid && hasAPermissionChecked(newClientRole)">
+                            <div class="panel-footer" data-ng-show="togglePermissionSelectable(newClientRole) && newClientRoleForm.$valid && hasAPermissionChecked(newClientRole)">
                                 <button class="btn btn-success" data-ng-click="saveNewRole(newClientRole, newClientRoleForm)">Save</button>
                                 <button type="button" class="btn btn-cancel" data-ng-click="cancelNew(newClientRoleForm)">cancel</button>
                             </div>
