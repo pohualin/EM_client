@@ -65,10 +65,12 @@ angular.module('emmiManager')
                                 id: teamResource.entity.id
                             },
                             location: {
-                                id: toSchedule.scheduledProgram.location.entity.id
+                                // scheduledProgram.location is a TeamLocation
+                                id: toSchedule.scheduledProgram.location.entity.location.id
                             },
                             provider: {
-                                id: toSchedule.scheduledProgram.provider.entity.id
+                                // scheduledProgram.provider is a TeamProvider
+                                id: toSchedule.scheduledProgram.provider.entity.provider.id
                             },
                             viewByDate: moment(toSchedule.scheduledProgram.viewByDate).utc().format('YYYY-MM-DD')
                         }
