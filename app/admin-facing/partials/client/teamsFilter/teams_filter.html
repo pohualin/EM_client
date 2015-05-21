@@ -57,8 +57,7 @@
                 <ul class="teams-filter-list list-unstyled">
                     <li data-ng-repeat="team in clientTeams">
                         <!--when a user clicks on a team they are taken to that team's page-->
-                        <a data-ng-if="team.active" data-ng-click="selectTeam(team.id)">{{team.name}}</a>
-                        <a data-ng-if="!team.active" data-ng-click="selectTeam(team.id)">{{team.name}} (inactive)</a>
+                        <a data-ng-click="selectTeam(team.id)">{{team.name}} <span data-ng-if="!team.active">(inactive)</span> </a>
                     </li>
                 </ul>
                 <div data-ng-show="clientTeams===null">No teams exist for this search.</div>
