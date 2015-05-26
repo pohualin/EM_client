@@ -25,6 +25,7 @@ angular.module('emmiManager')
 
                 $scope.enterCreateMode = function (){
                     $scope.createMode = true;
+                    $scope.taggingMode = true;
                     this.newTagGroupTitle = '';
                     focus('createMode');
                 };
