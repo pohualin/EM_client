@@ -17,9 +17,9 @@
                  data-ng-change="panelStateChange(role, existingRoleForm_{{$index}})" data-start-collapsed="true"
                  data-bs-collapse>
                 <div class="row">
-                  <div class="col-md-6">
-                      <div class="label label-danger" data-ng-show="existingRoleForm_{{$index}}.name.$error.unique">
-                          <strong>&nbsp;</strong>This role already exists
+                  <div class="col-md-12">
+                      <div class="label label-danger role-error" data-ng-show="existingRoleForm_{{$index}}.name.$error.unique">
+                          This role already exists
                       </div>
                   </div>
                 </div>
@@ -58,7 +58,7 @@
                             <div class="panel-body">
                                 <div data-ivh-treeview="role.entity.userClientPermissions" class="ivh-treeview-container" id="clientRoleTV_{{role.entity.id}}"></div>
                             </div>
-                            <div class="panel-footer" data-ng-show="existingRoleForm_{{$index}}.$valid && existingHasChanged(role) && hasAPermissionChecked(role.entity)">
+                            <div class="panel-footer" data-ng-show="togglePermissionSelectable(role.entity) && existingRoleForm_{{$index}}.$valid && existingHasChanged(role) && hasAPermissionChecked(role.entity)">
                                 <button class="btn btn-success" data-ng-click="update(role, existingRoleForm_{{$index}})"
                                         >Save</button>
                                 <button type="button" class="btn btn-cancel" data-ng-click="cancelExisting(role, existingRoleForm_{{$index}})"
@@ -73,9 +73,9 @@
     <div class="row">
         <div class="col-md-6">
             <div class="row">
-              <div class="col-md-6">
-                  <div class="label label-danger" data-ng-show="newClientRoleForm.name.$error.unique">
-                      <strong>&nbsp;</strong>This role already exists
+              <div class="col-md-12">
+                  <div class="label label-danger role-error" data-ng-show="newClientRoleForm.name.$error.unique">
+                      This role already exists
                   </div>
               </div>
             </div>
@@ -100,7 +100,7 @@
                             <div class="panel-body">
                                 <div data-ng-if="newClientRole.userClientPermissions" data-ivh-treeview="newClientRole.userClientPermissions" class="ivh-treeview-container" id="newClientRoleTV"></div>
                             </div>
-                            <div class="panel-footer" data-ng-show="newClientRoleForm.$valid && hasAPermissionChecked(newClientRole)">
+                            <div class="panel-footer" data-ng-show="togglePermissionSelectable(newClientRole) && newClientRoleForm.$valid && hasAPermissionChecked(newClientRole)">
                                 <button class="btn btn-success" data-ng-click="saveNewRole(newClientRole, newClientRoleForm)">Save</button>
                                 <button type="button" class="btn btn-cancel" data-ng-click="cancelNew(newClientRoleForm)">cancel</button>
                             </div>

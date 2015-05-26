@@ -33,14 +33,7 @@ angular.module('emmiManager')
 
         $scope.showRemovalSuccess = function (locationResource) {
             $alert({
-                title: ' ',
-                content: 'The location <b>' + locationResource.entity.location.name + '</b> has been successfully removed.',
-                container: '#messages-container',
-                type: 'success',
-                show: true,
-                duration: 5,
-                dismissable: true,
-                placement: 'top'
+                content: 'The location <b>' + locationResource.entity.location.name + '</b> has been successfully removed.'
             });
         };
 
@@ -74,14 +67,8 @@ angular.module('emmiManager')
                 ' <b>' + locationsToAdd[0].location.name + '</b> has been successfully added.' :
                 'The new locations have been successfully added.';
             $alert({
-                title: ' ',
                 content: message,
-                container: container,
-                type: 'success',
-                show: true,
-                duration: 5,
-                dismissable: true,
-                placement: 'top'
+                container: container
             });
         };
 

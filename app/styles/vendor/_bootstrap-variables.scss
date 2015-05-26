@@ -569,13 +569,13 @@ $label-default-bg:            $gray-light !default;
 //** Primary label background color
 $label-primary-bg:            $brand-primary !default;
 //** Success label background color
-$label-success-bg:            $brand-success !default;
+$label-success-bg:            $state-success-bg !default;
 //** Info label background color
-$label-info-bg:               $brand-info !default;
+$label-info-bg:               $state-info-bg !default;
 //** Warning label background color
-$label-warning-bg:            $brand-warning !default;
+$label-warning-bg:            $state-warning-bg !default;
 //** Danger label background color
-$label-danger-bg:             $brand-danger !default;
+$label-danger-bg:             $state-danger-bg !default;
 
 //** Default label text color
 $label-color:                 #fff !default;

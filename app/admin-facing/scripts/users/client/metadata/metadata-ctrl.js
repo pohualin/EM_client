@@ -46,8 +46,7 @@ angular.module('emmiManager')
                     var formDirty = form.$dirty;
                     UsersClientService.update($scope.userClientEdit).then(
                         function success(response) {
-                            var savedUserClient = response.data,
-                                placement = 'top';
+                            var savedUserClient = response.data;
                             $scope.userClientView = savedUserClient;
                             $scope.metadataChanged(); // inform the parent controller that things have changed
                             $scope.editMode = false;
@@ -62,25 +61,12 @@ angular.module('emmiManager')
                                     message += ' has been deactivated.';
                                 }
                                 $alert({
-                                    content: message,
-                                    container: '#messages-container',
-                                    type: 'success',
-                                    placement: placement,
-                                    show: true,
-                                    duration: 5,
-                                    dismissable: true
+                                    content: message
                                 });
-                                placement += ' second-line';
                             }
                             if (formDirty) {
                                 $alert({
-                                    content: 'User <b>' + savedUserClient.entity.login + '</b> has been successfully updated.',
-                                    container: '#messages-container',
-                                    type: 'success',
-                                    placement: placement,
-                                    show: true,
-                                    duration: 5,
-                                    dismissable: true
+                                    content: 'User <b>' + savedUserClient.entity.login + '</b> has been successfully updated.'
                                 });
                             }
                             _paq.push(['trackEvent', 'Form Action', 'Client User Edit', 'Save']);
