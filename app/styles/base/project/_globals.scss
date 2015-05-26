@@ -609,8 +609,13 @@
         > .sidebar-wrapper {
             padding: 25px 12px 0;
         }
-        .sidebar-heading {
+        .sidebar-heading,
+        .sidebar-heading .sidebar-client-link {
             color: rgba(255,255,255,0.85);
+        }
+        .sidebar-heading .sidebar-client-link:hover,
+        .sidebar-heading .sidebar-client-link:focus {
+            text-decoration: underline;
         }
         .sidebar-scroll-content {
             //overflow: auto;
