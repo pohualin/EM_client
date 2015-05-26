@@ -5,15 +5,23 @@ angular.module('emmiManager')
 
         var requiredResources = {
             /**
-             * Load the current team for the client
+             * Load the current team for the client, set up patient information if the route contains patient id
              */
-            'team': ['AuthSharedService', 'ScheduleService', '$q', '$route',
-                function (AuthSharedService, ScheduleService, $q, $route) {
+            'team' : ['AuthSharedService', 'ScheduleService', '$q', '$route', 'ViewPatientService',
+                function (AuthSharedService, ScheduleService, $q, $route, ViewPatientService) {
                     var deferred = $q.defer();
                     AuthSharedService.currentUser().then(function (loggedInUser) {
                         ScheduleService.loadTeam(loggedInUser.clientResource, $route.current.params.teamId)
                             .then(function (response) {
-                                deferred.resolve(response.data);
+                                if ($route.current.params.patientId) {
+                                    ViewPatientService.loadPatient(response.data, $route.current.params.patientId).then(function (patientResponse) {
+                                        response.data.patient = patientResponse.data;
+                                        deferred.resolve(response.data);
+                                    });
+                                } else {
+                                    response.data.patient = {};
+                                    deferred.resolve(response.data);
+                                }
                             }, function error() {
                                 deferred.reject();
                             });
@@ -34,7 +42,7 @@ angular.module('emmiManager')
 
         // Routes
         $routeProvider
-            .when('/teams/:teamId/schedule/patient', {
+            .when('/teams/:teamId/schedule/patient/:patientId?', {
                 templateUrl: 'client-facing/schedule/main.html',
                 controller: 'ScheduleController',
                 access: {
@@ -85,4 +93,3 @@ angular.module('emmiManager')
 
 
 ;
-

@@ -3,7 +3,8 @@
         <span class="configure pull-right hidden">
             <a href="#">Configure</a>
         </span>
-        {{client.name}}
+        <a data-ng-if="team.id" data-ng-href="#/clients/{{client.id}}?{{currentRouteQueryString}}" class="sidebar-client-link">{{client.name}}</a>
+        <span data-ng-if="!team.id">{{client.name}}</span>
     </h2>
     <div data-ng-show="!teamsExistForClient">
         <p>No teams exist for this client.</p>
