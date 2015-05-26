@@ -53,7 +53,8 @@ angular.module('emmiManager', [
     })
 
     .constant('PATTERN', {
-        EMAIL: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$/
+        EMAIL: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$/,
+        PROVIDER_NAME: /^[a-zA-Z- '(),.]*$/
     })
 
     .config(
@@ -132,12 +133,12 @@ angular.module('emmiManager', [
                     if (elementId) {
                         scope.elementId = elementId;
                     }
-                    
+
                     var node = scope.node;
                     var opts = ctrl.opts();
                     var disabledAttr = opts.userOptions.disabledAttribute;
                     scope.isDisabled = node[disabledAttr];
-                    
+
                     scope.$watch(function() {
                       return scope.node[disabledAttr];
                     }, function(newVal, oldVal) {
@@ -250,6 +251,7 @@ angular.module('emmiManager', [
         };
 
         $rootScope.emailPattern = PATTERN.EMAIL;
+        $rootScope.providerNamePattern = PATTERN.PROVIDER_NAME;
         $rootScope.isProduction = !!API.production;
 
         $rootScope.$on('$routeChangeStart', function (event, next) {
