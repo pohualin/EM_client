@@ -5,15 +5,22 @@ angular.module('emmiManager')
 
       var requiredResources = {
           /**
-           * Load the current team for the client
+           * Load the current team for the client, set up patient information if the route contains patient id
            */
-            'team' : ['AuthSharedService', 'ScheduleService', '$q', '$route',
-                function (AuthSharedService, ScheduleService, $q, $route) {
+            'team' : ['AuthSharedService', 'ScheduleService', '$q', '$route', 'ViewPatientService',
+                function (AuthSharedService, ScheduleService, $q, $route, ViewPatientService) {
                     var deferred = $q.defer();
                     AuthSharedService.currentUser().then(function (loggedInUser) {
                         ScheduleService.loadTeam(loggedInUser.clientResource, $route.current.params.teamId)
                             .then(function (response) {
-                                deferred.resolve(response.data);
+                                if ($route.current.params.patientId) {
+                                    ViewPatientService.loadPatient(response.data, $route.current.params.patientId).then(function (patientResponse) {
+                                        response.data.patient = patientResponse.data;
+                                        deferred.resolve(response.data);
+                                    });
+                                } else {
+                                    deferred.resolve(response.data);
+                                }
                             }, function error() {
                                 deferred.reject();
                             });
@@ -29,27 +36,6 @@ angular.module('emmiManager')
                         deferred.resolve(loggedInUser.clientResource);
                     });
                     return deferred.promise;
-                }],
-            'patientResource': ['AuthSharedService', 'ViewPatientService', '$q', '$route', 'ScheduleService',
-                function (AuthSharedService, ViewPatientService, $q, $route, ScheduleService) {
-                    var deferred = $q.defer();
-                    if($route.current.params.patientId){
-                        AuthSharedService.currentUser().then(function (loggedInUser) {
-                            ScheduleService.loadTeam(loggedInUser.clientResource, $route.current.params.teamId).then(function (teamResource) {
-                                ViewPatientService.loadPatient(teamResource.data, $route.current.params.patientId).then(function (patientResponse) {
-                                    deferred.resolve(patientResponse.data);
-                                }, function error() {
-                                    deferred.reject();
-                                });
-                            }, function error() {
-
-                            });
-                        });
-                    return deferred.promise;
-                    }
-                    else {
-                        deferred.reject();
-                    }
                 }]
             };
 
@@ -74,7 +60,5 @@ angular.module('emmiManager')
             })
         ;
     })
-
-
 ;
 
