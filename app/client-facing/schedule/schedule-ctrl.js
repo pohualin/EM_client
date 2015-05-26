@@ -13,6 +13,8 @@
                 $scope.team = team;
                 $scope.page.setTitle('Schedule Emmi Program - ' + team.entity.name);
                 $scope.client = client;
+                $scope.patient = team.patient.entity;
+                ScheduledProgramFactory.patient = team.patient.entity;
 
                 /**
                  * Broadcasts event so that Patient save and Program save are kicked off
