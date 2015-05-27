@@ -19,8 +19,7 @@ angular.module('emmiManager')
             		  ClientTeamEmailConfigurationService
                             .saveOrUpdateTeamEmailConfiguration($scope.team, $scope.emailConfigs).then(function (response) 
                              {
-                            	$scope.emailConfigs = response;
-                            	//$scope.loadExisting();
+                            	$scope.loadExisting();
                                 $alert({
                                     title: ' ',
                                     content: 'The team email configuration have been updated successfully.',
