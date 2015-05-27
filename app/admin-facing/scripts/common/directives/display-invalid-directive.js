@@ -9,16 +9,13 @@ angular.module('emmiManager')
     return {
       restrict: 'A',
       require: 'ngModel',
-      link: function(scope, elm, attrs, model) {
-        var displayed = false;
-        scope.$watch(attrs.ngModel, function(newValue, oldValue, scope) {
-          // only set once... on initial load
-          if(displayed === false && newValue !== undefined){
-            displayed = true;
-            elm.val(model.$modelValue);
-            model.$setViewValue(model.$modelValue);
-          }
-        });
+      link: function(scope, elm, attrs, ngModel) {
+          scope.$watch(attrs.ngModel, function (newVal, oldVal){
+              if (newVal !== undefined){
+                  elm.val(newVal);
+                  ngModel.$setViewValue(newVal);
+              }
+          });
       }
     };
   });
