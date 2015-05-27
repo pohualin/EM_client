@@ -1,0 +1,35 @@
+<form name="clientTeamEmailConfigurationForm" class="form"  novalidate>
+<div class="row">
+   	<div class="col-md-12 pull-left">
+       	<h3>Email Reminders</h3>
+   	</div>
+</div>
+
+<div class="row">
+   	 <div class="col-md-12">
+      	 <div class="form-group">
+              <div class="checkbox" data-ng-repeat="emailConfiguration in emailConfigs | orderBy:'emailConfig.rank'" >
+                   <input type="checkbox" id="emailConfiguration{{$index}}" 
+                          data-ng-model="emailConfiguration.entity.emailConfig"
+                          data-ng-change="onChange(clientTeamEmailConfigurationForm)" />
+            	 	<label for="emailConfiguration{{$index}}">{{emailConfiguration.entity.type | translate }}</label>
+              </div>
+         </div>
+     </div>
+</div>
+           
+<div class="row">
+     <div class="col-md-12">
+          <div class="form-group">
+               <button class="btn btn-primary" type="submit"
+                       data-ng-click="saveOrUpdateEmailConfig(clientTeamEmailConfigurationForm.$valid)">
+                       <span>Save</span>
+                </button>
+                <button class="btn btn-link" type="submit"
+                        data-ng-click="cancel()">
+                        <span>cancel</span>
+                 </button>
+          </div>
+     </div>
+</div> 
+</form>
