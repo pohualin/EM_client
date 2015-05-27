@@ -13,7 +13,7 @@ angular.module('emmiManager')
         var displayed = false;
         scope.$watch(attrs.ngModel, function(newValue, oldValue, scope) {
           // only set once... on initial load
-          if(displayed == false && newValue != undefined){
+          if(displayed === false && newValue !== undefined){
             displayed = true;
             elm.val(model.$modelValue);
             model.$setViewValue(model.$modelValue);
