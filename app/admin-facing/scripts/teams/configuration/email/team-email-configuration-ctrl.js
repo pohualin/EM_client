@@ -40,12 +40,20 @@ angular.module('emmiManager')
              * If yes, "Collect email" needs to automatically check.
              */
             $scope.onChange = function(){
-            	if(angular.equals($scope.emailConfigs[1].entity.type, 'REQUIRE_EMAIL')&&
-            	   ($scope.emailConfigs[1].entity.emailConfig)){
-            		$scope.emailConfigs[0].entity.emailConfig = true;
-               }
-       
-            };
+            	angular.forEach($scope.emailConfigs, function (emailConfig) {
+            		//If the type is REQUIRE_EMAIL and it is true
+            		if(angular.equals(emailConfig.entity.type, 'REQUIRE_EMAIL')&&
+            		                 (emailConfig.entity.emailConfig)){
+            		    //Loop thru the email config again and find the COLLECT_EMAIL type and set it to true
+            			angular.forEach($scope.emailConfigs, function (emailConfig){
+            				if(angular.equals(emailConfig.entity.type, 'COLLECT_EMAIL')){
+            					emailConfig.entity.emailConfig = true;
+            				}
+            			});
+            		
+            		}
+            	});
+           };
             
             /**
              * Called when cancel is clicked.. takes the original
