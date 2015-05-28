@@ -277,7 +277,7 @@ angular.module('emmiManager')
         return function (input) {
             return input.map(function (tag) {
                 return tag.text;
-            }).join(', ');
+            }).join('; ');
         };
     })
 ;

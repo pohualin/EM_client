@@ -30,11 +30,11 @@ angular.module('emmiManager')
         $scope.showErrorBanner = function () {
             if (!$scope.locationErrorAlert) {
                 $scope.locationErrorAlert = $alert({
-                    title: ' ',
                     content: 'Please correct the below information.',
                     container: '#modal-messages-container',
                     type: 'danger',
-                    show: true,
+                    placement: '',
+                    duration: false,
                     dismissable: false
                 });
             }
