@@ -28,7 +28,7 @@
                     <input class="form-control" id="providerFirstName"
                         data-ng-model="providerToEdit.firstName"
                         name="providerFirstName" type="text" maxlength="255" required
-                        data-ng-pattern="/^[a-zA-Z '-(),.]*$/">
+                        data-ng-pattern="providerNamePattern">
                 </div>
             </div>
             <div class="col-md-4">
@@ -45,7 +45,7 @@
                     <input class="form-control" id="providerMiddleName"
                         data-ng-model="providerToEdit.middleName"
                         name="providerMiddleName" type="text" maxlength="255"
-                        data-ng-pattern="/^[a-zA-Z '-(),.]*$/">
+                        data-ng-pattern="providerNamePattern">
                 </div>
             </div>
             <div class="col-md-4">
@@ -64,7 +64,7 @@
                     <input class="form-control" id="providerLastName"
                         data-ng-model="providerToEdit.lastName"
                         name="providerLastName" type="text" maxlength="255" required
-                        data-ng-pattern="/^[a-zA-Z '-(),.]*$/">
+                        data-ng-pattern="providerNamePattern">
                 </div>
             </div>
         </div>

@@ -27,13 +27,7 @@ angular.module('emmiManager')
                         function success(response) {
                             var savedUserClientResource = response.data;
                             $alert({
-                                content: 'User <b>' + savedUserClientResource.entity.login + '</b> has been successfully created.',
-                                container: '#messages-container',
-                                type: 'success',
-                                placement: 'top',
-                                show: true,
-                                duration: 5,
-                                dismissable: true
+                                content: 'User <b>' + savedUserClientResource.entity.login + '</b> has been successfully created.'
                             });
                             // go to the view/edit page, if the save is successful
                             if (!addAnother) {

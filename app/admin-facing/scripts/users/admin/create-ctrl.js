@@ -39,13 +39,7 @@ angular.module('emmiManager')
                             $scope.newEmmiUser();
                         }
                         $alert({
-                            content: 'User <b>' + response.data.login + '</b> has been successfully created.',
-                            container: '#messages-container',
-                            type: 'success',
-                            placement: 'top',
-                            show: true,
-                            duration: 5,
-                            dismissable: true
+                            content: 'User <b>' + response.data.login + '</b> has been successfully created.'
                         });
                     }, function (error) {
                         if (error.status === 406) {
@@ -65,11 +59,11 @@ angular.module('emmiManager')
                             });
                             if (!$scope.errorAlert) {
                                 $scope.errorAlert = $alert({
-                                    title: ' ',
                                     content: 'Please correct the below information.',
                                     container: '#validation-container',
                                     type: 'danger',
-                                    show: true,
+                                    placement: '',
+                                    duration: false,
                                     dismissable: false
                                 });
                             }
@@ -78,11 +72,11 @@ angular.module('emmiManager')
                 } else {
                     if (!$scope.errorAlert) {
                         $scope.errorAlert = $alert({
-                            title: ' ',
                             content: 'Please correct the below information.',
                             container: '#validation-container',
                             type: 'danger',
-                            show: true,
+                            placement: '',
+                            duration: false,
                             dismissable: false
                         });
                     }

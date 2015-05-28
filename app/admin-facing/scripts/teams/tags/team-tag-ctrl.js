@@ -44,13 +44,7 @@ angular.module('emmiManager')
                         angular.forEach(current, function (currentTag) {
                             if (!existingTags[currentTag.id]) {
                                 $alert({
-                                    content: '<b>' + currentTag.name + '</b> has been added successfully.',
-                                    container: '#messages-container',
-                                    type: 'success',
-                                    placement: 'top',
-                                    show: true,
-                                    duration: 5,
-                                    dismissable: true
+                                    content: '<b>' + currentTag.name + '</b> has been added successfully.'
                                 });
                             }
                         });

@@ -3,7 +3,8 @@
         <span class="configure pull-right hidden">
             <a href="#">Configure</a>
         </span>
-        {{client.name}}
+        <a data-ng-if="team.id" data-ng-href="#/clients/{{client.id}}?{{currentRouteQueryString}}" class="sidebar-client-link">{{client.name}}</a>
+        <span data-ng-if="!team.id">{{client.name}}</span>
     </h2>
     <div data-ng-show="!teamsExistForClient">
         <p>No teams exist for this client.</p>
@@ -57,7 +58,7 @@
                 <ul class="teams-filter-list list-unstyled">
                     <li data-ng-repeat="team in clientTeams">
                         <!--when a user clicks on a team they are taken to that team's page-->
-                        <a data-ng-click="selectTeam(team.id)">{{team.name}}</a>
+                        <a data-ng-click="selectTeam(team.id)">{{team.name}} <span data-ng-if="!team.active">(inactive)</span> </a>
                     </li>
                 </ul>
                 <div data-ng-show="clientTeams===null">No teams exist for this search.</div>

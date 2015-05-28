@@ -6,10 +6,7 @@
                     <div class="checkbox">
                         <input id="selfServiceReset" type="checkbox"
                                data-ng-model="clientPasswordConfiguration.entity.passwordReset"
-                               data-ng-show="defaultPasswordConfiguration.passwordResetChangeable"/>
-                        <input id="selfServiceReset" type="checkbox" disabled
-                               data-ng-model="clientPasswordConfiguration.entity.passwordReset"
-                               data-ng-hide="defaultPasswordConfiguration.passwordResetChangeable"/>
+                               data-ng-disabled="!defaultPasswordConfiguration.passwordResetChangeable"/>
                         <label class="control-label text-align-left" for="selfServiceReset">&nbsp;Allow self-service password reset</label>
                     </div>
                 </div>
@@ -68,10 +65,7 @@
                     <div class="checkbox">
                         <input id="uppercaseLetters" type="checkbox"
                                data-ng-model="clientPasswordConfiguration.entity.uppercaseLetters"
-                               data-ng-show="defaultPasswordConfiguration.uppercaseLettersChangeable"/>
-                        <input id="uppercaseLetters" type="checkbox" disabled
-                               data-ng-model="clientPasswordConfiguration.entity.uppercaseLetters"
-                               data-ng-hide="defaultPasswordConfiguration.uppercaseLettersChangeable"/>
+                               data-ng-disabled="!defaultPasswordConfiguration.uppercaseLettersChangeable"/>
                         <label for="uppercaseLetters">&nbsp;one uppercase letter</label>
                     </div>
                 </div>
@@ -89,10 +83,7 @@
                     <div class="checkbox">
                         <input id="lowercaseLetters" type="checkbox"
                                data-ng-model="clientPasswordConfiguration.entity.lowercaseLetters"
-                               data-ng-show="defaultPasswordConfiguration.lowercaseLettersChangeable"/>
-                        <input id="lowercaseLetters" type="checkbox" disabled
-                               data-ng-model="clientPasswordConfiguration.entity.lowercaseLetters"
-                               data-ng-hide="defaultPasswordConfiguration.lowercaseLettersChangeable"/>
+                               data-ng-disabled="!defaultPasswordConfiguration.lowercaseLettersChangeable"/>
                         <label for="lowercaseLetters">&nbsp;one lowercase letter</label>
                     </div>
                 </div>
@@ -110,10 +101,7 @@
                     <div class="checkbox">
                         <input id="numbers" type="checkbox"
                                data-ng-model="clientPasswordConfiguration.entity.numbers"
-                               data-ng-show="defaultPasswordConfiguration.numbersChangeable"/>
-                        <input id="numbers" type="checkbox" disabled
-                               data-ng-model="clientPasswordConfiguration.entity.numbers"
-                               data-ng-hide="defaultPasswordConfiguration.numbersChangeable"/>
+                               data-ng-disabled="!defaultPasswordConfiguration.numbersChangeable"/>
                         <label for="numbers">&nbsp;one number</label>
                     </div>
                 </div>
@@ -132,10 +120,7 @@
                     <div class="checkbox">
                         <input id="specialChars" type="checkbox"
                                data-ng-model="clientPasswordConfiguration.entity.specialChars"
-                               data-ng-show="defaultPasswordConfiguration.specialCharsChangeable"/>
-                        <input id="specialChars" type="checkbox" disabled
-                               data-ng-model="clientPasswordConfiguration.entity.specialChars"
-                               data-ng-hide="defaultPasswordConfiguration.specialCharsChangeable"/>
+                               data-ng-disabled="!defaultPasswordConfiguration.specialCharsChangeable"/>
                         <label for="specialChars">&nbsp;one special character</label>
                 </div>
             </div>
