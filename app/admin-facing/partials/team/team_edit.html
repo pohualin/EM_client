@@ -21,13 +21,10 @@
     </div>
 </div>
 <div class="layout-card">
-    <div class="row" data-ng-include="'admin-facing/partials/team/tags/team_tags.html'"
-         data-ng-class="{'masked': teamForm.teamName.$error.unique || editMode}"></div>
+    <div class="row" data-ng-include="'admin-facing/partials/team/tags/team_tags.html'"></div>
 </div>
 <div class="layout-card">
-    <div class="row" data-ng-include="'admin-facing/partials/team/location/team_current.html'"
-         data-ng-class="{'masked': teamForm.teamName.$error.unique || editMode}"></div>
+    <div class="row" data-ng-include="'admin-facing/partials/team/location/team_current.html'"></div>
     <hr>
-    <div class="row" data-ng-include="'admin-facing/partials/team/provider/team_current.html'"
-         data-ng-class="{'masked': teamForm.teamName.$error.unique || editMode}"></div>
+    <div class="row" data-ng-include="'admin-facing/partials/team/provider/team_current.html'"></div>
 </div>
