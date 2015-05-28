@@ -136,6 +136,7 @@
         border-radius: 4px;
         transition: border-color ease-in-out .15s;
         overflow: hidden;
+        overflow-x: auto;
         word-wrap: break-word;
         //cursor: text;
         &.focused {
