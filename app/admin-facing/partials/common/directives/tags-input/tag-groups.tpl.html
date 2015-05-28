@@ -8,7 +8,7 @@
             <span class="sr-only">Toggle Dropdown</span>
         </button>
         <div class="dropdown-menu" role="menu" style="width:600px">
-            <div data-tags-input class="tags-input" data-ng-model="tagGroup.tags" data-on-tag-added="onChange('tag added')" data-on-tag-removed="onChange('tag removed')" data-on-tag-edited="onChange('tag edited')" data-ng-click="$event.stopPropagation();" data-ng-paste="pasteTags($event, $index)" data-enable-editing-last-tag="true" data-add-on-space="false" data-replace-spaces-with-dashes="false" data-name="tags"></div>
+            <div data-tags-input class="tags-input" data-ng-model="tagGroup.tags" data-on-tag-added="onChange('tag added')" data-on-tag-removed="onChange('tag removed')" data-on-tag-edited="onChange('tag edited')" data-ng-click="$event.stopPropagation();" data-ng-paste="pasteTags($event, $index)" data-enable-editing-last-tag="true" data-add-on-space="false" data-add-on-comma="false" data-replace-spaces-with-dashes="false" data-name="tags"></div>
         </div>
         <div class="tag-group-edit" data-ng-show="tagGroup.editMode">
             <input type="text" name="tagGroupTitle" data-ng-model="tagGroup.title" value="{{ tagGroup.title }}" data-focus-on="editMode" data-ng-enter="changeTagGroupTitle($index)" data-ng-blur="changeTagGroupTitle($index)">
