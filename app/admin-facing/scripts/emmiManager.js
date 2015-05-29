@@ -57,8 +57,27 @@ angular.module('emmiManager', [
         PROVIDER_NAME: /^[a-zA-Z- '(),.]*$/
     })
 
+    .config(['ivhTreeviewOptionsProvider', function (ivhTreeviewOptionsProvider) {
+        ivhTreeviewOptionsProvider.set({
+            idAttribute: 'name',
+            labelAttribute: 'displayName',
+            childrenAttribute: 'children',
+            selectedAttribute: 'selected',
+            useCheckboxes: true,
+            expandToDepth: 1,
+            indeterminateAttribute: '__ivhTreeviewIndeterminate',
+            defaultSelectedState: false,
+            validate: true,
+            twistieExpandedTpl: '',
+            twistieCollapsedTpl: '',
+            twistieLeafTpl: '',
+            userOptions: {disabledAttribute: 'disabled'}
+        });
+    }])
+
     .config(
-    function ($provide, $httpProvider, $translateProvider, tmhDynamicLocaleProvider, HateoasInterceptorProvider, $datepickerProvider, $alertProvider, API, unsavedWarningsConfigProvider) {
+    function ($provide, $httpProvider, $translateProvider, tmhDynamicLocaleProvider,
+              HateoasInterceptorProvider, $datepickerProvider, $alertProvider, API, unsavedWarningsConfigProvider) {
 
         // Initialize angular-translate
         $translateProvider.useUrlLoader(API.messages);
