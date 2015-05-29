@@ -245,19 +245,5 @@ angular.module('emmiManager')
             // start by loading the currently saved roles
             $scope.loadExisting();
         }
-    ]).config(['ivhTreeviewOptionsProvider', function (ivhTreeviewOptionsProvider) {
-        ivhTreeviewOptionsProvider.set({
-            idAttribute: 'name',
-            labelAttribute: 'displayName',
-            childrenAttribute: 'children',
-            selectedAttribute: 'selected',
-            useCheckboxes: true,
-            expandToDepth: 1,
-            indeterminateAttribute: '__ivhTreeviewIndeterminate',
-            defaultSelectedState: false,
-            validate: true,
-            twistieExpandedTpl: '',
-            twistieCollapsedTpl: '',
-            twistieLeafTpl: ''
-        });
-    }]);
+    ])
+;
