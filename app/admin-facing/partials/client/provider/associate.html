@@ -10,7 +10,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-9">
-                        <form name="searchForm" ng-submit="search(searchForm.providerQuery.$valid)" novalidate>
+                        <form name="searchForm" data-ng-submit="search(searchForm.providerQuery.$valid)" novalidate>
                             <div class="form-group">
                                 <label class="sr-only" for="providerQuery">Search providers:</label>
                                 <div class="input-group has-input-icon has-input-icon-search">
@@ -60,9 +60,9 @@
                                 <thead>
                                 <tr>
                                     <th class="sort col-checkbox">&nbsp;</th>
-                                    <th class="sort" data-ng-click="sort('lastName')">
+                                    <th class="sort" data-ng-click="sort('normalizedName')">
                                         Name
-                                        <span data-ng-show="sortProperty.property === 'lastName'">
+                                        <span data-ng-show="sortProperty.property === 'normalizedName'">
                                             <span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span>
                                         </span>
                                     </th>
@@ -77,11 +77,14 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr data-ng-repeat="clientProvider in providers| orderBy:sortIdx" data-ng-class="clientProvider.link.self ? 'text-muted' : ''">
+                                <tr data-ng-repeat="clientProvider in providers | orderBy:'sortIdx'"
+                                    data-ng-class="clientProvider.link.self ? 'text-muted' : ''">
                                     <td class="col-checkbox">
                                         <div class="checkbox">
                                             <input type="checkbox" id="clientProviderCb{{$index}}" data-ng-model="clientProvider.provider.entity.newprovider"
-                                               ng-change="onCheckboxChange(clientProvider.provider)" data-ng-disabled="clientProvider.link.self" data-ng-checked="clientProvider.link.self">
+                                                   data-ng-change="onCheckboxChange(clientProvider.provider)"
+                                                   data-ng-disabled="clientProvider.link.self"
+                                                   data-ng-checked="clientProvider.link.self">
                                             <label class="empty" for="clientProviderCb{{$index}}"></label>
                                         </div>
                                     </td>
