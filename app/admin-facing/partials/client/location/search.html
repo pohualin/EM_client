@@ -63,28 +63,36 @@
                                     <th class="sort col-checkbox">&nbsp;</th>
                                     <th class="sort" data-ng-click="sort('name')">
                                         Name
-                                        <span data-ng-show="sortProperty.property === 'name'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span>
+                                        <span data-ng-show="sortProperty.property === 'name'"><span class="sort-icon"
+                                                                                                    data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
                                     </th>
                                     <th class="sort col-sm-3" data-ng-click="sort('belongsTo.name')">
                                         Client Owner
-                                        <span data-ng-show="sortProperty.property === 'belongsTo.name'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span>
+                                        <span data-ng-show="sortProperty.property === 'belongsTo.name'"><span
+                                            class="sort-icon"
+                                            data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
                                     </th>
                                     <th class="sort col-sm-3" data-ng-click="sort('city')">
                                         City/State
-                                        <span data-ng-show="sortProperty.property === 'city'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span>
+                                        <span data-ng-show="sortProperty.property === 'city'"><span class="sort-icon"
+                                                                                                    data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
                                     </th>
                                     <th class="sort col-phone" data-ng-click="sort('phone')">
                                         Phone
-                                        <span data-ng-show="sortProperty.property === 'phone'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span>
+                                        <span data-ng-show="sortProperty.property === 'phone'"><span class="sort-icon"
+                                                                                                     data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
                                     </th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr data-ng-repeat="clientLocation in locations| orderBy:sortIdx" data-ng-class="clientLocation.link.length > 0 ? 'text-muted' : ''">
+                                <tr data-ng-repeat="clientLocation in locations| orderBy:'sortIdx'"
+                                    data-ng-class="clientLocation.link.length > 0 ? 'text-muted' : ''">
                                     <td class="col-checkbox">
                                         <div class="checkbox">
                                             <input type="checkbox" id="clientLocationCb{{$index}}" data-ng-model="clientLocation.location.entity.newlocation"
-                                               ng-change="onCheckboxChange(clientLocation.location)" data-ng-disabled="clientLocation.link.self" data-ng-checked="clientLocation.link.self">
+                                                   data-ng-change="onCheckboxChange(clientLocation.location)"
+                                                   data-ng-disabled="clientLocation.link.self"
+                                                   data-ng-checked="clientLocation.link.self">
                                             <label class="empty" for="clientLocationCb{{$index}}"></label>
                                         </div>
                                     </td>

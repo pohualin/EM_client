@@ -49,9 +49,10 @@
              <thead>
                  <tr>
                      <th class="sort col-checkbox">&nbsp;</th>
-                     <th class="sort" data-ng-click="sort('lastName')">
+                     <th class="sort" data-ng-click="sort('normalizedName')">
                          Name
-                         <span data-ng-show="sortProperty.property === 'lastName'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
+                         <span data-ng-show="sortProperty.property === 'normalizedName'"><span class="sort-icon"
+                                                                                               data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
                      </th>
                      <th class="sort col-sm-3" data-ng-click="sort('specialty.name')">
                          Primary Specialty
@@ -80,13 +81,13 @@
                      <td class="col-has-multiselect" data-ng-if="allTeamLocations.length > 0" >
                          <div data-ng-show="teamProvider.provider.entity.showLocations">
                              <div data-ng-class="{'has-error col-md-11': teamProvider.provider.entity.selectedTeamLocations < 1 && associateRequestSubmitted}" data-multi-select
-                                 name=".nonClientProvider[{{teamProvider.provider.entity.id}}].allTeamLocations{{$index}}"
-                                 values="allTeamLocations"
-                                 model="teamProvider.provider.entity.selectedTeamLocations"
-                                 show-filters="true"
-                                 value-field="id"
-                                 label-field="label"
-                                 template-path = "admin-facing/partials/common/directives/multi-select/multi-select.html" >
+                                  data-name=".nonClientProvider[{{teamProvider.provider.entity.id}}].allTeamLocations{{$index}}"
+                                  data-values="allTeamLocations"
+                                  data-model="teamProvider.provider.entity.selectedTeamLocations"
+                                  data-show-filters="true"
+                                  data-value-field="id"
+                                  data-label-field="label"
+                                  data-template-path="admin-facing/partials/common/directives/multi-select/multi-select.html">
                              </div>
                              <div class="error-circle fa-exclamation-circle glyphicon-form-inline-right"
               					data-ng-show="teamProvider.provider.entity.selectedTeamLocations < 1 && associateRequestSubmitted"
