@@ -75,8 +75,7 @@ angular.module('emmiManager', [
         });
     }])
 
-    .config(
-    function ($provide, $httpProvider, $translateProvider, tmhDynamicLocaleProvider,
+    .config(function ($provide, $httpProvider, $translateProvider, tmhDynamicLocaleProvider,
               HateoasInterceptorProvider, $datepickerProvider, $alertProvider, API, unsavedWarningsConfigProvider) {
 
         // Initialize angular-translate
@@ -160,7 +159,7 @@ angular.module('emmiManager', [
 
                     scope.$watch(function() {
                       return scope.node[disabledAttr];
-                    }, function(newVal, oldVal) {
+                    }, function (newVal) {
                       scope.isDisabled = newVal;
                     });
                 };
@@ -170,7 +169,7 @@ angular.module('emmiManager', [
 
         $provide.decorator('scrollbarDirective', function ($delegate) {
             var directive = $delegate[0];
-            directive.template = '<div class="scroll-bar"><div class="scroll-thumb"></div></div><div class="scroll-viewport" sidebar-scroller><div class="scroll-overview" ng-transclude></div></div>';
+            directive.template = '<div class="scroll-bar"><div class="scroll-thumb"></div></div><div class="scroll-viewport" data-sidebar-scroller><div class="scroll-overview" data-ng-transclude></div></div>';
             var compile = directive.compile;
             directive.compile = function (tElement, tAttrs) {
                 var _me = this;

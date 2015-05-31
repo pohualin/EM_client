@@ -60,14 +60,19 @@ angular.module('emmiManager')
                     var me = this;
                     return $http.get(API.authenticated, {
                         ignoreAuthModule: 'ignoreAuthModule'
-                    }).success(function (user, status, headers, config) {
+                    }).success(function (user) {
                         $rootScope.account = Session.create(user);
+
+                        // set XSRF defaults based upon logged in user
+                        $http.defaults.xsrfHeaderName = 'X-XSRF-TOKEN-' + (!Session.impersonated ? 'CLIENT' : 'IMP');
+                        $http.defaults.xsrfCookieName = 'XSRF-TOKEN-' + (!Session.impersonated ? 'CLIENT' : 'IMP');
+
                         $rootScope.authenticated = true;
                         if (!$rootScope.isAuthorized(authorizedRoles)) {
                             $rootScope.$broadcast('event:auth-notAuthorized');
                         }
                         return $rootScope.account;
-                    }).error(function (data, status, headers, config) {
+                    }).error(function (data, status) {
                         $rootScope.authenticated = false;
                         if (status === 403) {
                             $rootScope.$broadcast('event:auth-totallyNotAuthorized');

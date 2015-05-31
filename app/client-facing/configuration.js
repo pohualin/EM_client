@@ -86,7 +86,8 @@ angular.module('emmiManager', [
         });
     })
 
-    .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, PATTERN, arrays, $document, ConfigurationService, $modal, $timeout, moment, ErrorMessageTranslateService) {
+    .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, PATTERN, arrays, $document,
+                   ConfigurationService, $modal, $timeout, moment, ErrorMessageTranslateService) {
 
         var modals = [], alerts = [];
 
