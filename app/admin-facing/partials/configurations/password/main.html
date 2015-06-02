@@ -19,7 +19,7 @@
         <div class="row">
             <div class="sidebar" data-ng-include="'admin-facing/partials/configurations/nav.html'"></div>
             <div class="main-content">
-                <div class="layout-card">
+                <div class="layout-card" data-ng-class="{'outlined':showButtons() && !loading}">
                     <div class="row" data-ng-include="'admin-facing/partials/configurations/password/form.html'"></div>
                     <div class="pull-right">
                         <span data-ng-show="showButtons() && !loading">

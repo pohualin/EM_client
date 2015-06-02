@@ -585,6 +585,7 @@
     .main-content {
         @include make-md-column(8.5);
         //@include make-md-column-offset(3.5);
+        min-height: 600px;
     }
     .sidebar + .main-content {
         padding-left: 25px;
@@ -639,14 +640,12 @@
                 color: $link-color;
                 text-decoration: underline;
             }
-            .active {
-                a,
-                a:hover,
-                a:focus {
-                    color: rgba(235,235,235,.75);
-                    cursor: default;
-                    text-decoration: none;
-                }
+            .active,
+            .active:hover,
+            .active:focus {
+                color: rgba(235,235,235,.75);
+                cursor: default;
+                text-decoration: none;
             }
         }
         .configure {
