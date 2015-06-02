@@ -24,9 +24,9 @@ angular.module('emmiManager')
         /**
          * Called when status changed
          */
-        $scope.statusChange = function (status) {
+        $scope.statusChange = function () {
             $scope.loading = true;
-            ClientProviderService.findPossibleProvidersNotUsingClient($scope.allTeamLocations, Client.getClient(), $scope.searchAll.providerQuery, status)
+            ClientProviderService.findPossibleProvidersNotUsingClient($scope.allTeamLocations, Client.getClient(), $scope.searchAll.providerQuery, $scope.status)
             .then(function (providerPage) {
                 $scope.handleResponse(providerPage, 'searchedProvidersList');
                 $scope.setCheckboxesForChanged($scope[searchedProvidersList]);
