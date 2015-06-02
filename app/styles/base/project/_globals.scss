@@ -375,6 +375,10 @@
         .radio:first-child {
             margin-top: 0;
         }
+        .checkbox:last-child,
+        .radio:last-child {
+            margin-bottom: 0;
+        }
     }
     .form-control:focus {
         box-shadow: none !important;
@@ -623,6 +627,28 @@
             //     height: 200px;
             // }
         }
+        .sidebar-list {
+            font-weight: 300;
+            @include remIt(font-size, 16);
+            //line-height: 1.875;
+            line-height: 1;
+            li {
+                padding: 6px 0;
+            }
+            a:hover, a:focus {
+                color: $link-color;
+                text-decoration: underline;
+            }
+            .active {
+                a,
+                a:hover,
+                a:focus {
+                    color: rgba(235,235,235,.75);
+                    cursor: default;
+                    text-decoration: none;
+                }
+            }
+        }
         .configure {
             a {
                 display: inline-block;
@@ -680,17 +706,7 @@
             margin: 0 0 28px;
         }
         .teams-filter-list {
-            font-weight: 300;
-            @include remIt(font-size, 16);
-            //line-height: 1.875;
-            line-height: 1;
-            li {
-                padding: 6px 0;
-            }
-            a:hover, a:focus {
-                color: $link-color;
-                text-decoration: underline;
-            }
+
         }
         .filter-link {
             @include remIt(font-size, 13);
