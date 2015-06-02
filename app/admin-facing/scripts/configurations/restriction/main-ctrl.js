@@ -21,6 +21,14 @@ angular.module('emmiManager')
             });
         };
 
+        $scope.$on('requestEmailList', function(e) {
+            $scope.$broadcast('refreshEmailList');
+        });
+
+        $scope.$on('requestIpList', function(e) {
+            $scope.$broadcast('refreshIpList');
+        });
+
         /**
          * init method called when page is loading
          */
