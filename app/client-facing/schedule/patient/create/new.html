@@ -82,6 +82,11 @@
                 </div>
             </div>
         </div>
+        
+        <div class="row" data-ng-show="patient.id && showEmail">
+           <div data-ng-include="'client-facing/schedule/patient/email/patient-email.html'"></div>
+        </div>
+
         <div class="row" data-ng-hide="patient.id">
             <div class="col-md-8">
                 <div class="actions pull-right">
