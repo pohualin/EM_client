@@ -160,9 +160,9 @@ angular.module('emmiManager')
             });
         };
 
-        $scope.statusChange = function () {
+        $scope.statusChange = function (status) {
             $scope.loading = true;
-            Location.findWithoutCL(Client.getClient(), $scope.searchAll.locationQuery, $scope.status, null, $scope.currentPageSize).then(function (locationPage) {
+            Location.findWithoutCL(Client.getClient(), $scope.searchAll.locationQuery, status, null, $scope.currentPageSize).then(function (locationPage) {
                     $scope.handleResponse(locationPage, managedLocationList);
                     $scope.setLocationChecked();
             }, function () {
