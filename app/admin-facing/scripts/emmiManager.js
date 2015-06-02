@@ -325,15 +325,37 @@ angular.module('emmiManager', [
         // Call when 409 response is returned by the server
         $rootScope.$on('event:optimistic-lock-failure', function (event, rejection) {
             console.log('409: ' + rejection.data.detail);
-            $modal({
-                title: 'Object Already Modified',
-                content: 'You have attempted to save an object that has already been modified by another user.' +
-                ' Please refresh the page to load the latest changes before attempting to save again.',
-                animation: 'none',
-                backdropAnimation: 'emmi-fade',
-                backdrop: 'static',
-                show: true
-            });
+            if (!$rootScope.optimisticLockModal) {
+                $rootScope.optimisticLockModal = $modal({
+                    title: 'Object Already Modified',
+                    content: [
+                        'You have attempted to save an object that has already been modified by another user.',
+                        ' Please refresh the page to load the latest changes before attempting to save again.'
+                    ].join(' '),
+                    animation: 'none',
+                    backdropAnimation: 'emmi-fade',
+                    backdrop: 'static',
+                    show: true
+                });
+            }
+        });
+
+        // when the xsrf token was not sent to the back-end
+        $rootScope.$on('event:auth-xsrf-token-missing', function () {
+            if (!$rootScope.xsrfMissingModal) {
+                $rootScope.xsrfMissingModal = $modal({
+                    title: 'XSRF Security Token Missing',
+                    content: [
+                        'You may have cleared your browser cookies, which could have resulted in the ',
+                        'expiry of your current security token. A new security token has been issued.',
+                        'Please retry the operation.'
+                    ].join(' '),
+                    animation: 'none',
+                    backdropAnimation: 'emmi-fade',
+                    backdrop: 'static',
+                    show: true
+                });
+            }
         });
 
         // Call when the 500 response is returned by the server

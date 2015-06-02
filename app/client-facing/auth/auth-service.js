@@ -149,6 +149,8 @@ angular.module('emmiManager')
                             });
                         } else if (error.entity.reason === 'EXPIRED_CANT_CHANGE'){
                             angular.extend(LoginErrorMessageFactory,{showTemporaryPasswordTokenExpired:true});
+                        } else if (error.entity.reason === 'XSRF_MISSING') {
+                            $rootScope.$broadcast('event:auth-xsrf-token-missing');
                         }
                     } else {
                         $rootScope.authenticationError = true;
