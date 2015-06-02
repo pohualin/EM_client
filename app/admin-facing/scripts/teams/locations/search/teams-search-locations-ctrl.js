@@ -106,7 +106,7 @@ angular.module('emmiManager')
                 $scope.loading = true;
                 $scope.locations = null;
                 $scope.cancelPopup(); //clean the locations checked in other search
-                Location.findWithoutCL(Client.getClient(), $scope.searchAll.locationQuery, $scope.status).then(function (locationPage) {
+                Location.findWithoutCL(Client.getClient(), $scope.searchAll.locationQuery, $scope.searchAll.status).then(function (locationPage) {
                     $scope.handleResponse(locationPage, managedLocationList);
                     $scope.setLocationChecked();
                     $scope.allLocationsSearch = true;
@@ -119,7 +119,7 @@ angular.module('emmiManager')
         // when a column header is clicked
         $scope.sortTeam = function (property) {
         	$scope.loading = true;
-            Location.findWithoutCL(Client.getClient(), $scope.searchAll.locationQuery, $scope.status, $scope.sort(property), $scope.currentPageSize).then(function (locationPage) {
+            Location.findWithoutCL(Client.getClient(), $scope.searchAll.locationQuery, $scope.searchAll.status, $scope.sort(property), $scope.currentPageSize).then(function (locationPage) {
                 $scope.handleResponse(locationPage, managedLocationList);
                 $scope.setLocationChecked();
             }, function () {
@@ -162,7 +162,7 @@ angular.module('emmiManager')
 
         $scope.statusChange = function () {
             $scope.loading = true;
-            Location.findWithoutCL(Client.getClient(), $scope.searchAll.locationQuery, $scope.status, null, $scope.currentPageSize).then(function (locationPage) {
+            Location.findWithoutCL(Client.getClient(), $scope.searchAll.locationQuery, $scope.searchAll.status, null, $scope.currentPageSize).then(function (locationPage) {
                     $scope.handleResponse(locationPage, managedLocationList);
                     $scope.setLocationChecked();
             }, function () {
@@ -221,7 +221,7 @@ angular.module('emmiManager')
         };
 
         function init() {
-        	$scope.status = 'ACTIVE_ONLY';
+        	$scope.searchAll.status = 'ACTIVE_ONLY';
         	TeamProviderService.buildMultiSelectProvidersData($scope.teamResource).then(function(response){
             	$scope.providersData = response;
             	$scope.sizeClass =  $scope.providersData.length === 0 ? 'sort col-sm-4' : 'sort col-sm-3';
