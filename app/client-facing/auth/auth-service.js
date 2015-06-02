@@ -122,6 +122,11 @@ angular.module('emmiManager')
                     $rootScope.authenticated = false;
                     $rootScope.account = null;
                     Session.destroy();
+
+                    // set XSRF defaults
+                    $http.defaults.xsrfHeaderName = 'X-XSRF-TOKEN-CLIENT';
+                    $http.defaults.xsrfCookieName = 'XSRF-TOKEN-CLIENT';
+
                     authService.loginCancelled();
                 },
                 processLoginFailureError: function (error, creds) {
