@@ -37,13 +37,7 @@ angular.module('emmiManager')
                         $scope.$hide();
                     }
                     $alert({
-                        content: '<b>' + $scope.client.name + '</b> has been updated successfully.',
-                        container: '#messages-container',
-                        type: 'success',
-                        placement: 'top',
-                        show: true,
-                        duration: 5,
-                        dismissable: true
+                        content: '<b>' + $scope.client.name + '</b> has been updated successfully.'
                     });
                 });
             } else {
@@ -57,11 +51,11 @@ angular.module('emmiManager')
         $scope.showErrorBanner = function () {
             if (!$scope.addIpRestrictErrorAlert) {
                 $scope.addIpRestrictErrorAlert = $alert({
-                    title: ' ',
                     content: 'Please correct the below information.',
                     container: '#ip-message-container',
                     type: 'danger',
-                    show: true,
+                    placement: '',
+                    duration: false,
                     dismissable: false
                 });
             }

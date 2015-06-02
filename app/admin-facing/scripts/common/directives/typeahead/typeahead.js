@@ -2,6 +2,7 @@
 
 angular.module('emmi.typeahead', [])
     .directive('emmiTypeahead', function ($timeout) {
+
         // Runs during compile
         return {
             // name: '',
@@ -23,12 +24,30 @@ angular.module('emmi.typeahead', [])
                 focus: '@',
                 minLength: '@'
             },
+
             controller: function ($scope, $element, $attrs, $transclude) {
                 $scope.items = [];
                 $scope.hide = true;
 
                 this.activate = function (item) {
                     $scope.active = item;
+                };
+
+                this.scrollToActive = function () {
+                    if ($scope.active) {
+                        $timeout(function (){
+                            // need in timeout so $$hashKey is calculated
+                            var listItem = angular.element('#sfSearchResult_' + $scope.active.$$hashKey),
+                                scroller = angular.element('#sfSearchResultsContainer');
+                            if (listItem && listItem.length > 0) {
+                                var pos = scroller.scrollTop() -
+                                    scroller.position().top + listItem.position().top;
+                                scroller.animate({
+                                    scrollTop: pos
+                                }, 10);
+                            }
+                        });
+                    }
                 };
 
                 this.activateNextItem = function () {
@@ -81,7 +100,7 @@ angular.module('emmi.typeahead', [])
                 };
 
                 this.blur = function () {
-                    $timeout(function(){
+                    $timeout(function () {
                         $scope.hide = true;
                         $scope.blur();
                     }, 500);
@@ -98,6 +117,9 @@ angular.module('emmi.typeahead', [])
                 $input.bind('focus', function () {
                     scope.$apply(function () {
                         scope.focused = true;
+                        if (scope.items && scope.items.length > 0) {
+                            scope.hide = false;
+                        }
                     });
                 });
 
@@ -122,9 +144,12 @@ angular.module('emmi.typeahead', [])
 
                 $input.bind('keyup', function (e) {
                     if (e.keyCode === 9 || e.keyCode === 13) {
-                        scope.$apply(function () {
-                            controller.selectActive();
-                        });
+                        if (!scope.hide) {
+                            // only select if the results window is open
+                            scope.$apply(function () {
+                                controller.selectActive();
+                            });
+                        }
                     }
 
                     if (e.keyCode === 27) {
@@ -144,6 +169,7 @@ angular.module('emmi.typeahead', [])
                         e.preventDefault();
                         scope.$apply(function () {
                             controller.activateNextItem();
+                            controller.scrollToActive();
                         });
                     }
 
@@ -151,6 +177,7 @@ angular.module('emmi.typeahead', [])
                         e.preventDefault();
                         scope.$apply(function () {
                             controller.activatePreviousItem();
+                            controller.scrollToActive();
                         });
                     }
                 });
@@ -158,6 +185,9 @@ angular.module('emmi.typeahead', [])
                 scope.$watch('items', function (items) {
                     scope.loading = false;
                     controller.activate(items.length ? items[0] : null);
+                    if (items.length > 0){
+                        controller.scrollToActive();
+                    }
                 });
 
                 scope.$watch('focused', function (focused) {

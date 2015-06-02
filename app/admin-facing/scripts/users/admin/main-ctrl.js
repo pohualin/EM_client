@@ -76,13 +76,7 @@ angular.module('emmiManager')
                         message += ' has been deactivated.';
                     }
                     $alert({
-                        content: message,
-                        container: '#messages-container',
-                        type: 'success',
-                        placement: 'top',
-                        show: true,
-                        duration: 5,
-                        dismissable: true
+                        content: message
                     });
                 });
             };

@@ -2,10 +2,12 @@
     <div class="row">
         <div class="col-md-6">
             <div class="pull-right" data-ng-if="existingClientRoles">
-                <button class="btn btn-link btn-link-nopad btn-heading btn-tag-library" type="button" title="Select client roles to add:"
+                <button class="btn btn-link btn-link-nopad btn-heading btn-tag-library" type="button"
+                        title="Select client roles to add:"
                         data-placement="right" data-template="admin-facing/partials/role/client/role-library.html"
-                        data-trigger="click" data-bs-popover data-auto-close="1" data-popover-dismiss data-container="body">
-                        <i class="icon-plus"></i> Add role from library
+                        data-trigger="click" data-bs-popover data-auto-close="1" data-popover-dismiss
+                        data-container="body">
+                    <i class="icon-plus"></i> Add role from library
                 </button>
             </div>
             <h2 style="margin-bottom:11px">Client Roles</h2>
@@ -14,19 +16,20 @@
     <div class="row" data-ng-if="existingClientRoles">
         <div class="col-md-6">
             <div class="panel-group" data-ng-model="role.activePanel" data-ng-repeat="role in existingClientRoles"
-                 data-ng-change="panelStateChange(role, existingRoleForm_{{$index}})" data-start-collapsed="true"
+                 data-ng-change="panelStateChange(role, existingForms[role.entity.id])" data-start-collapsed="true"
                  data-bs-collapse>
                 <div class="row">
-                  <div class="col-md-12">
-                      <div class="label label-danger role-error" data-ng-show="existingRoleForm_{{$index}}.name.$error.unique">
-                          This role already exists
-                      </div>
-                  </div>
+                    <div class="col-md-12">
+                        <div class="label label-danger role-error"
+                             data-ng-show="existingForms[role.entity.id].$error.unique">
+                            This role already exists
+                        </div>
+                    </div>
                 </div>
-                <form name="existingRoleForm_{{$index}}" class="form" novalidate unsaved-warning-form>
+                <form name="existingForms.{{role.entity.id}}" class="form" novalidate data-unsaved-warning-form>
                     <div class="panel panel-secondary" data-ng-class="{ 'panel-open': role.activePanel === 0 }">
                         <div class="panel-heading panel-heading-form">
-                            <h4 class="panel-title">
+                            <div class="panel-title">
                                 <div class="pull-right">
                                     <button type="button" class="btn btn-icon btn-inherit"
                                             data-placement="bottom"
@@ -38,81 +41,110 @@
                                         <i class="icon-trashcan"></i>
                                     </button>
                                 </div>
-                                <a data-bs-collapse-toggle data-ng-hide="role.editName" data-ng-dblclick="startEditName(role)">
+                                <a data-bs-collapse-toggle data-ng-hide="role.editName"
+                                   data-ng-dblclick="startEditName(role)">
                                     <span class="icon-caret-right"></span>
                                     <span class="panel-title-text">{{ role.entity.name }}</span>
                                 </a>
-                                <div data-ng-class="{ 'has-error' : existingRoleForm_{{$index}}.name.$invalid}">
-                                  <div class="form-inline" data-ng-if="role.editName" style="width:50%">
-                                      <input class="form-control input-sm" data-ng-model="role.entity.name"
-                                             name="name" data-focus-on="focus-{{role.entity.id}}"
-                                             maxlength="50"
-                                             data-ng-pattern="/^[\-\.a-zA-Z0-9 '=_;:`!@#&,\(\)\/]*$/"
-                                             data-ng-change="resetValidity(existingRoleForm_{{$index}})"
-                                             required>
-                                  </div>
+
+                                <div data-ng-class="{ 'has-error' : existingForms[role.entity.id].$error.unique}">
+                                    <div class="form-inline" data-ng-if="role.editName" style="width:50%">
+                                        <input class="form-control input-sm" data-ng-model="role.entity.name"
+                                               name="name" data-focus-on="focus-{{role.entity.id}}"
+                                               maxlength="50"
+                                               data-ng-pattern="/^[\-\.a-zA-Z0-9 '=_;:`!@#&,\(\)\/]*$/"
+                                               data-ng-change="resetValidity(existingForms[role.entity.id])"
+                                               required>
+                                    </div>
                                 </div>
-                            </h4>
-                        </div><!-- .panel-heading -->
+                            </div>
+                        </div>
+                        <!-- .panel-heading -->
                         <div class="panel-collapse" data-bs-collapse-target>
                             <div class="panel-body">
-                                <div data-ivh-treeview="role.entity.userClientPermissions" class="ivh-treeview-container" id="clientRoleTV_{{role.entity.id}}"></div>
+                                <div data-ivh-treeview="role.entity.userClientPermissions"
+                                     data-ivh-treeview-change-handler="permissionSelectionChange"
+                                     data-ivh-treeview-selected-attribute="'active'"
+                                     class="ivh-treeview-container" id="clientRoleTV_{{role.entity.id}}"></div>
                             </div>
-                            <div class="panel-footer" data-ng-show="existingRoleForm_{{$index}}.$valid && existingHasChanged(role) && hasAPermissionChecked(role.entity)">
-                                <button class="btn btn-success" data-ng-click="update(role, existingRoleForm_{{$index}})"
-                                        >Save</button>
-                                <button type="button" class="btn btn-cancel" data-ng-click="cancelExisting(role, existingRoleForm_{{$index}})"
-                                        data-bs-collapse-toggle>cancel</button>
+                            <div class="panel-footer"
+                                 data-ng-show="existingForms[role.entity.id].$dirty && existingForms[role.entity.id].$valid && hasAPermissionChecked(role.entity)">
+                                <button class="btn btn-success"
+                                        data-ng-click="update(role, existingForms[role.entity.id])"
+                                    >Save
+                                </button>
+                                <button type="button" class="btn btn-cancel"
+                                        data-ng-click="cancelExisting(role, existingForms[role.entity.id])"
+                                        data-bs-collapse-toggle>cancel
+                                </button>
                             </div>
-                        </div><!-- .panel-collapse -->
-                    </div><!-- .panel -->
+                        </div>
+                        <!-- .panel-collapse -->
+                    </div>
+                    <!-- .panel -->
                 </form>
-            </div><!-- .panel-group -->
+            </div>
+            <!-- .panel-group -->
         </div>
     </div>
     <div class="row">
         <div class="col-md-6">
             <div class="row">
-              <div class="col-md-12">
-                  <div class="label label-danger role-error" data-ng-show="newClientRoleForm.name.$error.unique">
-                      This role already exists
-                  </div>
-              </div>
+                <div class="col-md-12">
+                    <div class="label label-danger role-error" data-ng-show="newClientRoleForm.name.$error.unique">
+                        This role already exists
+                    </div>
+                </div>
             </div>
-            <form name="newClientRoleForm" class="form" novalidate unsaved-warning-form>
+            <form name="newClientRoleForm" class="form" novalidate data-unsaved-warning-form>
                 <div class="panel-group" data-ng-show="newClientRole">
                     <div class="panel panel-default">
                         <div class="panel-heading panel-heading-form">
-                        <div class="form-group"
-                            data-ng-class="{ 'has-error' : newClientRoleForm.name.$invalid && newClientRoleFormSubmitted }">
-                            <div class="panel-title">
-                                <div class="role-group-create form-inline">
-                                    <input class="form-control input-sm" data-ng-model="newClientRole.name"
-                                           name="name" data-focus-on="focus-new-role" maxlength="50" required placeholder="Enter a title for new role"
-                                           data-ng-pattern="/^[\-\.a-zA-Z0-9 '=_;:`!@#&,\(\)\/]*$/"
-                                           data-ng-change="resetValidity(newClientRoleForm)">
-                                    <button class="btn btn-sm btn-icon" data-ng-click="cancelNew(newClientRoleForm)"><span class="icon-delete icon-size-lg"></span></button>
+                            <div class="form-group"
+                                 data-ng-class="{ 'has-error' : newClientRoleForm.name.$invalid && newClientRoleFormSubmitted }">
+                                <div class="panel-title">
+                                    <div class="role-group-create form-inline">
+                                        <input class="form-control input-sm" data-ng-model="newClientRole.name"
+                                               name="name" data-focus-on="focus-new-role" maxlength="50" required
+                                               placeholder="Enter a title for new role"
+                                               data-ng-pattern="/^[\-\.a-zA-Z0-9 '=_;:`!@#&,\(\)\/]*$/"
+                                               data-ng-change="resetValidity(newClientRoleForm)">
+                                        <button class="btn btn-sm btn-icon"
+                                                data-ng-click="cancelNew(newClientRoleForm)"><span
+                                            class="icon-delete icon-size-lg"></span></button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        </div>
                         <div class="panel-collapse">
                             <div class="panel-body">
-                                <div data-ng-if="newClientRole.userClientPermissions" data-ivh-treeview="newClientRole.userClientPermissions" class="ivh-treeview-container" id="newClientRoleTV"></div>
+                                <div data-ng-if="newClientRole.userClientPermissions"
+                                     data-ivh-treeview-selected-attribute="'active'"
+                                     data-ivh-treeview="newClientRole.userClientPermissions"
+                                     class="ivh-treeview-container" id="newClientRoleTV"></div>
                             </div>
-                            <div class="panel-footer" data-ng-show="newClientRoleForm.$valid && hasAPermissionChecked(newClientRole)">
-                                <button class="btn btn-success" data-ng-click="saveNewRole(newClientRole, newClientRoleForm)">Save</button>
-                                <button type="button" class="btn btn-cancel" data-ng-click="cancelNew(newClientRoleForm)">cancel</button>
+                            <div class="panel-footer"
+                                 data-ng-show="newClientRoleForm.$valid && hasAPermissionChecked(newClientRole)">
+                                <button class="btn btn-success"
+                                        data-ng-click="saveNewRole(newClientRole, newClientRoleForm)">Save
+                                </button>
+                                <button type="button" class="btn btn-cancel"
+                                        data-ng-click="cancelNew(newClientRoleForm)">cancel
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div data-ng-hide="newClientRole">
-                    <button type="button" class="btn btn-default" data-ng-click="createNewClientRole()">Create new client role</button>
-                    <button data-ng-if="!existingClientRoles.length" class="btn btn-link btn-tag-library" type="button" title="Select roles to add:"
+                    <button type="button" class="btn btn-default" data-ng-click="createNewClientRole()">Create new
+                        client role
+                    </button>
+                    <button data-ng-if="!existingClientRoles.length" class="btn btn-link btn-tag-library" type="button"
+                            title="Select roles to add:"
                             data-placement="right" data-template="admin-facing/partials/role/client/role-library.html"
-                            data-trigger="click" data-bs-popover data-auto-close="1" data-popover-dismiss data-container="body">
-                            <i class="icon-plus"></i> Add role from library
+                            data-trigger="click" data-bs-popover data-auto-close="1" data-popover-dismiss
+                            data-container="body">
+                        <i class="icon-plus"></i> Add role from library
                     </button>
                 </div>
             </form>

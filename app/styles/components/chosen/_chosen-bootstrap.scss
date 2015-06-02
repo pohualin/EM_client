@@ -75,7 +75,7 @@ select.form-control {
                     padding: 8px 10px;
                 }
                 &.group-option {
-                    padding: 8px 10px 8px 25px;
+                    padding: 8px 25px;
                 }
                 &.highlighted {
                     @include hover;

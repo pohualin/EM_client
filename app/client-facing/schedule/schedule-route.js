@@ -3,17 +3,25 @@
 angular.module('emmiManager')
     .config(function ($routeProvider, USER_ROLES) {
 
-      var requiredResources = {
-          /**
-           * Load the current team for the client
-           */
-            'team' : ['AuthSharedService', 'ScheduleService', '$q', '$route',
-                function (AuthSharedService, ScheduleService, $q, $route) {
+        var requiredResources = {
+            /**
+             * Load the current team for the client, set up patient information if the route contains patient id
+             */
+            'team' : ['AuthSharedService', 'ScheduleService', '$q', '$route', 'ViewPatientService',
+                function (AuthSharedService, ScheduleService, $q, $route, ViewPatientService) {
                     var deferred = $q.defer();
                     AuthSharedService.currentUser().then(function (loggedInUser) {
                         ScheduleService.loadTeam(loggedInUser.clientResource, $route.current.params.teamId)
                             .then(function (response) {
-                                deferred.resolve(response.data);
+                                if ($route.current.params.patientId) {
+                                    ViewPatientService.loadPatient(response.data, $route.current.params.patientId).then(function (patientResponse) {
+                                        response.data.patient = patientResponse.data;
+                                        deferred.resolve(response.data);
+                                    });
+                                } else {
+                                    response.data.patient = {};
+                                    deferred.resolve(response.data);
+                                }
                             }, function error() {
                                 deferred.reject();
                             });
@@ -21,20 +29,20 @@ angular.module('emmiManager')
                     return deferred.promise;
                 }],
             /**
-            * Load the client from the logged in user
-            */
+             * Load the client from the logged in user
+             */
             'client': ['AuthSharedService', '$q', '$route', function (AuthSharedService, $q) {
-                    var deferred = $q.defer();
-                    AuthSharedService.currentUser().then(function (loggedInUser) {
-                        deferred.resolve(loggedInUser.clientResource);
-                    });
-                    return deferred.promise;
-                }]
+                var deferred = $q.defer();
+                AuthSharedService.currentUser().then(function (loggedInUser) {
+                    deferred.resolve(loggedInUser.clientResource);
+                });
+                return deferred.promise;
+            }]
         };
 
         // Routes
         $routeProvider
-            .when('/teams/:teamId/schedule/patient', {
+            .when('/teams/:teamId/schedule/patient/:patientId?', {
                 templateUrl: 'client-facing/schedule/main.html',
                 controller: 'ScheduleController',
                 access: {
@@ -47,13 +55,41 @@ angular.module('emmiManager')
                 templateUrl: 'client-facing/schedule/patient/search/search.html',
                 controller: 'SearchPatientController',
                 access: {
-                    authorizedRoles: [USER_ROLES.all]
+                    authorizedRoles: [USER_ROLES.teamScheduler, USER_ROLES.admin]
                 },
                 resolve: requiredResources
+            })
+            .when('/teams/:teamId/schedule/:scheduleId/instructions', {
+                templateUrl: 'client-facing/schedule/instructions/main.html',
+                controller: 'ScheduleProgramInstructionsViewController',
+                access: {
+                    authorizedRoles: [USER_ROLES.all]
+                },
+                resolve: {
+                    'scheduledProgram': ['$q', '$route', 'AuthSharedService', 'ScheduleService',
+                        function ($q, $route, AuthSharedService, ScheduleService) {
+                            var deferred = $q.defer();
+                            AuthSharedService.currentUser().then(function (loggedInUser) {
+                                ScheduleService.loadSchedule(loggedInUser.clientResource,
+                                    $route.current.params.teamId,
+                                    $route.current.params.scheduleId)
+                                    .then(function (response) {
+                                        if (response) {
+                                            deferred.resolve(response);
+                                        } else {
+                                            deferred.reject();
+                                        }
+                                    }, function error() {
+                                        deferred.reject();
+                                    });
+                            });
+                            return deferred.promise;
+                        }
+                    ]
+                }
             })
         ;
     })
 
 
 ;
-

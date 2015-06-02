@@ -609,8 +609,13 @@
         > .sidebar-wrapper {
             padding: 25px 12px 0;
         }
-        .sidebar-heading {
+        .sidebar-heading,
+        .sidebar-heading .sidebar-client-link {
             color: rgba(255,255,255,0.85);
+        }
+        .sidebar-heading .sidebar-client-link:hover,
+        .sidebar-heading .sidebar-client-link:focus {
+            text-decoration: underline;
         }
         .sidebar-scroll-content {
             //overflow: auto;
@@ -652,6 +657,9 @@
         }
         select.form-control + .chosen-container .chosen-drop {
             background-color: #f2f2f2;
+            // Allow the dropdown to be wider than the control so entire tag is visible (EM-1134)
+            width: auto;
+            min-width: 100%;
         }
         select.form-control + .chosen-container-multi .chosen-choices li.search-choice {
             background-color: #eaeaea;
