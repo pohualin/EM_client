@@ -337,6 +337,8 @@ angular.module('emmiManager', [
                     backdrop: 'static',
                     show: true
                 });
+            } else {
+                $rootScope.optimisticLockModal.show();
             }
         });
 
@@ -355,6 +357,8 @@ angular.module('emmiManager', [
                     backdrop: 'static',
                     show: true
                 });
+            } else {
+                $rootScope.xsrfMissingModal.show();
             }
         });
 
