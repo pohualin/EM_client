@@ -36,9 +36,12 @@
                              data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                              data-title="Please enter a valid phone number"></div>
                         <span class="field-note field-optional">optional</span>
-                        <input class="form-control" data-ng-model="location.phone" id="phone" name="phone" type="text"
-                               maxlength="12" data-input-mask="999-999-9999"
-                               data-ng-pattern="/[2-9][0-9][0-9]-[2-9][0-9][0-9]-[0-9][0-9][0-9][0-9]/">
+                        <div class="has-input-icon has-input-icon-telephone">
+                            <input class="form-control" data-ng-model="location.phone" id="phone" name="phone" type="text"
+                                   maxlength="12" data-input-mask="999-999-9999" placeholder="XXX-XXX-XXXX"
+                                   data-ng-pattern="/[2-9][0-9][0-9]-[2-9][0-9][0-9]-[0-9][0-9][0-9][0-9]/">
+                            <span class="input-icon"><i class="icon-telephone"></i></span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -116,7 +119,7 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button type="submit" class="btn btn-success">Save</button>
+            <button type="button" class="btn btn-success" data-client-location-deactivate-warning>Save</button>
             <button type="button" class="btn btn-default" data-ng-if="saveAndAddAnother"
                     data-ng-click="saveAndAddAnother(locationForm.$valid)">Save & Add Another
             </button>

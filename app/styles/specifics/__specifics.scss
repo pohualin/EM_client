@@ -112,6 +112,11 @@ label.empty {
     color: $brand-secondary;
 }
 
+.role-error {
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
 // Icon buttons next to headings
 h1 .btn-icon, .h1 .btn-icon,
 h2 .btn-icon, .h2 .btn-icon,

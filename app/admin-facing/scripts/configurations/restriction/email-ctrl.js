@@ -34,13 +34,7 @@ angular.module('emmiManager')
         $scope.remove = function(emailRestrictToRemove){
             EmailRestrictConfigurationsService.remove(emailRestrictToRemove).then(function(response){
                 $alert({
-                    content: '<b>' + $scope.client.name + '</b> has been updated successfully.',
-                    container: '#messages-container',
-                    type: 'success',
-                    placement: 'top',
-                    show: true,
-                    duration: 5,
-                    dismissable: true
+                    content: '<b>' + $scope.client.name + '</b> has been updated successfully.'
                 });
                 getEmailRestrict();
                 EmailRestrictConfigurationsService.getEmailsThatDoNotFollowRestrictions().then(function (emailsThatDoNotFollowRestrictions) {

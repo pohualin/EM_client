@@ -33,21 +33,23 @@ angular.module('emmiManager')
 
                 angular.forEach( teamClientLocations , function (location) {
                     var req = {};
-                    req.location = location;
-                    //Select ALL no rows on database
-                    if (providersList.length === location.providersSelected.length) { 
-                        req.providers = [];
-                    } else {
-                        req.providers = location.providersSelected;
+                    if (!location.disabled) {
+                        req.location = location;
+                        //Select ALL no rows on database
+                        if (providersList.length === location.providersSelected.length) {
+                            req.providers = [];
+                        } else {
+                            req.providers = location.providersSelected;
+                        }
+                        teamProviderTeamLocationSaveRequest.push(req);
                     }
-                    teamProviderTeamLocationSaveRequest.push(req);
                 });
                 angular.forEach( teamLocations , function (location) {
                     var req = {};
                     if (location.isNewAdd) {
                         location.isNewAdd = false;
                         req.location = location;
-                        if (providersList.length === location.providersSelected.length) { 
+                        if (providersList.length === location.providersSelected.length) {
                             req.providers = [];
                         } else {
                             req.providers = location.providersSelected;
@@ -58,9 +60,9 @@ angular.module('emmiManager')
 
                 return teamProviderTeamLocationSaveRequest;
             },
-            
-            setAllTabs: function(addAnother){
-            	return {'activeTab' : addAnother ? 1 : 0, 'data' : [
+
+            setAllTabs: function(){
+            	return {'activeTab' : 0, 'data' : [
             	        {
             	            'title': 'Client locations',
             	            'template': 'admin-facing/partials/team/location/tabs/team-client-locations-tab.html'
@@ -77,13 +79,13 @@ angular.module('emmiManager')
           return {
             restrict: 'A',
             link: function (scope, element, attrs, ngModel) {
-                
+
                element.bind('keyup', function (event) {
                     if (!scope.locationQuery || scope.locationQuery.length === 0 )  {
                         scope.cleanSearch();
-                    } 
+                    }
                 });
             }
-          };    
-    }])   
+          };
+    }])
 ;

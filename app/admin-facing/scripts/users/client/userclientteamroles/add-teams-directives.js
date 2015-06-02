@@ -18,7 +18,7 @@ angular.module('emmiManager')
                     UserClientUserClientTeamRolesService.checkSelectedTeamRoles(scope.selectedTeamRoles, scope.clientTeamRoles).then(function(response){
                     	if (response.length > 0) {
                             // pop a warning dialog
-                    		scope.$parent.$parent.cardsToRefresh = response;
+                    	    UserClientUserClientTeamRolesService.setCardsToRefresh(response);
                             if (!scope.addTeamRolesWarning) {
                                 scope.addTeamRolesWarning = $popover(element, {
                                     title: 'Are you sure?',
@@ -65,6 +65,10 @@ angular.module('emmiManager')
         			scope.okAddTeamsPopover = function(){
         				scope.save();
         			};
+        			
+    			    scope.$on('hide_add_team_roles_warning', function(){
+    			        scope.cancelAddTeamsPopover();
+    			    });
                 });
             }
         };

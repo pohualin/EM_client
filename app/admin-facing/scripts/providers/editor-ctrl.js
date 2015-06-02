@@ -32,6 +32,9 @@ angular.module('emmiManager').controller(
                     angular.copy(response.data, $scope.providerResource);
                     angular.copy(response.data.entity, $scope.provider);
                     $scope.cancel(providerForm);
+                    $alert({
+                        content: 'The provider <b>'+response.data.entity.fullName+'</b> has been successfully updated.'
+                    });
                 });
                 _paq.push(['trackEvent', 'Form Action', 'Provider Edit', 'Save']);
             }

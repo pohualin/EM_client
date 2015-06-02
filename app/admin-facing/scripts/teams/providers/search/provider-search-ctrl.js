@@ -1,7 +1,7 @@
 'use strict';
 angular.module('emmiManager')
 
-    .controller('ProviderSearchController', function ($scope, $modal, ProviderView, TeamLocation, TeamProviderService, ProviderSearch, $controller, arrays, ProviderCreate, ClientProviderService, Client) {
+    .controller('ProviderSearchController', function ($scope, $modal, ProviderView, TeamLocation, TeamProviderService, ProviderSearch, $controller, arrays, ProviderCreate, ClientProviderService, Client, focus) {
 
         $controller('CommonSearch', {$scope: $scope});
 
@@ -14,7 +14,7 @@ angular.module('emmiManager')
         $scope.search = function (isValid) {
             if (isValid) {
                 $scope.noSearch = false;
-                ClientProviderService.findPossibleProvidersNotUsingClient($scope.allTeamLocations, Client.getClient(), $scope.providerQuery, $scope.status)
+                ClientProviderService.findPossibleProvidersNotUsingClient($scope.allTeamLocations, Client.getClient(), $scope.searchAll.providerQuery, $scope.status)
                 .then(function (providerPage) {
                     $scope.handleResponse(providerPage, 'searchedProvidersList');
                 });
@@ -26,7 +26,7 @@ angular.module('emmiManager')
          */
         $scope.statusChange = function () {
             $scope.loading = true;
-            ClientProviderService.findPossibleProvidersNotUsingClient($scope.allTeamLocations, Client.getClient(), $scope.providerQuery, $scope.status)
+            ClientProviderService.findPossibleProvidersNotUsingClient($scope.allTeamLocations, Client.getClient(), $scope.searchAll.providerQuery, $scope.status)
             .then(function (providerPage) {
                 $scope.handleResponse(providerPage, 'searchedProvidersList');
                 $scope.setCheckboxesForChanged($scope[searchedProvidersList]);
@@ -69,7 +69,7 @@ angular.module('emmiManager')
         $scope.sort = function (property) {
             var sort = $scope.createSortProperty(property);
             $scope.loading = true;
-            ClientProviderService.findPossibleProvidersNotUsingClient($scope.allTeamLocations, Client.getClient(), $scope.providerQuery, $scope.status, sort, $scope.currentPageSize)
+            ClientProviderService.findPossibleProvidersNotUsingClient($scope.allTeamLocations, Client.getClient(), $scope.searchAll.providerQuery, $scope.status, sort, $scope.currentPageSize)
             .then(function (providerPage) {
                 $scope.handleResponse(providerPage, 'searchedProvidersList');
                 $scope.setCheckboxesForChanged($scope[searchedProvidersList]);
@@ -109,8 +109,7 @@ angular.module('emmiManager')
                 }
                 request.provider = provider.entity;
                 $scope.teamProviderTeamLocationSaveRequest.push(request);
-            }
-            else {
+            } else {
                 provider.entity.showLocations = false;
                 request.provider = provider.entity;
                 $scope.teamProviderTeamLocationSaveRequest.splice(request.provider.entity, 1);
@@ -147,6 +146,62 @@ angular.module('emmiManager')
             });
         };
 
+        $scope.cleanSearch = function() {
+            $scope.searchedProvidersList = [];
+            $scope.noSearch = true;
+            $scope.links = [];
+            $scope.searchAll.providerQuery = null;
+        };
+
+        $scope.saveAssociationAndAddAnotherProvider = function () {
+            $scope.associateSelectedProvidersToTeam(true).then(function (providersToAdd) {
+                $scope.refreshLocationsAndProviders().then(function () {
+                    $scope.successAlert(providersToAdd, '#modal-messages-container');
+                    $scope.resetState();
+                    // if on the client providers tab
+                    if ($scope.tabs.activeTab === 0) {
+                        // disable previously selected providers
+                        $scope.setClientProviderSelected($scope.clientProviders);
+                    }
+                    // set the active tab to search per UAT ticket EM-1029
+                    $scope.tabs.activeTab = 1;
+                    $scope.cleanSearch();
+                    focus('ProviderSearchFocus');
+                });
+            });
+        };
+
+        $scope.associateSelectedProvidersToTeam = function (addAnother) {
+            $scope.associateRequestSubmitted = true;
+            if ($scope.teamProviderTeamLocationSaveRequest.length > 0) {
+                var invalidRequest = false;
+                angular.forEach($scope.teamProviderTeamLocationSaveRequest, function(req){
+                    if ($scope.allTeamLocations.length > 0 && req.provider.selectedTeamLocations.length < 1) {
+                        invalidRequest = true;
+                    }
+                });
+                if (!invalidRequest) {
+                    // copy the selected team locations when 'all' has not been chosen
+                    angular.forEach($scope.teamProviderTeamLocationSaveRequest, function(req){
+                        if (req.provider.selectedTeamLocations.length !== $scope.allTeamLocations.length) {
+                            // user didn't choose all team locations
+                            req.teamLocations = angular.copy(req.provider.selectedTeamLocations);
+                        } else {
+                            // user chose all, which is the same as not selecting any
+                            req.teamLocations = [];
+                        }
+                    });
+                    return ProviderSearch.updateProviderTeamAssociations($scope.teamProviderTeamLocationSaveRequest, $scope.teamResource).then(function (response) {
+                        if (!addAnother) {
+                            $scope.successAlert($scope.teamProviderTeamLocationSaveRequest, '#messages-container');
+                            $scope.hideaddprovidermodal(); // this also resets $scope.teamProviderTeamLocationSaveRequest
+                            $scope.refreshLocationsAndProviders();
+                        }
+                        return $scope.teamProviderTeamLocationSaveRequest;
+                    });
+                }
+            }
+        };
 
         function init() {
         	$scope.status = 'ACTIVE_ONLY';
@@ -154,7 +209,8 @@ angular.module('emmiManager')
                 $scope.handleResponse(clientProviders, managedClientProviderList);
                 $scope.setClientProviderSelected($scope.clientProviders);
             });
-            $scope.tabs = TeamProviderService.setAllTabs($scope.addAnother);
+            $scope.cleanSearch();
+            $scope.tabs = TeamProviderService.setAllTabs();
         }
         init();
     })

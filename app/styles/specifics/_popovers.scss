@@ -66,13 +66,26 @@
         }
     }
     .popover-footer .btn.pull-left {
-        margin-right: 18px;
+        margin-right: 16px;
+    }
+    .popover-footer-with-info {
+        height: 72px;
+        .info {
+            // vertical centering
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .btn.pull-left {
+            position: relative;
+            z-index: 1;
+        }
     }
     .popover-footer .info {
         font-size: 15px;
         font-weight: 300;
         line-height: 17px;
-        padding: 6px 0;
+        padding: 0;
     }
     // Custom checkboxes/radios need to be smaller in popovers
     .radio label,

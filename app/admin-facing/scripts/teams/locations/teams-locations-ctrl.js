@@ -33,32 +33,22 @@ angular.module('emmiManager')
 
         $scope.showRemovalSuccess = function (locationResource) {
             $alert({
-                title: ' ',
-                content: 'The location <b>' + locationResource.entity.location.name + '</b> has been successfully removed.',
-                container: '#messages-container',
-                type: 'success',
-                show: true,
-                duration: 5,
-                dismissable: true,
-                placement: 'top'
+                content: 'The location <b>' + locationResource.entity.location.name + '</b> has been successfully removed.'
             });
         };
-        
-        $scope.addLocations = function (addAnother) {
-        	$scope.addAnother = addAnother;
-        	Location.findForClient(Client.getClient()).then(function (allLocations) {
-            	var locationTemplate = allLocations.content && allLocations.content.length > 0 ? 'admin-facing/partials/team/location/search-with-client-location-tabs.html'
-            		                                                    : 'admin-facing/partials/team/location/search-without-client-location-tabs.html';
-            		
+
+        $scope.addLocations = function () {
+        	return Location.findForClient(Client.getClient()).then(function (allLocations) {
+            	var locationTemplate = allLocations.content && allLocations.content.length > 0 ? 'admin-facing/partials/team/location/search-with-client-location-tabs.html' : 'admin-facing/partials/team/location/search-without-client-location-tabs.html';
                	$modal({
-            		scope: $scope, 
-            		template: locationTemplate, 
-            		animation: 'none', 
+            		scope: $scope,
+            		template: locationTemplate,
+            		animation: 'none',
             		backdropAnimation: 'emmi-fade',
             		show: true,
             		backdrop: 'static'});
             });
-        	
+
         };
 
         $scope.cancelPopup = function() {
@@ -72,43 +62,24 @@ angular.module('emmiManager')
             $scope.teamLocations = angular.copy(teamLocationsAux);
         };
 
-        $scope.displaySuccessfull = function(locationsToAdd, container, addAnother) {
+        $scope.displaySuccessfull = function(locationsToAdd, container) {
             var message = (locationsToAdd.length === 1) ?
                 ' <b>' + locationsToAdd[0].location.name + '</b> has been successfully added.' :
                 'The new locations have been successfully added.';
-            var placement = addAnother ? '': 'top';
-
             $alert({
-                title: ' ',
                 content: message,
-                container: container,
-                type: 'success',
-                show: true,
-                duration: 5,
-                dismissable: true,
-                placement: placement
+                container: container
             });
         };
 
         $scope.refresh = function() {
             $scope.teamLocations = {};
-            TeamLocation.loadTeamLocationsSimple($scope.teamClientResource.teamResource.link.teamLocations).then(function(pageLocations) {
+            return TeamLocation.loadTeamLocationsSimple($scope.teamClientResource.teamResource.link.teamLocations).then(function(pageLocations) {
                 angular.forEach(pageLocations.content, function (teamLocation) {
                     $scope.teamLocations[teamLocation.entity.location.id] = angular.copy(teamLocation.entity.location);
                 });
                 $scope.handleResponse(pageLocations, managedLocationList);
             });
-        };
-
-        $scope.save = function (locationsToAdd, addAnother) {
-            $scope.refresh();
-
-            if (addAnother) {
-                $scope.addLocations(true);
-                $scope.displaySuccessfull(locationsToAdd, '#modal-messages-container', addAnother);
-            } else {
-                $scope.displaySuccessfull(locationsToAdd, '#messages-container', addAnother);
-            }
         };
 
         $scope.removeExistingLocation = function (locationResource) {

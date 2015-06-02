@@ -85,14 +85,7 @@ angular.module('emmiManager')
                 UsersClientPasswordService.sendReset(UsersClientService.getUserClient()).then(function () {
                     $scope.metadataChanged();
                     $alert({
-                        content: 'A password reset email has been sent to <strong>' + UsersClientService.getUserClient().entity.email +
-                        '</strong>.',
-                        container: '#messages-container',
-                        type: 'success',
-                        placement: 'top',
-                        show: true,
-                        duration: 5,
-                        dismissable: true
+                        content: 'A password reset email has been sent to <strong>' + UsersClientService.getUserClient().entity.email + '</strong>.'
                     });
                 });
             };
@@ -110,14 +103,7 @@ angular.module('emmiManager')
                         .then(function success() {
                             $scope.reset();
                             $alert({
-                                content: 'The password for <b>' + UsersClientService.getUserClient().entity.login +
-                                '</b> has been successfully saved.',
-                                container: '#messages-container',
-                                type: 'success',
-                                placement: 'top',
-                                show: true,
-                                duration: 5,
-                                dismissable: true
+                                content: 'The password for <b>' + UsersClientService.getUserClient().entity.login + '</b> has been successfully saved.'
                             });
                         }, function error() {
                             $scope.reset();

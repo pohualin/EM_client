@@ -33,14 +33,7 @@ angular.module('emmiManager')
                 ActivationService.sendActivationEmail(UsersClientService.getUserClient()).then(function () {
                     $scope.metadataChanged();
                     $alert({
-                        content: 'A setup email has been sent to <strong>' + UsersClientService.getUserClient().entity.email +
-                        '</strong>.',
-                        container: '#messages-container',
-                        type: 'success',
-                        placement: 'top',
-                        show: true,
-                        duration: 5,
-                        dismissable: true
+                        content: 'A setup email has been sent to <strong>' + UsersClientService.getUserClient().entity.email + '</strong>.'
                     });
                     if(addAnother){
                         $scope.createAnotherUserClient();

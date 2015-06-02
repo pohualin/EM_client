@@ -53,15 +53,35 @@ angular.module('emmiManager', [
     })
 
     .constant('PATTERN', {
-        EMAIL: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$/
+        EMAIL: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$/,
+        PROVIDER_NAME: /^[a-zA-Z- '(),.]*$/
     })
 
-    .config(
-    function ($provide, $httpProvider, $translateProvider, tmhDynamicLocaleProvider, HateoasInterceptorProvider, $datepickerProvider, $alertProvider, API, unsavedWarningsConfigProvider) {
+    .config(['ivhTreeviewOptionsProvider', function (ivhTreeviewOptionsProvider) {
+        ivhTreeviewOptionsProvider.set({
+            idAttribute: 'name',
+            labelAttribute: 'displayName',
+            childrenAttribute: 'children',
+            selectedAttribute: 'selected',
+            useCheckboxes: true,
+            expandToDepth: 1,
+            indeterminateAttribute: '__ivhTreeviewIndeterminate',
+            defaultSelectedState: false,
+            validate: true,
+            twistieExpandedTpl: '',
+            twistieCollapsedTpl: '',
+            twistieLeafTpl: '',
+            userOptions: {disabledAttribute: 'disabled'}
+        });
+    }])
+
+    .config(function ($provide, $httpProvider, $translateProvider, tmhDynamicLocaleProvider,
+              HateoasInterceptorProvider, $datepickerProvider, $alertProvider, API, unsavedWarningsConfigProvider) {
 
         // Initialize angular-translate
         $translateProvider.useUrlLoader(API.messages);
         $translateProvider.preferredLanguage('en');
+        $translateProvider.useSanitizeValueStrategy(null);
         $translateProvider.useCookieStorage();
 
         tmhDynamicLocaleProvider.localeLocationPattern('bower_components/angular-i18n/angular-locale_{{locale}}.js');
@@ -101,6 +121,13 @@ angular.module('emmiManager', [
 
         // custom global angularstrap configurations
         angular.extend($alertProvider.defaults, {
+            show: true,
+            title: '',
+            container: '#messages-container',
+            type: 'success',
+            // placement: 'top',
+            duration: 5,
+            dismissable: true,
             animation: 'am-fade-and-slide-top',
             template: 'admin-facing/partials/common/directives/alert/alert.tpl.html'
         });
@@ -112,17 +139,29 @@ angular.module('emmiManager', [
             directive.template = [
                 '<span class="checkbox"><input id="ivhTreeviewCheckbox_{{elementId}}_{{node.name}}" type="checkbox"',
                 'ng-model="isSelected"',
+                'ng-disabled="isDisabled"',
                 'ng-change="ctrl.select(node, isSelected)" />',
                 '<label for="ivhTreeviewCheckbox_{{elementId}}_{{node.name}}"></label></span>'
             ].join('\n');
             directive.compile = function () {
-                return function (scope, element, attrs) {
+                return function (scope, element, attrs, ctrl) {
                     link.apply(this, arguments);
                     // get the closest treeview container id
                     var elementId = angular.element(element).closest('.ivh-treeview-container').attr('id');
                     if (elementId) {
                         scope.elementId = elementId;
                     }
+
+                    var node = scope.node;
+                    var opts = ctrl.opts();
+                    var disabledAttr = opts.userOptions.disabledAttribute;
+                    scope.isDisabled = node[disabledAttr];
+
+                    scope.$watch(function() {
+                      return scope.node[disabledAttr];
+                    }, function (newVal) {
+                      scope.isDisabled = newVal;
+                    });
                 };
             };
             return $delegate;
@@ -130,7 +169,7 @@ angular.module('emmiManager', [
 
         $provide.decorator('scrollbarDirective', function ($delegate) {
             var directive = $delegate[0];
-            directive.template = '<div class="scroll-bar"><div class="scroll-thumb"></div></div><div class="scroll-viewport" sidebar-scroller><div class="scroll-overview" ng-transclude></div></div>';
+            directive.template = '<div class="scroll-bar"><div class="scroll-thumb"></div></div><div class="scroll-viewport" data-sidebar-scroller><div class="scroll-overview" data-ng-transclude></div></div>';
             var compile = directive.compile;
             directive.compile = function (tElement, tAttrs) {
                 var _me = this;
@@ -230,6 +269,7 @@ angular.module('emmiManager', [
         };
 
         $rootScope.emailPattern = PATTERN.EMAIL;
+        $rootScope.providerNamePattern = PATTERN.PROVIDER_NAME;
         $rootScope.isProduction = !!API.production;
 
         $rootScope.$on('$routeChangeStart', function (event, next) {
@@ -285,15 +325,37 @@ angular.module('emmiManager', [
         // Call when 409 response is returned by the server
         $rootScope.$on('event:optimistic-lock-failure', function (event, rejection) {
             console.log('409: ' + rejection.data.detail);
-            $modal({
-                title: 'Object Already Modified',
-                content: 'You have attempted to save an object that has already been modified by another user.' +
-                ' Please refresh the page to load the latest changes before attempting to save again.',
-                animation: 'none',
-                backdropAnimation: 'emmi-fade',
-                backdrop: 'static',
-                show: true
-            });
+            if (!$rootScope.optimisticLockModal) {
+                $rootScope.optimisticLockModal = $modal({
+                    title: 'Object Already Modified',
+                    content: [
+                        'You have attempted to save an object that has already been modified by another user.',
+                        ' Please refresh the page to load the latest changes before attempting to save again.'
+                    ].join(' '),
+                    animation: 'none',
+                    backdropAnimation: 'emmi-fade',
+                    backdrop: 'static',
+                    show: true
+                });
+            }
+        });
+
+        // when the xsrf token was not sent to the back-end
+        $rootScope.$on('event:auth-xsrf-token-missing', function () {
+            if (!$rootScope.xsrfMissingModal) {
+                $rootScope.xsrfMissingModal = $modal({
+                    title: 'XSRF Security Token Missing',
+                    content: [
+                        'You may have cleared your browser cookies, which could have resulted in the ',
+                        'expiry of your current security token. A new security token has been issued.',
+                        'Please retry the operation.'
+                    ].join(' '),
+                    animation: 'none',
+                    backdropAnimation: 'emmi-fade',
+                    backdrop: 'static',
+                    show: true
+                });
+            }
         });
 
         // Call when the 500 response is returned by the server

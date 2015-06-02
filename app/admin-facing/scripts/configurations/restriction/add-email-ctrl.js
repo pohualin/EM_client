@@ -42,32 +42,26 @@ angular.module('emmiManager')
                     });
 
                     $alert({
-                        content: '<b>' + $scope.client.name + '</b> has been updated successfully.',
-                        container: '#messages-container',
-                        type: 'success',
-                        placement: 'top',
-                        show: true,
-                        duration: 5,
-                        dismissable: true
+                        content: '<b>' + $scope.client.name + '</b> has been updated successfully.'
                     });
                 } else {
                     $scope.showErrorBanner();
                 }
             };
 
-            /**
-             * Create and show error banner
-             */
-            $scope.showErrorBanner = function () {
-                if (!$scope.addEmailRestrictErrorAlert) {
-                    $scope.addEmailRestrictErrorAlert = $alert({
-                        title: ' ',
-                        content: 'Please correct the below information.',
-                        container: '#email-message-container',
-                        type: 'danger',
-                        show: true,
-                        dismissable: false
-                    });
-                }
-            };
-        }]);
+        /**
+         * Create and show error banner
+         */
+        $scope.showErrorBanner = function () {
+            if (!$scope.addEmailRestrictErrorAlert) {
+                $scope.addEmailRestrictErrorAlert = $alert({
+                    title: ' ',
+                    content: 'Please correct the below information.',
+                    container: '#email-message-container',
+                    type: 'danger',
+                    show: true,
+                    dismissable: false
+                });
+            }
+        };
+    }]);

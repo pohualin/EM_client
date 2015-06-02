@@ -32,6 +32,7 @@ angular.module('emmiManager')
                                 trigger: 'manual',
                                 show: true,
                                 placement: scope.placement,
+                                container: 'body',
                                 contentTemplate: 'admin-facing/partials/admin/tags/delete_popover.tpl.html'
                             });
                         }

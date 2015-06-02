@@ -78,12 +78,19 @@ angular.module('emmiManager')
              */
             $scope.saveNewRole = function (clientTeamRoleEntity, form) {
                 form.$setPristine();
-                ManageUserTeamRolesService.saveNewClientTeamRole(clientTeamRoleEntity, $scope.clientResource)
-                    .then(function () {
-                        delete $scope.newClientTeamRole;
-                        $scope.loadExisting();
-                        $scope.successAlert(clientTeamRoleEntity);
-                    });
+                $scope.newClientTeamRoleFormSubmitted = true;
+                if(form.$valid){
+                    ManageUserTeamRolesService.saveNewClientTeamRole(clientTeamRoleEntity, $scope.clientResource)
+                        .then(function () {
+                            delete $scope.newClientTeamRole;
+                            $scope.loadExisting();
+                            $scope.successAlert(clientTeamRoleEntity);
+                        }, function(error){
+                            if (error.status === 406) {
+                                form.name.$setValidity('unique', false);
+                            }
+                        });
+                }
             };
 
             /**
@@ -93,6 +100,8 @@ angular.module('emmiManager')
              */
             $scope.cancelNew = function (form) {
                 form.$setPristine();
+                $scope.resetValidity(form);
+                $scope.newClientTeamRoleFormSubmitted = false;
                 delete $scope.newClientTeamRole;
             };
 
@@ -106,6 +115,7 @@ angular.module('emmiManager')
                 form.$setPristine();
                 clientTeamRoleResource.editName = false;
                 angular.extend(clientTeamRoleResource, clientTeamRoleResource.original);
+                $scope.resetValidity(form);
                 delete clientTeamRoleResource.original;
             };
 
@@ -148,7 +158,16 @@ angular.module('emmiManager')
              */
             $scope.update = function (clientTeamRoleResource, form) {
                 form.$setPristine();
-                ManageUserTeamRolesService.saveExistingClientTeamRole(clientTeamRoleResource);
+                ManageUserTeamRolesService.saveExistingClientTeamRole(clientTeamRoleResource).then(function(){
+                    clientTeamRoleResource.activePanel = 1;
+                    $alert({
+                        content: 'The role <b>' + clientTeamRoleResource.entity.name + '</b> has been updated successfully.'
+                    });
+                }, function(error){
+                    if (error.status === 406) {
+                        form.name.$setValidity('unique', false);
+                    }
+                });
             };
 
             /**
@@ -158,6 +177,9 @@ angular.module('emmiManager')
              */
             $scope.remove = function (clientTeamRoleResource) {
                 ManageUserTeamRolesService.deleteExistingClientTeamRole(clientTeamRoleResource).then(function () {
+                    $alert({
+                        content: 'The role <b>' + clientTeamRoleResource.entity.name + '</b> has been successfully removed.'
+                    });
                     $scope.loadExisting();
                 });
             };
@@ -180,13 +202,7 @@ angular.module('emmiManager')
                             $scope.successAlert(added[0]);
                         } else {
                             $alert({
-                                content: 'The selected roles have been added successfully.',
-                                container: '#messages-container',
-                                type: 'success',
-                                placement: 'top',
-                                show: true,
-                                duration: 5,
-                                dismissable: true
+                                content: 'The selected roles have been added successfully.'
                             });
                         }
                     });
@@ -213,32 +229,21 @@ angular.module('emmiManager')
              */
             $scope.successAlert = function(clientRole){
                 $alert({
-                    content: 'The role <b>' + clientRole.name + '</b> has been added successfully.',
-                    container: '#messages-container',
-                    type: 'success',
-                    placement: 'top',
-                    show: true,
-                    duration: 5,
-                    dismissable: true
+                    content: 'The role <b>' + clientRole.name + '</b> has been added successfully.'
                 });
+            };
+
+            /**
+             * Reset all validity
+             */
+            $scope.resetValidity = function(form){
+                if(form.name){
+                    form.name.$setValidity('unique', true);
+                }
             };
 
             // start by loading the currently saved roles
             $scope.loadExisting();
         }
-    ]).config(['ivhTreeviewOptionsProvider', function (ivhTreeviewOptionsProvider) {
-        ivhTreeviewOptionsProvider.set({
-            idAttribute: 'name',
-            labelAttribute: 'displayName',
-            childrenAttribute: 'children',
-            selectedAttribute: 'selected',
-            useCheckboxes: true,
-            expandToDepth: 1,
-            indeterminateAttribute: '__ivhTreeviewIndeterminate',
-            defaultSelectedState: false,
-            validate: true,
-            twistieExpandedTpl: '',
-            twistieCollapsedTpl: '',
-            twistieLeafTpl: ''
-        });
-    }]);
+    ])
+;

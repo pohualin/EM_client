@@ -57,6 +57,7 @@ angular.module('emmiManager', [
         // Initialize angular-translate
         $translateProvider.useUrlLoader(API.messages);
         $translateProvider.preferredLanguage('en');
+        $translateProvider.useSanitizeValueStrategy(null);
         $translateProvider.useCookieStorage();
 
         tmhDynamicLocaleProvider.localeLocationPattern('bower_components/angular-i18n/angular-locale_{{locale}}.js');
@@ -64,6 +65,10 @@ angular.module('emmiManager', [
 
         // make sure the server knows that an AJAX call is happening
         $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+        // configure default client level XSRF/CSRF protection
+        $httpProvider.defaults.xsrfHeaderName = 'X-XSRF-TOKEN-CLIENT';
+        $httpProvider.defaults.xsrfCookieName = 'XSRF-TOKEN-CLIENT';
 
         // enable HATEOAS link array --> object parsing on $get
         HateoasInterceptorProvider.transformAllResponses();
@@ -85,7 +90,8 @@ angular.module('emmiManager', [
         });
     })
 
-    .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, PATTERN, arrays, $document, ConfigurationService, $modal, $timeout, moment, ErrorMessageTranslateService) {
+    .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, PATTERN, arrays, $document,
+                   ConfigurationService, $modal, $timeout, moment, ErrorMessageTranslateService) {
 
         var modals = [], alerts = [];
 
@@ -255,16 +261,39 @@ angular.module('emmiManager', [
         // Call when 409 response is returned by the server
         $rootScope.$on('event:optimistic-lock-failure', function (event, rejection) {
             console.log('409: ' + rejection.data.detail);
-            $modal({
-                title: 'Object Already Modified',
-                content: 'You have attempted to save an object that has already been modified by another user.' +
-                ' Please refresh the page to load the latest changes before attempting to save again.',
-                animation: 'none',
-                backdropAnimation: 'emmi-fade',
-                backdrop: 'static',
-                show: true
-            });
+            if (!$rootScope.optimisticLockModal) {
+                $rootScope.optimisticLockModal = $modal({
+                    title: 'Object Already Modified',
+                    content: [
+                        'You have attempted to save an object that has already been modified by another user.',
+                        ' Please refresh the page to load the latest changes before attempting to save again.'
+                    ].join(' '),
+                    animation: 'none',
+                    backdropAnimation: 'emmi-fade',
+                    backdrop: 'static',
+                    show: true
+                });
+            }
         });
+
+        // when the xsrf token was not sent to the back-end
+        $rootScope.$on('event:auth-xsrf-token-missing', function () {
+            if (!$rootScope.xsrfMissingModal) {
+                $rootScope.xsrfMissingModal = $modal({
+                    title: 'XSRF Security Token Missing',
+                    content: [
+                        'You may have cleared your browser cookies, which could have resulted in the ',
+                        'expiry of your current security token. A new security token has been issued.',
+                        'Please retry the operation.'
+                    ].join(' '),
+                    animation: 'none',
+                    backdropAnimation: 'emmi-fade',
+                    backdrop: 'static',
+                    show: true
+                });
+            }
+        });
+
 
         // Call when the 500 response is returned by the server
         $rootScope.$on('event:server-error', function (event, rejection) {
@@ -288,23 +317,23 @@ angular.module('emmiManager', [
             }
         });
 
-        ErrorMessageTranslateService.getLockErrorMessages().then(function(ERROR_MESSAGE){
-        	moment.locale('en', {
-            	relativeTime: {
-            		future: ERROR_MESSAGE.LOCK_PART_1 + 'in %s' + ERROR_MESSAGE.LOCK_PART_2,
+        ErrorMessageTranslateService.getLockErrorMessages().then(function (ERROR_MESSAGE) {
+            moment.locale('en', {
+                relativeTime: {
+                    future: ERROR_MESSAGE.LOCK_PART_1 + 'in %s' + ERROR_MESSAGE.LOCK_PART_2,
                     past: ERROR_MESSAGE.LOCK_EXPIRED,
-                    s:  'a few seconds',
-                    m:  'a minute',
+                    s: 'a few seconds',
+                    m: 'a minute',
                     mm: '%d minutes',
-                    h:  'an hour',
+                    h: 'an hour',
                     hh: '%d hours',
-                    d:  'a day',
+                    d: 'a day',
                     dd: '%d days',
-                    M:  'a month',
+                    M: 'a month',
                     MM: '%d months',
-                    y:  'a year',
+                    y: 'a year',
                     yy: '%d years'
-            	}
+                }
             });
         });
     });
