@@ -1,6 +1,12 @@
 <div class="col-md-12">
-    <div class="pull-left">
+    <div class="col-md-6 pull-left">
         <h2>Security Settings</h2>
+    </div>
+    <div data-ng-if="badEmails.length > 0 && clientRestrictConfiguration.entity.emailConfigRestrict" class="col-md-6 pull-right alert alert-warning">
+        <b>{{badEmails.length}} users </b> are non-compliant with this policy.
+        <a data-bs-popover data-placement="bottom" title="Non-compliant email addresses:" data-auto-close="true"
+           data-content-template="admin-facing/partials/configurations/restriction/non-compliant-email-popover.html" class="btn btn-link pull-right">View</a>
+
     </div>
     <div class="row">
         <div class="col-md-12">

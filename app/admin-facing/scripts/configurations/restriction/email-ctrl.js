@@ -43,6 +43,9 @@ angular.module('emmiManager')
                     dismissable: true
                 });
                 getEmailRestrict();
+                EmailRestrictConfigurationsService.getEmailsThatDoNotFollowRestrictions().then(function (emailsThatDoNotFollowRestrictions) {
+                    $scope.setEmailsThatDoNotFollowRestrictions(emailsThatDoNotFollowRestrictions);
+                });
             });
         };
 

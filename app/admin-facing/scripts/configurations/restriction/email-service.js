@@ -78,8 +78,25 @@ angular.module('emmiManager')
                             }
                             return responseArray;
                         });
+                },
+
+                /**
+                 * get the emails that do not follow the email restriction rules for the client
+                 */
+                getEmailsThatDoNotFollowRestrictions: function(){
+                    var responseArray = [];
+                    return $http.get(UriTemplate.create(Client.getClient().link.getBadEmails).stringify()).then(function getUserClients(response){
+                        angular.forEach(response.data.content, function (userClientWithEmailThatDoesNotFollowRestictions) {
+                            responseArray.push(userClientWithEmailThatDoesNotFollowRestictions);
+                        });
+                        if (response.data.link && response.data.link['page-next']) {
+                            $http.get(response.data.link['page-next']).then(function (response) {
+                                getUserClients(response);
+                            });
+                        }
+                        return responseArray;
+                    });
                 }
-                
             
             };
         }])
