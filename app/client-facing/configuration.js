@@ -66,6 +66,10 @@ angular.module('emmiManager', [
         // make sure the server knows that an AJAX call is happening
         $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
+        // configure default client level XSRF/CSRF protection
+        $httpProvider.defaults.xsrfHeaderName = 'X-XSRF-TOKEN-CLIENT';
+        $httpProvider.defaults.xsrfCookieName = 'XSRF-TOKEN-CLIENT';
+
         // enable HATEOAS link array --> object parsing on $get
         HateoasInterceptorProvider.transformAllResponses();
 

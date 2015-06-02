@@ -168,7 +168,7 @@ angular.module('emmiManager')
                     var deferred = $q.defer();
                     var self = this;
                     if ($rootScope.authenticated) {
-                        $http.get(API.logout);
+                        $http.post(API.logout, {});
                         self._localLogout();
                         deferred.resolve('ok');
                     } else {

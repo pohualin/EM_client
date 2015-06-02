@@ -110,7 +110,7 @@ angular.module('emmiManager')
                 },
                 logout: function () {
                     var self = this;
-                    return $http.get(API.logout)
+                    return $http.post(API.logout,{})
                         .success(function () {
                             self.localLogout();
                         }).error(function () {
