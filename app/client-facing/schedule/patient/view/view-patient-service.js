@@ -9,6 +9,12 @@ angular.module('emmiManager')
                         .success(function (response) {
                             return response.data;
                         });
+                },
+                allClientPatients : function (team) {
+                    ///clients/1/allPatients
+                    return $http.get(UriTemplate.create(team.link.clientPatients).stringify()).success(function (response){
+                       console.log(response);
+                    });
                 }
             };
         }])
