@@ -176,12 +176,12 @@ h3 .btn-icon, .h3 .btn-icon {
     position: relative;
     .form-control {
         padding-left: $padding-base-horizontal + 24;
+        // Change color of input icon when valid data has been entered
+        &.not-empty + .input-icon {
+            color: $gray;
+        }
         &:focus ~ .input-icon {
             color: $brand-secondary;
-        }
-        // Change color of input icon when valid data has been entered
-        &.ng-valid + .input-icon {
-            color: $gray;
         }
     }
 }
