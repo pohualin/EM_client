@@ -30,7 +30,7 @@ angular.module('emmiManager')
             $scope.emailRestrictConfigurationFormSubmitted = true;
             if(emailRestrictConfigurationForm.$valid){
                 EmailRestrictConfigurationsService.save($scope.emailRestrictConfiguration).then(function(response){
-                    $scope.listExisting();
+                    $scope.$emit('requestEmailList');
                     $scope.emailRestrictConfiguration = EmailRestrictConfigurationsService.newEmailRestrictConfiguration();
                     $scope.emailRestrictConfigurationFormSubmitted = false;
                     if(!addAnother){

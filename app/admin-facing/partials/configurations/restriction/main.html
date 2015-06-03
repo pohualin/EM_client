@@ -1,21 +1,27 @@
-<div class="container" data-ng-cloak>
-    <div class="row">
-        <div class="col-md-12">
-            <ol class="breadcrumb">
-                <li><a href="#/">Emmi Manager</a></li>
-                <li class="active"><a data-ng-href="#/clients/{{client.id}}?{{currentRouteQueryString}}">{{client.name}}</a></li>
-            </ol>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-3"
-            data-ng-include="'admin-facing/partials/configurations/main.html'">
-        </div>
-        <div class="col-md-9">
-            <div>
-                <div class="row" data-ng-include="'admin-facing/partials/configurations/restriction/form.html'"></div>
-            </div>
-        </div>
-    </div>
+<div class="app-header with-breadcrumbs" data-emmi-navbar>
+    <!-- Secondary menu for transclusion -->
+    <ul class="secondary-nav">
+        <li>
+            <a data-ng-if="existingClientRoles.length > 0 || existingClientTeamRoles.length > 0" href="#/clients/{{client.id}}/users">Manage Users</a>
+            <a data-ng-if="existingClientRoles.length === 0 && existingClientTeamRoles.length === 0" data-ng-class="{'disabled':(existingClientRoles.length === 0 && existingClientTeamRoles.length === 0)}" data-bs-tooltip data-type="info" data-placement="bottom" data-title="Set up user roles before adding users">Manage Users</a>
+        </li>
+        <li><a href="#/clients/{{client.id}}/roles">Manage Roles</a></li>
+    </ul>
+    <!-- Breadcrumb for transclusion -->
+    <ol class="breadcrumb">
+        <li><a href="#/clients?{{currentRouteQueryString}}">Search</a></li>
+        <li><a data-ng-href="#/clients/{{client.id}}?{{currentRouteQueryString}}">{{client.name}}</a></li>
+        <li class="active">Client Configurations</li>
+    </ol>
 </div>
+<div class="app-content app-content-with-sidebar container" data-ng-cloak>
+    <div class="row">
+        <div class="sidebar" data-ng-include="'admin-facing/partials/configurations/nav.html'"></div>
+        <div class="main-content">
+            <div class="layout-card">
+                <div class="row" data-ng-include="'admin-facing/partials/configurations/restriction/form.html'"></div>
+            </div><!-- .layout-card -->
+        </div><!-- .main-content -->
+    </div><!-- .row -->
+</div><!-- .container -->
+<footer class="footer" data-ng-include="'admin-facing/partials/common/footer.tpl.html'"></footer>
