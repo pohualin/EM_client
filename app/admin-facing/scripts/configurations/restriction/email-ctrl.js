@@ -28,6 +28,10 @@ angular.module('emmiManager')
             getEmailRestrict();
         };
 
+        $scope.$on('refreshEmailList', function(event) {
+            getEmailRestrict();
+        });
+
         /**
          * Remove one single emailRestrictConfiguration
          */

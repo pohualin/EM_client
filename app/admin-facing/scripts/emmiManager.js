@@ -291,6 +291,7 @@ angular.module('emmiManager', [
             var pageTitle = current && current.$$route && current.$$route.title;
             $rootScope.page.setTitle(pageTitle);
             $rootScope.activeMenu = current && current.$$route && current.$$route.activeMenu;
+            $rootScope.activeSidebarMenu = current && current.$$route && current.$$route.activeSidebarMenu;
         });
 
         // Call when the the client is confirmed
@@ -337,6 +338,8 @@ angular.module('emmiManager', [
                     backdrop: 'static',
                     show: true
                 });
+            } else {
+                $rootScope.optimisticLockModal.show();
             }
         });
 
@@ -355,6 +358,8 @@ angular.module('emmiManager', [
                     backdrop: 'static',
                     show: true
                 });
+            } else {
+                $rootScope.xsrfMissingModal.show();
             }
         });
 

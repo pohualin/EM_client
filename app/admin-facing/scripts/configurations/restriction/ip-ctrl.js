@@ -28,6 +28,10 @@ angular.module('emmiManager')
             getIpRestrict();
         };
 
+        $scope.$on('refreshIpList', function(event) {
+            getIpRestrict();
+        });
+
         /**
          * Remove one single ipRestrictConfiguration
          */

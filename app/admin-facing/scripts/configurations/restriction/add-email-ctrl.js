@@ -30,10 +30,10 @@ angular.module('emmiManager')
                 $scope.emailRestrictConfigurationFormSubmitted = true;
                 if (emailRestrictConfigurationForm.$valid) {
                     EmailRestrictConfigurationsService.save($scope.emailRestrictConfiguration).then(function (response) {
-                        $scope.listExisting();
+                        $scope.$emit('requestEmailList');
                         $scope.emailRestrictConfiguration = EmailRestrictConfigurationsService.newEmailRestrictConfiguration();
                         $scope.emailRestrictConfigurationFormSubmitted = false;
-                        if (!addAnother) {
+                        if(!addAnother){
                             $scope.$hide();
                         }
                         EmailRestrictConfigurationsService.getEmailsThatDoNotFollowRestrictions().then(function (emailsThatDoNotFollowRestrictions) {
@@ -55,11 +55,11 @@ angular.module('emmiManager')
         $scope.showErrorBanner = function () {
             if (!$scope.addEmailRestrictErrorAlert) {
                 $scope.addEmailRestrictErrorAlert = $alert({
-                    title: ' ',
                     content: 'Please correct the below information.',
                     container: '#email-message-container',
                     type: 'danger',
-                    show: true,
+                    placement: '',
+                    duration: false,
                     dismissable: false
                 });
             }
