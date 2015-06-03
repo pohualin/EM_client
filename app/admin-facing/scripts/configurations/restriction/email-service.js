@@ -7,7 +7,7 @@ angular.module('emmiManager')
     .service('EmailRestrictConfigurationsService', ['$filter', '$q', '$http', 'UriTemplate', 'CommonService', 'Client',
         function ($filter, $q, $http, UriTemplate, CommonService, Client) {
             return {
-                
+
                 /**
                  * Call server to fetch next batch of EmailRestrictConfiguration
                  */
@@ -18,7 +18,7 @@ angular.module('emmiManager')
                             return response.data;
                         });
                 },
-                
+
                 /**
                  * Get EmailRestrictConfiguration by Client
                  */
@@ -31,40 +31,40 @@ angular.module('emmiManager')
                             return response.data;
                         });
                 },
-                
+
                 /**
                  * Return an empty EmailRestrictConfiguration
                  */
-                newEmailRestrictConfiguration: function(){
+                newEmailRestrictConfiguration: function () {
                     return {};
                 },
-                
+
                 /**
                  * Remove single emailRestrictConfiguartion
                  * @param emailRestrictToRemove to remove
-                 * 
+                 *
                  */
-                remove: function(emailRestrictToRemove){
+                remove: function (emailRestrictToRemove) {
                     return $http.delete(UriTemplate.create(emailRestrictToRemove.link.self)
-                            .stringify()).then();
+                        .stringify()).then();
                 },
-                
+
                 /**
                  * Save EmailRestrictConfiguration
-                 */ 
-                save: function(emailRestrictConfiguration){
-                    return $http.post(UriTemplate.create(Client.getClient().link.emailRestrictConfigurations).stringify(), 
-                            emailRestrictConfiguration.entity)
+                 */
+                save: function (emailRestrictConfiguration) {
+                    return $http.post(UriTemplate.create(Client.getClient().link.emailRestrictConfigurations).stringify(),
+                        emailRestrictConfiguration.entity)
                         .then(function (response) {
                             CommonService.convertPageContentLinks(response.data);
                             return response.data;
                         });
                 },
-                
+
                 /**
                  * Return an array of valid email endings
                  */
-                allValidEmailEndings: function(){
+                allValidEmailEndings: function () {
                     var responseArray = [];
                     return this.getEmailRestrictConfiguration()
                         .then(function addToResponseArray(response) {
@@ -83,21 +83,21 @@ angular.module('emmiManager')
                 /**
                  * get the emails that do not follow the email restriction rules for the client
                  */
-                getEmailsThatDoNotFollowRestrictions: function(){
+                getEmailsThatDoNotFollowRestrictions: function () {
                     var responseArray = [];
-                    return $http.get(UriTemplate.create(Client.getClient().link.getBadEmails).stringify()).then(function getUserClients(response){
+                    return $http.get(UriTemplate.create(Client.getClient().link.getBadEmails).stringify()).then(function getUserClients(response) {
                         angular.forEach(response.data.content, function (userClientWithEmailThatDoesNotFollowRestictions) {
                             responseArray.push(userClientWithEmailThatDoesNotFollowRestictions);
                         });
                         if (response.data.link && response.data.link['page-next']) {
-                            $http.get(response.data.link['page-next']).then(function (response) {
-                                getUserClients(response);
+                            return $http.get(response.data.link['page-next']).then(function (response) {
+                                return getUserClients(response);
                             });
                         }
                         return responseArray;
                     });
                 }
-            
+
             };
         }])
 ;
