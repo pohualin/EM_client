@@ -56,7 +56,9 @@
                                 var deferred = $q.defer();
                                 httpBuffer.append(rejection.config, deferred);
                                 rejection.location = angular.copy($location);
-                                if (rejection.data && rejection.data.url) {
+                                if (rejection.data && rejection.data.entity && 'XSRF_MISSING' === rejection.data.entity.reason){
+                                    $rootScope.$broadcast('event:auth-xsrf-token-missing');
+                                } else if (rejection.data && rejection.data.url) {
                                     // CAS rejections have a url embedded to redirect to
                                     $window.location.href = rejection.data.url;
                                 } else {

@@ -30,7 +30,7 @@ angular.module('emmiManager')
             $scope.ipRestrictConfigurationFormSubmitted = true;
             if(ipRestrictConfigurationForm.$valid){
                 IpRestrictConfigurationsService.save($scope.ipRestrictConfiguration).then(function(response){
-                    $scope.listExisting();
+                    $scope.$emit('requestIpList');
                     $scope.ipRestrictConfiguration = IpRestrictConfigurationsService.newIpRestrictConfiguration();
                     $scope.ipRestrictConfigurationFormSubmitted = false;
                     if(!addAnother){

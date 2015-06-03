@@ -7,16 +7,33 @@
      * Controller for Patient-Program Scheduling
      */
         .controller('ScheduleController', ['$scope', 'team', 'client', 'ScheduledProgramFactory',
-            '$alert', 'ScheduleService', '$location', 'UriTemplate',
-            function ($scope, team, client, ScheduledProgramFactory, $alert, ScheduleService, $location, UriTemplate) {
-
+            '$alert', 'ScheduleService', '$location', 'UriTemplate', 'PatientEmailService',
+            function ($scope, team, client, ScheduledProgramFactory, $alert, ScheduleService, $location, UriTemplate, PatientEmailService) {
+        	       	
                 $scope.team = team;
                 $scope.page.setTitle('Schedule Emmi Program - ' + team.entity.name);
                 $scope.client = client;
                 $scope.patient = team.patient.entity;
                 ScheduledProgramFactory.patient = team.patient.entity;
-
+                
                 /**
+                 * Retrieve team email configuration for scheduling
+                 */
+                function getConfiguration(){
+                    PatientEmailService.getTeamEmailConfiguration(team).then(function(emailConfigsResponse){
+                      angular.forEach(emailConfigsResponse, function (emailConfig){
+                		if(angular.equals(emailConfig.entity.type, 'COLLECT_EMAIL')){
+                			$scope.showEmail = emailConfig.entity.emailConfig;
+                		}
+                		else if(angular.equals(emailConfig.entity.type, 'REQUIRE_EMAIL')){
+                			$scope.isEmailRequired = emailConfig.entity.emailConfig;
+                   		}
+                	 });
+                   });
+                }
+                getConfiguration();
+                
+               /**
                  * Broadcasts event so that Patient save and Program save are kicked off
                  */
                 $scope.savePatientAndProgram = function () {
