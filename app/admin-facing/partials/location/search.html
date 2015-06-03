@@ -79,10 +79,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr data-ng-repeat="location in locations | orderBy:'location.sortIdx'">
+                            <tr data-ng-repeat="location in locations | orderBy:'sortIdx'">
                                     <td>{{location.entity.name}} <em>{{location.entity.active ? '' : "(inactive)"}}</em></td>
                                     <td>{{location.entity.belongsTo.name}}</td>
-                                    <td>{{location.entity.city}}<span 
+                                <td>{{location.entity.city}}<span
                                         data-ng-if="location.entity.city && location.entity.state">,&nbsp;</span>
                                         {{location.entity.state}}</td>
                                     <td>{{location.entity.phone}}</td>

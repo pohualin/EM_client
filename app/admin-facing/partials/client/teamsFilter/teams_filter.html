@@ -55,7 +55,7 @@
             <!--there is a display template that shows ungrouped teams and a display template that shows groups of teams-->
             <!-- show teams un-grouped -->
             <div class="form-group" data-ng-hide="useGroupDisplay">
-                <ul class="teams-filter-list list-unstyled">
+                <ul class="sidebar-list teams-filter-list list-unstyled">
                     <li data-ng-repeat="team in clientTeams">
                         <!--when a user clicks on a team they are taken to that team's page-->
                         <a data-ng-click="selectTeam(team.id)">{{team.name}} <span data-ng-if="!team.active">(inactive)</span> </a>
@@ -75,7 +75,7 @@
                                                when="{'1': '{{tag.teams.length}} team','other':'{{tag.teams.length}} teams'}"></data-ng-pluralize>
                         </span>
                     </h4>
-                    <ul class="teams-filter-list list-unstyled">
+                    <ul class="sidebar-list teams-filter-list list-unstyled">
                         <!--show the teams that have the above tag-->
                         <li data-ng-repeat="team in tag.teams | orderBy:'name'">
                             <!--take user to the team's page when the link is clicked-->
@@ -92,7 +92,7 @@
 
             <div class="form-group" data-ng-show="useGroupDisplay && teamsNotInGroup">
                 <h4 class="h4 teams-filter-heading">Teams without a '{{selectedGroupDisplay.entity.name}}' tag</h4>
-                <ul class="teams-filter-list list-unstyled">
+                <ul class="sidebar-list teams-filter-list list-unstyled">
                     <li data-ng-repeat="team in teamsNotInGroup | orderBy:'name'">
                         <!--show all the teams that do not have a tag in the organize by group that was selected-->
                         <a data-ng-click="selectTeam(team.id)">{{team.name}}</a>
