@@ -6,7 +6,7 @@ angular.module('emmiManager')
  * Controller for ClientRestrictConfiguration main page
  */
 .controller('ClientRestrictConfigurationMainController', ['$alert', '$scope', '$controller', 'clientResource', 'Client', 'ClientRestrictConfigurationsService','ManageUserRolesService', 'ManageUserTeamRolesService','EmailRestrictConfigurationsService',
-    function ($alert, $scope, $controller, clientResource, Client, ClientRestrictConfigurationsService, EmailRestrictConfigurationsService, ManageUserRolesService, ManageUserTeamRolesService) {
+    function ($alert, $scope, $controller, clientResource, Client, ClientRestrictConfigurationsService, ManageUserRolesService, ManageUserTeamRolesService, EmailRestrictConfigurationsService) {
         /**
          * get the initial number of emails that don't follow the client email restrictions
          */
