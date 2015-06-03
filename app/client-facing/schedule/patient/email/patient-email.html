@@ -6,14 +6,14 @@
                     <div class="error-circle fa-exclamation-circle"
                      data-ng-show="newPatientForm.email.$error.required && formSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                     data-title="Required."></div>
+                     data-title="Required"></div>
                 </div>
                 <div class="error-circle fa-exclamation-circle"
                      data-ng-show="newPatientForm.email.$error.pattern && formSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                     data-title="Please enter a valid email."></div>
+                     data-title="Please enter a valid email"></div>
                 <input class="form-control" id="email" data-ng-model="patient.email"
-                       name="email" type="text" 
+                       name="email" type="text"
                        maxlength="255" data-focus-on="email"
                        data-ng-pattern="emailPattern" data-ng-required="isEmailRequired"/>
              </div>

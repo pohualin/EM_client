@@ -20,7 +20,7 @@
                          data-title="Required"></div>
                     <div class="error-circle fa-exclamation-circle" data-ng-show="newPatientForm.firstName.$error.pattern && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                         data-title="Please enter a valid first name."></div>
+                         data-title="Please enter a valid first name"></div>
                     <input class="form-control" data-ng-model="patient.firstName" id="firstName" name="firstName"
                            type="text" required
                            data-auto-focus data-ng-pattern="/^[A-Za-z \'\-]+([\.{0,1}]?[A-Za-z \'\-]*)?$/" data-animation="am-flip-x"
@@ -37,7 +37,7 @@
                          data-title="Required"></div>
                     <div class="error-circle fa-exclamation-circle" data-ng-show="newPatientForm.lastName.$error.pattern && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                         data-title="Please enter a valid last name."></div>
+                         data-title="Please enter a valid last name"></div>
                     <input class="form-control" data-ng-model="patient.lastName" id="lastName" name="lastName"
                            type="text" required data-ng-pattern="/^[A-Za-z \'\-]+([\.{0,1}]?[A-Za-z \'\-]*)?$/" data-animation="am-flip-x">
                 </div>
@@ -73,7 +73,7 @@
                          data-ng-show="newPatientForm.dateOfBirth.$error.date &&
                                        newPatientForm.dateOfBirth.$error.min && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                         data-title="Please select a valid date of birth."></div>
+                         data-title="Please select a valid date of birth"></div>
                     <input id="dateOfBirth" class="form-control" type="text" name="dateOfBirth"
                            data-ng-model="patient.dateOfBirth" data-autoclose="true"
                            data-dateType="iso" data-bs-datepicker data-max-date="today"
@@ -82,7 +82,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="row" data-ng-show="showEmail">
            <div data-ng-include="'client-facing/schedule/patient/email/patient-email.html'"></div>
         </div>
