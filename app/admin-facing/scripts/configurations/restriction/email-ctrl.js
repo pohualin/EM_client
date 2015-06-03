@@ -41,6 +41,9 @@ angular.module('emmiManager')
                     content: '<b>' + $scope.client.name + '</b> has been updated successfully.'
                 });
                 getEmailRestrict();
+                EmailRestrictConfigurationsService.getEmailsThatDoNotFollowRestrictions().then(function (emailsThatDoNotFollowRestrictions) {
+                    $scope.setEmailsThatDoNotFollowRestrictions(emailsThatDoNotFollowRestrictions);
+                });
             });
         };
 
