@@ -49,7 +49,14 @@ angular.module('emmiManager', [
         SORT: 'sort',
         DIRECTION: 'dir',
         SIZE: 'size',
-        INACTIVE_TEAMS: 'i'
+        INACTIVE_TEAMS: 'i',
+        CLIENT_USERS: 'cu'
+    })
+    
+    .constant('STATUS', {
+        'ALL': 'ALL',
+        'ACTIVE_ONLY': 'ACTIVE_ONLY',
+        'INACTIVE_ONLY': 'INACTIVE_ONLY'
     })
 
     .constant('PATTERN', {
