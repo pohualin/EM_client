@@ -123,7 +123,7 @@
                     <input id="contractStart" class="form-control" placeholder="MM/DD/YYYY" type="text" name="clientContractStart"
                            data-ng-model="clientToEdit.contractStart" data-autoclose="true"
                            data-dateType="string" data-bs-datepicker required data-date-format="M/d/yyyy"
-                           data-max-date="{{clientToEdit.contractEnd}}">
+                           data-max-date="{{clientToEdit.contractEnd}}" data-input-icon>
                     <span class="input-icon"><i class="icon-calendar"></i></span>
                 </div>
             </div>
@@ -152,7 +152,7 @@
                     <input id="contractEnd" class="form-control" placeholder="MM/DD/YYYY" type="text" name="clientContractEnd"
                            data-ng-model="clientToEdit.contractEnd" data-autoclose="true"
                            data-dateType="string" data-bs-datepicker required data-date-format="M/d/yyyy"
-                           data-min-date="{{clientToEdit.contractStart | addDays:1}}">
+                           data-min-date="{{clientToEdit.contractStart | addDays:1}}" data-input-icon>
                     <span class="input-icon"><i class="icon-calendar"></i></span>
                 </div>
             </div>
