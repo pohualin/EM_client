@@ -7,7 +7,7 @@
         <form name="searchForm" novalidate>
           <div class="row">
             <div class="col-md-2">
-                <div data-ng-include="'admin-facing/support/search_options.html'"></div>
+                <div data-ng-include="'admin-facing/support/search_options/search_options.html'"></div>
             </div>
             <div class="col-md-6 kill-grid-pad">
               <div class="form-group">
@@ -93,7 +93,7 @@
                     <td><span class="col-wrap">{{clientUser.entity.email}}</span></td>
                     <td class="text-right">
                         <a class="btn-link"
-                           href="#/support/clients/{{clientUser.entity.client.id}}/users/{{clientUser.entity.id}}?{{currentRouteQueryString}}"><i class="icon-compose icon-size-xl"></i></a>
+                           href="#/support/client_users?{{currentRouteQueryString}}"><i class="icon-compose icon-size-xl"></i></a>
                     </td>
                 </tr>
                 <tr class="pagination-row no-hover">
