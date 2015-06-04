@@ -104,10 +104,11 @@
                     </div>
                     <div class="form-inline">
                         <label for="status_filter" data-translate="global.labels.statusFilter">Show:</label>
-                        <select style="width: 105px" class="form-control input-sm" style="width:110px;" id="status_filter" data-ng-model="status"
+                        <select style="width: 110px" class="form-control input-sm" id="status_filter"
+                                data-ng-model="status"
                                 data-ng-options="status | translate for status in statuses"
                                 data-ng-change="statusChange()"
-                                disable-search="true"
+                                data-disable-search="true"
                                 data-chosen>
                         </select>
                     </div>
@@ -127,12 +128,12 @@
                             class="sort-icon"
                             data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
                     </th>
-                    <th class="sort" data-ng-click="sort('login')">User ID
+                    <th class="sort col-sm-4" data-ng-click="sort('login')">User ID
 						<span data-ng-show="sortProperty.property === 'login'"><span
                             class="sort-icon"
                             data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
                     </th>
-                    <th class="sort" data-ng-click="sort('email')">Email
+                    <th class="sort col-sm-4" data-ng-click="sort('email')">Email
 						<span data-ng-show="sortProperty.property === 'email'"><span
                             class="sort-icon"
                             data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
