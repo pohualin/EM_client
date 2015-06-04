@@ -5,8 +5,22 @@ angular.module('emmiManager')
 /**
  * Controller for ClientRestrictConfiguration main page
  */
-.controller('ClientRestrictConfigurationMainController', ['$alert', '$scope', '$controller', 'clientResource', 'Client', 'ClientRestrictConfigurationsService', 'ManageUserRolesService', 'ManageUserTeamRolesService',
-    function ($alert, $scope, $controller, clientResource, Client, ClientRestrictConfigurationsService, ManageUserRolesService, ManageUserTeamRolesService) {
+.controller('ClientRestrictConfigurationMainController', ['$alert', '$scope', '$controller', 'clientResource', 'Client', 'ClientRestrictConfigurationsService','ManageUserRolesService', 'ManageUserTeamRolesService','EmailRestrictConfigurationsService',
+    function ($alert, $scope, $controller, clientResource, Client, ClientRestrictConfigurationsService, ManageUserRolesService, ManageUserTeamRolesService, EmailRestrictConfigurationsService) {
+        /**
+         * get the initial number of emails that don't follow the client email restrictions
+         */
+        EmailRestrictConfigurationsService.getEmailsThatDoNotFollowRestrictions().then(function (emailsThatDoNotFollowRestrictions) {
+            $scope.setEmailsThatDoNotFollowRestrictions(emailsThatDoNotFollowRestrictions);
+        });
+
+        /**
+         * Child controller uses this to update the number of emails that don't follow the client email restrictions
+         * @param newValue
+         */
+        $scope.setEmailsThatDoNotFollowRestrictions = function(newValue){
+            $scope.badEmails = newValue;
+        };
 
         /**
          * Save restrict configuration for the client
