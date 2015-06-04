@@ -1,0 +1,39 @@
+<div class="container" data-ng-cloak data-ng-controller="ClientTeamPhoneConfigurationCtrl">
+   
+<form name="clientTeamPhoneConfigurationForm" class="form"  novalidate>
+<div class="row">
+   	<div class="col-md-12 pull-left">
+       	<h3>Phone Reminders</h3>
+   	</div>
+</div>
+
+<div class="row">
+   	 <div class="col-md-12">
+      	 <div class="form-group">
+              <div class="checkbox" data-ng-repeat="phoneConfiguration in phoneConfigs | orderBy:'phoneConfiguration.rank'" >
+                   <input type="checkbox" id="phoneConfiguration{{$index}}" 
+                          data-ng-model="phoneConfiguration.entity.phoneConfig"
+                          data-ng-change="onChange(clientTeamPhoneConfigurationForm)" />
+            	 	<label for="phoneConfiguration{{$index}}">{{phoneConfiguration.entity.type | translate }}</label>
+              </div>
+         </div>
+     </div>
+</div>
+           
+<div class="row">
+     <div class="col-md-12">
+          <div class="form-group">
+               <button class="btn btn-primary" type="submit"
+                       data-ng-click="saveOrUpdatePhoneConfig(clientTeamPhoneConfigurationForm.$valid)">
+                       <span>Save</span>
+                </button>
+                <button class="btn btn-link" type="submit"
+                        data-ng-click="cancel()">
+                        <span>cancel</span>
+                 </button>
+          </div>
+     </div>
+</div> 
+</form>
+
+</div>

@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  *   Manage Team Level configuration a client
  */
-    .controller('ClientTeamEmailConfigurationCtrl', ['$scope', '$location', '$alert', 'focus', '$controller', 'teamResource', '$routeParams', 'API', 'ClientTeamEmailConfigurationService',
-        function ($scope, $location, $alert, focus, $controller, teamResource,  $routeParams, API, ClientTeamEmailConfigurationService) {
+    .controller('ClientTeamEmailConfigurationCtrl', ['$scope', '$location', '$alert', 'focus', '$controller', 'ClientTeamConfigurationService', '$routeParams', 'API', 'ClientTeamEmailConfigurationService',
+        function ($scope, $location, $alert, focus, $controller, ClientTeamConfigurationService,  $routeParams, API, ClientTeamEmailConfigurationService) {
     	    $scope.showTeamConfig = 'yes';                 
             /**
              * When the save button is clicked. Sends all updates
@@ -67,11 +67,12 @@ angular.module('emmiManager')
              * init method called when page is loading
              */
             function init() {
-            	$scope.team = teamResource;
-            	$scope.client = teamResource.entity.client;
+            	$scope.team = ClientTeamConfigurationService.getTeam();
+            	$scope.client = $scope.team.entity.client;
                 ClientTeamEmailConfigurationService.getTeamEmailConfiguration($scope.team).then(function (response) {
-                    $scope.emailConfigs = response;
+                		$scope.emailConfigs = response;
                 });
+            	
             }
                  
             init();
