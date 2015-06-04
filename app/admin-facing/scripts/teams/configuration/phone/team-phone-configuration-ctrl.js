@@ -14,7 +14,6 @@ angular.module('emmiManager')
              * results
              */
             $scope.saveOrUpdatePhoneConfig = function (valid) {
-            	console.log($scope.phoneConfigs );
             	  if (valid) {
             		  ClientTeamPhoneConfigurationService
                             .saveOrUpdateTeamPhoneConfiguration($scope.team, $scope.phoneConfigs).then(function (response) 

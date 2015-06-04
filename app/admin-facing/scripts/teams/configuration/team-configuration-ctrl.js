@@ -21,10 +21,7 @@ angular.module('emmiManager')
             };
             
             $scope.onClick = function(configType){
-            	console.log('onClick ++++++++++++++');
-            	console.log(configType);
             	if(configType === 'phone'){
-            		console.log('phoneee click');
             		$scope.showEmailConfig = false;
             		$scope.showPhoneConfig = true;
             	}else{
