@@ -28,6 +28,10 @@ angular.module('emmiManager')
             getEmailRestrict();
         };
 
+        $scope.$on('refreshEmailList', function(event) {
+            getEmailRestrict();
+        });
+
         /**
          * Remove one single emailRestrictConfiguration
          */
@@ -37,6 +41,9 @@ angular.module('emmiManager')
                     content: '<b>' + $scope.client.name + '</b> has been updated successfully.'
                 });
                 getEmailRestrict();
+                EmailRestrictConfigurationsService.getEmailsThatDoNotFollowRestrictions().then(function (emailsThatDoNotFollowRestrictions) {
+                    $scope.setEmailsThatDoNotFollowRestrictions(emailsThatDoNotFollowRestrictions);
+                });
             });
         };
 

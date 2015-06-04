@@ -35,8 +35,14 @@ angular.module('emmiManager')
                         self.currentUser().then(function (currentUser) {
                             authService.loginConfirmed(currentUser);
                         });
-                    }).error(function () {
-                        $rootScope.authenticationError = true;
+                    }).error(function (response) {
+                        if (angular.isObject(response)) {
+                            if (response.entity.reason === 'XSRF_MISSING') {
+                                $rootScope.$broadcast('event:auth-xsrf-token-missing');
+                            }
+                        } else {
+                            $rootScope.authenticationError = true;
+                        }
                         Session.destroy();
                     });
                 },
@@ -168,7 +174,7 @@ angular.module('emmiManager')
                     var deferred = $q.defer();
                     var self = this;
                     if ($rootScope.authenticated) {
-                        $http.get(API.logout);
+                        $http.post(API.logout, {});
                         self._localLogout();
                         deferred.resolve('ok');
                     } else {

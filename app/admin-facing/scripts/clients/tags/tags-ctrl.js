@@ -56,7 +56,7 @@ angular.module('emmiManager')
         $scope.checkForConflicts = function (isValid) {
             Tag.checkForConflicts(Client.getClient(), $scope.removedTags).then(function (conflictingTeamTags) {
                 if (conflictingTeamTags.length > 0) {
-                    if (conflictingTeamTags.length === 1 && (conflictingTeamTags[0].conflictingTeamIds[0] === parseInt($route.current.params.teamId))) {
+                    if (conflictingTeamTags.length === 1 && (conflictingTeamTags[0].conflictingTeamIds[0] === parseInt($scope.currentTeam))) {
                         //if the only team with this tag is the team we are currently on don't show popover
                         $scope.saveTags(isValid);
                         $scope.hideOpenModals();

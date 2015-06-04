@@ -20,6 +20,24 @@ label.empty {
     }
 }
 
+.control-label-enumerate {
+    @include remIt(font-size, 14);
+    font-weight: normal;
+    text-transform: none;
+    &:after {
+        content: ':';
+    }
+}
+
+.enumerate-value {
+    display: inline-block;
+    padding-top: ($padding-base-vertical + 1); // Default padding plus a border
+    em {
+        font-style: italic;
+        color: #b0b6bd;
+    }
+}
+
 .table-no-results {
     font-style: italic;
     color: #999;
@@ -158,12 +176,12 @@ h3 .btn-icon, .h3 .btn-icon {
     position: relative;
     .form-control {
         padding-left: $padding-base-horizontal + 24;
+        // Change color of input icon when valid data has been entered
+        &.not-empty + .input-icon {
+            color: $gray;
+        }
         &:focus ~ .input-icon {
             color: $brand-secondary;
-        }
-        // Change color of input icon when valid data has been entered
-        &.ng-valid + .input-icon {
-            color: $gray;
         }
     }
 }

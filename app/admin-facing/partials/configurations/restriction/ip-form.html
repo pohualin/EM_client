@@ -1,5 +1,4 @@
-<div class="modal" tabindex="-1" role="dialog" data-ng-submit="add(ipRestrictConfigurationForm)"
-    data-ng-controller="AddIpRestrictConfigurationController">
+<div class="modal" tabindex="-1" role="dialog" data-ng-submit="add(ipRestrictConfigurationForm)" data-ng-controller="AddIpRestrictConfigurationController">
     <form name="ipRestrictConfigurationForm" class="form" novalidate>
         <div class="modal-dialog">
             <div class="modal-content">
@@ -67,9 +66,9 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-ng-click="$hide()">Cancel</button>
-                    <button type="button" class="btn btn-default" data-ng-click="add(ipRestrictConfigurationForm, true)">Save & Add Another</button>
-                    <input type="submit" id="submit" class="btn btn-primary" value="Save"/>
+                    <input type="submit" id="submit" class="btn btn-success" value="Save"/>
+                    <button type="button" class="btn btn-default" data-ng-click="add(ipRestrictConfigurationForm, true)"><i class="icon-plus"></i> Save & Add Another</button>
+                    <button type="button" class="btn btn-cancel" data-ng-click="$hide()">Cancel</button>
                 </div>
             </div>
         </div>

@@ -1,8 +1,8 @@
-<div class="col-md-12" data-ng-controller="AddIpRestrictConfigurationController">
-    <button type="button" class="btn btn-link" data-ng-hide="ipRestrictConfigurations" data-ng-click="addAnotherIpRestrict()">
-        add IP range
+<div data-ng-controller="AddIpRestrictConfigurationController">
+    <button type="button" class="btn btn-link btn-link-nopad btn-heading" data-ng-if="!ipRestrictConfigurations" data-ng-click="addAnotherIpRestrict()">
+        <i class="icon-plus"></i> add IP range
     </button>
-    <button type="button" class="btn btn-link" data-ng-show="ipRestrictConfigurations" data-ng-click="addAnotherIpRestrict()">
-        add another
+    <button type="button" class="btn btn-link btn-link-nopad btn-heading" data-ng-if="ipRestrictConfigurations" data-ng-click="addAnotherIpRestrict()">
+        <i class="icon-plus"></i> add another
     </button>
 </div>

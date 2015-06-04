@@ -75,8 +75,7 @@ angular.module('emmiManager', [
         });
     }])
 
-    .config(
-    function ($provide, $httpProvider, $translateProvider, tmhDynamicLocaleProvider,
+    .config(function ($provide, $httpProvider, $translateProvider, tmhDynamicLocaleProvider,
               HateoasInterceptorProvider, $datepickerProvider, $alertProvider, API, unsavedWarningsConfigProvider) {
 
         // Initialize angular-translate
@@ -160,7 +159,7 @@ angular.module('emmiManager', [
 
                     scope.$watch(function() {
                       return scope.node[disabledAttr];
-                    }, function(newVal, oldVal) {
+                    }, function (newVal) {
                       scope.isDisabled = newVal;
                     });
                 };
@@ -170,7 +169,7 @@ angular.module('emmiManager', [
 
         $provide.decorator('scrollbarDirective', function ($delegate) {
             var directive = $delegate[0];
-            directive.template = '<div class="scroll-bar"><div class="scroll-thumb"></div></div><div class="scroll-viewport" sidebar-scroller><div class="scroll-overview" ng-transclude></div></div>';
+            directive.template = '<div class="scroll-bar"><div class="scroll-thumb"></div></div><div class="scroll-viewport" data-sidebar-scroller><div class="scroll-overview" data-ng-transclude></div></div>';
             var compile = directive.compile;
             directive.compile = function (tElement, tAttrs) {
                 var _me = this;
@@ -292,6 +291,7 @@ angular.module('emmiManager', [
             var pageTitle = current && current.$$route && current.$$route.title;
             $rootScope.page.setTitle(pageTitle);
             $rootScope.activeMenu = current && current.$$route && current.$$route.activeMenu;
+            $rootScope.activeSidebarMenu = current && current.$$route && current.$$route.activeSidebarMenu;
         });
 
         // Call when the the client is confirmed
@@ -326,15 +326,41 @@ angular.module('emmiManager', [
         // Call when 409 response is returned by the server
         $rootScope.$on('event:optimistic-lock-failure', function (event, rejection) {
             console.log('409: ' + rejection.data.detail);
-            $modal({
-                title: 'Object Already Modified',
-                content: 'You have attempted to save an object that has already been modified by another user.' +
-                ' Please refresh the page to load the latest changes before attempting to save again.',
-                animation: 'none',
-                backdropAnimation: 'emmi-fade',
-                backdrop: 'static',
-                show: true
-            });
+            if (!$rootScope.optimisticLockModal) {
+                $rootScope.optimisticLockModal = $modal({
+                    title: 'Object Already Modified',
+                    content: [
+                        'You have attempted to save an object that has already been modified by another user.',
+                        ' Please refresh the page to load the latest changes before attempting to save again.'
+                    ].join(' '),
+                    animation: 'none',
+                    backdropAnimation: 'emmi-fade',
+                    backdrop: 'static',
+                    show: true
+                });
+            } else {
+                $rootScope.optimisticLockModal.show();
+            }
+        });
+
+        // when the xsrf token was not sent to the back-end
+        $rootScope.$on('event:auth-xsrf-token-missing', function () {
+            if (!$rootScope.xsrfMissingModal) {
+                $rootScope.xsrfMissingModal = $modal({
+                    title: 'XSRF Security Token Missing',
+                    content: [
+                        'You may have cleared your browser cookies, which could have resulted in the ',
+                        'expiry of your current security token. A new security token has been issued.',
+                        'Please retry the operation.'
+                    ].join(' '),
+                    animation: 'none',
+                    backdropAnimation: 'emmi-fade',
+                    backdrop: 'static',
+                    show: true
+                });
+            } else {
+                $rootScope.xsrfMissingModal.show();
+            }
         });
 
         // Call when the 500 response is returned by the server
