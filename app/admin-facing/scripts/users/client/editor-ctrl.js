@@ -23,6 +23,10 @@ angular.module('emmiManager')
                 $scope.clientRoles = roles;
             };
 
+            $scope.setPossibleClientRoles = function (possibleRoles) {
+                $scope.possibleClientRoles = possibleRoles;
+            };
+
             $scope.clientRolesChanged = function (){
                 $scope.$broadcast('client-roles-changed');
             };
@@ -52,16 +56,11 @@ angular.module('emmiManager')
                 $location.path('/clients/' + $scope.client.entity.id + '/users/new');
             };
 
-            $scope.setLoading = function(){
-                $scope.loading = true;
-            };
-
             /**
              * Call and check if user is assigned to Super user.
              */
             $scope.setIsSuperUser = function(){
                 $scope.isSuperUser = UserClientUserClientRolesService.isSuperUser();
-                $scope.loading = false;
             };
 
         }

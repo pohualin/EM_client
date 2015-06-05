@@ -1,6 +1,22 @@
 <div data-ng-controller="UsersClientUserClientRolesListController" data-ng-cloak>
-    <div class="col-md-12" data-ng-show="existingUserClientUserClientRoles">
-        <h2>Client Roles</h2>
+    <div class="col-md-12" data-ng-show="existingUserClientUserClientRoles || teamRoles.length === 0">
+        <div class="row">
+            <div class="col-md-6" data-ng-controller="UsersClientUserClientRolesListController">
+                <h2 class="pull-left" data-ng-show="clientRoles">Client Roles</h2>
+
+                <div class="pull-right" data-ng-show="teamRoles.length === 0">
+                    <a class="btn btn-link btn-link-nopad btn-heading btn-heading-h1"
+                       data-ng-if="!existingUserClientUserClientRoles && clientRoles"
+                       data-placement="right"
+                       data-template="admin-facing/partials/user/client/user_client_role/add-client-role.html"
+                       data-ng-click="setSelectedRoleHasSuperPermission()"
+                       data-trigger="click" data-bs-popover data-auto-close="1"
+                       data-popover-dismiss data-container="body">
+                        <i class="icon-plus"></i> <span>Add client role</span>
+                    </a>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-6">
                 <div class="panel-group" data-ng-repeat="existingUserClientUserClientRole in existingUserClientUserClientRoles"
@@ -9,7 +25,7 @@
                     <form name="existingUserClientUserClientRoleForm_{{existingUserClientUserClientRole.entity.id}}" class="form" novalidate>
                         <div class="panel panel-secondary" data-ng-class="{ 'panel-open': existingUserClientUserClientRole.activePanel === 1 }">
                             <div class="panel-heading" data-ng-click="toggleUserClientUserClienRolePanel(existingUserClientUserClientRole)">
-                                <h4 class="panel-title">
+                                <div class="panel-title">
                                     <a data-bs-collapse-toggle>
                                         <span class="icon-caret-right"></span>
                                         <span class="panel-title-text">{{ existingUserClientUserClientRole.entity.userClientRole.name}}</span>
@@ -19,11 +35,11 @@
                                             <i class="icon-trashcan"></i>
                                         </button>
                                     </div>
-                                </h4>
+                                </div>
                             </div>
                             <div class="panel-collapse" data-bs-collapse-target>
                                 <div class="panel-body">
-                                    Permissions:</br>
+                                    Permissions:<br/>
                                     <div class="permissions-list">
                                         <span data-ng-repeat="permission in existingUserClientUserClientRole.entity.permissions | orderBy:'permission.rank'">
                                             {{permission.name  | translate }}{{!$last ? ',' : ''}}&nbsp;

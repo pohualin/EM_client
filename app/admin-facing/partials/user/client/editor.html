@@ -30,8 +30,15 @@
             <div class="layout-card">
 
     <div data-ng-show="selectedUserClient">
-        <div class="row" data-ng-include="'admin-facing/partials/user/client/userclientrole/client-role.html'"></div>
-        <div class="row" data-ng-include="'admin-facing/partials/user/client/userclientteamrole/client-team-role.html'"></div>
+        <div class="row" data-ng-show="possibleClientRoles.length === 0 && teamRoles.length === 0 ">
+            <div class="col-md-6">
+                There are no client level or team level roles
+                <a href="#/clients/{{client.entity.id}}/roles">available for this client</a>.
+            </div>
+        </div>
+        <div class="row" data-ng-include="'admin-facing/partials/user/client/user_client_role/client-role.html'"></div>
+        <div class="row"
+             data-ng-include="'admin-facing/partials/user/client/user_client_team_role/client-team-role.html'"></div>
     </div>
 
     <!--
