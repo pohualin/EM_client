@@ -22,11 +22,20 @@ angular.module('emmiManager')
         }
         return {
             find: function (clientResource, query, status, sort, pageSize) {
-                var uri = clientResource ? clientResource.link.possibleLocations: Session.link.locations;
+                var uri = clientResource ? clientResource.link.possibleLocations : Session.link.locations,
+                    sortToUse = sort && sort.property ? sort.property : null;
+                if (sortToUse === 'city') {
+                    sortToUse = [
+                        sort.ascending ? 'city' : 'city,desc',
+                        'state'
+                    ];
+                } else if (sortToUse) {
+                    sortToUse += ',' + (sort.ascending ? 'asc' : 'desc');
+                }
                 return $http.get(UriTemplate.create(uri).stringify({
                         name: query,
                         status: status,
-                        sort: sort && sort.property ? sort.property + ',' + (sort.ascending ? 'asc' : 'desc') : '',
+                        sort: sortToUse,
                         size: pageSize
                     }
                 )).then(function (response) {

@@ -3,7 +3,7 @@
 angular.module('emmiManager')
     .controller(
         'ProvidersSearchController',
-        function($scope, $controller, $location, URL_PARAMETERS, STATUS, Client, ProviderSearch, ProviderService) {
+    function ($scope, $controller, $location, URL_PARAMETERS, STATUS, Client, ProviderSearch) {
 
             // when a pagination link is used
             $scope.fetchPage = function(href) {

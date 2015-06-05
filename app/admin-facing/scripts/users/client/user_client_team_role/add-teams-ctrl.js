@@ -11,7 +11,7 @@ angular.module('emmiManager')
 
 			var addTeamsModal = $modal(
 					{scope: $scope,
-					 template: 'admin-facing/partials/user/client/userclientteamrole/search.html',
+                        template: 'admin-facing/partials/user/client/user-client-team-role/search.html',
 					 animation: 'none',
 					 backdropAnimation: 'emmi-fade',
 					 show: false, backdrop: 'static'});
@@ -68,7 +68,7 @@ angular.module('emmiManager')
              * Call this method when save is clicked
              */
             $scope.save = function(){
-            	UserClientUserClientTeamRolesService.associateTeams($scope.selectedTeamRoles).then(function(response){
+                UserClientUserClientTeamRolesService.associateTeams($scope.selectedTeamRoles).then(function () {
             		$scope.hideAddTeamsModal();
                     var clientTeamRole = UserClientUserClientTeamRolesService.getSelectedClientTeamRole();
             		UserClientUserClientTeamRolesService.refreshTeamRoleCard(clientTeamRole);
