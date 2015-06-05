@@ -2,21 +2,21 @@
 angular.module('emmiManager')
     .controller('SearchOptionDropDownCtrl', function ($scope, $location) {
 
-        $scope.searchDropdownOptions = [ 'Clients', 'Teams', 'Providers', 'Locations' ];
+        $scope.searchDropdownOptions = ['Clients', 'Teams', 'Providers', 'Locations'];
 
         // set the proper value in the search chooser based upon the path
-        if ($location.path() === '/clients'){
+        if ($location.path() === '/clients') {
             $scope.option = 'Clients';
-        } else if ($location.path() === '/teams'){
+        } else if ($location.path() === '/teams') {
             $scope.option = 'Teams';
-        } else if ($location.path() === '/providers'){
+        } else if ($location.path() === '/providers') {
             $scope.option = 'Providers';
-        } else if ($location.path() === '/locations'){
+        } else if ($location.path() === '/locations') {
             $scope.option = 'Locations';
-        } else if ($location.path() === '/users'){
+        } else if ($location.path() === '/users') {
             $scope.option = 'Users';
         }
-        
+
         $scope.changehref = function (option) {
             if (option === 'Clients') {
                 $location.path('/clients');

@@ -28,7 +28,7 @@ angular.module('emmiManager')
                                     show: true,
                                     placement: 'top',
                                     target: element,
-                                    contentTemplate: 'admin-facing/partials/user/client/userclientteamrole/add_team_popover.tpl.html'
+                                    contentTemplate: 'admin-facing/partials/user/client/user-client-team-role/add-team-popover.tpl.html'
                                 });
                             } else {
                                 scope.addTeamRolesWarning.show();
@@ -65,8 +65,8 @@ angular.module('emmiManager')
         			scope.okAddTeamsPopover = function(){
         				scope.save();
         			};
-        			
-    			    scope.$on('hide_add_team_roles_warning', function(){
+
+                    scope.$on('hide_add_team_roles_warning', function () {
     			        scope.cancelAddTeamsPopover();
     			    });
                 });

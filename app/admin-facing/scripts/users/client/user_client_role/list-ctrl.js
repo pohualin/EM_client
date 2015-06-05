@@ -22,15 +22,15 @@ angular.module('emmiManager')
              * Load existingUserClientUserClientRoles for the UserClient
              */
             $scope.loadExistingUserClientUserClientRoles = function () {
-                $scope.setLoading();
                 UserClientUserClientRolesService.
                     getUserClientUserClientRoles($scope.selectedUserClient).then(function (response) {
                         // Set existingUserClientUserClientRoles if it exists
                         if (response.length > 0) {
-                            UserClientUserClientRolesService.loadPermissionsForUserClientUserClientRoles(response).then(function (response) {
-                                $scope.existingUserClientUserClientRoles = response;
-                                $scope.setIsSuperUser();
-                            });
+                            UserClientUserClientRolesService
+                                .loadPermissionsForUserClientUserClientRoles(response).then(function (response) {
+                                    $scope.existingUserClientUserClientRoles = response;
+                                    $scope.setIsSuperUser();
+                                });
                             // update parent controller with roles
                             $scope.setClientRoles(response);
                         } else {
@@ -49,6 +49,7 @@ angular.module('emmiManager')
                 ManageUserRolesService.loadClientRolesWithPermissions(Client.getClient()).then(function (clientRoles) {
                     $scope.clientRoles = clientRoles;
                     $scope.setIsSuperUser();
+                    $scope.setPossibleClientRoles(clientRoles);
                 });
             };
 
@@ -56,7 +57,6 @@ angular.module('emmiManager')
              * Called when 'remove' is clicked
              */
             $scope.removeUserClientRole = function (userClientUserClientRole) {
-                $scope.setLoading();
                 UserClientUserClientRolesService.deleteUserClientUserClientRole(userClientUserClientRole)
                     .then(function () {
                         $scope.clientRolesChanged();
