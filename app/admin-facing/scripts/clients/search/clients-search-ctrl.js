@@ -45,7 +45,7 @@ angular.module('emmiManager')
         if ($scope.query) {
             if ($scope.pageWhereBuilt === URL_PARAMETERS.CLIENT) {
                 performSearch($scope.query, $scope.status, $scope.sortProperty, $scope.currentPageSize,
-                        $scope.status !== STATUS.INACTIVE_ONLY);
+                    $scope.status !== STATUS.INACTIVE_ONLY);
             } else {
                 // it was built by a different page, use the query only
                 performSearch($scope.query, null, null, null, true);

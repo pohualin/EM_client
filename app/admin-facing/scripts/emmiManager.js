@@ -52,7 +52,7 @@ angular.module('emmiManager', [
         INACTIVE_TEAMS: 'i',
         CLIENT_USERS: 'cu'
     })
-    
+
     .constant('STATUS', {
         'ALL': 'ALL',
         'ACTIVE_ONLY': 'ACTIVE_ONLY',
