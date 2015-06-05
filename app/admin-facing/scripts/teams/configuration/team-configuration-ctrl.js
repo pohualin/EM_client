@@ -38,7 +38,6 @@ angular.module('emmiManager')
             	ClientTeamConfigurationService.setTeam(teamResource);
             	$scope.client = teamResource.entity.client;
             	$scope.team = teamResource;
-            	console.log($scope.team);
             }
                  
             init();
