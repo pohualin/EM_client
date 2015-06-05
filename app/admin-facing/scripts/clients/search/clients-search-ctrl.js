@@ -5,7 +5,7 @@ angular.module('emmiManager')
 /**
  *  Show list of clients
  */
-    .controller('ClientListCtrl', function ($scope, Client, $http, Session, UriTemplate, $controller) {
+    .controller('ClientListCtrl', function ($scope, Client, $http, Session, UriTemplate, $controller, URL_PARAMETERS, STATUS) {
 
         $controller('ViewEditCommon', {$scope: $scope});
 
@@ -20,7 +20,7 @@ angular.module('emmiManager')
         var performSearch = function(q, status, sort, size, recalculateStatusFilterAndTotal){
             if (!$scope.searchForm || !$scope.searchForm.query.$invalid ) {
                 $scope.loading = true;
-                $scope.serializeToQueryString(q, 'c', status, sort, size);
+                $scope.serializeToQueryString(q, URL_PARAMETERS.CLIENT, status, sort, size);
                 Client.find(q, status, sort, size).then(function (clientPage) {
                     $scope.handleResponse(clientPage, contentProperty);
                     if (recalculateStatusFilterAndTotal) {
@@ -43,9 +43,9 @@ angular.module('emmiManager')
 
         // when first loading the page, via SearchUriPersistence set variables
         if ($scope.query) {
-            if ($scope.pageWhereBuilt === 'client') {
+            if ($scope.pageWhereBuilt === URL_PARAMETERS.CLIENT) {
                 performSearch($scope.query, $scope.status, $scope.sortProperty, $scope.currentPageSize,
-                        $scope.status !== 'INACTIVE_ONLY');
+                    $scope.status !== STATUS.INACTIVE_ONLY);
             } else {
                 // it was built by a different page, use the query only
                 performSearch($scope.query, null, null, null, true);

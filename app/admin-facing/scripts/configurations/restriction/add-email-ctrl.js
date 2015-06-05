@@ -13,12 +13,13 @@ angular.module('emmiManager')
                     template: 'admin-facing/partials/configurations/restriction/email-form.html',
                     animation: 'none',
                     backdropAnimation: 'emmi-fade',
-                    show: false, backdrop: 'static'});
+                    show: false, backdrop: 'static'
+                });
 
             /**
              * Called when add another is clicked to add a new emailRestrictConfiguration
              */
-            $scope.addAnotherEmailRestrict = function (emailRestrictConfigurationForm) {
+            $scope.addAnotherEmailRestrict = function () {
                 $scope.emailRestrictConfiguration = EmailRestrictConfigurationsService.newEmailRestrictConfiguration();
                 addEmailRestrictModal.$promise.then(addEmailRestrictModal.show);
             };
@@ -29,11 +30,11 @@ angular.module('emmiManager')
             $scope.add = function (emailRestrictConfigurationForm, addAnother) {
                 $scope.emailRestrictConfigurationFormSubmitted = true;
                 if (emailRestrictConfigurationForm.$valid) {
-                    EmailRestrictConfigurationsService.save($scope.emailRestrictConfiguration).then(function (response) {
+                    EmailRestrictConfigurationsService.save($scope.emailRestrictConfiguration).then(function () {
                         $scope.$emit('requestEmailList');
                         $scope.emailRestrictConfiguration = EmailRestrictConfigurationsService.newEmailRestrictConfiguration();
                         $scope.emailRestrictConfigurationFormSubmitted = false;
-                        if(!addAnother){
+                        if (!addAnother) {
                             $scope.$hide();
                         }
                         EmailRestrictConfigurationsService.getEmailsThatDoNotFollowRestrictions().then(function (emailsThatDoNotFollowRestrictions) {

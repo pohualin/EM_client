@@ -45,7 +45,14 @@ label.empty {
 
 // utility class to make sure long table column content wraps to another line instead of breaking the table
 .col-wrap {
+    word-break: break-all;
+
+    /* Non standard for webkit */
     word-break: break-word;
+
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    -ms-hyphens: auto;
     hyphens: auto;
 }
 
