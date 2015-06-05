@@ -14,8 +14,7 @@ angular.module('emmiManager')
              * results
              */
             $scope.saveOrUpdateEmailConfig = function (valid) {
-            	console.log($scope.emailConfigs );
-            	  if (valid) {
+            	if (valid) {
             		  ClientTeamEmailConfigurationService
                             .saveOrUpdateTeamEmailConfiguration($scope.team, $scope.emailConfigs).then(function (response) 
                              {

@@ -15,9 +15,12 @@ angular.module('emmiManager')
              */
             $scope.saveOrUpdatePhoneConfig = function (valid) {
             	  if (valid) {
+            		  console.log($scope.phoneConfigs);
             		  ClientTeamPhoneConfigurationService
                             .saveOrUpdateTeamPhoneConfiguration($scope.team, $scope.phoneConfigs).then(function (response) 
                              {
+                            	console.log('response +++++++++++ ');
+                            	console.log(response);
                             	$scope.phoneConfigs = response;
                             	$alert({
                                     title: ' ',
@@ -39,19 +42,9 @@ angular.module('emmiManager')
              * If yes, "Collect phone" needs to automatically check.
              */
             $scope.onChange = function(){
-            	angular.forEach($scope.phoneConfigs, function (phoneConfig) {
-            		//If the type is REQUIRE_PPHONE and it is true
-            		if(angular.equals(phoneConfig.entity.type, 'REQUIRE_PHONE')&&
-            		                 (phoneConfig.entity.phoneConfig)){
-            		    //Loop thru the phone config again and find the COLLECT_PHONE type and set it to true
-            			angular.forEach($scope.phoneConfigs, function (phoneConfig){
-            				if(angular.equals(phoneConfig.entity.type, 'COLLECT_PHONE')){
-            					phoneConfig.entity.phoneConfig = true;
-            				}
-            			});
-            		
-            		}
-            	});
+            	if($scope.phoneConfigs.entity.requirePhone){
+            		$scope.phoneConfigs.entity.collectPhone = true; 	
+            	}
            };
             
             /**
@@ -70,7 +63,7 @@ angular.module('emmiManager')
             	$scope.client = $scope.team.entity.client;
             	ClientTeamPhoneConfigurationService.getTeamPhoneConfiguration($scope.team).then(function (response) {
             		$scope.phoneConfigs = response;
-            	});
+               	});
             }
                  
             init();

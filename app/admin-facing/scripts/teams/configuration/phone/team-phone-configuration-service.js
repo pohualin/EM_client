@@ -14,7 +14,7 @@ angular.module('emmiManager')
                 getTeamPhoneConfiguration: function (team) {
                     return $http.get(UriTemplate.create(team.link.teamPhoneConfig).stringify())
                         .then(function (response) {
-                        	return response.data.content;
+                        	return response.data;
                         });
                 },
                 
@@ -22,35 +22,16 @@ angular.module('emmiManager')
                  * Calls the back end to save or update a client-team phone configuration.
                  * @param team
                  * @param phoneConfigs all the phone configuration for a team 
-                 * @returns {*} the promise
+                 * @returns teamPhoneConfig
                  */
                 saveOrUpdateTeamPhoneConfiguration: function (team,
                 		                                      phoneConfigs){
-                	
-                	// looping thru the phone configs and save them
-                	var deferred = $q.defer();
-                	var promises = [];
-                    var updatedPhoneConfigurations = [];
-                    angular.forEach(phoneConfigs, function (phoneConfig) {
-                    	var deferred = $q.defer();
-                    	$http.post(UriTemplate.create(team.link.teamPhoneConfig)
-                                .stringify(), phoneConfig.entity).then(function(response){
-                                	updatedPhoneConfigurations.push(response.data);
-                                	deferred.resolve(response);
-                                });
-                    	promises.push(deferred.promise);
+                	return $http.post(UriTemplate.create(team.link.teamPhoneConfig).stringify(), phoneConfigs.entity)
+                    .then(function (response) {
+                    	return response.data;
                     });
-                    
-                    $q.all(promises).then(function () {
-                    	deferred.resolve(updatedPhoneConfigurations);
-                    });
-                    
-                   return deferred.promise;
                 }
-    	       };
-
-                  
-         
-    }
-])
-;
+              };
+          }
+      ])
+  ;

@@ -10,12 +10,20 @@
 <div class="row">
    	 <div class="col-md-12">
       	 <div class="form-group">
-              <div class="checkbox" data-ng-repeat="phoneConfiguration in phoneConfigs | orderBy:'phoneConfiguration.rank'" >
-                   <input type="checkbox" id="phoneConfiguration{{$index}}" 
-                          data-ng-model="phoneConfiguration.entity.phoneConfig"
-                          data-ng-change="onChange(clientTeamPhoneConfigurationForm)" />
-            	 	<label for="phoneConfiguration{{$index}}">{{phoneConfiguration.entity.type | translate }}</label>
-              </div>
+      	        <div class="checkbox">
+                    <input id="collectPhone" type="checkbox"
+                           data-ng-model="phoneConfigs.entity.collectPhone"
+                           data-ng-change="onChange()" />
+                    <label for="collectPhone">Collect Phone</label>
+                </div>
+      	      
+      	        <div class="checkbox">
+                    <input id="requirePhone" type="checkbox"
+                           data-ng-model="phoneConfigs.entity.requirePhone"
+                           data-ng-change="onChange()" />
+                    <label for="requirePhone">Require Phone</label>
+                </div>
+            
          </div>
      </div>
 </div>
