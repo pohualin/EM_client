@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  *   Manage Team Level configuration a client
  */
-    .controller('ClientTeamEmailConfigurationCtrl', ['$scope', '$location', '$alert', 'focus', '$controller', 'teamResource', '$routeParams', 'API', 'ClientTeamEmailConfigurationService',
-        function ($scope, $location, $alert, focus, $controller, teamResource,  $routeParams, API, ClientTeamEmailConfigurationService) {
+    .controller('ClientTeamEmailConfigurationCtrl', ['$scope', '$location', '$alert', 'focus', '$controller', 'ClientTeamConfigurationService', '$routeParams', 'API', 'ClientTeamEmailConfigurationService',
+        function ($scope, $location, $alert, focus, $controller, ClientTeamConfigurationService,  $routeParams, API, ClientTeamEmailConfigurationService) {
     	    $scope.showTeamConfig = 'yes';                 
             /**
              * When the save button is clicked. Sends all updates
@@ -14,8 +14,7 @@ angular.module('emmiManager')
              * results
              */
             $scope.saveOrUpdateEmailConfig = function (valid) {
-            	console.log($scope.emailConfigs );
-            	  if (valid) {
+            	if (valid) {
             		  ClientTeamEmailConfigurationService
                             .saveOrUpdateTeamEmailConfiguration($scope.team, $scope.emailConfigs).then(function (response) 
                              {
@@ -67,11 +66,11 @@ angular.module('emmiManager')
              * init method called when page is loading
              */
             function init() {
-            	$scope.team = teamResource;
-            	$scope.client = teamResource.entity.client;
-                ClientTeamEmailConfigurationService.getTeamEmailConfiguration($scope.team).then(function (response) {
-                    $scope.emailConfigs = response;
+            	$scope.team = ClientTeamConfigurationService.getTeam();
+            	ClientTeamEmailConfigurationService.getTeamEmailConfiguration($scope.team).then(function (response) {
+                		$scope.emailConfigs = response;
                 });
+            	
             }
                  
             init();
