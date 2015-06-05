@@ -28,7 +28,7 @@ angular.module('emmiManager')
                                     show: true,
                                     placement: 'top',
                                     target: element,
-                                    contentTemplate: 'admin-facing/partials/user/client/user_client_team_role/add_team_popover.tpl.html'
+                                    contentTemplate: 'admin-facing/partials/user/client/user-client-team-role/add-team-popover.tpl.html'
                                 });
                             } else {
                                 scope.addTeamRolesWarning.show();

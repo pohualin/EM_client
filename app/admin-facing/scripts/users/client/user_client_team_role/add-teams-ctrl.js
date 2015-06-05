@@ -11,7 +11,7 @@ angular.module('emmiManager')
 
 			var addTeamsModal = $modal(
 					{scope: $scope,
-                        template: 'admin-facing/partials/user/client/user_client_team_role/search.html',
+                        template: 'admin-facing/partials/user/client/user-client-team-role/search.html',
 					 animation: 'none',
 					 backdropAnimation: 'emmi-fade',
 					 show: false, backdrop: 'static'});
