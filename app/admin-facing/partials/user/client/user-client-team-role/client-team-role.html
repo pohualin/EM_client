@@ -1,17 +1,17 @@
 <div data-ng-controller="UsersClientUserClientTeamRolesListController" data-ng-cloak>
-    <div class="col-md-12" data-ng-show="isSuperUser && !loading">
+    <div class="col-md-12" data-ng-show="isSuperUser && possibleClientRoles.length > 0">
         <p class="disclaimer">Team roles aren't required because this user has been given all permissions at this client
             (including all teams within this client).</p>
     </div>
-    <div class="col-md-12" data-ng-show="clientTeamRoles && clientTeamRoles.length > 0 && !isSuperUser">
+    <div class="col-md-12" data-ng-show="clientTeamRoles.length > 0 && !isSuperUser">
         <div class="row">
             <div class="col-md-6" data-ng-controller="UsersClientUserClientRolesListController">
                 <h2 class="pull-left">Team Roles</h2>
                 <div class="pull-right">
                     <a class="btn btn-link btn-link-nopad btn-heading btn-heading-h1"
-                       data-ng-if="!existingUserClientUserClientRoles && !loading"
+                       data-ng-if="!existingUserClientUserClientRoles && clientRoles"
                        data-placement="right"
-                       data-template="admin-facing/partials/user/client/userclientrole/add-client-role.html"
+                       data-template="admin-facing/partials/user/client/user-client-role/add-client-role.html"
                        data-ng-click="setSelectedRoleHasSuperPermission()"
                        data-trigger="click" data-bs-popover data-auto-close="1"
                        data-popover-dismiss data-container="body">
@@ -30,7 +30,7 @@
                         <div class="panel panel-secondary"
                              data-ng-class="{ 'panel-open': clientTeamRole.activePanel === 0, 'panel-muted': !clientTeamRole.existingTeams.length }">
                             <div class="panel-heading">
-                                <h4 class="panel-title">
+                                <div class="panel-title">
                                     <a data-bs-collapse-toggle data-ng-click="panelStateChange(clientTeamRole)">
                                         <span class="icon-caret-right"></span>
                                         <span class="panel-title-text">{{ clientTeamRole.entity.name}}
@@ -53,7 +53,7 @@
                                             add teams for this role
                                         </a>
                                     </div>
-                                </h4>
+                                </div>
                             </div>
                             <!-- .panel-heading -->
                             <div class="panel-collapse" data-bs-collapse-target>
@@ -68,7 +68,7 @@
                                     </div>
                                 </div>
                                 <div class="panel-body" data-ng-show="clientTeamRole.existingTeams">
-                                    Teams:</br>
+                                    Teams:<br/>
                                     <table class="permissions-teams-list" cellspacing="0" cellpadding="0">
                                         <tr data-ng-repeat="existingTeam in clientTeamRole.existingTeams">
                                             <td>{{existingTeam.entity.team.name}}</td>
@@ -81,7 +81,7 @@
                                         </tr>
                                     </table>
                                     <div class="panel-misaligned-button" data-ng-show="clientTeamRole.existingTeams"
-                                         data-ng-include="'admin-facing/partials/user/client/userclientteamrole/add-teams.html'"></div>
+                                         data-ng-include="'admin-facing/partials/user/client/user-client-team-role/add-teams.html'"></div>
                                 </div>
                             </div>
                             <!-- .panel-collapse -->

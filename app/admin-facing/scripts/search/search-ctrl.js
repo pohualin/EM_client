@@ -2,6 +2,21 @@
 angular.module('emmiManager')
     .controller('SearchOptionDropDownCtrl', function ($scope, $location) {
 
+        $scope.searchDropdownOptions = ['Clients', 'Teams', 'Providers', 'Locations'];
+
+        // set the proper value in the search chooser based upon the path
+        if ($location.path() === '/clients') {
+            $scope.option = 'Clients';
+        } else if ($location.path() === '/teams') {
+            $scope.option = 'Teams';
+        } else if ($location.path() === '/providers') {
+            $scope.option = 'Providers';
+        } else if ($location.path() === '/locations') {
+            $scope.option = 'Locations';
+        } else if ($location.path() === '/users') {
+            $scope.option = 'Users';
+        }
+
         $scope.changehref = function (option) {
             if (option === 'Clients') {
                 $location.path('/clients');
@@ -132,21 +147,6 @@ angular.module('emmiManager')
 
                 $controller('CommonSort', {$scope: $scope});
 
-        $scope.searchDropdownOptions = [ 'Clients', 'Teams', 'Providers', 'Locations' ];
-
-        // set the proper value in the search chooser based upon the path
-        if ($location.path() === '/clients'){
-            $scope.option = 'Clients';
-        } else if ($location.path() === '/teams'){
-            $scope.option = 'Teams';
-        } else if ($location.path() === '/providers'){
-            $scope.option = 'Providers';
-        } else if ($location.path() === '/locations'){
-            $scope.option = 'Locations';
-        } else if ($location.path() === '/users'){
-            $scope.option = 'Users';
-        }
-
         // when first loading the page
         var searchObject = $location.search();
         if (searchObject && searchObject.q) {
@@ -175,25 +175,7 @@ angular.module('emmiManager')
                 }
             }
             // Set $scope.pageWhereBuilt
-            switch (searchObject.p) {
-            case URL_PARAMETERS.CLIENT:
-              $scope.pageWhereBuilt = 'client';
-              break;
-            case URL_PARAMETERS.TEAM:
-              $scope.pageWhereBuilt = 'team';
-              break;
-            case URL_PARAMETERS.PROVIDER:
-              $scope.pageWhereBuilt = 'provider';
-              break;
-            case URL_PARAMETERS.LOCATION:
-              $scope.pageWhereBuilt = 'location';
-              break;
-            case URL_PARAMETERS.USER:
-                $scope.pageWhereBuilt = 'user';
-                break;
-            default:
-              break;
-            }
+            $scope.pageWhereBuilt = searchObject.p;
         }
 
         $scope.serializeToQueryString = function (query, page, status, sort, size){

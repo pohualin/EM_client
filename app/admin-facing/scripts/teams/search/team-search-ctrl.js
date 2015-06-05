@@ -2,7 +2,7 @@
 
 angular.module('emmiManager')
 
-    .controller('TeamSearchController',function ($scope, Client, TeamSearch, $controller){
+    .controller('TeamSearchController', function ($scope, URL_PARAMETERS, STATUS, Client, TeamSearch, $controller) {
 
         $controller('CommonSearch', {$scope: $scope});
 
@@ -15,7 +15,7 @@ angular.module('emmiManager')
         var performSearch = function(q, status, sort, size, recalculateStatusFilterAndTotal){
             if (!$scope.searchForm || !$scope.searchForm.query.$invalid ) {
                 $scope.loading = true;
-                $scope.serializeToQueryString(q, 't', status, sort, size);
+                $scope.serializeToQueryString(q, URL_PARAMETERS.TEAM, status, sort, size);
                 TeamSearch.search(q, status, sort, size).then(function (teamPage) {
                     $scope.handleResponse(teamPage, contentProperty);
                     if (recalculateStatusFilterAndTotal) {
@@ -37,9 +37,9 @@ angular.module('emmiManager')
 
         // when first loading the page, via SearchUriPersistence set variables
         if ($scope.query) {
-            if ($scope.pageWhereBuilt === 'team') {
+            if ($scope.pageWhereBuilt === URL_PARAMETERS.TEAM) {
                 performSearch($scope.query, $scope.status, $scope.sortProperty, $scope.currentPageSize,
-                        $scope.status !== 'INACTIVE_ONLY');
+                    $scope.status !== STATUS.INACTIVE_ONLY);
             } else {
                 // it was built by a different page, use the query only
                 performSearch($scope.query, null, null, null, true);
