@@ -19,8 +19,6 @@ angular.module('emmiManager')
             		  ClientTeamPhoneConfigurationService
                             .saveOrUpdateTeamPhoneConfiguration($scope.team, $scope.phoneConfigs).then(function (response) 
                              {
-                            	console.log('response +++++++++++ ');
-                            	console.log(response);
                             	$scope.phoneConfigs = response;
                             	$alert({
                                     title: ' ',
@@ -60,7 +58,6 @@ angular.module('emmiManager')
              */
             function init() {
             	$scope.team = ClientTeamConfigurationService.getTeam();
-            	$scope.client = $scope.team.entity.client;
             	ClientTeamPhoneConfigurationService.getTeamPhoneConfiguration($scope.team).then(function (response) {
             		$scope.phoneConfigs = response;
                	});

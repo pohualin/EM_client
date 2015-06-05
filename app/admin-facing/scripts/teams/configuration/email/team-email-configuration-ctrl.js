@@ -67,8 +67,7 @@ angular.module('emmiManager')
              */
             function init() {
             	$scope.team = ClientTeamConfigurationService.getTeam();
-            	$scope.client = $scope.team.entity.client;
-                ClientTeamEmailConfigurationService.getTeamEmailConfiguration($scope.team).then(function (response) {
+            	ClientTeamEmailConfigurationService.getTeamEmailConfiguration($scope.team).then(function (response) {
                 		$scope.emailConfigs = response;
                 });
             	
