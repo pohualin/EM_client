@@ -29,10 +29,10 @@ angular.module('emmiManager')
              * Call server to get a list of UserClient
              */
             list: function (query, sort, status) {
-                return $http.get(UriTemplate.create(Session.link.clientUsers).stringify({
+                return $http.get(UriTemplate.create(Session.link.userClients).stringify({
                         term: query,
                         status: status,
-                        sort: sort && sort.property ? sort.property + ',' + (sort.ascending ? 'asc' : 'desc') : ''
+                        sort: sort && sort.property ? sort.property + ',' + (sort.ascending ? 'asc' : 'desc') : 'client.name'
                     })).then(function (response) {
                         CommonService.convertPageContentLinks(response.data);
                         return response.data;
