@@ -1,0 +1,123 @@
+<div class="app-header" data-emmi-navbar></div>
+<div class="container" data-ng-cloak>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="layout-card">
+        <h1>Client & Patient Search</h1>
+        <form name="searchForm" novalidate>
+          <div class="row">
+            <div class="col-md-2">
+                <div data-ng-include="'admin-facing/support/search_options/search_options.html'"></div>
+            </div>
+            <div class="col-md-6 kill-grid-pad">
+              <div class="form-group">
+                <label class="sr-only" for="query">Search</label>
+                <div class="input-group has-input-icon has-input-icon-search">
+                  <input type="text" class="form-control" id="query" name="query" data-ng-model="query"
+                     placeholder="First/last name, email, user ID" required data-auto-focus>
+                  <span class="input-icon"><i class="icon-search"></i></span>
+                  <span class="input-group-btn">
+                    <button class="btn btn-success" data-ng-click="search()"
+                            data-ng-disabled="searchForm.query.$invalid || loading"
+                            data-translate="global.buttons.search">
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-1">
+                <span data-ng-class="{'search-spinner' : loading}"></span>
+            </div>
+          </div>
+        </form>
+        <hr class="search-divider" data-ng-if="searchPerformed" />
+        <div class="row" data-ng-show="searchPerformed">
+          <div class="col-md-12">
+            <div class="row table-search-filters" data-ng-hide="removeStatusFilterAndTotal">
+              <div class="col-md-12">
+                <div class="pull-right table-results-count">
+                    {{total}} <span data-ng-show="total != 1"
+                                    data-translate="global.labels.total"> results</span> <span
+                    data-ng-show="total === 1"
+                    data-translate="global.labels.totalSingular"> result</span>
+                </div>
+                <div class="form-inline">
+                    <label for="status_filter" data-translate="global.labels.statusFilter">Show:</label>
+                    <select style="width: 105px" class="form-control input-sm" style="width:110px;" id="status_filter" data-ng-model="status"
+                            data-ng-options="status | translate for status in statuses"
+                            data-ng-change="statusChange()"
+                            disable-search="true"
+                            data-chosen>
+                    </select>
+                </div>
+              </div>
+            </div>
+            <table class="table table-bordered table-striped table-hover"
+                   border="0" cellpadding="0" cellspacing="0" data-ng-show="clientUsers">
+                <thead>
+                  <tr>
+                    <th class="sort col-sm-2" data-ng-click="sort('client.name')">Client
+                       <span data-ng-show="sortProperty.property === 'client.name'"><span
+                          class="sort-icon"
+                          data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
+                    </th>
+                    <th class="sort col-sm-2" data-ng-click="sort('lastName')">Last Name
+					   <span data-ng-show="sortProperty.property === 'lastName'"><span
+                          class="sort-icon"
+                          data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
+                    </th>
+                    <th class="sort col-sm-2" data-ng-click="sort('firstName')">First Name
+					   <span data-ng-show="sortProperty.property === 'firstName'"><span
+                          class="sort-icon"
+                          data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
+                    </th>
+                    <th class="sort" data-ng-click="sort('login')">User ID
+					   <span data-ng-show="sortProperty.property === 'login'"><span
+                          class="sort-icon"
+                          data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
+                    </th>
+                    <th class="sort" data-ng-click="sort('email')">Email
+					   <span data-ng-show="sortProperty.property === 'email'"><span
+                          class="sort-icon"
+                          data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
+                    </th>
+                    <th class="col-edit">&nbsp;</th>
+                  </tr>
+                </thead>
+                <tbody>
+                <tr data-ng-repeat="clientUser in clientUsers">
+                    <td>{{clientUser.entity.client.name}}</td>
+                    <td>{{clientUser.entity.lastName}}</td>
+                    <td>{{clientUser.entity.firstName}}</td>
+                    <td><span class="col-wrap">{{clientUser.entity.login}}</span></td>
+                    <td><span class="col-wrap">{{clientUser.entity.email}}</span></td>
+                    <td class="text-right">
+                        <a class="btn-link"
+                           href="#/support/client_users?{{currentRouteQueryString}}"><i class="icon-compose icon-size-xl"></i></a>
+                    </td>
+                </tr>
+                <tr class="pagination-row no-hover">
+                  <td colspan="6" class="text-center" data-ng-show="links">
+                    <ul class="pagination">
+                      <li data-ng-repeat="link in links | orderBy:'order'" class="{{link.className}}" data-ng-class="{'active': link.name == currentPage}">
+                        <a data-ng-click="fetchPage(link.href)">
+                            <i class="fa-angle-left" data-ng-if="link.className === 'previous'"></i>
+                            {{link.name}}
+                            <i class="fa-angle-right" data-ng-if="link.className === 'next'"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </td>
+                </tr>
+                </tbody>
+            </table>
+            <div data-ng-hide="clientUsers">
+                <span data-translate="global.messages.search.no_results_found"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<footer class="footer" data-ng-include="'admin-facing/partials/common/footer.tpl.html'"></footer>

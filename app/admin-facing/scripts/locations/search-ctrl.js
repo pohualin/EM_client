@@ -3,7 +3,7 @@
 angular.module('emmiManager')
     .controller(
         'LocationsSearchController',
-        function($scope, $controller, $location, Client, Location, LocationService) {
+        function($scope, $controller, $location, URL_PARAMETERS, STATUS, Client, Location, LocationService) {
 
           // when a pagination link is used
           $scope.fetchPage = function(href) {
@@ -45,9 +45,9 @@ angular.module('emmiManager')
 
             // Initiate a search when $scope.query is not empty
             if ($scope.query) {
-              if ($scope.pageWhereBuilt === 'location') {
+              if ($scope.pageWhereBuilt === URL_PARAMETERS.LOCATION) {
                 performSearch($scope.query, $scope.status, $scope.sortProperty,
-                    $scope.currentPageSize, $scope.status !== 'INACTIVE_ONLY');
+                    $scope.currentPageSize, $scope.status !== STATUS.INACTIVE_ONLY);
               } else {
                 // it was built by a different page, use the query only
                 performSearch($scope.query, null, null, null, true);
@@ -59,7 +59,7 @@ angular.module('emmiManager')
               recalculateStatusFilterAndTotal) {
             if (!$scope.searchForm || !$scope.searchForm.query.$invalid) {
               $scope.loading = true;
-              $scope.serializeToQueryString(q, 'l', status, sort, size);
+              $scope.serializeToQueryString(q, URL_PARAMETERS.LOCATION, status, sort, size);
               Location.find(null, q, status, sort, size).then(
                   function(locationData) {
                     $scope.handleResponse(locationData, 'locations');
