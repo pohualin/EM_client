@@ -38,7 +38,7 @@ angular.module('emmiManager')
              */
             $scope.createNewClientRole = function () {
                 $scope.newClientRole = ManageUserRolesService.newClientRoleEntity();
-                focus('focus-new-role');
+                focus('focus-new-client-role');
             };
 
             /**
@@ -63,7 +63,6 @@ angular.module('emmiManager')
              * @param form for unsaved changes
              */
             $scope.saveNewRole = function (clientRoleEntity, form) {
-                form.$setPristine();
                 $scope.newClientRoleFormSubmitted = true;
                 if (form.$valid) {
                     ManageUserRolesService.saveNewClientRole(clientRoleEntity, $scope.clientResource).then(function () {
@@ -71,10 +70,11 @@ angular.module('emmiManager')
                         $scope.newClientRoleFormSubmitted = false;
                         $scope.resetValidity(form);
                         $scope.loadExisting();
+                        form.$setPristine();
                         $scope.successAlert(clientRoleEntity);
                     }, function (error) {
                         if (error.status === 406) {
-                            form.name.$setValidity('unique', false);
+                            form.$setValidity('unique', false);
                         }
                     });
                 }
@@ -86,8 +86,8 @@ angular.module('emmiManager')
              * @param form for unsaved changes
              */
             $scope.cancelNew = function (form) {
-                form.$setPristine();
                 $scope.resetValidity(form);
+                form.$setPristine(true);
                 $scope.newClientRoleFormSubmitted = false;
                 delete $scope.newClientRole;
             };
@@ -99,10 +99,10 @@ angular.module('emmiManager')
              * @param form for unsaved changes
              */
             $scope.cancelExisting = function (clientRoleResource, form) {
-                form.$setPristine();
                 clientRoleResource.editName = false;
                 angular.extend(clientRoleResource, clientRoleResource.original);
                 $scope.resetValidity(form);
+                form.$setPristine(true);
                 delete clientRoleResource.original;
             };
 
@@ -138,13 +138,22 @@ angular.module('emmiManager')
             $scope.permissionSelectionChange = function (changedOption, isSelected, all) {
                 // process selection changes
                 var form = $scope.existingForms[changedOption.parentRoleId];
-                if (ManageUserRolesService.doesChangeNeedSave(changedOption, isSelected, all)){
-                    // set the form dirty if there are any deltas
-                    form.$setDirty(true);
-                } else {
-                    form.$setPristine(true);
+                if (form) {
+                    if (ManageUserRolesService.doesChangeNeedSave(changedOption, isSelected, all)) {
+                        // set the form dirty if there are any deltas
+                        form.$setDirty();
+                    } else {
+                        form.$setPristine();
+                    }
                 }
+            };
 
+            /**
+             * Called when an new role is changed, sets the admin vs. other permissions
+             */
+            $scope.newRolePermissionSelectionChange = function (changedOption, isSelected, all) {
+                // process selection changes
+                ManageUserRolesService.doesChangeNeedSave(changedOption, isSelected, all);
             };
 
             /**
@@ -227,10 +236,10 @@ angular.module('emmiManager')
             };
 
             /**
-             * when the library hides, uncheck everything
+             * before the library shows, uncheck everything
              */
-            $scope.$on('tooltip.hide', function () {
-                ManageUserRolesService.deselectAllLibraries($scope.clientReferenceData.roleLibrary);
+            $scope.$on('tooltip.show.before', function () {
+                ManageUserRolesService.deselectAllLibraries($scope.libraries);
             });
 
             /**
