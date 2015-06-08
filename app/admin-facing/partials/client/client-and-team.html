@@ -10,7 +10,6 @@
     </ul>
     <ul class="secondary-nav" data-ng-if="team.id">
         <li data-ng-if="!isProduction"><a target="create_patient" href="{{clientBaseUrl}}#/impersonate/{{client.id}}/teams/{{team.id}}/schedule/patients">Schedule Programs</a></li>
-        <li data-ng-if="!isProduction"><a target="create_patient" href="{{clientBaseUrl}}#/impersonate/{{client.id}}/teams/{{team.id}}/schedule/patients">p list</a></li>
         <li data-ng-if="!isProduction"><a target="client_patients" href="{{clientBaseUrl}}#/impersonate/{{client.id}}/teams/{{team.id}}/allPatients">Patients List</a></li>
         <li>
             <a data-ng-if="existingClientRoles.length > 0 || existingClientTeamRoles.length > 0" href="#/clients/{{client.id}}/users">Manage Users</a>

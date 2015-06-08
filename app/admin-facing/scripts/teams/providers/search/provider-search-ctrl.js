@@ -131,7 +131,6 @@ angular.module('emmiManager')
          */
         $scope.setClientProviderSelected = function (providers) {
             angular.forEach(providers, function (provider) {
-                console.log(provider);
                 if ($scope.teamProviders[provider.provider.entity.id] ) {
                     $scope.teamProviders[provider.provider.entity.id].isNewAdd = false;
                     $scope.teamProviders[provider.provider.entity.id].disabled = true;

@@ -11,9 +11,8 @@ angular.module('emmiManager')
                         });
                 },
                 allClientPatients : function (team) {
-                    ///clients/1/allPatients
                     return $http.get(UriTemplate.create(team.link.clientPatients).stringify()).success(function (response){
-                       console.log(response);
+                       return response.data;
                     });
                 }
             };

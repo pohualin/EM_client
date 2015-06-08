@@ -26,7 +26,6 @@ angular.module('emmiManager')
                                     deferred.reject();
                                 });
                         });
-                    console.log(deferred.promise);
                     return deferred.promise;
                 }],
             /**
@@ -35,13 +34,8 @@ angular.module('emmiManager')
             'client': ['AuthSharedService', '$q', '$route', function (AuthSharedService, $q) {
                 var deferred = $q.defer();
                 AuthSharedService.currentUser().then(function (loggedInUser) {
-                    console.log(loggedInUser);
                     deferred.resolve(loggedInUser.clientResource);
-                    console.log(loggedInUser.clientResource);
-
                 });
-                console.log(deferred.promise);
-
                 return deferred.promise;
             }]
         };
