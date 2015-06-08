@@ -22,9 +22,7 @@
             });
         })
         .error(function (data, response) {
-            window.location = '/404.html';
-            console.log('Unknown error');
-            console.log(data);
-            console.log(response);
+            window.location = '/maintenance.html';
+            console.log('Backend Down', data, response);
         });
 })();

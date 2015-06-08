@@ -67,11 +67,11 @@
                  </tr>
              </thead>
              <tbody>
-                 <tr data-ng-repeat="teamProvider in searchedProvidersList"  data-ng-class="teamProvider.link.self ? 'text-muted' : ''">
+                 <tr data-ng-repeat="teamProvider in searchedProvidersList"  data-ng-class="teamProvider.link.self || !teamProvider.provider.entity.active ? 'text-muted' : ''">
     				 <td class="col-checkbox">
                              <div class="checkbox">
                                  <input type="checkbox" id="teamProviderSearchCb{{$index}}" data-ng-model="teamProvider.provider.entity.checked"
-                                    data-ng-change="onCheckboxChange(teamProvider.provider)" data-ng-disabled="teamProvider.link.self" data-ng-checked="teamProvider.link.self">
+                                    data-ng-change="onCheckboxChange(teamProvider.provider)" data-ng-disabled="teamProvider.link.self || !teamProvider.provider.entity.active" data-ng-checked="teamProvider.link.self">
                                  <label for="teamProviderSearchCb{{$index}}"></label>
                              </div>
     				 </td>

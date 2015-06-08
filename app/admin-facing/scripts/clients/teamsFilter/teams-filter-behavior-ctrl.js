@@ -8,6 +8,10 @@ angular.module('emmiManager')
     .controller('TeamsFilterController', ['$scope', '$controller', 'TeamsFilter', '$q',
         function ($scope, $controller, TeamsFilter, $q) {
 
+            $scope.isCurrentTeam = function(team){
+                return team.id===parseInt($scope.currentTeam);
+            };
+
             $controller('TeamsFilterInitialization', {
                 $scope: $scope
             });
