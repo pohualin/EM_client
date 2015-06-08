@@ -29,8 +29,8 @@ angular.module('emmiManager')
         // Routes
         $routeProvider
          .when('/clients/:clientId/teams/:teamId/configuration', {
-           	templateUrl: 'admin-facing/partials/team/configuration/email/configuration.html',
-            controller: 'ClientTeamEmailConfigurationCtrl',
+           	templateUrl: 'admin-facing/partials/team/configuration/configuration.html',
+            controller: 'ClientTeamConfigurationCtrl',
             title: 'Team Configuration',
             activeMenu: MENU.setup,
             access: {

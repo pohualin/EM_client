@@ -19,7 +19,7 @@ angular.module('emmiManager')
                 resolve: requiredResources
             })
             .when('/support/client_users', {
-                templateUrl: 'admin-facing/support/client_users/search/search.html',
+                templateUrl: 'admin-facing/support/client-users/search/search.html',
                 controller: 'ClientUsersSupportSearchCtrl',
                 access: {
                     authorizedRoles: USER_ROLES.all
