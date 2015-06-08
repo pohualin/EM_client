@@ -28,7 +28,7 @@ angular.module('emmiManager')
 			/**
 			 * Call when GO button is clicked
 			 */
-			$scope.search = function(isValid){
+            $scope.search = function () {
 			    performSearch($scope.teamQuery, null, true);
 			};
 

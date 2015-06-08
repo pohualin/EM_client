@@ -26,12 +26,13 @@
                     <div class="fa-exclamation-circle"
                          data-ng-show="noEmailNoQuestionForm.addEmail.$error.pattern && noEmailNoQuestionFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger"
-                         data-container="body" data-title="Please enter a valid email."></div>
+                         data-container="body" data-title="Please enter a valid email"></div>
                     <div class="fa-exclamation-circle"
                          data-ng-show="noEmailNoQuestionForm.addEmail.$error.required && noEmailNoQuestionFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Required"></div>
-                     <input class="form-control" required id="addEmail" data-popover-save-error data-save-error="emailError"
+                    <input class="form-control" required id="addEmail" data-popover-save-error
+                           data-save-error="emailError"
                            data-ng-model="userClientReqdResource.email" name="addEmail"
                            type="text" maxlength="255" data-ng-change="resetDuplicateValidityEmailAndQuestions ()"
                            placeholder="your email address"
@@ -59,13 +60,12 @@
                         </button>
                         <button class="btn btn-primary" type="submit"
                                 data-ng-click="saveEmailThenQuestions(noEmailNoQuestionForm.$valid)"
-                                >
+                            >
                             <span>Save</span>
                         </button>
                     </div>
                 </div>
             </div>
         </div>
-</div>
-</form>
+    </form>
 </div>
