@@ -14,7 +14,7 @@ angular.module('emmiManager')
         $scope.search = function (isValid) {
             if (isValid) {
                 $scope.noSearch = false;
-                ClientProviderService.findPossibleProvidersNotUsingClient($scope.allTeamLocations, Client.getClient(), $scope.searchAll.providerQuery, $scope.status)
+                ClientProviderService.findPossibleProvidersNotUsingClient($scope.allTeamLocations, Client.getClient(), $scope.searchAll.providerQuery, $scope.searchAll.status)
                 .then(function (providerPage) {
                     $scope.handleResponse(providerPage, 'searchedProvidersList');
                 });
@@ -26,7 +26,7 @@ angular.module('emmiManager')
          */
         $scope.statusChange = function () {
             $scope.loading = true;
-            ClientProviderService.findPossibleProvidersNotUsingClient($scope.allTeamLocations, Client.getClient(), $scope.searchAll.providerQuery, $scope.status)
+            ClientProviderService.findPossibleProvidersNotUsingClient($scope.allTeamLocations, Client.getClient(), $scope.searchAll.providerQuery, $scope.searchAll.status)
             .then(function (providerPage) {
                 $scope.handleResponse(providerPage, 'searchedProvidersList');
                 $scope.setCheckboxesForChanged($scope[searchedProvidersList]);
@@ -69,7 +69,7 @@ angular.module('emmiManager')
         $scope.sort = function (property) {
             var sort = $scope.createSortProperty(property);
             $scope.loading = true;
-            ClientProviderService.findPossibleProvidersNotUsingClient($scope.allTeamLocations, Client.getClient(), $scope.searchAll.providerQuery, $scope.status, sort, $scope.currentPageSize)
+            ClientProviderService.findPossibleProvidersNotUsingClient($scope.allTeamLocations, Client.getClient(), $scope.searchAll.providerQuery, $scope.searchAll.status, sort, $scope.currentPageSize)
             .then(function (providerPage) {
                 $scope.handleResponse(providerPage, 'searchedProvidersList');
                 $scope.setCheckboxesForChanged($scope[searchedProvidersList]);
@@ -205,7 +205,7 @@ angular.module('emmiManager')
         };
 
         function init() {
-        	$scope.status = 'ACTIVE_ONLY';
+        	$scope.searchAll.status = 'ACTIVE_ONLY';
             ClientProviderService.findForClient(Client.getClient()).then(function (clientProviders) {
                 $scope.handleResponse(clientProviders, managedClientProviderList);
                 $scope.setClientProviderSelected($scope.clientProviders);

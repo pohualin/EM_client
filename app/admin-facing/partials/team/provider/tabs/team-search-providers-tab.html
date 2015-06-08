@@ -37,7 +37,7 @@
                  <form class="form-inline">
                      <div class="form-group">
                          <label for="status_filter" data-translate="global.labels.statusFilter">Show:</label>&nbsp;&nbsp;
-                         <select class="form-control input-sm" style="width:110px;" id="status_filter" data-ng-model="status"
+                         <select class="form-control input-sm" style="width:110px;" id="status_filter" data-ng-model="searchAll.status"
                                  data-ng-options="status | translate for status in statuses"
                                  data-ng-change="statusChange()" data-chosen data-disable-search="true" data-width="'110px'">
                          </select>
@@ -67,11 +67,11 @@
                  </tr>
              </thead>
              <tbody>
-                 <tr data-ng-repeat="teamProvider in searchedProvidersList"  data-ng-class="teamProvider.link.self ? 'text-muted' : ''">
+                 <tr data-ng-repeat="teamProvider in searchedProvidersList"  data-ng-class="teamProvider.link.self || !teamProvider.provider.entity.active ? 'text-muted' : ''">
     				 <td class="col-checkbox">
                              <div class="checkbox">
                                  <input type="checkbox" id="teamProviderSearchCb{{$index}}" data-ng-model="teamProvider.provider.entity.checked"
-                                    data-ng-change="onCheckboxChange(teamProvider.provider)" data-ng-disabled="teamProvider.link.self" data-ng-checked="teamProvider.link.self">
+                                    data-ng-change="onCheckboxChange(teamProvider.provider)" data-ng-disabled="teamProvider.link.self || !teamProvider.provider.entity.active" data-ng-checked="teamProvider.link.self">
                                  <label for="teamProviderSearchCb{{$index}}"></label>
                              </div>
     				 </td>

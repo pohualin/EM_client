@@ -1,8 +1,8 @@
 'use strict';
 angular.module('emmiManager')
 
-    .service('ClientTeamEmailConfigurationService', ['$q', '$http', 'UriTemplate', 'UsersClientService', 'Session',
-        function ($q, $http, UriTemplate, UsersClientService, Session) {
+    .service('ClientTeamEmailConfigurationService', ['$q', '$http', 'UriTemplate', 
+              function ($q, $http, UriTemplate) {
     	      return {
     	    	  
     	    	 /**
@@ -49,8 +49,7 @@ angular.module('emmiManager')
                 }
     	       };
 
-                  
-         
+       
     }
 ])
 ;

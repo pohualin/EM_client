@@ -60,14 +60,19 @@ angular.module('emmiManager')
                     var me = this;
                     return $http.get(API.authenticated, {
                         ignoreAuthModule: 'ignoreAuthModule'
-                    }).success(function (user, status, headers, config) {
+                    }).success(function (user) {
                         $rootScope.account = Session.create(user);
+
+                        // set XSRF defaults based upon logged in user
+                        $http.defaults.xsrfHeaderName = 'X-XSRF-TOKEN-' + (!Session.impersonated ? 'CLIENT' : 'IMP');
+                        $http.defaults.xsrfCookieName = 'XSRF-TOKEN-' + (!Session.impersonated ? 'CLIENT' : 'IMP');
+
                         $rootScope.authenticated = true;
                         if (!$rootScope.isAuthorized(authorizedRoles)) {
                             $rootScope.$broadcast('event:auth-notAuthorized');
                         }
                         return $rootScope.account;
-                    }).error(function (data, status, headers, config) {
+                    }).error(function (data, status) {
                         $rootScope.authenticated = false;
                         if (status === 403) {
                             $rootScope.$broadcast('event:auth-totallyNotAuthorized');
@@ -105,7 +110,7 @@ angular.module('emmiManager')
                 },
                 logout: function () {
                     var self = this;
-                    return $http.get(API.logout)
+                    return $http.post(API.logout,{})
                         .success(function () {
                             self.localLogout();
                         }).error(function () {
@@ -117,6 +122,11 @@ angular.module('emmiManager')
                     $rootScope.authenticated = false;
                     $rootScope.account = null;
                     Session.destroy();
+
+                    // set XSRF defaults
+                    $http.defaults.xsrfHeaderName = 'X-XSRF-TOKEN-CLIENT';
+                    $http.defaults.xsrfCookieName = 'XSRF-TOKEN-CLIENT';
+
                     authService.loginCancelled();
                 },
                 processLoginFailureError: function (error, creds) {
@@ -139,6 +149,8 @@ angular.module('emmiManager')
                             });
                         } else if (error.entity.reason === 'EXPIRED_CANT_CHANGE'){
                             angular.extend(LoginErrorMessageFactory,{showTemporaryPasswordTokenExpired:true});
+                        } else if (error.entity.reason === 'XSRF_MISSING') {
+                            $rootScope.$broadcast('event:auth-xsrf-token-missing');
                         }
                     } else {
                         $rootScope.authenticationError = true;

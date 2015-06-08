@@ -28,15 +28,22 @@ angular.module('emmiManager')
             getEmailRestrict();
         };
 
+        $scope.$on('refreshEmailList', function () {
+            getEmailRestrict();
+        });
+
         /**
          * Remove one single emailRestrictConfiguration
          */
         $scope.remove = function(emailRestrictToRemove){
-            EmailRestrictConfigurationsService.remove(emailRestrictToRemove).then(function(response){
+            EmailRestrictConfigurationsService.remove(emailRestrictToRemove).then(function () {
                 $alert({
                     content: '<b>' + $scope.client.name + '</b> has been updated successfully.'
                 });
                 getEmailRestrict();
+                EmailRestrictConfigurationsService.getEmailsThatDoNotFollowRestrictions().then(function (emailsThatDoNotFollowRestrictions) {
+                    $scope.setEmailsThatDoNotFollowRestrictions(emailsThatDoNotFollowRestrictions);
+                });
             });
         };
 

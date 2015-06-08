@@ -22,10 +22,10 @@
     </tr>
   </thead>
   <tbody>
-    <tr data-ng-repeat="clientProvider in clientProviders" data-ng-class="clientProvider.provider.entity.disabled ? 'text-muted' : ''">
+    <tr data-ng-repeat="clientProvider in clientProviders" data-ng-class="clientProvider.provider.entity.disabled || !clientProvider.provider.entity.active ? 'text-muted' : ''">
       <td class="col-checkbox">
           <div class="checkbox">
-              <input type="checkbox" id="clientProviderCb{{$index}}" data-ng-model="clientProvider.provider.entity.checked"  data-ng-disabled="clientProvider.provider.entity.disabled"
+              <input type="checkbox" id="clientProviderCb{{$index}}" data-ng-model="clientProvider.provider.entity.checked"  data-ng-disabled="clientProvider.provider.entity.disabled || !clientProvider.provider.entity.active"
                      data-ng-change="onCheckboxChange(clientProvider.provider)">
               <label for="clientProviderCb{{$index}}"></label>
           </div>
