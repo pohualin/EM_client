@@ -16,7 +16,7 @@ gulp.task('styles', function () {
 });
 
 gulp.task('admin-scripts', function () {
-    return gulp.src('app/admin-facing/scripts/**/*.js')
+    return gulp.src('app/admin-facing/**/*.js')
         .pipe($.jshint())
         .pipe($.jshint.reporter('jshint-stylish'))
         .pipe($.jshint.reporter('fail'))
@@ -40,7 +40,7 @@ gulp.task('router-scripts', function () {
 });
 
 gulp.task('admin-partials', function () {
-    return gulp.src('app/admin-facing/partials/**/*.html')
+    return gulp.src('app/admin-facing/**/*.html')
         .pipe($.minifyHtml({
             empty: true,
             spare: true,
@@ -48,7 +48,7 @@ gulp.task('admin-partials', function () {
         }))
         .pipe($.ngHtml2js({
             moduleName: "emmiManager",
-            prefix: "admin-facing/partials/"
+            prefix: "admin-facing/"
         }))
         .pipe(gulp.dest(".tmp/partials"))
         .pipe($.size({title: 'admin partials', showFiles:true}));

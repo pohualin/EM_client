@@ -1,0 +1,51 @@
+<div data-ng-controller="UsersClientUserClientRolesListController" data-ng-cloak>
+    <div class="col-md-12" data-ng-show="existingUserClientUserClientRoles || teamRoles.length === 0">
+        <div class="row">
+            <div class="col-md-6" data-ng-controller="UsersClientUserClientRolesListController">
+                <h2 class="pull-left" data-ng-show="clientRoles">Client Roles</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel-group" data-ng-repeat="existingUserClientUserClientRole in existingUserClientUserClientRoles"
+                     data-start-collapsed="true"
+                     data-bs-collapse>
+                    <form name="existingUserClientUserClientRoleForm_{{existingUserClientUserClientRole.entity.id}}" class="form" novalidate>
+                        <div class="panel panel-secondary" data-ng-class="{ 'panel-open': existingUserClientUserClientRole.activePanel === 1 }">
+                            <div class="panel-heading" data-ng-click="toggleUserClientUserClienRolePanel(existingUserClientUserClientRole)">
+                                <div class="panel-title">
+                                    <a data-bs-collapse-toggle>
+                                        <span class="icon-caret-right"></span>
+                                        <span class="panel-title-text">{{ existingUserClientUserClientRole.entity.userClientRole.name}}</span>
+                                    </a>
+                                    <div class="pull-right">
+                                        <button type="button" class="btn btn-icon btn-inherit" data-ng-click="removeUserClientRole(existingUserClientUserClientRole)">
+                                            <i class="icon-trashcan"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-collapse" data-bs-collapse-target>
+                                <div class="panel-body">
+                                    Permissions:<br/>
+                                    <div class="permissions-list">
+                                        <span data-ng-repeat="permission in existingUserClientUserClientRole.entity.permissions | orderBy:'permission.rank'">
+                                            {{permission.name  | translate }}{{!$last ? ',' : ''}}&nbsp;
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- .panel -->
+                    </form>
+                </div><!-- .panel-group -->
+            </div>
+        </div><!-- .row -->
+    </div><!-- .col-md-12 -->
+    <div class="col-md-12" data-ng-show="!existingUserClientUserClientRoles && clientRoles.length && teamRoles.length === 0">
+        <button class="btn btn-default" type="button"
+                data-placement="right" data-template="admin-facing/partials/user/client/user-client-role/add-client-role.html"
+                data-trigger="click" data-bs-popover data-auto-close="1" data-popover-dismiss data-container="body"
+                data-ng-click="setSelectedRoleHasSuperPermission()"><i class="icon-plus"></i> Add client role
+        </button>
+    </div>
+</div>

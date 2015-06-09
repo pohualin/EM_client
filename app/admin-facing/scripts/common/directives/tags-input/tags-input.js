@@ -296,6 +296,7 @@ tagsInput.directive('tagsInput', ['$timeout','$document','tagsInputConfig','focu
                 events = scope.events,
                 options = scope.options,
                 input = element.find('input.input'),
+                tagsContainer = element.find('.tags'),
                 getInputText;
 
             getInputText = function(){
@@ -375,6 +376,13 @@ tagsInput.directive('tagsInput', ['$timeout','$document','tagsInputConfig','focu
                 ngModelCtrl.$setValidity('maxTags', angular.isUndefined(options.maxTags) || value <= options.maxTags);
                 ngModelCtrl.$setValidity('minTags', angular.isUndefined(options.minTags) || value >= options.minTags);
                 tagList.validateTags();
+            });
+
+            // Allow clicking anywhere in the .tags container to focus the add tags input (EM-1033)
+            tagsContainer.on('click', function(e) {
+                if (e.target === this) {
+                    input[0].focus();
+                }
             });
 
             input

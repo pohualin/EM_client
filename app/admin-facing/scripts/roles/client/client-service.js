@@ -1,8 +1,8 @@
 'use strict';
 angular.module('emmiManager')
 
-    .service('ManageUserRolesService', ['$filter', '$q', '$http', '$translate', 'UriTemplate', 'CommonService',
-        function ($filter, $q, $http, $translate, UriTemplate, CommonService) {
+    .service('ManageUserRolesService', ['$filter', '$q', '$http', '$translate', 'UriTemplate', 'CommonService', 'ivhTreeviewMgr',
+        function ($filter, $q, $http, $translate, UriTemplate, CommonService, ivhTreeviewMgr) {
             var cachedReferenceData;
             var existingClientRoles = [];
             return {
@@ -93,35 +93,20 @@ angular.module('emmiManager')
                             angular.forEach(response.data, function (savedPermission) {
                                 // set 'active' on the template permission
                                 angular.forEach(clientRoleResource.entity.userClientPermissions, function (templatePerm) {
-                                    if (!templatePerm.children) {
-                                        if (!templatePerm.selected) {
-                                            templatePerm.selected = templatePerm.name === savedPermission.name;
+                                    templatePerm.parentRoleId = clientRoleResource.entity.id;
+                                    if (!templatePerm.active) {
+                                        templatePerm.active = templatePerm.name === savedPermission.name;
+                                    }
+                                    templatePerm.savedState = templatePerm.active;
+                                    angular.forEach(templatePerm.children, function (child) {
+                                        child.parentRoleId = clientRoleResource.entity.id;
+                                        if (!child.active) {
+                                            child.active = child.name === savedPermission.name;
                                         }
-                                    } else {
-                                        angular.forEach(templatePerm.children, function (child) {
-                                            if (!child.selected) {
-                                                child.selected = child.name === savedPermission.name;
-                                            }
-                                        });
-                                    }
+                                        child.savedState = child.active;
+                                    });
                                 });
                             });
-
-                            angular.forEach(clientRoleResource.entity.userClientPermissions, function (group) {
-                                var selectedChildren = 0;
-                                angular.forEach(group.children, function (child) {
-                                    if (child.selected) {
-                                        selectedChildren++;
-                                    }
-                                });
-                                // Half check or check on group checkbox
-                                if (selectedChildren !== 0 && group.children.length !== selectedChildren) {
-                                    group.__ivhTreeviewIndeterminate = true;
-                                } else if (selectedChildren !== 0 && group.children.length === selectedChildren) {
-                                    group.selected = true;
-                                }
-                            });
-
                             clientRoleResource.original = angular.copy(clientRoleResource);
                             return response.data;
                         });
@@ -283,7 +268,7 @@ angular.module('emmiManager')
                         var type = existingClientRole.entity ? existingClientRole.entity.type : null;
                         if (type && libraryRole.entity.type.id === type.id) {
                             libraryRole.disabled = true;
-                        } else if(libraryRole.entity.normalizedName === existingClientRole.entity.normalizedName){
+                        } else if (libraryRole.entity.normalizedName === existingClientRole.entity.normalizedName) {
                             libraryRole.disableNameMatch = true;
                             libraryRole.disabled = true;
                         }
@@ -384,7 +369,57 @@ angular.module('emmiManager')
                             });
                         }
                     });
-                    return $filter('filter')(perms, {selected: true}, true);
+                    return $filter('filter')(perms, {active: true}, true);
+                },
+
+                /**
+                 * This method does a couple of things.
+                 *
+                 * 1. It deals with the super user permission being selected.
+                 * 2. It determines if the existing state is the same as what
+                 * was originally loaded
+                 *
+                 * @param changedOption the option triggering the method call
+                 * @param isSelected is this option selected
+                 * @param all  possible options
+                 * @returns {*|boolean} true if the values are different than the loaded values
+                 */
+                doesChangeNeedSave: function (changedOption, isSelected, all) {
+
+                    if ('PERM_CLIENT_SUPER_USER' === changedOption.name) {
+                        // enable or disable based upon the selection state of admin permission
+                        angular.forEach(all, function (group) {
+                            // for all non-super user permissions...
+                            if (!angular.equals(changedOption, group)) {
+                                if (isSelected) {
+                                    group.active = false;
+                                }
+                                group.disabled = isSelected;
+                                angular.forEach(group.children, function (child) {
+                                    child.disabled = isSelected;
+                                    if (isSelected) {
+                                        child.active = false;
+                                    }
+                                });
+                            }
+                        });
+                    }
+
+                    // re-sync the tree
+                    ivhTreeviewMgr.validate(all, {selectedAttribute: 'active'});
+
+                    var deltas = {};
+                    angular.forEach(all, function (changedOption) {
+                        var options = changedOption.children ? changedOption.children : [changedOption];
+                        angular.forEach(options, function (option) {
+                            if (option.savedState !== option.active) {
+                                deltas[option.name] = option.active;
+                            } else {
+                                delete deltas[option.name];
+                            }
+                        });
+                    });
+                    return !angular.equals({}, deltas);
                 }
             };
         }])

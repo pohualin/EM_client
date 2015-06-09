@@ -375,6 +375,10 @@
         .radio:first-child {
             margin-top: 0;
         }
+        .checkbox:last-child,
+        .radio:last-child {
+            margin-bottom: 0;
+        }
     }
     .form-control:focus {
         box-shadow: none !important;
@@ -581,6 +585,7 @@
     .main-content {
         @include make-md-column(8.5);
         //@include make-md-column-offset(3.5);
+        min-height: 600px;
     }
     .sidebar + .main-content {
         padding-left: 25px;
@@ -609,14 +614,39 @@
         > .sidebar-wrapper {
             padding: 25px 12px 0;
         }
-        .sidebar-heading {
+        .sidebar-heading,
+        .sidebar-heading .sidebar-client-link {
             color: rgba(255,255,255,0.85);
+        }
+        .sidebar-heading .sidebar-client-link:hover,
+        .sidebar-heading .sidebar-client-link:focus {
+            text-decoration: underline;
         }
         .sidebar-scroll-content {
             //overflow: auto;
             // .scroll-viewport {
             //     height: 200px;
             // }
+        }
+        .sidebar-list {
+            font-weight: 300;
+            @include remIt(font-size, 16);
+            //line-height: 1.875;
+            line-height: 1;
+            li {
+                padding: 6px 0;
+            }
+            a:hover, a:focus {
+                color: $link-color;
+                text-decoration: underline;
+            }
+            .active,
+            .active:hover,
+            .active:focus {
+                color: rgba(235,235,235,.75);
+                cursor: default;
+                text-decoration: none;
+            }
         }
         .configure {
             a {
@@ -652,6 +682,9 @@
         }
         select.form-control + .chosen-container .chosen-drop {
             background-color: #f2f2f2;
+            // Allow the dropdown to be wider than the control so entire tag is visible (EM-1134)
+            width: auto;
+            min-width: 100%;
         }
         select.form-control + .chosen-container-multi .chosen-choices li.search-choice {
             background-color: #eaeaea;
@@ -672,17 +705,7 @@
             margin: 0 0 28px;
         }
         .teams-filter-list {
-            font-weight: 300;
-            @include remIt(font-size, 16);
-            //line-height: 1.875;
-            line-height: 1;
-            li {
-                padding: 6px 0;
-            }
-            a:hover, a:focus {
-                color: $link-color;
-                text-decoration: underline;
-            }
+
         }
         .filter-link {
             @include remIt(font-size, 13);

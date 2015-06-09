@@ -105,6 +105,7 @@ angular.module('emmiManager')
             $scope.selectTeam = function (id) {
                 $location.search('team', id).replace();
                 $rootScope.currentRouteQueryString = arrays.toQueryString($location.search());
+                $scope.currentTeamId = id;
             };
 
         }]);

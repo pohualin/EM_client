@@ -1,0 +1,33 @@
+
+<div class="app-header with-breadcrumbs" data-emmi-navbar>
+   <!-- Secondary menu for transclusion -->
+    <ul class="secondary-nav">
+        <li data-ng-if="!isProduction"><a href="#/clients/{{client.id}}/password_policy">Client Configurations</a></li>
+        <li>
+            <a data-ng-if="hasExistingClientRoles || hasExistingClientTeamRoles" href="#/clients/{{client.id}}/users">Manage Users</a>
+            <a data-ng-if="!hasExistingClientRoles && !hasExistingClientTeamRoles" data-ng-class="{'disabled':(!hasExistingClientRoles && !hasExistingClientTeamRoles)}" data-bs-tooltip data-type="info" data-placement="bottom" data-title="Set up user roles before adding users">Manage Users</a>
+        </li>
+    </ul>
+    <!-- Breadcrumb for transclusion -->
+     <!-- Breadcrumb for transclusion -->
+    <ol class="breadcrumb">
+        <li><a href="#/clients?{{currentRouteQueryString}}">Search</a></li>
+        <li><a href="#/clients/{{client.id}}">{{client.name}}</a></li>
+        <li><a href="#/clients/{{client.id}}/teams/{{team.entity.id}}">{{team.entity.name}}</a></li>
+    </ol>
+</div>
+
+<div class="app-content app-content-with-sidebar container" data-ng-cloak>
+    <div class="row" data-ng-switch on="showTeamConfig">
+        <div class="sidebar"
+             data-ng-include="'admin-facing/partials/team/configuration/main.html'"></div>
+         
+   		 <div class="main-content">
+              <div data-ng-show="showEmailConfig" data-ng-include="'admin-facing/partials/team/configuration/email/email-configuration.html'"></div>
+              <div data-ng-show="showPhoneConfig" data-ng-include="'admin-facing/partials/team/configuration/phone/phone-configuration.html'"></div>
+         </div>
+        
+    </div><!-- .row -->
+</div><!-- .container -->
+ 
+<footer class="footer" data-ng-include="'admin-facing/partials/common/footer.tpl.html'"></footer>

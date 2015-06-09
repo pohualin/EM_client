@@ -67,14 +67,7 @@ angular.module('emmiManager')
                             ' <b>' + $scope.singleProviderAdded.fullName + '</b> has been added successfully.' :
                             'The selected providers have been added successfully.';
                         $alert({
-                            title: ' ',
-                            content: message,
-                            container: '#messages-container',
-                            type: 'success',
-                            placement: 'top',
-                            show: true,
-                            duration: 5,
-                            dismissable: true
+                            content: message
                         });
                     }
                 });
@@ -92,13 +85,8 @@ angular.module('emmiManager')
                         message = (!$scope.singleProviderAdded) ? 'The selected providers were successfully added to ' + clientName :
                             'The provider <b>' + $scope.singleProviderAdded.fullName + '</b> has been successfully added to ' + clientName;
                     $alert({
-                        title: ' ',
                         content: message,
-                        container: '#modal-messages-container',
-                        type: 'success',
-                        show: true,
-                        duration: 5,
-                        dismissable: true
+                        container: '#modal-messages-container'
                     });
                 });
             };
@@ -127,7 +115,7 @@ angular.module('emmiManager')
                 ClientProviderService.find(Client.getClient(), $scope.providerQuery, $scope.status, $scope.sortProperty, $scope.currentPageSize).then(function (providerPage) {
                 	$scope.handleResponse(providerPage, managedProviderList);
                 	$scope.setCheckboxesForChanged($scope[managedProviderList]);
-                	
+
                 }, function () {
                 	// error happened
                 	$scope.loading = false;
@@ -155,7 +143,7 @@ angular.module('emmiManager')
                     $scope.loading = false;
                 });
             };
-            
+
             // when a column header is clicked
             $scope.sort = function (property) {
             	var sort = $scope.sortProperty || {};
@@ -182,7 +170,7 @@ angular.module('emmiManager')
                     $scope.loading = false;
                 });
             };
-            
+
             function init() {
             	$scope.providerQuery = null;
                 $scope.status = 'ACTIVE_ONLY';

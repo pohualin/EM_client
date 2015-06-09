@@ -30,20 +30,14 @@ angular.module('emmiManager')
             $scope.ipRestrictConfigurationFormSubmitted = true;
             if(ipRestrictConfigurationForm.$valid){
                 IpRestrictConfigurationsService.save($scope.ipRestrictConfiguration).then(function(response){
-                    $scope.listExisting();
+                    $scope.$emit('requestIpList');
                     $scope.ipRestrictConfiguration = IpRestrictConfigurationsService.newIpRestrictConfiguration();
                     $scope.ipRestrictConfigurationFormSubmitted = false;
                     if(!addAnother){
                         $scope.$hide();
                     }
                     $alert({
-                        content: '<b>' + $scope.client.name + '</b> has been updated successfully.',
-                        container: '#messages-container',
-                        type: 'success',
-                        placement: 'top',
-                        show: true,
-                        duration: 5,
-                        dismissable: true
+                        content: '<b>' + $scope.client.name + '</b> has been updated successfully.'
                     });
                 });
             } else {
@@ -57,11 +51,11 @@ angular.module('emmiManager')
         $scope.showErrorBanner = function () {
             if (!$scope.addIpRestrictErrorAlert) {
                 $scope.addIpRestrictErrorAlert = $alert({
-                    title: ' ',
                     content: 'Please correct the below information.',
                     container: '#ip-message-container',
                     type: 'danger',
-                    show: true,
+                    placement: '',
+                    duration: false,
                     dismissable: false
                 });
             }

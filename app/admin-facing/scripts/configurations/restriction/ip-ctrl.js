@@ -28,19 +28,17 @@ angular.module('emmiManager')
             getIpRestrict();
         };
 
+        $scope.$on('refreshIpList', function(event) {
+            getIpRestrict();
+        });
+
         /**
          * Remove one single ipRestrictConfiguration
          */
         $scope.remove = function(ipRestrictToRemove){
             IpRestrictConfigurationsService.remove(ipRestrictToRemove).then(function(response){
                 $alert({
-                    content: '<b>' + $scope.client.name + '</b> has been updated successfully.',
-                    container: '#messages-container',
-                    type: 'success',
-                    placement: 'top',
-                    show: true,
-                    duration: 5,
-                    dismissable: true
+                    content: '<b>' + $scope.client.name + '</b> has been updated successfully.'
                 });
                 getIpRestrict();
             });

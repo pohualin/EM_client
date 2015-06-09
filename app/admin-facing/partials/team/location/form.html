@@ -1,6 +1,6 @@
-<form name="locationForm" class="form" ng-submit="saveLocation(locationForm.$valid)" novalidate>
+<form name="locationForm" class="form" data-ng-submit="saveLocation(locationForm.$valid)" novalidate>
     <div class="modal-content">
-        <div class="modal-header" ng-show="title">
+        <div class="modal-header" data-ng-show="title">
             <h4 class="modal-title">{{title}}</h4>
         </div>
         <div class="modal-body">
@@ -39,7 +39,8 @@
                         <div class="has-input-icon has-input-icon-telephone">
                             <input class="form-control" data-ng-model="location.phone" id="phone" name="phone" type="text"
                                    maxlength="12" data-input-mask="999-999-9999" placeholder="XXX-XXX-XXXX"
-                                   data-ng-pattern="/[2-9][0-9][0-9]-[2-9][0-9][0-9]-[0-9][0-9][0-9][0-9]/">
+                                   data-ng-pattern="/[2-9][0-9][0-9]-[2-9][0-9][0-9]-[0-9][0-9][0-9][0-9]/"
+                                   data-input-icon>
                             <span class="input-icon"><i class="icon-telephone"></i></span>
                         </div>
                     </div>
@@ -80,13 +81,13 @@
                         <label class="control-label" for="providers">Add to Providers</label>
                         <span class="field-note field-optional">optional</span>
                         <div data-multi-select
-                         name="providersData"
-                         values="providersData"
-                         model="location.providersSelected"
-                         show-filters="true"
-                         value-field="id"
-                         label-field="label"
-                         template-path = "admin-facing/partials/common/directives/multi-select/multi-select.html" >
+                             data-name="providersData"
+                             data-values="providersData"
+                             data-model="location.providersSelected"
+                             data-show-filters="true"
+                             data-value-field="id"
+                             data-label-field="label"
+                             data-template-path="admin-facing/partials/common/directives/multi-select/multi-select.html">
                          </div>
                     </div>
                 </div>
@@ -119,7 +120,7 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button type="submit" class="btn btn-success">Save</button>
+            <button type="button" class="btn btn-success" data-client-location-deactivate-warning>Save</button>
             <button type="button" class="btn btn-default" data-ng-if="saveAndAddAnother"
                     data-ng-click="saveAndAddAnother(locationForm.$valid)">Save & Add Another
             </button>

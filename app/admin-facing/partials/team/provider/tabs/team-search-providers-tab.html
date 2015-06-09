@@ -6,7 +6,7 @@
                      <label class="sr-only" for="providerQuery">Search providers:</label>
                      <div class="input-group has-input-icon has-input-icon-search">
                          <input class="form-control" id="providerQuery" name="providerQuery" data-ng-model="searchAll.providerQuery"
-                                type="text" placeholder="Search all providers" required data-auto-focus data-focus-on="ProviderSearchFocus">
+                                type="text" placeholder="Search by &quot;lastname, firstname&quot;" required data-auto-focus data-focus-on="ProviderSearchFocus">
                          <span class="input-icon"><i class="icon-search"></i></span>
                          <span class="input-group-btn">
                              <button class="btn btn-success" data-ng-click="search(searchForm.providerQuery.$valid)"
@@ -37,7 +37,7 @@
                  <form class="form-inline">
                      <div class="form-group">
                          <label for="status_filter" data-translate="global.labels.statusFilter">Show:</label>&nbsp;&nbsp;
-                         <select class="form-control input-sm" style="width:110px;" id="status_filter" data-ng-model="status"
+                         <select class="form-control input-sm" style="width:110px;" id="status_filter" data-ng-model="searchAll.status"
                                  data-ng-options="status | translate for status in statuses"
                                  data-ng-change="statusChange()" data-chosen data-disable-search="true" data-width="'110px'">
                          </select>
@@ -49,9 +49,10 @@
              <thead>
                  <tr>
                      <th class="sort col-checkbox">&nbsp;</th>
-                     <th class="sort" data-ng-click="sort('lastName')">
+                     <th class="sort" data-ng-click="sort('normalizedName')">
                          Name
-                         <span data-ng-show="sortProperty.property === 'lastName'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
+                         <span data-ng-show="sortProperty.property === 'normalizedName'"><span class="sort-icon"
+                                                                                               data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
                      </th>
                      <th class="sort col-sm-3" data-ng-click="sort('specialty.name')">
                          Primary Specialty
@@ -66,11 +67,11 @@
                  </tr>
              </thead>
              <tbody>
-                 <tr data-ng-repeat="teamProvider in searchedProvidersList"  data-ng-class="teamProvider.link.self ? 'text-muted' : ''">
+                 <tr data-ng-repeat="teamProvider in searchedProvidersList"  data-ng-class="teamProvider.link.self || !teamProvider.provider.entity.active ? 'text-muted' : ''">
     				 <td class="col-checkbox">
                              <div class="checkbox">
                                  <input type="checkbox" id="teamProviderSearchCb{{$index}}" data-ng-model="teamProvider.provider.entity.checked"
-                                    data-ng-change="onCheckboxChange(teamProvider.provider)" data-ng-disabled="teamProvider.link.self" data-ng-checked="teamProvider.link.self">
+                                    data-ng-change="onCheckboxChange(teamProvider.provider)" data-ng-disabled="teamProvider.link.self || !teamProvider.provider.entity.active" data-ng-checked="teamProvider.link.self">
                                  <label for="teamProviderSearchCb{{$index}}"></label>
                              </div>
     				 </td>
@@ -80,13 +81,13 @@
                      <td class="col-has-multiselect" data-ng-if="allTeamLocations.length > 0" >
                          <div data-ng-show="teamProvider.provider.entity.showLocations">
                              <div data-ng-class="{'has-error col-md-11': teamProvider.provider.entity.selectedTeamLocations < 1 && associateRequestSubmitted}" data-multi-select
-                                 name=".nonClientProvider[{{teamProvider.provider.entity.id}}].allTeamLocations{{$index}}"
-                                 values="allTeamLocations"
-                                 model="teamProvider.provider.entity.selectedTeamLocations"
-                                 show-filters="true"
-                                 value-field="id"
-                                 label-field="label"
-                                 template-path = "admin-facing/partials/common/directives/multi-select/multi-select.html" >
+                                  data-name=".nonClientProvider[{{teamProvider.provider.entity.id}}].allTeamLocations{{$index}}"
+                                  data-values="allTeamLocations"
+                                  data-model="teamProvider.provider.entity.selectedTeamLocations"
+                                  data-show-filters="true"
+                                  data-value-field="id"
+                                  data-label-field="label"
+                                  data-template-path="admin-facing/partials/common/directives/multi-select/multi-select.html">
                              </div>
                              <div class="error-circle fa-exclamation-circle glyphicon-form-inline-right"
               					data-ng-show="teamProvider.provider.entity.selectedTeamLocations < 1 && associateRequestSubmitted"

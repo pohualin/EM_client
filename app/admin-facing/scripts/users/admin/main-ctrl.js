@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  * Manage users
  */
-    .controller('UsersMainCtrl', ['$scope', '$controller', 'UsersService', '$alert',
-        function ($scope, $controller, UsersService, $alert) {
+    .controller('UsersMainCtrl', ['$scope', '$controller', 'URL_PARAMETERS', 'UsersService', '$alert',
+        function ($scope, $controller, URL_PARAMETERS, UsersService, $alert) {
 
             /**
              * Set deactivationPopoverOpen to isOpen for the user
@@ -31,7 +31,7 @@ angular.module('emmiManager')
              * Called when GO button is clicked
              */
             $scope.search = function () {
-                $scope.serializeToQueryString('', 'u', null, null);
+                $scope.serializeToQueryString('', URL_PARAMETERS.USER, null, null);
                 $scope.loading = true;
                 UsersService.list('', null).then(
                     function (response) {
@@ -48,7 +48,7 @@ angular.module('emmiManager')
              */
             $scope.sort = function (property) {
                 var sort = $scope.createSortProperty(property);
-                $scope.serializeToQueryString('', 'u', null, sort);
+                $scope.serializeToQueryString('', URL_PARAMETERS.USER, null, sort);
                 UsersService.list('', sort).then(
                     function (response) {
                         $scope.handleResponse(response, 'users');
@@ -76,13 +76,7 @@ angular.module('emmiManager')
                         message += ' has been deactivated.';
                     }
                     $alert({
-                        content: message,
-                        container: '#messages-container',
-                        type: 'success',
-                        placement: 'top',
-                        show: true,
-                        duration: 5,
-                        dismissable: true
+                        content: message
                     });
                 });
             };

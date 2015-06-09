@@ -29,6 +29,7 @@ angular.module('emmiManager')
                 },
                 reloadOnSearch: false,
                 activeMenu: MENU.setup,
+                activeSidebarMenu: 'restriction',
                 resolve: clientDetailRequiredResources
             });
     })

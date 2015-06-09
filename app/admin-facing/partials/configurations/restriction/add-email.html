@@ -1,8 +1,8 @@
-<div class="col-md-12" data-ng-controller="AddEmailRestrictConfigurationController">
-    <button type="button" class="btn btn-link" data-ng-hide="emailRestrictConfigurations" data-ng-click="addAnotherEmailRestrict()">
-        add email ending
+<div data-ng-controller="AddEmailRestrictConfigurationController">
+    <button type="button" class="btn btn-link btn-link-nopad btn-heading" data-ng-if="!emailRestrictConfigurations" data-ng-click="addAnotherEmailRestrict()">
+        <i class="icon-plus"></i> add email ending
     </button>
-    <button type="button" class="btn btn-link" data-ng-show="emailRestrictConfigurations" data-ng-click="addAnotherEmailRestrict()">
-        add another
+    <button type="button" class="btn btn-link btn-link-nopad btn-heading" data-ng-if="emailRestrictConfigurations" data-ng-click="addAnotherEmailRestrict()">
+        <i class="icon-plus"></i> add another
     </button>
 </div>

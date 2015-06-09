@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  * Controller for Configuration main page
  */
-    .controller('ClientPasswordConfigurationMainController', ['$alert', '$scope', '$controller', 'Client', 'ClientPasswordConfigurationsService',
-        function ($alert, $scope, $controller, Client, ClientPasswordConfigurationsService) {
+    .controller('ClientPasswordConfigurationMainController', ['$alert', '$scope', '$rootScope', '$controller', 'clientResource', 'Client', 'ClientPasswordConfigurationsService', 'ManageUserRolesService', 'ManageUserTeamRolesService',
+        function ($alert, $scope, $rootScope, $controller, clientResource, Client, ClientPasswordConfigurationsService, ManageUserRolesService, ManageUserTeamRolesService) {
 
             /**
              * Cancel any changes
@@ -29,13 +29,7 @@ angular.module('emmiManager')
                         $scope.defaultPasswordConfiguration = response.entity.defaultPasswordConfiguration;
                         $scope.loading = false;
                         $alert({
-                            content: '<b>' + $scope.client.name + '</b> has been updated successfully.',
-                            container: '#messages-container',
-                            type: 'success',
-                            placement: 'top',
-                            show: true,
-                            duration: 5,
-                            dismissable: true
+                            content: '<b>' + $scope.client.name + '</b> has been updated successfully.'
                         });
                         clientPasswordConfigurationForm.$setPristine();
                     });
@@ -55,13 +49,7 @@ angular.module('emmiManager')
                         $scope.defaultPasswordConfiguration = response.entity.defaultPasswordConfiguration;
                         $scope.clientPasswordConfigurationFormSubmitted = false;
                         $alert({
-                            content: '<b>' + $scope.client.name + '</b> has been updated successfully.',
-                            container: '#messages-container',
-                            type: 'success',
-                            placement: 'top',
-                            show: true,
-                            duration: 5,
-                            dismissable: true
+                            content: '<b>' + $scope.client.name + '</b> has been updated successfully.'
                         });
                     });
                 }
@@ -85,6 +73,13 @@ angular.module('emmiManager')
              */
             function init() {
                 $scope.client = Client.getClient().entity;
+                //need to have at this point if the client has roles in order to define the correct redirect for users links at the bottom page
+                ManageUserRolesService.loadClientRoles(clientResource).then(function (rolesResources) {
+                    $scope.existingClientRoles = rolesResources;
+                });
+                ManageUserTeamRolesService.loadClientTeamRoles(clientResource).then(function (rolesResources) {
+                    $scope.existingClientTeamRoles = rolesResources;
+                });
                 ClientPasswordConfigurationsService.getClientPasswordConfiguration().then(function (response) {
                     $scope.originalClientPasswordConfiguration = response;
                     $scope.clientPasswordConfiguration = angular.copy($scope.originalClientPasswordConfiguration);
