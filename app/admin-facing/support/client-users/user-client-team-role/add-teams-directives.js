@@ -5,7 +5,7 @@ angular.module('emmiManager')
 /**
  * This directive shows a warning dialog when a currently active ClientProvider is deactivated
  */
-    .directive('addTeamRolesWarning', ['$popover', '$timeout', 'UserClientUserClientTeamRolesService', function ($popover, $timeout, UserClientUserClientTeamRolesService) {
+    .directive('supportAddTeamRolesWarning', ['$popover', '$timeout', 'UserClientUserClientTeamRolesService', function ($popover, $timeout, UserClientUserClientTeamRolesService) {
         return {
             restrict: 'EA',
             link: function (scope, element) {
@@ -29,7 +29,7 @@ angular.module('emmiManager')
                                     placement: 'top',
                                     target: element,
                                     autoClose: true,
-                                    contentTemplate: 'admin-facing/partials/user/client/user-client-team-role/add-team-popover.tpl.html'
+                                    contentTemplate: 'admin-facing/support/client-users/user-client-team-role/add-team-popover.tpl.html'
                                 });
                             } else {
                                 scope.addTeamRolesWarning.show();

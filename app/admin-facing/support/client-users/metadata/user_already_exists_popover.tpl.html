@@ -1,0 +1,20 @@
+<div class="popover">
+    <div class="arrow"></div>
+    <h3 class="popover-title">{{saveError.reason | translate}}</h3>
+    <div class="popover-content">
+        <div class="popover-text">
+            <table border="0" cellpadding="0" cellspacing="0" class="popover-table">
+                <tr>
+                    <th nowrap>User ID:</td>
+                    <td><a href="#/support/clients/{{saveError.userClient.client.id}}/users/{{saveError.userClient.id}}">{{saveError.userClient.login | characters:25}}</a></td>
+                </tr>
+                <tr>
+                    <th><span>Client:</span></th>
+                    <td>{{saveError.userClient.client.name | characters:25}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+

@@ -5,13 +5,13 @@ angular.module('emmiManager')
 /**
  * Controller for list of UserClientUser
  */
-.controller('UsersClientUserClientTeamRolesAddTeamsController',
+.controller('UsersClientUserClientTeamRolesSupportAddTeamsController',
 		['$modal', '$scope', 'UserClientUserClientTeamRolesService',
         function ($modal, $scope, UserClientUserClientTeamRolesService) {
 
 			var addTeamsModal = $modal(
 					{scope: $scope,
-                        template: 'admin-facing/partials/user/client/user-client-team-role/search.html',
+                        template: 'admin-facing/support/client-users/user-client-team-role/search.html',
 					 animation: 'none',
 					 backdropAnimation: 'emmi-fade',
 					 show: false, backdrop: 'static'});
