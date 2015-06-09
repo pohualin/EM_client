@@ -58,8 +58,14 @@
                 <ul class="sidebar-list teams-filter-list list-unstyled">
                     <li data-ng-repeat="team in clientTeams">
                         <!--when a user clicks on a team they are taken to that team's page-->
-                        <a data-ng-if="!isCurrentTeam(team)" data-ng-click="selectTeam(team.id)">{{team.name}} <span data-ng-if="!team.active">(inactive)</span> </a>
-                        <a class="active" data-ng-if="isCurrentTeam(team)">{{team.name}} <span data-ng-if="!team.active">(inactive)</span> </a>
+                        <a data-ng-if="!isCurrentTeam(team)" data-ng-click="selectTeam(team.id)">
+                            <span data-ng-if="team.active"> {{team.name}} </span>
+                            <i data-ng-if="!team.active">{{team.name}} (inactive)</i>
+                        </a>
+                        <a class="active" data-ng-if="isCurrentTeam(team)">
+                            <span data-ng-if="team.active"> {{team.name}} </span>
+                            <i data-ng-if="!team.active">{{team.name}} (inactive)</i>
+                        </a>
                     </li>
                 </ul>
                 <div data-ng-show="clientTeams===null">No teams exist for this search.</div>
