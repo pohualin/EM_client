@@ -1,0 +1,21 @@
+<div class="popover popover-flex">
+    <div class="arrow"></div>
+    <h3 class="popover-title">User Credentials:
+        <button type="button" class="btn btn-default btn-xs btn-close pull-right" data-ng-click="closePopover()">
+            <span class="icon-delete"></span>
+        </button>
+    </h3>
+    <div class="popover-content popover-text">
+        <p>Please direct the user to <span data-title="{{url}}" data-placement="right" data-type="info" data-bs-tooltip><a href>{{urlDisplay}}</a></span></p>
+        <table border="0" cellpadding="0" cellspacing="0">
+            <tr class="nowrap">
+                <td>User ID:</td>
+                <td><strong>{{login}}</strong></td>
+            </tr>
+            <tr class="nowrap">
+                <td>Temp password:&nbsp;&nbsp;&nbsp;</td>
+                <td><strong>{{passwordChange.password}}</strong></td>
+            </tr>
+        </table>
+    </div>
+</div>

@@ -33,6 +33,14 @@ angular.module('emmiManager')
                 title: 'Login',
                 access: {
                     authorizedRoles: [USER_ROLES.all]
+                },
+                resolve: {
+                    'csrf': ['API', '$http', function(API, $http){
+                        // call the webapi to get an XSRF-TOKEN
+                        return $http.get(API.self, {
+                            ignoreAuthModule: 'ignoreAuthModule'
+                        });
+                    }]
                 }
             })
             .when('/403', {
