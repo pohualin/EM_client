@@ -1,0 +1,47 @@
+<div class="popover popover-tag-library">
+    <div class="arrow"></div>
+    <h3 class="popover-title">Select a client role to add:</h3>
+
+    <div class="popover-content">
+        <form name="clientRolesSelection" class="tag-library" data-popover-right-toggle>
+            <div class="form-group">
+                <div class="radio" data-ng-repeat="clientRole in clientRoles">
+                    <input type="radio" id="clientRole{{$index}}"
+                           data-ng-model="$parent.clientRolesSelection.selectedClientRole"
+                           value="{{clientRole.entity.id}}"
+                           data-ng-click="setSelectedRoleHasSuperPermission(clientRole)"/>&nbsp;&nbsp;
+                    <label for="clientRole{{$index}}"></label>
+            <span class="toggle-trigger">
+                <span data-ng-show="clientRole.entity.permissions.length > 0" class="icon-caret-right"></span><span>{{ clientRole.entity.name }}</span>
+            </span>
+
+                    <div class="toggle-content">
+                        <small>
+                    <span data-ng-repeat="aPermission in clientRole.entity.permissions | orderBy:'permission.rank'">
+                    {{aPermission.name  | translate }}{{!$last ? ',' : ''}}&nbsp;
+                    </span>
+                        </small>
+                    </div>
+                </div>
+            </div>
+            <div class="popover-footer popover-footer-with-info">
+                <button type="button" class="btn btn-default btn-xs btn-close" data-ng-click="$hide()">
+                    <span class="icon-delete"></span>
+                </button>
+                <div class="row">
+                    <div class="col-md-3">
+                        <button type="button" class="btn btn-success pull-left" data-ng-click="associateClientRole(clientRolesSelection);$hide()">Add</button>
+                    </div>
+                    <div class="col-md-9" data-ng-if="selectedRoleHasSuperPermission">
+                        <small class="pull-right"
+                               style="margin: -2px -10px -10px 10px;">
+                            This role will replace existing team roles (the user will be given all permissions at all
+                            teams within this client).
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- .popover-content -->
+</div><!-- .popover -->

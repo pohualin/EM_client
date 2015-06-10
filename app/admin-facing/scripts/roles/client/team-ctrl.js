@@ -37,7 +37,7 @@ angular.module('emmiManager')
              */
             $scope.createNewClientTeamRole = function () {
                 $scope.newClientTeamRole = ManageUserTeamRolesService.newClientTeamRoleEntity();
-                focus('focus-new-role');
+                focus('focus-new-team-role');
             };
 
             /**
@@ -77,7 +77,6 @@ angular.module('emmiManager')
              * @param form for unsaved changes
              */
             $scope.saveNewRole = function (clientTeamRoleEntity, form) {
-                form.$setPristine();
                 $scope.newClientTeamRoleFormSubmitted = true;
                 if(form.$valid){
                     ManageUserTeamRolesService.saveNewClientTeamRole(clientTeamRoleEntity, $scope.clientResource)
@@ -85,9 +84,10 @@ angular.module('emmiManager')
                             delete $scope.newClientTeamRole;
                             $scope.loadExisting();
                             $scope.successAlert(clientTeamRoleEntity);
+                            form.$setPristine();
                         }, function(error){
                             if (error.status === 406) {
-                                form.name.$setValidity('unique', false);
+                                form.$setValidity('unique', false);
                             }
                         });
                 }
@@ -99,8 +99,8 @@ angular.module('emmiManager')
              * @param form for unsaved changes
              */
             $scope.cancelNew = function (form) {
-                form.$setPristine();
                 $scope.resetValidity(form);
+                form.$setPristine();
                 $scope.newClientTeamRoleFormSubmitted = false;
                 delete $scope.newClientTeamRole;
             };
@@ -112,10 +112,10 @@ angular.module('emmiManager')
              * @param form for unsaved changes
              */
             $scope.cancelExisting = function (clientTeamRoleResource, form) {
-                form.$setPristine();
                 clientTeamRoleResource.editName = false;
                 angular.extend(clientTeamRoleResource, clientTeamRoleResource.original);
                 $scope.resetValidity(form);
+                form.$setPristine();
                 delete clientTeamRoleResource.original;
             };
 
@@ -129,9 +129,10 @@ angular.module('emmiManager')
              */
             $scope.panelStateChange = function (clientTeamRoleResource, form) {
                 if (clientTeamRoleResource.activePanel === 0 && !clientTeamRoleResource.original) {
-                    ManageUserTeamRolesService.loadPermissions(clientTeamRoleResource);
-                    // Set the form back to pristine after loading permissions from server
-                    form.$setPristine();
+                    ManageUserTeamRolesService.loadPermissions(clientTeamRoleResource).then(function (){
+                        // Set the form back to pristine after loading permissions from server
+                        form.$setPristine();
+                    });
                 } else {
                     // Set the form back to pristine after initialization
                     form.$setPristine();
@@ -165,7 +166,7 @@ angular.module('emmiManager')
                     });
                 }, function(error){
                     if (error.status === 406) {
-                        form.name.$setValidity('unique', false);
+                        form.$setValidity('unique', false);
                     }
                 });
             };
@@ -218,9 +219,9 @@ angular.module('emmiManager')
             };
 
             /**
-             * when the library hides, uncheck everything
+             * before the library shows, uncheck everything
              */
-            $scope.$on('tooltip.hide', function () {
+            $scope.$on('tooltip.show.before', function () {
                 ManageUserTeamRolesService.deselectAllLibraries($scope.libraries);
             });
 
@@ -237,9 +238,8 @@ angular.module('emmiManager')
              * Reset all validity
              */
             $scope.resetValidity = function(form){
-                if(form.name){
-                    form.name.$setValidity('unique', true);
-                }
+                form.$setValidity('unique', true);
+                form.$setDirty(true);
             };
 
             // start by loading the currently saved roles
