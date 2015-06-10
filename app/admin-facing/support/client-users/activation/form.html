@@ -1,0 +1,96 @@
+<form name="activationForm" class="form" novalidate>
+    <div class="col-md-12">
+        <div id="generated-password"></div>
+        <div class="row">
+            <div class="col-md-12"
+                 data-ng-controller="SupportActivationController"
+                 data-ng-show="selectedUserClient.entity.email && !selectedUserClient.entity.activated"
+                 data-ng-switch="selectedUserClient.entity.activationExpirationDateTime != null &&
+                     selectedUserClient.entity.activationKey != null">
+                <div class="form-actions">
+                    <button class="btn btn-primary" type="button"
+                            data-ng-show="selectedUserClient.entity.email"
+                            data-ng-click="sendActivationEmail()">
+                        <span data-ng-switch-when="false">Send</span>
+                        <span data-ng-switch-when="true">Resend</span>
+                        <span> User Setup Email</span>
+                    </button>
+                    <button class="btn btn-default" type="button"
+                            data-ng-show="selectedUserClient.entity.email"
+                            data-ng-click="sendActivationEmail(true)">
+                        <span data-ng-switch-when="false">Send</span>
+                        <span data-ng-switch-when="true">Resend</span>
+                        <span> Email & Add Another User</span>
+                    </button>
+                    <div class="user-setup-status" data-ng-switch-when="true">
+                        <span data-ng-show="!inThePast()">
+                            <i class="icon-check-circle icon-size-xl green"></i>
+                            <em>Email sent. Link will expire
+                            <span data-am-time-ago="selectedUserClient.entity.activationExpirationDateTime + 'Z'">
+                                in time
+                            </span>.
+                            (<a href data-ng-click="expireNow()">expire now</a>)</em>
+                        </span>
+                        <span data-ng-hide="!inThePast()">
+                            <i class="icon-delete-circle icon-size-xl red"></i>
+                            <span><em>User setup email has expired. User will not be able to log in.</em></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12"
+                 data-ng-controller="UsersClientSupportPasswordController">
+                <div data-ng-show="selectedUserClient.entity.email && selectedUserClient.entity.activated"
+                     data-ng-switch="selectedUserClient.entity.passwordResetExpirationDateTime != null &&
+                     selectedUserClient.entity.passwordResetToken != null">
+                    <div class="form-actions">
+                        <button class="btn btn-default" type="button" data-ng-click="passwordReset()">
+                            <span>Resend Password Email</span>
+                        </button>
+                        <div class="user-setup-status" data-ng-switch-when="true">
+                            <span data-ng-show="!inThePast()">
+                                <i class="icon-check-circle icon-size-xl green"></i>
+                                <em>Email sent. Link will expire
+                                <span data-am-time-ago="selectedUserClient.entity.passwordResetExpirationDateTime + 'Z'">
+                                    in time
+                                </span>.
+                                (<a href data-ng-click="expireNow()">expire now</a>)</em>
+                            </span>
+                            <span data-ng-hide="!inThePast()">
+                                <i class="icon-delete-circle icon-size-xl red"></i>
+                                <span><em>Password reset email has expired. User can log in with existing password.</em></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div data-ng-hide="selectedUserClient.entity.email"
+                     data-ng-switch="selectedUserClient.entity.passwordResetExpirationDateTime != null">
+                    <div class="form-actions">
+                        <button class="btn btn-default" type="button"
+                                data-ng-disabled="passwordNotification"
+                                data-ng-click="generatePassword($event)">
+                            <span data-ng-if="selectedUserClient.entity.neverLoggedIn">Show User Credentials</span>
+                            <span data-ng-if="!selectedUserClient.entity.neverLoggedIn">Reset Password</span>
+                        </button>
+                        <div class="user-setup-status" data-ng-switch-when="true">
+                            <span data-ng-show="!inThePast() && !passwordNotification">
+                                <i class="icon-check-circle icon-size-xl green"></i>
+                                <em><span data-ng-show="selectedUserClient.entity.neverLoggedIn">Credentials expire</span>
+                                <span data-ng-hide="selectedUserClient.entity.neverLoggedIn">Reset password expires</span>
+                                <span data-am-time-ago="selectedUserClient.entity.passwordResetExpirationDateTime + 'Z'">
+                                    in time
+                                </span>.
+                                (<a href data-ng-click="expireNow()">expire now</a>)</em>
+                            </span>
+                            <span data-ng-hide="!inThePast()">
+                                <i class="icon-delete-circle icon-size-xl red"></i>
+                                <span data-ng-hide="selectedUserClient.entity.neverLoggedIn"><em>Reset password has expired. User will not be able to log in.</em></span>
+                                <span data-ng-show="selectedUserClient.entity.neverLoggedIn"><em>Credentials have expired. User will not be able to log in.</em></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

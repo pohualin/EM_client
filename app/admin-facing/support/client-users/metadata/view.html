@@ -1,0 +1,32 @@
+<div class="col-md-12" data-ng-cloak>
+    <div class="row">
+        <div class="col-md-6 pull-left">
+            <h1>
+                <span>User Information</span>
+                <span><a class="btn btn-icon icon-size-lg" data-ng-click="edit()"><i class="icon-compose"></i></a></span>
+            </h1>
+        </div>
+        <div class="col-md-6">
+            <div class="actions pull-right">
+                <a class="btn btn-link btn-link-nopad btn-heading btn-heading-h1" data-ng-click="">
+                    <i class="icon-plus"></i> <span>LOG SALESFORCE CASE</span>
+                </a>
+            </div>
+        </div>
+    </div>
+	<div class="row entity-info">
+		<div class="col-md-4">
+			<h5 class="entity-value-label">Name</h5>
+			<div class="entity-value">{{userClientView.entity.firstName}} {{userClientView.entity.lastName}}
+            <em>({{userClientView.entity.active ? "active" : "inactive"}})</em></div>
+		</div>
+		<div class="col-md-4">
+			<h5 class="entity-value-label">Email</h5>
+            <div class="entity-value">{{userClientView.entity.email}}</div>
+        </div>
+		<div class="col-md-4">
+			<h5 class="entity-value-label">User ID</h5>
+            <div class="entity-value">{{userClientView.entity.login}}</div>
+        </div>
+	</div>
+</div>
