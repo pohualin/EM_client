@@ -18,7 +18,7 @@
                             <span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}" />
                         </span>
                     </th>
-                    <th class="col-sm-1">&nbsp;</th>
+                    <th>&nbsp;</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -26,7 +26,7 @@
                     <td>{{ipRestrictConfig.entity.ipRangeStart}}</td>
                     <td>{{ipRestrictConfig.entity.ipRangeEnd}}</td>
                     <td>{{ipRestrictConfig.entity.description}}</td>
-                    <td>
+                    <td class="col-edit text-right">
                         <a href data-ng-click="remove(ipRestrictConfig)"><i class="icon-trashcan icon-size-xl"></i></a>
                     </td>
                 </tr>

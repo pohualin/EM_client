@@ -17,7 +17,7 @@
 <div class="app-content app-content-with-sidebar container" data-ng-cloak>
     <form name="clientPasswordConfigurationForm" novalidate unsaved-warning-form>
         <div class="row">
-            <div class="sidebar" data-ng-include="'admin-facing/partials/configurations/nav.html'"></div>
+            <div data-emmi-sidebar class="sidebar" data-ng-include="'admin-facing/partials/configurations/nav.html'"></div>
             <div class="main-content">
                 <div class="layout-card" data-ng-class="{'outlined':showButtons() && !loading}">
                     <div class="row" data-ng-include="'admin-facing/partials/configurations/password/form.html'"></div>
