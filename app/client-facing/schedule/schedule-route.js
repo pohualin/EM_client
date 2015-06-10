@@ -89,7 +89,7 @@ angular.module('emmiManager')
                 }
             })
             .when('/teams/:teamId/allPatients', {
-                templateUrl: 'client-facing/schedule/patient/list.html',
+                templateUrl: 'client-facing/schedule/patient/view/list.html',
                 controller: 'ViewPatientController',
                 access: {
                     authorizedRoles: [USER_ROLES.teamScheduler, USER_ROLES.admin]
