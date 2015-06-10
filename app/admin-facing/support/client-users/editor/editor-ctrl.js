@@ -10,7 +10,7 @@ angular.module('emmiManager')
 
             $scope.client = Client.getClient();
             $scope.selectedUserClient = UsersClientService.getUserClient();
-            $scope.page.setTitle('View User - ' + $scope.client.entity.name);
+            $scope.page.setTitle('View User - ' + $scope.client.entity.name + ' | ClientManager');
             $scope.isSuperUser = false;
 
             /**

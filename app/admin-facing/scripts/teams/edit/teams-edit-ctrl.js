@@ -17,7 +17,7 @@ angular.module('emmiManager')
         }
 
         function setTitle(){
-            $scope.page.setTitle('Team - ' + $scope.team.name);
+            $scope.page.setTitle('Team - ' + $scope.team.name + ' | ClientManager');
         }
 
         /**

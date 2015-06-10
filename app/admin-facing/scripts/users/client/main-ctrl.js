@@ -97,7 +97,7 @@ angular.module('emmiManager')
             function init() {
                 $controller('CommonSearch', {$scope: $scope});
                 $scope.client = Client.getClient();
-                $scope.page.setTitle('Manage Users - ' + $scope.client.entity.name);
+                $scope.page.setTitle('Manage Users - ' + $scope.client.entity.name + ' | ClientManager');
                 $scope.searchPerformed = false;
 
                 // See if client has any users at all
