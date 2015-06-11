@@ -50,7 +50,8 @@ angular.module('emmiManager', [
         DIRECTION: 'dir',
         SIZE: 'size',
         INACTIVE_TEAMS: 'i',
-        CLIENT_USERS: 'cu'
+        CLIENT_USERS: 'cu',
+        ALL_PATIENTS: 'ap'
     })
 
     .constant('STATUS', {
