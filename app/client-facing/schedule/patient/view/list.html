@@ -1,0 +1,36 @@
+<div class="container" data-ng-cloak>
+
+    <div class="row">
+        <ol class="breadcrumb h3">
+            <li><a href="#/">Emmi Manager</a></li>
+            <li class="active">Patients Scheduled</li>
+        </ol>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Patients Scheduled for {{team.entity.name}}:</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <br>
+            <table class="table table-bordered table-striped table-hover"
+                   border="0" cellpadding="0" cellspacing="0" data-ng-show="patients">
+                <tr>
+                    <th class="col-sm-3">Name</th>
+                    <th class="col-sm-3">Date of Birth</th>
+                </tr>
+                <tr
+                    data-ng-repeat="patient in patients">
+                    <td><a href="#/teams/{{team.entity.id}}/schedule/patient/{{patient.entity.id}}">{{patient.entity.lastName}}, {{patient.entity.firstName}}</td>
+                    <td>{{patient.entity.dateOfBirth |  date:"MM/dd/yyyy" }}</td>
+                </tr>
+            </table>
+            <div data-ng-hide="patients">
+                <span> There are no existing patients for {{team.entity.name}} </span>
+            </div>
+        </div>
+    </div>
+</div>
