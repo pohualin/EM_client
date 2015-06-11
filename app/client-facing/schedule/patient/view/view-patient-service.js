@@ -14,6 +14,7 @@ angular.module('emmiManager')
                     var deferred = $q.defer();
                     var responseArray = [];
                     $http.get(UriTemplate.create(team.link.patientsScheduled).stringify()).then(function addToPatients(response) {
+                        var page = response.data;
                         angular.forEach(response.data.content, function(patient){
                             responseArray.push(patient);
                         });
