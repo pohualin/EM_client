@@ -19,15 +19,13 @@
 
 <div class="app-content app-content-with-sidebar container" data-ng-cloak>
     <div class="row" data-ng-switch on="showTeamConfig">
-        <div class="sidebar"
+        <div data-emmi-sidebar class="sidebar"
              data-ng-include="'admin-facing/partials/team/configuration/main.html'"></div>
-         
-   		 <div class="main-content">
-              <div data-ng-show="showEmailConfig" data-ng-include="'admin-facing/partials/team/configuration/email/email-configuration.html'"></div>
-              <div data-ng-show="showPhoneConfig" data-ng-include="'admin-facing/partials/team/configuration/phone/phone-configuration.html'"></div>
-         </div>
-        
+        <div class="main-content">
+            <div data-ng-show="showEmailConfig" data-ng-include="'admin-facing/partials/team/configuration/email/email-configuration.html'"></div>
+            <div data-ng-show="showPhoneConfig" data-ng-include="'admin-facing/partials/team/configuration/phone/phone-configuration.html'"></div>
+        </div>
     </div><!-- .row -->
 </div><!-- .container -->
- 
+
 <footer class="footer" data-ng-include="'admin-facing/partials/common/footer.tpl.html'"></footer>
