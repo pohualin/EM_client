@@ -41,7 +41,7 @@ angular.module('emmiManager').config(
             access: {
                 authorizedRoles: USER_ROLES.all
             },
-            title: 'Provider Search',
+            title: 'Provider Search | ClientManager',
             activeMenu: MENU.setup,
             reloadOnSearch: false,
             resolve: requiredResources

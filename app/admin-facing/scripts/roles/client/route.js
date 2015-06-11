@@ -63,7 +63,7 @@ angular.module('emmiManager')
 
             $scope.clientResource = clientResource;
             $scope.client = clientResource.entity;
-            $scope.page.setTitle('Manage User Roles - ' + clientResource.entity.name);
+            $scope.page.setTitle('Manage User Roles - ' + clientResource.entity.name + ' | ClientManager');
             $scope.loading = true;
 
             /**

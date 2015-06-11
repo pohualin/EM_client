@@ -50,7 +50,7 @@ angular.module('emmiManager')
             function init() {
                 $controller('CommonSearch', {$scope: $scope});
 
-                $scope.page.setTitle('Search Client Users');
+                $scope.page.setTitle('Search Client Users | ClientManager');
                 $scope.searchPerformed = false;
 
                 ClientUsersSupportService.getReferenceData().then(function (refData) {
