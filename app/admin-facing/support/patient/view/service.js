@@ -22,7 +22,7 @@
                             return response.data;
                         });
                     }
-                }
+                };
             }]);
 
 })(window.angular);
