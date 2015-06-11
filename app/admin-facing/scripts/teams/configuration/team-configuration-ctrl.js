@@ -12,6 +12,7 @@ angular.module('emmiManager')
     	    $scope.emailClick = 'email';
     	    $scope.showEmailConfig = true;
     	    $scope.showPhoneConfig = false;
+            $scope.page.setTitle('Team Configuration - '+ teamResource.entity.name +' | ClientManager');
             /**
              * Called when cancel is clicked.. takes the original
              * objects and copies them back into the bound objects.
