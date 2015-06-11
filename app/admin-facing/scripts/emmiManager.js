@@ -269,8 +269,8 @@ angular.module('emmiManager', [
                     _paq.push(['trackPageView']);
                 } else {
                     title = 'Emmi Manager';
-                    this.title = title;
                 }
+                this.title = title;
             }
         };
 
