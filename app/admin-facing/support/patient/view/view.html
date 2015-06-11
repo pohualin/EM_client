@@ -1,0 +1,42 @@
+<div class="app-header" data-emmi-navbar></div>
+<div class="container" data-ng-cloak>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="layout-card">
+                <div class="row">
+                    <div class="col-md-6 pull-left">
+                        <h1>
+                            <span>Patient Information</span>
+                            <span><a class="btn btn-icon icon-size-lg" data-ng-click="edit()"><i
+                                class="icon-compose"></i></a></span>
+                        </h1>
+                    </div>
+                </div>
+                <div class="row entity-info">
+                    <div class="col-md-4">
+                        <h5 class="entity-value-label">Name</h5>
+
+                        <div class="entity-value">
+                            {{patientResource.entity.firstName}} {{patientResource.entity.lastName}}
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <h5 class="entity-value-label">Email</h5>
+
+                        <div class="entity-value">{{patientResource.entity.email}}</div>
+                    </div>
+                    <div class="col-md-4">
+                        <h5 class="entity-value-label">Date of Birth</h5>
+
+                        <div class="entity-value">{{patientResource.entity.dateOfBirth | date:'MM/dd/yyyy'}}</div>
+                    </div>
+                    <div class="col-md-4">
+                        <h5 class="entity-value-label">Phone</h5>
+
+                        <div class="entity-value">{{patientResource.entity.phone}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
