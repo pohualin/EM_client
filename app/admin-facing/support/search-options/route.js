@@ -27,5 +27,15 @@ angular.module('emmiManager')
                 activeMenu: MENU.support,
                 reloadOnSearch: false,
                 resolve: requiredResources
+            })
+            .when('/support/patients', {
+                templateUrl: 'admin-facing/support/patient/list/list.html',
+                controller: 'PatientSupportSearchController',
+                access: {
+                    authorizedRoles: USER_ROLES.all
+                },
+                activeMenu: MENU.support,
+                reloadOnSearch: false,
+                resolve: requiredResources
             });
     });
