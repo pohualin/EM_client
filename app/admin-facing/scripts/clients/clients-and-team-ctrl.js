@@ -64,7 +64,7 @@ angular.module('emmiManager')
                         $scope.showTeam = 'no';
                         $scope.currentTeam = null;
                         // Reset page title
-                        $scope.page.setTitle('Client - ' + clientResource.entity.name);
+                        $scope.page.setTitle('Client - ' + clientResource.entity.name + ' | ClientManager');
                         // Reset team scope variables
                         $scope.teamClientResource = null;
                         $scope.teamResource = null;

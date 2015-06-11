@@ -14,7 +14,7 @@ angular.module('emmiManager')
             .when('/admin', {
                 templateUrl: 'admin-facing/partials/admin/index.html',
                 controller: 'AdminFuncsCtrl',
-                title: 'Admin Functions',
+                title: 'Admin Functions | ClientManager',
                 activeMenu: MENU.settings,
                 access: {
                     authorizedRoles: USER_ROLES.all
@@ -22,7 +22,7 @@ angular.module('emmiManager')
             }).when('/admin/tags', {
             	templateUrl: 'admin-facing/partials/admin/tags/editor.html',
                 controller: 'AdminTagsCtrl',
-                title: 'Emmi Groups & Tags Library',
+                title: 'Emmi Groups & Tags Library | ClientManager',
                 activeMenu: MENU.settings,
                 resolve: requiredResources,
                 access: {

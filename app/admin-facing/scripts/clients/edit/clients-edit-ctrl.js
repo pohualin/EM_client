@@ -26,7 +26,7 @@ angular.module('emmiManager')
         }
 
         function setTitle(){
-            $scope.page.setTitle('Client - ' + Client.getClient().entity.name);
+            $scope.page.setTitle('Client - ' + Client.getClient().entity.name + ' | ClientManager');
         }
 
         setTitle();

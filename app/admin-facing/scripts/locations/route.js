@@ -35,7 +35,7 @@ angular.module('emmiManager').config(function($routeProvider, USER_ROLES, MENU) 
         access: {
             authorizedRoles: USER_ROLES.all
         },
-        title: 'Location Search',
+        title: 'Location Search | ClientManager',
         activeMenu: MENU.setup,
         reloadOnSearch: false,
         resolve: requiredResources
