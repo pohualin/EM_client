@@ -50,7 +50,8 @@ angular.module('emmiManager', [
         DIRECTION: 'dir',
         SIZE: 'size',
         INACTIVE_TEAMS: 'i',
-        CLIENT_USERS: 'cu'
+        CLIENT_USERS: 'cu',
+        ALL_PATIENTS: 'ap'
     })
 
     .constant('STATUS', {
@@ -263,7 +264,6 @@ angular.module('emmiManager', [
         $rootScope.page = {
             setTitle: function (title) {
                 if (title) {
-                    this.title = title + ' | Emmi Manager';
                     // only call Piwik if we've gotten a page title; and after we've gotten the correct one (this funtion is called twice on some pages)
                     _paq.push(['setDocumentTitle', title]); // overide document title as document.title reports the previous page
                     _paq.push(['setCustomUrl', $location.path()]); // need to check and see if the hashes are tracking okay now with the setting from the Admin Panel changed
