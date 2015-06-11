@@ -31,7 +31,6 @@ angular.module('emmiManager')
          .when('/clients/:clientId/teams/:teamId/configuration', {
            	templateUrl: 'admin-facing/partials/team/configuration/configuration.html',
             controller: 'ClientTeamConfigurationCtrl',
-            title: 'Team Configuration | ClientManager',
             activeMenu: MENU.setup,
             access: {
             authorizedRoles: USER_ROLES.all
