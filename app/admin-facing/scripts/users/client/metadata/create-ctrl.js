@@ -12,7 +12,7 @@ angular.module('emmiManager')
 
             $scope.userClientEdit = UsersClientService.newUserClient();
             $scope.client = Client.getClient();
-            $scope.page.setTitle('Create User - ' + $scope.client.entity.name);
+            $scope.page.setTitle('Create User - ' + $scope.client.entity.name + ' | ClientManager');
 
             $scope.createMode = true; // hides the active checkbox when creating a new user
 
