@@ -7,7 +7,7 @@ angular.module('emmiManager')
         $scope.team = team;
 
         PatientScheduleDetailsService.getPatientScheduleDetails(team, team.patient).then(function(response){
-            $scope.scheduledProgs = response.data.content;
+            $scope.scheduledProgs = response;
         });
 
     }
