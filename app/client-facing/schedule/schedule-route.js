@@ -96,6 +96,14 @@ angular.module('emmiManager')
                 },
                 resolve: requiredResources
             })
+            .when('/teams/:teamId/patient/:patientId', {
+                templateUrl: 'client-facing/schedule/patient/view/details.html',
+                controller: 'PatientScheduleDetailsController',
+                access: {
+                    authorizedRoles: [USER_ROLES.teamScheduler, USER_ROLES.admin]
+                },
+                resolve: requiredResources
+            })
         ;
     })
 
