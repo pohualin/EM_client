@@ -7,19 +7,19 @@
      * Controller for Patient-Program Scheduling
      */
         .controller('ScheduleController', ['$scope', 'team', 'client', 'ScheduledProgramFactory',
-            '$alert', 'ScheduleService', '$location', 'UriTemplate', 'PatientEmailService',
-            function ($scope, team, client, ScheduledProgramFactory, $alert, ScheduleService, $location, UriTemplate, PatientEmailService) {
+            '$alert', 'ScheduleService', '$location', 'UriTemplate', 'PatientEmailService', 'PatientPhoneService',
+            function ($scope, team, client, ScheduledProgramFactory, $alert, ScheduleService, $location, UriTemplate, PatientEmailService, PatientPhoneService) {
         	       	
                 $scope.team = team;
                 $scope.page.setTitle('Schedule Emmi Program - ' + team.entity.name);
                 $scope.client = client;
                 $scope.patient = team.patient.entity;
                 ScheduledProgramFactory.patient = team.patient.entity;
-                
+                             
                 /**
                  * Retrieve team email configuration for scheduling
                  */
-                function getConfiguration(){
+                function getEmailConfiguration(){
                     PatientEmailService.getTeamEmailConfiguration(team).then(function(emailConfigsResponse){
                       angular.forEach(emailConfigsResponse, function (emailConfig){
                 		if(angular.equals(emailConfig.entity.type, 'COLLECT_EMAIL')){
@@ -31,7 +31,18 @@
                 	 });
                    });
                 }
-                getConfiguration();
+                getEmailConfiguration();
+                
+                /**
+                 * Retrieve team phone configuration for scheduling
+                 */
+                function getPhoneConfiguration(){
+                    PatientPhoneService.getTeamPhoneConfiguration(team).then(function(response){
+                    	$scope.showPhone = (response.collectPhone) ? true : false;
+                    	$scope.isPhoneRequired = (response.requirePhone) ? true : false;
+                    });
+                }
+                getPhoneConfiguration();
                 
                /**
                  * Broadcasts event so that Patient save and Program save are kicked off
