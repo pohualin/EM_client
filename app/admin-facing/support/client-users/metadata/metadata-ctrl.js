@@ -10,18 +10,15 @@ angular.module('emmiManager')
 
             $controller('UserClientSupportMetaDataCommon', {$scope: $scope});
 
-            /**
-             * Called when 'edit' is clicked
-             */
-            $scope.edit = function () {
-                $scope.userClientEdit = angular.copy(UsersClientService.getUserClient());
-                $scope.editMode = true;
-                $scope.userClientFormSubmitted = false;
-                _paq.push(['trackEvent', 'Form Action', 'Client User Edit', 'Edit']);
-            };
-
             $scope.makeActive = function(){
                 $scope.userClientEdit.entity.active = true;
+            };
+            
+            /**
+             * Show/Hide save and cancel buttons
+             */
+            $scope.showCancelSave = function(){
+                return !angular.equals($scope.originalUserClient, $scope.userClientEdit);
             };
 
             /**
@@ -29,10 +26,10 @@ angular.module('emmiManager')
              */
             $scope.cancel = function () {
                 // Reset form to pristine
+                $scope.userClientEdit = angular.copy($scope.originalUserClient);
                 $scope.userClientForm.$setPristine();
                 delete $scope.loginError;
                 delete $scope.emailError;
-                $scope.editMode = false;
                 _paq.push(['trackEvent', 'Form Action', 'Client User Edit', 'Cancel']);
             };
 
@@ -42,12 +39,13 @@ angular.module('emmiManager')
             $scope.save = function (form) {
                 $scope.userClientFormSubmitted = true;
                 if (form.$valid) {
-                    var beforeSaveStatus = $scope.userClientEdit.currentlyActive;
+                    var beforeSaveStatus = $scope.originalUserClient.currentlyActive;
                     var formDirty = form.$dirty;
                     UsersClientService.update($scope.userClientEdit).then(
                         function success(response) {
                             var savedUserClient = response.data;
-                            $scope.userClientView = savedUserClient;
+                            $scope.originalUserClient = savedUserClient;
+                            $scope.userClientEdit = angular.copy($scope.originalUserClient);
                             $scope.metadataChanged(); // inform the parent controller that things have changed
                             $scope.editMode = false;
                             if (savedUserClient.currentlyActive !== beforeSaveStatus){
@@ -84,7 +82,10 @@ angular.module('emmiManager')
                 }
             };
 
-            $scope.userClientView = UsersClientService.getUserClient();
+            $scope.originalUserClient = UsersClientService.getUserClient();
+            $scope.userClientEdit = angular.copy($scope.originalUserClient);
+            $scope.userClientFormSubmitted = false;
+            window.paul = $scope;
         }])
 
 ;

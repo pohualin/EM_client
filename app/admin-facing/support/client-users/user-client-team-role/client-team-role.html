@@ -1,15 +1,15 @@
 <div data-ng-controller="UsersClientUserClientTeamRolesSupportListController" data-ng-cloak>
-    <div class="col-md-12" data-ng-show="isSuperUser && !loading">
+    <div class="col-md-12" data-ng-show="isSuperUser && possibleClientRoles.length > 0">
         <p class="disclaimer">Team roles aren't required because this user has been given all permissions at this client
             (including all teams within this client).</p>
     </div>
-    <div class="col-md-12" data-ng-show="clientTeamRoles && clientTeamRoles.length > 0 && !isSuperUser">
+    <div class="col-md-12" data-ng-show="clientTeamRoles.length > 0 && !isSuperUser">
         <div class="row">
             <div class="col-md-12" data-ng-controller="UsersClientUserClientRolesSupportListController">
                 <h2 class="pull-left">Team Roles</h2>
                 <div class="pull-right">
                     <a class="btn btn-link btn-link-nopad btn-heading btn-heading-h1"
-                       data-ng-if="!existingUserClientUserClientRoles && !loading"
+                       data-ng-if="!existingUserClientUserClientRoles && clientRoles"
                        data-placement="right"
                        data-template="admin-facing/support/client-users/user-client-role/add-client-role.html"
                        data-ng-click="setSelectedRoleHasSuperPermission()"
