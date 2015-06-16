@@ -77,7 +77,7 @@
                             </thead>
                             <tbody>
                             <tr data-ng-repeat="client in clients | orderBy:'sortIdx'">
-                                    <td>{{client.entity.name}}</td>
+                                    <td>{{client.entity.name}} <em>{{client.entity.active ? '' : "(inactive)"}}</em></td>
                                     <td>{{client.entity.salesForceAccount.name}}</td>
                                     <td>{{client.entity.contractOwner.firstName}} {{client.entity.contractOwner.lastName}}</td>
                                     <td>{{client.entity.type.typeKey | translate}}</td>
