@@ -24,7 +24,7 @@
                 </tr>
                 <tr
                     data-ng-repeat="patient in patients">
-                    <td><a href="#/teams/{{team.entity.id}}/schedule/patient/{{patient.entity.id}}">{{patient.entity.lastName}}, {{patient.entity.firstName}}</td>
+                    <td><a href="#/teams/{{team.entity.id}}/patient/{{patient.entity.id}}">{{patient.entity.lastName}}, {{patient.entity.firstName}}</td>
                     <td>{{patient.entity.dateOfBirth |  date:"MM/dd/yyyy" }}</td>
                 </tr>
             </table>
