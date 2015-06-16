@@ -3,8 +3,16 @@
         <h1>Security Settings</h1>
     </div>
     <div data-ng-if="badEmails.length > 0 && clientRestrictConfiguration.entity.emailConfigRestrict"
-         class="col-md-6 pull-right alert alert-warning">
-        <b>{{badEmails.length}} users </b> are non-compliant with this policy.
+         class="col-md-6 pull-right alert-warning">
+        <strong>
+        <ng-pluralize count="badEmails.length"
+                      when="{'1':'{{badEmails.length}} user',
+                            'other':'{{badEmails.length}} users'}"></ng-pluralize>
+        </strong>
+        <ng-pluralize count="badEmails.length"
+                      when="{'1':'is non-compliant with this policy.',
+                            'other':'are non-compliant with this policy.'}"></ng-pluralize>
+
         <a data-bs-popover data-placement="bottom" title="Non-compliant email addresses:" data-auto-close="true"
            data-container="body"
            data-content-template="admin-facing/partials/configurations/restriction/non-compliant-email-popover.html"
@@ -13,12 +21,13 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="pull-right" data-ng-include="'admin-facing/partials/configurations/restriction/add-email.html'"></div>
+            <div class="pull-right"
+                 data-ng-include="'admin-facing/partials/configurations/restriction/add-email.html'"></div>
             <div class="pull-left form-group">
                 <div class="checkbox">
                     <input id="emailConfigRestrict" type="checkbox"
-                        data-ng-model="clientRestrictConfiguration.entity.emailConfigRestrict"
-                        data-ng-change="save()" />
+                           data-ng-model="clientRestrictConfiguration.entity.emailConfigRestrict"
+                           data-ng-change="save()"/>
                     <label for="emailConfigRestrict">Restrict valid email addresses</label>
                 </div>
             </div>
@@ -34,8 +43,8 @@
             <div class="pull-left form-group">
                 <div class="checkbox">
                     <input id="ipConfigRestrict" type="checkbox"
-                        data-ng-model="clientRestrictConfiguration.entity.ipConfigRestrict"
-                        data-ng-change="save()" />
+                           data-ng-model="clientRestrictConfiguration.entity.ipConfigRestrict"
+                           data-ng-change="save()"/>
                     <label for="ipConfigRestrict">Restrict IP Range</label>
                 </div>
             </div>
