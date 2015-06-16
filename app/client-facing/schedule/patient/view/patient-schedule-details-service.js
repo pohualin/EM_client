@@ -22,7 +22,7 @@ angular.module('emmiManager')
                     });
                     return deferred.promise;
                     }
-                }
+                };
             }
         ])
 ;
