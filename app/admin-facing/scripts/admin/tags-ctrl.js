@@ -27,7 +27,10 @@ angular.module('emmiManager')
              * Puts a group into a mode where the group name is editable
              * @param tagGroup to be put in edit name mode
              */
-            $scope.startEditMode = function (tagGroup) {
+            $scope.startEditMode = function (tagGroup, forceOpen) {
+                if (forceOpen) {
+                    tagGroup.activePanel = 0;
+                }
                 tagGroup.editMode = true;
                 tagGroup.original = angular.copy(tagGroup);
                 if (tagGroup.watcher) {
@@ -79,14 +82,16 @@ angular.module('emmiManager')
              * @param tagGroup to be canceled
              * @param restore to put the original back
              */
-            $scope.cancelEditMode = function (tagGroup, restore) {
+            $scope.cancelEditMode = function (tagGroup, restore, form) {
                 if (restore) {
                     angular.extend(tagGroup, tagGroup.original);
                 }
+                tagGroup.activePanel = 1;
                 tagGroup.editMode = false;
                 if (tagGroup.watcher) {
                     tagGroup.watcher();
                 }
+                form.$setPristine(true);
                 delete tagGroup.original;
                 delete tagGroup.watcher;
             };
@@ -97,7 +102,8 @@ angular.module('emmiManager')
              *
              * @param tagGroup to be updated
              */
-            $scope.update = function (tagGroup) {
+            $scope.update = function (tagGroup, index, form) {
+                form.$setPristine();
                 Tag.updateReferenceGroup(tagGroup).then(function (editedGroup) {
                     angular.extend(tagGroup, editedGroup);
                     $scope.cancelEditMode(tagGroup, false);
@@ -109,20 +115,22 @@ angular.module('emmiManager')
              *
              * @param tagGroup to be saved
              */
-            $scope.saveNewGroup = function (tagGroup) {
+            $scope.saveNewGroup = function (tagGroup, form) {
                 tagGroup.tags = $scope.newTagGroupTags;
                 Tag.createReferenceGroup(tagGroup).then(function () {
                     delete $scope.newTagGroup;
                     delete $scope.newTagGroupTags;
                     $scope.loadExisting();
+                    form.$setPristine();
                 });
             };
 
             /**
              * Called when 'cancel' is clicked on the Add new group panel
              */
-            $scope.cancelNew = function () {
+            $scope.cancelNew = function (form) {
                 $scope.newTagGroupForm.newTagGroup.$setValidity('unique', true);
+                form.$setPristine(true);
                 delete $scope.newTagGroup;
                 delete $scope.newTagGroupTags;
             };
@@ -135,7 +143,7 @@ angular.module('emmiManager')
                 $scope.newTagGroupTags = [];
                 focus('focus-new-group');
             };
-            
+
             /**
              * Toggle between active/inactive for a group that is not tied to any team.
              */
