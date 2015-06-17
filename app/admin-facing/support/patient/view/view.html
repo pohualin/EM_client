@@ -1,4 +1,11 @@
-<div class="app-header" data-emmi-navbar></div>
+<div class="app-header" data-emmi-navbar>
+    <ol class="breadcrumb">
+        <li><a href="#/support/patients?{{currentRouteQueryString}}">Search</a></li>
+        <li data-ng-if="patientResource.entity.id" class="active">{{patientResource.entity.firstName}}
+            {{patientResource.entity.lastName}}
+        </li>
+    </ol>
+</div>
 <div class="container" data-ng-cloak>
     <div class="row">
         <div class="col-md-12">
@@ -25,7 +32,7 @@
                                      data-title="Please enter a valid first name"></div>
                                 <input class="form-control" data-ng-model="patientResource.entity.firstName" id="firstName" name="firstName"
                                        type="text" required
-                                       data-auto-focus data-ng-pattern="/^[A-Za-z \'\-]+([\.{0,1}]?[A-Za-z \'\-]*)?$/" data-animation="am-flip-x"
+                                       data-auto-focus data-ng-pattern="/^[[A-Za-z '-.]*$/" data-animation="am-flip-x"
                                        data-focus-on="firstName">
                             </div>
                         </div>
@@ -42,7 +49,7 @@
                                      data-title="Please enter a valid last name"></div>
                                 <input class="form-control" data-ng-model="patientResource.entity.lastName" id="lastName" name="lastName"
                                        type="text" required
-                                       data-ng-pattern="/^[A-Za-z \'\-]+([\.{0,1}]?[.A-Za-z \'\-]*)?$/"
+                                       data-ng-pattern="/^[[A-Za-z '-.]*$/"
                                        data-animation="am-flip-x">
                             </div>
                         </div>
@@ -134,7 +141,7 @@
                         </div>
                     </div>
 
-                    <div class="row" data-ng-show="patientHasChanged()">
+                    <div class="row" data-ng-show="isPatientChanged()">
                         <div class="col-md-8">
                             <div class="actions pull-left">
                                 <div class="form-group">

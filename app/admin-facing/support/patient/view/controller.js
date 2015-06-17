@@ -35,7 +35,7 @@
                     }
                 };
 
-                $scope.patientHasChanged = function () {
+                $scope.isPatientChanged = function () {
                     return !angular.equals($scope.master, $scope.patientResource);
                 };
 

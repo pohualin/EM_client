@@ -61,12 +61,12 @@
                      */
                     loadReferenceData: function (patientResource) {
                         var deferred = $q.defer();
-                        if (!refData.get()) {
+                        if (!refData.referenceData()) {
                             $http.get(patientResource.link.referenceData).then(function (response) {
-                                deferred.resolve(refData.create(response.data));
+                                deferred.resolve(refData.create(response.data).referenceData());
                             });
                         } else {
-                            deferred.resolve(refData);
+                            deferred.resolve(refData.referenceData());
                         }
                         return deferred.promise;
                     }
@@ -78,12 +78,12 @@
      */
         .factory('PatientSupportViewReferenceData', [function () {
             this.create = function (referenceData) {
-                this.referenceData = referenceData;
-                return this.get();
+                this._referenceData = referenceData;
+                return this;
             };
 
-            this.get = function () {
-                return this.referenceData;
+            this.referenceData = function () {
+                return this._referenceData;
             };
 
             return this;
