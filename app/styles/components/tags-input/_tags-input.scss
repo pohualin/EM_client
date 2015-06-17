@@ -281,3 +281,10 @@ ul.tags-view {
 	-ms-user-select: none;
 	border-radius: 4px;
 }
+
+// Tag input inside of collapse panel
+.panel-group {
+    .tags-input .tags {
+        margin: 0;
+    }
+}
