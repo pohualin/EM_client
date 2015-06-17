@@ -27,7 +27,8 @@ angular.module('emmiManager')
                         if (!scope.warningDialog) {
                             // pop a warning dialog
                             scope.warningDialog = $popover(element, {
-                                title: '',
+                                autoClose: true,
+                                title: 'Are you sure?',
                                 scope: scope,
                                 trigger: 'manual',
                                 show: true,

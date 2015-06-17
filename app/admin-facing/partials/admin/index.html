@@ -1,13 +1,15 @@
+<div class="app-header" data-emmi-navbar></div>
 <div class="container" data-ng-cloak>
     <div class="row">
-        <h2>
-            <a href="#/">Emmi Manager</a> : Admin Functions
-        </h2>
-        <div>
-            <ul>
-                <li data-ng-show="isAuthorized([userRoles.god, userRoles.admin])"><a
-                    data-ng-href="#/admin/tags">Manage Emmi Groups & Tags Library</a></li>
-            </ul>
-        </div>
-    </div>
-</div>
+        <div class="col-md-12">
+            <div class="layout-card">
+                <h1>Admin Functions</h1>
+                <ul>
+                    <li data-ng-show="isAuthorized([userRoles.god, userRoles.admin])"><a
+                        data-ng-href="#/admin/tags">Manage Emmi Groups & Tags Library</a></li>
+                </ul>
+            </div><!-- .layout-card -->
+        </div><!-- .col-md-12 -->
+    </div><!-- .row -->
+</div><!-- .container -->
+<footer class="footer" data-ng-include="'admin-facing/partials/common/footer.tpl.html'"></footer>
