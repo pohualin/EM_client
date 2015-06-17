@@ -10,8 +10,8 @@
                             'other':'{{badEmails.length}} users'}"></ng-pluralize>
         </strong>
         <ng-pluralize count="badEmails.length"
-                      when="{'1':'is non-compliant with this policy.',
-                            'other':'are non-compliant with this policy.'}"></ng-pluralize>
+                      when="{'1':' is non-compliant with this policy.',
+                            'other':' are non-compliant with this policy.'}"></ng-pluralize>
 
         <a data-bs-popover data-placement="bottom" title="Non-compliant email addresses:" data-auto-close="true"
            data-container="body"
