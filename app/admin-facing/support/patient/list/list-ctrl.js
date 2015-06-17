@@ -75,16 +75,16 @@
                                 if (!response) {
                                     // leave the existing sort, since one didn't come back
                                     $scope.sortProperty = sort;
+                                } else if (response.page && response.page.totalElements === 1) {
+                                    // bounce out to the detail page
+                                    $location.path('/support/patients/' + response.content[0].entity.id);
+                                    return;
                                 }
+
                                 // common paginated response handling
                                 $scope.handleResponse(response, contentProperty);
+                                $scope.serializeToQueryString(q, URL_PARAMETERS.ALL_PATIENTS, null, sort);
 
-                                if ($scope.total === 1){
-                                    $scope.loading = true;
-                                    $location.path('/support/patients/' + $scope.patients[0].entity.id);
-                                } else {
-                                    $scope.serializeToQueryString(q, URL_PARAMETERS.ALL_PATIENTS, null, sort);
-                                }
                             }, function failure() {
                                 $scope.loading = false;
                             });
