@@ -41,7 +41,9 @@
                                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                                      data-title="Please enter a valid last name"></div>
                                 <input class="form-control" data-ng-model="patientResource.entity.lastName" id="lastName" name="lastName"
-                                       type="text" required data-ng-pattern="/^[A-Za-z \'\-]+([\.{0,1}]?[A-Za-z \'\-]*)?$/" data-animation="am-flip-x">
+                                       type="text" required
+                                       data-ng-pattern="/^[A-Za-z \'\-]+([\.{0,1}]?[.A-Za-z \'\-]*)?$/"
+                                       data-animation="am-flip-x">
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -119,30 +121,31 @@
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <div class="form-group"
-                                 data-ng-class="{ 'has-error' : formSubmitted && editPatientForm.email.$invalid}">
+                            <div class="form-group">
                                 <label class="control-label" for="optOutPreference">Opt Out Preferences</label>
                                 <select class="form-control" id="optOutPreference"
                                         data-ng-model="patientResource.entity.optOutPreference"
                                         data-ng-options="optOutPreference.typeKey | translate for optOutPreference in optOutPreferences track by optOutPreference.id"
                                         name="optOutPreference" data-chosen data-disable-search="true"
                                         data-placeholder="Select...">
-                                    <option value=""></option>
+                                    <option value="">Select...</option>
                                 </select>
                             </div>
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row" data-ng-show="patientHasChanged()">
                         <div class="col-md-8">
                             <div class="actions pull-left">
                                 <div class="form-group">
                                     <button class="btn btn-success" type="button"
-                                            data-ng-click="saveOrUpdate(editPatientForm)">
+                                            data-ng-disabled="saving"
+                                            data-ng-click="save(editPatientForm)">
                                         <span>Save</span>
                                     </button>
                                     <button class="btn btn-link" type="button"
-                                            data-ng-click="cancel()">
+                                            data-ng-disabled="saving"
+                                            data-ng-click="cancel(editPatientForm)">
                                         <span>cancel</span>
                                     </button>
                                 </div>
