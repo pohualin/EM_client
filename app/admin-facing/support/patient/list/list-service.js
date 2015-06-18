@@ -6,8 +6,8 @@
     /**
      * This service is responsible fetch operations for Patient resources across clients
      */
-        .service('PatientSupportSearchService', ['$filter', '$q', '$http', 'UriTemplate', 'CommonService', 'Session',
-            function ($filter, $q, $http, UriTemplate, CommonService, Session) {
+        .service('PatientSupportSearchService', ['$filter', '$q', '$http', 'UriTemplate', 'CommonService', 'Session', '$timeout',
+            function ($filter, $q, $http, UriTemplate, CommonService, Session, $timeout) {
 
                 var phoneRegex = /(\+*\d+)*([ |\(])*(\d{3})[^\d]*(\d{3})[^\d]*(\d{4})/g,
                     accessCodeRegex = /1[0-9]{10}|2[0-9]{10}/g,
@@ -97,6 +97,42 @@
                                 CommonService.convertPageContentLinks(response);
                                 return response.data;
                             });
+                    },
+
+                    /**
+                     * Loads all of the scheduled programs for the patient
+                     *
+                     * @param patientResource to load for
+                     * @param scheduledProgram to be updated with .programs = [response from backend]
+                     * @param popover to be tweaked as soon as the data is loaded
+                     */
+                    loadAllScheduledPrograms: function (patientResource, scheduledProgram, popover) {
+                        if (!scheduledProgram.programs) {
+                            scheduledProgram.loading = true;
+                            this._findScheduled(patientResource.entity.id).then(function (programs) {
+                                scheduledProgram.programs = programs;
+                                scheduledProgram.loading = false;
+                                $timeout(function () {
+                                    popover.$applyPlacement();
+                                });
+                            });
+                        }
+                    },
+
+                    _findScheduled: function (patientId) {
+                        var programs = [];
+                        return $http.get(UriTemplate.create(Session.link.scheduledPrograms).stringify({
+                            patient: patientId
+                        })).then(function load(response) {
+                            var page = response.data;
+                            programs.push.apply(programs, page.content);
+                            if (page.link && page.link['page-next']) {
+                                return $http.get(page.link['page-next']).then(function (response) {
+                                    return load(response);
+                                });
+                            }
+                            return programs;
+                        });
                     }
                 };
             }]);

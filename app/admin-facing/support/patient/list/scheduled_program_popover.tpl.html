@@ -1,0 +1,19 @@
+<div class="popover">
+    <div class="arrow"></div>
+    <!--<h3 class="popover-title" data-ng-hide="content.loading">Scheduled Programs</h3>-->
+
+    <div class="popover-content">
+        <div data-ng-show="content.loading" class="progress progress-striped active">
+            <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"
+                 style="width: 200px;">
+                <span class="sr-only">loading</span>
+            </div>
+        </div>
+        <div data-ng-hide="content.loading">
+            <span data-ng-repeat="scheduledProgram in content.programs" class="">
+                {{scheduledProgram.entity.program.name}}{{!$last ? ',' : ''}}&nbsp;
+            </span>
+            <span data-ng-show="!content.programs">No scheduled programs found</span>
+        </div>
+    </div>
+</div>

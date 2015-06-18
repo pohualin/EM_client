@@ -94,9 +94,13 @@
                                 </td>
                                 <td>
                                     <span class="col-wrap">
-                                        <span data-ng-repeat="program in patient.entity.scheduledProgram">
-                                            {{program.accessCode}}
-                                        </span>
+                                        {{patient.entity.scheduledProgram[0].accessCode}}
+                                        <a href
+                                           data-ng-if="patient.entity.scheduledProgram[0]"
+                                           data-ng-mouseover="showScheduledPrograms($event, patient)"
+                                           data-ng-mouseout="hideScheduledPrograms(patient)">
+                                            <i class="icon-info-circle"></i>
+                                        </a>
                                     </span>
                                 </td>
                                 <td>{{patient.entity.client.name}}</td>
