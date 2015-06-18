@@ -7,21 +7,37 @@
      * Search users across all clients
      */
         .controller('PatientSupportSearchController', [
-            '$scope', '$controller', 'URL_PARAMETERS', 'STATUS', 'PatientSupportSearchService', '$location',
-            function ($scope, $controller, URL_PARAMETERS, STATUS, data, $location) {
+            '$scope', '$controller', '$sce', 'URL_PARAMETERS', 'STATUS', 'PatientSupportSearchService', '$location', '$popover',
+            function ($scope, $controller, $sce, URL_PARAMETERS, STATUS, data, $location, $popover) {
 
                 var contentProperty = 'patients';
 
                 /**
-                 * Called when fetching different pages
+                 * Called when the user mouseovers an access code
+                 * @param $event that has the target
+                 * @param patientResource being moused over
                  */
-                $scope.fetchPage = function (href) {
-                    $scope.loading = true;
-                    data.fetchPage(href).then(function (patients) {
-                        $scope.handleResponse(patients, contentProperty);
-                    }, function () {
-                        $scope.loading = false;
+                $scope.showScheduledPrograms = function ($event, patientResource) {
+                    var scheduledProgram = patientResource.entity.scheduledProgram[0],
+                        popover = $popover(angular.element($event.target), {
+                            placement: 'top',
+                            content: scheduledProgram,
+                            trigger: 'manual',
+                            template: 'admin-facing/support/patient/list/scheduled_program_popover.tpl.html'
+                        });
+                    popover.$promise.then(function ready() {
+                        data.loadAllScheduledPrograms(patientResource, scheduledProgram, popover);
+                        $scope.popovers[patientResource.entity.id] = popover;
+                        popover.show();
                     });
+                };
+
+                /**
+                 * Called when the user mouseout's an access code
+                 * @param patientResource leaving mouseover
+                 */
+                $scope.hideScheduledPrograms = function (patientResource) {
+                    $scope.popovers[patientResource.entity.id].destroy();
                 };
 
                 /**
@@ -40,24 +56,16 @@
                 };
 
                 /**
-                 * init method called when page is loading
+                 * Called when fetching different pages
                  */
-                function init() {
-                    $controller('CommonSearch', {$scope: $scope});
-
-                    $scope.page.setTitle('Search Patients');
-                    $scope.searchPerformed = false;
-
-                    // perform search if the query string has search arguments
-                    if ($scope.query) {
-                        if ($scope.pageWhereBuilt === URL_PARAMETERS.ALL_PATIENTS) {
-                            performSearch($scope.query, $scope.sortProperty);
-                        } else {
-                            // it was built by a different page, use the query only
-                            performSearch($scope.query);
-                        }
-                    }
-                }
+                $scope.fetchPage = function (href) {
+                    $scope.loading = true;
+                    data.fetchPage(href).then(function (patients) {
+                        $scope.handleResponse(patients, contentProperty);
+                    }, function () {
+                        $scope.loading = false;
+                    });
+                };
 
                 /**
                  * Performs a search via the service layer and handles persistence to
@@ -94,6 +102,22 @@
                     }
                 }
 
-                init();
+                (function init() {
+                    $controller('CommonSearch', {$scope: $scope});
+
+                    $scope.page.setTitle('Search Patients');
+                    $scope.searchPerformed = false;
+                    $scope.popovers = {};
+
+                    // perform search if the query string has search arguments
+                    if ($scope.query) {
+                        if ($scope.pageWhereBuilt === URL_PARAMETERS.ALL_PATIENTS) {
+                            performSearch($scope.query, $scope.sortProperty);
+                        } else {
+                            // it was built by a different page, use the query only
+                            performSearch($scope.query);
+                        }
+                    }
+                })();
             }]);
 })(window.angular);
