@@ -148,7 +148,7 @@ angular.module('emmiManager')
                                 tagGroup.isValid = false;
                                 tagGroup.invalidDueToEmpty = true;
                                 if (!tagGroup.isValidMessage) {
-                                    tagGroup.isValidMessage = 'Tag groups must contain at least one tag';
+                                    tagGroup.isValidMessage = 'Groups must contain at least one tag';
                                 }
                                 ret = true;
                             } else {
@@ -183,7 +183,7 @@ angular.module('emmiManager')
                         if (dupeIndices.indexOf(i) >= 0) {
                             $scope.groups[i].isValid = false;
                             $scope.groups[i].invalidDueToDuplicate = true;
-                            $scope.groups[i].isValidMessage = 'This tag group already exists';
+                            $scope.groups[i].isValidMessage = 'This group already exists';
                         } else if (!x.title || x.title.length === 0) {
                             blankIndices.push(i);
                             $scope.groups[i].isValid = false;
