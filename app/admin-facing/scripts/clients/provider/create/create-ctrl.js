@@ -31,6 +31,7 @@ angular.module('emmiManager')
             $scope.saveProvider = function (isValid, addAnother) {
                 $scope.providerFormSubmitted = true;
                 if (isValid) {
+                    $scope.whenSaving = true;
                     var toBeSaved = $scope.clientProvider;
                     ClientProviderService.create(Client.getClient(), toBeSaved).then(function (provider) {
                         // reload the existing providers
@@ -49,6 +50,8 @@ angular.module('emmiManager')
                                 content: '<b>' + providerResource.entity.fullName + '</b> has been added successfully.'
                             });
                         }
+                    }).finally(function () {
+                        $scope.whenSaving = false;
                     });
                     _paq.push(['trackEvent', 'Form Action', 'Client Provider Create', 'Save']);
                 } else {

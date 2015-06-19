@@ -16,6 +16,7 @@ angular.module('emmiManager')
             $scope.saveProvider = function (isValid) {
                 $scope.providerFormSubmitted = true;
                 if (isValid) {
+                    $scope.whenSaving = true;
                     var toBeSaved = $scope.clientProvider;
                     ClientProviderService.update(Client.getClient(), toBeSaved).then(function (response) {
                         var clientProviderResource = response.data;
@@ -25,6 +26,8 @@ angular.module('emmiManager')
                         $alert({
                             content: 'The provider <b>'+response.data.provider.entity.fullName+'</b> has been successfully updated.'
                         });
+                    }).finally(function () {
+                        $scope.whenSaving = false;
                     });
                     _paq.push(['trackEvent', 'Form Action', 'Client Provider Edit', 'Save']);
                 } else {

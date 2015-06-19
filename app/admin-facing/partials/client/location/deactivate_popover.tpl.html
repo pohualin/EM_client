@@ -1,7 +1,13 @@
         <div>This location will be deactivated.</div>
         <div class="popover-footer">
-            <button class="btn btn-success" data-ng-click="saveLocation(locationForm);$hide()">Yes</button>
-            <button class="btn btn-cancel" type="button" data-ng-click="doNotDeactivateLocation();$hide()">Cancel</button>
+            <button class="btn btn-success"
+                    data-ng-disabled="whenSaving"
+                    data-ng-click="saveLocation(locationForm);$hide()">Yes
+            </button>
+            <button class="btn btn-cancel" type="button"
+                    data-ng-disabled="whenSaving"
+                    data-ng-click="doNotDeactivateLocation();$hide()">Cancel
+            </button>
         </div>
 
 

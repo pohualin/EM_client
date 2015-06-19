@@ -3,8 +3,14 @@
     <div class="row">
         <div class="col-md-12">
             <div class="pull-right">
-                <button type="button" class="btn btn-link" data-ng-click="cancel()"> cancel </button>
-                <button class="btn btn-default" data-ng-click="saveProfileUpdates(userClient, userClientForm.$valid)"> Save Changes </button>
+                <button type="button" class="btn btn-link"
+                        data-ng-disabled="whenSaving"
+                        data-ng-click="cancel()"> cancel
+                </button>
+                <button class="btn btn-default"
+                        data-ng-disabled="whenSaving"
+                        data-ng-click="saveProfileUpdates(userClient, userClientForm.$valid)"> Save Changes
+                </button>
             </div>
         </div>
     </div>

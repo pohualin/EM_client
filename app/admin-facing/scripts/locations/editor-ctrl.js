@@ -17,7 +17,7 @@ angular.module('emmiManager').controller(
             focus('locationName');
             _paq.push(['trackEvent', 'Form Action', 'Location Edit', 'Edit']);
         };
-        
+
         $scope.doNotDeactivateLocation = function(){
             $scope.locationToEdit.active = true;
         };
@@ -26,6 +26,7 @@ angular.module('emmiManager').controller(
             var isValid = locationForm.$valid;
         	$scope.locationFormSubmitted = true;
         	if (isValid) {
+                $scope.whenSaving = true;
                 LocationService.updateLocation($scope.locationToEdit).then(function(response) {
                     angular.copy(response.data, $scope.locationResource);
                     angular.copy(response.data.entity, $scope.location);
@@ -33,6 +34,8 @@ angular.module('emmiManager').controller(
                     $alert({
                         content: 'The location <b>'+response.data.entity.name+'</b> has been successfully updated.'
                     });
+                }).finally(function () {
+                    $scope.whenSaving = false;
                 });
                 _paq.push(['trackEvent', 'Form Action', 'Location Edit', 'Save']);
             }

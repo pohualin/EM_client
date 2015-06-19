@@ -5,10 +5,14 @@
             </li>
         </ul>
         <div class="popover-footer">
-            <button class="btn btn-success" data-ng-click="onOk();$hide()">
+            <button class="btn btn-success"
+                    data-ng-disabled="whenSaving"
+                    data-ng-click="onOk();$hide()">
                 Yes
             </button>
-            <button type="button" class="btn btn-cancel" data-ng-click="$hide();onClosePopover(toRemove);">
+            <button type="button" class="btn btn-cancel"
+                    data-ng-disabled="whenSaving"
+                    data-ng-click="$hide();onClosePopover(toRemove);">
                 Cancel
             </button>
         </div>

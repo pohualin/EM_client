@@ -38,6 +38,7 @@ angular.module('emmiManager')
                 changePasswordForm.password.$setValidity('policy', true);
                 changePasswordForm.password.$setValidity('history', true);
                 if (changePasswordForm.$valid) {
+                    $scope.whenSaving = true;
                     ResetClientUserPasswordService.reset(resetToken, $scope.passwordChange, securityQuestions)
                         .then(function () {
                             SecretQuestionService.setUserInputSecurityResponses(null);
@@ -64,7 +65,9 @@ angular.module('emmiManager')
                             	$location.path('/login').replace();
                             }
                         }
-                    );
+                    ).finally(function () {
+                            $scope.whenSaving = false;
+                        });
                 }
             };
         }

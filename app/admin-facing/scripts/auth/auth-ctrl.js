@@ -21,7 +21,10 @@ angular.module('emmiManager')
                 $scope.loginForm.submitted = true;
                 LoginErrorMessageFactory.reset();
                 if ($scope.loginForm.$valid) {
-                    AuthSharedService.login(credentials);
+                    $scope.whenSaving = true;
+                    AuthSharedService.login(credentials).finally(function () {
+                        $scope.whenSaving = false;
+                    });
                 }
             };
 

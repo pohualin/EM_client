@@ -1,4 +1,4 @@
-<form name="clientForm" class="form" data-ng-controller="ClientTagsController" novalidate unsaved-warning-form>
+<form name="clientForm" class="form" data-ng-controller="ClientTagsController" novalidate data-unsaved-warning-form>
     <div class="col-md-12">
         <div class="row">
             <div class="col-md-6 pull-left">
@@ -10,7 +10,8 @@
                 <div class="pull-right">
                     <span data-ng-hide="tagInputMode || clientForm.clientTagGroups.$error.unique || clientForm.clientTagGroups.$error.blankTitle">
                         <button class="btn btn-link btn-link-nopad btn-heading btn-tag-library" type="button" title="Select groups to add:"
-                        data-placement="top" data-template="admin-facing/partials/client/tags/tag_library.html"
+                                data-ng-disabled="saving"
+                                data-placement="top" data-template="admin-facing/partials/client/tags/tag_library.html"
                         data-trigger="click" data-bs-popover data-auto-close="1" data-popover-dismiss data-container="body">
                             <i class="icon-plus"></i> Add from Library
                         </button>
@@ -29,11 +30,14 @@
         <div class="row">
             <div class="col-md-12" data-ng-show="!tagInputMode && clientTagsHaveChanges && !saving">
                 <div class="pull-right">
-                    <button class="btn btn-cancel" data-ng-click="cancelTagChanges()" data-ng-hide="hideCancelButton">cancel</button>
+                    <button class="btn btn-cancel"
+                            data-ng-disabled="saving"
+                            data-ng-click="cancelTagChanges()" data-ng-hide="hideCancelButton">cancel
+                    </button>
                     <button class="btn btn-success" type="button"
                             data-conflicting-team-tags="conflictingTeamTags"
                             data-ng-click="checkForConflicts(clientForm.$valid);"
-                            data-ng-disabled="!clientForm.$valid"
+                            data-ng-disabled="!clientForm.$valid || saving"
                             data-popover-dismiss
                             data-placement="bottom"
                             data-team-conflict-popover>

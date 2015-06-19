@@ -68,7 +68,9 @@
                     </label>
                 </div>
                 <a name="cancel" type="button" class="btn btn-link" data-ng-click="cancel()">cancel</a>
-                <button name="submit" type="submit" class="btn btn-primary" data-translate="login.form.button">Login
+                <button name="submit" type="submit"
+                        data-ng-disabled="whenSaving"
+                        class="btn btn-primary" data-translate="login.form.button">Login
                 </button>
             </form>
         </div>

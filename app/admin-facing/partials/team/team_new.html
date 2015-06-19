@@ -12,18 +12,24 @@
             <div class="layout-card">
                 <div id="validation-container" data-ng-show="teamForm.$invalid || !teamToSave.salesForceAccount"></div>
                 <h1><span>New Team Information</span></h1>
-                <form name="teamForm" class="form" novalidate unsaved-warning-form>
+
+                <form name="teamForm" class="form" novalidate data-unsaved-warning-form>
                     <div data-ng-include="'admin-facing/partials/team/team_form.html'"></div>
                     <div class="form-actions">
                         <div class="form-group">
                             <button class="btn btn-primary" type="button"
                                     data-on-ok="save(teamForm)" data-team-entity="teamToSave"
                                     data-placement="top" data-checking-for-dupes="checkingForDupes"
-                                    data-ng-disabled="teamForm.teamName.$error.unique"
+                                    data-ng-disabled="teamForm.teamName.$error.unique || whenSaving"
                                     data-team-edit-save>
                                 <span data-translate="team_edit_page.continue_button">Save</span>
                             </button>
-                            <button class="btn btn-cancel" type="button" data-ng-click="cancel()" data-translate="team_edit_page.cancel_button" href analytics-on analytics-category="Form Action" analytics-event="Team Create" analytics-label="Cancel">cancel</button>
+                            <button class="btn btn-cancel" type="button" data-ng-click="cancel()"
+                                    data-ng-disabled="whenSaving"
+                                    data-translate="team_edit_page.cancel_button"
+                                    data-analytics-on data-analytics-category="Form Action"
+                                    data-analytics-event="Team Create" data-analytics-label="Cancel">cancel
+                            </button>
                         </div>
                     </div>
                 </form>

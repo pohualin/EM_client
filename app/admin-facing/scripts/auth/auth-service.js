@@ -13,7 +13,7 @@ angular.module('emmiManager')
                  */
                 login: function (creds) {
                     var self = this;
-                    $http.post(API.authenticate, {
+                    return $http.post(API.authenticate, {
                         'j_username': creds.username,
                         'j_password': creds.password,
                         'remember-me': creds.rememberMe
