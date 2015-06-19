@@ -15,9 +15,9 @@ angular.module('emmiManager')
             if (isValid) {
                 $scope.noSearch = false;
                 ClientProviderService.findPossibleProvidersNotUsingClient($scope.allTeamLocations, Client.getClient(), $scope.searchAll.providerQuery, $scope.searchAll.status)
-                .then(function (providerPage) {
-                    $scope.handleResponse(providerPage, 'searchedProvidersList');
-                });
+                    .then(function (providerPage) {
+                        $scope.handleResponse(providerPage, 'searchedProvidersList');
+                    });
             }
         };
 
@@ -27,13 +27,13 @@ angular.module('emmiManager')
         $scope.statusChange = function () {
             $scope.loading = true;
             ClientProviderService.findPossibleProvidersNotUsingClient($scope.allTeamLocations, Client.getClient(), $scope.searchAll.providerQuery, $scope.searchAll.status)
-            .then(function (providerPage) {
-                $scope.handleResponse(providerPage, 'searchedProvidersList');
-                $scope.setCheckboxesForChanged($scope[searchedProvidersList]);
-            }, function () {
-                // error happened
-                $scope.loading = false;
-            });
+                .then(function (providerPage) {
+                    $scope.handleResponse(providerPage, 'searchedProvidersList');
+                    $scope.setCheckboxesForChanged($scope[searchedProvidersList]);
+                }, function () {
+                    // error happened
+                    $scope.loading = false;
+                });
         };
 
         /**
@@ -70,13 +70,13 @@ angular.module('emmiManager')
             var sort = $scope.createSortProperty(property);
             $scope.loading = true;
             ClientProviderService.findPossibleProvidersNotUsingClient($scope.allTeamLocations, Client.getClient(), $scope.searchAll.providerQuery, $scope.searchAll.status, sort, $scope.currentPageSize)
-            .then(function (providerPage) {
-                $scope.handleResponse(providerPage, 'searchedProvidersList');
-                $scope.setCheckboxesForChanged($scope[searchedProvidersList]);
-            }, function () {
-                // error happened
-                $scope.loading = false;
-            });
+                .then(function (providerPage) {
+                    $scope.handleResponse(providerPage, 'searchedProvidersList');
+                    $scope.setCheckboxesForChanged($scope[searchedProvidersList]);
+                }, function () {
+                    // error happened
+                    $scope.loading = false;
+                });
         };
 
         /**
@@ -88,7 +88,7 @@ angular.module('emmiManager')
             ClientProviderService.findForClient(Client.getClient(), sort).then(function (clientProviders) {
                 $scope.handleResponse(clientProviders, managedClientProviderList);
                 $scope.setClientProviderSelected($scope.clientProviders);
-            }, function(){
+            }, function () {
                 // error happened
                 $scope.loading = false;
             });
@@ -146,7 +146,7 @@ angular.module('emmiManager')
             });
         };
 
-        $scope.cleanSearch = function() {
+        $scope.cleanSearch = function () {
             $scope.searchedProvidersList = [];
             $scope.noSearch = true;
             $scope.links = [];
@@ -175,14 +175,14 @@ angular.module('emmiManager')
             $scope.associateRequestSubmitted = true;
             if ($scope.teamProviderTeamLocationSaveRequest.length > 0) {
                 var invalidRequest = false;
-                angular.forEach($scope.teamProviderTeamLocationSaveRequest, function(req){
+                angular.forEach($scope.teamProviderTeamLocationSaveRequest, function (req) {
                     if ($scope.allTeamLocations.length > 0 && req.provider.selectedTeamLocations.length < 1) {
                         invalidRequest = true;
                     }
                 });
                 if (!invalidRequest) {
                     // copy the selected team locations when 'all' has not been chosen
-                    angular.forEach($scope.teamProviderTeamLocationSaveRequest, function(req){
+                    angular.forEach($scope.teamProviderTeamLocationSaveRequest, function (req) {
                         if (req.provider.selectedTeamLocations.length !== $scope.allTeamLocations.length) {
                             // user didn't choose all team locations
                             req.teamLocations = angular.copy(req.provider.selectedTeamLocations);
@@ -191,20 +191,25 @@ angular.module('emmiManager')
                             req.teamLocations = [];
                         }
                     });
-                    return ProviderSearch.updateProviderTeamAssociations($scope.teamProviderTeamLocationSaveRequest, $scope.teamResource).then(function (response) {
-                        if (!addAnother) {
-                            $scope.successAlert($scope.teamProviderTeamLocationSaveRequest, '#messages-container');
-                            $scope.hideaddprovidermodal(); // this also resets $scope.teamProviderTeamLocationSaveRequest
-                            $scope.refreshLocationsAndProviders();
-                        }
-                        return $scope.teamProviderTeamLocationSaveRequest;
-                    });
+                    $scope.whenSaving = true;
+                    return ProviderSearch
+                        .updateProviderTeamAssociations($scope.teamProviderTeamLocationSaveRequest, $scope.teamResource)
+                        .then(function () {
+                            if (!addAnother) {
+                                $scope.successAlert($scope.teamProviderTeamLocationSaveRequest, '#messages-container');
+                                $scope.hideaddprovidermodal(); // this also resets $scope.teamProviderTeamLocationSaveRequest
+                                $scope.refreshLocationsAndProviders();
+                            }
+                            return $scope.teamProviderTeamLocationSaveRequest;
+                        }).finally(function () {
+                            $scope.whenSaving = false;
+                        });
                 }
             }
         };
 
         function init() {
-        	$scope.searchAll.status = 'ACTIVE_ONLY';
+            $scope.searchAll.status = 'ACTIVE_ONLY';
             ClientProviderService.findForClient(Client.getClient()).then(function (clientProviders) {
                 $scope.handleResponse(clientProviders, managedClientProviderList);
                 $scope.setClientProviderSelected($scope.clientProviders);
@@ -212,6 +217,7 @@ angular.module('emmiManager')
             $scope.cleanSearch();
             $scope.tabs = TeamProviderService.setAllTabs();
         }
+
         init();
     })
 ;

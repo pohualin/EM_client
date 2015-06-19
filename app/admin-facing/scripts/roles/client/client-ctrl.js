@@ -65,6 +65,7 @@ angular.module('emmiManager')
             $scope.saveNewRole = function (clientRoleEntity, form) {
                 $scope.newClientRoleFormSubmitted = true;
                 if (form.$valid) {
+                    $scope.whenSaving = true;
                     ManageUserRolesService.saveNewClientRole(clientRoleEntity, $scope.clientResource).then(function () {
                         delete $scope.newClientRole;
                         $scope.newClientRoleFormSubmitted = false;
@@ -76,6 +77,8 @@ angular.module('emmiManager')
                         if (error.status === 406) {
                             form.$setValidity('unique', false);
                         }
+                    }).finally(function () {
+                        $scope.whenSaving = false;
                     });
                 }
             };
@@ -176,6 +179,7 @@ angular.module('emmiManager')
              */
             $scope.update = function (clientRoleResource, form) {
                 form.$setPristine();
+                $scope.whenSaving = true;
                 ManageUserRolesService.saveExistingClientRole(clientRoleResource).then(function () {
                     clientRoleResource.activePanel = 1;
                     $alert({
@@ -185,6 +189,8 @@ angular.module('emmiManager')
                     if (error.status === 406) {
                         form.$setValidity('unique', false);
                     }
+                }).finally(function () {
+                    $scope.whenSaving = false;
                 });
             };
 
@@ -194,11 +200,16 @@ angular.module('emmiManager')
              * @param clientRoleResource to delete
              */
             $scope.remove = function (clientRoleResource) {
+                $scope.whenSaving = true;
                 ManageUserRolesService.deleteExistingClientRole(clientRoleResource).then(function () {
                     $alert({
                         content: 'The role <b>' + clientRoleResource.entity.name + '</b> has been successfully removed.'
+                    }).finally(function () {
+                        $scope.whenSaving = false;
                     });
                     $scope.loadExisting();
+                }).finally(function () {
+                    $scope.whenSaving = false;
                 });
             };
 
@@ -206,6 +217,7 @@ angular.module('emmiManager')
              * called on click of the 'Add' button on the group library popup
              */
             $scope.addLibraries = function () {
+                $scope.whenSaving = true;
                 ManageUserRolesService.saveSelectedLibraries($scope.clientReferenceData.roleLibrary, $scope.clientResource)
                     .then(function () {
                         $scope.loadExisting();
@@ -223,6 +235,8 @@ angular.module('emmiManager')
                                 content: 'The selected roles have been added successfully.'
                             });
                         }
+                    }).finally(function () {
+                        $scope.whenSaving = false;
                     });
             };
 

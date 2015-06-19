@@ -12,8 +12,11 @@ angular.module('emmiManager')
              * Associate selected UserClientRole to selected UserClient
              */
             $scope.associateClientRole = function (form) {
+                $scope.whenSaving = true;
                 UserClientUserClientRolesService.associateUserClientUserClientRole($scope.selectedUserClient, form.selectedClientRole).then(function () {
                     $scope.clientRolesChanged();
+                }).finally(function () {
+                    $scope.whenSaving = false;
                 });
                 _paq.push(['trackEvent', 'Form Action', 'User Client Role Edit', 'Add']);
             };
@@ -57,9 +60,12 @@ angular.module('emmiManager')
              * Called when 'remove' is clicked
              */
             $scope.removeUserClientRole = function (userClientUserClientRole) {
+                $scope.whenSaving = true;
                 UserClientUserClientRolesService.deleteUserClientUserClientRole(userClientUserClientRole)
                     .then(function () {
                         $scope.clientRolesChanged();
+                    }).finally(function () {
+                        $scope.whenSaving = false;
                     });
                 _paq.push(['trackEvent', 'Form Action', 'User Client Role Edit', 'Remove']);
             };

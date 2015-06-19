@@ -19,9 +19,10 @@
                     <hr>
                     <div class="form-group pull-right">
                         <a type="button" class="btn" data-ng-click="notNow()">not now</a>
-                        <button class="btn btn-primary" type="submit" data-ng-hide="Session.secretQuestionCreated"
-                                data-ng-click="saveEmail(enterEmailForm.addEmail.$valid)"
-                                >
+                        <button class="btn btn-primary" type="submit"
+                                data-ng-disabled="whenSaving"
+                                data-ng-hide="Session.secretQuestionCreated"
+                                data-ng-click="saveEmail(enterEmailForm.addEmail.$valid)">
                             Save
                         </button>
                     </div>

@@ -26,6 +26,7 @@ angular.module('emmiManager')
             /**
              * Puts a group into a mode where the group name is editable
              * @param tagGroup to be put in edit name mode
+             * @param forceOpen the edit
              */
             $scope.startEditMode = function (tagGroup, forceOpen) {
                 if (forceOpen) {
@@ -71,8 +72,11 @@ angular.module('emmiManager')
              * @param group to remove
              */
             $scope.remove = function (group) {
+                $scope.whenSaving = true;
                 AdminManageGroupService.remove(group).then(function () {
                     $scope.loadExisting();
+                }).finally(function () {
+                    $scope.whenSaving = false;
                 });
             };
 
@@ -81,6 +85,7 @@ angular.module('emmiManager')
              *
              * @param tagGroup to be canceled
              * @param restore to put the original back
+             * @param form the form
              */
             $scope.cancelEditMode = function (tagGroup, restore, form) {
                 if (restore) {
@@ -101,12 +106,17 @@ angular.module('emmiManager')
              * an existing role
              *
              * @param tagGroup to be updated
+             * @param index the index
+             * @param form the form
              */
             $scope.update = function (tagGroup, index, form) {
                 form.$setPristine();
+                $scope.whenSaving = true;
                 Tag.updateReferenceGroup(tagGroup).then(function (editedGroup) {
                     angular.extend(tagGroup, editedGroup);
                     $scope.cancelEditMode(tagGroup, false);
+                }).finally(function () {
+                    $scope.whenSaving = false;
                 });
             };
 
@@ -114,14 +124,18 @@ angular.module('emmiManager')
              * Called when the save button is clicked on a new tag group
              *
              * @param tagGroup to be saved
+             * @param form the form
              */
             $scope.saveNewGroup = function (tagGroup, form) {
                 tagGroup.tags = $scope.newTagGroupTags;
+                $scope.whenSaving = true;
                 Tag.createReferenceGroup(tagGroup).then(function () {
                     delete $scope.newTagGroup;
                     delete $scope.newTagGroupTags;
                     $scope.loadExisting();
                     form.$setPristine();
+                }).finally(function () {
+                    $scope.whenSaving = false;
                 });
             };
 
@@ -149,9 +163,12 @@ angular.module('emmiManager')
              */
             $scope.toggleActiveInactive = function(tagGroup){
                 tagGroup.entity.active = tagGroup.entity.active ? false : true;
+                $scope.whenSaving = true;
                 Tag.updateReferenceGroup(tagGroup).then(function (editedGroup) {
                     angular.extend(tagGroup, editedGroup);
                     $scope.cancelEditMode(tagGroup, false);
+                }).finally(function () {
+                    $scope.whenSaving = false;
                 });
             };
 

@@ -117,12 +117,17 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-ng-if="!isEmpty(changedProviders)" data-ng-click="save()">Save
+                <button type="button" class="btn btn-success"
+                        data-ng-disabled="whenSaving"
+                        data-ng-if="!isEmpty(changedProviders)" data-ng-click="save()">Save
                 </button>
                 <button type="button" class="btn btn-default" data-ng-if="!isEmpty(changedProviders)"
+                        data-ng-disabled="whenSaving"
                         data-ng-click="saveAndAddAnother()"><i class="icon-plus"></i> Save & Add Another
                 </button>
-                <button type="button" class="btn btn-cancel" data-ng-click="cancel()">cancel</button>
+                <button type="button" data-ng-disabled="whenSaving"
+                        class="btn btn-cancel" data-ng-click="cancel()">cancel
+                </button>
             </div>
         </div>
     </div>

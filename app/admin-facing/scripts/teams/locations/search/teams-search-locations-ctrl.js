@@ -21,7 +21,7 @@ angular.module('emmiManager')
                 }
             });
             if (!resp) {
-                angular.forEach( $scope.teamClientLocations , function (location) {
+                angular.forEach($scope.teamClientLocations, function () {
                     resp = true;
                 });
             }
@@ -54,7 +54,8 @@ angular.module('emmiManager')
 
         $scope.savePopupLocations = function(addAnother) {
         	var locationsToAdd = TeamSearchLocation.getTeamProviderTeamLocationSaveRequest($scope.teamClientLocations, $scope.teamLocations, $scope.providersData);
-            return TeamSearchLocation.save($scope.teamClientResource.teamResource.link.teamLocations, locationsToAdd).then(function () {
+            $scope.whenSaving = true;
+            TeamSearchLocation.save($scope.teamClientResource.teamResource.link.teamLocations, locationsToAdd).then(function () {
                 // close the modal and show the message
                 if (!addAnother) {
                     $scope.$hide();
@@ -63,7 +64,8 @@ angular.module('emmiManager')
                     $scope.displaySuccessfull(locationsToAdd, '#messages-container');
                 }
                 $rootScope.$broadcast('event:teamLocationSavedWithProvider');
-                return locationsToAdd;
+            }).finally(function () {
+                $scope.whenSaving = false;
             });
         };
 

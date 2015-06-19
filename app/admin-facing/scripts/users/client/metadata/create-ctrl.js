@@ -23,6 +23,7 @@ angular.module('emmiManager')
                 $scope.userClientFormSubmitted = true;
                 if (isValid) {
                     $scope.userClientForm.$setPristine();
+                    $scope.whenSaving = true;
                     UsersClientService.createUserClient($scope.client, $scope.userClientEdit).then(
                         function success(response) {
                             var savedUserClientResource = response.data;
@@ -41,6 +42,8 @@ angular.module('emmiManager')
                             _paq.push(['trackEvent', 'Form Action', 'Create User', 'Save']);
                         }, function error(response) {
                             $scope.handleSaveError(response, angular.element(event.currentTarget));
+                        }).finally(function () {
+                            $scope.whenSaving = false;
                         });
                 } else {
                     $scope.formValidationError();

@@ -26,12 +26,15 @@ angular.module('emmiManager')
          * Save restrict configuration for the client
          */
         $scope.save = function(){
+            $scope.whenSaving = true;
             ClientRestrictConfigurationsService.saveOrUpdate($scope.clientRestrictConfiguration).then(function(response){
                 $scope.originalClientRestrictConfiguration = response;
                 $scope.clientRestrictConfiguration = angular.copy($scope.originalClientRestrictConfiguration);
                 $alert({
                     content: '<b>' + $scope.client.name + '</b> has been updated successfully.'
                 });
+            }).finally(function () {
+                $scope.whenSaving = false;
             });
         };
 

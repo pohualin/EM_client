@@ -93,12 +93,15 @@ angular.module('emmiManager')
         };
 
         $scope.removeProvider = function (provider) {
+            $scope.whenSaving = true;
         	ProviderView.removeProvider(provider, $scope.teamResource).then(function () {
                 $scope.refreshLocationsAndProviders();
                 $alert({
                     content: 'The provider <b>' + provider.entity.provider.fullName + '</b> has been successfully removed.'
                 });
-        	});
+            }).finally(function () {
+                $scope.whenSaving = false;
+            });
             _paq.push(['trackEvent', 'Form Action', 'Team Provider', 'Remove']);
         };
 
@@ -280,7 +283,8 @@ angular.module('emmiManager')
             $scope.providerFormSubmitted = true;
         	if (isValid && (($scope.allTeamLocations.length > 0 && $scope.selectedItems.length > 0) || $scope.allTeamLocations.length === 0)) {
                 _paq.push(['trackEvent', 'Form Action', 'Team Provider Create', 'Save']);
-	        	ProviderCreate.create($scope.provider, $scope.teamResource, $scope.selectedItems).then(function (response) {
+                $scope.whenSaving = true;
+                ProviderCreate.create($scope.provider, $scope.teamResource, $scope.selectedItems).then(function (response) {
                     var providerToAdd = {
                         provider: response.data.entity
                     };
@@ -299,7 +303,9 @@ angular.module('emmiManager')
                             });
                         });
                     }
-	        	});
+                }).finally(function () {
+                    $scope.whenSaving = false;
+                });
 	        } else{
                 $scope.showError();
             }

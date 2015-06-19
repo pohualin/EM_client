@@ -15,14 +15,14 @@ angular.module('emmiManager')
                 $scope.passwordChange = ChangePasswordService.createChangeHolder();
                 $scope.changePasswordFormSubmitted = false;
             };
-            
+
             /**
              * clear bad validity for to avoid multiple error icons
              */
             $scope.oldPasswordChanged = function () {
                 $scope.changePasswordForm.oldPassword.$setValidity('bad', true);
             };
-            
+
             /**
              * method to make sure two new password fields match
              */
@@ -45,6 +45,7 @@ angular.module('emmiManager')
                 changePasswordForm.password.$setValidity('history', true);
                 changePasswordForm.password.$setValidity('eligibility', true);
                 if (changePasswordForm.$valid) {
+                    $scope.whenSaving = true;
                     ChangePasswordService.changePassword($scope.account, $scope.passwordChange)
                         .then(function success() {
                             $alert({
@@ -71,17 +72,19 @@ angular.module('emmiManager')
                                     }
                                 });
                             }
+                        }).finally(function () {
+                            $scope.whenSaving = false;
                         });
                 }
             };
-            
+
             function init(){
                 $scope.reset();
                 ChangePasswordService.loadPolicy($scope.account.clientResource).then(function (response){
                     $scope.policy = response.data;
                 });
             }
-            
+
             init();
         }
     ])

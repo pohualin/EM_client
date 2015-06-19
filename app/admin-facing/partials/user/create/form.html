@@ -112,6 +112,7 @@
                 <div class="form-actions">
                     <div class="form-group">
                         <button class="btn btn-success" type="submit"
+                                data-ng-disabled="whenSaving"
                                 data-user-client="userToBeEdit"
                                 data-on-ok="save(userForm, false)"
                                 data-on-cancel="makeActive()"
@@ -123,6 +124,7 @@
                             <span>Save</span>
                         </button>
                         <button class="btn btn-default" type="button"
+                                data-ng-disabled="whenSaving"
                                 data-user-client="userToBeEdit"
                                 data-on-ok="save(userForm, true)"
                                 data-on-cancel="makeActive()"

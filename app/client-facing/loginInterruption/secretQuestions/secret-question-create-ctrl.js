@@ -25,19 +25,25 @@ angular.module('emmiManager')
             $scope.saveOrUpdateSecretQuestion = function (valid) {
                 $scope.secretQuestionFormSubmitted = true;
                 if (valid) {
-                    SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.userClientReqdResource.question1.entity, $scope.userClientReqdResource.question2.entity).then(function (response) {
-                        $location.path($scope.locationBeforeLogin).replace();
-                        $alert({
-                            title: ' ',
-                            content: 'Your security questions have been updated successfully.',
-                            container: 'body',
-                            type: 'success',
-                            placement: 'top',
-                            show: true,
-                            duration: 5,
-                            dismissable: true
+                    $scope.whenSaving = true;
+                    SecretQuestionService.saveOrUpdateSecretQuestionResponse(
+                        $scope.userClientReqdResource.question1.entity,
+                        $scope.userClientReqdResource.question2.entity).then(
+                        function () {
+                            $location.path($scope.locationBeforeLogin).replace();
+                            $alert({
+                                title: ' ',
+                                content: 'Your security questions have been updated successfully.',
+                                container: 'body',
+                                type: 'success',
+                                placement: 'top',
+                                show: true,
+                                duration: 5,
+                                dismissable: true
+                            });
+                        }).finally(function () {
+                            $scope.whenSaving = false;
                         });
-                    });
                 } else {
                     $alert({
                         title: ' ',
@@ -67,7 +73,10 @@ angular.module('emmiManager')
              * objects and copies them back into the bound objects.
              */
             $scope.notNow = function () {
-                SecretQuestionService.notNow($scope.userClientReqdResource);
+                $scope.whenSaving = true;
+                SecretQuestionService.notNow($scope.userClientReqdResource).finally(function () {
+                    $scope.whenSaving = false;
+                });
                 $location.path($scope.locationBeforeLogin).replace();
             };
         }

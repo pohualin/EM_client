@@ -57,9 +57,12 @@ angular.module('emmiManager')
         };
 
         $scope.removeExistingLocation = function (locationResource) {
+            $scope.whenSaving = true;
             Location.removeLocation(locationResource).then(function () {
                 $scope.showRemovalSuccess(locationResource);
                 $scope.performSearch();
+            }).finally(function () {
+                $scope.whenSaving = false;
             });
             _paq.push(['trackEvent', 'Form Action', 'Client Location', 'Remove']);
         };

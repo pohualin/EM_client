@@ -23,11 +23,14 @@ angular.module('emmiManager')
                 var deferred = $q.defer();
                 $scope.formSubmitted = true;
                 if (valid) {
+                    $scope.whenSaving = true;
                     if ($scope.patient.id) {
                         CreatePatientService.update($scope.team, $scope.patient).then(function (response) {
                             $scope.patient = response.data.entity;
                             ScheduledProgramFactory.patient = response.data.entity;
                             deferred.resolve(ScheduledProgramFactory.patient);
+                        }).finally(function () {
+                            $scope.whenSaving = false;
                         });
                     } else {
                         CreatePatientService.save($scope.team, $scope.patient).then(function (response) {
@@ -44,6 +47,8 @@ angular.module('emmiManager')
                             $scope.patient = response.data.entity;
                             ScheduledProgramFactory.patient = response.data.entity;
                             deferred.resolve(ScheduledProgramFactory.patient);
+                        }).finally(function () {
+                            $scope.whenSaving = false;
                         });
                     }
                 } else {

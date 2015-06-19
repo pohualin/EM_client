@@ -1,9 +1,11 @@
     <div>This user will be deactivated.</div>
     <div class="popover-footer">
         <button class="btn btn-success"
+                data-ng-disabled="whenSaving"
                 data-ng-click="okDeactivatePopover();$hide()">Yes
         </button>
         <button class="btn btn-cancel" type="button"
+                data-ng-disabled="whenSaving"
                 data-ng-click="cancelDeactivatePopover();$hide()">Cancel
         </button>
     </div>

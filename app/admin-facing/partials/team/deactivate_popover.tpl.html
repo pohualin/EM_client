@@ -1,8 +1,10 @@
     <div data-translate="team_edit_page.deactivate_dialog.content"></div>
     <div class="popover-footer">
         <button class="btn btn-success" data-ng-click="okDeactivatePopover();$hide()"
+                data-ng-disabled="whenSaving"
                 data-translate="team_edit_page.deactivate_dialog.ok_button"></button>
         <button class="btn btn-cancel" type="button" data-ng-click="cancelDeactivatePopover()"
+                data-ng-disabled="whenSaving"
                 data-translate="team_edit_page.deactivate_dialog.cancel_button"></button>
     </div>
 

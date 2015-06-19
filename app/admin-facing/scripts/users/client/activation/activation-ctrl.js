@@ -20,9 +20,12 @@ angular.module('emmiManager')
              * Expires an activation token
              */
             $scope.expireNow = function () {
+                $scope.whenSaving = true;
                 ActivationService.expireActivation(UsersClientService.getUserClient())
                     .then(function () {
                         $scope.metadataChanged();
+                    }).finally(function () {
+                        $scope.whenSaving = false;
                     });
             };
 
@@ -30,6 +33,7 @@ angular.module('emmiManager')
              * Send an activation email to the user
              */
             $scope.sendActivationEmail = function (addAnother) {
+                $scope.whenSaving = true;
                 ActivationService.sendActivationEmail(UsersClientService.getUserClient()).then(function () {
                     $scope.metadataChanged();
                     $alert({
@@ -38,6 +42,8 @@ angular.module('emmiManager')
                     if(addAnother){
                         $scope.createAnotherUserClient();
                     }
+                }).finally(function () {
+                    $scope.whenSaving = false;
                 });
             };
         }

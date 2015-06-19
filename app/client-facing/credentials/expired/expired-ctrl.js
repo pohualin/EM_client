@@ -36,13 +36,14 @@ angular.module('emmiManager')
             /**
              * Saves a password change when the form is valid
              *
-             * @param formValid true if the form is valid
+             * @param changePasswordForm the form itself
              */
             $scope.save = function (changePasswordForm) {
                 $scope.changePasswordFormSubmitted = true;
                 changePasswordForm.password.$setValidity('policy', true);
                 changePasswordForm.password.$setValidity('history', true);
                 if (changePasswordForm.$valid) {
+                    $scope.whenSaving = true;
                     CredentialsExpiredService.expiredPassword(credentials, $scope.passwordChange)
                         .then(function success() {
                             $alert({
@@ -67,6 +68,8 @@ angular.module('emmiManager')
                             } else {
                                 $location.path('/login').replace();
                             }
+                        }).finally(function () {
+                            $scope.whenSaving = false;
                         });
                 }
             };

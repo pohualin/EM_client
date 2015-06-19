@@ -35,9 +35,12 @@ angular.module('emmiManager')
             };
 
             $scope.removeExistingProvider = function (providerResource) {
+                $scope.whenSaving = true;
                 ClientProviderService.removeProvider(providerResource).then(function () {
                     $scope.showRemovalSuccess(providerResource);
                     $scope.performSearch();
+                }).finally(function () {
+                    $scope.whenSaving = false;
                 });
             };
         }])
