@@ -44,6 +44,7 @@ angular.module('emmiManager')
                 if (form.$valid) {
                     var beforeSaveStatus = $scope.userClientEdit.currentlyActive;
                     var formDirty = form.$dirty;
+                    $scope.whenSaving = true;
                     UsersClientService.update($scope.userClientEdit).then(
                         function success(response) {
                             var savedUserClient = response.data;
@@ -78,6 +79,8 @@ angular.module('emmiManager')
                             delete $scope.emailError;
                         }, function error(response) {
                             $scope.handleSaveError(response);
+                        }).finally(function () {
+                            $scope.whenSaving = false;
                         });
                 } else {
                     $scope.formValidationError();

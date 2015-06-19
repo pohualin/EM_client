@@ -30,6 +30,7 @@ angular.module('emmiManager')
             $scope.add = function (emailRestrictConfigurationForm, addAnother) {
                 $scope.emailRestrictConfigurationFormSubmitted = true;
                 if (emailRestrictConfigurationForm.$valid) {
+                    $scope.whenSaving = true;
                     EmailRestrictConfigurationsService.save($scope.emailRestrictConfiguration).then(function () {
                         $scope.$emit('requestEmailList');
                         $scope.emailRestrictConfiguration = EmailRestrictConfigurationsService.newEmailRestrictConfiguration();
@@ -40,6 +41,8 @@ angular.module('emmiManager')
                         EmailRestrictConfigurationsService.getEmailsThatDoNotFollowRestrictions().then(function (emailsThatDoNotFollowRestrictions) {
                             $scope.setEmailsThatDoNotFollowRestrictions(emailsThatDoNotFollowRestrictions);
                         });
+                    }).finally(function () {
+                        $scope.whenSaving = false;
                     });
 
                     $alert({

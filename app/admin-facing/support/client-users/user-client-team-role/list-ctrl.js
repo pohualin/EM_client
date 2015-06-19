@@ -37,9 +37,12 @@ angular.module('emmiManager')
 			 * Remove all UserClientUserClientTeamRole
 			 */
 			$scope.removeAllUserClientUserClientTeamRole = function(clientTeamRole){
+                $scope.whenSaving = true;
                 UserClientUserClientTeamRolesService.deleteAllUserClientUserClientTeamRole(clientTeamRole).then(function () {
 					UserClientUserClientTeamRolesService.refreshTeamRoleCard(clientTeamRole);
-				});
+                }).finally(function () {
+                    $scope.whenSaving = false;
+                });
 				_paq.push(['trackEvent', 'Form Action', 'User Team Role Team', 'Remove All']);
 			};
 
@@ -47,9 +50,12 @@ angular.module('emmiManager')
 			 * Delete one UserClientUserClientTeamRole
 			 */
 			$scope.removeUserClientUserClientTeamRole = function(clientTeamRole, existingTeam){
+                $scope.whenSaving = true;
                 UserClientUserClientTeamRolesService.deleteUserClientUserClientTeamRole(existingTeam).then(function () {
 					UserClientUserClientTeamRolesService.refreshTeamRoleCard(clientTeamRole);
-				});
+                }).finally(function () {
+                    $scope.whenSaving = false;
+                });
 				_paq.push(['trackEvent', 'Form Action', 'User Team Role Team', 'Remove']);
 			};
 

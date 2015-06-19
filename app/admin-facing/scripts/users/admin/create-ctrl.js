@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  *   Manage users
  */
-    .controller('UsersCreateController', ['$alert', '$scope', 'UsersService', '$location', '$popover', 'focus',
-        function ($alert, $scope, UsersService, $location, $popover, $focus) {
+    .controller('UsersCreateController', ['$alert', '$scope', 'UsersService', '$location',
+        function ($alert, $scope, UsersService, $location) {
 
             $scope.newEmmiUser = function(){
                 $scope.userToBeEdit = UsersService.newUser();
@@ -28,6 +28,7 @@ angular.module('emmiManager')
                 $scope.userFormSubmitted = true;
                 userForm.email.$setValidity('unique', true);
                 if (userForm.$valid) {
+                    $scope.whenSaving = true;
                     UsersService.createUser($scope.userToBeEdit).then(function (response) {
                         // go to the view/edit page, if the save is successful
                         _paq.push(['trackEvent', 'Form Action', 'Create Emmi User', 'Save']);
@@ -68,6 +69,8 @@ angular.module('emmiManager')
                                 });
                             }
                         }
+                    }).finally(function () {
+                        $scope.whenSaving = false;
                     });
                 } else {
                     if (!$scope.errorAlert) {

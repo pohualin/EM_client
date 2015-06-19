@@ -22,6 +22,7 @@ angular.module('emmiManager')
              */
             $scope.reset = function (clientPasswordConfigurationForm) {
                 $scope.loading = true;
+                $scope.whenSaving = true;
                 ClientPasswordConfigurationsService.remove($scope.clientPasswordConfiguration).then(function () {
                     ClientPasswordConfigurationsService.getClientPasswordConfiguration().then(function (response) {
                         $scope.originalClientPasswordConfiguration = response;
@@ -33,6 +34,8 @@ angular.module('emmiManager')
                         });
                         clientPasswordConfigurationForm.$setPristine();
                     });
+                }).finally(function () {
+                    $scope.whenSaving = false;
                 });
             };
 
@@ -43,6 +46,7 @@ angular.module('emmiManager')
                 $scope.clientPasswordConfigurationFormSubmitted = true;
                 if (clientPasswordConfigurationForm.$valid) {
                     clientPasswordConfigurationForm.$setPristine();
+                    $scope.whenSaving = true;
                     ClientPasswordConfigurationsService.save($scope.clientPasswordConfiguration).then(function (response) {
                         $scope.originalClientPasswordConfiguration = response;
                         $scope.clientPasswordConfiguration = angular.copy($scope.originalClientPasswordConfiguration);
@@ -51,6 +55,8 @@ angular.module('emmiManager')
                         $alert({
                             content: '<b>' + $scope.client.name + '</b> has been updated successfully.'
                         });
+                    }).finally(function () {
+                        $scope.whenSaving = false;
                     });
                 }
             };

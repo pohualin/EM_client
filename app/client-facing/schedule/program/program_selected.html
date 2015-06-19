@@ -4,6 +4,9 @@
     </label>
     <br/>
     {{scheduledProgram.program.entity.name}}
-    <button class="btn btn-link" data-ng-click="editProgram(addProgramForm)">edit</button>
+    <button class="btn btn-link"
+            data-ng-disabled="whenSaving"
+            data-ng-click="editProgram(addProgramForm)">edit
+    </button>
 
 </div>

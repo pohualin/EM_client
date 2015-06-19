@@ -1,6 +1,6 @@
 <form name="providerForm" class="form" novalidate>
     <div class="modal-content">
-        <div class="modal-header" ng-show="title">
+        <div class="modal-header" data-ng-show="title">
             <h4 class="modal-title">{{title}}</h4>
         </div>
         <div class="modal-body">
@@ -111,11 +111,18 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button type="submit" id="submit" class="btn btn-success" data-client-provider-deactivate-warning>Save</button>
-            <button type="button" class="btn btn-default" data-ng-if="saveAndAddAnother"
+            <button type="submit" id="submit" data-ng-disabled="whenSaving"
+                    class="btn btn-success" data-client-provider-deactivate-warning>Save
+            </button>
+            <button type="button" class="btn btn-default"
+                    data-ng-disabled="whenSaving"
+                    data-ng-if="saveAndAddAnother"
                     data-ng-click="saveAndAddAnother(providerForm.$valid)"><i class="icon-plus"></i> Save & Add Another
             </button>
-            <button type="button" class="btn btn-cancel" data-ng-click="cancelProviderSave();$hide()">cancel</button>
+            <button type="button" class="btn btn-cancel"
+                    data-ng-disabled="whenSaving"
+                    data-ng-click="cancelProviderSave();$hide()">cancel
+            </button>
         </div>
     </div>
 </form>

@@ -36,7 +36,10 @@
                         <span data-translate="login.form.rememberme">Remember me on this computer.</span>
                     </label>
                 </div>
-                <button name="submit" type="submit" class="btn btn-primary" data-translate="login.form.button">Login</button>
+                <button name="submit" type="submit" class="btn btn-primary"
+                        data-ng-disabled="whenSaving"
+                        data-translate="login.form.button">Login
+                </button>
             </form>
         </div>
     </div>

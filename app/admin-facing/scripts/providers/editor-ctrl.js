@@ -27,6 +27,7 @@ angular.module('emmiManager').controller(
             var isValid = providerForm.$valid;
             $scope.providerFormSubmitted = true;
             if (isValid) {
+                $scope.whenSaving = true;
                 providerForm.$setPristine();
                 ProviderService.updateProvider($scope.providerToEdit).then(function(response) {
                     angular.copy(response.data, $scope.providerResource);
@@ -35,6 +36,8 @@ angular.module('emmiManager').controller(
                     $alert({
                         content: 'The provider <b>'+response.data.entity.fullName+'</b> has been successfully updated.'
                     });
+                }).finally(function () {
+                    $scope.whenSaving = false;
                 });
                 _paq.push(['trackEvent', 'Form Action', 'Provider Edit', 'Save']);
             }

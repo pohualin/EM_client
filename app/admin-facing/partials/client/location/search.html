@@ -27,7 +27,9 @@
                         </form>
                     </div>
                     <div class="col-md-3" data-ng-show="searchPerformed">
-                        <button type="button" class="btn btn-default pull-right" data-ng-click="createNewLocation()">
+                        <button type="button" class="btn btn-default pull-right"
+                                data-ng-disabled="whenSaving"
+                                data-ng-click="createNewLocation()">
                             <i class="icon-plus"></i> add new location
                         </button>
                         <span data-ng-class="{'search-spinner' : loading}"></span>
@@ -128,12 +130,18 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-ng-if="!isEmpty(changedLocations)" data-ng-click="save()">Save
+                <button type="button" class="btn btn-success" data-ng-if="!isEmpty(changedLocations)"
+                        data-ng-disabled="whenSaving"
+                        data-ng-click="save()">Save
                 </button>
                 <button type="button" class="btn btn-default" data-ng-if="!isEmpty(changedLocations)"
+                        data-ng-disabled="whenSaving"
                         data-ng-click="saveAndAddAnother()"><i class="icon-plus"></i> Save & Add Another
                 </button>
-                <button type="button" class="btn btn-cancel" data-ng-click="cancel()">cancel</button>
+                <button type="button" class="btn btn-cancel"
+                        data-ng-disabled="whenSaving"
+                        data-ng-click="cancel()">cancel
+                </button>
             </div>
         </div>
     </div>
