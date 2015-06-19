@@ -18,7 +18,9 @@
             </div>
             <div class="col-md-5" data-ng-show="allLocationsSearch">
                 <br/>
-                <button type="button" class="btn btn-default pull-right" data-ng-click="createNewTeamLocation()">
+                <button type="button" class="btn btn-default pull-right"
+                        data-ng-disabled="whenSaving"
+                        data-ng-click="createNewTeamLocation()">
                     <i class="icon-plus"></i> <span data-translate="team_locations_search_page.add_new.label"></span>
                 </button>
                 <span data-ng-class="{'search-spinner' : loading}"></span>
@@ -54,19 +56,35 @@
                             <th class="sort col-checkbox">&nbsp;</th>
                             <th class="sort" data-ng-click="sortTeam('name')" >
                                 Name
-                                <span data-ng-show="sortProperty.property === 'name'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span>
+                                <span data-ng-show="sortProperty.property === 'name'">
+                                    <span class="sort-icon"
+                                          data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}">
+                                    </span>
+                                </span>
                             </th>
                             <th class="sort col-sm-2" data-ng-click="sortTeam('belongsTo.name')" >
                                 Client Owner
-                                <span data-ng-show="sortProperty.property === 'belongsTo.name'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span>
+                                <span data-ng-show="sortProperty.property === 'belongsTo.name'">
+                                    <span class="sort-icon"
+                                          data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}">
+                                    </span>
+                                </span>
                             </th>
                             <th class="sort col-sm-2" data-ng-click="sortTeam('city')">
                                 City/State
-                                <span data-ng-show="sortProperty.property === 'city'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span>
+                                <span data-ng-show="sortProperty.property === 'city'">
+                                    <span class="sort-icon"
+                                          data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}">
+                                    </span>
+                                </span>
                             </th>
                             <th class="sort col-phone" data-ng-click="sortTeam('phone')">
                                 Phone
-                                <span data-ng-show="sortProperty.property === 'phone'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span>
+                                <span data-ng-show="sortProperty.property === 'phone'">
+                                    <span class="sort-icon"
+                                          data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}">
+                                    </span>
+                                </span>
                             </th>
                             <th class="sort col-sm-3" data-ng-if="providersData">
                                 Add to Providers
@@ -77,7 +95,10 @@
                         <tr data-ng-repeat="location in locations" data-ng-class="location.location.entity.disabled ? 'text-muted' : ''">
                             <td class="col-checkbox">
                                 <div class="checkbox">
-                                    <input type="checkbox" id="locationSearchCb{{$index}}" data-ng-model="location.location.entity.checked"  data-ng-disabled="location.location.entity.disabled" ng-change="onCheckboxChange(location)">
+                                    <input type="checkbox" id="locationSearchCb{{$index}}"
+                                           data-ng-model="location.location.entity.checked"
+                                           data-ng-disabled="location.location.entity.disabled"
+                                           data-ng-change="onCheckboxChange(location)">
                                     <label for="locationSearchCb{{$index}}"></label>
                                 </div>
                             </td>
@@ -92,13 +113,13 @@
                             <td class="col-has-multiselect" data-ng-if="providersData">
                                 <div data-ng-if="providersData && location.location.entity.checked && !location.location.entity.disabled">
                                        <div data-multi-select
-                                        name=".allLocation[{{location.location.entity.id}}].providersData[{{$index}}]"
-                                        values="providersData"
-                                        model="location.location.entity.providersSelected"
-                                        show-filters="true"
-                                        value-field="id"
-                                        label-field="label"
-                                        template-path = "admin-facing/partials/common/directives/multi-select/multi-select.html" >
+                                            data-name=".allLocation[{{location.location.entity.id}}].providersData[{{$index}}]"
+                                            data-values="providersData"
+                                            data-model="location.location.entity.providersSelected"
+                                            data-show-filters="true"
+                                            data-value-field="id"
+                                            data-label-field="label"
+                                            data-template-path="admin-facing/partials/common/directives/multi-select/multi-select.html">
                                         </div>
                                 </div>
                             </td>

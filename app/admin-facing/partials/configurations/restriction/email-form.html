@@ -33,7 +33,7 @@
                         <div class="col-md-12">
                             <div class="form-group"
                                  data-ng-class="{ 'has-error' : emailRestrictConfigurationForm.description.$invalid && emailRestrictConfigurationFormSubmitted }">
-                                <label class="control-label" for="description">Description</label>
+                                <label class="control-label" for="passwordLength">Description</label>
                                 <input class="form-control" id="passwordLength"
                                        data-ng-model="emailRestrictConfiguration.entity.description"
                                        name="description"
@@ -44,8 +44,15 @@
                 </div>
                 <div class="modal-footer">
                     <input type="submit" id="submit" class="btn btn-success" value="Save"/>
-                    <button type="button" class="btn btn-default" data-ng-click="add(emailRestrictConfigurationForm, true)"><i class="icon-plus"></i> Save & Add Another</button>
-                    <button type="button" class="btn btn-cancel" data-ng-click="$hide()">Cancel</button>
+                    <button type="button" class="btn btn-default"
+                            data-ng-disabled="whenSaving"
+                            data-ng-click="add(emailRestrictConfigurationForm, true)"><i class="icon-plus"></i> Save &
+                        Add Another
+                    </button>
+                    <button type="button" class="btn btn-cancel"
+                            data-ng-disabled="whenSaving"
+                            data-ng-click="$hide()">Cancel
+                    </button>
                 </div>
             </div>
         </div>

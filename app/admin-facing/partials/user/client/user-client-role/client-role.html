@@ -19,7 +19,9 @@
                                         <span class="panel-title-text">{{ existingUserClientUserClientRole.entity.userClientRole.name}}</span>
                                     </a>
                                     <div class="pull-right">
-                                        <button type="button" class="btn btn-icon btn-inherit" data-ng-click="removeUserClientRole(existingUserClientUserClientRole)">
+                                        <button type="button" class="btn btn-icon btn-inherit"
+                                                data-ng-disabled="whenSaving"
+                                                data-ng-click="removeUserClientRole(existingUserClientUserClientRole)">
                                             <i class="icon-trashcan"></i>
                                         </button>
                                     </div>

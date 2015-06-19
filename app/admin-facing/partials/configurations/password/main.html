@@ -15,7 +15,7 @@
     </ol>
 </div>
 <div id="app-content" class="app-content app-content-with-sidebar container" data-ng-cloak>
-    <form name="clientPasswordConfigurationForm" novalidate unsaved-warning-form>
+    <form name="clientPasswordConfigurationForm" novalidate data-unsaved-warning-form>
         <div class="row">
             <div data-emmi-sidebar class="sidebar" data-ng-include="'admin-facing/partials/configurations/nav.html'"></div>
             <div class="main-content">
@@ -30,6 +30,7 @@
                         </span>
                         <span data-ng-show="showButtons() && !loading">
                             <button class="btn btn-success" type="submit"
+                                    data-ng-disabled="whenSaving"
                                     data-ng-click="save(clientPasswordConfigurationForm)">Save
                             </button>
                         </span>

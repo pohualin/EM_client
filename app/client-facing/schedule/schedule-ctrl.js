@@ -9,13 +9,13 @@
         .controller('ScheduleController', ['$scope', 'team', 'client', 'ScheduledProgramFactory',
             '$alert', 'ScheduleService', '$location', 'UriTemplate', 'PatientEmailService', 'PatientPhoneService',
             function ($scope, team, client, ScheduledProgramFactory, $alert, ScheduleService, $location, UriTemplate, PatientEmailService, PatientPhoneService) {
-        	       	
+
                 $scope.team = team;
                 $scope.page.setTitle('Schedule Emmi Program - ' + team.entity.name);
                 $scope.client = client;
                 $scope.patient = team.patient.entity;
                 ScheduledProgramFactory.patient = team.patient.entity;
-                             
+
                 /**
                  * Retrieve team email configuration for scheduling
                  */
@@ -32,7 +32,7 @@
                    });
                 }
                 getEmailConfiguration();
-                
+
                 /**
                  * Retrieve team phone configuration for scheduling
                  */
@@ -43,8 +43,8 @@
                     });
                 }
                 getPhoneConfiguration();
-                
-               /**
+
+                /**
                  * Broadcasts event so that Patient save and Program save are kicked off
                  */
                 $scope.savePatientAndProgram = function () {
@@ -56,7 +56,7 @@
                  */
                 $scope.saveScheduledProgramForPatient = function () {
                     if (ScheduledProgramFactory.valid()) {
-
+                        $scope.whenSaving = true;
                         ScheduleService.schedule($scope.team, $scope.scheduledProgram)
                             .then(function (response) {
                                 var scheduledProgramResource = response.data;
@@ -77,6 +77,8 @@
                                     duration: 5,
                                     dismissable: true
                                 });
+                            }).finally(function () {
+                                $scope.whenSaving = false;
                             });
                     }
                 };

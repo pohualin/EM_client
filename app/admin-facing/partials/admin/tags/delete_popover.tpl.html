@@ -1,7 +1,10 @@
     <div>Are you sure you want to delete this group?</div>
     <div class="popover-footer">
-        <button class="btn btn-success" data-ng-click="ok();$hide()">Yes</button>
-        <button type="button" class="btn btn-cancel" type="button" data-ng-click="cancel();$hide()">Cancel</button>
+        <button class="btn btn-success" data-ng-disabled="whenSaving" data-ng-click="ok();$hide()">Yes</button>
+        <button type="button" class="btn btn-cancel"
+                data-ng-disabled="whenSaving"
+                data-ng-click="cancel();$hide()">Cancel
+        </button>
     </div>
 
 

@@ -5,7 +5,7 @@ angular.module('emmiManager')
 /**
  *  Controls the create new location popup (admin-facing/partials/location/new.html) from a Team search page
  */
-    .controller('TeamLocationCreateController', function ($rootScope, $scope, $controller, Location, TeamSearchLocation, $alert, Client, TeamLocation, $timeout) {
+    .controller('TeamLocationCreateController', function ($rootScope, $scope, $controller, Location, TeamSearchLocation, $alert, Client) {
 
         $controller('LocationCommon', {$scope: $scope});
 
@@ -24,6 +24,7 @@ angular.module('emmiManager')
             $scope.locationFormSubmitted = true;
             if (isValid) {
                 var toBeSaved = $scope.location;
+                $scope.whenSaving = true;
                 _paq.push(['trackEvent', 'Form Action', 'Team Location Create', 'Save']);
                 Location.create(Client.getClient(), toBeSaved).then(function (location) {
                     var teamProviderTeamLocationSaveRequest = [];
@@ -36,7 +37,7 @@ angular.module('emmiManager')
                     }
                     teamProviderTeamLocationSaveRequest.push(req);
 
-                    return TeamSearchLocation.save($scope.teamClientResource.teamResource.link.teamLocations,teamProviderTeamLocationSaveRequest).then(function (page) {
+                    return TeamSearchLocation.save($scope.teamClientResource.teamResource.link.teamLocations, teamProviderTeamLocationSaveRequest).then(function () {
                         // close the modal
                         $scope.$hide();
                         if (!addAnother) {
@@ -51,8 +52,9 @@ angular.module('emmiManager')
                             });
                         }
                         $rootScope.$broadcast('event:teamLocationSavedWithProvider');
-                        return teamProviderTeamLocationSaveRequest;
                     });
+                }).finally(function () {
+                    $scope.whenSaving = false;
                 });
             } else {
                 $scope.showErrorBanner();

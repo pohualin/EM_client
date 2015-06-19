@@ -46,6 +46,7 @@ angular.module('emmiManager')
                 var newPassword = UsersService.generatePassword();
                 $scope.selectedUser.password = newPassword;
 
+                $scope.whenSaving = true;
                 UsersService.savePassword($scope.selectedUser).then(function (response){
 
                     $scope.selectedUser = response.data;
@@ -60,6 +61,8 @@ angular.module('emmiManager')
                     });
 
 
+                }).finally(function () {
+                    $scope.whenSaving = false;
                 });
 
 
@@ -76,6 +79,7 @@ angular.module('emmiManager')
                 if (userForm.$valid) {
                     var beforeSaveStatus = $scope.userToBeEdit.currentlyActive;
                     var formDirty = userForm.$dirty;
+                    $scope.whenSaving = true;
                     UsersService.updateUser($scope.userToBeEdit).then(function (response) {
                         $scope.selectedUser = response.data;
                         $scope.userToBeEdit = response.data;
@@ -121,6 +125,8 @@ angular.module('emmiManager')
                                 });
                             }
                         }
+                    }).finally(function () {
+                        $scope.whenSaving = false;
                     });
                 } else {
                     if (!$scope.errorAlert) {

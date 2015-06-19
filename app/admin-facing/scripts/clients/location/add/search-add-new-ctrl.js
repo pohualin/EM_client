@@ -76,7 +76,8 @@ angular.module('emmiManager')
             // Reset changedLocations to empty
             $scope.changedLocations = {};
             // save the new locations
-            return Location.addLocationsToClient(Client.getClient(), newClientLocations).then(function () {
+            $scope.whenSaving = true;
+            Location.addLocationsToClient(Client.getClient(), newClientLocations).then(function () {
                 // reload the existing locations
                 $scope.performSearch();
 
@@ -96,6 +97,8 @@ angular.module('emmiManager')
                         content: message
                     });
                 }
+            }).finally(function () {
+                $scope.whenSaving = false;
             });
         };
 

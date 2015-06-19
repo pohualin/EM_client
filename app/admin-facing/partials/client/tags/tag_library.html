@@ -1,6 +1,6 @@
 <div class="popover popover-tag-library">
     <div class="arrow gray"></div>
-    <h3 class="popover-title" ng-bind="title" ng-show="title"></h3>
+    <h3 class="popover-title" data-ng-bind="title" data-ng-show="title"></h3>
     <div class="popover-content" style="max-height: 250px;overflow: auto;">
         <form name="tagGroupLibraries" class="tag-library" data-popover-toggle>
             <div class="form-group">
@@ -18,10 +18,15 @@
         </form>
     </div>
     <div class="popover-footer popover-footer-with-info">
-        <button type="button" class="btn btn-default btn-xs btn-close" data-ng-click="$hide()">
+        <button type="button" class="btn btn-default btn-xs btn-close"
+                data-ng-disabled="whenSaving"
+                data-ng-click="$hide()">
             <span class="icon-delete"></span>
         </button>
-        <button type="button" class="btn btn-success pull-left" data-ng-click="addLibraries();$hide()">Add</button>
+        <button type="button" class="btn btn-success pull-left"
+                data-ng-disabled="whenSaving"
+                data-ng-click="addLibraries();$hide()">Add
+        </button>
         <div class="info"><small>You'll be able to edit tags after adding groups.</small></div>
     </div>
 </div>

@@ -18,8 +18,12 @@
                 <div class="col-md-12">
                     <hr>
                     <div class="form-group pull-right">
-                        <a type="button" class="btn" data-ng-click="notNow()">not now</a>
+                        <button type="button" class="btn btn-cancel"
+                                data-ng-disabled="whenSaving"
+                                data-ng-click="notNow()">not now
+                        </button>
                         <button class="btn btn-primary" type="submit"
+                                data-ng-disabled="whenSaving"
                                 data-ng-click="sendValidationEmail(validateEmailForm.validateEmail.$valid)">
                             Save
                         </button>

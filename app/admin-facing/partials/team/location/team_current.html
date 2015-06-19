@@ -1,6 +1,8 @@
 <div class="col-md-12"  data-ng-controller="TeamsLocationsController" >
     <div class="pull-right">
-        <button type="button" class="btn btn-link btn-link-nopad btn-heading" data-ng-click="addLocations(false)">
+        <button type="button" class="btn btn-link btn-link-nopad btn-heading"
+                data-ng-disabled="whenSaving"
+                data-ng-click="addLocations(false)">
             <i class="icon-plus"></i> add locations
         </button>
     </div>
@@ -22,7 +24,7 @@
                 <span class="parent-entity" data-ng-show="location.entity.location.belongsTo && location.entity.location.belongsTo.id !== team.entity.id"> <em>({{location.entity.location.belongsTo.name}})</em></span>
                 <span class="parent-entity" data-ng-show="!location.entity.location.belongsTo"> <em>(<span data-translate="client_edit_page.locations.no_client_owner"></span>)</em></span></div>
             </td>
-            <td class="col-sm-2">{{location.entity.location.city}}<span 
+            <td class="col-sm-2">{{location.entity.location.city}}<span
               data-ng-if="location.entity.location.city && location.entity.location.state">,&nbsp;</span>
               {{location.entity.location.state}}
             </td>

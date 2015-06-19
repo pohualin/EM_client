@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('emmiManager')
-	.controller('ProfileEditNameCtrl', ['$scope', '$controller', '$alert', 'ProfileService', 'ValidationService',
-        function($scope, $controller, $alert, ProfileService, ValidationService){
+    .controller('ProfileEditNameCtrl', ['$scope', '$controller', '$alert', 'ProfileService',
+        function ($scope, $controller, $alert, ProfileService) {
 
 	$scope.edit = function () {
 		$scope.setEditMode(true);
@@ -21,13 +21,16 @@ angular.module('emmiManager')
 		$scope.formSubmitted = true;
 		if(isValid){
 		    $scope.setEditMode(false);
+            $scope.whenSaving = true;
 			ProfileService.update(userClient).then(function(response){
 				angular.extend($scope.userClient, response);
-			});
+            }).finally(function () {
+                $scope.whenSaving = false;
+            });
 		} else {
             // $scope.formValidationError();
 		}
 	};
-	
-}])
+
+        }])
 ;

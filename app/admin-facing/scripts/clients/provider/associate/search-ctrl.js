@@ -49,8 +49,9 @@ angular.module('emmiManager')
                 angular.forEach($scope.changedProviders, function (providerResource) {
                     newClientProviders.push(providerResource.entity);
                 });
+                $scope.whenSaving = true;
                 // save the new providers
-                return ClientProviderService.addProvidersToClient(Client.getClient(), newClientProviders).then(function () {
+                ClientProviderService.addProvidersToClient(Client.getClient(), newClientProviders).then(function () {
                     // reload the existing providers
                     $scope.performSearch();
 
@@ -70,6 +71,8 @@ angular.module('emmiManager')
                             content: message
                         });
                     }
+                }).finally(function () {
+                    $scope.whenSaving = false;
                 });
             };
 

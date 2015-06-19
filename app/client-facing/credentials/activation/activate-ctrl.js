@@ -15,7 +15,7 @@ angular.module('emmiManager')
             /**
              * Load the password policy for display
              */
-            ActivateClientUserService.loadPolicy(activationCode).then(function (response){
+            ActivateClientUserService.loadPolicy(activationCode).then(function (response) {
                 $scope.policy = response.data;
             });
 
@@ -37,6 +37,7 @@ angular.module('emmiManager')
                 changePasswordForm.password.$setValidity('policy', true);
                 changePasswordForm.password.$setValidity('history', true);
                 if (changePasswordForm.$valid) {
+                    $scope.whenSaving = true;
                     ActivateClientUserService.activate(activationCode, $scope.passwordChange)
                         .then(function () {
                             $alert({
@@ -50,7 +51,7 @@ angular.module('emmiManager')
                             $location.path('/').replace();
                         }, function error(errorResponse) {
                             if (errorResponse.status === 406 && errorResponse.data) {
-                                angular.forEach(errorResponse.data, function(validationError){
+                                angular.forEach(errorResponse.data, function (validationError) {
                                     if (validationError.entity.reason === 'POLICY') {
                                         changePasswordForm.password.$setValidity('policy', false);
                                     } else if (validationError.entity.reason === 'HISTORY') {
@@ -61,7 +62,9 @@ angular.module('emmiManager')
                                 $location.path('/login').replace();
                             }
                         }
-                    );
+                    ).finally(function () {
+                            $scope.whenSaving = false;
+                        });
                 }
             };
         }

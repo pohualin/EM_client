@@ -25,12 +25,17 @@
                 </div>
             </div>
             <div class="popover-footer popover-footer-with-info">
-                <button type="button" class="btn btn-default btn-xs btn-close" data-ng-click="$hide()">
+                <button type="button" class="btn btn-default btn-xs btn-close"
+                        data-ng-disabled="whenSaving"
+                        data-ng-click="$hide()">
                     <span class="icon-delete"></span>
                 </button>
                 <div class="row">
                     <div class="col-md-3">
-                        <button type="button" class="btn btn-success pull-left" data-ng-click="associateClientRole(clientRolesSelection);$hide()">Add</button>
+                        <button type="button" class="btn btn-success pull-left"
+                                data-ng-disabled="whenSaving"
+                                data-ng-click="associateClientRole(clientRolesSelection);$hide()">Add
+                        </button>
                     </div>
                     <div class="col-md-9" data-ng-if="selectedRoleHasSuperPermission">
                         <small class="pull-right"
