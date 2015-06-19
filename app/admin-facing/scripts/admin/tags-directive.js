@@ -57,10 +57,13 @@ angular.module('emmiManager')
                     if (value) {
                         var newGroupTitle = value.toLowerCase().replace(/[^a-z0-9]+/g, '');
                         var found = false;
-                        angular.forEach(scope.tagGroups, function (group) {
-                            var normalizedTitle = group.entity.name.toLowerCase().replace(/[^a-z0-9]+/g, '');
-                            if (newGroupTitle === normalizedTitle) {
-                                found = true;
+                        angular.forEach(scope.tagGroups, function (group, i) {
+                            // Make sure not to validate against the current group
+                            if (i.toString() !== attrs.groupIndex) {
+                                var normalizedTitle = group.entity.name.toLowerCase().replace(/[^a-z0-9]+/g, '');
+                                if (newGroupTitle === normalizedTitle) {
+                                    found = true;
+                                }
                             }
                         });
                         ctrl.$setValidity('unique', !found);
