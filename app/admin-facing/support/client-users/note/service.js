@@ -21,12 +21,16 @@ angular.module('emmiManager')
                     var self = this;
                     return $http.get(UriTemplate.create(client.link.clientNote).stringify()).then(function (response) {
                         if(response.status === 204){
+                            // No ClientNote for this Client
                             return self.newClientNote();
                         }
                         return response;
                     });
                 },
                 
+                /**
+                 * Call create if ClientNote has no id, otherwise call update
+                 */
                 createOrUpdateClientNote: function(client, clientNote){
                     var deferred = $q.defer();
                     if (clientNote.entity.id){
@@ -58,17 +62,6 @@ angular.module('emmiManager')
                     return $http.put(UriTemplate.create(client.link.clientNote).stringify(), clientNote.entity)
                         .success(function(response){
                             return response;
-                        });
-                },
-
-                /**
-                 * Call server to fetch next batch of UserClient
-                 */
-                fetchPage: function (href) {
-                    return $http.get(UriTemplate.create(href).stringify())
-                        .then(function (response) {
-                            CommonService.convertPageContentLinks(response);
-                            return response.data;
                         });
                 }
             };
