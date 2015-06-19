@@ -29,22 +29,26 @@ angular.module('emmiManager')
          * When cancel is clicked in edit mode
          */
         $scope.cancel = function () {
+            $scope.whenSaving = true;
             $scope.clientNoteEdit = angular.copy($scope.originalClientNote);
             $scope.editMode = false;
             $scope.clientNoteForm.$setPristine();
             _paq.push(['trackEvent', 'Form Action', 'Client Note Edit', 'Cancel']);
+            $scope.whenSaving = false;
         };
 
         /**
          * Called when Save button is clicked
          */
         $scope.save = function (form) {
-            window.paul = form;
             $scope.clientNoteFormSubmitted = true;
             if (form.$valid) {
+                $scope.whenSaving = true;
                 ClientNoteService.createOrUpdateClientNote($scope.client, $scope.clientNoteEdit).then(function(response){
                     $scope.originalClientNote = angular.copy(response.data);
                     $scope.editMode = false;
+                }).finally(function(){
+                    $scope.whenSaving = false;
                 });
             }
         };

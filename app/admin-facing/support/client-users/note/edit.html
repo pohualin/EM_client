@@ -20,10 +20,11 @@
         <div class="form-group">
           <button class="btn btn-success" type="submit"
                   data-placement="right"
+                  data-ng-disabled="whenSaving"
                   data-ng-click="save(clientNoteForm)">
               save
           </button>
-          <a class="btn btn-cancel" data-ng-click="cancel()">cancel</a>
+          <a class="btn btn-cancel" data-ng-disabled="whenSaving" data-ng-click="cancel()">cancel</a>
         </div>
       </div>
     </div>
