@@ -67,6 +67,7 @@ angular.module('emmiManager')
              * Call this method when save is clicked
              */
             $scope.save = function(){
+                $scope.whenSaving = true;
                 UserClientUserClientTeamRolesService.associateTeams($scope.selectedTeamRoles).then(function () {
             		$scope.hideAddTeamsModal();
                     var clientTeamRole = UserClientUserClientTeamRolesService.getSelectedClientTeamRole();
@@ -74,7 +75,9 @@ angular.module('emmiManager')
             		UserClientUserClientTeamRolesService.refreshTeamRoleCards(UserClientUserClientTeamRolesService.getCardsToRefresh());
                     clientTeamRole.activePanel = 0; // Open the panel after adding teams
             		_paq.push(['trackEvent', 'Form Action', 'User Team Role Search', 'Add']);
-            	});
+                }).finally(function () {
+                    $scope.whenSaving = false;
+                });
             };
         }
     ])

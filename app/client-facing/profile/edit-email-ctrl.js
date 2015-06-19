@@ -14,11 +14,12 @@ angular.module('emmiManager')
             userClient.login = userClient.email;
         }
         if (editEmailForm.$valid) {
+            $scope.whenSaving = true;
             ProfileService.update(userClient, $scope.password).then(function success(response) {
                 angular.extend($scope.userClient, response);
                 $scope.resetEditEmailForm();
                 if (!response.emailValidated) {
-                    ValidationService.sendValidationEmail(response).then(function (response) {
+                    ValidationService.sendValidationEmail(response).then(function () {
                         ProfileService.get($scope.userClient).then(function (response) {
                             angular.extend($scope.userClient, response);
                         });
@@ -26,6 +27,8 @@ angular.module('emmiManager')
                 }
             }, function error(err) {
             	$scope.handleSaveError(err, editEmailForm);
+            }).finally(function () {
+                $scope.whenSaving = false;
             });
         }
     };
@@ -103,13 +106,13 @@ angular.module('emmiManager')
      */
     $scope.verifyPassword = function (form, password){
         $scope.password = password;
-        ProfileService.verifyPassword($scope.userClient, password).then(function success(response){
+        ProfileService.verifyPassword($scope.userClient, password).then(function success() {
             $scope.editEmailFormSubmitted = false;
             $scope.passwordValidationFormSubmitted = false;
             $scope.passwordIsValidated = true;
             $scope.setEmailEditMode(true);
             $scope.promptPasswordModal.hide();
-        }, function fail(error){
+        }, function fail() {
             $scope.passwordValidationFormSubmitted = true;
             form.password.$setValidity('match', false);
             $scope.formValidationError('Please check your password and try again.');

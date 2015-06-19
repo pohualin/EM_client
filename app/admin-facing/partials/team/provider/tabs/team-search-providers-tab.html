@@ -18,7 +18,9 @@
          </div>
          <div class="col-md-5" data-ng-hide="noSearch">
              <br />
-             <button type="button" class="btn btn-default pull-right" data-ng-click="createNewProvider(searchForm)">
+             <button type="button" class="btn btn-default pull-right"
+                     data-ng-disabled="whenSaving"
+                     data-ng-click="createNewProvider(searchForm)">
                  <i class="icon-plus"></i> add new provider
              </button>
              <span data-ng-class="{'search-spinner' : loading}"></span>

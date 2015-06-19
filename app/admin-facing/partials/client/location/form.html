@@ -103,11 +103,18 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button type="button" id="submit" class="btn btn-success" data-client-location-deactivate-warning>Save</button>
+            <button type="button" id="submit" class="btn btn-success"
+                    data-ng-disabled="whenSaving"
+                    data-client-location-deactivate-warning>Save
+            </button>
             <button type="button" class="btn btn-default" data-ng-if="saveAndAddAnother"
+                    data-ng-disabled="whenSaving"
                     data-ng-click="saveAndAddAnother(locationForm.$valid)"><i class="icon-plus"></i> Save & Add Another
             </button>
-            <button type="button" class="btn btn-cancel" data-ng-click="$hide()">Cancel</button>
+            <button type="button" class="btn btn-cancel"
+                    data-ng-disabled="whenSaving"
+                    data-ng-click="$hide()">Cancel
+            </button>
         </div>
     </div>
 </form>

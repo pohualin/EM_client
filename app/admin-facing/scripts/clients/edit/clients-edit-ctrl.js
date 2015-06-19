@@ -57,10 +57,13 @@ angular.module('emmiManager')
             var isValid = metadataForm.$valid;
             $scope.metadataSubmitted = true;
             if (isValid && $scope.clientToEdit.salesForceAccount) {
+                $scope.whenSaving = true;
                 metadataForm.$setPristine();
                 Client.updateClient($scope.clientToEdit).then(function () {
                     $scope.editMode = false;
                     setTitle();
+                }).finally(function () {
+                    $scope.whenSaving = false;
                 });
                 _paq.push(['trackEvent', 'Form Action', 'Client Edit', 'Save']);
             } else {

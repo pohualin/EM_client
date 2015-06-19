@@ -58,6 +58,7 @@ angular.module('emmiManager')
             var isValid = teamForm.$valid;
             $scope.formSubmitted = true;
             if (isValid && $scope.teamToSave.salesForceAccount) {
+                $scope.whenSaving = true;
                 teamForm.$setPristine();
                 EditTeam.save($scope.teamToSave, teamClientResource.teamResource.link.self).then(function (team) {
                     if (!team.data.entity.description) { team.data.entity.description = ''; } // EM-517: TODO: this should be fixed with a larger refactor to that angular.extend is not necessary
@@ -68,6 +69,8 @@ angular.module('emmiManager')
                     $scope.fireUpdatedEvent();
                     $scope.team.currentlyActive = team.data.entity.active;
                     $scope.editMode = false;
+                }).finally(function () {
+                    $scope.whenSaving = false;
                 });
                 _paq.push(['trackEvent', 'Form Action', 'Team Edit', 'Save']);
             } else {

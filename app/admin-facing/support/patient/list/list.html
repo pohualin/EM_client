@@ -51,7 +51,7 @@
                                border="0" cellpadding="0" cellspacing="0" data-ng-show="patients">
                             <thead>
                             <tr>
-                                <th class="sort col-sm-3" data-ng-click="sort('lastName')">Last Name
+                                <th class="sort col-sm-2" data-ng-click="sort('lastName')">Last Name
                                     <span data-ng-show="sortProperty.property === 'lastName'">
                                         <span class="sort-icon"
                                               data-ng-class="{'fa-angle-down': sortProperty.ascending,
@@ -68,14 +68,14 @@
                                         </span>
                                     </span>
                                 </th>
-                                <th class="sort col-sm-2" data-ng-click="sort('dateOfBirth')">Date of Birth
+                                <th class="sort col-sm-2 text-center" data-ng-click="sort('dateOfBirth')">Date of Birth
                                     <span data-ng-show="sortProperty.property === 'dateOfBirth'">
                                         <span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending,
                                         'fa-angle-up': !sortProperty.ascending}">
                                         </span>
                                     </span>
                                 </th>
-                                <th class="col-sm-2">Access Code</th>
+                                <th class="col-sm-3 text-center">Most Recent <br/>Access Code/View-By Date</th>
                                 <th class="sort col-sm-2" data-ng-click="sort('client.name')">Client
                                     <span data-ng-show="sortProperty.property === 'client.name'">
                                         <span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending,
@@ -90,11 +90,15 @@
                             <tr data-ng-repeat="patient in patients">
                                 <td><span class="col-wrap">{{patient.entity.lastName}}</span></td>
                                 <td><span class="col-wrap">{{patient.entity.firstName}}</span></td>
-                                <td><span class="col-wrap">{{patient.entity.dateOfBirth | date:'MM/dd/yyyy'}}</span>
+                                <td class="text-center"><span class="col-wrap">{{patient.entity.dateOfBirth | date:'MM/dd/yyyy'}}</span>
                                 </td>
-                                <td>
-                                    <span class="col-wrap">
+                                <td class="text-center">
+                                    <span class="col-wrap ">
                                         {{patient.entity.scheduledProgram[0].accessCode}}
+                                         &nbsp;
+                                        <small class="text-muted"> {{patient.entity.scheduledProgram[0].viewByDate |
+                                            date:'MM/dd/yyyy'}}
+                                        </small>
                                         <a href
                                            data-ng-if="patient.entity.scheduledProgram[0]"
                                            data-ng-mouseover="showScheduledPrograms($event, patient)"

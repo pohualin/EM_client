@@ -5,7 +5,7 @@
         <li class="active">Manage Emmi Groups & Tags Library</li>
     </ol>
 </div>
-<div class="container" data-ng-cloak>
+<div id="app-content" class="app-content container" data-ng-cloak>
     <div class="row">
         <div class="col-md-12">
             <div class="layout-card">
@@ -29,6 +29,7 @@
                                             <div class="pull-right">
                                                 <button type="button" class="btn btn-icon btn-inherit"
                                                         data-ng-hide="group.editMode || group.warningOpen"
+                                                        data-ng-disabled="whenSaving"
                                                         data-ng-click="startEditMode(group, true)">
                                                     <i title="edit" class="icon-compose"></i>
                                                 </button>
@@ -36,17 +37,20 @@
                                                         data-ng-show="group.deletable"
                                                         data-on-ok="remove(group)"
                                                         data-placement="bottom"
+                                                        data-ng-disabled="whenSaving"
                                                         data-on-open-popover="warningToggle(group, true)"
                                                         data-on-close-popover="warningToggle(group, false)"
                                                         data-delete-group-warning>
                                                     <i title="remove" class="icon-trashcan"></i>
                                                 </button>
                                                 <button type="button" class="btn btn-icon btn-inherit"
+                                                        data-ng-disabled="whenSaving"
                                                         data-ng-show="!group.deletable && group.entity.active"
                                                         data-ng-click="toggleActiveInactive(group)">
                                                     <i title="deactivate" class="icon-trashcan"></i>
                                                 </button>
                                                 <button type="button" class="btn btn-icon btn-inherit"
+                                                        data-ng-disabled="whenSaving"
                                                         data-ng-show="!group.deletable && !group.entity.active"
                                                         data-ng-click="toggleActiveInactive(group)">
                                                     <i title="activate" class="icon-check-o-circle"></i>
@@ -59,7 +63,9 @@
                                             </a>
                                             <div data-ng-class="{ 'has-error' : existingTagGroupForm[group.entity.id].$error.unique}">
                                                 <div class="form-inline" data-ng-if="group.editMode" style="width:50%">
+                                                    <label class="sr-only" for="title-{{group.entity.id}}">Title</label>
                                                     <input class="form-control input-sm" data-ng-model="group.title"
+                                                           id="title-{{group.entity.id}}"
                                                            data-focus-on="focus-{{group.entity.id}}"
                                                            maxlength="50"
                                                            required data-group-title-unique>
@@ -74,11 +80,14 @@
                                         <div class="panel-footer">
                                             <button class="btn btn-success" type="button"
                                                     data-ng-click="update(group, $index, existingTagGroupForm[group.entity.id])"
-                                                    data-ng-disabled="!existingTagGroupForm.{{group.entity.id}}.$valid"
+                                                    data-ng-disabled="!existingTagGroupForm.{{group.entity.id}}.$valid || whenSaving"
                                                     data-ng-show="existingTagGroupForm.{{group.entity.id}}.$valid && group.changed">
                                                 Save
                                             </button>
-                                            <button type="button" class="btn btn-cancel" data-ng-click="cancelEditMode(group, true, existingTagGroupForm[group.entity.id])" data-bs-collapse-toggle>
+                                            <button type="button" class="btn btn-cancel"
+                                                    data-ng-disabled="whenSaving"
+                                                    data-ng-click="cancelEditMode(group, true, existingTagGroupForm[group.entity.id])"
+                                                    data-bs-collapse-toggle>
                                                 cancel
                                             </button>
                                         </div>
@@ -105,9 +114,14 @@
                                              data-ng-class="{ 'has-error' : newTagGroupForm.$error.unique }">
                                             <div class="panel-title">
                                                 <div class="role-group-create form-inline">
-                                                    <input class="form-control input-sm" name="newTagGroup" data-ng-model="newTagGroup.title"
+                                                    <label class="sr-only" for="newTagGroup">Title</label>
+                                                    <input class="form-control input-sm" name="newTagGroup"
+                                                           id="newTagGroup"
+                                                           data-ng-model="newTagGroup.title"
                                                            data-focus-on="focus-new-group" maxlength="50" required data-group-title-unique>
-                                                    <button class="btn btn-sm btn-icon" type="button" data-ng-click="cancelNew(newTagGroupForm)">
+                                                    <button class="btn btn-sm btn-icon" type="button"
+                                                            data-ng-disabled="whenSaving"
+                                                            data-ng-click="cancelNew(newTagGroupForm)">
                                                         <span class="icon-delete icon-size-lg"></span>
                                                     </button>
                                                 </div>
@@ -121,17 +135,22 @@
                                         <div class="panel-footer">
                                             <button class="btn btn-success" type="button"
                                                     data-ng-click="saveNewGroup(newTagGroup, newTagGroupForm)"
-                                                    data-ng-disabled="!newTagGroupForm.$valid"
+                                                    data-ng-disabled="!newTagGroupForm.$valid || whenSaving"
                                                     data-ng-show="newTagGroupForm.$valid">
                                                 Save
                                             </button>
-                                            <button type="button" class="btn btn-cancel" data-ng-click="cancelNew(newTagGroupForm)">cancel</button>
+                                            <button type="button" class="btn btn-cancel"
+                                                    data-ng-disabled="whenSaving"
+                                                    data-ng-click="cancelNew(newTagGroupForm)">cancel
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div data-ng-hide="newTagGroup">
-                                <button type="button" class="btn btn-default" data-ng-click="createNewTagGroup()">
+                                <button type="button" class="btn btn-default"
+                                        data-ng-disabled="whenSaving"
+                                        data-ng-click="createNewTagGroup()">
                                     Add new group
                                 </button>
                             </div>

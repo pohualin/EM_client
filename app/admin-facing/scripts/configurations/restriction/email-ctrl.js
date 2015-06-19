@@ -36,6 +36,7 @@ angular.module('emmiManager')
          * Remove one single emailRestrictConfiguration
          */
         $scope.remove = function(emailRestrictToRemove){
+            $scope.whenSaving = true;
             EmailRestrictConfigurationsService.remove(emailRestrictToRemove).then(function () {
                 $alert({
                     content: '<b>' + $scope.client.name + '</b> has been updated successfully.'
@@ -44,6 +45,8 @@ angular.module('emmiManager')
                 EmailRestrictConfigurationsService.getEmailsThatDoNotFollowRestrictions().then(function (emailsThatDoNotFollowRestrictions) {
                     $scope.setEmailsThatDoNotFollowRestrictions(emailsThatDoNotFollowRestrictions);
                 });
+            }).finally(function () {
+                $scope.whenSaving = false;
             });
         };
 

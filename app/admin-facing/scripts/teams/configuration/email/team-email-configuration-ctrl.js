@@ -7,7 +7,7 @@ angular.module('emmiManager')
  */
     .controller('ClientTeamEmailConfigurationCtrl', ['$scope', '$location', '$alert', 'focus', '$controller', 'ClientTeamConfigurationService', '$routeParams', 'API', 'ClientTeamEmailConfigurationService',
         function ($scope, $location, $alert, focus, $controller, ClientTeamConfigurationService,  $routeParams, API, ClientTeamEmailConfigurationService) {
-    	    $scope.showTeamConfig = 'yes';                 
+            $scope.showTeamConfig = 'yes';
             /**
              * When the save button is clicked. Sends all updates
              * to the back, then re-binds the form objects with the
@@ -15,8 +15,9 @@ angular.module('emmiManager')
              */
             $scope.saveOrUpdateEmailConfig = function (valid) {
             	if (valid) {
+                    $scope.whenSaving = true;
             		  ClientTeamEmailConfigurationService
-                            .saveOrUpdateTeamEmailConfiguration($scope.team, $scope.emailConfigs).then(function (response) 
+                          .saveOrUpdateTeamEmailConfiguration($scope.team, $scope.emailConfigs).then(function (response)
                              {
                             	$scope.emailConfigs = response;
                             	$alert({
@@ -29,11 +30,13 @@ angular.module('emmiManager')
                                     duration: 5,
                                     dismissable: true
                                 });
-                            });
-                       } 
+                             }).finally(function () {
+                              $scope.whenSaving = false;
+                          });
+                }
             };
-                
-            
+
+
             /**
              * Check to see if user checks "Require email"
              * If yes, "Collect email" needs to automatically check.
@@ -49,11 +52,11 @@ angular.module('emmiManager')
             					emailConfig.entity.emailConfig = true;
             				}
             			});
-            		
-            		}
+
+                    }
             	});
            };
-            
+
             /**
              * Called when cancel is clicked.. takes the original
              * objects and copies them back into the bound objects.
@@ -61,8 +64,8 @@ angular.module('emmiManager')
             $scope.cancel = function () {
                 $location.path('/');
             };
-            
-             /**
+
+            /**
              * init method called when page is loading
              */
             function init() {
@@ -70,9 +73,9 @@ angular.module('emmiManager')
             	ClientTeamEmailConfigurationService.getTeamEmailConfiguration($scope.team).then(function (response) {
                 		$scope.emailConfigs = response;
                 });
-            	
+
             }
-                 
+
             init();
 
     }])

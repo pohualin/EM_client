@@ -5,7 +5,7 @@
         <li class="active">New Client</li>
     </ol>
 </div>
-<div class="container" data-ng-cloak>
+<div id="app-content" class="app-content container" data-ng-cloak>
     <div class="row">
         <div class="col-md-12">
             <div class="layout-card">
@@ -168,6 +168,7 @@
                         data-ng-show="clientToEdit.salesForceAccount.city && clientToEdit.salesForceAccount.state">,&nbsp;</span>{{clientToEdit.salesForceAccount.state}}
                 </span>
                 <button class="btn btn-link btn-salesforce-update" type="button"
+                        data-ng-disabled="whenSaving"
                         data-ng-click="changeClientSfAccount()">update
                 </button>
             </div>
@@ -181,13 +182,16 @@
                         <button class="btn btn-primary" type="button"
                                 data-on-ok="save(clientForm)"
                                 data-save-click data-client-to-edit="clientToEdit" data-checking-for-dupes="checkingForDupes"
-                                data-ng-disabled="clientForm.clientName.$error.unique">
+                                data-ng-disabled="clientForm.clientName.$error.unique || whenSaving">
                             <span data-translate="client_edit_page.save_button">Continue...</span>
                         </button>
-                        <a class="btn btn-cancel" href data-ng-click="cancel()"
-                           data-analytics-on
-                           data-analytics-category="Form Action"
-                           data-analytics-event="Client Create" data-analytics-label="Cancel">cancel</a>
+                        <button class="btn btn-cancel" type="button"
+                                data-ng-disabled="whenSaving"
+                                data-ng-click="cancel()"
+                                data-analytics-on
+                                data-analytics-category="Form Action"
+                                data-analytics-event="Client Create" data-analytics-label="Cancel">cancel
+                        </button>
                     </div>
                 </div>
             </div>

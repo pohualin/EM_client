@@ -10,6 +10,7 @@
                      selectedUserClient.entity.activationKey != null">
                 <div class="form-actions">
                     <button class="btn btn-primary" type="button"
+                            data-ng-disabled="whenSaving"
                             data-ng-show="selectedUserClient.entity.email"
                             data-ng-click="sendActivationEmail()">
                         <span data-ng-switch-when="false">Send</span>
@@ -17,6 +18,7 @@
                         <span> User Setup Email</span>
                     </button>
                     <button class="btn btn-default" type="button"
+                            data-ng-disabled="whenSaving"
                             data-ng-show="selectedUserClient.entity.email"
                             data-ng-click="sendActivationEmail(true)">
                         <span data-ng-switch-when="false">Send</span>
@@ -45,7 +47,9 @@
                      data-ng-switch="selectedUserClient.entity.passwordResetExpirationDateTime != null &&
                      selectedUserClient.entity.passwordResetToken != null">
                     <div class="form-actions">
-                        <button class="btn btn-default" type="button" data-ng-click="passwordReset()">
+                        <button class="btn btn-default" type="button"
+                                data-ng-disabled="whenSaving"
+                                data-ng-click="passwordReset()">
                             <span>Resend Password Email</span>
                         </button>
                         <div class="user-setup-status" data-ng-switch-when="true">
@@ -68,7 +72,7 @@
                      data-ng-switch="selectedUserClient.entity.passwordResetExpirationDateTime != null">
                     <div class="form-actions">
                         <button class="btn btn-default" type="button"
-                                data-ng-disabled="passwordNotification"
+                                data-ng-disabled="passwordNotification || whenSaving"
                                 data-ng-click="generatePassword($event)">
                             <span data-ng-if="selectedUserClient.entity.neverLoggedIn">Show User Credentials</span>
                             <span data-ng-if="!selectedUserClient.entity.neverLoggedIn">Reset Password</span>

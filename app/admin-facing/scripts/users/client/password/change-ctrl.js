@@ -45,7 +45,7 @@ angular.module('emmiManager')
              */
             $scope.generatePassword = function ($event) {
                 $scope.passwordChange.password = UsersClientPasswordService.generatePassword();
-
+                $scope.whenSaving = true;
                 UsersClientPasswordService.changePassword(UsersClientService.getUserClient(), $scope.passwordChange)
                     .then(function success() {
                         if ($scope.passwordNotification) {
@@ -65,6 +65,8 @@ angular.module('emmiManager')
                             show: true
                         });
 
+                    }).finally(function () {
+                        $scope.whenSaving = false;
                     });
             };
 
@@ -72,9 +74,12 @@ angular.module('emmiManager')
              * Expire the password reset token
              */
             $scope.expireNow = function () {
+                $scope.whenSaving = true;
                 UsersClientPasswordService.expireReset(UsersClientService.getUserClient())
                     .then(function () {
                         $scope.metadataChanged();
+                    }).finally(function () {
+                        $scope.whenSaving = false;
                     });
             };
 
@@ -82,11 +87,14 @@ angular.module('emmiManager')
              * Generates a password for a user and saves it.
              */
             $scope.passwordReset = function () {
+                $scope.whenSaving = true;
                 UsersClientPasswordService.sendReset(UsersClientService.getUserClient()).then(function () {
                     $scope.metadataChanged();
                     $alert({
                         content: 'A password reset email has been sent to <strong>' + UsersClientService.getUserClient().entity.email + '</strong>.'
                     });
+                }).finally(function () {
+                    $scope.whenSaving = false;
                 });
             };
 
@@ -99,6 +107,7 @@ angular.module('emmiManager')
             $scope.save = function (formValid) {
                 $scope.changePasswordFormSubmitted = true;
                 if (formValid) {
+                    $scope.whenSaving = true;
                     UsersClientPasswordService.changePassword(UsersClientService.getUserClient(), $scope.passwordChange)
                         .then(function success() {
                             $scope.reset();
@@ -107,6 +116,8 @@ angular.module('emmiManager')
                             });
                         }, function error() {
                             $scope.reset();
+                        }).finally(function () {
+                            $scope.whenSaving = false;
                         });
                 }
             };

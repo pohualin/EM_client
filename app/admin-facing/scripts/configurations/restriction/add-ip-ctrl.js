@@ -18,7 +18,7 @@ angular.module('emmiManager')
         /**
          *  Called when add another is clicked to add a new ipRestrictConfiguration
          */
-        $scope.addAnotherIpRestrict = function(ipRestrictConfigurationForm){
+        $scope.addAnotherIpRestrict = function () {
             $scope.ipRestrictConfiguration = IpRestrictConfigurationsService.newIpRestrictConfiguration();
             addIpRestrictModal.$promise.then(addIpRestrictModal.show);
         };
@@ -29,7 +29,8 @@ angular.module('emmiManager')
         $scope.add = function(ipRestrictConfigurationForm, addAnother){
             $scope.ipRestrictConfigurationFormSubmitted = true;
             if(ipRestrictConfigurationForm.$valid){
-                IpRestrictConfigurationsService.save($scope.ipRestrictConfiguration).then(function(response){
+                $scope.whenSaving = true;
+                IpRestrictConfigurationsService.save($scope.ipRestrictConfiguration).then(function () {
                     $scope.$emit('requestIpList');
                     $scope.ipRestrictConfiguration = IpRestrictConfigurationsService.newIpRestrictConfiguration();
                     $scope.ipRestrictConfigurationFormSubmitted = false;
@@ -39,6 +40,8 @@ angular.module('emmiManager')
                     $alert({
                         content: '<b>' + $scope.client.name + '</b> has been updated successfully.'
                     });
+                }).finally(function () {
+                    $scope.whenSaving = false;
                 });
             } else {
                 $scope.showErrorBanner();

@@ -18,10 +18,11 @@ angular.module('emmiManager')
                 $scope.notValidatedEmailNoQuestionForm.validateEmail.$setValidity('duplicate', true);
 
                 if (isValid) {
+                    $scope.whenSaving = true;
                     ValidationService.saveEmail($scope.userClientReqdResource,Session.password).then(function () {
                         //send validation email
-                        ValidationService.sendValidationEmail($scope.userClientReqdResource).then(function () {
-                            SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.userClientReqdResource.question1.entity, $scope.userClientReqdResource.question2.entity).then(
+                        return ValidationService.sendValidationEmail($scope.userClientReqdResource).then(function () {
+                            return SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.userClientReqdResource.question1.entity, $scope.userClientReqdResource.question2.entity).then(
                                 function () {
                                     $location.path($scope.locationBeforeLogin).replace();
                                     $alert({
@@ -69,6 +70,8 @@ angular.module('emmiManager')
                                 dismissable: false
                             });
                         }
+                    }).finally(function () {
+                        $scope.whenSaving = false;
                     });
                 } else {
                     if (!$scope.notValidateEmailErrorAlert) {
@@ -108,7 +111,10 @@ angular.module('emmiManager')
              * functionality if user clicks not now
              */
             $scope.notNow = function () {
-                ValidationService.notNow($scope.userClientReqdResource);
+                $scope.whenSaving = true;
+                ValidationService.notNow($scope.userClientReqdResource).finally(function () {
+                    $scope.whenSaving = false;
+                });
                 $location.path($scope.locationBeforeLogin).replace();
             };
         }])

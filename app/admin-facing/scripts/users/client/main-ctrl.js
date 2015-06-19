@@ -50,6 +50,7 @@ angular.module('emmiManager')
              * @param userClientResource to be deactivated
              */
             $scope.toggleActivation = function (userClientResource) {
+                $scope.whenSaving = true;
                 UsersClientService.toggleActivation(userClientResource).then(function (){
                     var message = 'User <strong>' + userClientResource.entity.login + '</strong>';
                     // status has changed
@@ -63,6 +64,8 @@ angular.module('emmiManager')
                     $alert({
                         content: message
                     });
+                }).finally(function () {
+                    $scope.whenSaving = false;
                 });
             };
 
