@@ -85,7 +85,6 @@ angular.module('emmiManager')
             $scope.originalUserClient = UsersClientService.getUserClient();
             $scope.userClientEdit = angular.copy($scope.originalUserClient);
             $scope.userClientFormSubmitted = false;
-            window.paul = $scope;
         }])
 
 ;

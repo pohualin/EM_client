@@ -386,7 +386,8 @@ angular.module('emmiManager', [
                 var d = event.srcElement || event.target;
                 if (!(d.tagName.toUpperCase() === 'INPUT' &&
                     (d.type.toUpperCase() === 'TEXT' ||
-                    d.type.toUpperCase() === 'PASSWORD'))) {
+                    d.type.toUpperCase() === 'PASSWORD') || 
+                    d.tagName.toUpperCase() === 'TEXTAREA')) {
                     event.preventDefault();
                 }
             }

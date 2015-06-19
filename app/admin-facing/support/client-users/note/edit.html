@@ -1,0 +1,26 @@
+<div class="col-md-12">
+  <h2>
+    <span>Note</span>
+  </h2>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-group">
+        <textarea class="form-control" rows="5" id="clientNote" data-ng-model="clientNoteEdit.entity.note"></textarea>
+      </div>
+    </div>
+  </div>
+  <div class="row" data-ng-if="showCancelSave()">
+    <div class="col-md-12">
+      <div class="form-actions">
+        <div class="form-group">
+          <button class="btn btn-success" type="submit"
+                  data-placement="right"
+                  data-ng-click="save(clientNoteForm)">
+              save
+          </button>
+          <a class="btn btn-cancel" data-ng-click="cancel()">cancel</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
