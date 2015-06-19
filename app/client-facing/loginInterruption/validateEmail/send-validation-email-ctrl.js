@@ -18,10 +18,11 @@ angular.module('emmiManager')
                 $scope.validateEmailForm.validateEmail.$setValidity('duplicate', true);
                 if (isValid) {
                     //check if email is already in use and save email
+                    $scope.whenSaving = true;
                     ValidationService.saveEmail($scope.userClientReqdResource,Session.password).then(
                         function () {
                             //send validation email
-                            ValidationService.sendValidationEmail($scope.userClientReqdResource).then(function () {
+                            return ValidationService.sendValidationEmail($scope.userClientReqdResource).then(function () {
                                 $location.path($scope.locationBeforeLogin).replace();
 
                                 $alert({
@@ -58,6 +59,8 @@ angular.module('emmiManager')
                                 });
                             }
 
+                        }).finally(function () {
+                            $scope.whenSaving = false;
                         });
                 } else {
                     //email doesn't match the matcher on email field or is blank
@@ -86,7 +89,10 @@ angular.module('emmiManager')
              * functionality if user clicks not now
              */
             $scope.notNow = function () {
-                ValidationService.notNow($scope.userClientReqdResource);
+                $scope.whenSaving = true;
+                ValidationService.notNow($scope.userClientReqdResource).finally(function () {
+                    $scope.whenSaving = false;
+                });
                 $location.path($scope.locationBeforeLogin).replace();
             };
         }])

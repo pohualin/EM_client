@@ -28,6 +28,7 @@ angular.module('emmiManager')
             $scope.saveOrUpdateSecretQuestion = function (valid) {
                 $scope.secretQuestionFormSubmitted = true;
                 if (valid) {
+                    $scope.whenSaving = true;
                     SecretQuestionService
                         .saveOrUpdateSecretQuestionResponse($scope.question1.entity, $scope.question2.entity).then(
                         function ok() {
@@ -56,7 +57,9 @@ angular.module('emmiManager')
                             });
                             $location.path('/viewSecurityQuestions').replace();
                         }
-                    );
+                    ).finally(function () {
+                            $scope.whenSaving = false;
+                        });
 
                 } else {
                     if (!$scope.formAlert) {

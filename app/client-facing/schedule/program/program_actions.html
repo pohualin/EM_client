@@ -1,7 +1,10 @@
 <div class="col-md-12">
 
         <div class="form-actions pull-right">
-            <button class="btn btn-default" type="button" data-ng-click="saveScheduledProgram(addProgramForm)">Finish Scheduling</button>
+            <button class="btn btn-default" type="button"
+                    data-ng-disabled="whenSaving"
+                    data-ng-click="saveScheduledProgram(addProgramForm)">Finish Scheduling
+            </button>
         </div>
 
 </div>

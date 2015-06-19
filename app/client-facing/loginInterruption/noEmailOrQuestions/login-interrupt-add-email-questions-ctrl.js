@@ -13,8 +13,9 @@ angular.module('emmiManager')
                 $scope.noEmailNoQuestionForm.addEmail.$setValidity('duplicate', true);
 
                 if (isValid) {
+                    $scope.whenSaving = true;
                     NewEmailService.saveEmail($scope.userClientReqdResource,Session.password).then(function () {
-                        SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.userClientReqdResource.question1.entity, $scope.userClientReqdResource.question2.entity).then(
+                        return SecretQuestionService.saveOrUpdateSecretQuestionResponse($scope.userClientReqdResource.question1.entity, $scope.userClientReqdResource.question2.entity).then(
                             function () {
                                 $location.path($scope.locationBeforeLogin).replace();
                                 if (!$scope.emailErrorAlert) {
@@ -64,6 +65,8 @@ angular.module('emmiManager')
                             });
                         }
 
+                    }).finally(function () {
+                        $scope.whenSaving = false;
                     });
                 }else{
                     if (!$scope.noEmailNoQuestionAlert) {
@@ -103,7 +106,10 @@ angular.module('emmiManager')
              * functionality if user clicks not now
              */
             $scope.notNow = function () {
-                NewEmailService.notNow($scope.userClientReqdResource);
+                $scope.whenSaving = true;
+                NewEmailService.notNow($scope.userClientReqdResource).finally(function () {
+                    $scope.whenSaving = false;
+                });
                 $location.path($scope.locationBeforeLogin).replace();
             };
         }

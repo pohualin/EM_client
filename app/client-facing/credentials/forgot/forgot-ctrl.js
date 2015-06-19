@@ -14,6 +14,7 @@ angular.module('emmiManager')
              * Sends a reset password
              */
             $scope.go = function () {
+                $scope.whenSaving = true;
                 CredentialsForgottenService.resetPassword($scope.emailAddress).then(function () {
                     $alert({
                         content: 'An email has been sent to <strong>' + $scope.emailAddress +
@@ -26,6 +27,7 @@ angular.module('emmiManager')
                     });
 
                 }).finally(function () {
+                    $scope.whenSaving = false;
                     $location.path('/').replace();
                 });
             };
