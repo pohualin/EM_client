@@ -1,5 +1,10 @@
     <div>This role may be in use.</div>
     <div class="popover-footer">
-        <button class="btn btn-success" data-ng-click="remove(role)">Yes</button>
-        <button type="button" class="btn btn-cancel" type="button" data-ng-click="$hide()">Cancel</button>
+        <button class="btn btn-success" data-ng-disabled="whenSaving"
+                data-ng-click="remove(role)">Yes
+        </button>
+        <button type="button" class="btn btn-cancel"
+                data-ng-disabled="whenSaving"
+                data-ng-click="$hide()">Cancel
+        </button>
     </div>

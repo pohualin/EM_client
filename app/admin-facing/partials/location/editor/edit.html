@@ -1,4 +1,4 @@
-<form name="locationForm" class="form" novalidate unsaved-warning-form>
+<form name="locationForm" class="form" novalidate data-unsaved-warning-form>
 	<div class="col-md-12">
         <div id="validation-container" data-ng-show="locationForm.$invalid && locationFormSubmitted">
             <div class="alert alert-danger">
@@ -85,9 +85,14 @@
             <div class="col-md-12">
                 <div class="form-actions">
                     <div class="form-group">
-                        <button class="btn btn-success" type="button" 
-                          data-location-deactivate-warning><span>save</span></button>
-                        <a class="btn btn-cancel" data-ng-click="cancel(locationForm)">cancel</a>
+                        <button class="btn btn-success" type="button"
+                                data-ng-disabled="whenSaving"
+                                data-location-deactivate-warning><span>save</span></button>
+                        <button class="btn btn-cancel"
+                                type="button"
+                                data-ng-disabled="whenSaving"
+                                data-ng-click="cancel(locationForm)">cancel
+                        </button>
                     </div>
                 </div>
             </div>

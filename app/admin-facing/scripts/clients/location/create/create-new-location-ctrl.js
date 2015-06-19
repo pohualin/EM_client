@@ -27,6 +27,7 @@ angular.module('emmiManager')
             $scope.locationFormSubmitted = true;
             if (isValid) {
                 var toBeSaved = $scope.location;
+                $scope.whenSaving = true;
                 Location.create(Client.getClient(), toBeSaved).then(function (location) {
                     // reload the existing locations
                     $scope.performSearch();
@@ -45,6 +46,8 @@ angular.module('emmiManager')
                             container: '#messages-container'
                         });
                     }
+                }).finally(function () {
+                    $scope.whenSaving = false;
                 });
                 _paq.push(['trackEvent', 'Form Action', 'Client Location Create', 'Save']);
             } else {

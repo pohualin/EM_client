@@ -17,7 +17,8 @@
         <div class="col-md-12">
             <div class="layout-card">
             <h1>New Client User</h1>
-            <form name="userClientForm" class="form" novalidate unsaved-warning-form>
+
+                <form name="userClientForm" class="form" novalidate data-unsaved-warning-form>
                 <div id="validation-container" data-ng-show="userClientForm.$invalid"></div>
                 <div class="row" data-ng-include="'admin-facing/partials/user/client/metadata/form.html'"></div>
                 <div class="row">
@@ -25,6 +26,7 @@
                         <div class="form-actions">
                             <div class="form-group">
                                 <button class="btn btn-success" type="submit"
+                                        data-ng-disabled="whenSaving"
                                         data-ng-click="save(userClientForm.$valid, $event, false)">
                                     <span>Save and Add Roles</span>
                                 </button>

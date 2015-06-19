@@ -99,6 +99,7 @@ angular.module('emmiManager')
             $scope.save = function (formValid) {
                 $scope.changePasswordFormSubmitted = true;
                 if (formValid) {
+                    $scope.whenSaving = true;
                     UsersClientPasswordService.changePassword(UsersClientService.getUserClient(), $scope.passwordChange)
                         .then(function success() {
                             $scope.reset();
@@ -107,6 +108,8 @@ angular.module('emmiManager')
                             });
                         }, function error() {
                             $scope.reset();
+                        }).finally(function () {
+                            $scope.whenSaving = false;
                         });
                 }
             };

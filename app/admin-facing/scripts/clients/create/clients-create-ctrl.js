@@ -13,7 +13,7 @@ angular.module('emmiManager')
         $scope.editMode = true;
 
         $scope.clientToEdit = Client.newClient().entity;
-        
+
         // Fill in name with search query
         if($location.search().q){
             $scope.clientToEdit.name = $location.search().q;
@@ -35,9 +35,12 @@ angular.module('emmiManager')
         $scope.save = function (clientForm) {
             $scope.formSubmitted = true;
             if (clientForm.$valid && $scope.clientToEdit.salesForceAccount) {
+                $scope.whenSaving = true;
                 clientForm.$setPristine();
                 Client.insertClient($scope.clientToEdit).then(function (response) {
                     Client.viewClient(response.data.entity);
+                }).finally(function () {
+                    $scope.whenSaving = false;
                 });
                 _paq.push(['trackEvent', 'Form Action', 'Client Create', 'Save']);
             } else {
@@ -54,7 +57,7 @@ angular.module('emmiManager')
             }
         };
 
-        
-    }])
+
+        }])
 
 ;
