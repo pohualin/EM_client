@@ -1,0 +1,31 @@
+<div class="container" data-ng-controller="SelfRegistrationController" data-ng-cloak>
+    <form name="selfRegForm" class="form" novalidate>
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Self-Registration</h3>
+                <div >
+                    <label>Create a Code</label>
+                </div>
+                <div class="col-md-3">
+                    <input class="form-control" type="text" required data-ng-model="code">
+                </div>
+                <div class="col-md-9 pull-right">
+                    <span><i>There is no existing Self-Registration site for this team.</i></span>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <button class="btn btn-primary" type="submit" data-ng-click="saveSelfRegistrationCode(selfRegForm.$valid)">
+                        <span>Save</span>
+                    </button>
+                    <button class="btn btn-link" type="submit"data-ng-click="cancel()">
+                        <span>cancel</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
