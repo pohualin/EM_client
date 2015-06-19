@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('emmi.navbar', [])
-    .directive('emmiNavbar', ['$rootScope','$window', 'Session',
-        function ($rootScope, $window, Session) {
+    .directive('emmiNavbar', ['$rootScope','$window', 'Session', '$location', '$anchorScroll',
+        function ($rootScope, $window, Session, $location, $anchorScroll) {
         return {
             restrict: 'AE', // E = Element, A = Attribute, C = Class, M = Comment
             templateUrl: 'admin-facing/partials/common/directives/navbar/navbar.tpl.html',
@@ -17,6 +17,31 @@ angular.module('emmi.navbar', [])
                 var bodyEl = angular.element($window.document.body),
                     headerEl = angular.element(element);
                 bodyEl.css('padding-top', headerEl.outerHeight());
+
+                //$anchorScroll.yOffset = 50; // account for fixed header (not available in our Angular version)
+
+                scope.gotoContent = function(hash) {
+                    var newHash = hash,
+                        skipTo = '#'+hash;
+                    if ($location.hash() !== newHash) {
+                        // set the $location.hash to `newHash` and
+                        // $anchorScroll will automatically scroll to it
+                        $location.hash(newHash);
+                    } else {
+                        // call $anchorScroll() explicitly,
+                        // since $location.hash hasn't changed
+                        $anchorScroll();
+                    }
+                    // Make sure to also shift the focus past the navigation to the element
+                    // Setting 'tabindex' to -1 takes an element out of normal
+                    // tab flow but allows it to be focused via javascript
+                    angular.element(skipTo).attr('tabindex', -1).on('blur focusout', function () {
+                        // when focus leaves this element,
+                        // remove the tabindex attribute
+                        angular.element(this).removeAttr('tabindex');
+                     }).focus(); // focus on the content container
+                };
+
             }
         };
     }])

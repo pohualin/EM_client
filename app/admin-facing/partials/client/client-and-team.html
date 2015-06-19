@@ -24,7 +24,7 @@
         <li data-ng-if="team.id" class="active">{{team.name}}</li>
     </ol>
 </div>
-<div class="app-content app-content-with-sidebar container" data-ng-cloak>
+<div id="app-content" class="app-content app-content-with-sidebar container" data-ng-cloak>
     <div class="row" data-ng-switch on="showTeam">
         <div data-emmi-sidebar class="sidebar"
              data-ng-include="'admin-facing/partials/client/teamsFilter/teams_filter.html'"></div>

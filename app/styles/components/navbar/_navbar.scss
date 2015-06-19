@@ -18,6 +18,32 @@
     right: 0;
     left: 0;
     top: 0;
+    .skip-nav {
+        position: absolute;
+        z-index: $zindex-navbar-fixed+2;
+        top: -1000px;
+        left: -1000px;
+        height: 1px;
+        width: 1px;
+        text-align: left;
+        overflow: hidden;
+        padding: 6px 10px;
+        background: #F0F1F3;
+        transform: translateX(-50%);
+        border-radius: 0 0 4px 4px;
+        opacity: 0;
+        transition: opacity .25s ease-in;
+        &:active,
+        &:focus,
+        &:hover {
+            left: 50%;
+            top: 0;
+            width: auto;
+            height: auto;
+            overflow: visible;
+            opacity: 1;
+        }
+    }
 }
 
 .navbar {
