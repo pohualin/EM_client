@@ -10,8 +10,8 @@ angular.module('emmiManager')
                 /**
                  * Create a ClientNote placeholder
                  */
-                newClientNote: function(){
-                    return {entity:{note:''}};
+                newClientNote: function(client){
+                    return {entity:{client: client, note:''}};
                 },
                 
                 /**
@@ -22,27 +22,10 @@ angular.module('emmiManager')
                     return $http.get(UriTemplate.create(client.link.clientNote).stringify()).then(function (response) {
                         if(response.status === 204){
                             // No ClientNote for this Client
-                            return self.newClientNote();
+                            return self.newClientNote(client);
                         }
-                        return response;
+                        return response.data;
                     });
-                },
-                
-                /**
-                 * Call create if ClientNote has no id, otherwise call update
-                 */
-                createOrUpdateClientNote: function(client, clientNote){
-                    var deferred = $q.defer();
-                    if (clientNote.entity.id){
-                        this.updateClientNote(client, clientNote).then(function(response){
-                            deferred.resolve(response);
-                        });
-                    } else {
-                        this.createClientNote(client, clientNote).then(function(response){
-                            deferred.resolve(response);
-                        });
-                    }
-                    return deferred.promise;
                 },
                 
                 /**
@@ -50,8 +33,8 @@ angular.module('emmiManager')
                  */
                 createClientNote: function(client, clientNote){
                     return $http.post(UriTemplate.create(client.link.clientNote).stringify(), clientNote.entity)
-                        .success(function(response){
-                            return response;
+                        .then(function(response){
+                            return response.data;
                         });
                 },
                 
@@ -59,9 +42,9 @@ angular.module('emmiManager')
                  * Update existing ClientNote
                  */
                 updateClientNote: function(client, clientNote){
-                    return $http.put(UriTemplate.create(client.link.clientNote).stringify(), clientNote.entity)
-                        .success(function(response){
-                            return response;
+                    return $http.put(UriTemplate.create(clientNote.link.self).stringify(), clientNote.entity)
+                        .then(function(response){
+                            return response.data;
                         });
                 }
             };

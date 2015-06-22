@@ -29,23 +29,37 @@ angular.module('emmiManager')
          * When cancel is clicked in edit mode
          */
         $scope.cancel = function () {
-            $scope.whenSaving = true;
             $scope.clientNoteEdit = angular.copy($scope.originalClientNote);
             $scope.editMode = false;
             $scope.clientNoteForm.$setPristine();
             _paq.push(['trackEvent', 'Form Action', 'Client Note Edit', 'Cancel']);
-            $scope.whenSaving = false;
         };
 
         /**
-         * Called when Save button is clicked
+         * Called when Save button is clicked to Update an existing note
          */
-        $scope.save = function (form) {
+        $scope.update = function (form) {
             $scope.clientNoteFormSubmitted = true;
             if (form.$valid) {
                 $scope.whenSaving = true;
-                ClientNoteService.createOrUpdateClientNote($scope.client, $scope.clientNoteEdit).then(function(response){
-                    $scope.originalClientNote = angular.copy(response.data);
+                ClientNoteService.updateClientNote($scope.client, $scope.clientNoteEdit).then(function(response){
+                    $scope.originalClientNote = response;
+                    $scope.editMode = false;
+                }).finally(function(){
+                    $scope.whenSaving = false;
+                });
+            }
+        };
+        
+        /**
+         * Called when Save button is clicked to Add an brand new ClientNote
+         */
+        $scope.create = function (form) {
+            $scope.clientNoteFormSubmitted = true;
+            if (form.$valid) {
+                $scope.whenSaving = true;
+                ClientNoteService.createClientNote($scope.client, $scope.clientNoteEdit).then(function(response){
+                    $scope.originalClientNote = response;
                     $scope.editMode = false;
                 }).finally(function(){
                     $scope.whenSaving = false;
@@ -55,7 +69,7 @@ angular.module('emmiManager')
 
         $scope.client = Client.getClient();
         ClientNoteService.getClientNote($scope.client).then(function(response){
-            $scope.originalClientNote = angular.copy(response.data);
+            $scope.originalClientNote = response;
         });
         $scope.clientNoteFormSubmitted = false;
 }]);

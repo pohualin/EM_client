@@ -10,7 +10,7 @@
              data-ng-show="clientNoteForm.$error.maxlength && clientNoteFormSubmitted"
              data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
              data-title="Note exceed max length"></div>
-        <textarea class="form-control" rows="5" id="clientNote" data-ng-maxlength="10" data-ng-model="clientNoteEdit.entity.note" ></textarea>
+        <textarea class="form-control" rows="5" id="clientNote" data-ng-maxlength="4096" data-ng-model="clientNoteEdit.entity.note" ></textarea>
       </div>
     </div>
   </div>
@@ -18,13 +18,21 @@
     <div class="col-md-12">
       <div class="form-actions">
         <div class="form-group">
-          <button class="btn btn-success" type="submit"
+          <button data-ng-if = "!originalClientNote.link.self"
+                  class="btn btn-success" type="submit"
                   data-placement="right"
                   data-ng-disabled="whenSaving"
-                  data-ng-click="save(clientNoteForm)">
+                  data-ng-click="create(clientNoteForm)">
               save
           </button>
-          <a class="btn btn-cancel" data-ng-disabled="whenSaving" data-ng-click="cancel()">cancel</a>
+          <button data-ng-if = "originalClientNote.link.self"
+                  class="btn btn-success" type="submit"
+                  data-placement="right"
+                  data-ng-disabled="whenSaving"
+                  data-ng-click="update(clientNoteForm)">
+              save
+          </button>
+          <a class="btn btn-cancel" data-ng-click="cancel()">cancel</a>
         </div>
       </div>
     </div>
