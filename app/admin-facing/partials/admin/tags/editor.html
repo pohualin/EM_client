@@ -28,7 +28,7 @@
                                     <div class="panel-heading panel-heading-form">
                                         <div class="panel-title">
                                             <div class="pull-right">
-                                                <button type="button" class="btn btn-icon btn-inherit"
+                                                <button type="button" class="btn btn-link panel-title-link"
                                                         data-ng-show="group.deletable"
                                                         data-on-ok="remove(group)"
                                                         data-placement="bottom"
@@ -36,20 +36,20 @@
                                                         data-on-open-popover="warningToggle(group, true)"
                                                         data-on-close-popover="warningToggle(group, false)"
                                                         data-delete-group-warning>
-                                                    <i title="remove" class="icon-trashcan"></i>
+                                                    remove this group
                                                 </button>
-                                                <button type="button" class="btn btn-icon btn-inherit"
+                                                <button type="button" class="btn btn-link panel-title-link"
                                                         data-ng-disabled="whenSaving"
                                                         data-ng-show="!group.deletable && group.entity.active"
                                                         data-ng-click="toggleActiveInactive(group, existingTagGroupForm[group.entity.id])">
-                                                    <i title="deactivate" class="icon-trashcan"></i>
+                                                    deactivate this group
                                                 </button>
-                                                <a href class="panel-title-link"
+                                                <button type="button" class="btn btn-link panel-title-link"
                                                         data-ng-disabled="whenSaving"
                                                         data-ng-show="!group.deletable && !group.entity.active"
                                                         data-ng-click="toggleActiveInactive(group, existingTagGroupForm[group.entity.id])">
                                                     activate this group
-                                                </a>
+                                                </button>
                                             </div>
                                             <a data-bs-collapse-toggle data-ng-hide="group.editName" data-ng-dblclick="startEditName(group)">
                                                 <span class="icon-caret-right"></span>
