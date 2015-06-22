@@ -9,9 +9,10 @@ angular.module('emmiManager')
         });
 
         $scope.saveSelfRegistrationCode = function (valid) {
+            $scope.selfRegFormSubmitted = true;
+            $scope.saveOrUpdateFailed = false;
             if (valid) {
                 $scope.whenSaving = true;
-                $scope.selfRegFormSubmitted = true;
                 SelfRegistrationService.saveOrUpdateSelfRegCode($scope.team, $scope.selfRegConfig).success(function (response)
                     {
                         $scope.selfRegConfig = response.entity;
