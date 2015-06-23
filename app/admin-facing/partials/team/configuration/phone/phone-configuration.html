@@ -1,51 +1,33 @@
-<div class="container" data-ng-cloak data-ng-controller="ClientTeamPhoneConfigurationCtrl">
-
-<form name="clientTeamPhoneConfigurationForm" class="form"  novalidate>
-<div class="row">
-   	<div class="col-md-12 pull-left">
-       	<h3>Phone Reminders</h3>
-   	</div>
-</div>
-
-<div class="row">
-   	 <div class="col-md-12">
-      	 <div class="form-group">
-      	        <div class="checkbox">
-                    <input id="collectPhone" type="checkbox"
-                           data-ng-model="phoneConfigs.entity.collectPhone"
-                           data-ng-change="onChangeCollect()" />
-                    <label for="collectPhone">Collect Phone</label>
-                </div>
-
-      	        <div class="checkbox">
-                    <input id="requirePhone" type="checkbox"
-                           data-ng-model="phoneConfigs.entity.requirePhone"
-                           data-ng-change="onChangeRequire()" />
-                    <label for="requirePhone">Require Phone</label>
-                </div>
-
-         </div>
-     </div>
-</div>
-
-<div class="row" data-ng-show="showPhoneButton">
-   	 <div class="col-md-12">
-      	 <div class="form-group">
-	           <button class="btn btn-primary" type="button"
-                      data-ng-disabled="whenSaving"
-                       data-ng-click="saveOrUpdatePhoneConfig(clientTeamPhoneConfigurationForm.$valid)">
-                       <span>Save</span>
+<div class="col-md-12" data-ng-cloak data-ng-controller="ClientTeamPhoneConfigurationCtrl">
+    <form name="clientTeamPhoneConfigurationForm" class="form"  novalidate>
+        <h1>Phone Reminders</h1>
+        <div class="form-group">
+            <div class="checkbox">
+                <input id="collectPhone" type="checkbox"
+                    data-ng-model="phoneConfigs.entity.collectPhone"
+                    data-ng-change="onChangeCollect()" />
+                <label for="collectPhone">Collect Phone</label>
+            </div>
+            <div class="checkbox">
+                <input id="requirePhone" type="checkbox"
+                    data-ng-model="phoneConfigs.entity.requirePhone"
+                    data-ng-change="onChangeRequire()" />
+                <label for="requirePhone">Require Phone</label>
+            </div>
+        </div>
+        <div class="pull-right" data-ng-show="showPhoneButton">
+            <div class="form-group">
+                <button class="btn btn-cancel" type="button"
+                    data-ng-disabled="whenSaving"
+                    data-ng-click="cancel()">
+                    <span>cancel</span>
                 </button>
-			          
-                <button class="btn btn-link" type="button"
-                 		data-ng-disabled="whenSaving"
-                       	data-ng-click="cancel()">
-                       <span>cancel</span>
-                 </button>
-         </div>
-    </div>
-</div>
- 
-</form>
-
+                <button class="btn btn-success" type="button"
+                    data-ng-disabled="whenSaving"
+                    data-ng-click="saveOrUpdatePhoneConfig(clientTeamPhoneConfigurationForm.$valid)">
+                    <span>Save</span>
+                </button>
+            </div>
+        </div>
+     </form>
 </div>
