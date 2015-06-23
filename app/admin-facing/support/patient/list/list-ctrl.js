@@ -85,6 +85,7 @@
                                     $scope.sortProperty = sort;
                                 } else if (response.page && response.page.totalElements === 1) {
                                     // bounce out to the detail page
+                                    $scope.serializeToQueryString(null, URL_PARAMETERS.ALL_PATIENTS);
                                     $location.path('/support/patients/' + response.content[0].entity.id);
                                     return;
                                 }

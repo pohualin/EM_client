@@ -2,7 +2,7 @@
     <form name="clientTeamEmailConfigurationForm" class="form"  novalidate>
        	<h1>Email Reminders</h1>
         <div class="form-group">
-            <div class="checkbox" data-ng-repeat="emailConfiguration in emailConfigs | orderBy:'emailConfiguration.rank'" >
+            <div class="checkbox" data-ng-repeat="emailConfiguration in emailConfigs | orderBy:'entity.rank'" >
                 <input type="checkbox" id="emailConfiguration{{$index}}"
                   data-ng-model="emailConfiguration.entity.emailConfig"
                   data-ng-change="onChange(emailConfiguration)" />
