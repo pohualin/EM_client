@@ -9,6 +9,7 @@ angular.module('emmiManager')
         function ($scope, $location, $alert, focus, $controller, ClientTeamConfigurationService,  $routeParams, API, ClientTeamEmailConfigurationService) {
             $scope.showTeamConfig = 'yes';
             $scope.showEmailButton = false;
+            $scope.$emit('showCardOutline', { value: false });
             /**
              * When the save button is clicked. Sends all updates
              * to the back, then re-binds the form objects with the
@@ -36,9 +37,10 @@ angular.module('emmiManager')
                               $scope.whenSaving = false;
                           });
             		  $scope.showEmailButton = false;
+                      $scope.$emit('showCardOutline', { value: false });
                 }
             };
-            
+
             /**
              * If user checks "Require email"
              * "Collect email" needs to automatically check.
@@ -47,6 +49,7 @@ angular.module('emmiManager')
              */
             $scope.onChange = function(emailConfig){
             	$scope.showEmailButton = true;
+                $scope.$emit('showCardOutline', { value: true });
             	//If the type is REQUIRE_EMAIL and it is true
             	if(angular.equals(emailConfig.entity.type, 'REQUIRE_EMAIL')&&
 		                 (emailConfig.entity.emailConfig)){
@@ -66,7 +69,7 @@ angular.module('emmiManager')
              			}
              		});
                  }
-                     	
+
            };
 
             /**
@@ -76,8 +79,9 @@ angular.module('emmiManager')
            $scope.cancel = function () {
         	  $scope.emailConfigs = angular.copy($scope.originalEmailConfigs);
         	  $scope.showEmailButton = false;
+              $scope.$emit('showCardOutline', { value: false });
            };
-                     
+
              /**
              * init method called when page is loading
              */
