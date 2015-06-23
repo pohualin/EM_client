@@ -47,12 +47,13 @@
                                                 data-ng-click="removeAllUserClientUserClientTeamRole(clientTeamRole)">
                                             <i class="icon-trashcan"></i>
                                         </button>
-                                        <a href class="panel-title-link"
-                                           data-ng-hide="clientTeamRole.existingTeams"
-                                           data-ng-controller="UsersClientUserClientTeamRolesSupportAddTeamsController"
-                                           data-ng-click="addTeams(clientTeamRole)">
+                                        <button type="button" class="btn btn-link panel-title-link"
+                                            data-ng-disabled="whenSaving"
+                                            data-ng-hide="clientTeamRole.existingTeams"
+                                            data-ng-controller="UsersClientUserClientTeamRolesSupportAddTeamsController"
+                                            data-ng-click="addTeams(clientTeamRole)">
                                             add teams for this role
-                                        </a>
+                                        </button>
                                     </div>
                                 </div>
                             </div>

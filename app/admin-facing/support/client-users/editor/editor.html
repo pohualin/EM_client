@@ -35,19 +35,25 @@
     <div class="row">
       <div class="col-md-12">
         <div class="col-md-6">
-                <div class="layout-card">
-    
-        <div data-ng-show="selectedUserClient">
-            <div class="row" data-ng-include="'admin-facing/support/client-users/user-client-role/client-role.html'"></div>
-            <div class="row" data-ng-include="'admin-facing/support/client-users/user-client-team-role/client-team-role.html'"></div>
-        </div>
-        </div>
+          <div class="layout-card">
+            <div data-ng-show="selectedUserClient">
+                <div class="row" data-ng-include="'admin-facing/support/client-users/user-client-role/client-role.html'"></div>
+                <div class="row" data-ng-include="'admin-facing/support/client-users/user-client-team-role/client-team-role.html'"></div>
+            </div>
+          </div>
         </div>
         
         <div class="col-md-6">
-          <div class="layout-card">
-            <div class="row" data-ng-include="'admin-facing/support/client-users/note/main.html'"></div>
-          </div>
+          <form name="clientNoteForm" class="form" novalidate data-unsaved-warning-form>
+              <div class="layout-card" data-ng-class="{'outlined':editMode}" data-ng-switch="editMode" data-ng-controller="ClientNoteMainController">
+                  <div class="row" data-ng-switch-default>
+                      <div data-ng-include="'admin-facing/support/client-users/note/main.html'"></div>
+                  </div>
+                  <div class="row" data-ng-switch-when="true">
+                      <div data-ng-include="'admin-facing/support/client-users/note/edit.html'"></div>
+                  </div>
+              </div><!-- .layout-card -->
+          </form>
         </div>
       </div>
     </div>

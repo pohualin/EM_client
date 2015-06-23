@@ -26,30 +26,44 @@ angular.module('emmiManager')
             /**
              * Puts a group into a mode where the group name is editable
              * @param tagGroup to be put in edit name mode
-             * @param forceOpen the edit
              */
-            $scope.startEditMode = function (tagGroup, forceOpen) {
-                if (forceOpen) {
-                    tagGroup.activePanel = 0;
-                }
-                tagGroup.editMode = true;
-                tagGroup.original = angular.copy(tagGroup);
-                if (tagGroup.watcher) {
-                    tagGroup.watcher();
-                }
-                tagGroup.watcher = $scope.$watch(
-                    function () {
-                        return [tagGroup.title, tagGroup.tags];
-                    },
-                    function () {
-                        if (tagGroup.title !== tagGroup.original.title || !angular.equals(tagGroup.tags, tagGroup.original.tags, true)) {
-                            tagGroup.changed = true;
-                        } else {
-                            tagGroup.changed = false;
-                        }
-                    },
-                    true);
+            $scope.startEditName = function (tagGroup) {
+                tagGroup.activePanel = 0;
+                tagGroup.editName = true;
                 focus('focus-' + tagGroup.entity.id);
+            };
+
+            /**
+             * When a group panel is opened or closed. Copy the original
+             * resource into an .original property and setup a watcher.
+             *
+             * @param clientTeamRoleResource for the panel
+             * @param form for unsaved changes
+             */
+            $scope.panelStateChange = function (tagGroup, form) {
+                if (tagGroup.activePanel === 0 && !tagGroup.original) {
+                    // copy the original and setup a watcher
+                    tagGroup.original = angular.copy(tagGroup);
+                    // unbind the watcher
+                    if (tagGroup.watcher) {
+                        tagGroup.watcher();
+                    }
+                    tagGroup.watcher = $scope.$watch(
+                        function () {
+                            return [tagGroup.title, tagGroup.tags];
+                        },
+                        function () {
+                            if (tagGroup.title !== tagGroup.original.title || !angular.equals(tagGroup.tags, tagGroup.original.tags, true)) {
+                                tagGroup.changed = true;
+                            } else {
+                                tagGroup.changed = false;
+                            }
+                        },
+                    true);
+                } else {
+                    // Set the form back to pristine after initialization
+                    form.$setPristine();
+                }
             };
 
             /**
@@ -88,11 +102,11 @@ angular.module('emmiManager')
              * @param form the form
              */
             $scope.cancelEditMode = function (tagGroup, restore, form) {
+                tagGroup.activePanel = -1;
+                tagGroup.editName = false;
                 if (restore) {
                     angular.extend(tagGroup, tagGroup.original);
                 }
-                tagGroup.activePanel = 1;
-                tagGroup.editMode = false;
                 if (tagGroup.watcher) {
                     tagGroup.watcher();
                 }
@@ -106,15 +120,14 @@ angular.module('emmiManager')
              * an existing role
              *
              * @param tagGroup to be updated
-             * @param index the index
              * @param form the form
              */
-            $scope.update = function (tagGroup, index, form) {
+            $scope.update = function (tagGroup, form) {
                 form.$setPristine();
                 $scope.whenSaving = true;
                 Tag.updateReferenceGroup(tagGroup).then(function (editedGroup) {
+                    $scope.cancelEditMode(tagGroup, false, form);
                     angular.extend(tagGroup, editedGroup);
-                    $scope.cancelEditMode(tagGroup, false);
                 }).finally(function () {
                     $scope.whenSaving = false;
                 });
@@ -161,12 +174,12 @@ angular.module('emmiManager')
             /**
              * Toggle between active/inactive for a group that is not tied to any team.
              */
-            $scope.toggleActiveInactive = function(tagGroup){
+            $scope.toggleActiveInactive = function(tagGroup, form){
                 tagGroup.entity.active = tagGroup.entity.active ? false : true;
                 $scope.whenSaving = true;
                 Tag.updateReferenceGroup(tagGroup).then(function (editedGroup) {
+                    $scope.cancelEditMode(tagGroup, false, form);
                     angular.extend(tagGroup, editedGroup);
-                    $scope.cancelEditMode(tagGroup, false);
                 }).finally(function () {
                     $scope.whenSaving = false;
                 });

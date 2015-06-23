@@ -22,7 +22,7 @@ angular.module('emmiManager')
             }).when('/admin/tags', {
             	templateUrl: 'admin-facing/partials/admin/tags/editor.html',
                 controller: 'AdminTagsCtrl',
-                title: 'Emmi Groups & Tags Library | ClientManager',
+                title: 'Manage Groups & Tags Library | ClientManager',
                 activeMenu: MENU.settings,
                 resolve: requiredResources,
                 access: {
