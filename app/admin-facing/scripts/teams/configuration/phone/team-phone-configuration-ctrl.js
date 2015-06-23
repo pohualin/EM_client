@@ -8,6 +8,7 @@ angular.module('emmiManager')
     .controller('ClientTeamPhoneConfigurationCtrl', ['$scope', '$location', '$alert', 'focus', '$controller', '$routeParams', 'API', 'ClientTeamPhoneConfigurationService', 'ClientTeamConfigurationService',
         function ($scope, $location, $alert, focus, $controller, $routeParams, API, ClientTeamPhoneConfigurationService, ClientTeamConfigurationService) {
             $scope.showTeamConfig = 'yes';
+            $scope.showPhoneButton = false;
     	    /**
              * When the save button is clicked. Sends all updates
              * to the back, then re-binds the form objects with the
@@ -19,7 +20,8 @@ angular.module('emmiManager')
             		  ClientTeamPhoneConfigurationService
                           .saveOrUpdateTeamPhoneConfiguration($scope.team, $scope.phoneConfigs).then(function (response)
                              {
-                            	$scope.phoneConfigs = response;
+                        	  $scope.originalPhoneConfigs = response;
+                      		  $scope.phoneConfigs = angular.copy($scope.originalPhoneConfigs);
                             	$alert({
                                     title: ' ',
                                     content: 'The team phone configuration have been updated successfully.',
@@ -33,35 +35,51 @@ angular.module('emmiManager')
                              }).finally(function () {
                               $scope.whenSaving = false;
                           });
+            		  $scope.showPhoneButton = false;
                   }
             };
 
 
             /**
-             * Check to see if user checks "Require phone"
-             * If yes, "Collect phone" needs to automatically check.
+             * If user un-checks "Collect phone"
+             * "require phone" needs to automatically un-check.
              */
-            $scope.onChange = function(){
-            	if($scope.phoneConfigs.entity.requirePhone){
-                    $scope.phoneConfigs.entity.collectPhone = true;
+            $scope.onChangeCollect = function(){
+            	$scope.showPhoneButton  = true;
+            	if(!$scope.phoneConfigs.entity.collectPhone){
+                    $scope.phoneConfigs.entity.requirePhone = false;
             	}
            };
+           
+           /**
+            * If user checks "Require phone"
+            * If yes, "Collect phone" needs to automatically check.
+            */
+           $scope.onChangeRequire = function(){
+        	   $scope.showPhoneButton  = true;
+           	   if($scope.phoneConfigs.entity.requirePhone){
+                   $scope.phoneConfigs.entity.collectPhone = true;
+           	   }
+          };
 
             /**
              * Called when cancel is clicked.. takes the original
              * objects and copies them back into the bound objects.
              */
             $scope.cancel = function () {
-                $location.path('/');
+            	$scope.phoneConfigs = angular.copy($scope.originalPhoneConfigs);
+            	$scope.showPhoneButton = false;
             };
-
+            
+          
             /**
              * init method called when page is loading
              */
             function init() {
             	$scope.team = ClientTeamConfigurationService.getTeam();
             	ClientTeamPhoneConfigurationService.getTeamPhoneConfiguration($scope.team).then(function (response) {
-            		$scope.phoneConfigs = response;
+            		$scope.originalPhoneConfigs = response;
+            		$scope.phoneConfigs = angular.copy($scope.originalPhoneConfigs);
                	});
             }
 
