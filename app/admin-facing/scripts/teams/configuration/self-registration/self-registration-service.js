@@ -9,20 +9,32 @@ angular.module('emmiManager')
              * @param teamResource
              * @returns self registration code
              */
-            getSelfRegCode: function (team) {
-                return $http.get(UriTemplate.create(team.link.teamSelfRegConfig).stringify())
+            get: function (team) {
+                return $http.get(UriTemplate.create(team.link.selfRegConfig).stringify())
                     .then(function (response) {
                         return response.data;
                     });
             },
             /**
-             * Calls the back end to save or update a client-team self registration configuration.
+             * Calls the back end to save a client-team self registration configuration.
              * @param team
              * @param config the self reg configuration for a team
              * @returns selfRegConfig
              */
-            saveOrUpdateSelfRegCode: function (team, config) {
-                return $http.post(UriTemplate.create(team.link.teamSelfRegConfig).stringify(), config, {override500: true})
+            create: function (team, config) {
+                return $http.post(UriTemplate.create(team.link.selfRegConfig).stringify(), config)
+                    .success(function (response) {
+                        return response.data;
+                    });
+            },
+            /**
+             * Calls the back end to update a client-team self registration configuration.
+             * @param team
+             * @param config the self reg configuration for a team
+             * @returns selfRegConfig
+             */
+            update: function (team, config) {
+                return $http.put(UriTemplate.create(team.link.selfRegConfig).stringify(), config)
                     .success(function (response) {
                         return response.data;
                     });
