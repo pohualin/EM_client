@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  *   Manage Team Level configuration a client
  */
-    .controller('ClientTeamConfigurationCtrl', ['$scope', '$location', '$alert', 'focus', '$controller', 'teamResource', '$routeParams', 'API', 'ClientTeamConfigurationService',
-        function ($scope, $location, $alert, focus, $controller, teamResource,  $routeParams, API, ClientTeamConfigurationService) {
+    .controller('ClientTeamConfigurationCtrl', ['$scope', '$location', '$alert', 'focus', '$controller', 'teamResource', '$routeParams', 'arrays','$rootScope', 'API', 'ClientTeamConfigurationService',
+        function ($scope, $location, $alert, focus, $controller, teamResource,  $routeParams, arrays, $rootScope, API, ClientTeamConfigurationService) {
     	    $scope.showTeamConfig = 'yes';
     	    $scope.phoneClick = 'phone';
     	    $scope.emailClick = 'email';
@@ -20,8 +20,9 @@ angular.module('emmiManager')
             $scope.cancel = function () {
                 $location.path('/');
             };
-            
-            $scope.onClick = function(configType){
+
+            $scope.onClick = function(configType) {
+                $scope.showOutline = false;
             	if(configType === 'phone'){
             		$scope.showEmailConfig = false;
             		$scope.showPhoneConfig = true;
@@ -29,9 +30,13 @@ angular.module('emmiManager')
             		$scope.showEmailConfig = true;
             	    $scope.showPhoneConfig = false;
             	}
-            	
+
             };
-            
+
+            $scope.$on('showCardOutline', function (event, args) {
+                $scope.showOutline = args.value;
+            });
+
              /**
              * init method called when page is loading
              */
@@ -39,8 +44,11 @@ angular.module('emmiManager')
             	ClientTeamConfigurationService.setTeam(teamResource);
             	$scope.client = teamResource.entity.client;
             	$scope.team = teamResource;
+            	//set another parameter 'team' to the route query string for the breadcrumb
+            	$location.search('team', $scope.team.entity.id);
+            	$rootScope.currentRouteQueryString =  arrays.toQueryString($location.search());
             }
-                 
+
             init();
 
     }])

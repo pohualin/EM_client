@@ -2,18 +2,19 @@
     <!-- Breadcrumb for transclusion -->
     <ol class="breadcrumb">
         <li><a href="#/admin">Admin Functions</a></li>
-        <li class="active">Manage Emmi Groups & Tags Library</li>
+        <li class="active">Manage Groups & Tags Library</li>
     </ol>
 </div>
 <div id="app-content" class="app-content container" data-ng-cloak>
     <div class="row">
         <div class="col-md-12">
             <div class="layout-card">
-                <h1>Manage Emmi Groups & Tags Library</h1>
+                <h1>Manage Groups & Tags Library</h1>
                 <div class="row" data-ng-if="tagGroups">
                     <div class="col-md-6">
-                        <div class="panel-group" data-ng-model="group.activePanel" data-ng-repeat="group in tagGroups"
-                            data-start-collapsed="true" data-bs-collapse>
+                        <div class="panel-group" data-ng-model="group.activePanel" data-ng-repeat="group in tagGroups | orderBy:'-entity.active'"
+                            data-ng-change="panelStateChange(group, existingTagGroupForm.{{group.entity.id}})" data-start-collapsed="true"
+                            data-bs-collapse>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="label label-danger role-error"
@@ -23,17 +24,11 @@
                                 </div>
                             </div>
                             <form name="existingTagGroupForm.{{group.entity.id}}" class="form" novalidate data-unsaved-warning-form>
-                                <div class="panel panel-secondary" data-ng-class="{ 'panel-open': group.activePanel === 0 }">
+                                <div class="panel panel-secondary" data-ng-class="{ 'panel-open': group.activePanel === 0, 'panel-muted': !group.deletable && !group.entity.active }">
                                     <div class="panel-heading panel-heading-form">
                                         <div class="panel-title">
                                             <div class="pull-right">
-                                                <button type="button" class="btn btn-icon btn-inherit"
-                                                        data-ng-hide="group.editMode || group.warningOpen"
-                                                        data-ng-disabled="whenSaving"
-                                                        data-ng-click="startEditMode(group, true)">
-                                                    <i title="edit" class="icon-compose"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-icon btn-inherit"
+                                                <button type="button" class="btn btn-link panel-title-link"
                                                         data-ng-show="group.deletable"
                                                         data-on-ok="remove(group)"
                                                         data-placement="bottom"
@@ -41,34 +36,33 @@
                                                         data-on-open-popover="warningToggle(group, true)"
                                                         data-on-close-popover="warningToggle(group, false)"
                                                         data-delete-group-warning>
-                                                    <i title="remove" class="icon-trashcan"></i>
+                                                    remove this group
                                                 </button>
-                                                <button type="button" class="btn btn-icon btn-inherit"
+                                                <button type="button" class="btn btn-link panel-title-link"
                                                         data-ng-disabled="whenSaving"
                                                         data-ng-show="!group.deletable && group.entity.active"
-                                                        data-ng-click="toggleActiveInactive(group)">
-                                                    <i title="deactivate" class="icon-trashcan"></i>
+                                                        data-ng-click="toggleActiveInactive(group, existingTagGroupForm[group.entity.id])">
+                                                    deactivate this group
                                                 </button>
-                                                <button type="button" class="btn btn-icon btn-inherit"
+                                                <button type="button" class="btn btn-link panel-title-link"
                                                         data-ng-disabled="whenSaving"
                                                         data-ng-show="!group.deletable && !group.entity.active"
-                                                        data-ng-click="toggleActiveInactive(group)">
-                                                    <i title="activate" class="icon-check-o-circle"></i>
+                                                        data-ng-click="toggleActiveInactive(group, existingTagGroupForm[group.entity.id])">
+                                                    activate this group
                                                 </button>
                                             </div>
-                                            <a data-bs-collapse-toggle data-ng-hide="group.editMode"
-                                               data-ng-click="startEditMode(group)">
+                                            <a data-bs-collapse-toggle data-ng-hide="group.editName" data-ng-dblclick="startEditName(group)">
                                                 <span class="icon-caret-right"></span>
                                                 <span class="panel-title-text">{{ group.title }}</span>
                                             </a>
-                                            <div data-ng-class="{ 'has-error' : existingTagGroupForm[group.entity.id].$error.unique}">
-                                                <div class="form-inline" data-ng-if="group.editMode" style="width:50%">
-                                                    <label class="sr-only" for="title-{{group.entity.id}}">Title</label>
+                                            <div data-ng-class="{ 'has-error' : existingTagGroupForm[group.entity.id].$invalid}">
+                                                <div data-ng-show="group.editName" style="width:50%">
+                                                    <label class="sr-only" for="title-{{group.entity.id}}">Group title:</label>
                                                     <input class="form-control input-sm" data-ng-model="group.title"
                                                            id="title-{{group.entity.id}}"
                                                            data-focus-on="focus-{{group.entity.id}}"
                                                            maxlength="50"
-                                                           required data-group-title-unique>
+                                                           required data-group-index="{{$index}}" data-group-title-unique>
                                                 </div>
                                             </div>
                                         </div>
@@ -77,11 +71,10 @@
                                         <div class="panel-body">
                                             <div data-tags-input class="tags-input" data-ng-model="group.tags" data-on-tag-added="onChange('tag added')" data-on-tag-removed="onChange('tag removed')" data-on-tag-edited="onChange('tag edited')" data-ng-click="$event.stopPropagation();" data-ng-paste="pasteTags($event, $index)" data-enable-editing-last-tag="true" data-add-on-space="false" data-add-on-comma="false" data-replace-spaces-with-dashes="false" data-display-property="text" data-min-tags="1"></div>
                                         </div>
-                                        <div class="panel-footer">
+                                        <div class="panel-footer" data-ng-show="existingTagGroupForm.{{group.entity.id}}.$valid && group.changed">
                                             <button class="btn btn-success" type="button"
-                                                    data-ng-click="update(group, $index, existingTagGroupForm[group.entity.id])"
-                                                    data-ng-disabled="!existingTagGroupForm.{{group.entity.id}}.$valid || whenSaving"
-                                                    data-ng-show="existingTagGroupForm.{{group.entity.id}}.$valid && group.changed">
+                                                    data-ng-disabled="whenSaving"
+                                                    data-ng-click="update(group, existingTagGroupForm[group.entity.id])">
                                                 Save
                                             </button>
                                             <button type="button" class="btn btn-cancel"
