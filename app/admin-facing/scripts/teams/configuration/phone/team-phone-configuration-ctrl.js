@@ -9,6 +9,7 @@ angular.module('emmiManager')
         function ($scope, $location, $alert, focus, $controller, $routeParams, API, ClientTeamPhoneConfigurationService, ClientTeamConfigurationService) {
             $scope.showTeamConfig = 'yes';
             $scope.showPhoneButton = false;
+            $scope.$emit('showCardOutline', { value: false });
     	    /**
              * When the save button is clicked. Sends all updates
              * to the back, then re-binds the form objects with the
@@ -36,6 +37,7 @@ angular.module('emmiManager')
                               $scope.whenSaving = false;
                           });
             		  $scope.showPhoneButton = false;
+                      $scope.$emit('showCardOutline', { value: false });
                   }
             };
 
@@ -46,17 +48,19 @@ angular.module('emmiManager')
              */
             $scope.onChangeCollect = function(){
             	$scope.showPhoneButton  = true;
+                $scope.$emit('showCardOutline', { value: true });
             	if(!$scope.phoneConfigs.entity.collectPhone){
                     $scope.phoneConfigs.entity.requirePhone = false;
             	}
            };
-           
+
            /**
             * If user checks "Require phone"
             * If yes, "Collect phone" needs to automatically check.
             */
            $scope.onChangeRequire = function(){
         	   $scope.showPhoneButton  = true;
+               $scope.$emit('showCardOutline', { value: true });
            	   if($scope.phoneConfigs.entity.requirePhone){
                    $scope.phoneConfigs.entity.collectPhone = true;
            	   }
@@ -69,9 +73,10 @@ angular.module('emmiManager')
             $scope.cancel = function () {
             	$scope.phoneConfigs = angular.copy($scope.originalPhoneConfigs);
             	$scope.showPhoneButton = false;
+                $scope.$emit('showCardOutline', { value: false });
             };
-            
-          
+
+
             /**
              * init method called when page is loading
              */

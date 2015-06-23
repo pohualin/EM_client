@@ -20,8 +20,9 @@ angular.module('emmiManager')
             $scope.cancel = function () {
                 $location.path('/');
             };
-            
-            $scope.onClick = function(configType){
+
+            $scope.onClick = function(configType) {
+                $scope.showOutline = false;
             	if(configType === 'phone'){
             		$scope.showEmailConfig = false;
             		$scope.showPhoneConfig = true;
@@ -29,9 +30,13 @@ angular.module('emmiManager')
             		$scope.showEmailConfig = true;
             	    $scope.showPhoneConfig = false;
             	}
-            	
+
             };
-            
+
+            $scope.$on('showCardOutline', function (event, args) {
+                $scope.showOutline = args.value;
+            });
+
              /**
              * init method called when page is loading
              */
@@ -43,7 +48,7 @@ angular.module('emmiManager')
             	$location.search('team', $scope.team.entity.id);
             	$rootScope.currentRouteQueryString =  arrays.toQueryString($location.search());
             }
-                 
+
             init();
 
     }])
