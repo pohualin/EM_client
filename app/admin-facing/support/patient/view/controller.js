@@ -17,6 +17,14 @@
                             function ok(updatedPatientResource) {
                                 $scope.master = updatedPatientResource;
                                 $scope.cancel(form);
+                                $alert({
+                                    content: [
+                                        'Patient <strong>',
+                                        updatedPatientResource.entity.firstName,
+                                        updatedPatientResource.entity.lastName,
+                                        '</strong> has been successfully updated.'
+                                    ].join(' ')
+                                });
                             }).finally(
                             function () {
                                 $scope.saving = false;
