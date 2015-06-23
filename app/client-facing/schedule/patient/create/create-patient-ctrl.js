@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('emmiManager')
-    .controller('CreatePatientController', ['$scope', 'CreatePatientService', '$alert', '$location', 'ScheduledProgramFactory', '$q',
-        function ($scope, CreatePatientService, $alert, $location, ScheduledProgramFactory, $q) {
+    .controller('CreatePatientController', ['$scope', 'CreatePatientService', '$alert',
+        '$location', 'ScheduledProgramFactory', '$q', 'moment',
+        function ($scope, CreatePatientService, $alert, $location, ScheduledProgramFactory, $q, moment) {
 
-            var today = new Date();
-            $scope.minDate = new Date().setFullYear(today.getFullYear() - 125);
+            $scope.minDate = moment().subtract(125, 'years').calendar();
 
             /**
              * Loads reference data for genders dropdown for Patient
