@@ -34,7 +34,6 @@ angular.module('emmiManager')
                     $scope.showPhoneConfig = false;
                     $scope.showSelfRegistrationConfig = false;
                 }
-
             };
 
             $scope.showSelfRegSection = function () {
