@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  *   Manage Team Level configuration a client
  */
-    .controller('ClientTeamConfigurationCtrl', ['$scope', '$location', '$alert', 'focus', '$controller', 'teamResource', '$routeParams', 'API', 'ClientTeamConfigurationService',
-        function ($scope, $location, $alert, focus, $controller, teamResource,  $routeParams, API, ClientTeamConfigurationService) {
+    .controller('ClientTeamConfigurationCtrl', ['$scope', '$location', '$alert', 'focus', '$controller', 'teamResource', '$routeParams', 'arrays','$rootScope', 'API', 'ClientTeamConfigurationService',
+        function ($scope, $location, $alert, focus, $controller, teamResource,  $routeParams, arrays, $rootScope, API, ClientTeamConfigurationService) {
     	    $scope.showTeamConfig = 'yes';
     	    $scope.phoneClick = 'phone';
     	    $scope.emailClick = 'email';
@@ -39,6 +39,9 @@ angular.module('emmiManager')
             	ClientTeamConfigurationService.setTeam(teamResource);
             	$scope.client = teamResource.entity.client;
             	$scope.team = teamResource;
+            	//set another parameter 'team' to the route query string for the breadcrumb
+            	$location.search('team', $scope.team.entity.id);
+            	$rootScope.currentRouteQueryString =  arrays.toQueryString($location.search());
             }
                  
             init();
