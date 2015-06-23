@@ -6,8 +6,10 @@
     /**
      * Search users across all clients
      */
-        .controller('PatientSupportViewController', ['$scope', '$alert', 'patient', 'PatientSupportViewService',
-            function ($scope, $alert, patientResource, PatientSupportViewService) {
+        .controller('PatientSupportViewController', ['$scope', '$alert', 'patient', 'PatientSupportViewService', 'moment',
+            function ($scope, $alert, patientResource, PatientSupportViewService, moment) {
+
+                $scope.minDate = moment().subtract(125, 'years').calendar();
 
                 $scope.save = function (form) {
                     $scope.formSubmitted = true;
