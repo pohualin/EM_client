@@ -1,7 +1,7 @@
 <div class="col-md-12">
     <h2>
         <span>Note</span>
-        <span data-ng-if="Session.userRoles.indexOf('PERM_GOD') != -1 || Session.userRoles.indexOf('PERM_ADMIN_SUPER_USER') != -1">
+        <span data-ng-if="isEmmiSuperAdmin()">
           <a class="btn btn-icon icon-size-lg" data-ng-click="edit()"><i class="icon-compose"></i></a>
         </span>
     </h2>
