@@ -8,20 +8,20 @@ angular.module('emmiManager')
                 $scope.selfRegConfig = response.entity;
             });
 
-            $scope.continue = function (valid) {
+            $scope.continue = function (selfRegForm) {
                 $scope.selfRegFormSubmitted = true;
-                if (valid) {
+                if (selfRegForm.$valid) {
                     $scope.whenSaving = true;
                     if ($scope.selfRegConfig && $scope.selfRegConfig.id) {
-                        $scope.update();
+                        $scope.update(selfRegForm);
                     }
                     else {
-                        $scope.create();
+                        $scope.create(selfRegForm);
                     }
                 }
             };
 
-            $scope.create = function () {
+            $scope.create = function (selfRegForm) {
                 SelfRegistrationService.create($scope.team, $scope.selfRegConfig).success(function (response) {
                     $scope.selfRegConfig = response.entity;
                     $alert({
@@ -35,15 +35,15 @@ angular.module('emmiManager')
                         dismissable: true
                     });
                 })
-                    .error(function (response) {
-                        $scope.selfRegForm.$setValidity('unique', false);
+                    .error(function (response, selfRegForm) {
+                        selfRegForm.$setValidity('notUnique', true);
                     })
                     .finally(function () {
                         $scope.whenSaving = false;
                     });
             };
 
-            $scope.update = function () {
+            $scope.update = function (selfRegForm) {
                 SelfRegistrationService.update($scope.team, $scope.selfRegConfig).success(function (response) {
                     $scope.selfRegConfig = response.entity;
                     $alert({
@@ -57,8 +57,8 @@ angular.module('emmiManager')
                         dismissable: true
                     });
                 })
-                    .error(function (response) {
-                        $scope.selfRegForm.code.$setValidity('unique', false);
+                    .error(function (response, selfRegForm) {
+                        selfRegForm.code.$setValidity('notUnique', true);
                     })
                     .finally(function () {
                         $scope.whenSaving = false;
@@ -71,7 +71,7 @@ angular.module('emmiManager')
              */
             $scope.resetValidity = function (form) {
                 form.$setDirty(true);
-                form.code.$setValidity('unique', true);
+                form.code.$setValidity('notUnique', false);
             };
         }])
 ;
