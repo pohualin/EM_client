@@ -10,8 +10,10 @@ angular.module('emmiManager')
     	    $scope.showTeamConfig = 'yes';
     	    $scope.phoneClick = 'phone';
     	    $scope.emailClick = 'email';
+    	    $scope.schedulingClick = 'scheduling';
     	    $scope.showEmailConfig = true;
     	    $scope.showPhoneConfig = false;
+    	    $scope.showSchedulingConfig = false;
             $scope.page.setTitle('Team Configuration - '+ teamResource.entity.name +' | ClientManager');
             /**
              * Called when cancel is clicked.. takes the original
@@ -26,9 +28,16 @@ angular.module('emmiManager')
             	if(configType === 'phone'){
             		$scope.showEmailConfig = false;
             		$scope.showPhoneConfig = true;
-            	}else{
+            		$scope.showSchedulingConfig = false;
+               	}else if(configType === 'scheduling'){
+               		$scope.showEmailConfig = false;
+            		$scope.showPhoneConfig = false;
+            		$scope.showSchedulingConfig = true;
+               	}
+            	else{
             		$scope.showEmailConfig = true;
             	    $scope.showPhoneConfig = false;
+            	    $scope.showSchedulingConfig = false;
             	}
 
             };
