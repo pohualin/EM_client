@@ -1,0 +1,44 @@
+<div class="container" data-ng-controller="SelfRegistrationController" data-ng-cloak>
+    <form name="selfRegForm" class="form" novalidate>
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Self-Registration</h3>
+                <div >
+                    <label>Create a Code</label>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group"
+                         data-ng-class="{ 'has-error' : selfRegForm.code.$invalid && selfRegFormSubmitted }">
+                        <div class="error-circle fa-exclamation-circle"
+                             data-ng-show="selfRegForm.code.$error.required && selfRegFormSubmitted"
+                             data-bs-tooltip data-placement="right" data-type="danger"
+                             data-container="body" data-title="Required"></div>
+                        <div class="error-circle fa-exclamation-circle"
+                             data-ng-show="selfRegForm.code.$error.notUnique && selfRegFormSubmitted"
+                             data-bs-tooltip data-placement="right" data-type="danger"
+                             data-container="body"
+                             data-title="This Code is already in use."></div>
+                        <input class="form-control" name="code" type="text" required data-ng-model="selfRegConfig.code"
+                               data-ng-change="resetValidity(selfRegForm)" id="code" required maxlength="100">
+                    </div>
+                </div>
+                <div class="col-md-9 pull-right">
+                    <span><i>There is no existing Self-Registration site for this team.</i></span>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <button class="btn btn-primary" type="submit" data-ng-click="continue(selfRegForm)">
+                        <span>Continue</span>
+                    </button>
+                    <button class="btn btn-link" type="submit"data-ng-click="cancel()">
+                        <span>cancel</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
