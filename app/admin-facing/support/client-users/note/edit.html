@@ -14,18 +14,18 @@
       </div>
     </div>
   </div>
-  <div class="row" data-ng-if="showCancelSave()">
+  <div class="row">
     <div class="col-md-12">
       <div class="form-actions">
         <div class="form-group">
-          <button data-ng-if = "!originalClientNote.link.self"
+          <button data-ng-if = "showCancelSave() && !originalClientNote.link.self"
                   class="btn btn-success" type="submit"
                   data-placement="right"
                   data-ng-disabled="whenSaving"
                   data-ng-click="create(clientNoteForm)">
               save
           </button>
-          <button data-ng-if = "originalClientNote.link.self"
+          <button data-ng-if = "showCancelSave() && originalClientNote.link.self"
                   class="btn btn-success" type="submit"
                   data-placement="right"
                   data-ng-disabled="whenSaving"
