@@ -18,15 +18,6 @@ angular.module('emmiManager')
                 },
                 resolve: requiredResources
             })
-            .when('/settings', {
-                templateUrl: 'admin-facing/partials/main.html',
-                controller: 'MainCtrl',
-                title: 'Settings',
-                access: {
-                    authorizedRoles: [USER_ROLES.all]
-                },
-                resolve: requiredResources
-            })
             .when('/login', {
                 templateUrl: 'admin-facing/partials/login.html',
                 controller: 'LoginCtrl',

@@ -16,18 +16,16 @@
             </div>
         </div>
         <div class="pull-right" data-ng-show="showPhoneButton">
-            <div class="form-group">
-                <button class="btn btn-cancel" type="button"
-                    data-ng-disabled="whenSaving"
-                    data-ng-click="cancel()">
-                    <span>cancel</span>
-                </button>
-                <button class="btn btn-success" type="button"
-                    data-ng-disabled="whenSaving"
-                    data-ng-click="saveOrUpdatePhoneConfig(clientTeamPhoneConfigurationForm.$valid)">
-                    <span>Save</span>
-                </button>
-            </div>
+            <button class="btn btn-cancel" type="button"
+                data-ng-disabled="whenSaving"
+                data-ng-click="cancel()">
+                <span>cancel</span>
+            </button>
+            <button class="btn btn-success" type="button"
+                data-ng-disabled="whenSaving"
+                data-ng-click="saveOrUpdatePhoneConfig(clientTeamPhoneConfigurationForm.$valid)">
+                <span>Save</span>
+            </button>
         </div>
      </form>
 </div>
