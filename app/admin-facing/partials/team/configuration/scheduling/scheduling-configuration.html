@@ -1,0 +1,33 @@
+<div class="col-md-12" data-ng-cloak data-ng-controller="ClientTeamSchedulingConfigurationCtrl">
+    <form name="clientTeamSchedulingConfigurationForm" class="form"  novalidate>
+        <h1>Scheduling</h1>
+        <div class="form-group">
+            <div class="checkbox">
+                <input id="useProvider" type="checkbox"
+                    data-ng-model="schedulingConfigs.entity.useProvider"
+                    data-ng-change="onChange()" />
+                <label for="useProvider">Use Providers</label>
+            </div>
+            <div class="checkbox">
+                <input id="useLocation" type="checkbox"
+                    data-ng-model="schedulingConfigs.entity.useLocation"
+                    data-ng-change="onChange()" />
+                <label for="useLocation">Use Locations</label>
+            </div>
+        </div>
+        <div class="pull-right" data-ng-show="showSchedulingButton">
+            <div class="form-group">
+                <button class="btn btn-cancel" type="button"
+                    data-ng-disabled="whenSaving"
+                    data-ng-click="cancel()">
+                    <span>cancel</span>
+                </button>
+                <button class="btn btn-success" type="button"
+                    data-ng-disabled="whenSaving"
+                    data-ng-click="saveOrUpdateSchedulingConfig(clientTeamSchedulingConfigurationForm.$valid)">
+                    <span>Save</span>
+                </button>
+            </div>
+        </div>
+     </form>
+</div>
