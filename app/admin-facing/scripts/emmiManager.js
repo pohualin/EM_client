@@ -25,7 +25,8 @@ angular.module('emmiManager', [
     'unsavedChanges',
     'ivh.treeview',
     'headroom',
-    'ngTinyScrollbar'
+    'ngTinyScrollbar',
+    'nl2br'
 ])
 
     .constant('USER_ROLES', {
