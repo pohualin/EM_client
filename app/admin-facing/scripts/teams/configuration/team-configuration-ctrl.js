@@ -7,11 +7,13 @@ angular.module('emmiManager')
  */
     .controller('ClientTeamConfigurationCtrl', ['$scope', '$location', '$alert', 'focus', '$controller', 'teamResource', '$routeParams', 'arrays','$rootScope', 'API', 'ClientTeamConfigurationService',
         function ($scope, $location, $alert, focus, $controller, teamResource,  $routeParams, arrays, $rootScope, API, ClientTeamConfigurationService) {
-            $scope.showTeamConfig = 'yes';
-            $scope.phoneClick = 'phone';
-            $scope.emailClick = 'email';
-            $scope.showEmailConfig = true;
-            $scope.showPhoneConfig = false;
+    	    $scope.showTeamConfig = 'yes';
+    	    $scope.phoneClick = 'phone';
+    	    $scope.emailClick = 'email';
+    	    $scope.schedulingClick = 'scheduling';
+    	    $scope.showEmailConfig = true;
+    	    $scope.showPhoneConfig = false;
+    	    $scope.showSchedulingConfig = false;
             $scope.page.setTitle('Team Configuration - '+ teamResource.entity.name +' | ClientManager');
             $scope.showSelfRegistrationConfig = false;
 
@@ -25,21 +27,30 @@ angular.module('emmiManager')
 
             $scope.onClick = function(configType) {
                 $scope.showOutline = false;
-                if(configType === 'phone'){
-                    $scope.showEmailConfig = false;
-                    $scope.showPhoneConfig = true;
-                    $scope.showSelfRegistrationConfig = false;
-                }else{
-                    $scope.showEmailConfig = true;
-                    $scope.showPhoneConfig = false;
-                    $scope.showSelfRegistrationConfig = false;
-                }
+            	if(configType === 'phone'){
+            		$scope.showEmailConfig = false;
+            		$scope.showPhoneConfig = true;
+            		$scope.showSelfRegistrationConfig = false;
+            		$scope.showSchedulingConfig = false;
+               	}else if(configType === 'scheduling'){
+               		$scope.showEmailConfig = false;
+            		$scope.showPhoneConfig = false;
+            		$scope.showSchedulingConfig = true;
+            		$scope.showSelfRegistrationConfig = false;
+               	}
+            	else{
+            		$scope.showEmailConfig = true;
+            	    $scope.showPhoneConfig = false;
+            	    $scope.showSchedulingConfig = false;
+            	    $scope.showSelfRegistrationConfig = false;
+            	}
             };
 
             $scope.showSelfRegSection = function () {
                 $scope.showSelfRegistrationConfig = true;
                 $scope.showEmailConfig = false;
                 $scope.showPhoneConfig = false;
+                $scope.showSchedulingConfig = false;
             };
 
             $scope.$on('showCardOutline', function (event, args) {
