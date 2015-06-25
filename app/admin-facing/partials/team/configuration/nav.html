@@ -3,12 +3,19 @@
     <hr/>
     <ul class="sidebar-list list-unstyled">
         <li>
+            <a data-ng-click="onClick(emailClick)"
+                data-ng-class="{ 'active': showEmailConfig}">Email Reminders</a>
+        </li>
+        <li>
             <a data-ng-click="onClick(phoneClick)"
                 data-ng-class="{ 'active': showPhoneConfig}">Phone Reminders</a>
         </li>
+           <a data-ng-click="onClick(schedulingClick)"
+                data-ng-class="{ 'active': showSchedulingConfig}">Scheduling</a>
+        </li>
         <li>
-            <a data-ng-click="onClick(emailClick)"
-                data-ng-class="{ 'active': showEmailConfig}">Email Reminders</a>
+            <a data-ng-click="showSelfRegSection()"
+               data-ng-class="{ 'active': showSelfRegistrationConfig}">Self Registration</a>
         </li>
     </ul>
 </div><!-- .sidebar-wrapper -->

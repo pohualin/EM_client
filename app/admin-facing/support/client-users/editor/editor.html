@@ -31,29 +31,33 @@
           <div class="row" data-ng-include="'admin-facing/support/client-users/activation/form.html'"></div>
         </div>
       </div><!-- .col-md-12 -->
-    
+      
     <div class="row">
-      <div class="col-md-12">
-        <div class="col-md-6">
-          <div class="layout-card">
+      <div class="col-md-12 row-same-height row-full-height">
+        <div class="col-md-6 col-xs-height col-full-height" style="padding-right: 6px">
+          <div class="row-same-height row-full-height">
+            <div class="layout-content layout-card">
             <div data-ng-show="selectedUserClient">
                 <div class="row" data-ng-include="'admin-facing/support/client-users/user-client-role/client-role.html'"></div>
                 <div class="row" data-ng-include="'admin-facing/support/client-users/user-client-team-role/client-team-role.html'"></div>
             </div>
+          </div>          
           </div>
         </div>
         
-        <div class="col-md-6">
-          <form name="clientNoteForm" class="form" novalidate data-unsaved-warning-form>
-              <div class="layout-card" data-ng-class="{'outlined':editMode}" data-ng-switch="editMode" data-ng-controller="ClientNoteMainController">
-                  <div class="row" data-ng-switch-default>
-                      <div data-ng-include="'admin-facing/support/client-users/note/main.html'"></div>
-                  </div>
-                  <div class="row" data-ng-switch-when="true">
-                      <div data-ng-include="'admin-facing/support/client-users/note/edit.html'"></div>
-                  </div>
-              </div><!-- .layout-card -->
-          </form>
+        <div class="col-md-6 col-xs-height col-full-height" style="padding-left: 6px">
+          <div class="row-same-height row-full-height">
+            <div class="layout-content layout-card" data-ng-class="{'outlined':editMode}" data-ng-switch="editMode" data-ng-controller="ClientNoteMainController">
+              <form name="clientNoteForm" class="form" novalidate data-unsaved-warning-form>
+                <div class="row" data-ng-switch-default>
+                    <div data-ng-include="'admin-facing/support/client-users/note/main.html'"></div>
+                </div>
+                <div class="row" data-ng-switch-when="true">
+                    <div data-ng-include="'admin-facing/support/client-users/note/edit.html'"></div>
+                </div>
+              </form>
+            </div><!-- .layout-card -->
+          </div>
         </div>
       </div>
     </div>

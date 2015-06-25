@@ -1,0 +1,25 @@
+.row-full-height {
+  height: 100%;
+}
+.col-full-height {
+  height: 100%;
+  vertical-align: top;
+}
+.row-same-height {
+  display: table;
+  width: 100%;
+  /* fix overflow */
+  table-layout: fixed;
+}
+.col-xs-height {
+  display: table-cell;
+  float: none !important;
+}
+.layout-content {
+  display: table-cell;
+  float: none !important;
+  height: 100%;
+  width: 100%;
+  vertical-align: top;
+  text-align: left;
+}
