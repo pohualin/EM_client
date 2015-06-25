@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  * Controller for the UserClient Support Client Note section
  */
-.controller('ClientNoteMainController', ['$scope', '$alert', 'Client', 'ClientNoteService',
-    function ($scope, $alert, Client, ClientNoteService) {
+.controller('ClientNoteMainController', ['$scope', '$alert', 'AuthSharedService', 'Client', 'ClientNoteService',
+    function ($scope, $alert, AuthSharedService, Client, ClientNoteService) {
         
         /**
          * Called when Edit button is clicked
@@ -65,6 +65,13 @@ angular.module('emmiManager')
                     $scope.whenSaving = false;
                 });
             }
+        };
+        
+        /**
+         * Hide/Show edit button if user is not/is an Admin Super User or GOD
+         */
+        $scope.isEmmiSuperAdmin = function(){
+            return AuthSharedService.isAuthorized(['PERM_GOD', 'PERM_ADMIN_SUPER_USER']); 
         };
 
         $scope.client = Client.getClient();
