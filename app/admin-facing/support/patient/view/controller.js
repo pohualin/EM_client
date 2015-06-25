@@ -6,8 +6,10 @@
     /**
      * Search users across all clients
      */
-        .controller('PatientSupportViewController', ['$scope', '$alert', 'patient', 'PatientSupportViewService',
-            function ($scope, $alert, patientResource, PatientSupportViewService) {
+        .controller('PatientSupportViewController', ['$scope', '$alert', 'patient', 'PatientSupportViewService', 'moment',
+            function ($scope, $alert, patientResource, PatientSupportViewService, moment) {
+
+                $scope.minDate = moment().subtract(125, 'years').calendar();
 
                 $scope.save = function (form) {
                     $scope.formSubmitted = true;
@@ -17,6 +19,14 @@
                             function ok(updatedPatientResource) {
                                 $scope.master = updatedPatientResource;
                                 $scope.cancel(form);
+                                $alert({
+                                    content: [
+                                        'Patient <strong>',
+                                        updatedPatientResource.entity.firstName,
+                                        updatedPatientResource.entity.lastName,
+                                        '</strong> has been successfully updated.'
+                                    ].join(' ')
+                                });
                             }).finally(
                             function () {
                                 $scope.saving = false;
