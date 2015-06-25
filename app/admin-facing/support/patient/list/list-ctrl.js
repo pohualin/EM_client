@@ -7,8 +7,9 @@
      * Search users across all clients
      */
         .controller('PatientSupportSearchController', [
-            '$scope', '$controller', '$sce', 'URL_PARAMETERS', 'STATUS', 'PatientSupportSearchService', '$location', '$popover',
-            function ($scope, $controller, $sce, URL_PARAMETERS, STATUS, data, $location, $popover) {
+            '$scope', '$controller', '$sce', 'URL_PARAMETERS', 'STATUS', 'PatientSupportSearchService',
+            '$location', '$popover', '$timeout',
+            function ($scope, $controller, $sce, URL_PARAMETERS, STATUS, data, $location, $popover, $timeout) {
 
                 var contentProperty = 'patients';
 
@@ -86,7 +87,9 @@
                                 } else if (response.page && response.page.totalElements === 1) {
                                     // bounce out to the detail page
                                     $scope.serializeToQueryString(null, URL_PARAMETERS.ALL_PATIENTS);
-                                    $location.path('/support/patients/' + response.content[0].entity.id);
+                                    $timeout(function () { // need timeout so location isn't replaced in history
+                                        $location.path('/support/patients/' + response.content[0].entity.id);
+                                    });
                                     return;
                                 }
 
