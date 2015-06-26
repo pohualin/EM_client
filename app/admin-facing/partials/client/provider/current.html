@@ -23,12 +23,12 @@
             <td class="col-sm-2">{{clientProvider.provider.entity.specialty.name}}</td>
             <td class="col-sm-4"><span class="col-wrap">{{clientProvider.provider.entity.email}}</span></td>
             <td class="col-edit text-center">
-                <a href data-ng-click="editProvider(clientProvider)" data-ng-hide="clientProvider.provider.entity.deleting"><i class="icon-compose icon-size-xl"></i></a>
+                <a href data-ng-click="editProvider(clientProvider)" data-ng-hide="clientProvider.provider.entity.deleting" aria-label="Edit Provider"><i class="icon-compose icon-size-xl"></i></a>
                 <a href data-to-remove="clientProvider"
                    data-on-ok="removeExistingProvider(clientProvider)"
                    data-on-open-popover="openDeletePopover(clientProvider.provider.entity)"
                    data-on-close-popover="closeDeletePopover(clientProvider.provider.entity)"
-                   data-client-provider-delete-warning=""><i class="icon-trashcan icon-size-xl"></i></a>
+                   data-client-provider-delete-warning="" aria-label="Remove Provider"><i class="icon-trashcan icon-size-xl"></i></a>
             </td>
         </tr>
         <tr class="pagination-row no-hover">
@@ -36,9 +36,9 @@
                 <ul class="pagination">
                     <li data-ng-repeat="link in links | orderBy:'order'" class="{{link.className}}" data-ng-class="{'active': link.name == currentPage}">
                         <a data-ng-click="fetchPage(link.href)">
-                            <i class="fa-angle-left" data-ng-if="link.className === 'previous'"></i>
+                            <i aria-label="Previous" class="fa-angle-left" data-ng-if="link.className === 'previous'"></i>
                             {{link.name}}
-                            <i class="fa-angle-right" data-ng-if="link.className === 'next'"></i>
+                            <i aria-label="Next" class="fa-angle-right" data-ng-if="link.className === 'next'"></i>
                         </a>
                     </li>
                 </ul>

@@ -17,18 +17,18 @@
                 <span class="parent-entity" data-ng-show="clientLocation.location.entity.belongsTo && clientLocation.location.entity.belongsTo.id !== client.entity.id"> <em>({{clientLocation.location.entity.belongsTo.name}})</em></span>
                 <span class="parent-entity" data-ng-show="!clientLocation.location.entity.belongsTo"> <em>(<span data-translate="client_edit_page.locations.no_client_owner"></span>)</em></span></div>
             </td>
-            <td class="col-sm-2">{{clientLocation.location.entity.city}}<span 
+            <td class="col-sm-2">{{clientLocation.location.entity.city}}<span
               data-ng-if="clientLocation.location.entity.city && clientLocation.location.entity.state">,&nbsp;</span>
               {{clientLocation.location.entity.state}}
             </td>
             <td class="col-sm-3">{{clientLocation.location.entity.phone}}</td>
             <td class="col-edit text-center">
-                <a href data-ng-click="editLocation(clientLocation.location.entity)" data-ng-hide="clientLocation.location.entity.deleting"><i class="icon-compose icon-size-xl"></i></a>
+                <a href data-ng-click="editLocation(clientLocation.location.entity)" data-ng-hide="clientLocation.location.entity.deleting" aria-label="Edit Location"><i class="icon-compose icon-size-xl"></i></a>
                 <a href data-to-remove="clientLocation"
                    data-on-ok="removeExistingLocation(clientLocation)"
                    data-on-open-popover="openDeletePopover(clientLocation.location.entity)"
                    data-on-close-popover="closeDeletePopover(clientLocation.location.entity)"
-                   data-client-location-delete-warning=""><i class="icon-trashcan icon-size-xl"></i></a>
+                   data-client-location-delete-warning="" aria-label="Remove Location"><i class="icon-trashcan icon-size-xl"></i></a>
             </td>
         </tr>
         <tr class="pagination-row no-hover">
@@ -36,9 +36,9 @@
                 <ul class="pagination">
                     <li data-ng-repeat="link in links | orderBy:'order'" class="{{link.className}}" data-ng-class="{'active': link.name == currentPage}">
                         <a data-ng-click="fetchPage(link.href)">
-                            <i class="fa-angle-left" data-ng-if="link.className === 'previous'"></i>
+                            <i aria-label="Previous" class="fa-angle-left" data-ng-if="link.className === 'previous'"></i>
                             {{link.name}}
-                            <i class="fa-angle-right" data-ng-if="link.className === 'next'"></i>
+                            <i aria-label="Next" class="fa-angle-right" data-ng-if="link.className === 'next'"></i>
                         </a>
                     </li>
                 </ul>

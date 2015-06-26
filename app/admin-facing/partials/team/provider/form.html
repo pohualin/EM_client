@@ -13,14 +13,14 @@
                          data-ng-class="{ 'has-error' : providerForm.providerFirstName.$invalid && providerFormSubmitted }">
                         <label class="control-label" for="providerFirstName">First Name</label>
 
-                        <div class="error-circle fa-exclamation-circle"
+                        <div class="error-circle fa-exclamation-circle" role="alert"
                              data-ng-show="providerForm.providerFirstName.$error.required && providerFormSubmitted"
                              data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                             data-title="Required"></div>
-                        <div class="error-circle fa-exclamation-circle"
+                             data-title="Required" aria-label="Required"></div>
+                        <div class="error-circle fa-exclamation-circle" role="alert"
                              data-ng-show="providerForm.providerFirstName.$error.pattern && providerFormSubmitted"
                              data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                             data-title="Please enter a valid first name"></div>
+                             data-title="Please enter a valid first name" aria-label="Please enter a valid first name"></div>
                         <input class="form-control" id="providerFirstName"
                                data-ng-model="teamProviderToBeEdit.entity.provider.firstName"
                                name="providerFirstName"
@@ -34,10 +34,10 @@
                          data-ng-class="{ 'has-error' : providerForm.providerMiddleName.$invalid && providerFormSubmitted }">
                         <label class="control-label" for="providerMiddleName">Middle Name</label>
 
-                        <div class="error-circle fa-exclamation-circle"
+                        <div class="error-circle fa-exclamation-circle" role="alert"
                              data-ng-show="providerForm.providerMiddleName.$error.pattern && providerFormSubmitted"
                              data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                             data-title="Please enter a valid middle name"></div>
+                             data-title="Please enter a valid middle name" aria-label="Please enter a valid middle name"></div>
                         <span class="field-note field-optional">optional</span>
                         <input class="form-control" id="providerMiddleName"
                                data-ng-model="teamProviderToBeEdit.entity.provider.middleName"
@@ -52,14 +52,14 @@
                          data-ng-class="{ 'has-error' : providerForm.providerLastName.$invalid && providerFormSubmitted }">
                         <label class="control-label" for="providerLastName">Last Name</label>
 
-                        <div class="error-circle fa-exclamation-circle"
+                        <div class="error-circle fa-exclamation-circle" role="alert"
                              data-ng-show="providerForm.providerLastName.$error.required && providerFormSubmitted"
                              data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                             data-title="Required"></div>
-                        <div class="error-circle fa-exclamation-circle"
+                             data-title="Required" aria-label="Required"></div>
+                        <div class="error-circle fa-exclamation-circle" role="alert"
                              data-ng-show="providerForm.providerLastName.$error.pattern && providerFormSubmitted"
                              data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                             data-title="Please enter a valid last name"></div>
+                             data-title="Please enter a valid last name" aria-label="Please enter a valid last name"></div>
                         <input class="form-control" id="providerLastName"
                                data-ng-model="teamProviderToBeEdit.entity.provider.lastName"
                                name="providerLastName"
@@ -88,10 +88,10 @@
                          data-ng-class="{ 'has-error' : providerForm.email.$invalid && providerFormSubmitted }">
                         <label class="control-label" for="email">Email</label>
 
-                        <div class="error-circle fa-exclamation-circle"
+                        <div class="error-circle fa-exclamation-circle" role="alert"
                              data-ng-show="providerForm.email.$error.pattern && providerFormSubmitted"
                              data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                             data-title="Please enter a valid email"></div>
+                             data-title="Please enter a valid email" aria-label="Please enter a valid email"></div>
                         <span class="field-note field-optional">optional</span>
                         <input class="form-control" data-ng-model="teamProviderToBeEdit.entity.provider.email"
                                id="email"
@@ -104,10 +104,10 @@
                          data-ng-class="{ 'has-error' : selectedItems < 1 && providerFormSubmitted}">
                         <label class="control-label" for="locations">Use Locations</label>
 
-                        <div class="error-circle fa-exclamation-circle"
+                        <div class="error-circle fa-exclamation-circle" role="alert"
                              data-ng-show="selectedItems < 1 && providerFormSubmitted"
                              data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                             data-title="At least one location is required"></div>
+                             data-title="At least one location is required" aria-label="At least one location is required"></div>
                         <input data-multi-select
                                data-values="multiSelectData"
                                id="locations"

@@ -48,10 +48,10 @@
                data-label-field="label"
                data-template-path="admin-facing/partials/common/directives/multi-select/multi-select.html">
           </div>
-          <div class="error-circle fa-exclamation-circle glyphicon-form-inline-right"
+          <div class="error-circle fa-exclamation-circle glyphicon-form-inline-right" role="alert"
             data-ng-show="clientProvider.provider.entity.selectedTeamLocations < 1 && associateRequestSubmitted"
             data-bs-tooltip data-placement="top" data-type="danger" data-container="body"
-            data-title="At least one location is required">
+            data-title="At least one location is required" aria-label="At least one location is required">
           </div>
         </div>
       </td>
@@ -61,9 +61,9 @@
         <ul class="pagination">
           <li data-ng-repeat="link in links | orderBy:'order'" class="{{link.className}}" data-ng-class="{'active': link.name == currentPage}">
              <a data-ng-click="fetchPageClientProviders(link.href)">
-                 <i class="fa-angle-left" data-ng-if="link.className === 'previous'"></i>
+                 <i aria-label="Previous" class="fa-angle-left" data-ng-if="link.className === 'previous'"></i>
                  {{link.name}}
-                 <i class="fa-angle-right" data-ng-if="link.className === 'next'"></i>
+                 <i aria-label="Next" class="fa-angle-right" data-ng-if="link.className === 'next'"></i>
              </a>
           </li>
         </ul>
