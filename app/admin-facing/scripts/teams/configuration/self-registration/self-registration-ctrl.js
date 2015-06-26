@@ -35,8 +35,8 @@ angular.module('emmiManager')
                         dismissable: true
                     });
                 })
-                    .error(function (response, selfRegForm) {
-                        selfRegForm.$setValidity('notUnique', true);
+                    .error(function () {
+                        selfRegForm.code.$setValidity('notUnique', false);
                     })
                     .finally(function () {
                         $scope.whenSaving = false;
@@ -57,8 +57,8 @@ angular.module('emmiManager')
                         dismissable: true
                     });
                 })
-                    .error(function (response, selfRegForm) {
-                        selfRegForm.code.$setValidity('notUnique', true);
+                    .error(function () {
+                        selfRegForm.code.$setValidity('notUnique', false);
                     })
                     .finally(function () {
                         $scope.whenSaving = false;
@@ -71,7 +71,7 @@ angular.module('emmiManager')
              */
             $scope.resetValidity = function (form) {
                 form.$setDirty(true);
-                form.code.$setValidity('notUnique', false);
+                form.code.$setValidity('notUnique', true);
             };
         }])
 ;
