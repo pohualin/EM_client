@@ -45,6 +45,8 @@ angular.module('emmiManager')
                 ClientNoteService.updateClientNote($scope.client, $scope.clientNoteEdit).then(function(response){
                     $scope.originalClientNote = response;
                     $scope.editMode = false;
+                    $scope.clientNoteFormSubmitted = false;
+                    form.$setPristine();
                 }).finally(function(){
                     $scope.whenSaving = false;
                 });
@@ -61,6 +63,8 @@ angular.module('emmiManager')
                 ClientNoteService.createClientNote($scope.client, $scope.clientNoteEdit).then(function(response){
                     $scope.originalClientNote = response;
                     $scope.editMode = false;
+                    $scope.clientNoteFormSubmitted = false;
+                    form.$setPristine();
                 }).finally(function(){
                     $scope.whenSaving = false;
                 });

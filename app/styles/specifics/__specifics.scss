@@ -487,6 +487,10 @@ TR.nowrap TD, TH {
     }
 }
 
+.textwrap-output {
+	white-space: pre-wrap;
+}
+
 // various example component implementations
 @include example();
 @include example('.example2');
