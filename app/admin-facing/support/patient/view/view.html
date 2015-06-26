@@ -95,7 +95,7 @@
                                 <div class="error-circle fa-exclamation-circle"
                                      data-ng-show="editPatientForm.phone.$error.pattern && formSubmitted"
                                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                                     data-title="Please enter a valid phone"></div>
+                                     data-title="Please enter a valid phone number"></div>
                                 <div class="has-input-icon has-input-icon-telephone">
                                     <input class="form-control" data-ng-model="patientResource.entity.phone"
                                            id="phone" name="phone" type="text"
@@ -150,7 +150,7 @@
                                             data-ng-click="save(editPatientForm)">
                                         <span>Save</span>
                                     </button>
-                                    <button class="btn btn-link" type="button"
+                                    <button class="btn btn-cancel" type="button"
                                             data-ng-disabled="saving"
                                             data-ng-click="cancel(editPatientForm)">
                                         <span>cancel</span>

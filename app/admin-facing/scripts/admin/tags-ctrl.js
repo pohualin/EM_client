@@ -189,5 +189,23 @@ angular.module('emmiManager')
             $scope.loadExisting();
 
         }])
-
+    .filter('tagGroupOrderBy', function () {
+        function alphaSort (a, b) {
+            return a.title.localeCompare(b.title);
+        }
+        return function (arr) {
+            var active = [];
+            var inactive = [];
+            angular.forEach(arr, function (item) {
+                if (!item.deletable && !item.entity.active) {
+                    inactive.push(item);
+                } else {
+                    active.push(item);
+                }
+            });
+            active.sort(alphaSort);
+            inactive.sort(alphaSort);
+            return active.concat(inactive);
+        };
+    })
 ;
