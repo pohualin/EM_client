@@ -4,12 +4,16 @@
   </h2>
   <div class="row">
     <div class="col-md-12">
+      <div class="label label-danger role-error"
+           data-ng-show="clientNoteForm.$error.maxlength && clientNoteFormSubmitted">
+          Notes exceeds max length
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
       <div class="form-group"
         data-ng-class="{ 'has-error' : clientNoteForm.$invalid && clientNoteFormSubmitted }">
-        <div class="error-circle fa-exclamation-circle"
-             data-ng-show="clientNoteForm.$error.maxlength && clientNoteFormSubmitted"
-             data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-             data-title="Note exceed max length"></div>
         <textarea class="form-control" rows="5" id="clientNote" data-ng-maxlength="800" data-ng-model="clientNoteEdit.entity.note" ></textarea>
       </div>
     </div>
