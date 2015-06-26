@@ -3,26 +3,26 @@
         <div class="col-md-4 col-md-offset-4">
             <h1 data-translate="login.title">Authentication</h1>
 
-            <div class="alert alert-danger error-circle fa-exclamation-circle" data-ng-if="loginErrorMessageFactory.showAccountActivationTokenExpired && !authenticationError">
+            <div class="alert alert-danger error-circle fa-exclamation-circle" role="alert" data-ng-if="loginErrorMessageFactory.showAccountActivationTokenExpired && !authenticationError">
                 We’re sorry, your activation link has expired. To finish setting up your account, please contact Emmi Support at 866-294-3664 or <a href="mailto:support@emmisolutions.com?subject=Activation Link Has Expired">support@emmisolutions.com</a>.
             </div>
-            <div class="alert alert-danger error-circle fa-exclamation-circle" data-ng-if="loginErrorMessageFactory.showResetPasswordTokenExpired && !authenticationError">
+            <div class="alert alert-danger error-circle fa-exclamation-circle" role="alert" data-ng-if="loginErrorMessageFactory.showResetPasswordTokenExpired && !authenticationError">
                 We’re sorry, your password reset link has expired, and your password has not been changed. If you would still like to reset your password, you can try again.
             </div>
-            <div class="alert alert-danger error-circle fa-exclamation-circle" data-ng-if="loginErrorMessageFactory.showTemporaryPasswordTokenExpired && !authenticationError">
+            <div class="alert alert-danger error-circle fa-exclamation-circle" role="alert" data-ng-if="loginErrorMessageFactory.showTemporaryPasswordTokenExpired && !authenticationError">
                 We’re sorry, your temporary password has expired and can no longer be changed. To finish setting up your account, please contact Emmi Support at 866-294-3664 or  <a href="mailto:support@emmisolutions.com?subject=Temporary Password Has Expired">support@emmisolutions.com</a>.
             </div>
-            <div class="alert alert-danger error-circle fa-exclamation-circle" data-ng-if="loginErrorMessageFactory.showEmailValidationTokenExpired && !authenticationError">
+            <div class="alert alert-danger error-circle fa-exclamation-circle" role="alert" data-ng-if="loginErrorMessageFactory.showEmailValidationTokenExpired && !authenticationError">
                 We’re sorry, your validation link has expired. If you would still like to verify your email address, please try again.
             </div>
 
-            <div class="alert alert-danger error-circle fa-exclamation-circle" data-ng-show="authenticationError">
+            <div class="alert alert-danger error-circle fa-exclamation-circle" role="alert" data-ng-show="authenticationError">
                 <strong>&nbsp;</strong>Please check your username and password and try again.
             </div>
-            <div class="alert alert-danger error-circle fa-exclamation-circle" data-ng-show="lockError && !lockExpirationDateTime">
+            <div class="alert alert-danger error-circle fa-exclamation-circle" role="alert" data-ng-show="lockError && !lockExpirationDateTime">
                 <strong>&nbsp;</strong>To continue, please contact Emmi Support at 866-294-3664 or <a href="mailto:support@emmisolutions.com">support@emmisolutions.com</a>.
             </div>
-            <div class="alert alert-danger error-circle fa-exclamation-circle" data-ng-show="lockError && lockExpirationDateTime">
+            <div class="alert alert-danger error-circle fa-exclamation-circle" role="alert" data-ng-show="lockError && lockExpirationDateTime">
             	<strong>&nbsp;</strong>
             	<span data-ng-switch="lockError === true && lockExpirationDateTime != null">
             		<span data-ng-switch-when="true">
@@ -32,7 +32,7 @@
 	            	</span>
             	</span>
             </div>
-            <div class="alert alert-danger error-circle fa-exclamation-circle" data-ng-show="username">
+            <div class="alert alert-danger error-circle fa-exclamation-circle" role="alert" data-ng-show="username">
                 <strong>&nbsp;</strong>Your session has timed out. Please login again.
             </div>
 
@@ -41,10 +41,10 @@
                      data-ng-class="{ 'has-error' : loginForm.username.$invalid && loginForm.submitted}">
                     <label class="control-label" for="username" data-translate="login.form.user">User:</label>
 
-                    <div class="error-circle fa-exclamation-circle"
+                    <div class="error-circle fa-exclamation-circle" role="alert"
                          data-ng-show="loginForm.username.$error.required && loginForm.submitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                         data-title="Required"></div>
+                         data-title="Required" aria-label="Required"></div>
                     <input id="username" name="username" type="text"
                            class="form-control" data-ng-model="credentials.username" required
                            autocomplete="off"
@@ -54,10 +54,10 @@
                      data-ng-class="{ 'has-error' : loginForm.password.$invalid && loginForm.submitted}">
                     <label class="control-label" for="password" data-translate="login.form.password">Password:</label>
 
-                    <div class="error-circle fa-exclamation-circle"
+                    <div class="error-circle fa-exclamation-circle" role="alert"
                          data-ng-show="loginForm.password.$error.required && loginForm.submitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                         data-title="Required"></div>
+                         data-title="Required" aria-label="Required"></div>
                     <input id="password" type="password" name="password" class="form-control" required
                            autocomplete="off" data-ng-model="credentials.password">
                 </div>

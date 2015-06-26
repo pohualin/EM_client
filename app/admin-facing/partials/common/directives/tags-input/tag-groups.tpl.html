@@ -1,6 +1,6 @@
     <div data-tag-groups-item class="btn-group tag-group" data-ng-repeat="tagGroup in groups" data-ng-class="{ 'selected': $index == selectedTagGroupIndex, 'invalid': !tagGroup.isValid, 'has-error': !tagGroup.isValid, 'tag-group-last': $last}" data-ng-form="tagGroupForm">
-        <button type="button" class="btn btn-sm btn-tag-group" data-ng-class="{ 'btn-primary': tagGroup.isValid, 'btn-invalid': !tagGroup.isValid}" data-ng-click="selectTagGroup($index)"><span class="tag-group-btn-text" data-ng-class="{ 'invisible' : tagGroup.editMode }"><span class="icon-link" data-ng-if="tagGroup.entity.type || tagGroup.type">&nbsp;</span>{{ tagGroup.title }}</span>&nbsp;</button>
-        <button type="button" class="btn btn-sm btn-tag-group tag-group-remove" data-ng-class="{ 'btn-primary': tagGroup.isValid, 'btn-invalid': !tagGroup.isValid}" data-ng-click="removeTagGroup($index)">
+        <button type="button" class="btn btn-sm btn-tag-group" data-ng-class="{ 'btn-primary': tagGroup.isValid, 'btn-invalid': !tagGroup.isValid}" data-ng-click="selectTagGroup($index)"><span class="tag-group-btn-text" data-ng-class="{ 'invisible' : tagGroup.editMode }"><span class="icon-link" data-ng-if="tagGroup.entity.type || tagGroup.type" aria-hidden="true">&nbsp;</span>{{ tagGroup.title }}</span>&nbsp;</button>
+        <button type="button" class="btn btn-sm btn-tag-group tag-group-remove" data-ng-class="{ 'btn-primary': tagGroup.isValid, 'btn-invalid': !tagGroup.isValid}" data-ng-click="removeTagGroup($index)" aria-label="Remove Group">
             <span class="icon-delete"></span>
         </button>
         <button type="button" class="btn btn-sm btn-tag-group dropdown-toggle" data-ng-class="{ 'btn-primary': tagGroup.isValid, 'btn-invalid': !tagGroup.isValid}" data-toggle="dropdown">
@@ -13,15 +13,15 @@
         <div class="tag-group-edit" data-ng-show="tagGroup.editMode">
             <input type="text" name="tagGroupTitle" data-ng-model="tagGroup.title" value="{{ tagGroup.title }}" data-focus-on="editMode" data-ng-enter="changeTagGroupTitle($index)" data-ng-blur="changeTagGroupTitle($index)">
         </div>
-        <div class="error-circle fa-exclamation-circle" data-ng-hide="tagGroup.isValid"
+        <div class="error-circle fa-exclamation-circle" role="alert" data-ng-hide="tagGroup.isValid"
             data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-            data-title="{{ tagGroup.isValidMessage }}"></div>
+            data-title="{{ tagGroup.isValidMessage }}" aria-label="{{ tagGroup.isValidMessage }}"></div>
         &nbsp;
     </div>
     <button data-ng-hide="createMode || taggingMode || formField.$error.unique || formField.$error.blankTitle" class="btn btn-sm btn-default btn-add-group" type="button" data-ng-click="enterCreateMode()" data-swap-text="Add New Group">Add Groups &amp; Tags</button>
     <div class="tag-group-create form-inline" data-ng-show="createMode">
         <div class="form-group">
             <input type="text" class="form-control input-sm" data-ng-model="newTagGroupTitle" data-focus-on="createMode" data-ng-enter="newTagGroup()" data-ng-blur="newTagGroup()">
-            <div class="btn btn-sm btn-icon" data-ng-click="exitCreateMode()"><span data-ng-click="exitCreateMode()" class="icon-delete icon-size-lg"></span></div>
+            <div class="btn btn-sm btn-icon" data-ng-click="exitCreateMode()" aria-label="Cancel"><span data-ng-click="exitCreateMode()" class="icon-delete icon-size-lg"></span></div>
         </div>
     </div>

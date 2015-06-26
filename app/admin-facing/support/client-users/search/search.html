@@ -13,7 +13,6 @@
                         <div class="col-md-6 kill-grid-pad">
                             <div class="form-group">
                                 <label class="sr-only" for="query">Search</label>
-
                                 <div class="input-group has-input-icon has-input-icon-search">
                                     <input type="text" class="form-control" id="query" name="query"
                                            data-ng-model="query"
@@ -97,8 +96,8 @@
                                 <td><span class="col-wrap">{{clientUser.entity.email}}</span></td>
                                 <td class="text-right">
                                     <a class="btn-link"
-                                       href="#/support/clients/{{clientUser.entity.client.id}}/users/{{clientUser.entity.id}}?{{currentRouteQueryString}}"><i
-                                        class="icon-compose icon-size-xl"></i></a>
+                                       href="#/support/clients/{{clientUser.entity.client.id}}/users/{{clientUser.entity.id}}?{{currentRouteQueryString}}" aria-label="View User">
+                                       <i class="icon-compose icon-size-xl"></i></a>
                                 </td>
                             </tr>
                             <tr class="pagination-row no-hover">
@@ -107,9 +106,9 @@
                                         <li data-ng-repeat="link in links | orderBy:'order'" class="{{link.className}}"
                                             data-ng-class="{'active': link.name == currentPage}">
                                             <a data-ng-click="fetchPage(link.href)">
-                                                <i class="fa-angle-left" data-ng-if="link.className === 'previous'"></i>
+                                                <i aria-label="Previous" class="fa-angle-left" data-ng-if="link.className === 'previous'"></i>
                                                 {{link.name}}
-                                                <i class="fa-angle-right" data-ng-if="link.className === 'next'"></i>
+                                                <i aria-label="Next" class="fa-angle-right" data-ng-if="link.className === 'next'"></i>
                                             </a>
                                         </li>
                                     </ul>

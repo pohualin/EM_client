@@ -48,8 +48,8 @@
                 </div>
             </td>
             <td class="col-edit text-center">
-                <a href data-ng-click="editProvider(teamProvider)"><i class="icon-compose icon-size-xl"></i></a>
-                <a href data-ng-click="removeProvider(teamProvider)"><i class="icon-trashcan icon-size-xl"></i></a>
+                <a href data-ng-click="editProvider(teamProvider)" aria-label="Edit Provider"><i class="icon-compose icon-size-xl"></i></a>
+                <a href data-ng-click="removeProvider(teamProvider)" aria-label="Remove Provider"><i class="icon-trashcan icon-size-xl"></i></a>
             </td>
         </tr>
         <tr class="pagination-row no-hover">
@@ -58,9 +58,9 @@
                     <li data-ng-repeat="link in links | orderBy:'order'" class="{{link.className}}"
                         data-ng-class="{'active': link.name == currentPage}">
                         <a data-ng-click="fetchPage(link.href)">
-                            <i class="fa-angle-left" data-ng-if="link.className === 'previous'"></i>
+                            <i aria-label="Previous" class="fa-angle-left" data-ng-if="link.className === 'previous'"></i>
                             {{link.name}}
-                            <i class="fa-angle-right" data-ng-if="link.className === 'next'"></i>
+                            <i aria-label="Next" class="fa-angle-right" data-ng-if="link.className === 'next'"></i>
                         </a>
                     </li>
                 </ul>

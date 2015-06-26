@@ -8,10 +8,10 @@
                     <label class="control-label"><span class="icon-list-bullet"></span> show top 10
                         only</label>
                 </button>
-                <div class="error-circle fa-exclamation-circle"
+                <div class="error-circle fa-exclamation-circle" role="alert"
                      data-ng-show="!scheduledProgram.program && addProgramFormSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                     data-title="Required"></div>
+                     data-title="Required" aria-label="Required"></div>
             </div>
             <div class="pull-right">
                 <div data-ng-hide="showAll">
@@ -43,17 +43,17 @@
                 <label for="program_{{program.entity.id}}"></label>
             </td>
             <td><span data-ng-show="program.entity.type.name === 'MULTIMEDIA PROGRAM'" class="icon-film"
-                      title="Multimedia"></span>
+                      aria-label="Multimedia" title="Multimedia"></span>
                 <span data-ng-show="program.entity.type.name === 'ARTICLE'" class="icon-text-doc"
-                      title="Article"></span>
+                      aria-label="Article" title="Article"></span>
                 <span data-ng-show="program.entity.type.name === 'IVR CALL'" class="icon-telephone"
-                      title="Call"></span>
-                <span data-ng-show="program.entity.type.name === 'TRANSITION PROGRAM'"
-                      class="icon-telephone" title="Transition Program"></span>
+                      aria-label="Call" title="Call"></span>
+                <span data-ng-show="program.entity.type.name === 'TRANSITION PROGRAM'" class="icon-telephone"
+                      aria-label="Transition Program" title="Transition Program"></span>
                 <span data-ng-show="program.entity.type.name === 'NAVIGATE'" class="icon-telephone"
-                      title="Navigate"></span>
+                      aria-label="Navigate" title="Navigate"></span>
                 <span data-ng-show="program.entity.type.name === 'MESSAGE'" class="icon-telephone"
-                      title="Message"></span>
+                      aria-label="Message" title="Message"></span>
                 {{program.entity.name}}
             </td>
         </tr>

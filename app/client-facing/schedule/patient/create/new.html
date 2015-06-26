@@ -16,12 +16,12 @@
                 <div class="form-group"
                      data-ng-class="{ 'has-error' : newPatientForm.firstName.$invalid && formSubmitted}">
                     <label class="control-label" for="firstName">First Name</label>
-                    <div class="error-circle fa-exclamation-circle" data-ng-show="newPatientForm.firstName.$error.required && formSubmitted"
+                    <div class="error-circle fa-exclamation-circle" role="alert" data-ng-show="newPatientForm.firstName.$error.required && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                         data-title="Required"></div>
-                    <div class="error-circle fa-exclamation-circle" data-ng-show="newPatientForm.firstName.$error.pattern && formSubmitted"
+                         data-title="Required" aria-label="Required"></div>
+                    <div class="error-circle fa-exclamation-circle" role="alert" data-ng-show="newPatientForm.firstName.$error.pattern && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                         data-title="Please enter a valid first name"></div>
+                         data-title="Please enter a valid first name" aria-label="Please enter a valid first name"></div>
                     <input class="form-control" data-ng-model="patient.firstName" id="firstName" name="firstName"
                            type="text" required
                            data-auto-focus data-ng-pattern="/^[A-Za-z\'\-]+([.A-Za-z \'\-]*)?$/" data-animation="am-flip-x"
@@ -33,12 +33,12 @@
                 <div class="form-group"
                      data-ng-class="{ 'has-error' : newPatientForm.lastName.$invalid && formSubmitted}">
                     <label class="control-label" for="lastName">Last Name</label>
-                    <div class="error-circle fa-exclamation-circle" data-ng-show="newPatientForm.lastName.$error.required && formSubmitted"
+                    <div class="error-circle fa-exclamation-circle" role="alert" data-ng-show="newPatientForm.lastName.$error.required && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                         data-title="Required"></div>
-                    <div class="error-circle fa-exclamation-circle" data-ng-show="newPatientForm.lastName.$error.pattern && formSubmitted"
+                         data-title="Required" aria-label="Required"></div>
+                    <div class="error-circle fa-exclamation-circle" role="alert" data-ng-show="newPatientForm.lastName.$error.pattern && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                         data-title="Please enter a valid last name"></div>
+                         data-title="Please enter a valid last name" aria-label="Please enter a valid last name"></div>
                     <input class="form-control" data-ng-model="patient.lastName" id="lastName" name="lastName"
                            type="text" required data-ng-pattern="/^[A-Za-z\'\-]+([.A-Za-z \'\-]*)?$/" data-animation="am-flip-x">
                 </div>
@@ -60,21 +60,21 @@
                 <div class="form-group"
                      data-ng-class="{ 'has-error' : newPatientForm.dateOfBirth.$invalid && formSubmitted }">
                     <label class="control-label" for="dateOfBirth">Date of Birth</label>
-                    <div class="error-circle fa-exclamation-circle"
+                    <div class="error-circle fa-exclamation-circle" role="alert"
                          data-ng-show="newPatientForm.dateOfBirth.$error.required &&
                                       !newPatientForm.dateOfBirth.$error.date && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                         data-title="Required"></div>
-                    <div class="error-circle fa-exclamation-circle"
+                         data-title="Required" aria-label="Required"></div>
+                    <div class="error-circle fa-exclamation-circle" role="alert"
                          data-ng-show="newPatientForm.dateOfBirth.$error.date &&
                                       !newPatientForm.dateOfBirth.$error.min && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                         data-title="Dates must be in the format MM/DD/YYYY"></div>
-                    <div class="error-circle fa-exclamation-circle"
+                         data-title="Dates must be in the format MM/DD/YYYY" aria-label="Dates must be in the format MM/DD/YYYY"></div>
+                    <div class="error-circle fa-exclamation-circle" role="alert"
                          data-ng-show="newPatientForm.dateOfBirth.$error.date &&
                                        newPatientForm.dateOfBirth.$error.min && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                         data-title="Please select a valid date of birth"></div>
+                         data-title="Please select a valid date of birth" aria-label="Please select a valid date of birth"></div>
                     <input id="dateOfBirth" class="form-control" type="text" name="dateOfBirth"
                            data-ng-model="patient.dateOfBirth" data-autoclose="true"
                            data-dateType="iso" data-bs-datepicker data-max-date="today"

@@ -6,6 +6,7 @@
         <div class="row">
             <div class="col-md-6 col-sm-5">
                 <div class="input-group">
+                    <label class="sr-only" for="query">Search</label>
                     <input class="form-control" id="query" name="query"
                            data-ng-model="query" type="text" placeholder="Search..." required
                            data-auto-focus>
@@ -24,7 +25,7 @@
                 <div class="col-md-2 col-sm-2">
                     <div class="pull-right">
                         <a class="btn btn-link" data-ng-href="#/teams/{{team.entity.id}}/schedule/patient">
-                            <i class="icon-plus icon-size-md">&nbsp;</i>Create New Patient
+                            <i class="icon-plus icon-size-md"></i> Create New Patient
                         </a>
                     </div>
                 </div>

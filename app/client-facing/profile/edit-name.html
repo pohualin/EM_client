@@ -19,12 +19,12 @@
         <div class="col-md-12" >
             <div class="form-group" data-ng-class="{ 'has-error' : userClientForm.firstName.$invalid && formSubmitted }">
                 <label class="control-label" for="firstName">First Name: </label>
-                <div class="error-circle fa-exclamation-circle" data-ng-show="userClientForm.firstName.$error.required && formSubmitted"
+                <div class="error-circle fa-exclamation-circle" role="alert" data-ng-show="userClientForm.firstName.$error.required && formSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                     data-title="Required"></div>
-                <div class="error-circle fa-exclamation-circle" data-ng-show="userClientForm.firstName.$error.pattern && formSubmitted"
+                     data-title="Required" aria-label="Required"></div>
+                <div class="error-circle fa-exclamation-circle" role="alert" data-ng-show="userClientForm.firstName.$error.pattern && formSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                     data-title="Please enter a valid first name"></div>
+                     data-title="Please enter a valid first name" aria-label="Please enter a valid first name"></div>
                 <input class="form-control" data-ng-model="userClient.firstName" id="firstName" name="firstName"
                        type="text"
                        data-auto-focus required
@@ -38,12 +38,12 @@
         <div class="col-md-12" >
             <div class="form-group"  data-ng-class="{ 'has-error' : userClientForm.lastName.$invalid && formSubmitted }">
                 <label class="control-label" for="lastName">Last Name: </label>
-                <div class="error-circle fa-exclamation-circle" data-ng-show="userClientForm.lastName.$error.required && formSubmitted"
+                <div class="error-circle fa-exclamation-circle" role="alert" data-ng-show="userClientForm.lastName.$error.required && formSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                     data-title="Required"></div>
-                <div class="error-circle fa-exclamation-circle" data-ng-show="userClientForm.lastName.$error.pattern && formSubmitted"
+                     data-title="Required" aria-label="Required"></div>
+                <div class="error-circle fa-exclamation-circle" role="alert" data-ng-show="userClientForm.lastName.$error.pattern && formSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                     data-title="Please enter a valid last name"></div>
+                     data-title="Please enter a valid last name" aria-label="Please enter a valid last name"></div>
                 <input class="form-control" data-ng-model="userClient.lastName" id="lastName" name="lastName"
                        type="text" required
                        data-ng-pattern="/^[a-zA-Z '-]*$/" data-animation="am-flip-x"

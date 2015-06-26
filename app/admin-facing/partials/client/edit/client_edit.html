@@ -11,14 +11,14 @@
             <div class="form-group"
                 data-ng-class="{ 'has-error' : (metadataForm.clientName.$invalid && metadataSubmitted) || metadataForm.clientName.$error.unique}">
                 <label class="control-label" for="clientName">Name</label>
-                <div class="error-circle fa-exclamation-circle"
+                <div class="error-circle fa-exclamation-circle" role="alert"
                      data-ng-show="metadataForm.clientName.$error.required && metadataSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                     data-title="Required"></div>
-                <div class="error-circle fa-exclamation-circle"
+                     data-title="Required" aria-label="Required"></div>
+                <div class="error-circle fa-exclamation-circle" role="alert"
                      data-ng-show="metadataForm.clientName.$error.pattern && metadataSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                     data-title="Please enter a valid client name"></div>
+                     data-title="Please enter a valid client name" aria-label="Please enter a valid client name"></div>
                 <input class="form-control" data-ng-model="clientToEdit.name" id="clientName" name="clientName"
                        type="text" data-unique-url="findNormalizedNameLink" data-unique-client required
                        data-auto-focus
@@ -42,9 +42,9 @@
             <div class="form-group"
                  data-ng-class="{ 'has-error' : metadataForm.clientType.$invalid && metadataSubmitted }">
                 <label class="control-label" for="clientType">Client Type</label>
-                <div class="error-circle fa-exclamation-circle" data-ng-show="metadataForm.clientType.$invalid && metadataSubmitted"
+                <div class="error-circle fa-exclamation-circle" role="alert" data-ng-show="metadataForm.clientType.$invalid && metadataSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                     data-title="Required"></div>
+                     data-title="Required" aria-label="Required"></div>
                 <select id="clientType" class="form-control" data-ng-model="clientToEdit.type"
                         data-ng-options="type.typeKey | translate for type in clientTypes track by type.id"
                         name="clientType" required
@@ -83,10 +83,10 @@
             <div class="form-group"
                  data-ng-class="{ 'has-error' : metadataForm.clientContractOwner.$invalid && metadataSubmitted }">
                 <label class="control-label" for="contractOwner">Contract Owner</label>
-                <div class="error-circle fa-exclamation-circle"
+                <div class="error-circle fa-exclamation-circle" role="alert"
                      data-ng-show="metadataForm.clientContractOwner.$invalid && metadataSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                     data-title="Required"></div>
+                     data-title="Required" aria-label="Required"></div>
                 <select
                         class="form-control"
                         data-placeholder="Select..."
@@ -103,22 +103,22 @@
             <div class="form-group"
                  data-ng-class="{ 'has-error' : metadataForm.clientContractStart.$invalid && metadataSubmitted }">
                 <label class="control-label" for="contractStart">Contract Start</label>
-                <div class="error-circle fa-exclamation-circle"
+                <div class="error-circle fa-exclamation-circle" role="alert"
                      data-ng-show="!metadataForm.clientContractStart.$error.date &&
                                     metadataForm.clientContractStart.$error.required &&
                                    !metadataForm.clientContractStart.$error.max && metadataSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                     data-title="Required"></div>
-                <div class="error-circle fa-exclamation-circle"
+                     data-title="Required" aria-label="Required"></div>
+                <div class="error-circle fa-exclamation-circle" role="alert"
                      data-ng-show="metadataForm.clientContractStart.$error.date &&
                                   !metadataForm.clientContractStart.$error.max && metadataSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                     data-title="Dates must be in the format MM/DD/YYYY"></div>
-                <div class="error-circle fa-exclamation-circle"
+                     data-title="Dates must be in the format MM/DD/YYYY" aria-label="Dates must be in the format MM/DD/YYYY"></div>
+                <div class="error-circle fa-exclamation-circle" role="alert"
                      data-ng-show="metadataForm.clientContractStart.$error.date &&
                                    metadataForm.clientContractStart.$error.max && metadataSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                     data-title="Please select a valid date"></div>
+                     data-title="Please select a valid date" aria-label="Please select a valid date"></div>
                 <div class="has-input-icon has-input-icon-calendar">
                     <input id="contractStart" class="form-control" placeholder="MM/DD/YYYY" type="text" name="clientContractStart"
                            data-ng-model="clientToEdit.contractStart" data-autoclose="true"
@@ -132,22 +132,22 @@
             <div class="form-group"
                  data-ng-class="{ 'has-error' : metadataForm.clientContractEnd.$invalid && metadataSubmitted }">
                 <label class="control-label" for="contractEnd">Contract End</label>
-                <div class="error-circle fa-exclamation-circle"
+                <div class="error-circle fa-exclamation-circle" role="alert"
                      data-ng-show="!metadataForm.clientContractEnd.$error.date &&
                                     metadataForm.clientContractEnd.$error.required &&
                                    !metadataForm.clientContractEnd.$error.min && metadataSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                     data-title="Required"></div>
-                <div class="error-circle fa-exclamation-circle"
+                     data-title="Required" aria-label="Required"></div>
+                <div class="error-circle fa-exclamation-circle" role="alert"
                      data-ng-show="metadataForm.clientContractEnd.$error.date &&
                                   !metadataForm.clientContractEnd.$error.min && metadataSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                     data-title="Dates must be in the format MM/DD/YYYY"></div>
-                <div class="error-circle fa-exclamation-circle"
+                     data-title="Dates must be in the format MM/DD/YYYY" aria-label="Dates must be in the format MM/DD/YYYY"></div>
+                <div class="error-circle fa-exclamation-circle" role="alert"
                      data-ng-show="metadataForm.clientContractEnd.$error.date &&
                                    metadataForm.clientContractEnd.$error.min && metadataSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                     data-title="Please select a valid date"></div>
+                     data-title="Please select a valid date" aria-label="Please select a valid date"></div>
                 <div class="has-input-icon has-input-icon-calendar">
                     <input id="contractEnd" class="form-control" placeholder="MM/DD/YYYY" type="text" name="clientContractEnd"
                            data-ng-model="clientToEdit.contractEnd" data-autoclose="true"

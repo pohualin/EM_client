@@ -12,7 +12,7 @@
                     <div class="row">
                         <div class="col-md-7">
                             <div class="form-group">
-                                <label class="control-label invisible" for="query">Search:</label>
+                                <label class="sr-only" for="query">Search teams</label>
                                 <div class="input-group has-input-icon has-input-icon-search">
                                     <input class="form-control" name="query" id="query" data-ng-model="teamQuery"
                                            type="text" placeholder="Search teams..." required data-auto-focus data-focus-on="LocationSearchFocus">
@@ -82,7 +82,7 @@
     							<div class="info-circle fa-exclamation-circle"
     					             data-ng-show="userClientUserClientTeamRole.entity.warning"
     					             data-bs-tooltip data-placement="right" data-type="info" data-container="body"
-    					             data-title="{{userClientUserClientTeamRole.entity.warning}}"></div>
+    					             data-title="{{userClientUserClientTeamRole.entity.warning}}" aria-label="{{userClientUserClientTeamRole.entity.warning}}"></div>
     						</td>
     					</tr>
                         <tr class="pagination-row no-hover">
