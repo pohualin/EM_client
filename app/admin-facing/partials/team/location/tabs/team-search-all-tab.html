@@ -129,9 +129,9 @@
                                 <ul class="pagination">
                                     <li data-ng-repeat="link in links | orderBy:'order'" class="{{link.className}}" data-ng-class="{'active': link.name == currentPage}">
                                         <a data-ng-click="fetchPage(link.href)">
-                                            <i class="fa-angle-left" data-ng-if="link.className === 'previous'"></i>
+                                            <i aria-label="Previous" class="fa-angle-left" data-ng-if="link.className === 'previous'"></i>
                                             {{link.name}}
-                                            <i class="fa-angle-right" data-ng-if="link.className === 'next'"></i>
+                                            <i aria-label="Next" class="fa-angle-right" data-ng-if="link.className === 'next'"></i>
                                         </a>
                                     </li>
                                 </ul>

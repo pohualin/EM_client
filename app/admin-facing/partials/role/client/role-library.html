@@ -12,7 +12,7 @@
                 <div class="info-circle fa-exclamation-circle"
                    data-ng-show="library.disableNameMatch"
                    data-bs-tooltip data-placement="right" data-type="info" data-container="body"
-                   data-title="A role with this name already exists"></div>
+                   data-title="A role with this name already exists" aria-label="A role with this name already exists"></div>
             </span>
             <div class="toggle-content">
                 <small>
@@ -26,7 +26,7 @@
     <div class="popover-footer">
         <button type="button" class="btn btn-default btn-xs btn-close"
                 data-ng-disabled="whenSaving"
-                data-ng-click="$hide()">
+                data-ng-click="$hide()" aria-label="Close Library">
             <span class="icon-delete"></span>
         </button>
         <button type="button" class="btn btn-success pull-left"

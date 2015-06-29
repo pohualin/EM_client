@@ -150,7 +150,7 @@
                     <td><span class="col-wrap">{{userClient.entity.email}}</span></td>
                     <td class="text-right">
                         <a class="btn-link" data-ng-hide="userClient.deactivationPopoverOpen"
-                               href="#/clients/{{client.entity.id}}/users/{{userClient.entity.id}}?{{currentRouteQueryString}}"><i class="icon-compose icon-size-xl"></i></a>
+                               href="#/clients/{{client.entity.id}}/users/{{userClient.entity.id}}?{{currentRouteQueryString}}" aria-label="View"><i class="icon-compose icon-size-xl"></i></a>
                         <a href
                            data-on-ok="toggleActivation(userClient)"
                            data-is-currently-active="userClient.entity.active"
@@ -158,8 +158,8 @@
                            data-on-open-popover="deactivationPopoverOpen(userClient, true)"
                            data-on-close-popover="deactivationPopoverOpen(userClient, false)"
                            data-toggle-user-client-active>
-                                <i title="activate" data-ng-if="!userClient.entity.active" class="icon-check-o-circle icon-size-xl"></i>
-                                <i title="deactivate" data-ng-if="userClient.entity.active" class="icon-trashcan icon-size-xl"></i>
+                                <i aria-label="Activate" title="activate" data-ng-if="!userClient.entity.active" class="icon-check-o-circle icon-size-xl"></i>
+                                <i aria-label="Deactivate" title="deactivate" data-ng-if="userClient.entity.active" class="icon-trashcan icon-size-xl"></i>
                         </a>
                     </td>
                 </tr>
@@ -168,9 +168,9 @@
                         <ul class="pagination">
                             <li data-ng-repeat="link in links | orderBy:'order'" class="{{link.className}}" data-ng-class="{'active': link.name == currentPage}">
                                 <a data-ng-click="fetchPage(link.href)">
-                                    <i class="fa-angle-left" data-ng-if="link.className === 'previous'"></i>
+                                    <i aria-label="Previous" class="fa-angle-left" data-ng-if="link.className === 'previous'"></i>
                                     {{link.name}}
-                                    <i class="fa-angle-right" data-ng-if="link.className === 'next'"></i>
+                                    <i aria-label="Next" class="fa-angle-right" data-ng-if="link.className === 'next'"></i>
                                 </a>
                             </li>
                         </ul>

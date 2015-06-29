@@ -44,7 +44,7 @@
                                         <button type="button" class="btn btn-icon btn-inherit"
                                                 data-ng-show="clientTeamRole.existingTeams"
                                                 data-ng-disabled="whenSaving"
-                                                data-ng-click="removeAllUserClientUserClientTeamRole(clientTeamRole)">
+                                                data-ng-click="removeAllUserClientUserClientTeamRole(clientTeamRole)" aria-label="Remove Role">
                                             <i class="icon-trashcan"></i>
                                         </button>
                                         <button type="button" class="btn btn-link panel-title-link"
@@ -76,7 +76,7 @@
                                             <td>{{existingTeam.entity.team.name}}</td>
                                             <td class="pull-right">
                                                 <button class="btn btn-icon"
-                                                        data-ng-click="removeUserClientUserClientTeamRole(clientTeamRole, existingTeam)">
+                                                        data-ng-click="removeUserClientUserClientTeamRole(clientTeamRole, existingTeam)" aria-label="Cancel">
                                                     <i class="icon-delete"></i>
                                                 </button>
                                             </td>

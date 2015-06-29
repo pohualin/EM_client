@@ -26,14 +26,14 @@
                      data-ng-class="{ 'has-error' : (notValidatedEmailNoQuestionForm.validateEmail.$invalid || notValidatedEmailNoQuestionForm.validateEmail.$error.duplicate) && notValidatedEmailNoQuestionFormSubmitted }">
                     <label class="control-label" for="validateEmail">Email:</label>
 
-                    <div class="fa-exclamation-circle"
+                    <div class="fa-exclamation-circle" role="alert"
                          data-ng-show="notValidatedEmailNoQuestionForm.validateEmail.$error.pattern && notValidatedEmailNoQuestionFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                         data-title="Please enter a valid email"></div>
-                    <div class="fa-exclamation-circle"
+                         data-title="Please enter a valid email" aria-label="Please enter a valid email"></div>
+                    <div class="fa-exclamation-circle" role="alert"
                          data-ng-show="notValidatedEmailNoQuestionForm.validateEmail.$error.required && notValidatedEmailNoQuestionFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                         data-title="Required"></div>
+                         data-title="Required" aria-label="Required"></div>
                     <input class="form-control" required id="validateEmail" data-popover-save-error data-save-error="emailError"
                            data-ng-model="userClientReqdResource.email" name="validateEmail"
                            type="text" data-ng-change="resetDuplicateValidityEmailAndQuestions()"

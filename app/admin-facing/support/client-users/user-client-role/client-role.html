@@ -12,32 +12,32 @@
                           class="form" novalidate>
                         <div class="panel panel-secondary"
                              data-ng-class="{ 'panel-open': existingUserClientUserClientRole.activePanel === 1 }">
-                            <div class="panel-heading"
-                                 data-ng-click="toggleUserClientUserClienRolePanel(existingUserClientUserClientRole)">
-                                <div class="panel-title">
-                                    <a data-bs-collapse-toggle>
-                                        <span class="icon-caret-right"></span>
-                                        <span class="panel-title-text">{{ existingUserClientUserClientRole.entity.userClientRole.name}}</span>
-                                    </a>
+                          <div class="panel-heading"
+                               data-ng-click="toggleUserClientUserClienRolePanel(existingUserClientUserClientRole)">
+                              <div class="panel-title">
+                                  <a data-bs-collapse-toggle>
+                                      <span class="icon-caret-right"></span>
+                                      <span class="panel-title-text">{{ existingUserClientUserClientRole.entity.userClientRole.name}}</span>
+                                  </a>
 
-                                    <div class="pull-right">
-                                        <button type="button" class="btn btn-icon btn-inherit"
-                                                data-ng-disabled="whenSaving"
-                                                data-ng-click="removeUserClientRole(existingUserClientUserClientRole)">
-                                            <i class="icon-trashcan"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="panel-collapse" data-bs-collapse-target>
-                                    <div class="panel-body">
-                                        Permissions:<br/>
+                                  <div class="pull-right">
+                                      <button type="button" class="btn btn-icon btn-inherit"
+                                              data-ng-disabled="whenSaving"
+                                              data-ng-click="removeUserClientRole(existingUserClientUserClientRole)" aria-label="Remove Role">
+                                          <i class="icon-trashcan"></i>
+                                      </button>
+                                  </div>
+                              </div>
+                            </div>
+                            <div class="panel-collapse" data-bs-collapse-target>
+                                <div class="panel-body">
+                                    Permissions:<br/>
 
-                                        <div class="permissions-list">
-                                        <span
-                                            data-ng-repeat="permission in existingUserClientUserClientRole.entity.permissions | orderBy:'permission.rank'">
-                                            {{permission.name  | translate }}{{!$last ? ',' : ''}}&nbsp;
-                                        </span>
-                                        </div>
+                                    <div class="permissions-list">
+                                    <span
+                                        data-ng-repeat="permission in existingUserClientUserClientRole.entity.permissions | orderBy:'permission.rank'">
+                                        {{permission.name  | translate }}{{!$last ? ',' : ''}}&nbsp;
+                                    </span>
                                     </div>
                                 </div>
                             </div>

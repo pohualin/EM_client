@@ -12,7 +12,7 @@
                 <h1>Manage Groups & Tags Library</h1>
                 <div class="row" data-ng-if="tagGroups">
                     <div class="col-md-6">
-                        <div class="panel-group" data-ng-model="group.activePanel" data-ng-repeat="group in tagGroups | orderBy:'-entity.active'"
+                        <div class="panel-group" data-ng-model="group.activePanel" data-ng-repeat="group in tagGroups | tagGroupOrderBy"
                             data-ng-change="panelStateChange(group, existingTagGroupForm.{{group.entity.id}})" data-start-collapsed="true"
                             data-bs-collapse>
                             <div class="row">
@@ -36,19 +36,19 @@
                                                         data-on-open-popover="warningToggle(group, true)"
                                                         data-on-close-popover="warningToggle(group, false)"
                                                         data-delete-group-warning>
-                                                    remove this group
+                                                    remove
                                                 </button>
                                                 <button type="button" class="btn btn-link panel-title-link"
                                                         data-ng-disabled="whenSaving"
                                                         data-ng-show="!group.deletable && group.entity.active"
                                                         data-ng-click="toggleActiveInactive(group, existingTagGroupForm[group.entity.id])">
-                                                    deactivate this group
+                                                    deactivate
                                                 </button>
                                                 <button type="button" class="btn btn-link panel-title-link"
                                                         data-ng-disabled="whenSaving"
                                                         data-ng-show="!group.deletable && !group.entity.active"
                                                         data-ng-click="toggleActiveInactive(group, existingTagGroupForm[group.entity.id])">
-                                                    activate this group
+                                                    activate
                                                 </button>
                                             </div>
                                             <a data-bs-collapse-toggle data-ng-hide="group.editName" data-ng-dblclick="startEditName(group)">
@@ -114,7 +114,8 @@
                                                            data-focus-on="focus-new-group" maxlength="50" required data-group-title-unique>
                                                     <button class="btn btn-sm btn-icon" type="button"
                                                             data-ng-disabled="whenSaving"
-                                                            data-ng-click="cancelNew(newTagGroupForm)">
+                                                            data-ng-click="cancelNew(newTagGroupForm)"
+                                                            aria-label="Cancel">
                                                         <span class="icon-delete icon-size-lg"></span>
                                                     </button>
                                                 </div>

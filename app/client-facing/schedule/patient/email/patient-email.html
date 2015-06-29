@@ -3,15 +3,15 @@
                  data-ng-class="{ 'has-error' : formSubmitted && newPatientForm.email.$invalid}">
                 <label class="control-label" for="email">Patient's Email:</label>
                 <div data-ng-show="isEmailRequired">
-                    <div class="error-circle fa-exclamation-circle"
+                    <div class="error-circle fa-exclamation-circle" role="alert"
                      data-ng-show="newPatientForm.email.$error.required && formSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                         data-title="Required"></div>
+                         data-title="Required" aria-label="Required"></div>
                 </div>
-                <div class="error-circle fa-exclamation-circle"
+                <div class="error-circle fa-exclamation-circle" role="alert"
                      data-ng-show="newPatientForm.email.$error.pattern && formSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                     data-title="Please enter a valid email"></div>
+                     data-title="Please enter a valid email" aria-label="Please enter a valid email"></div>
                 <input class="form-control" id="email" data-ng-model="patient.email"
                        name="email" type="text"
                        maxlength="255" data-focus-on="email"

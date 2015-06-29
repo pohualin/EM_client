@@ -3,7 +3,7 @@
     <ul class="secondary-nav">
         <li>
             <a data-ng-if="existingClientRoles.length > 0 || existingClientTeamRoles.length > 0" href="#/clients/{{client.id}}/users">Manage Users</a>
-            <a data-ng-if="existingClientRoles.length === 0 && existingClientTeamRoles.length === 0" data-ng-class="{'disabled':(existingClientRoles.length === 0 && existingClientTeamRoles.length === 0)}" data-bs-tooltip data-type="info" data-placement="bottom" data-title="Set up user roles before adding users">Manage Users</a>
+            <a data-ng-if="existingClientRoles.length === 0 && existingClientTeamRoles.length === 0" data-ng-class="{'disabled':(existingClientRoles.length === 0 && existingClientTeamRoles.length === 0)}" data-bs-tooltip data-type="info" data-placement="bottom" data-title="Set up user roles before adding users" aria-label="Set up user roles before adding users">Manage Users</a>
         </li>
         <li><a href="#/clients/{{client.id}}/roles">Manage Roles</a></li>
     </ul>
