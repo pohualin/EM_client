@@ -58,7 +58,6 @@ angular.module('emmiManager')
                     });
                 })
                     .error(function () {
-                        console.log('in error');
                         selfRegForm.code.$setValidity('unique', false);
                     })
                     .finally(function () {
