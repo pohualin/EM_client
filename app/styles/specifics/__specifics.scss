@@ -491,6 +491,10 @@ TR.nowrap TD, TH {
 	white-space: pre-wrap;
 }
 
+.padding-left-zero {
+  padding-left: 0;
+}
+
 // various example component implementations
 @include example();
 @include example('.example2');
