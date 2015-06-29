@@ -3,7 +3,7 @@
         <h1>Security Settings</h1>
     </div>
     <div data-ng-if="badEmails.length > 0 && clientRestrictConfiguration.entity.emailConfigRestrict"
-         class="col-md-6 pull-right alert-warning">
+         class="col-md-6 pull-right alert-warning" style="padding:8px 10px">
         <strong>
         <ng-pluralize count="badEmails.length"
                       when="{'1':'{{badEmails.length}} user',
