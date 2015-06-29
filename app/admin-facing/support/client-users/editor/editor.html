@@ -10,28 +10,25 @@
     </ol>
 </div>
 <div class="container" data-ng-cloak>
-    <div class="row">
-        <div class="col-md-12">
-
-    <form name="userClientForm" class="form" novalidate data-unsaved-warning-form>
-        <div class="layout-card" data-ng-controller="UserClientSupportMetaDataController">
-            <div class="row">
-                <div data-ng-include="'admin-facing/support/client-users/metadata/edit.html'"></div>
-            </div>
-        </div><!-- .layout-card -->
-    </form>
-    </div>
-    
-    <!--
-        only show the activate and reset choices when the selected user client has
-        least one role (either client or team)
-    -->
-      <div class="col-md-12" data-ng-show="selectedUserClient && (clientRoles || (teamRoles | teamSetOnRole))">
-        <div class="layout-card">
-          <div class="row" data-ng-include="'admin-facing/support/client-users/activation/form.html'"></div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="layout-card">
+        <form name="userClientForm" class="form" novalidate data-unsaved-warning-form>
+            <div data-ng-controller="UserClientSupportMetaDataController">
+                <div class="row">
+                    <div data-ng-include="'admin-facing/support/client-users/metadata/edit.html'"></div>
+                </div>
+            </div><!-- .layout-card -->
+        </form>
+        <!--
+            only show the activate and reset choices when the selected user client has
+            least one role (either client or team)
+        -->
+        <div data-ng-show="selectedUserClient && (clientRoles || (teamRoles | teamSetOnRole))"
+          class="row" data-ng-include="'admin-facing/support/client-users/activation/form.html'">
         </div>
-      </div><!-- .col-md-12 -->
-      
+      </div>
+    </div>
     <div class="row">
       <div class="col-md-12 row-same-height row-full-height">
         <div class="col-md-6 col-xs-height col-full-height" style="padding-right: 6px">
@@ -61,7 +58,6 @@
         </div>
       </div>
     </div>
-
-    </div><!-- .row -->
+  </div>
 </div><!-- .container -->
 <footer class="footer" data-ng-include="'admin-facing/partials/common/footer.tpl.html'"></footer>
