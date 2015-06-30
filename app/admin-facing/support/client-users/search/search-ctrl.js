@@ -26,6 +26,7 @@ angular.module('emmiManager')
              * Called when GO button is clicked
              */
             $scope.search = function () {
+                $scope.status = STATUS.ACTIVE_ONLY;
                 performSearch($scope.query, null, null, true);
             };
 
