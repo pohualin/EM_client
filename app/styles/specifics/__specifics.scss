@@ -126,6 +126,9 @@ label.empty {
         color: $input-color-placeholder;
         font-style: italic;
         font-weight: 300;
+        &.text-danger {
+	        color: #CB2328;
+	    }
     }
 }
 
