@@ -14,30 +14,26 @@
     <div class="col-md-12">
       <div class="form-group"
         data-ng-class="{ 'has-error' : clientNoteForm.$invalid && clientNoteFormSubmitted }">
-        <textarea class="form-control" rows="5" id="clientNote" data-ng-maxlength="800" data-ng-model="clientNoteEdit.entity.note" ></textarea>
+        <textarea class="form-control" rows="5" id="clientNote" data-ng-maxlength="800" data-ng-trim="false" data-trim-extra
+                  data-ng-model="clientNoteEdit.entity.note" ></textarea>
+        <span class="pull-right">{{800 - clientNoteEdit.entity.note.length}} left</span>
       </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <div class="form-actions">
-        <div class="form-group">
-          <button data-ng-if = "showCancelSave() && !originalClientNote.link.self"
-                  class="btn btn-success" type="submit"
-                  data-placement="right"
-                  data-ng-disabled="whenSaving"
-                  data-ng-click="create(clientNoteForm)">
-              save
-          </button>
-          <button data-ng-if = "showCancelSave() && originalClientNote.link.self"
-                  class="btn btn-success" type="submit"
-                  data-placement="right"
-                  data-ng-disabled="whenSaving"
-                  data-ng-click="update(clientNoteForm)">
-              save
-          </button>
-          <a class="btn btn-cancel" data-ng-click="cancel()">cancel</a>
-        </div>
+      <div class="form-group">
+        <button data-ng-if = "showCancelSave() && !originalClientNote.link.self"
+                class="btn btn-success" type="submit"
+                data-placement="right"
+                data-ng-disabled="whenSaving"
+                data-ng-click="create(clientNoteForm)">
+            save
+        </button>
+        <button data-ng-if = "showCancelSave() && originalClientNote.link.self"
+                class="btn btn-success" type="submit"
+                data-placement="right"
+                data-ng-disabled="whenSaving"
+                data-ng-click="update(clientNoteForm)">
+            save
+        </button>
+        <a class="btn btn-cancel" data-ng-class="{ 'padding-left-zero' : !showCancelSave() }" data-ng-click="cancel()">cancel</a>
       </div>
     </div>
   </div>
