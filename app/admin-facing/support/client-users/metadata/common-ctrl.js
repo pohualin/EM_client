@@ -27,7 +27,7 @@ angular.module('emmiManager')
                 if ($scope.userClientEdit && $scope.userClientEdit.useEmail) {
                     $scope.userClientEdit.entity.login = $scope.userClientEdit.entity.email;
                 }
-            }
+            };
 
             /**
              * Common function that handles errors that happen on save.
