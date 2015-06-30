@@ -19,6 +19,15 @@ angular.module('emmiManager')
                     delete $scope.loginError;
                 }
             };
+            
+            /**
+             * Sync up email and login if useEmail is checked
+             */
+            $scope.syncEmailLogin = function () {
+                if ($scope.userClientEdit && $scope.userClientEdit.useEmail) {
+                    $scope.userClientEdit.entity.login = $scope.userClientEdit.entity.email;
+                }
+            };
 
             /**
              * Common function that handles errors that happen on save.
