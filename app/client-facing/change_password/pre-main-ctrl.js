@@ -16,20 +16,12 @@ angular.module('emmiManager')
                     if (!$scope.passwordAlert  && $scope.policy.daysBetweenPasswordChange > 1) {
                         $scope.passwordAlert = $alert({
                             content: 'A minimum of ' + $scope.policy.daysBetweenPasswordChange + ' days are required between password changes.',
-                            type: 'warning',
-                            placement: 'top',
-                            duration: 5,
-                            show: true,
-                            dismissable: true
+                            type: 'warning'
                         });
                     } else if (!$scope.passwordAlert && $scope.policy.daysBetweenPasswordChange === 1) {
                         $scope.passwordAlert = $alert({
                             content: 'A minimum of one day is required between password changes.',
-                            type: 'warning',
-                            placement: 'top',
-                            duration: 5,
-                            show: true,
-                            dismissable: true
+                            type: 'warning'
                         });
                     } else {
                         $scope.passwordAlert.show();

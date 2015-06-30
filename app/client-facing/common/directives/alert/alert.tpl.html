@@ -1,0 +1,4 @@
+<div class="alert" data-ng-class="[type ? 'alert-' + type : null, dismissable ? 'alert-dismissable' : null]" role="alert">
+    <button type="button" class="close" data-ng-if="dismissable" data-ng-click="$hide()" aria-hidden="true"><i class="icon-delete"></i></button>
+    <strong class="alert-title" data-ng-bind="title"></strong>&nbsp;<span data-ng-bind-html="content"></span>
+</div>

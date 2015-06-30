@@ -43,12 +43,7 @@ angular.module('emmiManager')
                         .then(function () {
                             SecretQuestionService.setUserInputSecurityResponses(null);
                             $alert({
-                                content: 'Your password has been reset. Please login.',
-                                type: 'success',
-                                placement: 'top',
-                                show: true,
-                                duration: 5,
-                                dismissable: true
+                                content: 'Your password has been reset. Please login.'
                             });
                             $location.path('/').replace();
                         }, function error(errorResponse) {

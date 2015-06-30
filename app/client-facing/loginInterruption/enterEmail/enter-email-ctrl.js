@@ -21,12 +21,7 @@ angular.module('emmiManager')
 
                             $alert({
                                 content: 'Please check your email. A link has been sent to <strong>' + $scope.userClientReqdResource.email +
-                                    '</strong> to finish setting up your account.',
-                                type: 'success',
-                                placement: 'top',
-                                show: true,
-                                duration: 5,
-                                dismissable: true
+                                    '</strong> to finish setting up your account.'
                             });
 
 
@@ -46,11 +41,12 @@ angular.module('emmiManager')
                         //error function
                         if (!$scope.emailErrorAlert) {
                             $scope.emailErrorAlert = $alert({
-                                title: ' ',
                                 content: 'Please correct the below information.',
                                 container: '#message-container-no-email',
                                 type: 'danger',
                                 show: true,
+                                placement: '',
+                                duration: false,
                                 dismissable: false
                             });
                         }
@@ -62,11 +58,12 @@ angular.module('emmiManager')
                     //error function
                     if (!$scope.emailErrorAlert) {
                         $scope.emailErrorAlert = $alert({
-                            title: ' ',
                             content: 'Please correct the below information.',
                             container: '#message-container-no-email',
                             type: 'danger',
                             show: true,
+                            placement: '',
+                            duration: false,
                             dismissable: false
                         });
                     }
