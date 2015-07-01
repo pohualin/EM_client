@@ -82,6 +82,7 @@ angular.module('emmiManager')
                 $scope[contentProperty] = responsePage.content;
                 // set the total
                 $scope.total = responsePage.page.totalElements;
+                $scope.removeStatusFilterAndTotal = $scope.total <= 0;
 
                 // create links in scope
                 $scope.links = [];
@@ -125,6 +126,7 @@ angular.module('emmiManager')
                 }
             } else {
             	$scope.total = 0;
+            	$scope.removeStatusFilterAndTotal = true;
                 $scope[contentProperty] = null;
             }
             $scope.searchPerformed = true;

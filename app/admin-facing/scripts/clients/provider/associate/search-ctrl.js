@@ -6,8 +6,8 @@ angular.module('emmiManager')
 /**
  *  Controls the new provider search/select popup
  */
-    .controller('ClientAssociateProviderSearchController', ['$controller', '$scope', 'ClientProviderService', 'Client', '$alert', 'ProviderSearch',
-        function ($controller, $scope, ClientProviderService, Client, $alert, ProviderSearch) {
+    .controller('ClientAssociateProviderSearchController', ['$controller', '$scope', 'ClientProviderService', 'Client', '$alert', 'ProviderSearch', 'STATUS',
+        function ($controller, $scope, ClientProviderService, Client, $alert, ProviderSearch, STATUS) {
 
             $controller('CommonPagination', {$scope: $scope});
 
@@ -104,8 +104,8 @@ angular.module('emmiManager')
                     $scope.changedProviders = {};
                     $scope.loading = true;
                     ClientProviderService.find(Client.getClient(), $scope.providerQuery).then(function (providerPage) {
+                        $scope.status = STATUS.ACTIVE_ONLY;
                         $scope.handleResponse(providerPage, managedProviderList);
-                        $scope.removeStatusFilterAndTotal = $scope.total <= 0;
                     }, function () {
                         // error happened
                         $scope.loading = false;
