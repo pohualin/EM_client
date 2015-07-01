@@ -35,7 +35,7 @@
     <hr>
     <div class="row" data-ng-show="searchPerformed">
         <div class="col-md-12">
-            <div class="row" data-ng-hide="removeStatusFilterAndTotal">
+            <div class="row" data-ng-hide="total === 0">
                 <div class="col-md-12">
                     <div class="pull-right">
                         {{total}} <span data-ng-show="total != 1"

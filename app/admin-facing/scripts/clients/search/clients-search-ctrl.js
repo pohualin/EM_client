@@ -17,15 +17,12 @@ angular.module('emmiManager')
             $scope.statuses = refData.statusFilter;
         });
 
-        var performSearch = function(q, status, sort, size, recalculateStatusFilterAndTotal){
+        var performSearch = function(q, status, sort, size){
             if (!$scope.searchForm || !$scope.searchForm.query.$invalid ) {
                 $scope.loading = true;
                 $scope.serializeToQueryString(q, URL_PARAMETERS.CLIENT, status, sort, size);
                 Client.find(q, status, sort, size).then(function (clientPage) {
                     $scope.handleResponse(clientPage, contentProperty);
-                    if (recalculateStatusFilterAndTotal) {
-                        $scope.removeStatusFilterAndTotal = $scope.total <= 0;
-                    }
                 }, function () {
                     // error happened
                     $scope.loading = false;
@@ -38,17 +35,18 @@ angular.module('emmiManager')
 
         // when the search button is used
         $scope.search = function () {
-            performSearch($scope.query, null, null, null, true);
+            $scope.status = STATUS.ACTIVE_ONLY;
+            performSearch($scope.query, $scope.status, null, null);
         };
 
         // when first loading the page, via SearchUriPersistence set variables
         if ($scope.query) {
             if ($scope.pageWhereBuilt === URL_PARAMETERS.CLIENT) {
-                performSearch($scope.query, $scope.status, $scope.sortProperty, $scope.currentPageSize,
-                    $scope.status !== STATUS.INACTIVE_ONLY);
+                performSearch($scope.query, $scope.status, $scope.sortProperty, $scope.currentPageSize);
             } else {
                 // it was built by a different page, use the query only
-                performSearch($scope.query, null, null, null, true);
+                $scope.status = STATUS.ACTIVE_ONLY;
+                performSearch($scope.query, $scope.status, null, null);
             }
         }
 
