@@ -42,7 +42,6 @@ angular.module('emmiManager')
                                 content: 'There was a problem saving your security questions.',
                                 type: 'danger',
                                 show: true,
-                                duration: false,
                                 placement: '',
                                 duration: false,
                                 dismissable: false
