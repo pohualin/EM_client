@@ -1,5 +1,6 @@
 <form name="activationForm" class="form" novalidate>
     <div class="col-md-12">
+        <hr>
         <div id="generated-password"></div>
         <div class="row">
             <div class="col-md-12"
@@ -15,14 +16,6 @@
                         <span data-ng-switch-when="false">Send</span>
                         <span data-ng-switch-when="true">Resend</span>
                         <span> User Setup Email</span>
-                    </button>
-                    <button class="btn btn-default" type="button"
-                            data-ng-disabled="whenSaving"
-                            data-ng-show="selectedUserClient.entity.email"
-                            data-ng-click="sendActivationEmail(true)">
-                        <span data-ng-switch-when="false">Send</span>
-                        <span data-ng-switch-when="true">Resend</span>
-                        <span> Email & Add Another User</span>
                     </button>
                     <div class="user-setup-status" data-ng-switch-when="true">
                         <span data-ng-show="!inThePast()">

@@ -51,6 +51,7 @@
                 <input class="form-control" id="email" data-ng-model="userClientEdit.entity.email"
                        name="email" type="text" data-ng-required="userClientEdit.useEmail"
                        maxlength="255" data-support-popover-save-error data-save-error="emailError" data-focus-on="email"
+                       data-ng-change="syncEmailLogin()"
                        data-ng-pattern="emailPattern" />
             </div>
         </div>
