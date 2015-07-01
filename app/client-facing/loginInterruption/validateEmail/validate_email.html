@@ -1,35 +1,21 @@
-<div class="container" data-ng-cloak data-ng-controller="sendValidationEmail">
-    <form name="validateEmailForm" class="form" novalidate>
-        <div class="row col-md-6">
-            <div class="col-md-12">
-                <h2>
-                    Please confirm your email address
-                </h2>
-
-                <div data-ng-show="validateEmailForm.$invalid">
-                    <div class="col-md-12" id="message-container-validate-email"></div>
-                </div>
-                Verifying your email address will make your account more secure, and allow you to reset your password if
-                you
-                forget it in the future.
-
-                <div data-ng-include="'client-facing/loginInterruption/validateEmail/validate_email_template.html'">
-                </div>
-                <div class="col-md-12">
-                    <hr>
-                    <div class="form-group pull-right">
-                        <button type="button" class="btn btn-cancel"
-                                data-ng-disabled="whenSaving"
-                                data-ng-click="notNow()">not now
-                        </button>
-                        <button class="btn btn-primary" type="submit"
-                                data-ng-disabled="whenSaving"
-                                data-ng-click="sendValidationEmail(validateEmailForm.validateEmail.$valid)">
-                            Save
-                        </button>
-                    </div>
-                </div>
-            </div>
+<form name="validateEmailForm" class="form" novalidate data-ng-controller="sendValidationEmail">
+    <h1>Please confirm your email address</h1>
+    <div class="form-group">
+        <p>Verifying your email address will make your account more secure, and allow you to reset your password if you forget it in the future.</p>
+    </div>
+    <div data-ng-show="validateEmailForm.$invalid" id="message-container-validate-email"></div>
+    <div data-ng-include="'client-facing/loginInterruption/validateEmail/validate_email_template.html'">
+    <div class="form-actions pull-right">
+        <div class="form-group">
+            <button type="button" class="btn btn-cancel"
+                    data-ng-disabled="whenSaving"
+                    data-ng-click="notNow()">not now
+            </button>
+            <button class="btn btn-primary" type="submit"
+                    data-ng-disabled="whenSaving"
+                    data-ng-click="sendValidationEmail(validateEmailForm.validateEmail.$valid)">
+                Save
+            </button>
         </div>
-    </form>
-</div>
+    </div>
+</form>
