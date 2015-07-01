@@ -17,7 +17,8 @@ angular.module('emmiManager')
           };
 
           $scope.search = function() {
-            performSearch($scope.query, null, null, null, true);
+            $scope.status = STATUS.ACTIVE_ONLY;
+            performSearch($scope.query, $scope.status, null, null);
           };
 
           $scope.sort = function(property) {
@@ -46,26 +47,22 @@ angular.module('emmiManager')
             // Initiate a search when $scope.query is not empty
             if ($scope.query) {
                 if ($scope.pageWhereBuilt === URL_PARAMETERS.LOCATION) {
-                performSearch($scope.query, $scope.status, $scope.sortProperty,
-                    $scope.currentPageSize, $scope.status !== STATUS.INACTIVE_ONLY);
+                performSearch($scope.query, $scope.status, $scope.sortProperty, $scope.currentPageSize);
               } else {
                 // it was built by a different page, use the query only
-                performSearch($scope.query, null, null, null, true);
+                  $scope.status = STATUS.ACTIVE_ONLY;
+                  performSearch($scope.query, $scope.status, null, null);
               }
             }
           }
 
-          function performSearch(q, status, sort, size,
-              recalculateStatusFilterAndTotal) {
+          function performSearch(q, status, sort, size) {
             if (!$scope.searchForm || !$scope.searchForm.query.$invalid) {
               $scope.loading = true;
                 $scope.serializeToQueryString(q, URL_PARAMETERS.LOCATION, status, sort, size);
               Location.find(null, q, status, sort, size).then(
                   function(locationData) {
                     $scope.handleResponse(locationData, 'locations');
-                    if (recalculateStatusFilterAndTotal) {
-                      $scope.removeStatusFilterAndTotal = $scope.total <= 0;
-                    }
                   }, function() {
                     // error happened
                     $scope.loading = false;

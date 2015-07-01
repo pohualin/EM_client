@@ -1,7 +1,8 @@
 'use strict';
 angular.module('emmiManager')
 
-    .controller('ProviderSearchController', function ($scope, $modal, ProviderView, TeamLocation, TeamProviderService, ProviderSearch, $controller, arrays, ProviderCreate, ClientProviderService, Client, focus) {
+    .controller('ProviderSearchController', ['$scope', '$modal', 'ProviderView', 'TeamLocation', 'TeamProviderService', 'ProviderSearch', '$controller', 'arrays', 'ProviderCreate', 'ClientProviderService', 'Client', 'focus', 'STATUS',
+         function ($scope, $modal, ProviderView, TeamLocation, TeamProviderService, ProviderSearch, $controller, arrays, ProviderCreate, ClientProviderService, Client, focus, STATUS) {
 
         $controller('CommonSearch', {$scope: $scope});
 
@@ -14,6 +15,7 @@ angular.module('emmiManager')
         $scope.search = function (isValid) {
             if (isValid) {
                 $scope.noSearch = false;
+                $scope.searchAll.status = STATUS.ACTIVE_ONLY;
                 ClientProviderService.findPossibleProvidersNotUsingClient($scope.allTeamLocations, Client.getClient(), $scope.searchAll.providerQuery, $scope.searchAll.status)
                     .then(function (providerPage) {
                         $scope.handleResponse(providerPage, 'searchedProvidersList');
@@ -209,7 +211,6 @@ angular.module('emmiManager')
         };
 
         function init() {
-            $scope.searchAll.status = 'ACTIVE_ONLY';
             ClientProviderService.findForClient(Client.getClient()).then(function (clientProviders) {
                 $scope.handleResponse(clientProviders, managedClientProviderList);
                 $scope.setClientProviderSelected($scope.clientProviders);
@@ -219,5 +220,5 @@ angular.module('emmiManager')
         }
 
         init();
-    })
+    }])
 ;

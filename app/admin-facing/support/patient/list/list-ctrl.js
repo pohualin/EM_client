@@ -45,7 +45,7 @@
                  * Called when GO button is clicked
                  */
                 $scope.search = function () {
-                    performSearch($scope.query, null, null, true);
+                    performSearch($scope.query, null);
                 };
 
                 /**

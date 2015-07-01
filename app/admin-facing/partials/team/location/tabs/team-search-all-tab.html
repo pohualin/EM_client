@@ -30,7 +30,7 @@
         <div data-ng-show="allLocationsSearch">
             <div class="row table-search-filters">
                 <div class="col-md-12">
-                    <div class="pull-right table-results-count">
+                    <div class="pull-right table-results-count" data-ng-hide="total === 0">
                         {{total}}
                         <span data-ng-if="total != 1" data-translate="global.labels.total"> results</span>
                         <span data-ng-if="total === 1"
