@@ -94,9 +94,9 @@
     </div>
     <div class="row" data-ng-show="searchPerformed && hasUsers">
         <div class="col-md-12">
-            <div class="row table-search-filters" data-ng-hide="removeStatusFilterAndTotal">
+            <div class="row table-search-filters">
                 <div class="col-md-12">
-                    <div class="pull-right table-results-count">
+                    <div class="pull-right table-results-count" data-ng-hide="total === 0">
                         {{total}} <span data-ng-show="total != 1"
                                         data-translate="global.labels.total"> results</span> <span
                         data-ng-show="total === 1"
@@ -178,7 +178,7 @@
                 </tr>
                 </tbody>
             </table>
-            <div data-ng-hide="usersClient">
+            <div class="table-no-results" data-ng-hide="usersClient">
                 <span data-translate="global.messages.search.no_results_found"></span>
             </div>
         </div><!-- .col-md-12 -->

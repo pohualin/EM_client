@@ -114,6 +114,16 @@ angular.module('emmi.typeahead', [])
                 var $input = element.find('form > input');
                 var $list = element.find('.menu');
 
+                // EM-1433: prevent the blur event from firing when clicking within the menu's scrollbar (oddly only happens when clicking on page scroll in between)
+                $list.on('mousedown', function(e) {
+                    var offX  = (e.offsetX || e.pageX - angular.element(e.target).offset().left);
+                    // preventing the default still allows the scroll, but blocks the blur.
+                    // We're inside the scrollbar if the offsetX is >= the clientWidth.
+                    if (offX >= e.target.clientWidth) {
+                        e.preventDefault();
+                    }
+                });
+
                 $input.bind('focus', function () {
                     scope.$apply(function () {
                         scope.focused = true;

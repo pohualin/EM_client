@@ -126,6 +126,9 @@ label.empty {
         color: $input-color-placeholder;
         font-style: italic;
         font-weight: 300;
+        &.text-danger {
+	        color: #CB2328;
+	    }
     }
 }
 
@@ -489,6 +492,10 @@ TR.nowrap TD, TH {
 
 .textwrap-output {
 	white-space: pre-wrap;
+}
+
+.padding-left-zero {
+  padding-left: 0;
 }
 
 // various example component implementations

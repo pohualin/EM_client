@@ -18,6 +18,9 @@ angular.module('emmiManager')
              * Show/Hide save and cancel buttons
              */
             $scope.showCancelSave = function(){
+                if(angular.equals($scope.originalUserClient, $scope.userClientEdit)){
+                    $scope.cancel();
+                }
                 return !angular.equals($scope.originalUserClient, $scope.userClientEdit);
             };
 
@@ -27,6 +30,7 @@ angular.module('emmiManager')
             $scope.cancel = function () {
                 // Reset form to pristine
                 $scope.userClientEdit = angular.copy($scope.originalUserClient);
+                $scope.userClientFormSubmitted = false;
                 $scope.userClientForm.$setPristine();
                 delete $scope.loginError;
                 delete $scope.emailError;

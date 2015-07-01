@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  * Manage Client Level users
  */
-    .controller('UsersClientMainCtrl', ['$scope', '$controller', 'Client', 'UsersClientService', '$alert',
-        function ($scope, $controller, Client, UsersClientService, $alert) {
+    .controller('UsersClientMainCtrl', ['$scope', '$controller', 'Client', 'UsersClientService', '$alert', 'STATUS', 'URL_PARAMETERS',
+        function ($scope, $controller, Client, UsersClientService, $alert, STATUS, URL_PARAMETERS) {
 
             var contentProperty = 'usersClient';
 
@@ -14,7 +14,7 @@ angular.module('emmiManager')
              * when the status select is changed
              */
             $scope.statusChange = function () {
-                performSearch($scope.query, $scope.status, $scope.sortProperty, false, $scope.teamTagFilter);
+                performSearch($scope.query, $scope.status, $scope.sortProperty, $scope.teamTagFilter);
             };
 
             /**
@@ -33,7 +33,8 @@ angular.module('emmiManager')
              * Called when GO button is clicked
              */
             $scope.search = function () {
-                performSearch($scope.query, null, null, true);
+                $scope.status = STATUS.ACTIVE_ONLY;
+                performSearch($scope.query, $scope.status, null);
             };
 
             /**
@@ -41,7 +42,7 @@ angular.module('emmiManager')
              */
             $scope.sort = function (property) {
                 var sort = $scope.createSortProperty(property);
-                performSearch($scope.query, $scope.status, sort, false, $scope.teamTagFilter);
+                performSearch($scope.query, $scope.status, sort, $scope.teamTagFilter);
             };
 
             /**
@@ -80,7 +81,7 @@ angular.module('emmiManager')
              * Called when the team filter is changed
              */
             $scope.onTeamFilterChange = function () {
-                performSearch($scope.query, $scope.status, $scope.sortProperty, false, $scope.teamTagFilter);
+                performSearch($scope.query, $scope.status, $scope.sortProperty, $scope.teamTagFilter);
             };
 
             /**
@@ -125,12 +126,13 @@ angular.module('emmiManager')
 
                 // perform search if the query string has search arguments
                 if ($scope.query) {
-                    if ($scope.pageWhereBuilt === 'user') {
+                    if ($scope.pageWhereBuilt === URL_PARAMETERS.USER) {
                         // search from the query string, don't blank out status and total for INACTIVE_ONLY searches
-                        performSearch($scope.query, $scope.status, $scope.sortProperty, $scope.status !== 'INACTIVE_ONLY');
+                        performSearch($scope.query, $scope.status, $scope.sortProperty);
                     } else {
                         // it was built by a different page, use the query only
-                        performSearch($scope.query, null, null, true);
+                        $scope.status = STATUS.ACTIVE_ONLY;
+                        performSearch($scope.query, $scope.status, null);
                     }
                 }
             }
@@ -148,10 +150,10 @@ angular.module('emmiManager')
              *        way it is
              * @param teamTagFilter the team and or tag filter
              */
-            function performSearch(q, status, sort, recalculateStatusFilterAndTotal, teamTagFilter) {
+            function performSearch(q, status, sort, teamTagFilter) {
                 if (!$scope.searchForm || !$scope.searchForm.query.$invalid) {
                     $scope.loading = true;
-                    $scope.serializeToQueryString(q, 'u', status, sort);
+                    $scope.serializeToQueryString(q, URL_PARAMETERS.USER, status, sort);
 
                     UsersClientService.list($scope.client,
                         $scope.query, sort, status, teamTagFilter).then(
@@ -167,9 +169,6 @@ angular.module('emmiManager')
                             // update team and tag filters with response
                             $scope.teamTagFilter = UsersClientService.updateTeamTagFilterFromResponse(teamTagFilter, response);
 
-                            if (recalculateStatusFilterAndTotal) {
-                                $scope.removeStatusFilterAndTotal = $scope.total <= 0;
-                            }
                         }, function failure() {
                             $scope.loading = false;
                         });

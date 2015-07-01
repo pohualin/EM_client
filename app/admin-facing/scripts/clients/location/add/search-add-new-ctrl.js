@@ -5,7 +5,8 @@ angular.module('emmiManager')
 /**
  *  This is the controller for the 'add locations' section on client edit (admin-facing/partials/location/client_new.html)
  */
-    .controller('ClientAddNewLocationsController', function ($scope, Location, $controller, Client, $modal) {
+    .controller('ClientAddNewLocationsController', ['$scope', 'Location', '$controller', 'Client', '$modal',
+        function ($scope, Location, $controller, Client, $modal) {
 
         $controller('LocationCommon', {$scope: $scope});
 
@@ -27,12 +28,13 @@ angular.module('emmiManager')
             addNewLocationsModal.hide();
         };
 
-    })
+    }])
 
 /**
  *  Controls the new location search/select popup (admin-facing/partials/location/search.html)
  */
-    .controller('LocationListController', function ($scope, Location, $http, Session, UriTemplate, $controller, $modal, focus, $alert, Client) {
+    .controller('LocationListController', ['$scope', 'Location', '$http', 'Session', 'UriTemplate', '$controller', '$modal', 'focus', '$alert', 'Client', 'STATUS',
+       function ($scope, Location, $http, Session, UriTemplate, $controller, $modal, focus, $alert, Client, STATUS) {
 
         $controller('LocationCommon', {$scope: $scope});
 
@@ -129,8 +131,8 @@ angular.module('emmiManager')
                 $scope.changedLocations = {};
                 $scope.loading = true;
                 Location.find(Client.getClient(), $scope.locationQuery).then(function (locationPage) {
+                    $scope.status = STATUS.ACTIVE_ONLY;
                     $scope.handleResponse(locationPage, managedLocationList);
-                    $scope.removeStatusFilterAndTotal = $scope.total <= 0;
                 }, function () {
                     // error happened
                     $scope.loading = false;
@@ -226,5 +228,5 @@ angular.module('emmiManager')
 
         init();
 
-    })
+    }])
 ;

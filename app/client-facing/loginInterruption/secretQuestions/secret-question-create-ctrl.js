@@ -32,25 +32,19 @@ angular.module('emmiManager')
                         function () {
                             $location.path($scope.locationBeforeLogin).replace();
                             $alert({
-                                title: ' ',
-                                content: 'Your security questions have been updated successfully.',
-                                container: 'body',
-                                type: 'success',
-                                placement: 'top',
-                                show: true,
-                                duration: 5,
-                                dismissable: true
+                                content: 'Your security questions have been updated successfully.'
                             });
                         }).finally(function () {
                             $scope.whenSaving = false;
                         });
                 } else {
                     $alert({
-                        title: ' ',
                         content: 'Please correct the below information.',
                         container: '#message-container-no-questions',
                         type: 'danger',
                         show: true,
+                        placement: '',
+                        duration: false,
                         dismissable: false
                     });
                 }

@@ -14,22 +14,20 @@ angular.module('emmiManager')
              * Sends a reset password
              */
             $scope.go = function () {
-                $scope.whenSaving = true;
-                CredentialsForgottenService.resetPassword($scope.emailAddress).then(function () {
-                    $alert({
-                        content: 'An email has been sent to <strong>' + $scope.emailAddress +
-                        '</strong> with instructions on how to reset your password.',
-                        type: 'success',
-                        placement: 'top',
-                        show: true,
-                        duration: 5,
-                        dismissable: true
-                    });
+                $scope.resetPasswordForm.submitted = true;
+                if ($scope.resetPasswordForm.$valid) {
+                    $scope.whenSaving = true;
+                    CredentialsForgottenService.resetPassword($scope.emailAddress).then(function () {
+                        $alert({
+                            content: 'An email has been sent to <strong>' + $scope.emailAddress +
+                            '</strong> with instructions on how to reset your password.'
+                        });
 
-                }).finally(function () {
-                    $scope.whenSaving = false;
-                    $location.path('/').replace();
-                });
+                    }).finally(function () {
+                        $scope.whenSaving = false;
+                        $location.path('/').replace();
+                    });
+                }
             };
 
         }

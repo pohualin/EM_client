@@ -20,24 +20,12 @@ angular.module('emmiManager')
                                 $location.path($scope.locationBeforeLogin).replace();
                                 if (!$scope.emailErrorAlert) {
                                     $alert({
-                                        title: ' ',
-                                        content: 'Your security questions have been updated successfully.',
-                                        container: 'body',
-                                        type: 'success',
-                                        placement: 'top',
-                                        show: true,
-                                        duration: 5,
-                                        dismissable: true
+                                        content: 'Your security questions have been updated successfully.'
                                     });
 
                                     $alert({
                                         content: 'Please check your email. A verification  link has been sent to <strong>' + $scope.userClientReqdResource.email +
-                                            '</strong> to finish setting up your account.',
-                                        type: 'success',
-                                        placement: 'top',
-                                        show: true,
-                                        duration: 5,
-                                        dismissable: true
+                                            '</strong> to finish setting up your account.'
                                     });
                                 }
                             });
@@ -56,11 +44,12 @@ angular.module('emmiManager')
 
                         if (!$scope.noEmailNoQuestionAlert) {
                             $scope.noEmailNoQuestionAlert = $alert({
-                                title: ' ',
                                 content: 'Please correct the below information.',
                                 container: '#message-container',
                                 type: 'danger',
                                 show: true,
+                                placement: '',
+                                duration: false,
                                 dismissable: false
                             });
                         }
@@ -71,11 +60,12 @@ angular.module('emmiManager')
                 }else{
                     if (!$scope.noEmailNoQuestionAlert) {
                         $scope.noEmailNoQuestionAlert = $alert({
-                            title: ' ',
                             content: 'Please correct the below information.',
                             container: '#message-container',
                             type: 'danger',
                             show: true,
+                            placement: '',
+                            duration: false,
                             dismissable: false
                         });
                     }

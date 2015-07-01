@@ -3,7 +3,7 @@
 angular.module('emmiManager')
 	.controller('ProfileCtrl', ['$scope', '$alert', '$modal', 'userClientReqdResource', 'ProfileService',
         function($scope, $alert, $modal, userClientReqdResource, ProfileService){
-	
+
     /**
      * Set edit mode for userClientForm
      */
@@ -12,12 +12,12 @@ angular.module('emmiManager')
     };
 
     /**
-     * Set edit mode for editEmailForm 
+     * Set edit mode for editEmailForm
      */
     $scope.setEmailEditMode = function(value){
         $scope.emailEditMode = value;
     };
-    
+
     /**
      * Show error alert
      */
@@ -25,18 +25,19 @@ angular.module('emmiManager')
         var content = message ? message : 'Please correct the below information.';
         if (!$scope.errorAlert) {
             $scope.errorAlert = $alert({
-                title: ' ',
                 content: content,
                 container: '#message-container',
                 type: 'danger',
                 show: true,
+                placement: '',
+                duration: false,
                 dismissable: false
             });
         } else {
             $scope.errorAlert.show();
         }
     };
-    
+
     /**
      * Hide error alert
      */
@@ -50,7 +51,7 @@ angular.module('emmiManager')
         $scope.userClient = userClientReqdResource;
         ProfileService.setUseEmail($scope.userClient);
     }
-    
+
     init();
 }])
 ;

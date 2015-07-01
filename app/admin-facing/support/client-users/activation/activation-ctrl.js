@@ -32,16 +32,13 @@ angular.module('emmiManager')
             /**
              * Send an activation email to the user
              */
-            $scope.sendActivationEmail = function (addAnother) {
+            $scope.sendActivationEmail = function () {
                 $scope.whenSaving = true;
                 ActivationService.sendActivationEmail(UsersClientService.getUserClient()).then(function () {
                     $scope.metadataChanged();
                     $alert({
                         content: 'A setup email has been sent to <strong>' + UsersClientService.getUserClient().entity.email + '</strong>.'
                     });
-                    if(addAnother){
-                        $scope.createAnotherUserClient();
-                    }
                 }).finally(function () {
                     $scope.whenSaving = false;
                 });
