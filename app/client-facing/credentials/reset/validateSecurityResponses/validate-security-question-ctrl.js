@@ -81,11 +81,12 @@ angular.module('emmiManager')
             $scope.showError = function (message) {
                 if (!$scope.errorAlert) {
                     $scope.errorAlert = $alert({
-                        title: ' ',
                         content: 'Please check your responses and try again.',
                         container: '#message-container',
                         type: 'danger',
                         show: true,
+                        placement: '',
+                        duration: false,
                         dismissable: false
                     });
                 } else {

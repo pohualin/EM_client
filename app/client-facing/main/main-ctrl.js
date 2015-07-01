@@ -26,15 +26,12 @@ angular.module('emmiManager')
                     		$scope.passwordAlert = $alert({
                     			content: expiredAlertMessage,
                     			template: 'client-facing/main/password-reminder-alert.tpl.html',
-                    			type: 'warning',
-                    			placement: 'top',
-                    			show: true,
-                    			dismissable: true
+                    			type: 'warning'
                     		});
                     	} else {
                     		$scope.passwordAlert.show();
                     	}
-                    	
+
                     }
                 });
 
