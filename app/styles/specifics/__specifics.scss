@@ -139,6 +139,9 @@ label.empty {
 .info-circle {
     color: $brand-secondary;
 }
+.error-circle {
+    color: $state-danger-text;
+}
 
 .role-error {
     display: inline-block;
