@@ -39,7 +39,7 @@
                                             title="Are you sure?"
                                             data-content-template="admin-facing/partials/role/client/delete.tpl.html"
                                             data-auto-close="1"
-                                            data-bs-popover>
+                                            data-bs-popover aria-label="Delete">
                                         <i class="icon-trashcan"></i>
                                     </button>
                                 </div>
@@ -117,7 +117,7 @@
                                                data-ng-change="resetValidity(newClientRoleForm)">
                                         <button class="btn btn-sm btn-icon" type="button"
                                                 data-ng-disabled="whenSaving"
-                                                data-ng-click="cancelNew(newClientRoleForm)"><span
+                                                data-ng-click="cancelNew(newClientRoleForm)" aria-label="Cancel"><span
                                             class="icon-delete icon-size-lg"></span></button>
                                     </div>
                                 </div>

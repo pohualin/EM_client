@@ -29,14 +29,14 @@
                              data-ng-class="{ 'has-error' : changePasswordForm.oldPassword.$invalid && changePasswordFormSubmitted }">
                             <label class="control-label" for="oldPassword">Current Password:</label>
 
-                            <div class="error-circle fa-exclamation-circle"
+                            <div class="error-circle fa-exclamation-circle" role="alert"
                                  data-ng-show="changePasswordForm.oldPassword.$error.required && changePasswordFormSubmitted"
                                  data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                                 data-title="Required"></div>
-                            <div class="error-circle fa-exclamation-circle"
+                                 data-title="Required" aria-label="Required"></div>
+                            <div class="error-circle fa-exclamation-circle" role="alert"
                                  data-ng-show="changePasswordForm.oldPassword.$error.bad && changePasswordFormSubmitted"
                                  data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                                 data-title="Please enter your current password"></div>
+                                 data-title="Please enter your current password" aria-label="Please enter your current password"></div>
                             <input class="form-control" id="oldPassword" data-ng-model="passwordChange.oldPassword"
                                    name="oldPassword" autocomplete="off"
                                    type="password" maxlength="50" data-auto-focus required data-ng-change="oldPasswordChanged()">
@@ -49,22 +49,22 @@
                              data-ng-class="{ 'has-error' : changePasswordForm.password.$invalid && changePasswordFormSubmitted }">
                             <label class="control-label" for="password">New Password:</label>
 
-                            <div class="error-circle fa-exclamation-circle"
+                            <div class="error-circle fa-exclamation-circle" role="alert"
                                  data-ng-show="changePasswordForm.password.$error.required && changePasswordFormSubmitted"
                                  data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                                 data-title="Required"></div>
-                            <div class="error-circle fa-exclamation-circle"
+                                 data-title="Required" aria-label="Required"></div>
+                            <div class="error-circle fa-exclamation-circle" role="alert"
                                  data-ng-show="changePasswordForm.password.$error.policy && changePasswordFormSubmitted"
                                  data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                                 data-title="Password must meet guidelines"></div>
-                            <div class="error-circle fa-exclamation-circle"
+                                 data-title="Password must meet guidelines" aria-label="Password must meet guidelines"></div>
+                            <div class="error-circle fa-exclamation-circle" role="alert"
                                  data-ng-show="changePasswordForm.password.$error.history && changePasswordFormSubmitted"
                                  data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                                 data-title="Must not match your previous {{policy.passwordRepetitions}} passwords"></div>
-                            <div class="error-circle fa-exclamation-circle"
+                                 data-title="Must not match your previous {{policy.passwordRepetitions}} passwords" aria-label="Must not match your previous {{policy.passwordRepetitions}} passwords"></div>
+                            <div class="error-circle fa-exclamation-circle" role="alert"
                                  data-ng-show="changePasswordForm.password.$error.eligibility && changePasswordFormSubmitted"
                                  data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                                 data-title="A minimum of {{policy.daysBetweenPasswordChange}} days are required between password changes"></div>
+                                 data-title="A minimum of {{policy.daysBetweenPasswordChange}} days are required between password changes" aria-label="A minimum of {{policy.daysBetweenPasswordChange}} days are required between password changes"></div>
                             <input class="form-control" id="password" data-ng-model="passwordChange.password"
                                    name="password" autocomplete="off"
                                    type="password" maxlength="50" required data-ng-change="passwordChanged()">
@@ -77,16 +77,16 @@
                              data-ng-class="{ 'has-error' : changePasswordForm.confirmPassword.$invalid && changePasswordFormSubmitted }">
                             <label class="control-label" for="confirmPassword">Confirm Password:</label>
 
-                            <div class="error-circle fa-exclamation-circle"
+                            <div class="error-circle fa-exclamation-circle" role="alert"
                                  data-ng-show="changePasswordForm.confirmPassword.$error.required && changePasswordFormSubmitted"
                                  data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                                 data-title="Required"></div>
-                            <div class="error-circle fa-exclamation-circle"
+                                 data-title="Required" aria-label="Required"></div>
+                            <div class="error-circle fa-exclamation-circle" role="alert"
                                  data-ng-show="!changePasswordForm.password.$error.required &&
                          !changePasswordForm.confirmPassword.$error.required &&
                          changePasswordForm.confirmPassword.$error.same && changePasswordFormSubmitted"
                                  data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                                 data-title="Passwords must match"></div>
+                                 data-title="Passwords must match" aria-label="Passwords must match"></div>
                             <input class="form-control" id="confirmPassword"
                                    data-ng-model="passwordChange.confirmPassword"
                                    name="confirmPassword" autocomplete="off"

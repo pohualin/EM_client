@@ -4,14 +4,14 @@
             <div class="form-group"
                  data-ng-class="{ 'has-error' : userClientForm.firstName.$invalid && userClientFormSubmitted }">
                 <label class="control-label" for="firstName">First Name</label>
-                <div class="error-circle fa-exclamation-circle"
+                <div class="error-circle fa-exclamation-circle" role="alert"
                      data-ng-show="userClientForm.firstName.$error.required && userClientFormSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                     data-title="Required"></div>
-                <div class="error-circle fa-exclamation-circle"
+                     data-title="Required" aria-label="Required"></div>
+                <div class="error-circle fa-exclamation-circle" role="alert"
                      data-ng-show="userClientForm.firstName.$error.pattern && userClientFormSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                     data-title="Please enter a valid first name"></div>
+                     data-title="Please enter a valid first name" aria-label="Please enter a valid first name"></div>
                 <input class="form-control" id="firstName" data-ng-model="userClientEdit.entity.firstName"
                        name="firstName"
                        type="text" maxlength="50" required data-auto-focus
@@ -22,14 +22,14 @@
             <div class="form-group"
                  data-ng-class="{ 'has-error' : userClientForm.lastName.$invalid && userClientFormSubmitted }">
                 <label class="control-label" for="lastName">Last Name</label>
-                <div class="error-circle fa-exclamation-circle"
+                <div class="error-circle fa-exclamation-circle" role="alert"
                      data-ng-show="userClientForm.lastName.$error.required && userClientFormSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                     data-title="Required"></div>
-                <div class="error-circle fa-exclamation-circle"
+                     data-title="Required" aria-label="Required"></div>
+                <div class="error-circle fa-exclamation-circle" role="alert"
                      data-ng-show="userClientForm.lastName.$error.pattern && userClientFormSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                     data-title="Please enter a valid last name"></div>
+                     data-title="Please enter a valid last name" aria-label="Please enter a valid last name"></div>
                 <input class="form-control" id="lastName" data-ng-model="userClientEdit.entity.lastName"
                        name="lastName"
                        type="text" maxlength="50" required
@@ -40,17 +40,18 @@
             <div class="form-group"
                  data-ng-class="{ 'has-error' : userClientForm.email.$invalid && userClientFormSubmitted }">
                 <label class="control-label" for="email">Email</label>
-                <div class="error-circle fa-exclamation-circle"
+                <div class="error-circle fa-exclamation-circle" role="alert"
                      data-ng-show="userClientForm.email.$error.required && userClientFormSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                     data-title="Required"></div>
-                <div class="error-circle fa-exclamation-circle"
+                     data-title="Required" aria-label="Required"></div>
+                <div class="error-circle fa-exclamation-circle" role="alert"
                      data-ng-show="userClientForm.email.$error.pattern && userClientFormSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                     data-title="Please enter a valid email"></div>
+                     data-title="Please enter a valid email" aria-label="Please enter a valid email"></div>
                 <input class="form-control" id="email" data-ng-model="userClientEdit.entity.email"
                        name="email" type="text" data-ng-required="userClientEdit.useEmail"
                        maxlength="255" data-support-popover-save-error data-save-error="emailError" data-focus-on="email"
+                       data-ng-change="syncEmailLogin()"
                        data-ng-pattern="emailPattern" />
             </div>
         </div>
@@ -70,10 +71,10 @@
             <div class="form-group"
                  data-ng-class="{ 'has-error' : userClientForm.login.$invalid && userClientFormSubmitted && !userClientEdit.useEmail}">
                 <label class="control-label" for="userId">User ID</label>
-                <div class="error-circle fa-exclamation-circle"
+                <div class="error-circle fa-exclamation-circle" role="alert"
                      data-ng-show="userClientForm.login.$error.required && userClientFormSubmitted && !userClientEdit.useEmail"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                     data-title="Required"></div>
+                     data-title="Required" aria-label="Required"></div>
                 <div data-ng-hide="userClientEdit.useEmail">
                     <input class="form-control" id="userId" data-ng-model="userClientEdit.entity.login"
                            name="login" type="text" data-ng-required="!userClientEdit.useEmail"

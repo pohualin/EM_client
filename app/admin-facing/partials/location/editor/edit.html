@@ -15,27 +15,27 @@
                 <div class="form-group"
                      data-ng-class="{ 'has-error' : locationForm.locationName.$invalid && locationFormSubmitted }">
                     <label class="control-label" for="locationName">Name</label>
-                    <div class="error-circle fa-exclamation-circle"
+                    <div class="error-circle fa-exclamation-circle" role="alert"
                          data-ng-show="locationForm.locationName.$error.required && locationFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                         data-title="Required"></div>
-                    <div class="error-circle fa-exclamation-circle"
+                         data-title="Required" aria-label="Required"></div>
+                    <div class="error-circle fa-exclamation-circle" role="alert"
                          data-ng-show="locationForm.locationName.$error.pattern && locationFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                         data-title="Please enter a valid name"></div>
+                         data-title="Please enter a valid name" aria-label="Please enter a valid name"></div>
                     <input class="form-control" id="locationName" data-ng-model="locationToEdit.name" name="locationName"
                            type="text" maxlength="255" required data-focus-on="locationName" data-auto-focus
-                           data-ng-pattern="/^[\-\.a-zA-Z0-9 '=_;:@#&,\(\)!]*$/">
+                           data-ng-pattern="/^[\-\.a-zA-Z0-9 '=_;:@#&,\(\)\/!]*$/">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group"
                      data-ng-class="{ 'has-error' : locationForm.phone.$invalid && locationFormSubmitted }">
                     <label class="control-label" for="phone">Phone</label>
-                    <div class="error-circle fa-exclamation-circle"
+                    <div class="error-circle fa-exclamation-circle" role="alert"
                          data-ng-show="locationForm.phone.$error.pattern && locationFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                         data-title="Please enter a valid phone number"></div>
+                         data-title="Please enter a valid phone number" aria-label="Please enter a valid phone number"></div>
                     <span class="field-note field-optional">optional</span>
                     <input class="form-control" data-ng-model="locationToEdit.phone" id="phone" name="phone" type="text"
                            maxlength="12" data-input-mask="999-999-9999"
@@ -48,10 +48,10 @@
                 <div class="form-group"
                      data-ng-class="{ 'has-error' : locationForm.city.$invalid && locationFormSubmitted }">
                     <label class="control-label" for="city">City</label>
-                    <div class="error-circle fa-exclamation-circle"
+                    <div class="error-circle fa-exclamation-circle" role="alert"
                          data-ng-show="locationForm.city.$error.pattern && locationFormSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                         data-title="Please enter a valid city"></div>
+                         data-title="Please enter a valid city" aria-label="Please enter a valid city"></div>
                     <span class="field-note field-optional">optional</span>
                     <input class="form-control" data-ng-model="locationToEdit.city" id="city" name="city" type="text"
                            maxlength="255" data-ng-pattern="/^[\-\.a-zA-Z0-9 '=_;:@#&,\(\)!]*$/">

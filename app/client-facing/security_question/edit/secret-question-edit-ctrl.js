@@ -33,27 +33,18 @@ angular.module('emmiManager')
                         .saveOrUpdateSecretQuestionResponse($scope.question1.entity, $scope.question2.entity).then(
                         function ok() {
                             $alert({
-                                title: ' ',
-                                content: 'Your security questions have been updated successfully.',
-                                container: 'body',
-                                type: 'success',
-                                placement: 'top',
-                                show: true,
-                                duration: 5,
-                                dismissable: true
+                                content: 'Your security questions have been updated successfully.'
                             });
                             $location.path('/viewSecurityQuestions').replace();
                         },
                         function notOk() {
                             $alert({
-                                title: ' ',
                                 content: 'There was a problem saving your security questions.',
-                                container: 'body',
-                                type: 'success',
-                                placement: 'top',
+                                type: 'danger',
                                 show: true,
-                                duration: 5,
-                                dismissable: true
+                                placement: '',
+                                duration: false,
+                                dismissable: false
                             });
                             $location.path('/viewSecurityQuestions').replace();
                         }
@@ -64,7 +55,6 @@ angular.module('emmiManager')
                 } else {
                     if (!$scope.formAlert) {
                         $scope.formAlert = $alert({
-                            title: ' ',
                             content: 'Please correct the below information.',
                             container: '#message-container',
                             type: 'danger',
@@ -130,7 +120,6 @@ angular.module('emmiManager')
             $scope.showError = function () {
                 if (!$scope.errorAlert) {
                     $scope.errorAlert = $alert({
-                        title: ' ',
                         content: 'Please check your password and try again.',
                         container: '#password-message-container',
                         type: 'danger',

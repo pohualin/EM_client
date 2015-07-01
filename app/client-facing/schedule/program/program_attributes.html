@@ -7,10 +7,10 @@
                 Provider:
             </label>
 
-            <div class="error-circle fa-exclamation-circle"
+            <div class="error-circle fa-exclamation-circle" role="alert"
                  data-ng-show="addProgramForm.provider.$error.required && addProgramFormSubmitted"
                  data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                 data-title="Required"></div>
+                 data-title="Required" aria-label="Required"></div>
             <div class="row">
                 <div class="col-md-12">
                     <select id="provider" name="provider" class="form-control"
@@ -37,10 +37,10 @@
                 Location:
             </label>
 
-            <div class="error-circle fa-exclamation-circle"
+            <div class="error-circle fa-exclamation-circle" role="alert"
                  data-ng-show="addProgramForm.location.$error.required && addProgramFormSubmitted"
                  data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                 data-title="Required"></div>
+                 data-title="Required" aria-label="Required"></div>
             <div class="row">
                 <div class="col-md-12">
                     <select id="location" name="location" class="form-control"
@@ -66,21 +66,21 @@
             <label class="control-label" for="viewByDate">
                 View-by Date:
             </label>
-            <div class="error-circle fa-exclamation-circle"
+            <div class="error-circle fa-exclamation-circle" role="alert"
                  data-ng-show="!addProgramForm.viewByDate.$error.date &&
                                addProgramForm.viewByDate.$error.required &&
                                addProgramFormSubmitted"
                  data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                 data-title="Required"></div>
-            <div class="error-circle fa-exclamation-circle"
+                 data-title="Required" aria-label="Required"></div>
+            <div class="error-circle fa-exclamation-circle" role="alert"
                  data-ng-show="!addProgramForm.viewByDate.$error.required && addProgramForm.viewByDate.$error.min && addProgramFormSubmitted"
                  data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                 data-title="Please enter a date in the future"></div>
-            <div class="error-circle fa-exclamation-circle"
+                 data-title="Please enter a date in the future" aria-label="Please enter a date in the future"></div>
+            <div class="error-circle fa-exclamation-circle" role="alert"
                  data-ng-show="(addProgramForm.viewByDate.$error.min && addProgramForm.viewByDate.$error.date && addProgramForm.viewByDate.$error.required
                   || addProgramForm.viewByDate.$error.date && addProgramForm.viewByDate.$error.required) && addProgramFormSubmitted"
                  data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                 data-title="Please select a valid date"></div>
+                 data-title="Please select a valid date" aria-label="Please select a valid date"></div>
             <input id="viewByDate" class="form-control" type="text" name="viewByDate"
                    data-ng-model="scheduledProgram.viewByDate" data-autoclose="true"
                    data-dateType="iso" data-bs-datepicker

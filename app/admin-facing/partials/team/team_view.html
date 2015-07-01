@@ -1,10 +1,17 @@
         <div class="col-md-12">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-6 pull-left">
                     <h1>
                         <span data-translate="team_view_page.information.title">Team Information</span>
-                        <span><a class="btn btn-icon icon-size-lg" data-ng-click="edit()"><i class="icon-compose"></i></a></span>
+                        <span><a class="btn btn-icon icon-size-lg" data-ng-click="edit()" aria-label="Edit"><i class="icon-compose"></i></a></span>
                     </h1>
+                </div>
+                <div class="col-md-6">
+                    <div class="pull-right">
+                        <a href="#/clients/{{client.id}}/teams/new" class="btn btn-link btn-link-nopad btn-heading btn-heading-h1">
+                            <i class="icon-plus"></i> Add New Team
+                        </a>
+                    </div>
                 </div>
             </div>
             <div class="row entity-info">

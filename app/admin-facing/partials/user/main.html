@@ -11,7 +11,7 @@
                 <h1>Emmi Users</h1>
                 <div class="row" data-ng-show="searchPerformed">
                     <div class="col-md-12">
-                        <div class="row table-search-filters" data-ng-hide="removeStatusFilterAndTotal">
+                        <div class="row table-search-filters" data-ng-hide="total === 0">
                             <div class="col-md-12"></div>
                         </div>
                         <table class="table table-bordered table-striped table-hover"
@@ -49,7 +49,7 @@
                                 <td><span class="col-wrap">{{user.email}}</span></td>
                                 <td class="text-right">
                                     <a data-ng-hide="userClient.deactivationPopoverOpen" class="btn-link"
-                                        href="#/users/{{user.id}}?{{currentRouteQueryString}}"><i class="icon-compose icon-size-xl"></i></a>
+                                        href="#/users/{{user.id}}?{{currentRouteQueryString}}" aria-label="View User"><i class="icon-compose icon-size-xl"></i></a>
                                     <a data-ng-hide="user.id === account.id"
                                        href
                                        data-on-ok="toggleActivation(user)"
@@ -58,8 +58,8 @@
                                        data-on-open-popover="deactivationPopoverOpen(user, true)"
                                        data-on-close-popover="deactivationPopoverOpen(user, false)"
                                        data-toggle-user-client-active>
-                                        <i title="activate" data-ng-if="!user.active" class="icon-check-o-circle icon-size-xl"></i>
-                                        <i title="deactivate" data-ng-if="user.active" class="icon-trashcan icon-size-xl"></i>
+                                        <i aria-label="Activate" title="activate" data-ng-if="!user.active" class="icon-check-o-circle icon-size-xl"></i>
+                                        <i aria-label="Deactivate" title="deactivate" data-ng-if="user.active" class="icon-trashcan icon-size-xl"></i>
                                     </a>
                                 </td>
                             </tr>
@@ -68,9 +68,9 @@
                                     <ul class="pagination">
                                         <li data-ng-repeat="link in links | orderBy:'order'" class="{{link.className}}" data-ng-class="{'active': link.name == currentPage}">
                                             <a data-ng-click="fetchPage(link.href)">
-                                                <i class="fa-angle-left" data-ng-if="link.className === 'previous'"></i>
+                                                <i aria-label="Previous" class="fa-angle-left" data-ng-if="link.className === 'previous'"></i>
                                                 {{link.name}}
-                                                <i class="fa-angle-right" data-ng-if="link.className === 'next'"></i>
+                                                <i aria-label="Next" class="fa-angle-right" data-ng-if="link.className === 'next'"></i>
                                             </a>
                                         </li>
                                     </ul>

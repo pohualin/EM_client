@@ -40,9 +40,9 @@
                 <div class="row" data-ng-show="searchPerformed">
                     <div class="col-md-12">
                         <hr class="search-divider" />
-                        <div class="row table-search-filters" data-ng-hide="removeStatusFilterAndTotal">
+                        <div class="row table-search-filters">
                             <div class="col-md-12">
-                                <div class="pull-right table-results-count">
+                                <div class="pull-right table-results-count" data-ng-hide="total === 0">
                                     {{total}}
                                     <span data-ng-if="total != 1" data-translate="global.labels.total"> results</span>
                                     <span data-ng-if="total === 1" data-translate="global.labels.totalSingular"> result</span>
@@ -82,7 +82,7 @@
                                     <td>{{client.entity.contractOwner.firstName}} {{client.entity.contractOwner.lastName}}</td>
                                     <td>{{client.entity.type.typeKey | translate}}</td>
                                     <td class="text-center">
-                                        <a href="#/clients/{{client.entity.id}}?{{currentRouteQueryString}}"><i class="icon-compose icon-size-xl"></i></a>
+                                        <a href="#/clients/{{client.entity.id}}?{{currentRouteQueryString}}" aria-label="Edit"><i class="icon-compose icon-size-xl"></i></a>
                                     </td>
                                 </tr>
                                 <tr class="pagination-row no-hover">
@@ -90,9 +90,9 @@
                                         <ul class="pagination">
                                             <li data-ng-repeat="link in links | orderBy:'order'" class="{{link.className}}" data-ng-class="{'active': link.name == currentPage}">
                                                 <a data-ng-click="fetchPage(link.href)">
-                                                    <i class="fa-angle-left" data-ng-if="link.className === 'previous'"></i>
+                                                    <i aria-label="Previous" class="fa-angle-left" data-ng-if="link.className === 'previous'"></i>
                                                     {{link.name}}
-                                                    <i class="fa-angle-right" data-ng-if="link.className === 'next'"></i>
+                                                    <i aria-label="Next" class="fa-angle-right" data-ng-if="link.className === 'next'"></i>
                                                 </a>
                                             </li>
                                         </ul>
@@ -100,7 +100,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <div data-ng-hide="clients">
+                        <div class="table-no-results"  data-ng-hide="clients">
                             <span data-translate="global.messages.search.no_results_found"></span>
                         </div>
                     </div><!-- .col-md-12 -->

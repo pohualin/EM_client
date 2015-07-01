@@ -26,7 +26,8 @@ angular.module('emmiManager')
              * Called when GO button is clicked
              */
             $scope.search = function () {
-                performSearch($scope.query, null, null, true);
+                $scope.status = STATUS.ACTIVE_ONLY;
+                performSearch($scope.query, null, null);
             };
 
             /**
@@ -34,14 +35,14 @@ angular.module('emmiManager')
              */
             $scope.sort = function (property) {
                 var sort = $scope.createSortProperty(property);
-                performSearch($scope.query, $scope.status, sort, false);
+                performSearch($scope.query, $scope.status, sort);
             };
 
             /**
              * when the status select is changed
              */
             $scope.statusChange = function () {
-                performSearch($scope.query, $scope.status, $scope.sortProperty, false);
+                performSearch($scope.query, $scope.status, $scope.sortProperty);
             };
 
             /**
@@ -60,11 +61,11 @@ angular.module('emmiManager')
                 // perform search if the query string has search arguments
                 if ($scope.query) {
                     if ($scope.pageWhereBuilt === URL_PARAMETERS.CLIENT_USERS) {
-                        // search from the query string, don't blank out status and total for INACTIVE_ONLY searches
-                        performSearch($scope.query, $scope.status, $scope.sortProperty, $scope.status !== STATUS.INACTIVE_ONLY);
+                        performSearch($scope.query, $scope.status, $scope.sortProperty);
                     } else {
                         // it was built by a different page, use the query only
-                        performSearch($scope.query, null, null, true);
+                        $scope.status = STATUS.ACTIVE_ONLY;
+                        performSearch($scope.query, $scope.status, null);
                     }
                 }
             }
@@ -76,12 +77,8 @@ angular.module('emmiManager')
              * @param q the query
              * @param status to filter by
              * @param sort to sort by
-             * @param recalculateStatusFilterAndTotal boolean indicating whether the
-             *        status and filter line should be possibly blanked out or not
-             *        true means to possibly blank it out, false means leave it the
-             *        way it is
              */
-            function performSearch(q, status, sort, recalculateStatusFilterAndTotal) {
+            function performSearch(q, status, sort) {
                 if (!$scope.searchForm || !$scope.searchForm.query.$invalid) {
                     $scope.loading = true;
                     $scope.serializeToQueryString(q, URL_PARAMETERS.CLIENT_USERS, status, sort);
@@ -98,9 +95,6 @@ angular.module('emmiManager')
                             // common paginated response handling
                             $scope.handleResponse(response, contentProperty);
 
-                            if (recalculateStatusFilterAndTotal) {
-                                $scope.removeStatusFilterAndTotal = $scope.total <= 0;
-                            }
                         }, function failure() {
                             $scope.loading = false;
                         });

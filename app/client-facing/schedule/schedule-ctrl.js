@@ -69,13 +69,7 @@
                                     }));
 
                                 $alert({
-                                    title: '',
-                                    content: 'Program has been scheduled successfully',
-                                    type: 'success',
-                                    placement: 'top',
-                                    show: true,
-                                    duration: 5,
-                                    dismissable: true
+                                    content: 'Program has been scheduled successfully'
                                 });
                             }).finally(function () {
                                 $scope.whenSaving = false;

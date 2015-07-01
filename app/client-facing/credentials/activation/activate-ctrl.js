@@ -41,12 +41,7 @@ angular.module('emmiManager')
                     ActivateClientUserService.activate(activationCode, $scope.passwordChange)
                         .then(function () {
                             $alert({
-                                content: 'Your account has been activated. Please login.',
-                                type: 'success',
-                                placement: 'top',
-                                show: true,
-                                duration: 5,
-                                dismissable: true
+                                content: 'Your account has been activated. Please login.'
                             });
                             $location.path('/').replace();
                         }, function error(errorResponse) {

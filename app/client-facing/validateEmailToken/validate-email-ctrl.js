@@ -11,12 +11,7 @@ angular.module('emmiManager')
                 ValidationService.validateEmailToken(validationKey).then(function () {
                     //show confirmation banner
                     $alert({
-                        content: 'Thanks! Your email address has been verified.',
-                        type: 'success',
-                        placement: 'top',
-                        show: true,
-                        duration: 5,
-                        dismissable: true
+                        content: 'Thanks! Your email address has been verified.'
                     });
                     $location.path('/login').replace();
                 }, function error() {

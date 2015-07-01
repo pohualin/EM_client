@@ -52,7 +52,7 @@ angular.module('emmiManager', [
         EMAIL: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$/
     })
 
-    .config(function ($httpProvider, $translateProvider, tmhDynamicLocaleProvider, HateoasInterceptorProvider, $datepickerProvider, API) {
+    .config(function ($httpProvider, $translateProvider, tmhDynamicLocaleProvider, HateoasInterceptorProvider, $datepickerProvider, $alertProvider, API) {
 
         // Initialize angular-translate
         $translateProvider.useUrlLoader(API.messages);
@@ -88,6 +88,20 @@ angular.module('emmiManager', [
             iconLeft: 'fa-angle-left',
             iconRight: 'fa-angle-right'
         });
+
+        // custom global angularstrap configurations
+        angular.extend($alertProvider.defaults, {
+            show: true,
+            title: '',
+            container: '#messages-container',
+            type: 'success',
+            // placement: 'top',
+            duration: 5,
+            dismissable: true,
+            animation: 'am-fade-and-slide-top',
+            template: 'client-facing/common/directives/alert/alert.tpl.html'
+        });
+
     })
 
     .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, PATTERN, arrays, $document,
@@ -315,7 +329,7 @@ angular.module('emmiManager', [
                 var d = event.srcElement || event.target;
                 if (!(d.tagName.toUpperCase() === 'INPUT' &&
                     (d.type.toUpperCase() === 'TEXT' ||
-                    d.type.toUpperCase() === 'PASSWORD') || 
+                    d.type.toUpperCase() === 'PASSWORD') ||
                     d.tagName.toUpperCase() === 'TEXTAREA')) {
                     event.preventDefault();
                 }

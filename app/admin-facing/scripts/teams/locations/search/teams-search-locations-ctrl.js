@@ -2,7 +2,8 @@
 
 angular.module('emmiManager')
 
-    .controller('SearchTeamsLocationsController', function ($rootScope, $scope, $modal, $controller,TeamSearchLocation, Location, Client, ProviderView, TeamProviderService, focus) {
+    .controller('SearchTeamsLocationsController', ['$rootScope', '$scope', '$modal', '$controller', 'TeamSearchLocation', 'Location', 'Client', 'ProviderView', 'TeamProviderService', 'focus', 'STATUS',
+       function ($rootScope, $scope, $modal, $controller,TeamSearchLocation, Location, Client, ProviderView, TeamProviderService, focus, STATUS) {
 
         $controller('LocationCommon', {$scope: $scope});
 
@@ -108,6 +109,7 @@ angular.module('emmiManager')
                 $scope.loading = true;
                 $scope.locations = null;
                 $scope.cancelPopup(); //clean the locations checked in other search
+                $scope.searchAll.status = STATUS.ACTIVE_ONLY;
                 Location.findWithoutCL(Client.getClient(), $scope.searchAll.locationQuery, $scope.searchAll.status).then(function (locationPage) {
                     $scope.handleResponse(locationPage, managedLocationList);
                     $scope.setLocationChecked();
@@ -223,7 +225,6 @@ angular.module('emmiManager')
         };
 
         function init() {
-        	$scope.searchAll.status = 'ACTIVE_ONLY';
         	TeamProviderService.buildMultiSelectProvidersData($scope.teamResource).then(function(response){
             	$scope.providersData = response;
             	$scope.sizeClass =  $scope.providersData.length === 0 ? 'sort col-sm-4' : 'sort col-sm-3';
@@ -234,9 +235,8 @@ angular.module('emmiManager')
         	});
         	$scope.cleanSearch();
         	$scope.tabs = TeamSearchLocation.setAllTabs();
-
         }
         init();
 
-    })
+    }])
 ;

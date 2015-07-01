@@ -11,14 +11,14 @@
                             <div class="form-group"
                                  data-ng-class="{ 'has-error' : emailRestrictConfigurationForm.emailEnding.$invalid && emailRestrictConfigurationFormSubmitted }">
                                 <label class="control-label" for="emailEnding">Email ending</label>
-                                <div class="error-circle fa-exclamation-circle"
+                                <div class="error-circle fa-exclamation-circle" role="alert"
                                      data-ng-show="emailRestrictConfigurationForm.emailEnding.$error.required && emailRestrictConfigurationFormSubmitted"
                                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                                     data-title="Required"></div>
-                                <div class="error-circle fa-exclamation-circle"
+                                     data-title="Required" aria-label="Required"></div>
+                                <div class="error-circle fa-exclamation-circle" role="alert"
                                     data-ng-show="emailRestrictConfigurationForm.emailEnding.$error.pattern && emailRestrictConfigurationFormSubmitted"
                                     data-bs-tooltip data-placement="right" data-type="danger"
-                                    data-container="body" data-title="Please enter a valid email ending"></div>
+                                    data-container="body" data-title="Please enter a valid email ending" aria-label="Please enter a valid email ending"></div>
                                 <input class="form-control" id="emailEnding"
                                        data-ng-model="emailRestrictConfiguration.entity.emailEnding"
                                        name="emailEnding"
