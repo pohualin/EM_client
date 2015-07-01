@@ -59,6 +59,9 @@
     padding-right: 25px;
     strong {
         color: $brand-secondary;
+        .client-header & {
+            color: rgb(250,212,107);
+        }
     }
 }
 
@@ -115,6 +118,9 @@
     }
     background: $brand-secondary;
     @include clearfix();
+    .client-header & {
+        background: rgb(250,212,107);
+    }
 }
 
 .app-breadcrumb {

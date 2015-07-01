@@ -48,12 +48,7 @@ angular.module('emmiManager')
                         .then(function success() {
                             $alert({
                                 content: 'The password for <b>' + credentials.username +
-                                '</b> has been successfully changed.',
-                                type: 'success',
-                                placement: 'top',
-                                show: true,
-                                duration: 5,
-                                dismissable: true
+                                '</b> has been successfully changed.'
                             });
                             $location.path('/').replace();
                         }, function error(errorResponse) {

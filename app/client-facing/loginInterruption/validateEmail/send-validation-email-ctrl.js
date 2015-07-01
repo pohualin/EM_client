@@ -24,15 +24,9 @@ angular.module('emmiManager')
                             //send validation email
                             return ValidationService.sendValidationEmail($scope.userClientReqdResource).then(function () {
                                 $location.path($scope.locationBeforeLogin).replace();
-
                                 $alert({
                                     content: 'Please check your email. A link has been sent to <strong>' + $scope.userClientReqdResource.email +
-                                        '</strong> to finish setting up your account.',
-                                    type: 'success',
-                                    placement: 'top',
-                                    show: true,
-                                    duration: 5,
-                                    dismissable: true
+                                        '</strong> to finish setting up your account.'
                                 });
                             });
 
@@ -50,11 +44,12 @@ angular.module('emmiManager')
                             }
                             if (!$scope.validateEmailErrorAlert) {
                                 $scope.validateEmailErrorAlert = $alert({
-                                    title: ' ',
                                     content: 'Please correct the below information.',
                                     container: '#message-container-validate-email',
                                     type: 'danger',
                                     show: true,
+                                    placement: '',
+                                    duration: false,
                                     dismissable: false
                                 });
                             }
@@ -66,11 +61,12 @@ angular.module('emmiManager')
                     //email doesn't match the matcher on email field or is blank
                     if (!$scope.validateEmailErrorAlert) {
                         $scope.validateEmailErrorAlert = $alert({
-                            title: ' ',
                             content: 'Please correct the below information.',
                             container: '#message-container-validate-email',
                             type: 'danger',
                             show: true,
+                            placement: '',
+                            duration: false,
                             dismissable: false
                         });
                     }

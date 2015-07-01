@@ -35,13 +35,7 @@ angular.module('emmiManager')
                     } else {
                         CreatePatientService.save($scope.team, $scope.patient).then(function (response) {
                             $alert({
-                                title: ' ',
-                                content: 'The patient <b>' + response.data.entity.firstName + ' ' + response.data.entity.lastName + '</b> has been successfully added.',
-                                type: 'success',
-                                placement: 'top',
-                                show: true,
-                                duration: 5,
-                                dismissable: true
+                                content: 'The patient <b>' + response.data.entity.firstName + ' ' + response.data.entity.lastName + '</b> has been successfully added.'
                             });
                             $scope.editMode = false;
                             $scope.patient = response.data.entity;
@@ -64,11 +58,12 @@ angular.module('emmiManager')
             $scope.showError = function () {
                 if (!$scope.errorAlert) {
                     $scope.errorAlert = $alert({
-                        title: ' ',
                         content: 'Please correct the below information.',
                         container: '#alerts-container',
                         type: 'danger',
                         show: true,
+                        placement: '',
+                        duration: false,
                         dismissable: false
                     });
                 } else {
