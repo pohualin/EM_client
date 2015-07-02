@@ -7,11 +7,12 @@
     <div data-ng-include="'client-facing/loginInterruption/validateEmail/validate_email_template.html'">
     <div class="form-actions pull-right">
         <div class="form-group">
-            <button type="button" class="btn btn-cancel"
-                    data-ng-disabled="whenSaving"
-                    data-ng-click="notNow()">not now
+            <button class="btn btn-cancel" type="button"
+                data-ng-disabled="whenSaving"
+                data-ng-click="notNow()">
+                not now
             </button>
-            <button class="btn btn-primary" type="submit"
+            <button class="btn btn-success" type="submit"
                     data-ng-disabled="whenSaving"
                     data-ng-click="sendValidationEmail(validateEmailForm.validateEmail.$valid)">
                 Save

@@ -1,72 +1,44 @@
-<div class="container" data-ng-cloak data-ng-controller="addEmailQuestions">
-    <form name="noEmailNoQuestionForm" class="form" novalidate>
-        <div class="row">
-            <div class="col-md-12">
-                <h2>
-                    Please complete your account profile
-                </h2>
-
-                <div data-ng-show="noEmailNoQuestionForm.$invalid">
-                    <div class="col-md-12" id="message-container">
-                    </div>
-                </div>
-
-                <div>
-                    To finish setting up your account, we need a few extra pieces of information.
-                    This will make your account more secure, and allow you to reset your password if you forget it in
-                    the
-                    future.
-                </div>
-                <br>
-                <img src="images/one-icon.png" alt="One">
-                <label class="control-label">Please add an email address to your account:</label>
-
-                <div class="form-group"
-                     data-ng-class="{ 'has-error' : noEmailNoQuestionForm.addEmail.$invalid && noEmailNoQuestionFormSubmitted }">
-                    <div class="error-circle fa-exclamation-circle" role="alert"
-                         data-ng-show="noEmailNoQuestionForm.addEmail.$error.pattern && noEmailNoQuestionFormSubmitted"
-                         data-bs-tooltip data-placement="right" data-type="danger"
-                         data-container="body" data-title="Please enter a valid email" aria-label="Please enter a valid email"></div>
-                    <div class="error-circle fa-exclamation-circle" role="alert"
-                         data-ng-show="noEmailNoQuestionForm.addEmail.$error.required && noEmailNoQuestionFormSubmitted"
-                         data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                         data-title="Required" aria-label="Required"></div>
-                    <input class="form-control" required id="addEmail" data-popover-save-error
-                           data-save-error="emailError"
-                           data-ng-model="userClientReqdResource.email" name="addEmail"
-                           type="text" maxlength="255" data-ng-change="resetDuplicateValidityEmailAndQuestions ()"
-                           placeholder="your email address"
-                           data-ng-pattern="emailPattern"/>
-                </div>
-
-            </div>
+<form name="noEmailNoQuestionForm" class="form" novalidate data-ng-controller="addEmailQuestions">
+    <h1>Please complete your account profile</h1>
+    <div class="form-group">
+        <p>To finish setting up your account, we need a few extra pieces of information.
+            This will make your account more secure, and allow you to reset your password if you forget it in
+            the future.</p>
+    </div>
+    <div data-ng-show="noEmailNoQuestionForm.$invalid" id="message-container">
+    <div class="form-group"
+         data-ng-class="{ 'has-error' : noEmailNoQuestionForm.addEmail.$invalid && noEmailNoQuestionFormSubmitted }">
+        <label class="control-label" for="addEmail"><img src="images/one-icon.png" alt="1.">&nbsp;&nbsp;Please add an email address to your account:</label>
+        <div class="error-circle fa-exclamation-circle" role="alert"
+             data-ng-show="noEmailNoQuestionForm.addEmail.$error.required && noEmailNoQuestionFormSubmitted"
+             data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+             data-title="Required" aria-label="Required"></div>
+        <div class="error-circle fa-exclamation-circle" role="alert"
+             data-ng-show="noEmailNoQuestionForm.addEmail.$error.pattern && noEmailNoQuestionFormSubmitted"
+             data-bs-tooltip data-placement="right" data-type="danger"
+             data-container="body" data-title="Please enter a valid email" aria-label="Please enter a valid email"></div>
+        <input class="form-control" required id="addEmail" data-popover-save-error
+               data-save-error="emailError"
+               data-ng-model="userClientReqdResource.email" name="addEmail"
+               type="text" maxlength="255" data-ng-change="resetDuplicateValidityEmailAndQuestions ()"
+               placeholder="your email address"
+               data-ng-pattern="emailPattern"/>
+    </div>
+    <hr>
+    <label class="control-label"><img src="images/two-icon.png" alt="2.">&nbsp;&nbsp;Please choose your security questions:</label>
+    <div data-ng-include="'client-facing/loginInterruption/noEmailOrQuestions/secret-question-no-email.html'"></div>
+    <div class="form-actions pull-right">
+        <div class="form-group">
+            <button class="btn btn-cancel" type="button"
+                    data-ng-disabled="whenSaving"
+                    data-ng-click="notNow()">
+                <span>not now</span>
+            </button>
+            <button class="btn btn-success" type="button"
+                    data-ng-disabled="whenSaving"
+                    data-ng-click="saveEmailThenQuestions(noEmailNoQuestionForm.$valid)">
+                <span>Save</span>
+            </button>
         </div>
-
-        <div>
-            <hr>
-            <img src="images/two-icon.png" alt="Two">
-            <label class="control-label">Please choose your security questions:</label>
-
-            <div data-ng-include="'client-facing/loginInterruption/noEmailOrQuestions/secret-question-no-email.html'">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="actions pull-right">
-                    <div class="form-group">
-                        <button class="btn btn-link" type="button"
-                                data-ng-disabled="whenSaving"
-                                data-ng-click="notNow()">
-                            <span>not now</span>
-                        </button>
-                        <button class="btn btn-primary" type="button"
-                                data-ng-disabled="whenSaving"
-                                data-ng-click="saveEmailThenQuestions(noEmailNoQuestionForm.$valid)">
-                            <span>Save</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
+    </div>
+</form>

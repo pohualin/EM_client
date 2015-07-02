@@ -3,7 +3,7 @@
     <div class="form-group">
         <p>Adding an email address will make your account more secure, and allow you to reset your password if you forget it in the future.</p>
     </div>
-    <div data-ng-show="!enterEmailForm.$valid" id="message-container-no-email"></div>
+    <div data-ng-show="enterEmailForm.$invalid" id="message-container-no-email"></div>
     <div data-ng-include="'client-facing/loginInterruption/enterEmail/enter_email_template.html'"></div>
     <div class="form-actions pull-right">
         <div class="form-group">
@@ -12,7 +12,7 @@
                 data-ng-click="notNow()">
                 not now
             </button>
-            <button class="btn btn-primary" type="submit"
+            <button class="btn btn-success" type="submit"
                     data-ng-disabled="whenSaving"
                     data-ng-hide="Session.secretQuestionCreated"
                     data-ng-click="saveEmail(enterEmailForm.addEmail.$valid)">
