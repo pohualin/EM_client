@@ -1,10 +1,11 @@
 <div class="form-group"
      data-ng-class="{ 'has-error' : enterEmailForm.addEmail.$invalid && enterEmailFormSubmitted }">
-    <div class="fa-exclamation-circle" role="alert"
+     <label class="control-label" for="addEmail">Email:</label>
+    <div class="error-circle fa-exclamation-circle" role="alert"
          data-ng-show="enterEmailForm.addEmail.$error.pattern && enterEmailFormSubmitted"
          data-bs-tooltip data-placement="right" data-type="danger"
          data-container="body" data-title="Please enter a valid email" aria-label="Please enter a valid email"></div>
-    <div class="fa-exclamation-circle" role="alert"
+    <div class="error-circle fa-exclamation-circle" role="alert"
          data-ng-show="enterEmailForm.addEmail.$error.required && enterEmailFormSubmitted"
          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
          data-title="Required" aria-label="Required"></div>
