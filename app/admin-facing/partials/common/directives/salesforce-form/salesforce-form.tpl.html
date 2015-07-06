@@ -1,0 +1,80 @@
+<form name="caseForm" novalidate>
+    <fieldset data-ng-repeat="section in formFields.sections">
+        <legend>{{ section.name }}</legend>
+        <div class="form-group" data-ng-repeat="field in section.fields" data-ng-class="{ 'has-error' : caseFormField.field.$invalid }">
+            <div data-ng-form name="caseFormField">
+                <div data-ng-switch="field.type">
+                    <div data-ng-switch-when="STRING">
+                        <label class="control-label">{{ field.label }}</label>
+                        <span data-ng-if="!field.required" class="field-note field-optional">optional</span>
+                        <input name="field.name" type="text" class="form-control" data-ng-model="field.value"
+                            data-ng-required="field.required">
+                    </div>
+                    <div data-ng-switch-when="EMAIL">
+                        <label class="control-label">{{ field.label }}</label>
+                        <span data-ng-if="!field.required" class="field-note field-optional">optional</span>
+                        <input name="field.name" type="email" class="form-control" data-ng-model="field.value"
+                            data-ng-required="field.required">
+                    </div>
+                    <div data-ng-switch-when="PHONE">
+                        <label class="control-label">{{ field.label }}</label>
+                        <span data-ng-if="!field.required" class="field-note field-optional">optional</span>
+                        <!-- <input name="field.name" type="tel" class="form-control" data-ng-model="field.value"> -->
+                        <div class="has-input-icon has-input-icon-telephone">
+                            <input class="form-control" data-ng-model="field.value" name="field.name" type="tel"
+                                   data-ng-required="field.required" maxlength="12" data-input-mask="999-999-9999" placeholder="XXX-XXX-XXXX"
+                                   data-ng-pattern="/[2-9][0-9][0-9]-[2-9][0-9][0-9]-[0-9][0-9][0-9][0-9]/"
+                                   data-input-icon>
+                            <span class="input-icon"><i class="icon-telephone"></i></span>
+                        </div>
+                    </div>
+                    <div data-ng-switch-when="DATE">
+                        <label class="control-label">{{ field.label }}</label>
+                        <span data-ng-if="!field.required" class="field-note field-optional">optional</span>
+                        <!-- <input name="field.name" type="date" class="form-control"> -->
+                        <div class="has-input-icon has-input-icon-calendar">
+                            <input class="form-control" placeholder="MM/DD/YYYY" type="text" name="field.name"
+                                   data-ng-model="field.value" data-autoclose="true" data-date-format="M/d/yyyy"
+                                   data-dateType="string" data-bs-datepicker data-ng-required="field.required"
+                                   data-input-icon>
+                            <span class="input-icon"><i class="icon-calendar"></i></span>
+                        </div>
+                    </div>
+                    <div data-ng-switch-when="TEXTAREA">
+                        <label class="control-label">{{ field.label }}</label>
+                        <span data-ng-if="!field.required" class="field-note field-optional">optional</span>
+                        <textarea name="field.name" class="form-control" rows="3" data-ng-model="field.value"
+                            data-ng-required="field.required"></textarea>
+                    </div>
+                    <div data-ng-switch-when="BOOLEAN" class="checkbox">
+                        <input name="field.name" type="checkbox" id="salesforceCaseCb{{$index}}" value="">
+                        <label for="salesforceCaseCb{{$index}}">{{ field.label }}</label>
+                    </div>
+                    <div data-ng-switch-when="PICK_LIST">
+                        <label class="control-label">{{ field.label }}</label>
+                        <span data-ng-if="!field.required" class="field-note field-optional">optional</span>
+                        <!-- <select name="field.name" class="form-control" data-ng-model="field.values" data-ng-options="option.value as option.value for option in field.options track by option.value"></select> -->
+                        <!-- <select name="field.name" class="form-control" data-ng-model="field.values"
+                            data-ng-required="field.required"
+                            data-ng-change="onChange(field)">
+                            <option data-ng-repeat="option in field.options" value="{{option.value}}" data-ng-selected="field.values.length && field.values[0] === option.value">{{ option.value }}</option>
+                        </select> -->
+                        <select name="field.name" class="form-control" data-ng-model="field.values"
+                            data-ng-options="option.value as option.value for option in field.options track by option.value"
+                            data-ng-required="field.required"
+                            data-ng-change="onChange(field)"
+                            data-chosen data-disable-search="true" data-placeholder="Select...">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                    <div data-ng-switch-when="REFERENCE">
+                        <p>Typeahead will need to go here...</p>
+                    </div>
+                    <div data-ng-switch-default>
+                        <p class="text-danger">Sorry this form field is not supported.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</form>

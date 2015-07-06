@@ -1,4 +1,9 @@
 <div class="col-md-12">
+    <div class="pull-right">
+        <button data-ng-click="startSalesforceCase()" class="btn btn-link btn-link-nopad btn-heading btn-heading-h1">
+            <i class="icon-flag"></i> Log Salesforce Case
+        </button>
+    </div>
     <h1>Client User Information</h1>
     <div id="validation-container" data-ng-show="userClientForm.$invalid && userClientFormSubmitted"></div>
     <div class="row" data-ng-include="'admin-facing/support/client-users/metadata/form.html'"></div>
