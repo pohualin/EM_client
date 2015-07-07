@@ -4,18 +4,55 @@
         <div class="form-group">
             <div class="checkbox">
                 <input id="useProvider" type="checkbox"
-                    data-ng-model="schedulingConfigs.entity.useProvider"
-                    data-ng-change="onChange()" />
+                    data-ng-model="schedulingConfigs.entity.useProvider" />
                 <label for="useProvider">Use Providers</label>
             </div>
+        </div>
+        
+        <div class="form-group">
             <div class="checkbox">
                 <input id="useLocation" type="checkbox"
-                    data-ng-model="schedulingConfigs.entity.useLocation"
-                    data-ng-change="onChange()" />
+                    data-ng-model="schedulingConfigs.entity.useLocation" />
                 <label for="useLocation">Use Locations</label>
             </div>
         </div>
-        <div class="pull-right" data-ng-show="showSchedulingButton">
+        
+        <div class="form-group form-horizontal" 
+          data-ng-class="{ 'has-error' : clientTeamSchedulingConfigurationForm.viewByDays.$invalid && clientTeamSchedulingConfigurationFormSubmitted }">
+          <div class="row">
+              <div class="col-md-4">
+                  <input id="useViewByDays" type="checkbox"
+                    data-ng-model="schedulingConfigs.entity.useViewByDays" />
+                  <label class="control-label control-label-enumerate text-align-left" for="useViewByDays">View by days</label>
+                  <div class="error-circle fa-exclamation-circle" role="alert"
+                       data-ng-show="clientTeamSchedulingConfigurationForm.viewByDays.$error.pattern && clientTeamSchedulingConfigurationFormSubmitted"
+                       data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                       data-title="Please enter a valid number" aria-label="Please enter a valid number"></div>
+                  <div class="error-circle fa-exclamation-circle" role="alert"
+                       data-ng-show="clientTeamSchedulingConfigurationForm.viewByDays.$error.ngMin && clientTeamSchedulingConfigurationFormSubmitted"
+                       data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                       data-title="Please enter a valid number" aria-label="Please enter a valid number"></div>
+                  <div class="error-circle fa-exclamation-circle" role="alert"
+                       data-ng-show="clientTeamSchedulingConfigurationForm.viewByDays.$error.ngMax && clientTeamSchedulingConfigurationFormSubmitted"
+                       data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                       data-title="Please enter a valid number" aria-label="Please enter a valid number"></div>
+              </div>
+              <div class="col-md-2">
+                  <input class="form-control" id="viewByDays"
+                         data-ng-model="schedulingConfigs.entity.viewByDays"
+                         name="viewByDays"
+                         data-ng-min="defaultClientTeamSchedulingConfiguration.viewByDaysMin"
+                         data-ng-max="defaultClientTeamSchedulingConfiguration.viewByDaysMax"
+                         data-ng-pattern="/^[0-9]*$/" />
+              </div>
+              <div class="col-md-4">
+                  <span class="enumerate-value"><em>({{defaultClientTeamSchedulingConfiguration.viewByDaysMin}} -
+                      {{defaultClientTeamSchedulingConfiguration.viewByDaysMax}})</em></span>
+              </div>
+          </div><!-- .row -->
+        </div><!-- .form-group -->
+        
+        <div class="pull-right" data-ng-show="configurationChanged()">
             <div class="form-group">
                 <button class="btn btn-cancel" type="button"
                     data-ng-disabled="whenSaving"
