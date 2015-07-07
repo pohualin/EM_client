@@ -1,5 +1,18 @@
 <form name="caseForm" novalidate>
-    <fieldset data-ng-repeat="section in formFields.sections">
+    <fieldset>
+        <legend>Case Type</legend>
+        <div class="form-group">
+            <label class="control-label">Record Type of new record</label>
+            <select name="caseType" class="form-control" data-ng-model="caseType"
+                data-ng-options="type.name for type in caseTypes"
+                required
+                data-ng-change="getTypeData()"
+                data-chosen data-disable-search="true" data-placeholder="Select...">
+                <option value=""></option>
+            </select>
+        </div>
+    </fieldset>
+    <fieldset data-ng-repeat="section in formFields.sections" data-ng-if="formFields.sections">
         <legend>{{ section.name }}</legend>
         <div class="form-group" data-ng-repeat="field in section.fields" data-ng-class="{ 'has-error' : caseFormField.field.$invalid }">
             <div data-ng-form name="caseFormField">
