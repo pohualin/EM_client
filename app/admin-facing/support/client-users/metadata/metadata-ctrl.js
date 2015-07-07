@@ -21,6 +21,8 @@ angular.module('emmiManager')
             });
 
             $scope.startSalesforceCase = function () {
+                // TODO: retrieve case type constant for this page!
+                $scope.pageCaseType = 'CLIENT';
                 salesforceCaseModal.$promise.then(salesforceCaseModal.show);
             };
 
