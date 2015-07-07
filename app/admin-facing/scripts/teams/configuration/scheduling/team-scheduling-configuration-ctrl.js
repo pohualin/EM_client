@@ -68,8 +68,6 @@ angular.module('emmiManager')
             $scope.cancel = function () {
                 $scope.clientTeamSchedulingConfigurationFormSubmitted = false;
             	$scope.schedulingConfigs = angular.copy($scope.originalSchedulingConfigs);
-            	// $scope.showSchedulingButton = false;
-                // $scope.$emit('showCardOutline', { value: false });
             };
 
 
