@@ -1,3 +1,4 @@
+// jshint ignore: start
 'use strict';
 
 angular.module('emmiManager')
@@ -21,7 +22,6 @@ angular.module('emmiManager')
 
             $scope.startSalesforceCase = function () {
                 // Call the service to retrieve Salesforce data
-                /* jshint ignore:start */
                 $scope.sfData = {
                     "type": {
                         "id": "012500000009F6GAAU",
@@ -122,9 +122,9 @@ angular.module('emmiManager')
                                             ]
                                         }
                                     ],
-                                    "values": [
-                                        "New"
-                                    ]
+                                    "values": {
+                                            "value": "New"
+                                    }
                                 },
                                 {
                                     "type": "REFERENCE",
@@ -164,9 +164,9 @@ angular.module('emmiManager')
                                             "requiredWhenChosen": null
                                         }
                                     ],
-                                    "values": [
-                                        "Medium"
-                                    ]
+                                    "values": {
+                                            "value": "Medium"
+                                    }
                                 },
                                 {
                                     "type": "STRING",
@@ -419,7 +419,6 @@ angular.module('emmiManager')
                         }
                     ]
                 };
-                /* jshint ignore:end */
                 salesforceCaseModal.$promise.then(salesforceCaseModal.show);
             };
 
