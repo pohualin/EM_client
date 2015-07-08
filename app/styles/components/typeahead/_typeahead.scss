@@ -4,10 +4,16 @@
     overflow-y: auto;
     overflow-x: hidden;
 
+    ul {
+        margin: 0;
+        padding: 0;
+    }
+
     li {
         clear: both;
         overflow: hidden; // clear the float
         font-weight: 300;
+        list-style: none;
     }
 
     .header {

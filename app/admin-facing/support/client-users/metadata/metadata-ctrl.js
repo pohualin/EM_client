@@ -1,3 +1,4 @@
+// jshint ignore: start
 'use strict';
 
 angular.module('emmiManager')
@@ -5,10 +6,25 @@ angular.module('emmiManager')
 /**
  * Controller for the UserClient Support metadata section
  */
-    .controller('UserClientSupportMetaDataController', ['$scope', '$controller', 'UsersClientService', '$alert',
-        function ($scope, $controller, UsersClientService, $alert) {
+    .controller('UserClientSupportMetaDataController', ['$scope', '$controller', 'UsersClientService', '$alert', '$modal',
+        function ($scope, $controller, UsersClientService, $alert, $modal) {
 
             $controller('UserClientSupportMetaDataCommon', {$scope: $scope});
+
+            var salesforceCaseModal = $modal({
+                scope: $scope,
+                template: 'admin-facing/partials/common/directives/salesforce-form/modal.html',
+                animation: 'none',
+                backdropAnimation: 'emmi-fade',
+                show: false,
+                backdrop: 'static'
+            });
+
+            $scope.startSalesforceCase = function () {
+                // TODO: retrieve case type constant for this page!
+                $scope.pageCaseType = 'CLIENT';
+                salesforceCaseModal.$promise.then(salesforceCaseModal.show);
+            };
 
             $scope.makeActive = function(){
                 $scope.userClientEdit.entity.active = true;
