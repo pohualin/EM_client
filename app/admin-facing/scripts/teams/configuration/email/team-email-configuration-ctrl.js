@@ -24,8 +24,8 @@ angular.module('emmiManager')
                         	    $scope.originalEmailConfigs = response;
                         	    $scope.emailConfigs = angular.copy($scope.originalEmailConfigs);
                             	$alert({
-                                    title: ' ',
-                                    content: 'The team email configuration have been updated successfully.',
+                                    title: '',
+                                    content: '<b>' + $scope.team.entity.name + '</b> has been updated successfully.',
                                     container: 'body',
                                     type: 'success',
                                     placement: 'top',
