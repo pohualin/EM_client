@@ -4,6 +4,10 @@
 @import 'sample';
 @import 'popovers';
 
+.form-group-nested {
+    padding: 10px 0 0 20px;
+}
+
 .user-setup-status {
     display: inline-block;
     margin-left: 10px;
@@ -138,6 +142,9 @@ label.empty {
 }
 .info-circle {
     color: $brand-secondary;
+}
+.error-circle {
+    color: $state-danger-text;
 }
 
 .role-error {
