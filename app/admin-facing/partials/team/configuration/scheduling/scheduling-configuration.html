@@ -4,7 +4,8 @@
         <div class="form-group">
             <div class="checkbox">
                 <input id="useProvider" type="checkbox"
-                    data-ng-model="schedulingConfigs.entity.useProvider" />
+                    data-ng-model="schedulingConfigs.entity.useProvider"
+                    data-ng-change="onChange()" />
                 <label for="useProvider">Use Providers</label>
             </div>
         </div>
@@ -12,7 +13,8 @@
         <div class="form-group">
             <div class="checkbox">
                 <input id="useLocation" type="checkbox"
-                    data-ng-model="schedulingConfigs.entity.useLocation" />
+                    data-ng-model="schedulingConfigs.entity.useLocation"
+                    data-ng-change="onChange()" />
                 <label for="useLocation">Use Locations</label>
             </div>
         </div>
@@ -22,7 +24,8 @@
           <div class="row">
               <div class="col-md-4">
                   <input id="useViewByDays" type="checkbox"
-                    data-ng-model="schedulingConfigs.entity.useViewByDays" />
+                    data-ng-model="schedulingConfigs.entity.useViewByDays"
+                    data-ng-change="onChange()" />
                   <label class="control-label control-label-enumerate text-align-left" for="useViewByDays">View by days</label>
                   <div class="error-circle fa-exclamation-circle" role="alert"
                        data-ng-show="clientTeamSchedulingConfigurationForm.viewByDays.$error.pattern && clientTeamSchedulingConfigurationFormSubmitted"
@@ -41,6 +44,7 @@
                   <input class="form-control" id="viewByDays"
                          data-ng-model="schedulingConfigs.entity.viewByDays"
                          name="viewByDays"
+                         data-ng-change="onChange()"
                          data-ng-min="defaultClientTeamSchedulingConfiguration.viewByDaysMin"
                          data-ng-max="defaultClientTeamSchedulingConfiguration.viewByDaysMax"
                          data-ng-pattern="/^[0-9]*$/" />
@@ -52,7 +56,7 @@
           </div><!-- .row -->
         </div><!-- .form-group -->
         
-        <div class="pull-right" data-ng-show="configurationChanged()">
+        <div class="pull-right" data-ng-show="showSchedulingButton">
             <div class="form-group">
                 <button class="btn btn-cancel" type="button"
                     data-ng-disabled="whenSaving"

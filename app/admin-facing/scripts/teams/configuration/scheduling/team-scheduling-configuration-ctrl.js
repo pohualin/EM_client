@@ -8,6 +8,8 @@ angular.module('emmiManager')
     .controller('ClientTeamSchedulingConfigurationCtrl', ['$scope', '$location', '$alert', 'focus', '$controller', '$routeParams', 'API', 'ClientTeamSchedulingConfigurationService', 'ClientTeamConfigurationService',
         function ($scope, $location, $alert, focus, $controller, $routeParams, API, ClientTeamSchedulingConfigurationService, ClientTeamConfigurationService) {
             $scope.showTeamConfig = 'yes';
+            $scope.showSchedulingButton = false;
+            $scope.$emit('showCardOutline', { value: false });
     	    /**
              * When the save button is clicked. Sends all updates
              * to the back, then re-binds the form objects with the
@@ -36,29 +38,15 @@ angular.module('emmiManager')
                           $scope.whenSaving = false;
                           $scope.clientTeamSchedulingConfigurationFormSubmitted = false;
                       });
+        		  $scope.showSchedulingButton = false;
+                  $scope.$emit('showCardOutline', { value: false });
                 }
             };
 
-            /**
-             * Method to check if anything has changed in schedulingConfigs
-             */
-            $scope.configurationChanged = function () {
-                if (!$scope.originalSchedulingConfigs || !$scope.schedulingConfigs) {
-                    $scope.$emit('showCardOutline', { value: true });
-                    return false;
-                }
-                
-                if(angular.equals(
-                        $scope.originalSchedulingConfigs.entity,
-                        $scope.schedulingConfigs.entity)){
-                    $scope.$emit('showCardOutline', { value: false });
-                } else {
-                    $scope.$emit('showCardOutline', { value: true });
-                }
-                
-                return !angular.equals(
-                                $scope.originalSchedulingConfigs.entity,
-                                $scope.schedulingConfigs.entity);
+
+            $scope.onChange = function(){
+            	$scope.showSchedulingButton  = true;
+                $scope.$emit('showCardOutline', { value: true });
             };
             
             /**
@@ -68,6 +56,8 @@ angular.module('emmiManager')
             $scope.cancel = function () {
                 $scope.clientTeamSchedulingConfigurationFormSubmitted = false;
             	$scope.schedulingConfigs = angular.copy($scope.originalSchedulingConfigs);
+            	$scope.showSchedulingButton = false;
+            	$scope.$emit('showCardOutline', { value: false });
             };
 
 
