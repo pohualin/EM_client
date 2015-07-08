@@ -24,8 +24,8 @@ angular.module('emmiManager')
                         	  $scope.originalPhoneConfigs = response;
                       		  $scope.phoneConfigs = angular.copy($scope.originalPhoneConfigs);
                             	$alert({
-                                    title: ' ',
-                                    content: 'The team phone configuration have been updated successfully.',
+                                    title: '',
+                                    content: '<strong>' + $scope.team.entity.name + '</strong> has been updated successfully.',
                                     container: 'body',
                                     type: 'success',
                                     placement: 'top',

@@ -64,9 +64,6 @@ angular.module('emmiManager')
                 ClientTeamConfigurationService.setTeam(teamResource);
                 $scope.client = teamResource.entity.client;
                 $scope.team = teamResource;
-                //set another parameter 'team' to the route query string for the breadcrumb
-                $location.search('team', $scope.team.entity.id);
-                $rootScope.currentRouteQueryString =  arrays.toQueryString($location.search());
             }
 
             init();

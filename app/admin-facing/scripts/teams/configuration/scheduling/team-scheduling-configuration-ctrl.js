@@ -23,8 +23,8 @@ angular.module('emmiManager')
                     	  $scope.originalSchedulingConfigs = response;
                   		  $scope.schedulingConfigs = angular.copy($scope.originalSchedulingConfigs);
                         	$alert({
-                                title: ' ',
-                                content: 'The team scheduling configuration have been updated successfully.',
+                        	    title: '',
+                                content: '<strong>' + $scope.team.entity.name + '</strong> has been updated successfully.',
                                 container: 'body',
                                 type: 'success',
                                 placement: 'top',
