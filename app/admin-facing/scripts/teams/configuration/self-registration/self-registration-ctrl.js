@@ -26,7 +26,7 @@ angular.module('emmiManager')
                     $scope.selfRegConfig = response.entity;
                     $alert({
                         title: '',
-                        content: '<b>' + $scope.team.entity.name + '</b> has been updated successfully.',
+                        content: '<strong>' + $scope.team.entity.name + '</strong> has been updated successfully.',
                         container: 'body',
                         type: 'success',
                         placement: 'top',
