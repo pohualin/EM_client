@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  *   Manage Team Level configuration a client
  */
-    .controller('ClientTeamConfigurationCtrl', ['$scope', '$location', '$alert', 'focus', '$controller', 'teamResource', '$routeParams', 'arrays','$rootScope', 'API', 'ClientTeamConfigurationService',
-        function ($scope, $location, $alert, focus, $controller, teamResource,  $routeParams, arrays, $rootScope, API, ClientTeamConfigurationService) {
+    .controller('ClientTeamConfigurationCtrl', ['$scope', '$location', '$alert', 'focus', '$controller', 'teamResource', '$routeParams', 'arrays','$rootScope', 'API', 'ClientTeamConfigurationService', 'SelfRegistrationService', 'PatientSelfRegService',
+        function ($scope, $location, $alert, focus, $controller, teamResource,  $routeParams, arrays, $rootScope, API, ClientTeamConfigurationService, SelfRegistrationService, PatientSelfRegService) {
     	    $scope.showTeamConfig = 'yes';
     	    $scope.phoneClick = 'phone';
     	    $scope.emailClick = 'email';
@@ -14,6 +14,7 @@ angular.module('emmiManager')
     	    $scope.showEmailConfig = true;
     	    $scope.showPhoneConfig = false;
     	    $scope.showSchedulingConfig = false;
+
             $scope.page.setTitle('Team Configuration - '+ teamResource.entity.name +' | ClientManager');
             $scope.showSelfRegistrationConfig = false;
 
@@ -67,6 +68,10 @@ angular.module('emmiManager')
                 //set another parameter 'team' to the route query string for the breadcrumb
                 $location.search('team', $scope.team.entity.id);
                 $rootScope.currentRouteQueryString =  arrays.toQueryString($location.search());
+
+                PatientSelfRegService.refData($scope.team).then(function (response) {
+                    $scope.idLabelTypes = response;
+                });
             }
 
             init();

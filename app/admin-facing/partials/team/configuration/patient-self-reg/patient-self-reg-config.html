@@ -1,0 +1,85 @@
+<div class="col-md-12" data-ng-controller="PatientSelfRegController" data-ng-cloak>
+    <form name="patientSelfRegForm" class="form" novalidate>
+        <h1>Patient Information</h1>
+        <div class="form-group">
+            <div class="checkbox">
+                <input id="patientNameRequire" type="checkbox"
+                       data-ng-model="patientSelfRegConfig.exposeName" data-ng-disabled="true"
+                       data-ng-checked="true"/>
+                <label for="patientNameRequire">Patient Name (always required)</label>
+            </div>
+            <div class="checkbox">
+                <input id="dateOfBirthRequire" type="checkbox"
+                       data-ng-model="patientSelfRegConfig.requireDateOfBirth" data-ng-disabled="true"
+                       data-ng-checked="true"/>
+                <label for="dateOfBirthRequire">Date of birth (always required)</label>
+            </div>
+            <div class=" row">
+                <div class="checkbox col-sm-6">
+                    <input id="exposePatientID" type="checkbox"
+                           data-ng-model="patientSelfRegConfig.exposeId"/>
+                    <label for="exposePatientID">Patient ID</label>
+                </div>
+                <div class="checkbox col-sm-6">
+                    <input id="requirePatientId" type="checkbox"
+                           data-ng-model="patientSelfRegConfig.requireId"/>
+                    <label for="requirePatientId">Required</label>
+                </div>
+            </div>
+            <br/>
+            <div class="form-group">
+                <label for="idLabelType" >ID Label</label>&nbsp;&nbsp;
+                <select class="form-control input-sm" style="width:200px;" id="idLabelType" name="idLabelType"  data-ng-model="patientSelfRegConfig.idLabelType"
+                        data-ng-options="idLabelType | translate for idLabelType in idLabelTypes"
+                        data-chosen data-disable-search="true" data-width="'200px'">
+                    <option value="">Select...</option>
+                </select>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <label class="control-label" for="patientIdLabelEnglish">Patient Id Label (English)</label>
+                    <input class="form-control" name="patientIdLabelEnglish" type="text" data-ng-pattern="/^[a-zA-Z0-9-_]+$/"  data-ng-model="patientSelfRegConfig.patientIdLabelEnglish"
+                           id="patientIdLabelEnglish"  maxlength="100">
+                </div>
+                <div class="col-sm-6">
+                    <label class="control-label" for="patientIdLabelSpanish">Patient Id Label (Spanish)</label>
+                    <input class="form-control" name="patientIdLabelSpanish" type="text" data-ng-pattern="/^[a-zA-Z0-9-_]+$/"  data-ng-model="patientSelfRegConfig.patientIdLabelSpanish"
+                           id="patientIdLabelSpanish"  maxlength="100">
+                </div>
+            </div>
+                <br/>
+            <div class="row">
+                <div class="checkbox col-sm-6">
+                    <input id="exposePatientPhone" type="checkbox"
+                           data-ng-model="patientSelfRegConfig.exposePhone"/>
+                    <label for="exposePatientPhone">Phone</label>
+                </div>
+                <div class="checkbox col-sm-6">
+                    <input id="requirePatientPhone" type="checkbox"
+                           data-ng-model="patientSelfRegConfig.requirePhone"/>
+                    <label for="requirePatientPhone">Required</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="checkbox col-sm-6">
+                    <input id="exposePatientEmail" type="checkbox"
+                           data-ng-model="patientSelfRegConfig.exposeEmail"/>
+                    <label for="exposePatientEmail">Email</label>
+                </div>
+                <div class="checkbox col-sm-6">
+                    <input id="requirePatientEmail" type="checkbox"
+                           data-ng-model="patientSelfRegConfig.requireEmail"/>
+                    <label for="requirePatientEmail">Required</label>
+                </div>
+            </div>
+        </div>
+        <div class="pull-left">
+            <button class="btn btn-success" type="submit" data-ng-click="continue(patientSelfRegForm)">
+                <span>Save & add programs</span>
+            </button>
+            <button class="btn btn-cancel " type="button" data-ng-click="cancel()">
+                <span>cancel</span>
+            </button>
+        </div>
+    </form>
+</div>
