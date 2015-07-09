@@ -13,16 +13,28 @@ angular.module('emmiManager')
 
             var salesforceCaseModal = $modal({
                 scope: $scope,
-                template: 'admin-facing/partials/common/directives/salesforce-form/modal.html',
+                template: 'admin-facing/support/client-users/metadata/salesforce_modal.html',
                 animation: 'none',
                 backdropAnimation: 'emmi-fade',
                 show: false,
                 backdrop: 'static'
             });
 
+            var closeSalesForceModel = function (newId) {
+                salesforceCaseModal.$promise.then(salesforceCaseModal.hide);
+                if (newId) {
+                    $alert({
+                        content: ['Salesforce case <strong>',
+                            newId, '</strong> has been successfully.'].join('')
+                    });
+                }
+            };
+
             $scope.startSalesforceCase = function () {
-                // TODO: retrieve case type constant for this page!
                 $scope.pageCaseType = 'CLIENT';
+                $scope.caseForResource = $scope.originalUserClient;
+                $scope.onSaveSuccess = closeSalesForceModel;
+                $scope.onCancel = closeSalesForceModel;
                 salesforceCaseModal.$promise.then(salesforceCaseModal.show);
             };
 
