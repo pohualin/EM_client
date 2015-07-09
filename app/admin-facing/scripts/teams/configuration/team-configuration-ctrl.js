@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  *   Manage Team Level configuration a client
  */
-    .controller('ClientTeamConfigurationCtrl', ['$scope', '$location', '$alert', 'focus', '$controller', 'teamResource', '$routeParams', 'arrays','$rootScope', 'API', 'ClientTeamConfigurationService', 'SelfRegistrationService', 'PatientSelfRegService',
-        function ($scope, $location, $alert, focus, $controller, teamResource,  $routeParams, arrays, $rootScope, API, ClientTeamConfigurationService, SelfRegistrationService, PatientSelfRegService) {
+    .controller('ClientTeamConfigurationCtrl', ['$scope', '$location', '$alert', 'focus', '$controller', 'teamResource', '$routeParams', 'arrays','$rootScope', 'API', 'ClientTeamConfigurationService', 'PatientSelfRegService',
+        function ($scope, $location, $alert, focus, $controller, teamResource,  $routeParams, arrays, $rootScope, API, ClientTeamConfigurationService, PatientSelfRegService) {
     	    $scope.showTeamConfig = 'yes';
     	    $scope.phoneClick = 'phone';
     	    $scope.emailClick = 'email';

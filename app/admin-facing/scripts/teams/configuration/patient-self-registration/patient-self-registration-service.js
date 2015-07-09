@@ -22,9 +22,7 @@ angular.module('emmiManager')
                     });
             },
             refData: function (team) {
-                console.log(team.link.patientSelfRegReferenceData);
                 return $http.get(UriTemplate.create(API.patientSelfRegReferenceData).stringify()).then(function (response) {
-                    console.log(response);
                     return response.data.idLabelTypes;
                 });
             },

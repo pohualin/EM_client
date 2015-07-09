@@ -10,7 +10,6 @@ angular.module('emmiManager')
     $scope.continue = function (form) {
         if (form.$valid) {
             $scope.whenSaving = true;
-            console.log($scope.patientSelfRegConfig);
             if ($scope.patientSelfRegConfig && $scope.patientSelfRegConfig.id) {
                 $scope.update();
             }
