@@ -1,45 +1,54 @@
 <div class="modal-body">
-    <div class="row">
-        <div class="col-md-10 col-md-offset-1" id="modal-messages-container"></div>
-    </div>
+
+    <div id="case-form-messages-container"></div>
+
     <form name="caseForm" novalidate>
         <fieldset>
             <legend>Case Type</legend>
             <div class="form-group">
-                <label class="control-label">Record Type of new record</label>
-                <select name="caseType" class="form-control" data-ng-model="caseType"
+                <label class="control-label" for="caseType">Record Type of new record</label>
+                <select name="caseType" id="caseType" class="form-control" data-ng-model="caseType"
                         data-ng-options="type.entity.name for type in caseTypes"
                         required
                         data-ng-change="getTypeData()"
+                        data-auto-focus
+                        data-focus-on="caseType"
                         data-chosen data-disable-search="true" data-placeholder="Select...">
                     <option value=""></option>
                 </select>
             </div>
         </fieldset>
-        <fieldset data-ng-repeat="section in form.entity.sections" data-ng-if="form.entity.sections">
+        <fieldset data-ng-repeat="(sectionIndex, section) in form.entity.sections" data-ng-if="form.entity.sections">
             <legend>{{ section.name }}</legend>
-            <div class="form-group" data-ng-repeat="field in section.fields"
+            <div class="form-group" data-ng-repeat="(fieldIndex, field) in section.fields"
                  data-ng-class="{ 'has-error' : caseFormField.field.$invalid }">
-                <div data-ng-form name="caseFormField">
+                <div>
                     <div data-ng-switch="field.type">
                         <div data-ng-switch-when="STRING">
-                            <label class="control-label">{{ field.label }}</label>
+                            <label class="control-label" for="section{{sectionIndex}}_stringField{{fieldIndex}}">{{
+                                field.label }}</label>
                             <span data-ng-if="!field.required" class="field-note field-optional">optional</span>
-                            <input name="field.name" type="text" class="form-control" data-ng-model="field.value"
-                                   data-ng-required="field.required" data-ng-maxlength="field.maxLength">
+                            <input name="field.name" id="section{{sectionIndex}}_stringField{{fieldIndex}}" type="text"
+                                   class="form-control" data-ng-model="field.value"
+                                   data-ng-required="field.required"
+                                   maxlength="{{field.maxLength ? field.maxLength : 255}}">
                         </div>
                         <div data-ng-switch-when="EMAIL">
-                            <label class="control-label">{{ field.label }}</label>
+                            <label class="control-label" for="section{{sectionIndex}}_emailField{{fieldIndex}}">{{
+                                field.label }}</label>
                             <span data-ng-if="!field.required" class="field-note field-optional">optional</span>
-                            <input name="field.name" type="email" class="form-control" data-ng-model="field.value"
+                            <input name="field.name" id="section{{sectionIndex}}_emailField{{fieldIndex}}" type="email"
+                                   class="form-control" data-ng-model="field.value"
                                    data-ng-required="field.required">
                         </div>
                         <div data-ng-switch-when="PHONE">
-                            <label class="control-label">{{ field.label }}</label>
+                            <label class="control-label" for="section{{sectionIndex}}_phoneField{{fieldIndex}}">{{
+                                field.label }}</label>
                             <span data-ng-if="!field.required" class="field-note field-optional">optional</span>
                             <!-- <input name="field.name" type="tel" class="form-control" data-ng-model="field.value"> -->
                             <div class="has-input-icon has-input-icon-telephone">
-                                <input class="form-control" data-ng-model="field.value" name="field.name" type="tel"
+                                <input class="form-control" data-ng-model="field.value" name="field.name"
+                                       id="section{{sectionIndex}}_phoneField{{fieldIndex}}" type="tel"
                                        data-ng-required="field.required" maxlength="12"
                                        data-input-mask="999-999-9999" placeholder="XXX-XXX-XXXX"
                                        data-ng-pattern="/[2-9][0-9][0-9]-[2-9][0-9][0-9]-[0-9][0-9][0-9][0-9]/"
@@ -48,11 +57,13 @@
                             </div>
                         </div>
                         <div data-ng-switch-when="DATE">
-                            <label class="control-label">{{ field.label }}</label>
+                            <label class="control-label" for="section{{sectionIndex}}_dateField{{fieldIndex}}">{{
+                                field.label }}</label>
                             <span data-ng-if="!field.required" class="field-note field-optional">optional</span>
                             <!-- <input name="field.name" type="date" class="form-control"> -->
                             <div class="has-input-icon has-input-icon-calendar">
-                                <input class="form-control" placeholder="MM/DD/YYYY" type="text" name="field.name"
+                                <input class="form-control" id="section{{sectionIndex}}_dateField{{fieldIndex}}"
+                                       placeholder="MM/DD/YYYY" type="text" name="field.name"
                                        data-ng-model="field.value" data-autoclose="true" data-date-format="M/d/yyyy"
                                        data-dateType="string" data-bs-datepicker data-ng-required="field.required"
                                        data-input-icon>
@@ -60,19 +71,27 @@
                             </div>
                         </div>
                         <div data-ng-switch-when="TEXTAREA">
-                            <label class="control-label">{{ field.label }}</label>
+                            <label class="control-label" for="section{{sectionIndex}}_textArea{{fieldIndex}}">{{
+                                field.label }}</label>
                             <span data-ng-if="!field.required" class="field-note field-optional">optional</span>
-                        <textarea name="field.name" class="form-control" rows="3" data-ng-model="field.value"
+                        <textarea name="field.name" id="section{{sectionIndex}}_textArea{{fieldIndex}}"
+                                  class="form-control" rows="3" data-ng-model="field.value"
                                   data-ng-required="field.required"></textarea>
                         </div>
                         <div data-ng-switch-when="BOOLEAN" class="checkbox">
-                            <input name="field.name" type="checkbox" id="salesforceCaseCb{{$index}}" value="">
-                            <label for="salesforceCaseCb{{$index}}">{{ field.label }}</label>
+                            <input name="field.name" type="checkbox"
+                                   id="section{{sectionIndex}}_salesforceCaseCb{{fieldIndex}}"
+                                   data-ng-model="field.value">
+                            <label for="section{{sectionIndex}}_salesforceCaseCb{{fieldIndex}}">{{ field.label
+                                }}</label>
                         </div>
                         <div data-ng-switch-when="PICK_LIST">
-                            <label class="control-label">{{ field.label }}</label>
+                            <label class="control-label" for="section{{sectionIndex}}_pickList{{fieldIndex}}">{{
+                                field.label }}</label>
                             <span data-ng-if="!field.required" class="field-note field-optional">optional</span>
-                            <select name="field.name" class="form-control" data-ng-model="field.value"
+                            <select name="section{{sectionIndex}}_pickList{{fieldIndex}}"
+                                    id="section{{sectionIndex}}_pickList{{fieldIndex}}" class="form-control"
+                                    data-ng-model="field.value"
                                     data-ng-options="option.value for option in field.options track by option.value"
                                     data-ng-required="field.required"
                                     data-ng-change="onChange(field)"
@@ -81,9 +100,13 @@
                             </select>
 
                             <div data-ng-if="field.chainedField" class="form-group-nested">
-                                <div data-ng-repeat="nestedField in field.values.requiredWhenChosen">
-                                    <label class="control-label">{{ nestedField.label }}</label>
-                                    <select name="nestedField.name" class="form-control"
+                                <div data-ng-repeat="(nestedIndex,nestedField) in field.value.requiredWhenChosen">
+                                    <label class="control-label"
+                                           for="section{{sectionIndex}}_{{fieldIndex}}_pickList{{nestedIndex}}">{{
+                                        nestedField.label }}</label>
+                                    <select name="section{{sectionIndex}}_{{fieldIndex}}_pickList{{nestedIndex}}"
+                                            id="section{{sectionIndex}}_{{fieldIndex}}_pickList{{nestedIndex}}"
+                                            class="form-control"
                                             data-ng-model="nestedField.value"
                                             data-ng-options="option2.value for option2 in nestedField.options track by option2.value"
                                             data-ng-required="nestedField.required"
@@ -94,9 +117,12 @@
                             </div>
                         </div>
                         <div data-ng-switch-when="MULTI_PICK_LIST">
-                            <label class="control-label">{{ field.label }}</label>
+                            <label class="control-label" for="section{{sectionIndex}}_multiPickList{{fieldIndex}}">{{
+                                field.label }}</label>
                             <span data-ng-if="!field.required" class="field-note field-optional">optional</span>
-                            <select name="field.name" class="form-control" data-ng-model="field.values"
+                            <select name="section{{sectionIndex}}_multiPickList{{fieldIndex}}"
+                                    id="section{{sectionIndex}}_multiPickList{{fieldIndex}}" class="form-control"
+                                    data-ng-model="field.values"
                                     data-ng-options="option.value for option in field.options track by option.value"
                                     data-ng-required="field.required"
                                     data-ng-change="onChange(field)"
@@ -106,9 +132,13 @@
                             </select>
 
                             <div data-ng-if="field.chainedField" class="form-group-nested">
-                                <div data-ng-repeat="nestedField in field.values.requiredWhenChosen">
-                                    <label class="control-label">{{ nestedField.label }}</label>
-                                    <select name="nestedField.name" class="form-control"
+                                <div data-ng-repeat="(nestedIndex, nestedField) in field.values.requiredWhenChosen">
+                                    <label class="control-label"
+                                           for="section{{sectionIndex}}_{{fieldIndex}}_multiPickList{{nestedIndex}}">{{
+                                        nestedField.label }}</label>
+                                    <select name="section{{sectionIndex}}_{{fieldIndex}}_multiPickList{{nestedIndex}}"
+                                            id="section{{sectionIndex}}_{{fieldIndex}}_multiPickList{{nestedIndex}}"
+                                            class="form-control"
                                             data-ng-model="nestedField.value"
                                             data-ng-options="option2.value for option2 in nestedField.options track by option2.value"
                                             data-ng-required="nestedField.required"
@@ -119,25 +149,30 @@
                             </div>
                         </div>
                         <div data-ng-switch-when="REFERENCE" class="has-feedback">
-                            <label class="control-label">{{ field.label }}</label>
+                            <label class="control-label" for="section{{sectionIndex}}_salesforceCaseRef{{fieldIndex}}">{{
+                                field.label }}</label>
+                            <span data-ng-if="!field.required" class="field-note field-optional">optional</span>
 
-                            <div class="typeahead" data-emmi-typeahead data-items="field.searchResults.content"
+                            <div class="typeahead" data-emmi-typeahead data-tab-does-not-select-active
+                                 data-items="field.searchResults.content"
                                  data-term="field.searchQuery" data-search="referenceSearch(term,field)"
                                  data-select="referenceSelect(item,field)"
                                  data-placeholder="Start typing to search..."
-                                 data-focus="salesforceCaseRef{{$index}}" data-id="salesforceCaseRef{{$index}}"
+                                 data-on-empty-callback="referenceSelect({},field)"
+                                 data-search-result-container="section{{sectionIndex}}_sfSearchResultsContainer{{fieldIndex}}"
+                                 data-id="section{{sectionIndex}}_salesforceCaseRef{{fieldIndex}}"
                                  data-min-length="3">
-                                <div class="menu typeahead-menu dropdown-menu bottom-left container-fluid">
-                                    <ul>
-                                        <li data-emmi-typeahead-item="refitem"
-                                            data-ng-repeat="refitem in field.searchResults.content"
-                                            class="results">
-                                            <div class="col-md-12">{{refitem.name}}</div>
-                                        </li>
-                                        <li data-ng-show="hasMore()" class="footer">
-                                            <div class="col-md-12">Refine search for more results.</div>
-                                        </li>
-                                    </ul>
+                                <div class="menu typeahead-menu dropdown-menu bottom-left container-fluid"
+                                     id="section{{sectionIndex}}_sfSearchResultsContainer{{fieldIndex}}">
+                                    <li id="sfSearchResult_{{refitem.$$hashKey}}"
+                                        data-emmi-typeahead-item="refitem"
+                                        data-ng-repeat="refitem in field.searchResults.content"
+                                        class="results">
+                                        <div class="col-md-12">{{refitem.name}}</div>
+                                    </li>
+                                    <li data-ng-show="hasMore()" class="footer">
+                                        <div class="col-md-12">Refine search for more results.</div>
+                                    </li>
                                     <div data-ng-hide="field.searchResults.content.length" class="no-results">
                                         <div class="col-md-12">No results found</div>
                                     </div>
