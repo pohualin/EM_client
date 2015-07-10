@@ -25,7 +25,7 @@ angular.module('emmiManager')
                 if (newId) {
                     $alert({
                         content: ['Salesforce case <strong>',
-                            newId, '</strong> has been successfully.'].join('')
+                            newId, '</strong> has been successfully created.'].join('')
                     });
                 }
             };
