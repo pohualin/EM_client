@@ -4,7 +4,11 @@
         <div class="error-circle fa-exclamation-circle" role="alert" data-ng-show="!clientToEdit.salesForceAccount && formSubmitted"
              data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
              data-title="Please enter an associated Salesforce account" aria-label="Please enter an associated Salesforce account"></div>
-        <div class="typeahead" data-emmi-typeahead data-items="sfResult.account" data-term="sfSearch.searchQuery" data-search="findClientSfAccount(term)" data-select="chooseClientSfAccount(item)" data-blur="revertClientSfAccount()" data-placeholder="Start typing to search..." data-focus="SfSearch" data-min-length="5">
+        <div class="typeahead" data-emmi-typeahead data-items="sfResult.account"
+             data-search-result-container="sfSearchResultsContainer"
+             data-term="sfSearch.searchQuery" data-search="findClientSfAccount(term)"
+             data-select="chooseClientSfAccount(item)" data-blur="revertClientSfAccount()"
+             data-placeholder="Start typing to search..." data-focus="SfSearch" data-min-length="5">
             <div class="menu typeahead-menu dropdown-menu bottom-left container-fluid" id="sfSearchResultsContainer">
                 <li class="header" data-ng-show="sfResult.account.length">
                     <div class="col-md-6 account-name">Account Name</div>

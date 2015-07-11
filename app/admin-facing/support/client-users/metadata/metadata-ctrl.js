@@ -1,3 +1,4 @@
+// jshint ignore: start
 'use strict';
 
 angular.module('emmiManager')
@@ -5,10 +6,37 @@ angular.module('emmiManager')
 /**
  * Controller for the UserClient Support metadata section
  */
-    .controller('UserClientSupportMetaDataController', ['$scope', '$controller', 'UsersClientService', '$alert',
-        function ($scope, $controller, UsersClientService, $alert) {
+    .controller('UserClientSupportMetaDataController', ['$scope', '$controller', 'UsersClientService', '$alert', '$modal',
+        function ($scope, $controller, UsersClientService, $alert, $modal) {
 
             $controller('UserClientSupportMetaDataCommon', {$scope: $scope});
+
+            var salesforceCaseModal = $modal({
+                scope: $scope,
+                template: 'admin-facing/support/client-users/metadata/salesforce_modal.html',
+                animation: 'none',
+                backdropAnimation: 'emmi-fade',
+                show: false,
+                backdrop: 'static'
+            });
+
+            var closeSalesForceModel = function (newId) {
+                salesforceCaseModal.$promise.then(salesforceCaseModal.hide);
+                if (newId) {
+                    $alert({
+                        content: ['Salesforce case <strong>',
+                            newId, '</strong> has been successfully created.'].join('')
+                    });
+                }
+            };
+
+            $scope.startSalesforceCase = function () {
+                $scope.pageCaseType = 'CLIENT';
+                $scope.caseForResource = $scope.originalUserClient;
+                $scope.onSaveSuccess = closeSalesForceModel;
+                $scope.onCancel = closeSalesForceModel;
+                salesforceCaseModal.$promise.then(salesforceCaseModal.show);
+            };
 
             $scope.makeActive = function(){
                 $scope.userClientEdit.entity.active = true;

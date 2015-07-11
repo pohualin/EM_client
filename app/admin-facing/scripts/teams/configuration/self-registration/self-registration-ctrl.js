@@ -25,8 +25,8 @@ angular.module('emmiManager')
                 SelfRegistrationService.create($scope.team, $scope.selfRegConfig).success(function (response) {
                     $scope.selfRegConfig = response.entity;
                     $alert({
-                        title: ' ',
-                        content: 'The team self reg configuration has been created successfully.',
+                        title: '',
+                        content: '<strong>' + $scope.team.entity.name + '</strong> has been updated successfully.',
                         container: 'body',
                         type: 'success',
                         placement: 'top',
