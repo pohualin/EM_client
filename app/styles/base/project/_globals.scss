@@ -474,9 +474,10 @@
         margin: 0;
         padding: 0;
         border: 0;
+        background-color: transparent;
         outline: 0;
         opacity: 0;
-        visibility: hidden;
+        //visibility: hidden; //can't take away visibility or element becomes not tabbable
         cursor: pointer;
     }
     /*

@@ -13,6 +13,7 @@ angular.module('emmiManager', [
     'pascalprecht.translate',
     'tmh.dynamicLocale',
     'emmi.navbar',
+    'emmi.salesforceForm',
     'emmi.typeahead',
     'emmi.chosen',
     'ngTagsInput',
@@ -386,8 +387,9 @@ angular.module('emmiManager', [
                 var d = event.srcElement || event.target;
                 if (!(d.tagName.toUpperCase() === 'INPUT' &&
                     (d.type.toUpperCase() === 'TEXT' ||
-                    d.type.toUpperCase() === 'PASSWORD') || 
-                    d.tagName.toUpperCase() === 'TEXTAREA')) {
+                    d.type.toUpperCase() === 'PASSWORD' ||
+                    d.type.toUpperCase() === 'EMAIL')) ||
+                    d.tagName.toUpperCase() === 'TEXTAREA') {
                     event.preventDefault();
                 }
             }

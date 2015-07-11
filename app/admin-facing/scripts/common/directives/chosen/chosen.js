@@ -288,6 +288,15 @@
                             ngModel.$render(true);
                         }
                     });
+                    attr.$observe('id', function (changeValue) {
+                        if (angular.isDefined(changeValue)) {
+                            if (chosen) {
+                                chosen = null;
+                                element.chosen('destroy');
+                                ngModel.$render(true);
+                            }
+                        }
+                    });
                     attr.$observe('placeholder', function (changeValue) {
                         if (angular.isDefined(changeValue)) {
                             defaultText = changeValue;
