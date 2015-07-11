@@ -46,7 +46,6 @@
                                 if (listItem && listItem.length > 0 && scroller && scroller.length > 0) {
                                     var pos = scroller.scrollTop() -
                                         scroller.position().top + listItem.position().top;
-                                    console.log('scrolling to position', scroller);
                                     scroller.animate({
                                         scrollTop: pos
                                     }, 10);
