@@ -278,7 +278,7 @@ angular.module('emmiManager', [
 
         $rootScope.emailPattern = PATTERN.EMAIL;
         $rootScope.providerNamePattern = PATTERN.PROVIDER_NAME;
-        $rootScope.isProduction = !!API.production;
+        $rootScope.isProduction = API.production;
 
         $rootScope.$on('$routeChangeStart', function (event, next) {
             $rootScope.killAllToolTips();

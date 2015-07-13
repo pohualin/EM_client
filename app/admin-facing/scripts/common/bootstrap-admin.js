@@ -12,6 +12,8 @@
                     api[item.rel] = item.href;
                 }
             });
+            // add production flag
+            api.production = !!data.production;
             // save as a constant
             angular.module('emmiManager.api', [])
                 .constant('API', api);
