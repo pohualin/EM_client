@@ -49,7 +49,7 @@ angular.module('emmiManager')
                 });
             },
             translate: function(idLabelType, config){
-                if (idLabelType === 'OTHER_ID_LABEL') {
+                if (idLabelType === 'PATIENT_SELF_REG_LABEL_OTHER') {
                     config.patientIdLabelSpanish = '';
                     config.patientIdLabelEnglish = '';
                 } else {

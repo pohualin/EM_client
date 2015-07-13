@@ -8,7 +8,7 @@ angular.module('emmiManager')
         $scope.patientSelfRegConfig = response.entity;
         if ($scope.patientSelfRegConfig === undefined){
             $scope.patientSelfRegConfig = {};
-            $scope.patientSelfRegConfig.idLabelType = 'PATIENT_ID';
+            $scope.patientSelfRegConfig.idLabelType = 'PATIENT_SELF_REG_LABEL_PATIENT_ID';
                 $scope.updatePatientIDLabelType($scope.patientSelfRegConfig.idLabelType);
         }
     });
