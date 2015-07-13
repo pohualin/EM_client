@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('emmiManager')
-    .controller('PatientSelfRegController', ['$scope', 'PatientSelfRegService', '$translate', '$q', '$alert',
-        function ($scope, PatientSelfRegService, $translate, $q, $alert) {
+    .controller('PatientSelfRegController', ['$scope', 'PatientSelfRegService', '$alert',
+        function ($scope, PatientSelfRegService, $alert) {
 
     PatientSelfRegService.get($scope.team).then(function (response) {
         $scope.patientSelfRegConfig = response.entity;
@@ -29,14 +29,7 @@ angular.module('emmiManager')
         PatientSelfRegService.create($scope.team, $scope.patientSelfRegConfig).success(function (response) {
             $scope.patientSelfRegConfig = response.entity;
             $alert({
-                title: ' ',
-                content: 'The patient self reg configuration has been saved successfully.',
-                container: 'body',
-                type: 'success',
-                placement: 'top',
-                show: true,
-                duration: 5,
-                dismissable: true
+                content: 'The patient self reg configuration has been saved successfully.'
             });
         })
         .finally(function () {
@@ -48,34 +41,17 @@ angular.module('emmiManager')
         PatientSelfRegService.update($scope.team, $scope.patientSelfRegConfig).success(function (response) {
             $scope.patientSelfRegConfig = response.entity;
             $alert({
-                title: ' ',
-                content: 'The team self reg configuration has been updated successfully.',
-                container: 'body',
-                type: 'success',
-                placement: 'top',
-                show: true,
-                duration: 5,
-                dismissable: true
+                content: 'The team self reg configuration has been updated successfully.'
             });
         })
         .finally(function () {
             $scope.whenSaving = false;
         });
     };
+
     $scope.updatePatientIDLabelType = function (idLabelType) {
-        if (idLabelType === 'OTHER_ID_LABEL') {
-            $scope.patientSelfRegConfig.patientIdLabelSpanish = '';
-            $scope.patientSelfRegConfig.patientIdLabelEnglish = '';
-        } else {
-            var promises = [];
-            promises.push($translate(idLabelType + '_SPANISH'));
-            promises.push($translate(idLabelType));
-            return $q.all(promises).then(function (response) {
-                $scope.patientSelfRegConfig.patientIdLabelSpanish = response[0];
-                $scope.patientSelfRegConfig.patientIdLabelEnglish = response [1];
-            });
-        }
-        ;
-    }
+        PatientSelfRegService.translate(idLabelType, $scope.patientSelfRegConfig);
+    };
+
     }])
 ;
