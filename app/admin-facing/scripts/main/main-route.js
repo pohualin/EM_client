@@ -21,7 +21,7 @@ angular.module('emmiManager')
             .when('/login', {
                 templateUrl: 'admin-facing/partials/login.html',
                 controller: 'LoginCtrl',
-                title: 'Login',
+                title: 'Login | ClientManager',
                 access: {
                     authorizedRoles: [USER_ROLES.all]
                 },
@@ -37,7 +37,7 @@ angular.module('emmiManager')
             .when('/403', {
                 templateUrl: 'admin-facing/partials/403.html',
                 resolve: requiredResources,
-                title: 'Access Denied',
+                title: 'Access Denied | ClientManager',
                 access: {
                     authorizedRoles: [USER_ROLES.all]
                 }
@@ -45,7 +45,7 @@ angular.module('emmiManager')
             .when('/500', {
                 templateUrl: 'admin-facing/partials/500.html',
                 resolve: requiredResources,
-                title: 'Server Error',
+                title: 'Server Error | ClientManager',
                 access: {
                     authorizedRoles: [USER_ROLES.all]
                 }
@@ -53,7 +53,7 @@ angular.module('emmiManager')
             .when('/logout', {
                 templateUrl: 'admin-facing/partials/logout.html',
                 controller: 'LogoutCtrl',
-                title: 'Logged Out',
+                title: 'Logged Out | ClientManager',
                 access: {
                     authorizedRoles: [USER_ROLES.all]
                 }
