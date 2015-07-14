@@ -71,9 +71,8 @@
                     <!--show the tag with the number of teams -->
                     <h4 class="h4 teams-filter-heading">
                         {{tag.name}}
-                        <span class="team-count">
-                            <data-ng-pluralize count="tag.teams.length"
-                                               when="{'1': '{{tag.teams.length}} team','other':'{{tag.teams.length}} teams'}"></data-ng-pluralize>
+                        <span class="team-count" data-ng-pluralize count="tag.teams.length"
+                            when="{'1': '{{tag.teams.length}} team','other':'{{tag.teams.length}} teams'}">
                         </span>
                     </h4>
                     <ul class="sidebar-list teams-filter-list list-unstyled">
