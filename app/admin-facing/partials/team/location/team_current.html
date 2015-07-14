@@ -53,7 +53,7 @@
         <span><em>There are no existing locations<span data-ng-show="team.name">&nbsp;for {{team.name}}</span>.</em></span>
     </div>
     <div class="table-no-results" data-ng-if="!schedulingConfiguration.entity.useLocation">
-        <span><em>Locations are not in use for this team click <span><a href="#/clients/{{client.entity.id}}/teams/{{team.id}}/configuration/scheduling?&{{currentRouteQueryString}}">here</a></span> to edit this.</em></span>
+        <span><em>Locations are not in use for this team click <span><a href="#/clients/{{client.entity.id}}/teams/{{team.id}}/configuration/scheduling?team={{team.id}}&{{currentRouteQueryString}}">here</a></span> to edit this.</em></span>
     </div>
 </div>
 
