@@ -43,7 +43,6 @@ angular.module('emmiManager')
 		};
 
 		if ($scope.teamResource) {
-		    console.log($scope.teamResource);
 		    $scope.client = $scope.teamResource.entity.client;
 			$scope.refreshLocationsAndProviders();
 		}
