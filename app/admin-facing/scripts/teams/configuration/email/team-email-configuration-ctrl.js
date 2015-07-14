@@ -5,11 +5,9 @@ angular.module('emmiManager')
 /**
  *   Manage Team Level configuration a client
  */
-    .controller('ClientTeamEmailConfigurationCtrl', ['$scope', '$location', '$alert', 'focus', '$controller', 'ClientTeamConfigurationService', '$routeParams', 'API', 'ClientTeamEmailConfigurationService',
-        function ($scope, $location, $alert, focus, $controller, ClientTeamConfigurationService,  $routeParams, API, ClientTeamEmailConfigurationService) {
-            $scope.showTeamConfig = 'yes';
-            $scope.showEmailButton = false;
-            $scope.$emit('showCardOutline', { value: false });
+    .controller('ClientTeamEmailConfigurationCtrl', ['$scope', '$alert', 'teamResource', 'ClientTeamEmailConfigurationService',
+        function ($scope, $alert, teamResource, ClientTeamEmailConfigurationService) {
+            
             /**
              * When the save button is clicked. Sends all updates
              * to the back, then re-binds the form objects with the
@@ -37,7 +35,6 @@ angular.module('emmiManager')
                               $scope.whenSaving = false;
                           });
             		  $scope.showEmailButton = false;
-                      $scope.$emit('showCardOutline', { value: false });
                 }
             };
 
@@ -49,7 +46,6 @@ angular.module('emmiManager')
              */
             $scope.onChange = function(emailConfig){
             	$scope.showEmailButton = true;
-                $scope.$emit('showCardOutline', { value: true });
             	//If the type is REQUIRE_EMAIL and it is true
             	if(angular.equals(emailConfig.entity.type, 'REQUIRE_EMAIL')&&
 		                 (emailConfig.entity.emailConfig)){
@@ -79,14 +75,16 @@ angular.module('emmiManager')
            $scope.cancel = function () {
         	  $scope.emailConfigs = angular.copy($scope.originalEmailConfigs);
         	  $scope.showEmailButton = false;
-              $scope.$emit('showCardOutline', { value: false });
            };
 
              /**
              * init method called when page is loading
              */
             function init() {
-            	$scope.team = ClientTeamConfigurationService.getTeam();
+                $scope.showEmailButton = false;
+                
+                $scope.client = teamResource.entity.client;
+            	$scope.team = teamResource;
             	ClientTeamEmailConfigurationService.getTeamEmailConfiguration($scope.team).then(function (response) {
                 		$scope.originalEmailConfigs = response;
                 		$scope.emailConfigs = angular.copy($scope.originalEmailConfigs);

@@ -1,5 +1,5 @@
 <div class="col-md-12"  data-ng-controller="TeamsLocationsController" >
-    <div class="pull-right">
+    <div class="pull-right" data-ng-if="schedulingConfiguration.entity.useLocation">
         <button type="button" class="btn btn-link btn-link-nopad btn-heading"
                 data-ng-disabled="whenSaving"
                 data-ng-click="addLocations(false)">
@@ -8,7 +8,7 @@
     </div>
     <h2>Locations</h2>
     <table class="table table-bordered table-striped table-hover table-condensed" border="0" cellpadding="0"
-           cellspacing="0" data-ng-show="locations">
+           cellspacing="0" data-ng-show="locations" data-ng-if="schedulingConfiguration.entity.useLocation">
         <thead>
         <tr>
             <th>Name</th>
@@ -49,8 +49,11 @@
         </tr>
         </tbody>
     </table>
-    <div class="table-no-results" data-ng-hide="locations">
+    <div class="table-no-results" data-ng-hide="locations" data-ng-if="schedulingConfiguration.entity.useLocation">
         <span><em>There are no existing locations<span data-ng-show="team.name">&nbsp;for {{team.name}}</span>.</em></span>
+    </div>
+    <div class="table-no-results" data-ng-if="!schedulingConfiguration.entity.useLocation">
+        <span><em>Locations are not in use for this team click <span><a href="#/clients/{{client.entity.id}}/teams/{{team.id}}/configuration/scheduling?&{{currentRouteQueryString}}">here</a></span> to edit this.</em></span>
     </div>
 </div>
 
