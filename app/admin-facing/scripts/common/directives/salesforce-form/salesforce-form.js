@@ -12,7 +12,6 @@
                      * @returns {*}
                      */
                     getCaseTypes: function (forResource) {
-                        // TODO: hook up to API call
                         return $http.get(link.create(forResource.link.createCase).stringify())
                             .then(function (response) {
                                 var ret = response.data;
@@ -37,13 +36,23 @@
                     /**
                      * Saves a case
                      * @param caseForm on which to find the save link as well as the entity to save
+                     * @param account to hook into the account field
                      * @returns {*}
                      */
-                    saveCase: function (caseForm) {
+                    saveCase: function (caseForm, account) {
+                        // put the account id reference in the correct spot
+                        angular.forEach(caseForm.entity.sections, function (section) {
+                            angular.forEach(section.fields, function (field) {
+                                if (field.type === 'REFERENCE' && field.name === 'AccountId') {
+                                    field.referenceId = account.id;
+                                }
+                            });
+                        });
                         return $http.post(link.create(caseForm.link.save).stringify(), caseForm.entity)
                             .then(function (response) {
                                 return response.data;
                             });
+
                     },
                     /**
                      * Look up SF objects by their name
@@ -63,8 +72,8 @@
                     }
                 };
             }])
-        .directive('salesforceForm', ['SalesforceCase', '$alert', 'focus', '$timeout',
-            function (SalesforceCase, $alert, focus, $timeout) {
+        .directive('salesforceForm', ['SalesforceCase', '$alert', '$timeout',
+            function (SalesforceCase, $alert, $timeout) {
                 return {
                     restrict: 'AE', // E = Element, A = Attribute, C = Class, M = Comment
                     templateUrl: 'admin-facing/partials/common/directives/salesforce-form/salesforce-form.tpl.html',
@@ -94,31 +103,45 @@
                         };
 
                         $scope.save = function (caseForm) {
-                            $scope.whenSaving = true;
                             caseForm.submitted = true;
-                            SalesforceCase.saveCase($scope.form).then(
-                                function ok(response) {
-                                    $scope.onSaveSuccess(response.id);
-                                },
-                                function err(response) {
-                                    if (!$scope.errorAlert) {
-                                        $scope.errorAlert = $alert({
-                                            container: '#case-form-messages-container',
-                                            content: response.data.errorMessage.join(' '),
-                                            type: 'danger',
-                                            placement: '',
-                                            duration: false,
-                                            dismissable: false
-                                        });
+                            caseForm.$setValidity('backEndError', true);
+                            if (caseForm.$valid) {
+                                $scope.whenSaving = true;
+                                SalesforceCase.saveCase($scope.form, $scope.account).then(
+                                    function ok(response) {
+                                        $scope.onSaveSuccess(response.id);
+                                    },
+                                    function err(response) {
+                                        caseForm.$setValidity('backEndError', false);
+                                        $scope.showError(response.data.errorMessage ? response.data.errorMessage.join(' ') :
+                                            'Unknown error saving case.');
                                     }
-                                }
-                            ).finally(function () {
-                                    $scope.whenSaving = false;
-                                });
+                                ).finally(function () {
+                                        $scope.whenSaving = false;
+                                    });
+                            } else {
+                                $scope.showError('Please correct the below information.');
+                            }
+                        };
+
+                        $scope.showError = function (message) {
+                            if ($scope.errorAlert) {
+                                $scope.errorAlert.destroy();
+                            }
+                            $scope.errorAlert = $alert({
+                                container: '#case-form-messages-container',
+                                content: message,
+                                type: 'danger',
+                                duration: false,
+                                dismissable: false
+                            });
                         };
 
                         $scope.cancel = function () {
                             $scope.onCancel();
+                        };
+                        $scope.continue = function () {
+                            $scope.continuePressed = true;
                         };
 
                         $scope.referenceSelect = function (item, field) {
@@ -133,12 +156,14 @@
                         };
 
                         function init() {
+
                             SalesforceCase.getCaseTypes($scope.caseForResource).then(function (response) {
                                 $scope.caseTypes = response.type;
-                                $timeout(function () {
-                                    focus('caseType');
-                                });
+                                $scope.possibleAccounts = response.account;
 
+                                $timeout(function () {
+                                    $scope.focusOnAccount();
+                                });
 
                                 // TODO: loop over the types and find the matching ‘page’
                                 // $scope.caseType = $scope.caseTypes[0]; // use index so we have the whole object
@@ -152,5 +177,19 @@
                     }
                 };
             }])
+
+    /**
+     * Ensures that the pick list values are not null.
+     */
+        .directive('pickListValue', function () {
+            return {
+                require: 'ngModel',
+                link: function (scope, elm, attrs, ctrl) {
+                    ctrl.$isEmpty = function (value) {
+                        return !angular.isDefined(value) || !angular.isDefined(value.value);
+                    };
+                }
+            };
+        })
     ;
 })(window.angular);
