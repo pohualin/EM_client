@@ -82,13 +82,26 @@
                         pageCaseType: '=',
                         caseForResource: '=',
                         onSaveSuccess: '=',
-                        onCancel: '='
+                        onCancel: '=',
+                        defaultCaseType: '=',
+                        defaultCaseDescription: '='
                     },
                     controller: function ($scope) {
 
                         $scope.getTypeData = function () {
                             SalesforceCase.getFormData($scope.caseType).then(function (response) {
                                 $scope.form = response;
+
+                                // populate the description if it has been passed in
+                                if ($scope.defaultCaseDescription) {
+                                    angular.forEach($scope.form.entity.sections, function (section) {
+                                        angular.forEach(section.fields, function (field) {
+                                            if (field.type === 'TEXTAREA' && field.name === 'Description') {
+                                                field.value = $scope.defaultCaseDescription;
+                                            }
+                                        });
+                                    });
+                                }
                             });
                         };
 
@@ -161,12 +174,22 @@
                                 $scope.caseTypes = response.type;
                                 $scope.possibleAccounts = response.account;
 
+                                // if there is only one possible account, choose it
+                                if ($scope.possibleAccounts && $scope.possibleAccounts.length === 1) {
+                                    $scope.account = $scope.possibleAccounts[0];
+                                }
+
+                                // choose a default case type if a match is found
+                                angular.forEach($scope.caseTypes, function (caseType) {
+                                    if (caseType.entity.emmiCaseType === $scope.defaultCaseType) {
+                                        $scope.caseType = caseType;
+                                        $scope.getTypeData();
+                                    }
+                                });
+
                                 $timeout(function () {
                                     $scope.focusOnAccount();
                                 });
-
-                                // TODO: loop over the types and find the matching ‘page’
-                                // $scope.caseType = $scope.caseTypes[0]; // use index so we have the whole object
                             });
                         }
 

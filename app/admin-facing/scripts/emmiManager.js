@@ -420,8 +420,8 @@ angular.module('emmiManager', [
                 if (!(d.tagName.toUpperCase() === 'INPUT' &&
                     (d.type.toUpperCase() === 'TEXT' ||
                     d.type.toUpperCase() === 'PASSWORD' ||
-                    d.type.toUpperCase() === 'EMAIL')) ||
-                    d.tagName.toUpperCase() === 'TEXTAREA') {
+                    d.type.toUpperCase() === 'EMAIL')) &&
+                    d.tagName.toUpperCase() !== 'TEXTAREA') {
                     event.preventDefault();
                 }
             }
