@@ -35,6 +35,18 @@ angular.module('emmiManager')
                 $scope.caseForResource = $scope.originalUserClient;
                 $scope.onSaveSuccess = closeSalesForceModel;
                 $scope.onCancel = closeSalesForceModel;
+                var client = $scope.originalUserClient.entity;
+                $scope.defaultCaseDescription = [
+                    'Client User Information:', '\n',
+                    '\t* Login: ', client.login, '\n',
+                    '\t* Name: ', client.firstName, ' ', client.lastName];
+                if (client.email) {
+                    $scope.defaultCaseDescription.push(
+                        '\n', '\t* Email: ', client.email
+                    );
+                }
+                $scope.defaultCaseDescription.push('\n');
+                $scope.defaultCaseDescription = $scope.defaultCaseDescription.join('');
                 salesforceCaseModal.$promise.then(salesforceCaseModal.show);
             };
 

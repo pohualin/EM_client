@@ -84,6 +84,38 @@ angular.module('emmiManager', [
         });
     }])
 
+/**
+ * Allow for dynamic form field names and form names
+ */
+    .config(function ($provide) {
+        $provide.decorator('ngModelDirective', function ($delegate) {
+            var ngModel = $delegate[0], controller = ngModel.controller;
+            ngModel.controller = ['$scope', '$element', '$attrs', '$injector', function (scope, element, attrs, $injector) {
+                var $interpolate = $injector.get('$interpolate');
+                attrs.$set('name', $interpolate(attrs.name || '')(scope));
+                $injector.invoke(controller, this, {
+                    '$scope': scope,
+                    '$element': element,
+                    '$attrs': attrs
+                });
+            }];
+            return $delegate;
+        });
+        $provide.decorator('ngFormDirective', function ($delegate) {
+            var form = $delegate[0], controller = form.controller;
+            form.controller = ['$scope', '$element', '$attrs', '$injector', function (scope, element, attrs, $injector) {
+                var $interpolate = $injector.get('$interpolate');
+                attrs.$set('name', $interpolate(attrs.name || attrs.ngForm || '')(scope));
+                $injector.invoke(controller, this, {
+                    '$scope': scope,
+                    '$element': element,
+                    '$attrs': attrs
+                });
+            }];
+            return $delegate;
+        });
+    })
+
     .config(function ($provide, $httpProvider, $translateProvider, tmhDynamicLocaleProvider,
               HateoasInterceptorProvider, $datepickerProvider, $alertProvider, API, unsavedWarningsConfigProvider) {
 
@@ -388,8 +420,8 @@ angular.module('emmiManager', [
                 if (!(d.tagName.toUpperCase() === 'INPUT' &&
                     (d.type.toUpperCase() === 'TEXT' ||
                     d.type.toUpperCase() === 'PASSWORD' ||
-                    d.type.toUpperCase() === 'EMAIL')) ||
-                    d.tagName.toUpperCase() === 'TEXTAREA') {
+                    d.type.toUpperCase() === 'EMAIL')) &&
+                    d.tagName.toUpperCase() !== 'TEXTAREA') {
                     event.preventDefault();
                 }
             }
