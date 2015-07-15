@@ -155,7 +155,7 @@ angular.module('emmiManager')
                         $scope.roles = response.content;
                     });
 
-                    $scope.page.setTitle('View User - ' + $scope.selectedUser.firstName + ' | ClientManager');
+                    $scope.page.setTitle('View User - ' + $scope.selectedUser.firstName + ' ' + $scope.selectedUser.lastName + ' | ClientManager');
                 } else {
                     // In this case User does not exist
                     $scope.page.setTitle('Create User | ClientManager');

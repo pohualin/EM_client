@@ -270,7 +270,7 @@ angular.module('emmiManager', [
                     _paq.push(['setCustomUrl', $location.path()]); // need to check and see if the hashes are tracking okay now with the setting from the Admin Panel changed
                     _paq.push(['trackPageView']);
                 } else {
-                    title = 'Emmi Manager';
+                    title = 'ClientManager';
                 }
                 this.title = title;
             }

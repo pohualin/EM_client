@@ -1,3 +1,7 @@
-<div style="max-height: 200px;overflow: auto;">
-    <div style="color: grey" data-ng-repeat="userClient in badEmails">{{userClient.entity.email}}</div>
+<div class="popover popover-stretch">
+    <div class="arrow gray"></div>
+    <h3 class="popover-title" data-ng-bind="title" data-ng-show="title"></h3>
+    <div class="popover-content" style="max-height: 250px;overflow: auto;">
+        <div data-ng-repeat="userClient in badEmails">{{userClient.entity.email}}</div>
+    </div>
 </div>
