@@ -21,7 +21,7 @@
                  data-bs-collapse>
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="label label-danger role-error"
+                        <div class="label label-danger role-error" role="alert"
                              data-ng-show="existingForms[role.entity.id].$error.unique">
                             This role already exists
                         </div>
@@ -97,7 +97,7 @@
         <div class="col-md-6">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="label label-danger role-error" data-ng-show="newClientRoleForm.$error.unique">
+                    <div class="label label-danger role-error" role="alert" data-ng-show="newClientRoleForm.$error.unique">
                         This role already exists
                     </div>
                 </div>

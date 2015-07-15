@@ -19,7 +19,7 @@
                  data-bs-collapse>
                 <div class="row">
                   <div class="col-md-12">
-                      <div class="label label-danger role-error" data-ng-show="existingClientTeamRoleForm_{{role.entity.id}}.$error.unique">
+                      <div class="label label-danger role-error" role="alert" data-ng-show="existingClientTeamRoleForm_{{role.entity.id}}.$error.unique">
                           This role already exists
                       </div>
                   </div>
@@ -83,8 +83,8 @@
         <div class="col-md-6">
             <div class="row">
               <div class="col-md-12">
-                  <div class="label label-danger role-error" data-ng-show="newClientTeamRoleForm.$error.unique">
-                      <strong>&nbsp;</strong>This role already exists
+                  <div class="label label-danger role-error" role="alert" data-ng-show="newClientTeamRoleForm.$error.unique">
+                      This role already exists
                   </div>
               </div>
             </div>
