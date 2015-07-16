@@ -174,9 +174,11 @@
                                 $scope.possibleAccounts = response.account;
 
                                 // if there is only one possible account, choose it
-                                if ($scope.possibleAccounts && $scope.possibleAccounts.length === 1) {
-                                    $scope.account = $scope.possibleAccounts[0];
-                                }
+                                angular.forEach($scope.possibleAccounts, function (possibleAccount) {
+                                    if (possibleAccount.client) {
+                                        $scope.account = possibleAccount;
+                                    }
+                                });
 
                                 // choose a default case type if a match is found
                                 angular.forEach($scope.caseTypes, function (caseType) {
