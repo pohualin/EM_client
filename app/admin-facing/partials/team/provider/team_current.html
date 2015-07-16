@@ -1,5 +1,5 @@
 <div class="col-md-12" data-ng-controller="ProviderListController">
-    <div class="pull-right">
+    <div class="pull-right" data-ng-if="schedulingConfiguration.entity.useProvider">
         <button type="button" class="btn btn-link btn-link-nopad btn-heading"
                 data-ng-disabled="whenSaving"
                 data-ng-click="addProviders()"><i class="icon-plus"></i> add providers
@@ -7,7 +7,7 @@
     </div>
     <h2>Providers</h2>
     <table class="table table-bordered table-striped table-hover table-condensed" border="0" cellpadding="0"
-           data-ng-show="listOfTeamProviders.length > 0">
+           data-ng-show="listOfTeamProviders.length > 0" data-ng-if="schedulingConfiguration.entity.useProvider">
         <thead>
         <tr>
             <th>Name</th>
@@ -68,8 +68,11 @@
         </tr>
         </tbody>
     </table>
-    <div class="table-no-results" data-ng-hide="listOfTeamProviders.length > 0">
+    <div class="table-no-results" data-ng-hide="listOfTeamProviders.length > 0" data-ng-if="schedulingConfiguration.entity.useProvider">
         <span><em>There are no existing providers<span
             data-ng-show="team.name">&nbsp;for {{team.name}}</span>.</em></span>
+    </div>
+    <div class="table-no-results" data-ng-if="!schedulingConfiguration.entity.useProvider">
+        <span><em>Providers are not in use for this team click <span><a href="#/clients/{{client.id}}/teams/{{team.id}}/configuration/scheduling?team={{team.id}}&{{currentRouteQueryString}}">here</a></span> to edit this.</em></span>
     </div>
 </div>

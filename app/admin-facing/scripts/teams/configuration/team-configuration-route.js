@@ -22,19 +22,62 @@ angular.module('emmiManager')
                     }
                 });
             });
-             return deferred.promise;
+            return deferred.promise;
         }];
         
-
         // Routes
         $routeProvider
-         .when('/clients/:clientId/teams/:teamId/configuration', {
-           	templateUrl: 'admin-facing/partials/team/configuration/configuration.html',
-            controller: 'ClientTeamConfigurationCtrl',
+        .when('/clients/:clientId/teams/:teamId/configuration', {
+            redirectTo: '/clients/:clientId/teams/:teamId/configuration/email_reminders',
+            access: {
+                authorizedRoles: [USER_ROLES.all]
+            },
+            resolve: requiredResources
+        })
+        .when('/clients/:clientId/teams/:teamId/configuration/email_reminders', {
+           	templateUrl: 'admin-facing/partials/team/configuration/email/main.html',
+            controller: 'ClientTeamEmailConfigurationCtrl',
             activeMenu: MENU.setup,
             access: {
-            authorizedRoles: USER_ROLES.all
+                authorizedRoles: USER_ROLES.all
             },
+            activeSidebarMenu: 'email_reminders',
+            resolve: {
+                   'teamResource' : teamResource
+            }
+        })
+        .when('/clients/:clientId/teams/:teamId/configuration/phone_reminders', {
+            templateUrl: 'admin-facing/partials/team/configuration/phone/main.html',
+            controller: 'ClientTeamPhoneConfigurationCtrl',
+            activeMenu: MENU.setup,
+            access: {
+                authorizedRoles: USER_ROLES.all
+            },
+            activeSidebarMenu: 'phone_reminders',
+            resolve: {
+                   'teamResource' : teamResource
+            }
+        })
+        .when('/clients/:clientId/teams/:teamId/configuration/scheduling', {
+            templateUrl: 'admin-facing/partials/team/configuration/scheduling/main.html',
+            controller: 'ClientTeamSchedulingConfigurationCtrl',
+            activeMenu: MENU.setup,
+            access: {
+                authorizedRoles: USER_ROLES.all
+            },
+            activeSidebarMenu: 'scheduling',
+            resolve: {
+                   'teamResource' : teamResource
+            }
+        })
+        .when('/clients/:clientId/teams/:teamId/configuration/self_registration', {
+            templateUrl: 'admin-facing/partials/team/configuration/self-registration/main.html',
+            controller: 'SelfRegistrationController',
+            activeMenu: MENU.setup,
+            access: {
+                authorizedRoles: USER_ROLES.all
+            },
+            activeSidebarMenu: 'self_registration',
             resolve: {
                    'teamResource' : teamResource
             }

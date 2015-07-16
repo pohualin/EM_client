@@ -1,4 +1,8 @@
 // Custom Popover code
+.popover.popover-stretch {
+    max-width: none !important;
+}
+
 // Tag library popover
 .popover.popover-tag-library {
     width: 355px;

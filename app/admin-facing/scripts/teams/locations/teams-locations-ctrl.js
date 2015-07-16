@@ -2,7 +2,7 @@
 
 angular.module('emmiManager')
 
-    .controller('TeamsLocationsController', ['$rootScope', '$scope', '$http', 'Session', 'UriTemplate', '$controller', '$modal', '$alert', 'Location', 'TeamLocation', 'Client', function ($rootScope, $scope, $http, Session, UriTemplate, $controller, $modal, $alert, Location, TeamLocation, Client) {
+    .controller('TeamsLocationsController', ['$rootScope', '$scope', '$http', 'Session', 'UriTemplate', '$controller', '$modal', '$alert', 'Location', 'TeamLocation', 'Client', 'ClientTeamSchedulingConfigurationService', function ($rootScope, $scope, $http, Session, UriTemplate, $controller, $modal, $alert, Location, TeamLocation, Client, ClientTeamSchedulingConfigurationService) {
 
         $controller('LocationCommon', {$scope: $scope});
 
@@ -73,12 +73,17 @@ angular.module('emmiManager')
         };
 
         $scope.refresh = function() {
-            $scope.teamLocations = {};
-            return TeamLocation.loadTeamLocationsSimple($scope.teamClientResource.teamResource.link.teamLocations).then(function(pageLocations) {
-                angular.forEach(pageLocations.content, function (teamLocation) {
-                    $scope.teamLocations[teamLocation.entity.location.id] = angular.copy(teamLocation.entity.location);
-                });
-                $scope.handleResponse(pageLocations, managedLocationList);
+            ClientTeamSchedulingConfigurationService.getTeamSchedulingConfiguration($scope.teamResource).then(function(schedulingConfiguration){
+                $scope.schedulingConfiguration = schedulingConfiguration;
+                if($scope.schedulingConfiguration.entity.useLocation){
+                    $scope.teamLocations = {};
+                    return TeamLocation.loadTeamLocationsSimple($scope.teamClientResource.teamResource.link.teamLocations).then(function(pageLocations) {
+                        angular.forEach(pageLocations.content, function (teamLocation) {
+                            $scope.teamLocations[teamLocation.entity.location.id] = angular.copy(teamLocation.entity.location);
+                        });
+                        $scope.handleResponse(pageLocations, managedLocationList);
+                    });
+                }
             });
         };
 

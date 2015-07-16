@@ -38,6 +38,7 @@ angular.module('emmiManager')
             .when('/users/', {
                 templateUrl: 'admin-facing/partials/user/main.html',
                 controller: 'UsersMainCtrl',
+                title: 'Manage Emmi Users | ClientManager',
                 access: {
                     authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
                 },
@@ -47,6 +48,7 @@ angular.module('emmiManager')
             }).when('/users/new', {
                 templateUrl: 'admin-facing/partials/user/create/new.html',
                 controller: 'UsersCreateController',
+                title: 'Create User | ClientManager',
                 access: {
                     authorizedRoles: [USER_ROLES.god, USER_ROLES.admin]
                 },
