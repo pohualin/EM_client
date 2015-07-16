@@ -60,9 +60,13 @@
                             field.label }}</label>
 
                         <div class="error-circle fa-exclamation-circle" role="alert"
-                             data-ng-show="caseForm.{{field.name}}.$invalid && caseForm.submitted"
+                             data-ng-show="caseForm.{{field.name}}.$error.required && caseForm.submitted"
                              data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                              data-title="Required" aria-label="Required"></div>
+                        <div class="error-circle fa-exclamation-circle" role="alert"
+                             data-ng-show="caseForm.{{field.name}}.$error.email && caseForm.submitted"
+                             data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                             data-title="Please enter a valid email" aria-label="Please enter a valid email"></div>
                         <span data-ng-if="!field.required" class="field-note field-optional">optional</span>
                         <input name="{{field.name}}" id="section{{sectionIndex}}_emailField{{fieldIndex}}"
                                type="email"
@@ -74,9 +78,14 @@
                             field.label }}</label>
 
                         <div class="error-circle fa-exclamation-circle" role="alert"
-                             data-ng-show="caseForm.{{field.name}}.$invalid && caseForm.submitted"
+                             data-ng-show="caseForm.{{field.name}}.$error.required && caseForm.submitted"
                              data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                              data-title="Required" aria-label="Required"></div>
+                        <div class="error-circle fa-exclamation-circle" role="alert"
+                             data-ng-show="caseForm.{{field.name}}.$error.pattern && caseForm.submitted"
+                             data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                             data-title="Please enter a valid phone number"
+                             aria-label="Please enter a valid phone number"></div>
                         <span data-ng-if="!field.required" class="field-note field-optional">optional</span>
 
                         <div class="has-input-icon has-input-icon-telephone">
@@ -94,9 +103,15 @@
                             field.label }}</label>
 
                         <div class="error-circle fa-exclamation-circle" role="alert"
-                             data-ng-show="caseForm.{{field.name}}.$invalid && caseForm.submitted"
+                             data-ng-show="caseForm.{{field.name}}.$error.required && caseForm.submitted"
                              data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                              data-title="Required" aria-label="Required"></div>
+                        <div class="error-circle fa-exclamation-circle" role="alert"
+                             data-ng-show="caseForm.{{field.name}}.$error.date &&
+                                  !metadataForm.clientContractStart.$error.max && caseForm.submitted"
+                             data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                             data-title="Dates must be in the format MM/DD/YYYY"
+                             aria-label="Dates must be in the format MM/DD/YYYY"></div>
                         <span data-ng-if="!field.required" class="field-note field-optional">optional</span>
 
                         <div class="has-input-icon has-input-icon-calendar">
