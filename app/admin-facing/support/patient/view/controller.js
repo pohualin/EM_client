@@ -6,8 +6,9 @@
     /**
      * Search users across all clients
      */
-        .controller('PatientSupportViewController', ['$scope', '$alert', 'patient', 'PatientSupportViewService', 'moment',
-            function ($scope, $alert, patientResource, PatientSupportViewService, moment) {
+        .controller('PatientSupportViewController', ['$scope', '$alert', 'patient',
+            'PatientSupportViewService', 'moment', '$modal',
+            function ($scope, $alert, patientResource, PatientSupportViewService, moment, $modal) {
 
                 $scope.minDate = moment().subtract(125, 'years').calendar();
 
@@ -35,6 +36,50 @@
                     } else {
                         $scope.showError();
                     }
+                };
+
+                var salesforceCaseModal = $modal({
+                    scope: $scope,
+                    template: 'admin-facing/support/patient/view/salesforce_modal.html',
+                    animation: 'none',
+                    backdropAnimation: 'emmi-fade',
+                    show: false,
+                    backdrop: 'static'
+                });
+
+                var closeSalesForceModel = function (newId) {
+                    salesforceCaseModal.$promise.then(salesforceCaseModal.hide);
+                    if (newId) {
+                        $alert({
+                            content: ['Salesforce case <strong>',
+                                newId, '</strong> has been successfully created.'].join('')
+                        });
+                    }
+                };
+
+                $scope.startSalesforceCase = function () {
+                    $scope.caseForResource = $scope.patientResource;
+                    $scope.onSaveSuccess = closeSalesForceModel;
+                    $scope.onCancel = closeSalesForceModel;
+                    var patient = $scope.patientResource.entity;
+                    $scope.defaultCaseDescription = [
+                        'Patient Information:', '\n',
+                        '\t* Name: ', patient.firstName, ' ', patient.lastName, '\n',
+                        '\t* DOB: ', patient.dateOfBirth
+                    ];
+                    if (patient.phone) {
+                        $scope.defaultCaseDescription.push(
+                            '\n', '\t* Phone: ', patient.phone
+                        );
+                    }
+                    if (patient.email) {
+                        $scope.defaultCaseDescription.push(
+                            '\n', '\t* Email: ', patient.email
+                        );
+                    }
+                    $scope.defaultCaseDescription.push('\n');
+                    $scope.defaultCaseDescription = $scope.defaultCaseDescription.join('');
+                    salesforceCaseModal.$promise.then(salesforceCaseModal.show);
                 };
 
                 $scope.cancel = function (form) {
