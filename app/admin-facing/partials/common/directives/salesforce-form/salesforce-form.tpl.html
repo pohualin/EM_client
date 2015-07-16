@@ -191,7 +191,7 @@
                         </div>
                     </div>
                     <div data-ng-switch-when="REFERENCE" data-ng-if="field.name != 'AccountId'" class="has-feedback">
-                        <label class="control-label" for="section{{sectionIndex}}_salesforceCaseRef{{fieldIndex}}">{{
+                        <label class="control-label" for="{{field.name}}">{{
                             field.label }}</label>
 
                         <div class="error-circle fa-exclamation-circle" role="alert"

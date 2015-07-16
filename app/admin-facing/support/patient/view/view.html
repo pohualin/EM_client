@@ -16,6 +16,14 @@
                             <span>Patient Information</span>
                         </h1>
                     </div>
+                    <div class="col-md-6">
+                        <div class="actions pull-right">
+                            <button data-ng-click="startSalesforceCase()"
+                                    class="btn btn-link btn-link-nopad btn-heading btn-heading-h1">
+                                <i class="icon-flag"></i> Log Salesforce Case
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 <form name="editPatientForm" class="form" novalidate data-unsaved-warning-form>
                     <div id="alerts-container" data-ng-show="formSubmitted && editPatientForm.$invalid"></div>
@@ -24,13 +32,18 @@
                             <div class="form-group"
                                  data-ng-class="{ 'has-error' : editPatientForm.firstName.$invalid && formSubmitted}">
                                 <label class="control-label" for="firstName">First Name</label>
-                                <div class="error-circle fa-exclamation-circle" role="alert" data-ng-show="editPatientForm.firstName.$error.required && formSubmitted"
+
+                                <div class="error-circle fa-exclamation-circle" role="alert"
+                                     data-ng-show="editPatientForm.firstName.$error.required && formSubmitted"
                                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                                      data-title="Required" aria-label="Required"></div>
-                                <div class="error-circle fa-exclamation-circle" role="alert" data-ng-show="editPatientForm.firstName.$error.pattern && formSubmitted"
+                                <div class="error-circle fa-exclamation-circle" role="alert"
+                                     data-ng-show="editPatientForm.firstName.$error.pattern && formSubmitted"
                                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                                     data-title="Please enter a valid first name" aria-label="Please enter a valid first name"></div>
-                                <input class="form-control" data-ng-model="patientResource.entity.firstName" id="firstName" name="firstName"
+                                     data-title="Please enter a valid first name"
+                                     aria-label="Please enter a valid first name"></div>
+                                <input class="form-control" data-ng-model="patientResource.entity.firstName"
+                                       id="firstName" name="firstName"
                                        type="text" required
                                        data-auto-focus data-ng-pattern="/^[[A-Za-z '-.]*$/" data-animation="am-flip-x"
                                        data-focus-on="firstName">
@@ -41,13 +54,18 @@
                             <div class="form-group"
                                  data-ng-class="{ 'has-error' : editPatientForm.lastName.$invalid && formSubmitted}">
                                 <label class="control-label" for="lastName">Last Name</label>
-                                <div class="error-circle fa-exclamation-circle" role="alert" data-ng-show="editPatientForm.lastName.$error.required && formSubmitted"
+
+                                <div class="error-circle fa-exclamation-circle" role="alert"
+                                     data-ng-show="editPatientForm.lastName.$error.required && formSubmitted"
                                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                                      data-title="Required" aria-label="Required"></div>
-                                <div class="error-circle fa-exclamation-circle" role="alert" data-ng-show="editPatientForm.lastName.$error.pattern && formSubmitted"
+                                <div class="error-circle fa-exclamation-circle" role="alert"
+                                     data-ng-show="editPatientForm.lastName.$error.pattern && formSubmitted"
                                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                                     data-title="Please enter a valid last name" aria-label="Please enter a valid last name"></div>
-                                <input class="form-control" data-ng-model="patientResource.entity.lastName" id="lastName" name="lastName"
+                                     data-title="Please enter a valid last name"
+                                     aria-label="Please enter a valid last name"></div>
+                                <input class="form-control" data-ng-model="patientResource.entity.lastName"
+                                       id="lastName" name="lastName"
                                        type="text" required
                                        data-ng-pattern="/^[[A-Za-z '-.]*$/"
                                        data-animation="am-flip-x">
@@ -57,6 +75,7 @@
                             <div class="form-group"
                                  data-ng-class="{ 'has-error' : editPatientForm.dateOfBirth.$invalid && formSubmitted }">
                                 <label class="control-label" for="dateOfBirth">Date of Birth</label>
+
                                 <div class="error-circle fa-exclamation-circle" role="alert"
                                      data-ng-show="editPatientForm.dateOfBirth.$error.required &&
                                       !editPatientForm.dateOfBirth.$error.date && formSubmitted"
@@ -66,12 +85,14 @@
                                      data-ng-show="editPatientForm.dateOfBirth.$error.date &&
                                       !editPatientForm.dateOfBirth.$error.min && formSubmitted"
                                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                                     data-title="Dates must be in the format MM/DD/YYYY" aria-label="Dates must be in the format MM/DD/YYYY"></div>
+                                     data-title="Dates must be in the format MM/DD/YYYY"
+                                     aria-label="Dates must be in the format MM/DD/YYYY"></div>
                                 <div class="error-circle fa-exclamation-circle" role="alert"
                                      data-ng-show="editPatientForm.dateOfBirth.$error.date &&
                                        editPatientForm.dateOfBirth.$error.min && formSubmitted"
                                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                                     data-title="Please select a valid date of birth" aria-label="Please select a valid date of birth"></div>
+                                     data-title="Please select a valid date of birth"
+                                     aria-label="Please select a valid date of birth"></div>
                                 <input id="dateOfBirth" class="form-control" type="text" name="dateOfBirth"
                                        data-ng-model="patientResource.entity.dateOfBirth" data-autoclose="true"
                                        data-dateType="iso" data-bs-datepicker data-max-date="today"
@@ -86,6 +107,7 @@
                             <div class="form-group"
                                  data-ng-class="{ 'has-error' : formSubmitted && editPatientForm.phone.$invalid}">
                                 <label class="control-label" for="phone">Phone</label>
+
                                 <div data-ng-show="isPhoneRequired">
                                     <div class="error-circle fa-exclamation-circle" role="alert"
                                          data-ng-show="editPatientForm.phone.$error.required && formSubmitted"
@@ -95,7 +117,8 @@
                                 <div class="error-circle fa-exclamation-circle" role="alert"
                                      data-ng-show="editPatientForm.phone.$error.pattern && formSubmitted"
                                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                                     data-title="Please enter a valid phone number" aria-label="Please enter a valid phone number"></div>
+                                     data-title="Please enter a valid phone number"
+                                     aria-label="Please enter a valid phone number"></div>
                                 <div class="has-input-icon has-input-icon-telephone">
                                     <input class="form-control" data-ng-model="patientResource.entity.phone"
                                            id="phone" name="phone" type="text"
@@ -111,6 +134,7 @@
                             <div class="form-group"
                                  data-ng-class="{ 'has-error' : formSubmitted && editPatientForm.email.$invalid}">
                                 <label class="control-label" for="email">Email</label>
+
                                 <div data-ng-show="isEmailRequired">
                                     <div class="error-circle fa-exclamation-circle" role="alert"
                                          data-ng-show="editPatientForm.email.$error.required && formSubmitted"
@@ -120,7 +144,8 @@
                                 <div class="error-circle fa-exclamation-circle" role="alert"
                                      data-ng-show="editPatientForm.email.$error.pattern && formSubmitted"
                                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                                     data-title="Please enter a valid email" aria-label="Please enter a valid email"></div>
+                                     data-title="Please enter a valid email"
+                                     aria-label="Please enter a valid email"></div>
                                 <input class="form-control" id="email" data-ng-model="patientResource.entity.email"
                                        name="email" type="text"
                                        maxlength="255" data-focus-on="email"

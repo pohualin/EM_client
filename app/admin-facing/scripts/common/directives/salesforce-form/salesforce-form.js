@@ -79,7 +79,6 @@
                     templateUrl: 'admin-facing/partials/common/directives/salesforce-form/salesforce-form.tpl.html',
                     transclude: true,
                     scope: {
-                        pageCaseType: '=',
                         caseForResource: '=',
                         onSaveSuccess: '=',
                         onCancel: '=',
