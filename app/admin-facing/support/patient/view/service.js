@@ -45,6 +45,11 @@
                         });
                     },
 
+                    /**
+                     * Saves a patient
+                     * @param patientResource to be saved
+                     * @returns {*}
+                     */
                     save: function (patientResource) {
                         return $http.put(UriTemplate.create(patientResource.link.self).stringify(),
                             patientResource.entity).then(
@@ -68,6 +73,33 @@
                         } else {
                             deferred.resolve(refData.referenceData());
                         }
+                        return deferred.promise;
+                    },
+
+                    /**
+                     * Loads all of the scheduled programs for a patient
+                     * @param patientResource to load programs
+                     * @returns {promise}
+                     */
+                    loadScheduledPrograms: function (patientResource) {
+                        var deferred = $q.defer(),
+                            scheduledPrograms = [];
+
+                        $http.get(patientResource.link.scheduledPrograms).then(function load(response) {
+                            var page = response.data;
+                            CommonService.convertPageContentLinks(page);
+
+                            angular.forEach(page.content, function (scheduledProgram) {
+                                scheduledPrograms.push(scheduledProgram);
+                            });
+
+                            if (page.link && page.link['page-next']) {
+                                return $http.get(page.link['page-next']).then(function (response) {
+                                    return load(response);
+                                });
+                            }
+                            deferred.resolve(scheduledPrograms);
+                        });
                         return deferred.promise;
                     }
                 };
