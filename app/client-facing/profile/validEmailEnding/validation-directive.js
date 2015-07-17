@@ -65,7 +65,7 @@ angular.module('emmiManager')
                                         placement: 'auto',
                                         scope: scope,
                                         trigger: 'manual',
-                                        template: 'client-facing/profile/validEmailEnding/user_already_exists_popover.tpl.html'
+                                        templateUrl: 'client-facing/profile/validEmailEnding/user_already_exists_popover.tpl.html'
                                     });
                                 }
                             } else if (value.reason === 'EMAIL_RESTRICTION'){
@@ -75,7 +75,7 @@ angular.module('emmiManager')
                                         placement: 'auto',
                                         scope: scope,
                                         trigger: 'manual',
-                                        template: 'client-facing/profile/validEmailEnding/restricted_email_popover.tpl.html'
+                                        templateUrl: 'client-facing/profile/validEmailEnding/restricted_email_popover.tpl.html'
                                     });
                                 }
                             }

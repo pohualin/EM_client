@@ -99,7 +99,7 @@ angular.module('emmiManager', [
             duration: 5,
             dismissable: true,
             animation: 'am-fade-and-slide-top',
-            template: 'client-facing/common/directives/alert/alert.tpl.html'
+            templateUrl: 'client-facing/common/directives/alert/alert.tpl.html'
         });
 
     })

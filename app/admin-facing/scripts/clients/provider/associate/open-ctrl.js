@@ -9,7 +9,7 @@ angular.module('emmiManager')
 
         var addProviderAssociationModal = $modal({
             scope: $scope,
-            template: 'admin-facing/partials/client/provider/associate.html',
+            templateUrl: 'admin-facing/partials/client/provider/associate.html',
             animation: 'none',
             backdropAnimation: 'emmi-fade',
             show: false,

@@ -10,7 +10,7 @@ angular.module('emmiManager')
 
         var addIpRestrictModal = $modal(
             {scope: $scope,
-             template: 'admin-facing/partials/configurations/restriction/ip-form.html',
+                templateUrl: 'admin-facing/partials/configurations/restriction/ip-form.html',
              animation: 'none',
              backdropAnimation: 'emmi-fade',
              show: false, backdrop: 'static'});

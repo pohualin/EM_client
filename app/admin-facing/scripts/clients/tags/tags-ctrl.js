@@ -5,7 +5,7 @@ angular.module('emmiManager')
 /**
  *   Controls the tag group section
  */
-    .controller('ClientTagsController', function ($scope, focus, $filter, Tag, TeamTag, Client, $q, $route) {
+    .controller('ClientTagsController', function ($scope, focus, $filter, Tag, TeamTag, Client, $q) {
 
         $scope.tagInputMode = false;
         $scope.hideCancelButton = false;
@@ -237,7 +237,7 @@ angular.module('emmiManager')
                             placement: element.data('placement'), // grab the placement from the elements data attribute
                             trigger: 'manual',
                             container: 'body',
-                            template: 'admin-facing/partials/client/tags/conflictingTeam_popover.tpl.html'
+                            templateUrl: 'admin-facing/partials/client/tags/conflictingTeam_popover.tpl.html'
                         });
                     }
                     scope.$on('teamConflict.hide', function () {

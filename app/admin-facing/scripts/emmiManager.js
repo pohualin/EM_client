@@ -170,7 +170,7 @@ angular.module('emmiManager', [
             duration: 5,
             dismissable: true,
             animation: 'am-fade-and-slide-top',
-            template: 'admin-facing/partials/common/directives/alert/alert.tpl.html'
+            templateUrl: 'admin-facing/partials/common/directives/alert/alert.tpl.html'
         });
 
         // extend ivh.treeview ivhTreeviewCheckbox directive so we can skin the checkboxes (EM-1046)
