@@ -9,7 +9,7 @@
       </th>
       <th colspan="{{ rows[0].length - 2 }}">
         <button tabindex="-1" type="button" class="btn btn-default btn-block text-strong"  ng-click="$toggleMode()">
-          <strong style="text-transform: capitalize;" ng-bind="title" role="heading" aria-live="assertive" aria-atomic="true" aria-label="Currently viewing:"></strong>
+          <strong style="text-transform: capitalize;" ng-bind="title" role="heading" aria-live="assertive" aria-atomic="true"></strong>
         </button>
       </th>
       <th>
@@ -18,7 +18,7 @@
         </button>
       </th>
     </tr>
-    <tr ng-show="showLabels" ng-bind-html="labels"></tr>
+    <tr ng-show="showLabels" ng-bind-html="labels" aria-hidden="true"></tr>
   </thead>
   <tbody aria-label="use arrows to navigate, and press enter to select a day">
     <tr ng-repeat="(i, row) in rows" height="{{ 100 / rows.length }}%">
