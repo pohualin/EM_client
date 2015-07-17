@@ -98,7 +98,13 @@ angular.module('emmiManager')
     $scope.editEmail = function () {
         $scope.promptPasswordModal = {};
         $scope.promptPasswordModal =
-            $modal({scope: $scope, template: 'client-facing/profile/passwordPrompt.html', animation: 'none', backdropAnimation: 'emmi-fade', backdrop: 'static'});
+            $modal({
+                scope: $scope,
+                templateUrl: 'client-facing/profile/passwordPrompt.html',
+                animation: 'none',
+                backdropAnimation: 'emmi-fade',
+                backdrop: 'static'
+            });
     };
 
     /**
