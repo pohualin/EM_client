@@ -28,36 +28,19 @@ angular.module('emmiManager')
              * @return TeamProviderTeamLocationSaveRequest
              *
              */
-            getTeamProviderTeamLocationSaveRequest: function (teamClientLocations, teamLocations, providersList) {
+            getTeamProviderTeamLocationSaveRequest: function (selectedLocations, providersList) {
                 var teamProviderTeamLocationSaveRequest = [];
-
-                angular.forEach( teamClientLocations , function (location) {
+                angular.forEach(selectedLocations, function(location){
                     var req = {};
-                    if (!location.disabled) {
-                        req.location = location;
-                        //Select ALL no rows on database
-                        if (providersList.length === location.providersSelected.length) {
-                            req.providers = [];
-                        } else {
-                            req.providers = location.providersSelected;
-                        }
-                        teamProviderTeamLocationSaveRequest.push(req);
+                    req.location = location;
+                    //Select ALL no rows on database
+                    if (providersList.length === location.providersSelected.length) {
+                        req.providers = [];
+                    } else {
+                        req.providers = location.providersSelected;
                     }
+                    teamProviderTeamLocationSaveRequest.push(req);
                 });
-                angular.forEach( teamLocations , function (location) {
-                    var req = {};
-                    if (location.isNewAdd) {
-                        location.isNewAdd = false;
-                        req.location = location;
-                        if (providersList.length === location.providersSelected.length) {
-                            req.providers = [];
-                        } else {
-                            req.providers = location.providersSelected;
-                        }
-                        teamProviderTeamLocationSaveRequest.push(req);
-                    }
-                });
-
                 return teamProviderTeamLocationSaveRequest;
             },
 
