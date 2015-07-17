@@ -40,7 +40,7 @@
 
                 var salesforceCaseModal = $modal({
                     scope: $scope,
-                    template: 'admin-facing/support/patient/view/salesforce_modal.html',
+                    templateUrl: 'admin-facing/support/patient/view/salesforce_modal.html',
                     animation: 'none',
                     backdropAnimation: 'emmi-fade',
                     show: false,

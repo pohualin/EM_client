@@ -25,7 +25,14 @@ angular.module('emmiManager')
             $scope.setBelongsToPropertiesFor($scope.location);
 
             // show the dialog box, to avoid display the popup without the providers
-            $modal({scope: $scope, template: 'admin-facing/partials/team/location/edit.html', animation: 'none', backdropAnimation: 'emmi-fade', show: true, backdrop: 'static'});
+            $modal({
+                scope: $scope,
+                templateUrl: 'admin-facing/partials/team/location/edit.html',
+                animation: 'none',
+                backdropAnimation: 'emmi-fade',
+                show: true,
+                backdrop: 'static'
+            });
 
             _paq.push(['trackEvent', 'Form Action', 'Team Location', 'Edit']);
 
@@ -42,7 +49,7 @@ angular.module('emmiManager')
             	var locationTemplate = allLocations.content && allLocations.content.length > 0 ? 'admin-facing/partials/team/location/search-with-client-location-tabs.html' : 'admin-facing/partials/team/location/search-without-client-location-tabs.html';
                	$modal({
             		scope: $scope,
-            		template: locationTemplate,
+                    templateUrl: locationTemplate,
             		animation: 'none',
             		backdropAnimation: 'emmi-fade',
             		show: true,

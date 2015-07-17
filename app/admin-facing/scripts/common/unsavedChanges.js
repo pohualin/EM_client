@@ -236,7 +236,7 @@ angular.module('unsavedChanges', ['resettable'])
                         scope: event.currentScope,
                         title: 'Are you sure?',
                         content: 'If you leave this page, any unsaved changes will be lost.',
-                        template: 'admin-facing/partials/common/cancel.tpl.html',
+                        templateUrl: 'admin-facing/partials/common/cancel.tpl.html',
                         animation: 'none',
                         backdropAnimation: 'emmi-fade',
                         backdrop: 'static'});

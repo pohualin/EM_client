@@ -10,7 +10,7 @@ angular.module('emmiManager')
 
             var editProviderModal = $modal({
                 scope: $scope,
-                template: 'admin-facing/partials/client/provider/edit.html',
+                templateUrl: 'admin-facing/partials/client/provider/edit.html',
                 animation: 'none',
                 backdropAnimation: 'emmi-fade',
                 show: false,
