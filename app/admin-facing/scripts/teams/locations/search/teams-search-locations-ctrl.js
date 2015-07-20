@@ -284,7 +284,6 @@ angular.module('emmiManager')
         	});
         	$scope.cleanSearch();
         	$scope.tabs = TeamSearchLocation.setAllTabs();
-        	window.paul = $scope;
         }
         init();
 
