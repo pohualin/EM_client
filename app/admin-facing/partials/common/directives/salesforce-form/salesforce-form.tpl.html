@@ -210,9 +210,10 @@
                              data-search-result-container="section{{sectionIndex}}_sfSearchResultsContainer{{fieldIndex}}"
                              data-id="{{field.name}}"
                              data-min-length="3">
-                            <div class="menu typeahead-menu dropdown-menu bottom-left container-fluid"
-                                 id="section{{sectionIndex}}_sfSearchResultsContainer{{fieldIndex}}">
-                                <li id="sfSearchResult_{{refitem.$$hashKey}}"
+                            <ul class="menu typeahead-menu dropdown-menu bottom-left container-fluid"
+                                 id="section{{sectionIndex}}_sfSearchResultsContainer{{fieldIndex}}"
+                                 role="listbox" aria-expanded="false">
+                                <li role="option"
                                     data-emmi-typeahead-item="refitem"
                                     data-ng-repeat="refitem in field.searchResults.content"
                                     class="results">
@@ -221,10 +222,10 @@
                                 <li data-ng-show="!field.searchResults.complete" class="footer">
                                     <div class="col-md-12">Refine search for more results.</div>
                                 </li>
-                                <div data-ng-hide="field.searchResults.content.length" class="no-results">
+                                <li data-ng-if="!field.searchResults.content.length" class="no-results" role="option">
                                     <div class="col-md-12">No results found</div>
-                                </div>
-                            </div>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                     <div data-ng-switch-default>
