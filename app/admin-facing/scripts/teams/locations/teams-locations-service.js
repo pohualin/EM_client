@@ -39,6 +39,9 @@ angular.module('emmiManager')
                 	});
             	return deferred.promise;
             },
+            /**
+             * Get possible (client) locations to associate to a team
+             */
             getPossibleClientLocations: function(teamResource, sort){
                 return $http.get(UriTemplate.create(teamResource.link.possibleClientLocations).stringify({
                         sort: sort && sort.property ? sort.property + ',' + (sort.ascending ? 'asc' : 'desc') : ''    
