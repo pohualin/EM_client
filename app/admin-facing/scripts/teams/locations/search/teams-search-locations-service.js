@@ -1,7 +1,7 @@
 'use strict';
 angular.module('emmiManager')
 
-    .service('TeamSearchLocation', ['$http','UriTemplate', 'CommonService', function ($http, UriTemplate, CommonService) {
+    .service('TeamSearchLocation', ['$q', '$http','UriTemplate', 'CommonService', function ($q, $http, UriTemplate, CommonService) {
         var referenceData;
 
         return {
@@ -54,6 +54,41 @@ angular.module('emmiManager')
          		            'title': 'Search all locations',
          		            'template': 'admin-facing/partials/team/location/tabs/team-search-all-tab.html'
          		        }]};
+            },
+            
+            /**
+             * Associate all (client) locations to a team. 
+             * 
+             * @param teamResource the team to be associated to
+             * @param selectedLocations contains locations having subset of providers
+             * @param providersList the whole list of providers to compare with
+             * @param selectAllBut contains a set of locations to be excluded
+             */
+            saveAllLocationsExcept: function(teamResource, selectedLocations, providersList, selectAllBut){
+                var deferred = $q.defer();
+                var self = this;
+                // Only keep locations with subset of providers
+                angular.forEach(selectedLocations, function(location){
+                    if (providersList.length === location.providersSelected.length){
+                        delete selectedLocations[location.id];
+                    }
+                });
+                
+                var locationsToAdd = self.getTeamProviderTeamLocationSaveRequest(selectedLocations, providersList);
+                
+                // First save locations with subset of providers
+                self.save(teamResource.link.teamLocations, locationsToAdd).then(function(response){
+                    var excludeSet = [];
+                    // collect a set of location ids to be excluded
+                    angular.forEach(selectAllBut, function(exclusion){
+                        excludeSet.push(exclusion.id);
+                    });
+                    // associate all locations except the ones in excludeSet
+                    $http.post(UriTemplate.create(teamResource.link.associateAllClientLocationsExcept).stringify(), excludeSet).then(function(response){
+                        deferred.resolve(locationsToAdd);
+                    });
+                });
+                return deferred.promise;
             }
         };
     }])

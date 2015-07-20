@@ -1,9 +1,14 @@
         <br/>
         <table class="table table-bordered table-striped table-hover table-condensed" border="0" cellpadding="0"
-               cellspacing="0" data-ng-show="clientLocations">
+               cellspacing="0" data-ng-show="teamLocations" >
             <thead>
             <tr>
-                <th class="sort col-checkbox">&nbsp;</th>
+                <th class="sort col-checkbox">
+                  <div class="checkbox">
+                      <input type="checkbox" id="selectAllClientTeams" data-ng-model="selectAllClientTeams" data-ng-change="selectAllClientTeamsChanged()">
+                      <label for="selectAllClientTeams"></label>
+                  </div>
+                </th>
                 <th class="sort" data-ng-click="sortClient('location.name')">
                     Name
                     <span data-ng-show="sortProperty.property === 'location.name'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span>
@@ -26,11 +31,17 @@
             </tr>
             </thead>
             <tbody>
-            <tr data-ng-repeat="location in clientLocations" data-ng-class="location.location.entity.disabled ? 'text-muted' : ''">
-                <td class="col-checkbox">
+            <tr data-ng-repeat="location in teamLocations" data-ng-class="location.location.entity.disabled ? 'text-muted' : ''">
+                <td>
                     <div class="checkbox">
-                        <input type="checkbox" id="clientLocationCb{{$index}}" data-ng-model="location.location.entity.checked"  data-ng-disabled="location.location.entity.disabled"
-                           ng-change="onCheckboxChange(location)">
+                        <input type="checkbox" id="clientLocationCb{{$index}}" 
+                           data-ng-model="location.location.entity.checked" 
+                           data-ng-change="onCheckboxChange(location)" 
+                           data-ng-if="!location.link.self" >
+                         <input type="checkbox" id="clientLocationCb{{$index}}" 
+                           data-ng-checked=true
+                           data-ng-disabled=true 
+                           data-ng-if="location.link.self" >
                         <label for="clientLocationCb{{$index}}"></label>
                     </div>
                 </td>

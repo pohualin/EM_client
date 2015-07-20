@@ -38,6 +38,14 @@ angular.module('emmiManager')
 	                    }
                 	});
             	return deferred.promise;
+            },
+            getPossibleClientLocations: function(teamResource, sort){
+                return $http.get(UriTemplate.create(teamResource.link.possibleClientLocations).stringify({
+                        sort: sort && sort.property ? sort.property + ',' + (sort.ascending ? 'asc' : 'desc') : ''    
+                    })).then(function(response){
+                    CommonService.convertPageContentLinks(response.data);
+                    return response.data;
+                });
             }
         };
     }])
