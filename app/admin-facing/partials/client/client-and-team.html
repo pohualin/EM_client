@@ -1,4 +1,4 @@
-<div class="app-header with-breadcrumbs" data-emmi-navbar>
+<header class="app-header with-breadcrumbs" data-emmi-navbar>
     <!-- Secondary menu for transclusion -->
     <ul class="secondary-nav" data-ng-if="!team.id">
         <li data-ng-if="!isProduction"><a href="#/clients/{{client.id}}/password_policy">Client Configurations</a></li>
@@ -23,7 +23,7 @@
         <li data-ng-class="{'active': !team.id}"><a data-ng-href="#/clients/{{client.id}}?{{currentRouteQueryString}}">{{client.name}}</a></li>
         <li data-ng-if="team.id" class="active">{{team.name}}</li>
     </ol>
-</div>
+</header>
 <div id="app-content" role="main" class="app-content app-content-with-sidebar container" data-ng-cloak>
     <div class="row" data-ng-switch on="showTeam">
         <div data-emmi-sidebar class="sidebar"
