@@ -1,7 +1,8 @@
 'use strict';
 angular.module('emmiManager')
 
-	.controller('ProviderListController', function ($scope, $modal, ProviderView, TeamLocation, TeamProviderService, ProviderSearch, $controller, arrays, ProviderCreate, ClientProviderService, Client, $alert, $q) {
+	.controller('ProviderListController', ['$scope', '$modal', 'ProviderView', 'TeamLocation', 'TeamProviderService', 'ProviderSearch', '$controller', 'arrays', 'ProviderCreate', 'ClientProviderService', 'Client', '$alert', '$q', 'ClientTeamSchedulingConfigurationService',
+        function ($scope, $modal, ProviderView, TeamLocation, TeamProviderService, ProviderSearch, $controller, arrays, ProviderCreate, ClientProviderService, Client, $alert, $q, ClientTeamSchedulingConfigurationService) {
 
 		$controller('CommonPagination', {$scope: $scope});
 
@@ -23,26 +24,32 @@ angular.module('emmiManager')
         });
 
         $scope.refreshLocationsAndProviders = function () {
-            $scope.teamProviders = {};
-            var promises = [];
-            promises.push(ProviderView.paginatedProvidersForTeam($scope.teamResource));
-            promises.push(TeamLocation.getTeamLocations($scope.teamResource.link.teamLocations));
-            return $q.all(promises).then(function (response) {
-                angular.forEach(response[0].content, function (teamProvider) {
-                    $scope.teamProviders[teamProvider.entity.provider.id] = angular.copy(teamProvider.entity.provider);
-                });
-                $scope.handleResponse(response[0], 'listOfTeamProviders');
-                $scope.allTeamLocations = TeamProviderService.buildMultiSelectData(response[1]);
+            ClientTeamSchedulingConfigurationService.getTeamSchedulingConfiguration($scope.teamResource).then(function(schedulingConfiguration){
+                $scope.schedulingConfiguration = schedulingConfiguration;
+                if($scope.schedulingConfiguration.entity.useProvider){
+                    $scope.teamProviders = {};
+                    var promises = [];
+                    promises.push(ProviderView.paginatedProvidersForTeam($scope.teamResource));
+                    promises.push(TeamLocation.getTeamLocations($scope.teamResource.link.teamLocations));
+                    return $q.all(promises).then(function (response) {
+                        angular.forEach(response[0].content, function (teamProvider) {
+                            $scope.teamProviders[teamProvider.entity.provider.id] = angular.copy(teamProvider.entity.provider);
+                        });
+                        $scope.handleResponse(response[0], 'listOfTeamProviders');
+                        $scope.allTeamLocations = TeamProviderService.buildMultiSelectData(response[1]);
+                    });
+                }
             });
 		};
 
 		if ($scope.teamResource) {
+		    $scope.client = $scope.teamResource.entity.client;
 			$scope.refreshLocationsAndProviders();
 		}
 
 		var editProviderModal = $modal({
             scope: $scope,
-            template: 'admin-facing/partials/team/provider/edit.html',
+            templateUrl: 'admin-facing/partials/team/provider/edit.html',
             animation: 'none',
             backdropAnimation: 'emmi-fade',
             show: false,
@@ -119,7 +126,7 @@ angular.module('emmiManager')
                                                                                                      : 'admin-facing/partials/team/provider/search-without-client-provider-tabs.html';
        			$scope.addProvidersModalOnScope = $modal({
        				                              scope: $scope,
-       				                              template: providerTemplate,
+                    templateUrl: providerTemplate,
        				                              animation: 'none',
        				                              backdropAnimation: 'emmi-fade',
        				                              show: true,
@@ -159,7 +166,14 @@ angular.module('emmiManager')
             });
         };
 
-        var newProviderModal = $modal({scope: $scope, template: 'admin-facing/partials/team/provider/new.html', animation: 'none', backdropAnimation: 'emmi-fade', show: false, backdrop: 'static'});
+            var newProviderModal = $modal({
+                scope: $scope,
+                templateUrl: 'admin-facing/partials/team/provider/new.html',
+                animation: 'none',
+                backdropAnimation: 'emmi-fade',
+                show: false,
+                backdrop: 'static'
+            });
 
         $scope.hideNewProviderModal = function () {
         	newProviderModal.$promise.then(newProviderModal.hide);
@@ -350,5 +364,5 @@ angular.module('emmiManager')
                 $scope.providerErrorAlertForCreate.show();
             }
         };
-	})
+	}])
 ;

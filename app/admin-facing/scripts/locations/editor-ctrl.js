@@ -52,6 +52,7 @@ angular.module('emmiManager').controller(
 
         $scope.locationResource = locationResource;
         $scope.location = locationResource.entity;
+        $scope.page.setTitle('Location - ' + $scope.location.name + ' | ClientManager');
         $scope.edit();
 
     });

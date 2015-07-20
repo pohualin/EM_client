@@ -3,20 +3,20 @@
     <hr/>
     <ul class="sidebar-list list-unstyled">
         <li>
-            <a data-ng-click="onClick(emailClick)"
-                data-ng-class="{ 'active': showEmailConfig}">Email Reminders</a>
+            <a data-ng-href="#/clients/{{client.id}}/teams/{{team.entity.id}}/configuration/email_reminders?{{currentRouteQueryString}}"
+                data-ng-class="{ 'active': activeSidebarMenu === 'email_reminders'}">Email Reminders</a>
         </li>
         <li>
-            <a data-ng-click="onClick(phoneClick)"
-                data-ng-class="{ 'active': showPhoneConfig}">Phone Reminders</a>
+            <a data-ng-href="#/clients/{{client.id}}/teams/{{team.entity.id}}/configuration/phone_reminders?{{currentRouteQueryString}}"
+                data-ng-class="{ 'active': activeSidebarMenu === 'phone_reminders'}">Phone Reminders</a>
         </li>
         <li>
-           <a data-ng-click="onClick(schedulingClick)"
-                data-ng-class="{ 'active': showSchedulingConfig}">Scheduling</a>
+            <a data-ng-href="#/clients/{{client.id}}/teams/{{team.entity.id}}/configuration/scheduling?{{currentRouteQueryString}}"
+                data-ng-class="{ 'active': activeSidebarMenu === 'scheduling'}">Scheduling</a>
         </li>
         <li>
-            <a data-ng-click="showSelfRegSection()"
-               data-ng-class="{ 'active': showSelfRegistrationConfig}">Self Registration</a>
+            <a data-ng-href="#/clients/{{client.id}}/teams/{{team.entity.id}}/configuration/self_registration?{{currentRouteQueryString}}"
+                data-ng-class="{ 'active': activeSidebarMenu === 'self_registration'}">Self Registration</a>
         </li>
     </ul>
 </div><!-- .sidebar-wrapper -->

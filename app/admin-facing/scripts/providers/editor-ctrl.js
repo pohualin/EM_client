@@ -58,6 +58,7 @@ angular.module('emmiManager').controller(
                 });
                 $scope.providerResource = providerResource;
                 $scope.provider = providerResource.entity; // for the view state
+                $scope.page.setTitle('Provider - ' + $scope.provider.firstName + ' ' + $scope.provider.lastName + ' | ClientManager');
                 $scope.edit();
             } else {
                 $location.path('/providers');

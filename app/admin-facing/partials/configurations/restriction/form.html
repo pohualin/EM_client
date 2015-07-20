@@ -1,23 +1,26 @@
 <div class="col-md-12">
-    <div class="col-md-6 pull-left">
-        <h1>Security Settings</h1>
-    </div>
-    <div data-ng-if="badEmails.length > 0 && clientRestrictConfiguration.entity.emailConfigRestrict"
-         class="col-md-6 pull-right alert-warning" style="padding:8px 10px">
-        <strong>
-        <ng-pluralize count="badEmails.length"
-                      when="{'1':'{{badEmails.length}} user',
-                            'other':'{{badEmails.length}} users'}"></ng-pluralize>
-        </strong>
-        <ng-pluralize count="badEmails.length"
-                      when="{'1':' is non-compliant with this policy.',
-                            'other':' are non-compliant with this policy.'}"></ng-pluralize>
-
-        <a data-bs-popover data-placement="bottom" title="Non-compliant email addresses:" data-auto-close="true"
-           data-container="body"
-           data-content-template="admin-facing/partials/configurations/restriction/non-compliant-email-popover.html"
-           class="btn-link-nopad pull-right">View</a>
-
+    <div class="row">
+        <div class="col-md-6">
+            <h1>Security Settings</h1>
+        </div>
+        <div class="col-md-6">
+            <div class="alert alert-warning" data-ng-if="badEmails.length > 0 && clientRestrictConfiguration.entity.emailConfigRestrict">
+                <strong>
+                    <span data-ng-pluralize count="badEmails.length"
+                              when="{'1':'{{badEmails.length}} user',
+                                    'other':'{{badEmails.length}} users'}">
+                    </span>
+                </strong>
+                <span data-ng-pluralize count="badEmails.length"
+                              when="{'1':' is non-compliant with this policy.',
+                                    'other':' are non-compliant with this policy.'}">
+                </span>
+                <a href data-bs-popover data-placement="bottom" title="Non-compliant email addresses:" data-auto-close="true"
+                   data-container="body"
+                   data-template-url="admin-facing/partials/configurations/restriction/non-compliant-email-popover.html"
+                   class="pull-right">View</a>
+            </div>
+        </div>
     </div>
     <div class="row">
         <div class="col-md-12">
