@@ -28,29 +28,29 @@
                 </div>
             </div>
             <br/>
-
             <div class="form-group">
                 <label for="idLabelType">ID Label</label>&nbsp;&nbsp;
                 <select class="form-control input-sm" style="width:200px;" id="idLabelType" name="idLabelType"
-                        data-ng-model="patientSelfRegConfig.idLabelType"
+                        data-ng-model="idLabelConfig.idLabelType"
                         data-ng-options="idLabelType | translate for idLabelType in idLabelTypes"
                         data-chosen data-disable-search="true" data-width="'200px'"
-                        data-ng-change="updatePatientIDLabelType(patientSelfRegConfig.idLabelType)">
+                        data-ng-change="updatePatientIDLabelType(idLabelConfig.idLabelType)">
+
                 </select>
             </div>
             <div class="row">
                 <div class="col-sm-6">
                     <label class="control-label" for="patientIdLabelEnglish">Patient Id Label (English)</label>
                     <input class="form-control" name="patientIdLabelEnglish" type="text"
-                           data-ng-model="patientSelfRegConfig.patientIdLabelEnglish"
-                           data-ng-disabled="patientSelfRegConfig.idLabelType !== 'PATIENT_SELF_REG_LABEL_OTHER'"
+                           data-ng-model="idLabelConfig.patientIdLabelEnglish"
+                           data-ng-disabled="idLabelConfig.idLabelType !== 'PATIENT_SELF_REG_LABEL_OTHER'"
                            id="patientIdLabelEnglish" maxlength="100">
                 </div>
                 <div class="col-sm-6">
                     <label class="control-label" for="patientIdLabelSpanish">Patient Id Label (Spanish)</label>
                     <input class="form-control" name="patientIdLabelSpanish" type="text"
-                           data-ng-model="patientSelfRegConfig.patientIdLabelSpanish"
-                           data-ng-disabled="patientSelfRegConfig.idLabelType !== 'PATIENT_SELF_REG_LABEL_OTHER'"
+                           data-ng-model="idLabelConfig.patientIdLabelSpanish"
+                           data-ng-disabled="idLabelConfig.idLabelType !== 'PATIENT_SELF_REG_LABEL_OTHER'"
                            id="patientIdLabelSpanish" maxlength="100">
                 </div>
             </div>
