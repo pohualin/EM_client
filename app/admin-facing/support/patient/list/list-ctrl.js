@@ -109,7 +109,7 @@
                 (function init() {
                     $controller('CommonSearch', {$scope: $scope});
 
-                    $scope.page.setTitle('Search Patients');
+                    $scope.page.setTitle('Patient Search | ClientManager');
                     $scope.searchPerformed = false;
                     $scope.popovers = {};
 
