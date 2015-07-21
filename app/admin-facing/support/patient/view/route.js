@@ -49,6 +49,8 @@
                 // make the loaded patient available to controllers
                 holder.setPatient(patientResource);
 
+                $scope._patient = patientResource.entity;
+
                 var setTitle = function () {
                     $scope.page.setTitle('Patient - ' +
                         holder.patient().entity.firstName + ' ' +
@@ -58,6 +60,7 @@
                 // when the patient is updated, update the title
                 $scope.$on('patient-updated', function ($event, patientResource) {
                     holder.setPatient(patientResource);
+                    $scope._patient = holder.patient().entity;
                     setTitle();
                 });
 
