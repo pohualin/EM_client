@@ -61,7 +61,7 @@ angular.module('emmiManager')
                             scope: $scope,
                             placement: 'right',
                             trigger: 'manual',
-                            template: 'admin-facing/partials/user/client/password/generate_popover.tpl.html',
+                            templateUrl: 'admin-facing/partials/user/client/password/generate_popover.tpl.html',
                             show: true
                         });
 

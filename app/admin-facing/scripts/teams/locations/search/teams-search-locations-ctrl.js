@@ -267,7 +267,13 @@ angular.module('emmiManager')
          */
         $scope.createNewTeamLocation = function () {
             $scope.$hide();
-            $modal({scope: $scope, template: 'admin-facing/partials/team/location/new.html', animation: 'none', backdropAnimation: 'emmi-fade', backdrop: 'static'});
+            $modal({
+                scope: $scope,
+                templateUrl: 'admin-facing/partials/team/location/new.html',
+                animation: 'none',
+                backdropAnimation: 'emmi-fade',
+                backdrop: 'static'
+            });
         };
 
         /**

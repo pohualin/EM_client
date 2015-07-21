@@ -28,7 +28,7 @@
                         data-chosen-activate="focusOnCaseType"
                         data-ng-disabled="continuePressed"
                         data-auto-focus
-                        data-chosen data-disable-search="true" data-placeholder="Select...">
+                        data-chosen data-disable-search-threshold="10" data-placeholder="Select...">
                     <option value=""></option>
                 </select>
             </div>
@@ -184,14 +184,14 @@
                                         data-ng-options="option2.value for option2 in nestedField.options track by option2.value"
                                         data-ng-required="nestedField.required"
                                         data-pick-list-value
-                                        data-chosen data-disable-search="true" data-placeholder="Select...">
+                                        data-chosen data-disable-search-threshold="10" data-placeholder="Select...">
                                     <option value=""></option>
                                 </select>
                             </div>
                         </div>
                     </div>
                     <div data-ng-switch-when="REFERENCE" data-ng-if="field.name != 'AccountId'" class="has-feedback">
-                        <label class="control-label" for="section{{sectionIndex}}_salesforceCaseRef{{fieldIndex}}">{{
+                        <label class="control-label" for="{{field.name}}">{{
                             field.label }}</label>
 
                         <div class="error-circle fa-exclamation-circle" role="alert"

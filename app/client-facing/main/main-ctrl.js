@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('emmiManager')
-    .controller('MainCtrl', ['$scope', '$translate', '$alert', 'tmhDynamicLocale', 'account', 'MainService', 'Session', '$rootScope',
-        function ($scope, $translate, $alert, tmhDynamicLocale, account, MainService, Session, $rootScope) {
+    .controller('MainCtrl', ['$scope', '$translate', '$alert', 'tmhDynamicLocale', 'account', 'MainService',
+        function ($scope, $translate, $alert, tmhDynamicLocale, account, MainService) {
 
             // initial setup
             $scope.account = account;
@@ -25,7 +25,7 @@ angular.module('emmiManager')
                     	if (!$scope.passwordAlert) {
                     		$scope.passwordAlert = $alert({
                     			content: expiredAlertMessage,
-                    			template: 'client-facing/main/password-reminder-alert.tpl.html',
+                                templateUrl: 'client-facing/main/password-reminder-alert.tpl.html',
                     			type: 'warning'
                     		});
                     	} else {

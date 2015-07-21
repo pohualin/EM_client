@@ -10,7 +10,7 @@ angular.module('emmiManager')
 
             var addEmailRestrictModal = $modal(
                 {scope: $scope,
-                    template: 'admin-facing/partials/configurations/restriction/email-form.html',
+                    templateUrl: 'admin-facing/partials/configurations/restriction/email-form.html',
                     animation: 'none',
                     backdropAnimation: 'emmi-fade',
                     show: false, backdrop: 'static'

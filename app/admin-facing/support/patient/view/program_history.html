@@ -1,0 +1,162 @@
+<h2>Program History</h2>
+<div class="row">
+    <div class="col-md-12">
+        <span
+            data-ng-if="scheduledProgramsLoaded && !scheduledPrograms.length">Patient has no scheduled programs.</span>
+
+        <div class="panel-group"
+             data-ng-repeat="scheduledProgram in scheduledPrograms"
+             data-start-collapsed="true"
+             data-bs-collapse>
+            <form name="scheduledProgramForm_{{scheduledProgram.entity.id}}"
+                  class="form-horizontal" novalidate>
+                <div class="panel panel-secondary"
+                     data-ng-class="{ 'panel-open': scheduledProgram.activePanel === 1 }">
+                    <div class="panel-heading" data-bs-collapse-toggle
+                         data-ng-click="toggleScheduledProgramPanel(scheduledProgram)">
+                        <div class="panel-title">
+                            <span class="icon-caret-right"></span>
+                            <span class="panel-title-text" data-ng-hide="scheduledProgram.activePanel === 1">
+                                {{ scheduledProgram.entity.program.name}}
+                            </span>
+
+                            <div class="pull-right">
+                                Access Code: <strong>{{scheduledProgram.entity.accessCode}}</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-collapse" data-bs-collapse-target>
+                        <div class="panel-body" style="padding: 0;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table table-hover table-striped" style="margin-bottom: 0;" border="0"
+                                           cellpadding="0" cellspacing="0">
+                                        <tr data-ng-mouseover="showEnable = true" data-ng-mouseout="showEnable = false">
+                                            <td>
+                                        <span
+                                            data-ng-class="{'text-muted': !scheduledProgram.entity.active}"
+                                            data-ng-style="{
+                                                'font-size': '16px',
+                                                'font-style': !scheduledProgram.entity.active ? 'italic' : ''
+                                            }">
+                                            <span
+                                                data-ng-show="scheduledProgram.entity.program.type.name === 'MULTIMEDIA PROGRAM'"
+                                                class="icon-film"
+                                                aria-label="Multimedia" title="Multimedia"></span>
+                                            <span data-ng-show="scheduledProgram.entity.program.type.name === 'ARTICLE'"
+                                                  class="icon-text-doc"
+                                                  aria-label="Article" title="Article"></span>
+                                            <span
+                                                data-ng-show="scheduledProgram.entity.program.type.name === 'IVR CALL'"
+                                                class="icon-telephone"
+                                                aria-label="Call" title="Call"></span>
+                                            <span
+                                                data-ng-show="scheduledProgram.entity.program.type.name === 'TRANSITION PROGRAM'"
+                                                class="icon-telephone"
+                                                aria-label="Transition Program" title="Transition Program"></span>
+                                            <span
+                                                data-ng-show="scheduledProgram.entity.program.type.name === 'NAVIGATE'"
+                                                class="icon-telephone"
+                                                aria-label="Navigate" title="Navigate"></span>
+                                            <span data-ng-show="scheduledProgram.entity.program.type.name === 'MESSAGE'"
+                                                  class="icon-telephone"
+                                                  aria-label="Message" title="Message"></span>
+                                            <span>
+                                                {{scheduledProgram.entity.program.name}}
+                                                </span>
+                                            <span data-ng-hide="scheduledProgram.entity.active">(inactive)</span>
+                                        </span>
+
+                                                <div class="pull-right" data-ng-show="showEnable">
+                                                    <button type="button" class="btn btn-link btn-link-nopad"
+                                                            data-ng-disabled="whenSaving"
+                                                            data-ng-click="toggleProgramActivation(scheduledProgram)"
+                                                            aria-label="Disable Scheduled Program">
+                                                        <span
+                                                            data-ng-show="scheduledProgram.entity.active">deactivate</span>
+                                                        <span
+                                                            data-ng-hide="scheduledProgram.entity.active">reactivate</span>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row" style="border-top: 1px solid #ddd; padding-top: 20px;">
+
+                                <div class="col-md-5" style="margin-left: 10px;">
+                                    <button type="button" class="btn btn-default"
+                                            id="resendInstructions_{{scheduledProgram.entity.id}}"
+                                            aria-label="Resend Instructions">
+                                        resend instructions
+                                    </button>
+                                </div>
+
+                                <div class="pull-right form-group"
+                                     data-ng-class="{ 'has-error' : scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$invalid &&
+                                                    scheduledProgramForm_{{scheduledProgram.entity.id}}.programFormSubmitted }">
+                                    <div class="col-sm-5">
+                                        <label class="control-label"
+                                               for="viewByDate_{{scheduledProgram.entity.id}}">
+                                            View-by Date:
+                                        </label>
+
+                                        <div class="error-circle fa-exclamation-circle" role="alert"
+                                             data-ng-show="!scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.date &&
+                                                 scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.required &&
+                                                 scheduledProgramForm_{{scheduledProgram.entity.id}}.programFormSubmitted"
+                                             data-bs-tooltip data-placement="right" data-type="danger"
+                                             data-container="body"
+                                             data-title="Required" aria-label="Required"></div>
+                                        <div class="error-circle fa-exclamation-circle" role="alert"
+                                             data-ng-show="!scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.required &&
+                                                 scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.min &&
+                                                 scheduledProgramForm_{{scheduledProgram.entity.id}}.programFormSubmitted"
+                                             data-bs-tooltip data-placement="right" data-type="danger"
+                                             data-container="body"
+                                             data-title="Please enter a date in the future"
+                                             aria-label="Please enter a date in the future"></div>
+                                        <div class="error-circle fa-exclamation-circle" role="alert"
+                                             data-ng-show="(scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.min &&
+                                                 scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.date &&
+                                                 scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.required ||
+                                                 scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.date &&
+                                                 scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.required) &&
+                                                 scheduledProgramForm_{{scheduledProgram.entity.id}}.programFormSubmitted"
+                                             data-bs-tooltip data-placement="right" data-type="danger"
+                                             data-container="body"
+                                             data-title="Please enter a valid view by date"
+                                             aria-label="Please enter a valid view by date"></div>
+                                    </div>
+                                    <div class="col-sm-6 has-input-icon has-input-icon-calendar">
+                                        <input id="viewByDate_{{scheduledProgram.entity.id}}"
+                                               class="form-control "
+                                               type="text" name="viewByDate"
+                                               data-ng-model="scheduledProgram.entity.viewByDate"
+                                               data-autoclose="true"
+                                               data-container="body"
+                                               data-date-format="M/d/yyyy"
+                                               data-dateType="iso" data-bs-datepicker
+                                               data-min-date="today" required>
+                                        <span class="input-icon"><i class="icon-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="border-top: 1px solid #ddd; background-color: #fbfcfc;">
+                                <div class="pull-right">
+                                    <button type="button" class="btn btn-link"
+                                            data-ng-disabled="whenSaving"
+                                            data-ng-click="showDetails(scheduledProgram)"
+                                            aria-label="SHOW DETAILS">
+                                        SHOW DETAILS
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
