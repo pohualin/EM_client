@@ -237,7 +237,7 @@ angular.module('emmiManager')
                             placement: element.data('placement'), // grab the placement from the elements data attribute
                             trigger: 'manual',
                             container: 'body',
-                            templateUrl: 'admin-facing/partials/client/tags/conflictingTeam_popover.tpl.html'
+                            template: 'admin-facing/partials/client/tags/conflictingTeam_popover.tpl.html'
                         });
                     }
                     scope.$on('teamConflict.hide', function () {

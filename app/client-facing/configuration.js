@@ -100,7 +100,7 @@ angular.module('emmiManager', [
             duration: 5,
             dismissable: true,
             animation: 'am-fade-and-slide-top',
-            templateUrl: 'client-facing/common/directives/alert/alert.tpl.html'
+            template: 'client-facing/common/directives/alert/alert.tpl.html'
         });
 
     })

@@ -122,7 +122,8 @@
                     _findScheduled: function (patientId) {
                         var programs = [];
                         return $http.get(UriTemplate.create(Session.link.scheduledPrograms).stringify({
-                            patient: patientId
+                            patient: patientId,
+                            expired: true
                         })).then(function load(response) {
                             var page = response.data;
                             programs.push.apply(programs, page.content);

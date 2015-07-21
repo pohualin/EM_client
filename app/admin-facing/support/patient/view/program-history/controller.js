@@ -47,8 +47,8 @@
                     form.programFormSubmitted = true;
                     if (form.$valid) {
                         scheduledProgramResource.whenSaving = true;
-                        service.save(scheduledProgramResource).then(function ok(saved) {
-                            scheduledProgramResource = saved;
+                        service.save(scheduledProgramResource).then(function ok(savedResource) {
+                            scheduledProgramResource.original = savedResource.entity;
                             $scope.cancel(scheduledProgramResource, form);
                         }).finally(function () {
                             scheduledProgramResource.whenSaving = false;
@@ -80,8 +80,11 @@
                  */
                 $scope.$on('scheduled-programs-loaded', function () {
                     $scope.scheduledPrograms = holder.scheduledPrograms();
-                    $scope.scheduledPrograms[0].activePanel = 0;
-                    $scope.toggleScheduledProgramPanel($scope.scheduledPrograms[0]);
+                    $scope.scheduledProgramsLoaded = true;
+                    if ($scope.scheduledPrograms.length > 0) {
+                        $scope.scheduledPrograms[0].activePanel = 0;
+                        $scope.toggleScheduledProgramPanel($scope.scheduledPrograms[0]);
+                    }
                 });
 
             }])
