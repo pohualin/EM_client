@@ -1,5 +1,6 @@
 <div data-ng-form data-name="{{id}}">
     <input type="text" autocomplete="off" class="form-control typeahead-input-for-finding"
+           role="combobox" aria-autocomplete="list" aria-owns="{{searchResultContainer}}" aria-activedescendant="{{searchResultContainer}}_active-option"
            data-ng-model="term" data-ng-change="query()"
            data-ng-enter="anySizeQuery()" placeholder="{{placeholder}}"
            data-ng-required="{{ngRequired}}"

@@ -1,4 +1,4 @@
-<div class="app-header with-breadcrumbs" data-emmi-navbar>
+<header class="app-header with-breadcrumbs" data-emmi-navbar>
     <!-- Secondary menu for transclusion -->
     <ul class="secondary-nav">
         <li><a href="#/clients/{{client.entity.id}}">{{client.entity.name}}</a></li>
@@ -8,8 +8,8 @@
         <li><a href="#/support">Search</a></li>
         <li class="active">{{selectedUserClient.entity.firstName}} {{selectedUserClient.entity.lastName}}</li>
     </ol>
-</div>
-<div class="container" data-ng-cloak>
+</header>
+<div id="app-content" role="main" class="app-content container" data-ng-cloak>
   <div class="row">
     <div class="col-md-12">
       <div class="layout-card">
@@ -38,10 +38,10 @@
                 <div class="row" data-ng-include="'admin-facing/support/client-users/user-client-role/client-role.html'"></div>
                 <div class="row" data-ng-include="'admin-facing/support/client-users/user-client-team-role/client-team-role.html'"></div>
             </div>
-          </div>          
+          </div>
           </div>
         </div>
-        
+
         <div class="col-md-6 col-xs-height col-full-height" style="padding-left: 6px">
           <div class="row-same-height row-full-height">
             <div class="layout-content layout-card" data-ng-class="{'outlined':editMode}" data-ng-switch="editMode" data-ng-controller="ClientNoteMainController">

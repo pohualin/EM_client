@@ -1,4 +1,4 @@
-<div class="app-header with-breadcrumbs" data-emmi-navbar>
+<header class="app-header with-breadcrumbs" data-emmi-navbar>
     <!-- Secondary menu for transclusion -->
     <ul class="secondary-nav">
         <li>
@@ -13,8 +13,8 @@
         <li><a data-ng-href="#/clients/{{client.id}}?{{currentRouteQueryString}}">{{client.name}}</a></li>
         <li class="active">Client Configurations</li>
     </ol>
-</div>
-<div id="app-content" class="app-content app-content-with-sidebar container" data-ng-cloak>
+</header>
+<div id="app-content" role="main" class="app-content app-content-with-sidebar container" data-ng-cloak>
     <form name="clientPasswordConfigurationForm" novalidate data-unsaved-warning-form>
         <div class="row">
             <div data-emmi-sidebar class="sidebar" data-ng-include="'admin-facing/partials/configurations/nav.html'"></div>

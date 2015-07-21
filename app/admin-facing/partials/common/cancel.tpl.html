@@ -1,9 +1,9 @@
-<div class="modal modal-confirm-exit" tabindex="-1" role="dialog">
+<div class="modal modal-confirm-exit" tabindex="-1" role="alertdialog" aria-labelledby="cancel-dialog-title" aria-describedby="cancel-dialog-desc">
     <div class="modal-dialog">
         <div class="popover">
             <button type="button" class="btn btn-default btn-xs btn-close" data-ng-click="unsavedFormCancel();$hide()" aria-label="Close Dialog"><span class="icon-delete"></span></button>
-            <h3 class="popover-title" ng-bind="title"></h3>
-            <div class="popover-content" ng-bind="content"></div>
+            <h3 class="popover-title" ng-bind="title" id="cancel-dialog-title"></h3>
+            <div class="popover-content" ng-bind="content" id="cancel-dialog-desc"></div>
             <div class="popover-footer">
                 <button type="button" class="btn btn-success" data-ng-click="unsavedFormOk();$hide()">OK</button>
                 <button type="button" class="btn btn-cancel" data-ng-click="unsavedFormCancel();$hide()">Cancel</button>
