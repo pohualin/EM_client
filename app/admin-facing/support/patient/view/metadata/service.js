@@ -87,7 +87,7 @@
 
                         $http.get(UriTemplate.create(patientResource.link.scheduledPrograms).stringify({
                             size: 50,
-                            sort: ["active,desc", "id,desc"],
+                            sort: ['active,desc', 'id,desc'],
                             expired: true,
                             patient: patientResource.entity.id
                         })).then(function load(response) {
