@@ -14,7 +14,7 @@ angular.module('emmiManager')
     	    $scope.showEmailConfig = true;
     	    $scope.showPhoneConfig = false;
     	    $scope.showSchedulingConfig = false;
-            $scope.page.setTitle('Team Configuration - '+ teamResource.entity.name +' | ClientManager');
+            $scope.page.setTitle('Team Configurations - '+ teamResource.entity.name +' | ClientManager');
             $scope.showSelfRegistrationConfig = false;
 
             /**

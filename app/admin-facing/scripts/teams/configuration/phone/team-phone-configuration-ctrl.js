@@ -5,11 +5,9 @@ angular.module('emmiManager')
 /**
  *   Manage Team Level configuration a client
  */
-    .controller('ClientTeamPhoneConfigurationCtrl', ['$scope', '$location', '$alert', 'focus', '$controller', '$routeParams', 'API', 'ClientTeamPhoneConfigurationService', 'ClientTeamConfigurationService',
-        function ($scope, $location, $alert, focus, $controller, $routeParams, API, ClientTeamPhoneConfigurationService, ClientTeamConfigurationService) {
-            $scope.showTeamConfig = 'yes';
-            $scope.showPhoneButton = false;
-            $scope.$emit('showCardOutline', { value: false });
+    .controller('ClientTeamPhoneConfigurationCtrl', ['$scope', '$alert', 'teamResource', 'ClientTeamPhoneConfigurationService',
+        function ($scope, $alert, teamResource, ClientTeamPhoneConfigurationService) {
+            
     	    /**
              * When the save button is clicked. Sends all updates
              * to the back, then re-binds the form objects with the
@@ -37,7 +35,6 @@ angular.module('emmiManager')
                               $scope.whenSaving = false;
                           });
             		  $scope.showPhoneButton = false;
-                      $scope.$emit('showCardOutline', { value: false });
                   }
             };
 
@@ -48,7 +45,6 @@ angular.module('emmiManager')
              */
             $scope.onChangeCollect = function(){
             	$scope.showPhoneButton  = true;
-                $scope.$emit('showCardOutline', { value: true });
             	if(!$scope.phoneConfigs.entity.collectPhone){
                     $scope.phoneConfigs.entity.requirePhone = false;
             	}
@@ -60,7 +56,6 @@ angular.module('emmiManager')
             */
            $scope.onChangeRequire = function(){
         	   $scope.showPhoneButton  = true;
-               $scope.$emit('showCardOutline', { value: true });
            	   if($scope.phoneConfigs.entity.requirePhone){
                    $scope.phoneConfigs.entity.collectPhone = true;
            	   }
@@ -73,7 +68,6 @@ angular.module('emmiManager')
             $scope.cancel = function () {
             	$scope.phoneConfigs = angular.copy($scope.originalPhoneConfigs);
             	$scope.showPhoneButton = false;
-                $scope.$emit('showCardOutline', { value: false });
             };
 
 
@@ -81,7 +75,10 @@ angular.module('emmiManager')
              * init method called when page is loading
              */
             function init() {
-            	$scope.team = ClientTeamConfigurationService.getTeam();
+                $scope.showPhoneButton = false;
+                
+                $scope.client = teamResource.entity.client;
+            	$scope.team = teamResource;
             	ClientTeamPhoneConfigurationService.getTeamPhoneConfiguration($scope.team).then(function (response) {
             		$scope.originalPhoneConfigs = response;
             		$scope.phoneConfigs = angular.copy($scope.originalPhoneConfigs);

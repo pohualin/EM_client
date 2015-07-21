@@ -24,7 +24,7 @@
                             placement: 'top',
                             content: scheduledProgram,
                             trigger: 'manual',
-                            template: 'admin-facing/support/patient/list/scheduled_program_popover.tpl.html'
+                            templateUrl: 'admin-facing/support/patient/list/scheduled_program_popover.tpl.html'
                         });
                     popover.$promise.then(function ready() {
                         data.loadAllScheduledPrograms(patientResource, scheduledProgram, popover);
@@ -109,7 +109,7 @@
                 (function init() {
                     $controller('CommonSearch', {$scope: $scope});
 
-                    $scope.page.setTitle('Search Patients');
+                    $scope.page.setTitle('Patient Search | ClientManager');
                     $scope.searchPerformed = false;
                     $scope.popovers = {};
 

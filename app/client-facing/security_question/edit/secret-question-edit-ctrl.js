@@ -13,7 +13,7 @@ angular.module('emmiManager')
 
             var promptPasswordModal = $modal({
                 scope: $scope,
-                template: 'client-facing/security_question/promptPassword.html',
+                templateUrl: 'client-facing/security_question/promptPassword.html',
                 animation: 'none',
                 backdropAnimation: 'emmi-fade',
                 show: false,

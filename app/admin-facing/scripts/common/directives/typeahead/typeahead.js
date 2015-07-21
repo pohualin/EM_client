@@ -2,6 +2,7 @@
     'use strict';
 
     angular.module('emmi.typeahead', [])
+
         .directive('emmiTypeahead', function ($timeout) {
 
             // Runs during compile
@@ -25,7 +26,8 @@
                     focus: '@',
                     minLength: '@',
                     onEmptyCallback: '&',
-                    searchResultContainer: '@'
+                    searchResultContainer: '@',
+                    ngRequired: '='
                 },
 
                 controller: function ($scope) {
@@ -74,6 +76,7 @@
 
                     this.select = function (item) {
                         var result = $scope.select({item: item});
+                        item._selected = true;
                         $scope.focused = true;
                         if (result) {
                             $scope.hide = true;
@@ -93,7 +96,7 @@
                     };
 
                     $scope.query = function () {
-                        if ($scope.term.length >= $scope.minLength) {
+                        if ($scope.term && $scope.term.length >= $scope.minLength) {
                             $scope.loading = true;
                             $scope.hide = false;
                             $scope.search({term: $scope.term});
@@ -116,9 +119,9 @@
                 //link: function($scope, iElm, iAttrs, controller) {
                 link: function (scope, element, attrs, controller) {
 
-                    var $input = element.find('form > input');
-                    var $list = element.find('.menu');
-                    var tabDoesNotSelectActive = angular.isDefined(attrs.tabDoesNotSelectActive);
+                    var $input = element.find('.typeahead-input-for-finding'),
+                        $list = element.find('.menu'),
+                        tabDoesNotSelectActive = angular.isDefined(attrs.tabDoesNotSelectActive);
 
 
                     // EM-1433: prevent the blur event from firing when clicking within the menu's scrollbar (oddly only happens when clicking on page scroll in between)
@@ -265,6 +268,18 @@
                             controller.select(item);
                         });
                     });
+                }
+            };
+        })
+
+        .directive('typeAheadValue', function () {
+            return {
+                require: 'ngModel',
+                link: function (scope, elm, attrs, ctrl) {
+                    ctrl.$isEmpty = function (value) {
+                        console.log('Selected', ctrl._selected);
+                        return !angular.isDefined(value) || !angular.isDefined(value.value);
+                    };
                 }
             };
         })

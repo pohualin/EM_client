@@ -84,6 +84,38 @@ angular.module('emmiManager', [
         });
     }])
 
+/**
+ * Allow for dynamic form field names and form names
+ */
+    .config(function ($provide) {
+        $provide.decorator('ngModelDirective', function ($delegate) {
+            var ngModel = $delegate[0], controller = ngModel.controller;
+            ngModel.controller = ['$scope', '$element', '$attrs', '$injector', function (scope, element, attrs, $injector) {
+                var $interpolate = $injector.get('$interpolate');
+                attrs.$set('name', $interpolate(attrs.name || '')(scope));
+                $injector.invoke(controller, this, {
+                    '$scope': scope,
+                    '$element': element,
+                    '$attrs': attrs
+                });
+            }];
+            return $delegate;
+        });
+        $provide.decorator('ngFormDirective', function ($delegate) {
+            var form = $delegate[0], controller = form.controller;
+            form.controller = ['$scope', '$element', '$attrs', '$injector', function (scope, element, attrs, $injector) {
+                var $interpolate = $injector.get('$interpolate');
+                attrs.$set('name', $interpolate(attrs.name || attrs.ngForm || '')(scope));
+                $injector.invoke(controller, this, {
+                    '$scope': scope,
+                    '$element': element,
+                    '$attrs': attrs
+                });
+            }];
+            return $delegate;
+        });
+    })
+
     .config(function ($provide, $httpProvider, $translateProvider, tmhDynamicLocaleProvider,
               HateoasInterceptorProvider, $datepickerProvider, $alertProvider, API, unsavedWarningsConfigProvider) {
 
@@ -138,7 +170,7 @@ angular.module('emmiManager', [
             duration: 5,
             dismissable: true,
             animation: 'am-fade-and-slide-top',
-            template: 'admin-facing/partials/common/directives/alert/alert.tpl.html'
+            templateUrl: 'admin-facing/partials/common/directives/alert/alert.tpl.html'
         });
 
         // extend ivh.treeview ivhTreeviewCheckbox directive so we can skin the checkboxes (EM-1046)
@@ -270,7 +302,7 @@ angular.module('emmiManager', [
                     _paq.push(['setCustomUrl', $location.path()]); // need to check and see if the hashes are tracking okay now with the setting from the Admin Panel changed
                     _paq.push(['trackPageView']);
                 } else {
-                    title = 'Emmi Manager';
+                    title = 'ClientManager';
                 }
                 this.title = title;
             }
@@ -278,7 +310,7 @@ angular.module('emmiManager', [
 
         $rootScope.emailPattern = PATTERN.EMAIL;
         $rootScope.providerNamePattern = PATTERN.PROVIDER_NAME;
-        $rootScope.isProduction = !!API.production;
+        $rootScope.isProduction = API.production;
 
         $rootScope.$on('$routeChangeStart', function (event, next) {
             $rootScope.killAllToolTips();
@@ -388,8 +420,8 @@ angular.module('emmiManager', [
                 if (!(d.tagName.toUpperCase() === 'INPUT' &&
                     (d.type.toUpperCase() === 'TEXT' ||
                     d.type.toUpperCase() === 'PASSWORD' ||
-                    d.type.toUpperCase() === 'EMAIL')) ||
-                    d.tagName.toUpperCase() === 'TEXTAREA') {
+                    d.type.toUpperCase() === 'EMAIL')) &&
+                    d.tagName.toUpperCase() !== 'TEXTAREA') {
                     event.preventDefault();
                 }
             }

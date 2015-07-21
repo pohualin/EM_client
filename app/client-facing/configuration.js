@@ -99,7 +99,7 @@ angular.module('emmiManager', [
             duration: 5,
             dismissable: true,
             animation: 'am-fade-and-slide-top',
-            template: 'client-facing/common/directives/alert/alert.tpl.html'
+            templateUrl: 'client-facing/common/directives/alert/alert.tpl.html'
         });
 
     })
@@ -330,8 +330,8 @@ angular.module('emmiManager', [
                 if (!(d.tagName.toUpperCase() === 'INPUT' &&
                     (d.type.toUpperCase() === 'TEXT' ||
                     d.type.toUpperCase() === 'PASSWORD' ||
-                    d.type.toUpperCase() === 'EMAIL')) ||
-                    d.tagName.toUpperCase() === 'TEXTAREA') {
+                    d.type.toUpperCase() === 'EMAIL')) &&
+                    d.tagName.toUpperCase() !== 'TEXTAREA') {
                     event.preventDefault();
                 }
             }

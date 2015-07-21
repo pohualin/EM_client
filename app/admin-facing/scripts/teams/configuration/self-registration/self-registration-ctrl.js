@@ -1,9 +1,11 @@
 'use strict';
 
 angular.module('emmiManager')
-    .controller('SelfRegistrationController', ['$scope', 'SelfRegistrationService', '$alert',
-        function ($scope, SelfRegistrationService, $alert) {
+    .controller('SelfRegistrationController', ['$scope', 'teamResource', 'SelfRegistrationService', '$alert',
+        function ($scope, teamResource, SelfRegistrationService, $alert) {
 
+            $scope.team = teamResource;
+            $scope.client = teamResource.entity.client;
             SelfRegistrationService.get($scope.team).then(function (response) {
                 $scope.selfRegConfig = response.entity;
             });

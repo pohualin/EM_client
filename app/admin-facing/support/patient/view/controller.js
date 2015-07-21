@@ -6,8 +6,9 @@
     /**
      * Search users across all clients
      */
-        .controller('PatientSupportViewController', ['$scope', '$alert', 'patient', 'PatientSupportViewService', 'moment',
-            function ($scope, $alert, patientResource, PatientSupportViewService, moment) {
+        .controller('PatientSupportViewController', ['$scope', '$alert', 'patient',
+            'PatientSupportViewService', 'moment', '$modal', '$filter',
+            function ($scope, $alert, patientResource, PatientSupportViewService, moment, $modal, $filter) {
 
                 $scope.minDate = moment().subtract(125, 'years').calendar();
 
@@ -35,6 +36,62 @@
                     } else {
                         $scope.showError();
                     }
+                };
+
+                var salesforceCaseModal = $modal({
+                    scope: $scope,
+                    templateUrl: 'admin-facing/support/patient/view/salesforce_modal.html',
+                    animation: 'none',
+                    backdropAnimation: 'emmi-fade',
+                    show: false,
+                    backdrop: 'static'
+                });
+
+                var closeSalesForceModel = function (newId) {
+                    salesforceCaseModal.$promise.then(salesforceCaseModal.hide);
+                    if (newId) {
+                        $alert({
+                            content: ['Salesforce case <strong>',
+                                newId, '</strong> has been successfully created.'].join('')
+                        });
+                    }
+                };
+
+                $scope.startSalesforceCase = function () {
+                    $scope.caseForResource = $scope.patientResource;
+                    $scope.onSaveSuccess = closeSalesForceModel;
+                    $scope.onCancel = closeSalesForceModel;
+                    var patient = $scope.patientResource.entity;
+                    $scope.defaultCaseDescription = [
+                        'Patient Information:', '\n',
+                        '\t* Name: ', patient.firstName, ' ', patient.lastName, '\n',
+                        '\t* DOB: ', $filter('date')(patient.dateOfBirth, 'MM/dd/yyyy')
+                    ];
+                    // add phone number when present
+                    if (patient.phone) {
+                        $scope.defaultCaseDescription.push(
+                            '\n', '\t* Phone: ', patient.phone
+                        );
+                    }
+                    // add email when present
+                    if (patient.email) {
+                        $scope.defaultCaseDescription.push(
+                            '\n', '\t* Email: ', patient.email
+                        );
+                    }
+                    // add access codes when present
+                    if ($scope.scheduledPrograms && $scope.scheduledPrograms.length > 0) {
+                        var accessCodes = [];
+                        angular.forEach($scope.scheduledPrograms, function (scheduledProgram) {
+                            accessCodes.push(scheduledProgram.entity.accessCode);
+                        });
+                        $scope.defaultCaseDescription.push(
+                            '\n', '\t* Access Codes: ', accessCodes.join(', ')
+                        );
+                    }
+                    $scope.defaultCaseDescription.push('\n');
+                    $scope.defaultCaseDescription = $scope.defaultCaseDescription.join('');
+                    salesforceCaseModal.$promise.then(salesforceCaseModal.show);
                 };
 
                 $scope.cancel = function (form) {
@@ -75,6 +132,11 @@
                     // load reference data for the screen
                     PatientSupportViewService.loadReferenceData(patientResource).then(function (referenceData) {
                         $scope.optOutPreferences = referenceData.optOutPreference;
+                    });
+
+                    PatientSupportViewService.loadScheduledPrograms(patientResource).then(function (scheduledPrograms) {
+                        $scope.scheduledProgramsLoaded = true;
+                        $scope.scheduledPrograms = scheduledPrograms;
                     });
                     $scope.cancel();
                 })();
