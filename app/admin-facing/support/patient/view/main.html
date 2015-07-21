@@ -1,8 +1,8 @@
 <header class="app-header" data-emmi-navbar>
     <ol class="breadcrumb">
         <li><a href="#/support/patients?{{currentRouteQueryString}}">Search</a></li>
-        <li data-ng-if="patientResource.entity.id" class="active">{{master.entity.firstName}}
-            {{master.entity.lastName}}
+        <li data-ng-if="_patient.id" class="active">{{_patient.firstName}}
+            {{_patient.lastName}}
         </li>
     </ol>
 </header>
