@@ -31,7 +31,9 @@
                              data-ng-class="{ 'panel-open': clientTeamRole.activePanel === 0, 'panel-muted': !clientTeamRole.existingTeams.length }">
                             <div class="panel-heading">
                                 <div class="panel-title">
-                                    <a data-bs-collapse-toggle data-ng-click="panelStateChange(clientTeamRole)">
+                                    <a data-bs-collapse-toggle data-ng-click="panelStateChange(clientTeamRole)"
+                                       aria-expanded="{{clientTeamRole.activePanel === 0}}"
+                                       aria-controls="teamRole-collapsible-{{clientTeamRole.entity.id}}">
                                         <span class="icon-caret-right"></span>
                                         <span class="panel-title-text">{{ clientTeamRole.entity.name}}
 			                            <span data-ng-show="clientTeamRole.existingTeams">({{clientTeamRole.existingTeams.length}}
@@ -39,7 +41,6 @@
 			                            	<span data-ng-show="clientTeamRole.existingTeams.length > 1">teams)</span>
 			                            </span></span>
                                     </a>
-
                                     <div class="pull-right">
                                         <button type="button" class="btn btn-icon btn-inherit"
                                                 data-ng-show="clientTeamRole.existingTeams"
@@ -58,10 +59,9 @@
                                 </div>
                             </div>
                             <!-- .panel-heading -->
-                            <div class="panel-collapse" data-bs-collapse-target>
+                            <div class="panel-collapse" data-bs-collapse-target aria-hidden="{{clientTeamRole.activePanel !== 0}}" id="teamRole-collapsible-{{clientTeamRole.entity.id}}">
                                 <div class="panel-body">
                                     Permissions:<br/>
-
                                     <div class="permissions-list">
 				                        <span
                                             data-ng-repeat="permission in clientTeamRole.entity.permissions | orderBy:'permission.rank'">
