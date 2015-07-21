@@ -15,11 +15,10 @@
                           <div class="panel-heading"
                                data-ng-click="toggleUserClientUserClienRolePanel(existingUserClientUserClientRole)">
                               <div class="panel-title">
-                                  <a data-bs-collapse-toggle>
+                                  <a data-bs-collapse-toggle aria-expanded="{{existingUserClientUserClientRole.activePanel === 1}}" aria-controls="clientRole-collapsible-{{existingUserClientUserClientRole.entity.id}}">
                                       <span class="icon-caret-right"></span>
                                       <span class="panel-title-text">{{ existingUserClientUserClientRole.entity.userClientRole.name}}</span>
                                   </a>
-
                                   <div class="pull-right">
                                       <button type="button" class="btn btn-icon btn-inherit"
                                               data-ng-disabled="whenSaving"
@@ -29,10 +28,9 @@
                                   </div>
                               </div>
                             </div>
-                            <div class="panel-collapse" data-bs-collapse-target>
+                            <div class="panel-collapse" data-bs-collapse-target aria-hidden="{{existingUserClientUserClientRole.activePanel !== 1}}" id="clientRole-collapsible-{{existingUserClientUserClientRole.entity.id}}">
                                 <div class="panel-body">
                                     Permissions:<br/>
-
                                     <div class="permissions-list">
                                     <span
                                         data-ng-repeat="permission in existingUserClientUserClientRole.entity.permissions | orderBy:'permission.rank'">
@@ -55,7 +53,7 @@
          data-ng-show="!existingUserClientUserClientRoles && clientRoles.length && teamRoles.length === 0">
         <button class="btn btn-default" type="button"
                 data-placement="right"
-                data-template-url="admin-facing/support/client-users/user-client-role/add-client-role.html"
+                data-template="admin-facing/support/client-users/user-client-role/add-client-role.html"
                 data-trigger="click" data-bs-popover data-auto-close="1" data-popover-dismiss data-container="body"
                 data-ng-click="setSelectedRoleHasSuperPermission()"><i class="icon-plus"></i> Add client role
         </button>

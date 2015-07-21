@@ -1,11 +1,11 @@
-<div class="app-header" data-emmi-navbar>
+<header class="app-header" data-emmi-navbar>
     <!-- Breadcrumb for transclusion -->
     <ol class="breadcrumb">
         <li><a href="#/admin">Admin Functions</a></li>
         <li class="active">Manage Groups & Tags Library</li>
     </ol>
-</div>
-<div id="app-content" class="app-content container" data-ng-cloak>
+</header>
+<div id="app-content" role="main" class="app-content container" data-ng-cloak>
     <div class="row">
         <div class="col-md-12">
             <div class="layout-card">
@@ -17,7 +17,7 @@
                             data-bs-collapse>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="label label-danger role-error"
+                                    <div class="label label-danger role-error" role="alert"
                                          data-ng-show="existingTagGroupForm[group.entity.id].$error.unique">
                                         This group already exists
                                     </div>
@@ -51,7 +51,7 @@
                                                     activate
                                                 </button>
                                             </div>
-                                            <a data-bs-collapse-toggle data-ng-hide="group.editName" data-ng-dblclick="startEditName(group)">
+                                            <a data-bs-collapse-toggle data-ng-hide="group.editName" data-ng-dblclick="startEditName(group)" aria-expanded="{{group.activePanel === 0}}" aria-controls="collapsible-{{group.entity.id}}">
                                                 <span class="icon-caret-right"></span>
                                                 <span class="panel-title-text">{{ group.title }}</span>
                                             </a>
@@ -67,7 +67,7 @@
                                             </div>
                                         </div>
                                     </div><!-- .panel-heading -->
-                                    <div class="panel-collapse" data-bs-collapse-target>
+                                    <div class="panel-collapse" data-bs-collapse-target aria-hidden="{{group.activePanel !== 0}}" id="collapsible-{{group.entity.id}}">
                                         <div class="panel-body">
                                             <div data-tags-input class="tags-input" data-ng-model="group.tags" data-on-tag-added="onChange('tag added')" data-on-tag-removed="onChange('tag removed')" data-on-tag-edited="onChange('tag edited')" data-ng-click="$event.stopPropagation();" data-ng-paste="pasteTags($event, $index)" data-enable-editing-last-tag="true" data-add-on-space="false" data-add-on-comma="false" data-replace-spaces-with-dashes="false" data-display-property="text" data-min-tags="1"></div>
                                         </div>
@@ -94,7 +94,7 @@
                     <div class="col-md-6">
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="label label-danger role-error" data-ng-show="newTagGroupForm.$error.unique">
+                                <div class="label label-danger role-error" role="alert" data-ng-show="newTagGroupForm.$error.unique">
                                     This group already exists
                                 </div>
                             </div>

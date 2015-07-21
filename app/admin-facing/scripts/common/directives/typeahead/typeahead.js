@@ -43,7 +43,7 @@
                         if ($scope.active) {
                             $timeout(function () {
                                 // need in timeout so $$hashKey is calculated
-                                var listItem = angular.element('#sfSearchResult_' + $scope.active.$$hashKey),
+                                var listItem = angular.element('#' + $scope.searchResultContainer + '_active-option'),
                                     scroller = angular.element('#' + $scope.searchResultContainer);
                                 if (listItem && listItem.length > 0 && scroller && scroller.length > 0) {
                                     var pos = scroller.scrollTop() -
@@ -76,10 +76,12 @@
 
                     this.select = function (item) {
                         var result = $scope.select({item: item});
-                        item._selected = true;
-                        $scope.focused = true;
-                        if (result) {
-                            $scope.hide = true;
+                        if (item) {
+                            item._selected = true;
+                            $scope.focused = true;
+                            if (result) {
+                                $scope.hide = true;
+                            }
                         }
                     };
 
@@ -230,9 +232,9 @@
                                 position: 'absolute',
                                 display: 'block',
                                 width: $input.outerWidth()
-                            });
+                            }).attr('aria-expanded', 'true');
                         } else {
-                            $list.css('display', 'none');
+                            $list.css('display', 'none').attr('aria-expanded', 'false');
                         }
                     });
 
@@ -252,8 +254,10 @@
                     }, function (active) {
                         if (active) {
                             element.addClass('active');
+                            element.attr('id', element.closest('ul').attr('id')+'_active-option');
                         } else {
                             element.removeClass('active');
+                            element.removeAttr('id');
                         }
                     });
 

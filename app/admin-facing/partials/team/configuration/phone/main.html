@@ -1,4 +1,4 @@
-<div class="app-header with-breadcrumbs" data-emmi-navbar>
+<header class="app-header with-breadcrumbs" data-emmi-navbar>
    <!-- Secondary menu for transclusion -->
     <ul class="secondary-nav">
         <li data-ng-if="!isProduction"><a href="#/clients/{{client.id}}/password_policy">Client Configurations</a></li>
@@ -13,8 +13,8 @@
         <li><a href="#/clients/{{client.id}}">{{client.name}}</a></li>
         <li><a href="#/clients/{{client.id}}?{{currentRouteQueryString}}">{{team.entity.name}}</a></li>
     </ol>
-</div>
-<div id="app-content" class="app-content app-content-with-sidebar container" data-ng-cloak>
+</header>
+<div id="app-content" role="main" class="app-content app-content-with-sidebar container" data-ng-cloak>
     <div class="row">
         <div data-emmi-sidebar class="sidebar" data-ng-include="'admin-facing/partials/team/configuration/nav.html'"></div>
         <div class="main-content">

@@ -1,4 +1,4 @@
-<div class="modal modal-client-tags" tabindex="-1" role="dialog">
+<div class="modal modal-client-tags" tabindex="-1" role="dialog" aria-labelledby="modal-dialog-title">
     <div class="modal-dialog">
         <div class="modal-content">
             <form name="clientForm" class="form"
@@ -9,13 +9,13 @@
                             <button class="btn btn-link btn-link-nopad btn-heading btn-tag-library" type="button" title="Select groups to add:"
                                     data-ng-disabled="saving"
                                     data-placement="left"
-                                    data-template-url="admin-facing/partials/client/tags/tag_library_modal.html"
+                                    data-template="admin-facing/partials/client/tags/tag_library_modal.html"
                                     data-trigger="click" data-bs-popover data-auto-close="1" data-popover-dismiss data-container="body">
                                     <i class="icon-plus"></i> <span data-translate="team_edit.client_tags.modal_add_from_library"></span>
                             </button>
                         </span>
                     </div>
-                    <h4 class="modal-title" data-translate="team_edit.client_tags.modal_title"></h4>
+                    <h4 class="modal-title" data-translate="team_edit.client_tags.modal_title" id="modal-dialog-title"></h4>
                 </div>
                 <div class="modal-body">
                     <div class="tag-groups" data-tag-groups data-ng-model="client.tagGroups" data-library-groups="tagLibraryMap"

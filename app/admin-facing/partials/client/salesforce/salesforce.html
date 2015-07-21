@@ -1,6 +1,6 @@
 <div class="col-md-8">
     <div class="form-group has-feedback" data-ng-class="{ 'has-error' : formSubmitted && !clientToEdit.salesForceAccount }">
-        <label class="control-label">Salesforce Account</label>
+        <label class="control-label" for="salesForceAccount">Salesforce Account</label>
         <div class="error-circle fa-exclamation-circle" role="alert" data-ng-show="!clientToEdit.salesForceAccount && formSubmitted"
              data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
              data-title="Please enter an associated Salesforce account" aria-label="Please enter an associated Salesforce account"></div>
@@ -8,14 +8,14 @@
              data-search-result-container="sfSearchResultsContainer"
              data-term="sfSearch.searchQuery" data-search="findClientSfAccount(term)"
              data-select="chooseClientSfAccount(item)" data-blur="revertClientSfAccount()"
-             data-placeholder="Start typing to search..." data-focus="SfSearch" data-min-length="5">
-            <div class="menu typeahead-menu dropdown-menu bottom-left container-fluid" id="sfSearchResultsContainer">
-                <li class="header" data-ng-show="sfResult.account.length">
+             data-placeholder="Start typing to search..." data-focus="SfSearch" data-min-length="5" data-id="salesForceAccount">
+            <ul class="menu typeahead-menu dropdown-menu bottom-left container-fluid" id="sfSearchResultsContainer" role="listbox" aria-expanded="false">
+                <li class="header" data-ng-show="sfResult.account.length" role="presentation">
                     <div class="col-md-6 account-name">Account Name</div>
                     <div class="col-md-3 client-name">Client Name</div>
                     <div class="col-md-3 city-state">City/State</div>
                 </li>
-                <li id="sfSearchResult_{{account.$$hashKey}}"
+                <li role="option"
                     data-emmi-typeahead-item="account"
                     data-ng-repeat="account in sfResult.account"
                     class="results" data-ng-class="!account.clientName ? 'selectable' : 'unselectable'">
@@ -26,10 +26,10 @@
                 <li data-ng-show="hasMore()" class="footer">
                     <div class="col-md-12">Refine search for more results.</div>
                 </li>
-                <div data-ng-hide="sfResult.account.length" class="no-results">
+                <li data-ng-if="!sfResult.account.length" class="no-results" role="option">
                     <div class="col-md-12">No results found</div>
-                </div>
-            </div>
+                </li>
+            </ul>
         </div>
     </div>
 </div>

@@ -4,9 +4,11 @@
             <span>Patient Information</span>
         </h1>
     </div>
-    <div class="col-md-6" data-ng-if="scheduledProgramsLoaded">
+    <div class="col-md-6">
         <div class="actions pull-right">
             <button data-ng-click="startSalesforceCase()"
+                    data-ng-show="scheduledProgramsLoaded"
+                    data-ng-controller="PatientSupportViewSalesforceController"
                     class="btn btn-link btn-link-nopad btn-heading btn-heading-h1">
                 <i class="icon-flag"></i> Log Salesforce Case
             </button>
@@ -154,7 +156,7 @@
         </div>
     </div>
 
-    <div class="row" data-ng-show="isPatientChanged()">
+    <div class="row" data-ng-show="isPatientChanged(editPatientForm)">
         <div class="col-md-8">
             <div class="actions pull-left">
                 <div class="form-group">
@@ -165,7 +167,7 @@
                     </button>
                     <button class="btn btn-cancel" type="button"
                             data-ng-disabled="saving"
-                            data-ng-click="cancel(editPatientForm)">
+                            data-ng-click="cancel()">
                         <span>cancel</span>
                     </button>
                 </div>

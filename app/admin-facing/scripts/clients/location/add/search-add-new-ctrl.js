@@ -12,7 +12,7 @@ angular.module('emmiManager')
 
         var addNewLocationsModal = $modal({
             scope: $scope,
-            templateUrl: 'admin-facing/partials/client/location/search.html',
+            template: 'admin-facing/partials/client/location/search.html',
             animation: 'none',
             backdropAnimation: 'emmi-fade',
             show: false,
@@ -202,7 +202,7 @@ angular.module('emmiManager')
 
         var newLocationModal = $modal({
             scope: $scope,
-            templateUrl: 'admin-facing/partials/client/location/new.html',
+            template: 'admin-facing/partials/client/location/new.html',
             animation: 'none',
             backdropAnimation: 'emmi-fade',
             show: false,

@@ -1,8 +1,8 @@
-<div class="modal" tabindex="-1" role="dialog" data-ng-controller="UsersClientUserClientTeamRolesSearchController">
+<div class="modal" tabindex="-1" role="dialog" aria-labelledby="modal-dialog-title" data-ng-controller="UsersClientUserClientTeamRolesSearchController">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Role: {{selectedClientTeamRole.entity.name}}</h4>
+                <h4 class="modal-title" id="modal-dialog-title">Role: {{selectedClientTeamRole.entity.name}}</h4>
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -44,7 +44,7 @@
                     </div><!-- .row -->
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="pull-right table-results-count" data-ng-hide="total === 0">
+                            <div class="pull-right table-results-count" aria-live="polite" aria-atomic="true" data-ng-hide="total === 0">
                                 {{total}} <span data-ng-show="total != 1"
                                     data-translate="global.labels.total"> results</span> <span
                                     data-ng-show="total === 1"
