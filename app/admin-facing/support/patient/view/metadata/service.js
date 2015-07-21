@@ -85,7 +85,12 @@
                         var deferred = $q.defer(),
                             scheduledPrograms = [];
 
-                        $http.get(patientResource.link.scheduledPrograms).then(function load(response) {
+                        $http.get(UriTemplate.create(patientResource.link.scheduledPrograms).stringify({
+                            size: 50,
+                            sort: ["active,desc", "id,desc"],
+                            expired: true,
+                            patient: patientResource.entity.id
+                        })).then(function load(response) {
                             var page = response.data;
                             CommonService.convertPageContentLinks(page);
 

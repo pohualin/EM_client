@@ -223,7 +223,7 @@ angular.module('emmiManager')
             $scope.$hide();
             $modal({
                 scope: $scope,
-                templateUrl: 'admin-facing/partials/team/location/new.html',
+                template: 'admin-facing/partials/team/location/new.html',
                 animation: 'none',
                 backdropAnimation: 'emmi-fade',
                 backdrop: 'static'

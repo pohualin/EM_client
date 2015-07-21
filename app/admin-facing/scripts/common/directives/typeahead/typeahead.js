@@ -76,10 +76,12 @@
 
                     this.select = function (item) {
                         var result = $scope.select({item: item});
-                        item._selected = true;
-                        $scope.focused = true;
-                        if (result) {
-                            $scope.hide = true;
+                        if (item) {
+                            item._selected = true;
+                            $scope.focused = true;
+                            if (result) {
+                                $scope.hide = true;
+                            }
                         }
                     };
 

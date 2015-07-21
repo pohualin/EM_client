@@ -13,7 +13,7 @@ angular.module('emmiManager')
 
             var salesforceCaseModal = $modal({
                 scope: $scope,
-                templateUrl: 'admin-facing/support/client-users/metadata/salesforce_modal.html',
+                template: 'admin-facing/support/client-users/metadata/salesforce_modal.html',
                 animation: 'none',
                 backdropAnimation: 'emmi-fade',
                 show: false,

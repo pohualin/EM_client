@@ -24,7 +24,7 @@
                             placement: 'top',
                             content: scheduledProgram,
                             trigger: 'manual',
-                            templateUrl: 'admin-facing/support/patient/list/scheduled_program_popover.tpl.html'
+                            template: 'admin-facing/support/patient/list/scheduled_program_popover.tpl.html'
                         });
                     popover.$promise.then(function ready() {
                         data.loadAllScheduledPrograms(patientResource, scheduledProgram, popover);

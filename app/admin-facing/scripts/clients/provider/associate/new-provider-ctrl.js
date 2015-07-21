@@ -11,7 +11,7 @@ angular.module('emmiManager')
 
             var newProviderModal = $modal({
                 scope: $scope,
-                templateUrl: 'admin-facing/partials/client/provider/create.html',
+                template: 'admin-facing/partials/client/provider/create.html',
                 animation: 'none',
                 backdropAnimation: 'emmi-fade',
                 show: false,

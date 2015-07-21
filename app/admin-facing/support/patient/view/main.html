@@ -1,8 +1,8 @@
 <header class="app-header" data-emmi-navbar>
     <ol class="breadcrumb">
         <li><a href="#/support/patients?{{currentRouteQueryString}}">Search</a></li>
-        <li data-ng-if="patientResource.entity.id" class="active">{{patientResource.entity.firstName}}
-            {{patientResource.entity.lastName}}
+        <li data-ng-if="patientResource.entity.id" class="active">{{master.entity.firstName}}
+            {{master.entity.lastName}}
         </li>
     </ol>
 </header>
@@ -10,7 +10,8 @@
     <div class="row">
         <div class="col-md-12">
             <div class="layout-card">
-                <div data-ng-include="'admin-facing/support/patient/view/patient_metadata.html'"></div>
+                <div data-ng-include="'admin-facing/support/patient/view/metadata/patient_metadata.html'"
+                     data-ng-controller="PatientSupportViewMetadataController"></div>
             </div>
         </div>
     </div>
@@ -19,7 +20,7 @@
             <div class="col-md-7 col-xs-height col-full-height" style="padding-right: 6px">
                 <div class="row-same-height row-full-height">
                     <div class="layout-content layout-card">
-                        <div data-ng-include="'admin-facing/support/patient/view/program_history.html'"
+                        <div data-ng-include="'admin-facing/support/patient/view/program-history/program_history.html'"
                              data-ng-controller="PatientSupportViewProgramHistoryController"></div>
                     </div>
                 </div>
@@ -28,7 +29,7 @@
             <div class="col-md-5 col-xs-height col-full-height" style="padding-left: 6px">
                 <div class="row-same-height row-full-height">
                     <div class="layout-content layout-card">
-                        <div data-ng-include="'admin-facing/support/patient/view/notes.html'"></div>
+                        <div data-ng-include="'admin-facing/support/patient/view/notes/notes.html'"></div>
                     </div>
                 </div>
             </div>

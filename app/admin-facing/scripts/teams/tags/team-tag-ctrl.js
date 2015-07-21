@@ -93,7 +93,7 @@ angular.module('emmiManager')
 
             var showClientTagsModal = $modal({
                 scope: $scope,
-                templateUrl: 'admin-facing/partials/team/tags/client_tags_modal.html',
+                template: 'admin-facing/partials/team/tags/client_tags_modal.html',
                 animation: 'none',
                 backdropAnimation: 'emmi-fade',
                 show: false,
