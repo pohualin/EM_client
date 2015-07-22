@@ -2,74 +2,82 @@
 
 angular.module('emmiManager')
 
-    .controller('SearchTeamsLocationsController', ['$rootScope', '$scope', '$q', '$modal', '$controller', 'TeamSearchLocation', 'Location', 'Client', 'ProviderView', 'TeamProviderService', 'focus', 'STATUS', 'TeamLocation',
-       function ($rootScope, $scope, $q, $modal, $controller,TeamSearchLocation, Location, Client, ProviderView, TeamProviderService, focus, STATUS, TeamLocation) {
+    .controller('SearchTeamsLocationsController', ['$rootScope', '$scope', '$q', '$modal', '$controller', 'TeamSearchLocation', 'Location', 'Client', 'TeamProviderService', 'focus', 'STATUS', 'TeamLocation', 'SelectAllFactory',
+       function ($rootScope, $scope, $q, $modal, $controller,TeamSearchLocation, Location, Client, TeamProviderService, focus, STATUS, TeamLocation, SelectAllFactory) {
 
         $controller('LocationCommon', {$scope: $scope});
         $controller('CommonSearch', {$scope: $scope});
 
         $scope.selectedLocations = {};
-        $scope.selectAllBut = {};
         $scope.searchAll = {};
         var managedLocationList = 'locations';
         var managedClientLocationList = 'teamLocations';
 
         /**
-         * Return true if any location is selected or selectAllClientTeams is true
+         * Return true if any location is selected or SelectAllFactory.isSelectAll() returns true
          */
         $scope.hasLocationsAdded = function() {
             // Any location selected or select all is checked
-            return !angular.equals({}, $scope.selectedLocations) || $scope.selectAllClientTeams;
+            return !angular.equals({}, $scope.selectedLocations) || SelectAllFactory.isSelectAll();
         };
         
-        /**
-         * When select all check box is checked/unchecked, turn selectAllClientTeam to true/false.
-         * Fire 'selectAllButSome' event to check all unchecked check boxes on this page
-         * 
-         */
-        $scope.selectAllClientTeamsChanged = function(){
-            $scope.selectAllClientTeams = $scope.selectAllClientTeams ? false : true;
-            $scope.$emit('selectAllButSome');
-        };
-        
-        /**
-         * On 'selectAllButSome' events happens
-         * Select all locations on the page that have not associated yet except those unchecked when selectAllClientTeams is true. 
-         * Clear all selections when selectAllClientTeams is false.
-         * 
-         */
-        $scope.$on('selectAllButSome', function () {
-            if($scope.selectAllClientTeams){
-                angular.forEach($scope.teamLocations, function(teamLocation){
-                    // When the location have not been associated.
-                    // and
-                    // When the location has not been added to selectedLocations.
-                    // and
-                    // When location is not unchecked.
-                    if(!teamLocation.link.self && 
-                            !$scope.selectedLocations[teamLocation.location.entity.id] && 
-                            !$scope.selectAllBut[teamLocation.location.entity.id]){
-                        $scope.selectedLocations[teamLocation.location.entity.id] = teamLocation.location.entity;
-                        teamLocation.location.entity.providersSelected =  angular.copy($scope.providersData);
-                        teamLocation.location.entity.checked = true;
-                    }
-                });
-            } else {
-                $scope.selectedLocations = {};
-                $scope.selectAllBut = {};
-                angular.forEach($scope.teamLocations, function(teamLocation){
-                    if(!teamLocation.link.self){
-                        teamLocation.location.entity.checked = false;
-                    }
-                });
-            }
+        $scope.$on('selectAllLocations', function () {
+            angular.forEach($scope.teamLocations, function(teamLocation){
+                // When the location have not been associated.
+                // and
+                // When the location has not been added to selectedLocations.
+                // and
+                // When location is not excluded.
+                if(!teamLocation.link.self && 
+                        !$scope.selectedLocations[teamLocation.location.entity.id] && 
+                        !SelectAllFactory.getExclusionSet()[teamLocation.location.entity.id]){
+                    $scope.selectedLocations[teamLocation.location.entity.id] = teamLocation.location.entity;
+                    teamLocation.location.entity.checked = true;
+                    $scope.onCheckboxChange(teamLocation);
+                }
+            });
         });
+        
+        $scope.$on('deselectAllLocations', function () {
+            $scope.selectedLocations = {};
+            SelectAllFactory.resetSelectedPossibleLocationIds();
+            SelectAllFactory.resetExclusionSet();
+            $scope.setSelectedLocations($scope.teamLocations);
+        });
+        
+        $scope.addToExclusionSet = function(locationResource) {
+            SelectAllFactory.getExclusionSet()[locationResource.location.entity.id] = locationResource.location.entity;
+        };
+        
+        $scope.removeFromExclusionSet = function(locationResource) {
+            delete SelectAllFactory.getExclusionSet()[locationResource.location.entity.id];
+        };
+        
+        $scope.addToSelectedLocations = function(locationResource) {
+            $scope.selectedLocations[locationResource.location.entity.id] = locationResource.location.entity;
+            locationResource.location.entity.providersSelected =  angular.copy($scope.providersData);
+            SelectAllFactory.getSelectedPossibleLocationIds()[locationResource.location.entity.id] = locationResource.location.entity.id;
+        };
+        
+        $scope.removeFromSelectedLocations = function(locationResource) {
+            delete $scope.selectedLocations[locationResource.location.entity.id];
+            delete SelectAllFactory.getSelectedPossibleLocationIds()[locationResource.location.entity.id];
+        };
+        
+        $scope.setPossibleLocations = function() {
+            TeamLocation.getPossibleClientLocations($scope.teamResource).then(function (allLocations) {
+                $scope.handleResponse(allLocations, managedClientLocationList);
+                TeamLocation.getTeamLocationsCount($scope.teamResource).then(function(count){
+                    SelectAllFactory.setTotalPossibleLocationsCount(allLocations.page.totalElements - count);
+                });
+            });
+        };
         
         $scope.cleanSearch = function() {
         	$scope.allLocationsSearch = false;
             $scope.locations = null;
             $scope.selectedLocations = {};
-            $scope.selectAllBut = {};
+            SelectAllFactory.resetExclusionSet();
             $scope.searchAll.locationQuery = null;
         };
 
@@ -80,7 +88,7 @@ angular.module('emmiManager')
             $scope.whenSaving = true;
             var deferred = $q.defer();
             
-            if(!$scope.selectAllClientTeams) {
+            if(!SelectAllFactory.isSelectAll()) {
                 var locationsToAdd = TeamSearchLocation.getTeamProviderTeamLocationSaveRequest($scope.selectedLocations, $scope.providersData);
                 TeamSearchLocation.save($scope.teamClientResource.teamResource.link.teamLocations, locationsToAdd).then(function () {
                     // close the modal and show the message
@@ -97,7 +105,7 @@ angular.module('emmiManager')
                 });
             } else {
                 TeamSearchLocation.saveAllLocationsExcept($scope.teamClientResource.teamResource, 
-                        $scope.selectedLocations, $scope.providersData, $scope.selectAllBut).then(function (locationsToAdd) {
+                        $scope.selectedLocations, $scope.providersData, SelectAllFactory.getExclusionSet()).then(function (locationsToAdd) {
                     // close the modal and show the message
                     if (!addAnother) {
                         $scope.$hide();
@@ -121,6 +129,7 @@ angular.module('emmiManager')
         $scope.saveAndAddAnother = function () {
             $scope.savePopupLocations(true).then(function (locationsToAdd) {
                 // set the active tab to search per UAT ticket EM-1029
+                $scope.setPossibleLocations();
                 $scope.tabs.activeTab = 1;
                 $scope.cleanSearch();
                 $scope.displaySuccessfull(locationsToAdd, '#modal-messages-container');
@@ -143,6 +152,8 @@ angular.module('emmiManager')
                 if ($scope.selectedLocations[location.location.entity.id]) {
                     location.location.entity.checked = true;
                     location.location.entity.providersSelected = $scope.selectedLocations[location.location.entity.id].providersSelected;
+                } else {
+                    location.location.entity.checked = false;
                 }
                 if(!location.location.entity.providersSelected){
                     location.location.entity.providersSelected =  angular.copy($scope.providersData);
@@ -231,7 +242,9 @@ angular.module('emmiManager')
             Location.fetchPageLink(href).then(function (locationPage) {
                 $scope.handleResponse(locationPage, managedClientLocationList);
                 $scope.setSelectedLocations($scope.teamLocations);
-                $scope.$emit('selectAllButSome');
+                if(SelectAllFactory.isSelectAll()){
+                    $scope.$emit('selectAllLocations');
+                }
             }, function () {
                 $scope.loading = false;
             });
@@ -243,25 +256,23 @@ angular.module('emmiManager')
          * Delete location from selectedLocation when it's unchecked.
          */
         $scope.onCheckboxChange = function (locationResource) {
-            if(!$scope.selectAllClientTeams) {
+            if(!SelectAllFactory.isSelectAll()) {
                 if (!locationResource.location.entity.checked) {
-                    delete $scope.selectedLocations[locationResource.location.entity.id];
+                    $scope.removeFromSelectedLocations(locationResource);
                 } else {
-                    $scope.selectedLocations[locationResource.location.entity.id] = locationResource.location.entity;
-                    locationResource.location.entity.providersSelected =  angular.copy($scope.providersData);
+                    $scope.addToSelectedLocations(locationResource)
                 }
             } else {
-                if (locationResource.location.entity.checked) {
-                    delete $scope.selectAllBut[locationResource.location.entity.id];
-                    $scope.selectedLocations[locationResource.location.entity.id] = locationResource.location.entity;
-                    locationResource.location.entity.providersSelected =  angular.copy($scope.providersData);
+                if (!locationResource.location.entity.checked) {
+                    $scope.removeFromSelectedLocations(locationResource);
+                    $scope.addToExclusionSet(locationResource);
                 } else {
-                    delete $scope.selectedLocations[locationResource.location.entity.id];
-                    $scope.selectAllBut[locationResource.location.entity.id] = locationResource.location.entity;
+                    $scope.removeFromExclusionSet(locationResource);
+                    $scope.addToSelectedLocations(locationResource);
                 }
             }
         };
-
+        
         /**
          * Add new location button in search all locations tab
          */
@@ -275,7 +286,7 @@ angular.module('emmiManager')
                 backdrop: 'static'
             });
         };
-
+        
         /**
          * Modal init
          */
@@ -284,12 +295,11 @@ angular.module('emmiManager')
         	TeamProviderService.buildMultiSelectProvidersData($scope.teamResource).then(function(response){
             	$scope.providersData = response;
             	$scope.sizeClass =  $scope.providersData.length === 0 ? 'sort col-sm-4' : 'sort col-sm-3';
-                TeamLocation.getPossibleClientLocations($scope.teamResource).then(function (allLocations) {
-                    $scope.handleResponse(allLocations, managedClientLocationList);
-                });
+            	$scope.setPossibleLocations();
         	});
         	$scope.cleanSearch();
         	$scope.tabs = TeamSearchLocation.setAllTabs();
+        	window.searchTeamsLocationsController = $scope;
         }
         init();
 

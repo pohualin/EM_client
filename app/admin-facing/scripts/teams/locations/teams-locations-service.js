@@ -39,6 +39,14 @@ angular.module('emmiManager')
                 	});
             	return deferred.promise;
             },
+            
+            getTeamLocationsCount: function(teamResource) {
+                return $http.get(UriTemplate.create(teamResource.link.teamLocations).stringify())
+                    .then(function(response){
+                    return response.data.page.totalElements;
+                });
+            },
+            
             /**
              * Get possible (client) locations to associate to a team
              */

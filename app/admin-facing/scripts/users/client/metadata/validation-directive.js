@@ -21,6 +21,7 @@ angular.module('emmiManager')
  */
     .directive('popoverSaveError', ['$popover', '$timeout',
         function ($popover, $timeout) {
+            console.log('hey');
             return {
                 restrict: 'EA',
                 scope: {
