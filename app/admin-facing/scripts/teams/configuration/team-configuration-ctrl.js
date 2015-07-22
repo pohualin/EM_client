@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  *   Manage Team Level configuration a client
  */
-    .controller('ClientTeamConfigurationCtrl', ['$scope', '$location', '$alert', 'focus', '$controller', 'teamResource', '$routeParams', 'arrays','$rootScope', 'API', 'ClientTeamConfigurationService', 'PatientSelfRegService',
-        function ($scope, $location, $alert, focus, $controller, teamResource,  $routeParams, arrays, $rootScope, API, ClientTeamConfigurationService, PatientSelfRegService) {
+    .controller('ClientTeamConfigurationCtrl', ['$scope', '$location', '$alert', 'focus', '$controller', 'teamResource', '$routeParams', 'arrays','$rootScope', 'API', 'ClientTeamConfigurationService',
+        function ($scope, $location, $alert, focus, $controller, teamResource,  $routeParams, arrays, $rootScope, API, ClientTeamConfigurationService) {
     	    $scope.showTeamConfig = 'yes';
     	    $scope.phoneClick = 'phone';
     	    $scope.emailClick = 'email';
@@ -64,9 +64,6 @@ angular.module('emmiManager')
                 ClientTeamConfigurationService.setTeam(teamResource);
                 $scope.client = teamResource.entity.client;
                 $scope.team = teamResource;
-                PatientSelfRegService.refData($scope.team).then(function (response) {
-                    $scope.idLabelTypes = response;
-                });
             }
 
             init();

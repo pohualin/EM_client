@@ -1,30 +1,41 @@
 'use strict';
 
 angular.module('emmiManager')
-    .controller('SelfRegistrationController', ['$scope', 'teamResource', 'SelfRegistrationService', '$alert',
-        function ($scope, teamResource, SelfRegistrationService, $alert) {
+    .controller('SelfRegistrationController', ['$scope', 'teamResource', 'SelfRegistrationService', '$alert', 'PatientSelfRegService',
+        function ($scope, teamResource, SelfRegistrationService, $alert, PatientSelfRegService) {
 
             $scope.team = teamResource;
             $scope.client = teamResource.entity.client;
+
             SelfRegistrationService.get($scope.team).then(function (response) {
                 $scope.selfRegConfig = response.entity;
             });
 
-            $scope.continue = function (selfRegForm) {
+            PatientSelfRegService.refData($scope.team).then(function (response) {
+                $scope.idLabelTypes = response;
+            });
+
+            SelfRegistrationService.getLanguages().then(function (response) {
+                    console.log(response);
+                //$scope.idLabelTypes = response;
+                $scope.languagesAvailable = response;
+            });
+
+            $scope.continue = function (selfRegForm, regConfig) {
                 $scope.selfRegFormSubmitted = true;
                 if (selfRegForm.$valid) {
                     $scope.whenSaving = true;
                     if ($scope.selfRegConfig && $scope.selfRegConfig.id) {
-                        $scope.update(selfRegForm);
+                        $scope.update(selfRegForm, regConfig);
                     }
                     else {
-                        $scope.create(selfRegForm);
+                        $scope.create(selfRegForm, regConfig);
                     }
                 }
             };
 
-            $scope.create = function (selfRegForm) {
-                SelfRegistrationService.create($scope.team, $scope.selfRegConfig).success(function (response) {
+            $scope.create = function (selfRegForm, regConfig) {
+                SelfRegistrationService.create($scope.team, regConfig).success(function (response) {
                     $scope.selfRegConfig = response.entity;
                     $alert({
                         title: '',
@@ -45,8 +56,8 @@ angular.module('emmiManager')
                     });
             };
 
-            $scope.update = function (selfRegForm) {
-                SelfRegistrationService.update($scope.team, $scope.selfRegConfig).success(function (response) {
+            $scope.update = function (selfRegForm, regConfig) {
+                SelfRegistrationService.update($scope.team, regConfig).success(function (response) {
                     $scope.selfRegConfig = response.entity;
                     $alert({
                         title: ' ',

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('emmiManager')
-    .service('SelfRegistrationService', ['$http', 'UriTemplate', function ($http, UriTemplate) {
+    .service('SelfRegistrationService', ['$http', 'UriTemplate', '$q', 'API', function ($http, UriTemplate, $q, API) {
         return {
             /**
              * Calls the back end to get the self registration configuration for a client-team
@@ -38,6 +38,24 @@ angular.module('emmiManager')
                     .success(function (response) {
                         return response.data;
                     });
+            },
+            getLanguages: function() {
+                var deferred = $q.defer();
+                var languages = [];
+                $http.get(UriTemplate.create(API.languages).stringify()).then(function addToLanguages(response) {
+                    var page = response.data;
+                    angular.forEach(page.content, function(language){
+                        languages.push(language);
+                    });
+                    if(page.link && page.link['page-next']){
+                        $http.get(page.link['page-next']).then(function(response){
+                            addToLanguages(response);
+                        });
+                    } else {
+                        deferred.resolve(languages);
+                    }
+                });
+                return deferred.promise;
             }
         };
     }])

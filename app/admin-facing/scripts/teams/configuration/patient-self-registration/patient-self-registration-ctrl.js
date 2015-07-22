@@ -18,26 +18,28 @@ angular.module('emmiManager')
             $scope.createPatientIdLabelConfig = function () {
                 $scope.patientIdLabelConfigs = [];
 
-                var languageObjectEnglish = {};
-                languageObjectEnglish.languageTag = 'en';
+                $scope.idLabelConfigEnglish = $scope.idLabelConfigEnglish ? $scope.idLabelConfigEnglish : {};
+                $scope.idLabelConfigEnglish.patientSelfRegConfig = $scope.patientSelfRegConfig;
+                $scope.idLabelConfigEnglish.idLabelType = $scope.idLabelConfig.idLabelType;
 
-                var languageObjectSpanish = {};
-                languageObjectSpanish.languageTag = 'sp';
 
-                var patientIdLabelEnglish = {};
-                patientIdLabelEnglish.language = languageObjectEnglish;
-                patientIdLabelEnglish.value = $scope.idLabelConfig.patientIdLabelEnglish;
-                patientIdLabelEnglish.patientSelfRegConfig = $scope.patientSelfRegConfig;
-                patientIdLabelEnglish.idLabelType = $scope.idLabelConfig.idLabelType;
+                $scope.idLabelConfigSpanish = $scope.idLabelConfigSpanish ? $scope.idLabelConfigSpanish : {};
+                $scope.idLabelConfigSpanish.patientSelfRegConfig = $scope.patientSelfRegConfig;
+                $scope.idLabelConfigSpanish.idLabelType = $scope.idLabelConfig.idLabelType;
 
-                var patientIdLabelSpanish = {};
-                patientIdLabelSpanish.language = languageObjectSpanish;
-                patientIdLabelSpanish.value = $scope.idLabelConfig.patientIdLabelSpanish;
-                patientIdLabelSpanish.patientSelfRegConfig = $scope.patientSelfRegConfig;
-                patientIdLabelSpanish.idLabelType = $scope.idLabelConfig.idLabelType;
+                angular.forEach($scope.languagesAvailable, function (language) {
+                    if (language.entity.languageTag === 'en') {
+                        $scope.idLabelConfigEnglish.language = language.entity;
+                        console.log($scope.idLabelConfigEnglish);
+                    }
+                    else if (language.entity.languageTag === 'es') {
+                        $scope.idLabelConfigSpanish.language = language.entity;
+                        console.log($scope.idLabelConfigSpanish);
+                    }
+                });
 
-                $scope.patientIdLabelConfigs.push(patientIdLabelEnglish);
-                $scope.patientIdLabelConfigs.push(patientIdLabelSpanish);
+                $scope.patientIdLabelConfigs.push($scope.idLabelConfigSpanish);
+                $scope.patientIdLabelConfigs.push($scope.idLabelConfigEnglish);
                 return $scope.patientIdLabelConfigs;
             };
 
@@ -47,20 +49,16 @@ angular.module('emmiManager')
                         $scope.setDefaultPatientIdLabel();
                     }
                     angular.forEach(patientIdLabelConfigs.content, function (config) {
-                        if (config.entity.language.languageTag === 'en') {
-                            $scope.idLabelConfig.patientIdLabelEnglish = config.entity.value;
-                            $scope.idLabelConfig.idLabelType = config.entity.idLabelType;
-                        } else if (config.entity.language.languageTag === 'sp') {
-                            $scope.idLabelConfig.patientIdLabelSpanish = config.entity.value;
-                            $scope.idLabelConfig.idLabelType = config.entity.idLabelType;
-                        }
+                        angular.forEach($scope.languagesAvailable, function (language) {
+                            if (language.entity.languageTag === config.entity.language.languageTag && config.entity.language.languageTag === 'en') {
+                                $scope.idLabelConfigEnglish = config.entity;
+                            } else if (language.entity.languageTag === config.entity.language.languageTag && config.entity.language.languageTag === 'es') {
+                                $scope.idLabelConfigSpanish = config.entity;
+                            }
+                        });
+
                     });
                 });
-            };
-
-            $scope.setDefaultPatientIdLabel = function () {
-                $scope.idLabelConfig.idLabelType = 'PATIENT_SELF_REG_LABEL_PATIENT_ID';
-                $scope.updatePatientIDLabelType($scope.idLabelConfig.idLabelType);
             };
 
             $scope.continue = function (form) {
@@ -99,9 +97,14 @@ angular.module('emmiManager')
                     });
             };
 
+            /*$scope.setDefaultPatientIdLabel = function () {
+                $scope.idLabelConfig.idLabelType = 'PATIENT_SELF_REG_LABEL_PATIENT_ID';
+                $scope.updatePatientIDLabelType($scope.idLabelConfig.idLabelType);
+            };
+
             $scope.updatePatientIDLabelType = function (idLabelType) {
                 PatientSelfRegService.translate(idLabelType, $scope.idLabelConfig);
-            };
+            };*/
 
         }])
 ;
