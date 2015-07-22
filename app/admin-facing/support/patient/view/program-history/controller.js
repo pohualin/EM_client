@@ -45,7 +45,7 @@
                  */
                 $scope.save = function (scheduledProgramResource, form) {
                     form.programFormSubmitted = true;
-                    if (form.$valid) {
+                    if ((form.viewByDate.$dirty && form.$valid) || !form.viewByDate.$dirty) {
                         scheduledProgramResource.whenSaving = true;
                         service.save(scheduledProgramResource).then(function ok(savedResource) {
                             scheduledProgramResource.original = savedResource.entity;

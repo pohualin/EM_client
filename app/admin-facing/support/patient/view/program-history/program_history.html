@@ -102,7 +102,8 @@
 
                                         <div class="pull-right form-group"
                                              data-ng-class="{ 'has-error' : scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$invalid &&
-                                                    scheduledProgramForm_{{scheduledProgram.entity.id}}.programFormSubmitted }"
+                                                    scheduledProgramForm_{{scheduledProgram.entity.id}}.programFormSubmitted  &&
+                                                    scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$dirty}"
                                              style="margin-bottom: 15px;">
                                             <div class="col-sm-5">
                                                 <label class="control-label"
@@ -111,27 +112,29 @@
                                                 </label>
 
                                                 <div class="error-circle fa-exclamation-circle" role="alert"
-                                                     data-ng-show="!scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.date &&
-                                                 scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.required &&
-                                                 scheduledProgramForm_{{scheduledProgram.entity.id}}.programFormSubmitted"
+                                                     data-ng-show="
+                                                        !scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.date &&
+                                                        scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.required &&
+                                                        scheduledProgramForm_{{scheduledProgram.entity.id}}.programFormSubmitted"
                                                      data-bs-tooltip data-placement="right" data-type="danger"
                                                      data-container="body"
                                                      data-title="Required" aria-label="Required"></div>
                                                 <div class="error-circle fa-exclamation-circle" role="alert"
                                                      data-ng-show="!scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.required &&
-                                                 scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.min &&
-                                                 scheduledProgramForm_{{scheduledProgram.entity.id}}.programFormSubmitted"
+                                                        scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.min &&
+                                                        scheduledProgramForm_{{scheduledProgram.entity.id}}.programFormSubmitted &&
+                                                        scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$dirty"
                                                      data-bs-tooltip data-placement="right" data-type="danger"
                                                      data-container="body"
                                                      data-title="Please enter a date in the future"
                                                      aria-label="Please enter a date in the future"></div>
                                                 <div class="error-circle fa-exclamation-circle" role="alert"
                                                      data-ng-show="(scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.min &&
-                                                 scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.date &&
-                                                 scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.required ||
-                                                 scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.date &&
-                                                 scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.required) &&
-                                                 scheduledProgramForm_{{scheduledProgram.entity.id}}.programFormSubmitted"
+                                                        scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.date &&
+                                                        scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.required ||
+                                                        scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.date &&
+                                                        scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.required) &&
+                                                        scheduledProgramForm_{{scheduledProgram.entity.id}}.programFormSubmitted"
                                                      data-bs-tooltip data-placement="right" data-type="danger"
                                                      data-container="body"
                                                      data-title="Please enter a valid view by date"
