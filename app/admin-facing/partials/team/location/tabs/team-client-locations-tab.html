@@ -3,12 +3,6 @@
                cellspacing="0" data-ng-show="teamLocations" data-ng-controller="ClientLocationsTabController">
             <thead>
             <tr>
-                <th class="sort col-checkbox" data-ng-if="false">
-                  <div class="checkbox"  data-ng-controller="SelectAllController">
-                      <input type="checkbox" id="selectAllClientTeams" data-ng-model="selectAllClientTeams" data-ng-change="selectAllClientTeamsChanged()">
-                      <label for="selectAllClientTeams"></label>
-                  </div>
-                </th>
                 <th class="sort col-checkbox">
                   <div class="checkbox" data-ng-select-all>
                       <input type="checkbox" id="selectAllClientTeams" 
