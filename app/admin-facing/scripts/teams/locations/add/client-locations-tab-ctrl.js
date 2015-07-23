@@ -166,6 +166,5 @@ angular.module('emmiManager')
         	$scope.setPossibleLocations();
         }
         init();
-        window.clientLocationsTab = $scope;
     }])
 ;

@@ -45,7 +45,6 @@ angular.module('emmiManager')
         };
 
         $scope.addLocations = function () {
-            console.log('there');
         	return Location.findForClient(Client.getClient()).then(function (allLocations) {
             	var locationTemplate = allLocations.content && allLocations.content.length > 0 ? 'admin-facing/partials/team/location/search-with-client-location-tabs.html' : 'admin-facing/partials/team/location/search-without-client-location-tabs.html';
                	$modal({

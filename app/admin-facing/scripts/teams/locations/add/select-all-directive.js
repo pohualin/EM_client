@@ -6,6 +6,11 @@ angular.module('emmiManager')
             restrict: 'A',
             link: function (scope, element, attributes) {
                 
+                /**
+                 * Watch selectAllClientTeams
+                 * 
+                 * Call SelectAllFactory.setSelectAll whenever it changed. Fire event depending on the new value.
+                 */
                 scope.$watch('selectAllClientTeams', function(newVal, oldVal){
                     SelectAllFactory.setSelectAll(scope.selectAllClientTeams);
                     if (scope.selectAllClientTeams){
@@ -15,6 +20,11 @@ angular.module('emmiManager')
                     }
                 });
                 
+                /**
+                 * When allPossibleCheck is true and hasExclusion is false.
+                 * 
+                 * Check selectAllClientTeams and setSelectAll to true
+                 */
                 scope.$watch(
                     function(){
                         return SelectAllFactory.isAllPossibleChecked();
@@ -27,6 +37,11 @@ angular.module('emmiManager')
                     }
                 );
                 
+                /**
+                 * When hasExclusion is true.
+                 * 
+                 * Half check check box
+                 */
                 scope.$watch(
                     function(){
                         return SelectAllFactory.hasExclusion();
@@ -36,6 +51,11 @@ angular.module('emmiManager')
                     }
                 );
                 
+                /**
+                 * When excludeSet has all possible locations
+                 * 
+                 * Uncheck selectAllClientTeams and setSelectAll to false
+                 */
                 scope.$watch(
                     function(){
                         return SelectAllFactory.isAllSelectedUnchecked();
