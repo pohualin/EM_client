@@ -68,7 +68,7 @@ angular.module('emmiManager')
                 if (!locationResource.location.entity.checked) {
                     $scope.removeFromSelectedLocations(locationResource);
                 } else {
-                    $scope.addToSelectedLocations(locationResource)
+                    $scope.addToSelectedLocations(locationResource);
                 }
             } else {
                 if (!locationResource.location.entity.checked) {

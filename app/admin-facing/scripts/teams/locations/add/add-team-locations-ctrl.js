@@ -20,9 +20,7 @@ angular.module('emmiManager')
          */
         $scope.hasLocationsAdded = function() {
             // Any location selected or select all is checked
-            return SelectAllFactory.isSelectAll() 
-                || !angular.equals({}, AddTeamLocationsFactory.getSelectedClientLocations())
-                || !angular.equals({}, AddTeamLocationsFactory.getSelectedLocations());
+            return SelectAllFactory.isSelectAll() || !angular.equals({}, AddTeamLocationsFactory.getSelectedClientLocations()) || !angular.equals({}, AddTeamLocationsFactory.getSelectedLocations());
         };
         
         /**
@@ -58,8 +56,8 @@ angular.module('emmiManager')
                 $scope.tabs.activeTab = 1;
                 $scope.displaySuccessfull(locationsToAdd, '#modal-messages-container');
                 focus('LocationSearchFocus');
-                $scope.$broadcast("refreshClientLocationsPage");
-                $scope.$broadcast("refreshTeamLocationsSearchPage");
+                $scope.$broadcast('refreshClientLocationsPage');
+                $scope.$broadcast('refreshTeamLocationsSearchPage');
                 $rootScope.$broadcast('event:teamLocationSavedWithProvider');
             }).finally(function () {
                 $scope.whenSaving = false;
@@ -98,8 +96,8 @@ angular.module('emmiManager')
                 $scope.tabs.activeTab = 1;
                 $scope.displaySuccessfull(locationsToAdd, '#modal-messages-container');
                 focus('LocationSearchFocus');
-                $scope.$broadcast("refreshClientLocationsPage");
-                $scope.$broadcast("refreshTeamLocationsSearchPage");
+                $scope.$broadcast('refreshClientLocationsPage');
+                $scope.$broadcast('refreshTeamLocationsSearchPage');
                 $rootScope.$broadcast('event:teamLocationSavedWithProvider');
             }).finally(function () {
                 $scope.whenSaving = false;

@@ -29,27 +29,27 @@ angular.module('emmiManager')
         
         addTeamLocationsFactory.getSelectedClientLocations = function() {
             return _selectedClientLocations;
-        }
+        };
         
         addTeamLocationsFactory.resetSelectedClientLocations = function() {
             _selectedClientLocations = {};
-        }
+        };
         
         addTeamLocationsFactory.getSelectedLocations = function() {
             return _selectedLocations;
-        }
+        };
         
         addTeamLocationsFactory.resetSelectedLocations = function() {
             _selectedLocations = {};
-        }
+        };
         
         addTeamLocationsFactory.getTeamProviders = function() {
             return _teamProviders;
-        }
+        };
         
         addTeamLocationsFactory.setTeamProviders = function(teamProviders) {
             _teamProviders = teamProviders;
-        }
+        };
         
         return addTeamLocationsFactory;
     }]);
