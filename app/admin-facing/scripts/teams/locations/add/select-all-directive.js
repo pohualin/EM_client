@@ -9,9 +9,9 @@ angular.module('emmiManager')
                 scope.$watch('selectAllClientTeams', function(newVal, oldVal){
                     SelectAllFactory.setSelectAll(scope.selectAllClientTeams);
                     if (scope.selectAllClientTeams){
-                        scope.$emit('selectAllLocations');
+                        scope.$emit('selectAllChecked');
                     } else {
-                        scope.$emit('deselectAllLocations');
+                        scope.$emit('selectAllUnchecked');
                     }
                 });
                 

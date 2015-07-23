@@ -43,7 +43,11 @@ angular.module('emmiManager')
             getTeamLocationsCount: function(teamResource) {
                 return $http.get(UriTemplate.create(teamResource.link.teamLocations).stringify())
                     .then(function(response){
-                    return response.data.page.totalElements;
+                    if(response.data && response.data.page) {
+                        return response.data.page.totalElements;
+                    } else {
+                        return 0;
+                    }
                 });
             },
             

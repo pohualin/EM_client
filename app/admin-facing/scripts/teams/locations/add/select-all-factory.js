@@ -7,6 +7,7 @@ angular.module('emmiManager')
 
     var _totalPossibleLocationsCount;
     var _selectedPossibleLocationIds = {};
+    var _selectedLocations = {};
 
     selectAllFactory.setSelectAll = function(isSelectAll){
         _isSelectAll = isSelectAll;
@@ -46,6 +47,10 @@ angular.module('emmiManager')
     
     selectAllFactory.isAllSelectedUnchecked = function() {
         return _totalPossibleLocationsCount === Object.keys(_exclusionSet).length;
+    }
+    
+    selectAllFactory.getSelectedLocations = function() {
+        return _selectedLocations;
     }
     
     return selectAllFactory;
