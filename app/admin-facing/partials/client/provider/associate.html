@@ -1,8 +1,8 @@
-<div class="modal" tabindex="-1" role="dialog" data-ng-controller="ClientAssociateProviderSearchController">
+<div class="modal" tabindex="-1" role="dialog" aria-labelledby="modal-dialog-title" data-ng-controller="ClientAssociateProviderSearchController">
     <div class="modal-dialog modal-dialog-large container-fluid">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Add Providers</h4>
+                <h4 class="modal-title" id="modal-dialog-title">Add Providers</h4>
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -37,7 +37,7 @@
                 <div data-ng-show="searchPerformed">
                     <div class="row table-search-filters" >
                         <div class="col-md-12">
-                            <div class="pull-right table-results-count" data-ng-hide="total === 0">
+                            <div class="pull-right table-results-count" aria-live="polite" aria-atomic="true" data-ng-hide="total === 0">
                                 {{total}}
                                 <span data-ng-show="total != 1" data-translate="global.labels.total"> results</span>
                                 <span data-ng-show="total === 1"

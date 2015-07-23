@@ -15,7 +15,7 @@ angular.module('emmiManager')
 
         var editLocationModal = $modal({
             scope: $scope,
-            templateUrl: 'admin-facing/partials/client/location/edit.html',
+            template: 'admin-facing/partials/client/location/edit.html',
             animation: 'none',
             backdropAnimation: 'emmi-fade',
             show: false,

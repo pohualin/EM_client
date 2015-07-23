@@ -49,7 +49,7 @@ angular.module('emmiManager')
 
 		var editProviderModal = $modal({
             scope: $scope,
-            templateUrl: 'admin-facing/partials/team/provider/edit.html',
+            template: 'admin-facing/partials/team/provider/edit.html',
             animation: 'none',
             backdropAnimation: 'emmi-fade',
             show: false,
@@ -126,7 +126,7 @@ angular.module('emmiManager')
                                                                                                      : 'admin-facing/partials/team/provider/search-without-client-provider-tabs.html';
        			$scope.addProvidersModalOnScope = $modal({
        				                              scope: $scope,
-                    templateUrl: providerTemplate,
+                    template: providerTemplate,
        				                              animation: 'none',
        				                              backdropAnimation: 'emmi-fade',
        				                              show: true,
@@ -168,7 +168,7 @@ angular.module('emmiManager')
 
             var newProviderModal = $modal({
                 scope: $scope,
-                templateUrl: 'admin-facing/partials/team/provider/new.html',
+                template: 'admin-facing/partials/team/provider/new.html',
                 animation: 'none',
                 backdropAnimation: 'emmi-fade',
                 show: false,

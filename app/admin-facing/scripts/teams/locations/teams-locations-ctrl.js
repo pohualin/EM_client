@@ -27,7 +27,7 @@ angular.module('emmiManager')
             // show the dialog box, to avoid display the popup without the providers
             $modal({
                 scope: $scope,
-                templateUrl: 'admin-facing/partials/team/location/edit.html',
+                template: 'admin-facing/partials/team/location/edit.html',
                 animation: 'none',
                 backdropAnimation: 'emmi-fade',
                 show: true,
@@ -50,7 +50,7 @@ angular.module('emmiManager')
             	var locationTemplate = allLocations.content && allLocations.content.length > 0 ? 'admin-facing/partials/team/location/search-with-client-location-tabs.html' : 'admin-facing/partials/team/location/search-without-client-location-tabs.html';
                	$modal({
             		scope: $scope,
-                    templateUrl: locationTemplate,
+                    template: locationTemplate,
             		animation: 'none',
             		backdropAnimation: 'emmi-fade',
             		show: true,

@@ -25,7 +25,7 @@ angular.module('emmiManager')
                     	if (!$scope.passwordAlert) {
                     		$scope.passwordAlert = $alert({
                     			content: expiredAlertMessage,
-                                templateUrl: 'client-facing/main/password-reminder-alert.tpl.html',
+                                template: 'client-facing/main/password-reminder-alert.tpl.html',
                     			type: 'warning'
                     		});
                     	} else {

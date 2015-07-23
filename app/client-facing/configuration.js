@@ -86,7 +86,8 @@ angular.module('emmiManager', [
             modelDateFormat: 'yyyy-MM-dd',
             dateType: 'string',
             iconLeft: 'fa-angle-left',
-            iconRight: 'fa-angle-right'
+            iconRight: 'fa-angle-right',
+            template: 'admin-facing/partials/common/directives/datepicker/datepicker.tpl.html'
         });
 
         // custom global angularstrap configurations
@@ -99,7 +100,7 @@ angular.module('emmiManager', [
             duration: 5,
             dismissable: true,
             animation: 'am-fade-and-slide-top',
-            templateUrl: 'client-facing/common/directives/alert/alert.tpl.html'
+            template: 'client-facing/common/directives/alert/alert.tpl.html'
         });
 
     })

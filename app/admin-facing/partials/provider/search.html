@@ -1,5 +1,5 @@
-<div class="app-header" data-emmi-navbar></div>
-<div id="app-content" class="app-content container" data-ng-cloak>
+<header class="app-header" data-emmi-navbar></header>
+<div id="app-content" role="main" class="app-content container" data-ng-cloak>
     <div class="row">
         <div class="col-md-12">
             <div class="layout-card">
@@ -35,7 +35,7 @@
                         <hr class="search-divider" />
                         <div class="row table-search-filters">
                             <div class="col-md-12">
-                                <div class="pull-right table-results-count" data-ng-hide="total === 0">
+                                <div class="pull-right table-results-count" aria-live="polite" aria-atomic="true" data-ng-hide="total === 0">
                                     {{total}}
                                     <span data-ng-if="total != 1" data-translate="global.labels.total"> results</span>
                                     <span data-ng-if="total === 1" data-translate="global.labels.totalSingular"> result</span>

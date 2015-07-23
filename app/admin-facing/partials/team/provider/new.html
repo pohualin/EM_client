@@ -1,9 +1,9 @@
-<div class="modal" tabindex="-1" role="dialog">
+<div class="modal" tabindex="-1" role="dialog" aria-labelledby="modal-dialog-title">
     <div class="modal-dialog modal-lg">
         <form name="providerForm" class="form" data-ng-submit="saveProvider(providerForm.$valid)" novalidate>
             <div class="modal-content">
                 <div class="modal-header" data-ng-show="title">
-                    <h4 class="modal-title">{{title}}</h4>
+                    <h4 class="modal-title" id="modal-dialog-title">{{title}}</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row" data-ng-show="providerFormSubmitted && (providerForm.$invalid || (multiSelectData.length > 0 && selectedItems < 1))">
