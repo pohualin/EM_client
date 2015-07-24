@@ -1,0 +1,61 @@
+<div class="row entity-info">
+    <div class="col-md-4">
+        <h5 class="entity-value-label">CLIENT</h5>
+
+        <div class="entity-value">
+            <span class="col-wrap">
+                <a href="#/clients/{{scheduledProgram.entity.team.client.id}}" target="_blank">
+                    {{scheduledProgram.entity.team.client.name}}
+                </a>
+            </span>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <h5 class="entity-value-label">TEAM</h5>
+
+        <div class="entity-value">
+            <span class="col-wrap">
+                <a href="#/clients/{{scheduledProgram.entity.team.client.id}}?team={{scheduledProgram.entity.team.id}}"
+                   target="_blank">
+                    {{scheduledProgram.entity.team.name}}
+                </a>
+            </span>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <h5 class="entity-value-label">SCHEDULED</h5>
+
+        <div class="entity-value">
+            <span class="col-wrap">{{scheduledProgram.entity.created_date | date:'MM/dd/yyyy'}}
+                <a href data-ng-if="scheduledProgram.entity.createdBy"
+                   data-ng-click="goToUser(scheduledProgram)">
+                    ({{scheduledProgram.entity.createdBy.login}})
+                </a>
+            </span>
+        </div>
+    </div>
+</div>
+<div class="row entity-info">
+    <div class="col-md-4">
+        <h5 class="entity-value-label">PROVIDER</h5>
+
+        <div class="entity-value">
+            <span class="col-wrap">
+                <a href="#/providers/{{scheduledProgram.entity.provider.id}}" target="_blank">
+                    {{scheduledProgram.entity.provider.fullName}}
+                </a>
+            </span>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <h5 class="entity-value-label">LOCATION</h5>
+
+        <div class="entity-value">
+            <span class="col-wrap">
+                <a href="#/locations/{{scheduledProgram.entity.location.id}}" target="_blank">
+                    {{scheduledProgram.entity.location.name}}
+                </a>
+            </span>
+        </div>
+    </div>
+</div>
