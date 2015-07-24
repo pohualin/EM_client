@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('emmiManager')
-    .controller('loginInterruption', ['$scope', '$alert', '$location', 'locationBeforeLogin', 'account', 'userClientReqdResource',
-        function ($scope, $alert, $location, locationBeforeLogin, account, userClientReqdResource) {
+    .controller('loginInterruption', ['$scope', '$alert', '$location', 'locationBeforeLogin', 'account',
+        function ($scope, $alert, $location, locationBeforeLogin, account) {
             $scope.account = account;
-            $scope.userClientReqdResource = userClientReqdResource;
+            $scope.userClientReqdResource = account;
             $scope.locationBeforeLogin = locationBeforeLogin;
         }])
 ;
