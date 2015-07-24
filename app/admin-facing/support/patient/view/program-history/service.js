@@ -31,7 +31,7 @@
                             if (user.type === 'A') {
                                 link = $location.path('/users/' + user.id).absUrl();
                             } else if (user.type === 'C') {
-                                link = $location.path('/clients/' + user.client.id + '/users/' + user.id).absUrl();
+                                link = $location.path('/support/clients/' + user.client.id + '/users/' + user.id).absUrl();
                             }
                             // set link back to where we are now so current window doesn't change
                             $location.url(current);
