@@ -30,6 +30,12 @@ angular.module('emmiManager')
                 link: function (scope, element, attributes, ngModelController) {
 
                     scope.reset = function () {
+                        if (scope.restrictedEmailPopover) {
+                            scope.restrictedEmailPopover.hide();
+                        }
+                        if (scope.conflictingUserPopover) {
+                            scope.conflictingUserPopover.hide();
+                        }
                         ngModelController.$setValidity('unique', true);
                         ngModelController.$setValidity('restricted', true);
                     };
@@ -65,7 +71,7 @@ angular.module('emmiManager')
                                         placement: 'top',
                                         scope: scope,
                                         trigger: 'manual',
-                                        templateUrl: 'admin-facing/support/client-users/metadata/user_already_exists_popover.tpl.html'
+                                        template: 'admin-facing/support/client-users/metadata/user_already_exists_popover.tpl.html'
                                     });
                                 }
                             } else if (value.reason === 'EMAIL_RESTRICTION'){
@@ -75,7 +81,7 @@ angular.module('emmiManager')
                                         placement: 'top',
                                         scope: scope,
                                         trigger: 'manual',
-                                        templateUrl: 'admin-facing/support/client-users/metadata/restricted_email_popover.tpl.html'
+                                        template: 'admin-facing/support/client-users/metadata/restricted_email_popover.tpl.html'
                                     });
                                 }
                             }

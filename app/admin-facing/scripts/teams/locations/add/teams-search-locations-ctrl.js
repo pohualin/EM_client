@@ -9,7 +9,7 @@ angular.module('emmiManager')
         $controller('CommonSearch', {$scope: $scope});
 
         var managedLocationList = 'locations';
-        
+
         /**
          * Set selected locations check box to be checked
          */
@@ -49,7 +49,7 @@ angular.module('emmiManager')
          */
         $scope.sortTeam = function (property) {
         	$scope.loading = true;
-            Location.findWithoutCL($scope.client, $scope.searchAll.locationQuery, $scope.searchAll.status, 
+            Location.findWithoutCL($scope.client, $scope.searchAll.locationQuery, $scope.searchAll.status,
                     $scope.createSortProperty(property), $scope.currentPageSize).then(function (locationPage) {
                 $scope.handleResponse(locationPage, managedLocationList);
                 $scope.setSelectedLocations($scope.locations);
@@ -87,8 +87,8 @@ angular.module('emmiManager')
         };
 
         /**
-         * Called when the check box is checked or unchecked. 
-         * Add the location to selectedLocation and assign whole list of providers to it when it's checked. 
+         * Called when the check box is checked or unchecked.
+         * Add the location to selectedLocation and assign whole list of providers to it when it's checked.
          * Delete location from selectedLocation when it's unchecked.
          */
         $scope.onCheckboxChange = function (locationResource) {
@@ -99,30 +99,30 @@ angular.module('emmiManager')
                 locationResource.location.entity.providersSelected =  angular.copy($scope.providersData);
             }
         };
-        
-        /**
+
+           /**
          * Add new location button in search all locations tab
          */
         $scope.createNewTeamLocation = function () {
             $scope.$hide();
             $modal({
                 scope: $scope,
-                templateUrl: 'admin-facing/partials/team/location/new.html',
+                template: 'admin-facing/partials/team/location/new.html',
                 animation: 'none',
                 backdropAnimation: 'emmi-fade',
                 backdrop: 'static'
             });
         };
-        
-        /**
+
+           /**
          * Listen on 'setTeamProviders' event
          */
         $scope.$on('setTeamProviders', function(){
             $scope.providersData = AddTeamLocationsFactory.getTeamProviders();
             $scope.sizeClass = AddTeamLocationsFactory.getTeamProviders().length === 0 ? 'sort col-sm-4' : 'sort col-sm-3';
         });
-        
-        /**
+
+           /**
          * Listen on 'refreshClientLocationsPage' event
          */
         $scope.$on('refreshTeamLocationsSearchPage', function(){
@@ -131,8 +131,8 @@ angular.module('emmiManager')
             $scope.allLocationsSearch = false;
             AddTeamLocationsFactory.resetSelectedLocations();
         });
-        
-        function init() {
+
+           function init() {
             $scope.locations = null;
             $scope.searchAll = {};
             $scope.allLocationsSearch = false;

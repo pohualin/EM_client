@@ -79,7 +79,8 @@ angular.module('emmiManager')
             $scope.changedLocations = {};
             // save the new locations
             $scope.whenSaving = true;
-            Location.addLocationsToClient(Client.getClient(), newClientLocations).then(function () {
+            // need to return here to not break promise chain for saveAndAddAnother
+            return Location.addLocationsToClient(Client.getClient(), newClientLocations).then(function () {
                 // reload the existing locations
                 $scope.performSearch();
 

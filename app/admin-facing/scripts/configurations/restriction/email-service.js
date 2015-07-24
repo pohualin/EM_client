@@ -72,8 +72,8 @@ angular.module('emmiManager')
                                 responseArray.push(validEmailEnding.entity.emailEnding);
                             });
                             if (response.link && response.link['page-next']) {
-                                $http.get(response.link['page-next']).then(function (response) {
-                                    addToResponseArray(response);
+                                return $http.get(response.link['page-next']).then(function (response) {
+                                    return addToResponseArray(response);
                                 });
                             }
                             return responseArray;

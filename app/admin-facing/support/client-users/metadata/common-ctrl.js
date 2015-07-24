@@ -19,7 +19,7 @@ angular.module('emmiManager')
                     delete $scope.loginError;
                 }
             };
-            
+
             /**
              * Sync up email and login if useEmail is checked
              */
@@ -81,6 +81,8 @@ angular.module('emmiManager')
                         duration: false,
                         dismissable: false
                     });
+                } else {
+                    $scope.errorAlert.show();
                 }
             };
 
