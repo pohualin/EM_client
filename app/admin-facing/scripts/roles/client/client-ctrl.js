@@ -204,8 +204,6 @@ angular.module('emmiManager')
                 ManageUserRolesService.deleteExistingClientRole(clientRoleResource).then(function () {
                     $alert({
                         content: 'The role <b>' + clientRoleResource.entity.name + '</b> has been successfully removed.'
-                    }).finally(function () {
-                        $scope.whenSaving = false;
                     });
                     $scope.loadExisting();
                 }).finally(function () {
