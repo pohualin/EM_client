@@ -25,7 +25,7 @@
                      */
                     createUserLink: function (scheduledProgramResource) {
                         var deferred = $q.defer(),
-                            user = scheduledProgramResource.entity.created_by;
+                            user = scheduledProgramResource.entity.createdBy;
                         if (user) {
                             var current = $location.url(), link;
                             if (user.type === 'A') {

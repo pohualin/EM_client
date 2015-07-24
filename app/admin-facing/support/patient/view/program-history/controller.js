@@ -6,9 +6,10 @@
     /**
      * Controls the program history block on the patient support screen
      */
-        .controller('PatientSupportViewProgramHistoryController', ['$scope', 'PatientSupportViewProgramHistoryService',
+        .controller('PatientSupportViewProgramHistoryController', ['$scope', '$alert',
+            'PatientSupportViewProgramHistoryService',
             'PatientSupportDataHolder', '$window',
-            function ($scope, service, holder, $window) {
+            function ($scope, $alert, service, holder, $window) {
 
                 /**
                  * Called when program panel is toggled, make a copy of the original program
@@ -52,12 +53,19 @@
                         scheduledProgramResource.whenSaving = true;
                         service.save(scheduledProgramResource).then(function ok(savedResource) {
                             // created by isn't returned on updates, save it
-                            var createdBy = scheduledProgramResource.original.created_by;
+                            var createdBy = scheduledProgramResource.original.createdBy;
                             // update the original with the newly saved resource
                             angular.extend(scheduledProgramResource.original, savedResource.entity);
                             // put the created by back onto the new original
-                            scheduledProgramResource.original.created_by = createdBy;
+                            scheduledProgramResource.original.createdBy = createdBy;
                             $scope.cancel(scheduledProgramResource, form);
+                            $alert({
+                                content: [
+                                    'Program <strong>',
+                                    scheduledProgramResource.entity.program.name,
+                                    '</strong> has been successfully updated.'
+                                ].join(' ')
+                            });
                         }).finally(function () {
                             scheduledProgramResource.whenSaving = false;
                         });

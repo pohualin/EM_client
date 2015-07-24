@@ -27,9 +27,9 @@
 
         <div class="entity-value">
             <span class="col-wrap">{{scheduledProgram.entity.created_date | date:'MM/dd/yyyy'}}
-                <a href data-ng-if="scheduledProgram.entity.created_by"
+                <a href data-ng-if="scheduledProgram.entity.createdBy"
                    data-ng-click="goToUser(scheduledProgram)">
-                    ({{scheduledProgram.entity.created_by.login}})
+                    ({{scheduledProgram.entity.createdBy.login}})
                 </a>
             </span>
         </div>
