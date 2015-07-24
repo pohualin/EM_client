@@ -39,7 +39,6 @@ angular.module('emmiManager')
 
                 /**
                  * Calls the back end to get all question and responses with asterisks
-                 * @param client user id
                  * @returns all questions and the responses with asterisks
                  */
                 getAllUserSecretQuestionAsteriskResponse: function () {
@@ -68,7 +67,7 @@ angular.module('emmiManager')
 
                 /**
                  * Calls the back end to get all questions for a user with reset password token
-                 * @param reset password token
+                 * @param resetToken password token
                  * @param userClientSecretQuestionResponse to be checked
                  * @returns all questions and empty response
                  */
@@ -167,7 +166,7 @@ angular.module('emmiManager')
                  *
                  */
                 notNow: function (userClient) {
-                    $http.put(UriTemplate.create(userClient.link.notNow).stringify(), userClient).then(function (response) {
+                    return $http.put(UriTemplate.create(userClient.link.notNow).stringify(), userClient).then(function (response) {
                         return response;
                     });
                 },
