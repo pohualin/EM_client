@@ -1,16 +1,23 @@
 <div class="modal-footer">
-    <button type="button" class="btn btn-success" data-ng-if="hasLocationsAdded()"
-            data-ng-disabled="whenSaving"
-            data-ng-click="savePopupLocations(false)"><span
-        data-translate="team_locations_search_page.save.label"></span>
-     </button>
-     <button type="button" class="btn btn-default" data-ng-if="hasLocationsAdded()"
-             data-ng-disabled="whenSaving"
-             data-ng-click="saveAndAddAnother()"><span data-translate="team_locations_search_page.save_and_other.label"></span>
-     </button>
-    <button type="button" class="btn btn-cancel"
-            data-ng-disabled="whenSaving"
-            data-ng-click="hidePopupLocations()"><span data-translate="team_locations_search_page.cancel.label"></span>
-    </button>
+  <button type="button" class="btn btn-success" data-ng-if="hasLocationsAdded() && !selectAll"
+    data-ng-disabled="whenSaving"
+    data-ng-click="save()"><span data-translate="team_locations_search_page.save.label"></span>
+  </button>
+  <button type="button" class="btn btn-default" data-ng-if="hasLocationsAdded() && !selectAll"
+    data-ng-disabled="whenSaving"
+    data-ng-click="saveAndAddAnother()"><span data-translate="team_locations_search_page.save_and_other.label"></span>
+  </button>
+  <button type="button" class="btn btn-success" data-ng-if="hasLocationsAdded() && selectAll"
+    data-ng-disabled="whenSaving"
+    data-ng-click="saveAll()"><span data-translate="team_locations_search_page.save.label"></span>
+  </button>
+  <button type="button" class="btn btn-default" data-ng-if="hasLocationsAdded()  && selectAll"
+    data-ng-disabled="whenSaving"
+    data-ng-click="saveAllAndAddAnother()"><span data-translate="team_locations_search_page.save_and_other.label"></span>
+  </button>
+  <button type="button" class="btn btn-cancel"
+      data-ng-disabled="whenSaving"
+      data-ng-click="hidePopupLocations()"><span data-translate="team_locations_search_page.cancel.label"></span>
+  </button>
 </div>
 
