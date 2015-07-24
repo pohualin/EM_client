@@ -93,8 +93,10 @@
                                         <div class="checkbox">
                                             <input type="checkbox" id="clientLocationCb{{$index}}" data-ng-model="clientLocation.location.entity.newlocation"
                                                    data-ng-change="onCheckboxChange(clientLocation.location)"
-                                                   data-ng-disabled="clientLocation.link.self"
-                                                   data-ng-checked="clientLocation.link.self">
+                                                   data-ng-if="!clientLocation.link.self" >
+                                            <input type="checkbox" id="clientLocationCb{{$index}}"
+                                                   data-ng-if="clientLocation.link.self"
+                                                   data-ng-disabled=true data-ng-checked=true >
                                             <label class="empty" for="clientLocationCb{{$index}}"></label>
                                         </div>
                                     </td>
