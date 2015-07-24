@@ -178,12 +178,17 @@
                             <div class="row" style="border-top: 1px solid #ddd; background-color: #fbfcfc;">
                                 <div class="pull-right">
                                     <button type="button" class="btn btn-link"
+                                            data-ng-hide="scheduledProgram.showDetails"
                                             data-ng-disabled="scheduledProgram.whenSaving"
                                             data-ng-click="showDetails(scheduledProgram)"
                                             aria-label="SHOW DETAILS">
                                         SHOW DETAILS
                                     </button>
                                 </div>
+                                <div data-ng-if="scheduledProgram.showDetails"
+                                     class="col-md-12"
+                                     style="padding-left: 33px;padding-right: 33px; padding-top: 20px;"
+                                     data-ng-include="'admin-facing/support/patient/view/program-history/details.html'"></div>
                             </div>
                         </div>
                     </div>

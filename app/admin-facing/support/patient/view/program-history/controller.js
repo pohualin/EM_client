@@ -7,16 +7,19 @@
      * Controls the program history block on the patient support screen
      */
         .controller('PatientSupportViewProgramHistoryController', ['$scope', 'PatientSupportViewProgramHistoryService',
-            'PatientSupportDataHolder',
-            function ($scope, service, holder) {
+            'PatientSupportDataHolder', '$window',
+            function ($scope, service, holder, $window) {
 
                 /**
                  * Called when program panel is toggled, make a copy of the original program
                  * when the panel is opened so that we can cancel changes
                  */
                 $scope.toggleScheduledProgramPanel = function (scheduledProgramResource) {
-                    if (scheduledProgramResource.activePanel === 0 && !scheduledProgramResource.original) {
-                        scheduledProgramResource.original = angular.copy(scheduledProgramResource.entity);
+                    if (scheduledProgramResource.activePanel === 0) {
+                        scheduledProgramResource.showDetails = false;
+                        if (!scheduledProgramResource.original) {
+                            scheduledProgramResource.original = angular.copy(scheduledProgramResource.entity);
+                        }
                     }
                 };
 
@@ -48,12 +51,26 @@
                     if ((form.viewByDate.$dirty && form.$valid) || !form.viewByDate.$dirty) {
                         scheduledProgramResource.whenSaving = true;
                         service.save(scheduledProgramResource).then(function ok(savedResource) {
-                            scheduledProgramResource.original = savedResource.entity;
+                            // created by isn't returned on updates, save it
+                            var createdBy = scheduledProgramResource.original.created_by;
+                            // update the original with the newly saved resource
+                            angular.extend(scheduledProgramResource.original, savedResource.entity);
+                            // put the created by back onto the new original
+                            scheduledProgramResource.original.created_by = createdBy;
                             $scope.cancel(scheduledProgramResource, form);
                         }).finally(function () {
                             scheduledProgramResource.whenSaving = false;
                         });
                     }
+                };
+
+                /**
+                 * Show the program details section
+                 *
+                 * @param scheduledProgramResource on this resource
+                 */
+                $scope.showDetails = function (scheduledProgramResource) {
+                    scheduledProgramResource.showDetails = true;
                 };
 
                 /**
@@ -86,6 +103,17 @@
                         $scope.toggleScheduledProgramPanel($scope.scheduledPrograms[0]);
                     }
                 });
+
+                $scope.goToUser = function (scheduledProgram) {
+                    if (!$scope.loadingUser) {
+                        $scope.loadingUser = true;
+                        service.createUserLink(scheduledProgram).then(function (link) {
+                            $window.open(link, '_blank');
+                        }).finally(function () {
+                            $scope.loadingUser = false;
+                        });
+                    }
+                };
 
             }])
     ;
