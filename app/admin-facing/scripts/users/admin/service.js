@@ -11,7 +11,7 @@ angular.module('emmiManager')
                  * Create a new User placeholder
                  */
                 newUser: function () {
-                    var newUser = {
+                    return {
                         firstName: null,
                         lastName: null,
                         email: null,
@@ -20,7 +20,6 @@ angular.module('emmiManager')
                         webApiUser: false,
                         active: true
                     };
-                    return newUser;
                 },
 
                 userAssembler: function (user) {
@@ -135,7 +134,14 @@ angular.module('emmiManager')
                         // Call server to get User by userId
                         return $http.get(UriTemplate.create(Session.link.userById).stringify({id: userId})).then(function (user) {
                             selectedUser = user.data;
-                            selectedUser.currentlyActive = selectedUser.active;
+                            if (selectedUser) {
+                                selectedUser.currentlyActive = selectedUser.active;
+                                angular.forEach(selectedUser.roles, function (role) {
+                                    if (role.name === 'SYSTEM') {
+                                        selectedUser.isSystemUser = true;
+                                    }
+                                });
+                            }
                             return selectedUser;
                         });
                     }

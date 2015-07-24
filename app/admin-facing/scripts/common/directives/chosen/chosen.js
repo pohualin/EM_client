@@ -212,31 +212,31 @@
                             chosen = element.chosen(options).data('chosen');
                             // Chosen ARIA enhancements for screen readers. Ideally, much of this would just be part of the chosen plugin...
                             /*jshint -W069 */
-                            if (chosen['form_field_label'].length && chosen['form_field_label'].attr('for')){
+                            if (chosen['form_field_label'].length && chosen['form_field_label'].attr('for') && chosen.container.attr('id')){
                                 chosen['form_field_label'].attr('id', chosen.container.attr('id')+'_chosen-label');
-                            }
-                            chosen.container.find('.chosen-search input, .search-field input').attr({
-                                'role': 'combobox',
-                                'aria-labelledby': chosen.container.attr('id')+'_chosen-label',
-                                'aria-owns': chosen.container.attr('id')+'_chosen-list',
-                                'aria-activedescendant': chosen.container.attr('id')+'_active-option'
-                            });
-                            chosen.container.find('.chosen-results').attr({
-                                'role': 'listbox',
-                                'id': chosen.container.attr('id')+'_chosen-list'
-                            });
-                            element.on('chosen:showing_dropdown', function(evt) {
-                                chosen.container.find('.chosen-results li').attr('role', 'option');
-                            });
-                            if (chosen['form_field'].id.length) {
-                                element.on('change', function(evt, options) {
-                                    chosen.container.find('.chosen-results li').removeAttr('id');
-                                    if (options.selected && options.selected.length) {
-                                        chosen.container.find('.chosen-results li[data-option-array-index="'+options.selected+'"]').attr('id', chosen.container.attr('id')+'_active-option');
-                                    } else {
-                                        chosen.container.find('.chosen-results li').first().attr('id', chosen.container.attr('id')+'_active-option');
-                                    }
+                                chosen.container.find('.chosen-search input, .search-field input').attr({
+                                    'role': 'combobox',
+                                    'aria-labelledby': chosen.container.attr('id')+'_chosen-label',
+                                    'aria-owns': chosen.container.attr('id')+'_chosen-list',
+                                    'aria-activedescendant': chosen.container.attr('id')+'_active-option'
                                 });
+                                chosen.container.find('.chosen-results').attr({
+                                    'role': 'listbox',
+                                    'id': chosen.container.attr('id')+'_chosen-list'
+                                });
+                                element.on('chosen:showing_dropdown', function(evt) {
+                                    chosen.container.find('.chosen-results li').attr('role', 'option');
+                                });
+                                if (chosen['form_field'].id.length) {
+                                    element.on('change', function(evt, options) {
+                                        chosen.container.find('.chosen-results li').removeAttr('id');
+                                        if (options.selected && options.selected.length) {
+                                            chosen.container.find('.chosen-results li[data-option-array-index="'+options.selected+'"]').attr('id', chosen.container.attr('id')+'_active-option');
+                                        } else {
+                                            chosen.container.find('.chosen-results li').first().attr('id', chosen.container.attr('id')+'_active-option');
+                                        }
+                                    });
+                                }
                             }
                             /*jshint +W069 */
                         }

@@ -38,6 +38,29 @@ angular.module('emmiManager')
 	                    }
                 	});
             	return deferred.promise;
+            },
+            
+            getTeamLocationsCount: function(teamResource) {
+                return $http.get(UriTemplate.create(teamResource.link.teamLocations).stringify())
+                    .then(function(response){
+                    if(response.data && response.data.page) {
+                        return response.data.page.totalElements;
+                    } else {
+                        return 0;
+                    }
+                });
+            },
+            
+            /**
+             * Get possible (client) locations to associate to a team
+             */
+            getPossibleClientLocations: function(teamResource, sort){
+                return $http.get(UriTemplate.create(teamResource.link.possibleClientLocations).stringify({
+                        sort: sort && sort.property ? sort.property + ',' + (sort.ascending ? 'asc' : 'desc') : ''    
+                    })).then(function(response){
+                    CommonService.convertPageContentLinks(response.data);
+                    return response.data;
+                });
             }
         };
     }])

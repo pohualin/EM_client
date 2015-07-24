@@ -3,7 +3,8 @@
         <div class="col-md-6 pull-left">
             <h1>
                 <span>Emmi User Information</span>
-                <span><a class="btn btn-icon icon-size-lg" data-ng-click="edit()" aria-label="Edit"><i class="icon-compose"></i></a></span>
+                <span><a data-ng-if="!selectedUser.isSystemUser" class="btn btn-icon icon-size-lg"
+                         data-ng-click="edit()" aria-label="Edit"><i class="icon-compose"></i></a></span>
             </h1>
         </div>
         <div class="col-md-6">
@@ -34,7 +35,7 @@
             <div class="entity-value" data-ng-repeat="role in selectedUser.roles">{{role.name}}</div>
         </div>
     </div>
-    <div class="row" data-ng-show="selectedUser.webApiUser && selectedUser.link.password">
+    <div class="row" data-ng-show="selectedUser.webApiUser && selectedUser.link.password && !selectedUser.isSystemUser">
         <div class="col-md-12">
             <hr/>
             <button class="btn btn-default" type="button"
