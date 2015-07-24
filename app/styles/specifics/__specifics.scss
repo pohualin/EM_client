@@ -33,6 +33,12 @@ label.empty {
     }
 }
 
+.control-label-enumerate-without-colon {
+    @include remIt(font-size, 14);
+    font-weight: normal;
+    text-transform: none;
+}
+
 .enumerate-value {
     display: inline-block;
     padding-top: ($padding-base-vertical + 1); // Default padding plus a border

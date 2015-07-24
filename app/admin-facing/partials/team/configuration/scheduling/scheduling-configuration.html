@@ -26,7 +26,8 @@
                   <input id="useViewByDays" type="checkbox"
                     data-ng-model="schedulingConfigs.entity.useViewByDays"
                     data-ng-change="onChange()" />
-                  <label class="control-label control-label-enumerate text-align-left" for="useViewByDays">View by days</label>
+                  <label class="control-label control-label-enumerate text-align-left" for="useViewByDays" data-ng-if="schedulingConfigs.entity.useViewByDays">Default view-by date</label>
+                  <label class="control-label control-label-enumerate-without-colon text-align-left" for="useViewByDays" data-ng-if="!schedulingConfigs.entity.useViewByDays">Default view-by date</label>
                   <div class="error-circle fa-exclamation-circle" role="alert"
                        data-ng-show="clientTeamSchedulingConfigurationForm.viewByDays.$error.pattern && clientTeamSchedulingConfigurationFormSubmitted"
                        data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
@@ -40,7 +41,7 @@
                        data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                        data-title="Please enter a valid number" aria-label="Please enter a valid number"></div>
               </div>
-              <div class="col-md-2">
+              <div class="col-md-2" data-ng-if="schedulingConfigs.entity.useViewByDays">
                   <input class="form-control" id="viewByDays"
                          data-ng-model="schedulingConfigs.entity.viewByDays"
                          name="viewByDays"
@@ -49,7 +50,8 @@
                          data-ng-max="defaultClientTeamSchedulingConfiguration.viewByDaysMax"
                          data-ng-pattern="/^[0-9]*$/" />
               </div>
-              <div class="col-md-4">
+              <div class="col-md-4" data-ng-if="schedulingConfigs.entity.useViewByDays">
+                  days after scheduling
                   <span class="enumerate-value"><em>({{defaultClientTeamSchedulingConfiguration.viewByDaysMin}} -
                       {{defaultClientTeamSchedulingConfiguration.viewByDaysMax}})</em></span>
               </div>
