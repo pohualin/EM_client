@@ -86,7 +86,7 @@ angular.module('emmiManager')
                  *
                  **/
                 notNow: function (userClient) {
-                    $http.put(UriTemplate.create(userClient.link.notNow).stringify(), userClient).then(function (response) {
+                    return $http.put(UriTemplate.create(userClient.link.notNow).stringify(), userClient).then(function (response) {
                         return response;
                     });
                 }
