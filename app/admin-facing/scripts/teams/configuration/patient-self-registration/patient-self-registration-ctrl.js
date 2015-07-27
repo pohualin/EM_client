@@ -30,11 +30,11 @@ angular.module('emmiManager')
                 angular.forEach($scope.languagesAvailable, function (language) {
                     if (language.entity.languageTag === 'en') {
                         $scope.idLabelConfigEnglish.language = language.entity;
-                        console.log($scope.idLabelConfigEnglish);
+                        //console.log($scope.idLabelConfigEnglish);
                     }
                     else if (language.entity.languageTag === 'es') {
                         $scope.idLabelConfigSpanish.language = language.entity;
-                        console.log($scope.idLabelConfigSpanish);
+                        //console.log($scope.idLabelConfigSpanish);
                     }
                 });
 
@@ -60,6 +60,20 @@ angular.module('emmiManager')
                     });
                 });
             };
+
+                $scope.lister = function (list){
+                console.log(list);
+                angular.forEach(list, function (config) {
+                    angular.forEach($scope.languagesAvailable, function (language) {
+                        if (language.entity.languageTag === config.entity.language.languageTag && config.entity.language.languageTag === 'en') {
+                            $scope.idLabelConfigEnglish = config.entity;
+                        } else if (language.entity.languageTag === config.entity.language.languageTag && config.entity.language.languageTag === 'es') {
+                            $scope.idLabelConfigSpanish = config.entity;
+                        }
+                    });
+
+                });
+            }
 
             $scope.continue = function (form) {
                 if (form.$valid) {
@@ -88,6 +102,8 @@ angular.module('emmiManager')
             $scope.update = function () {
                 PatientSelfRegService.update($scope.team, $scope.patientSelfRegConfig, $scope.createPatientIdLabelConfig()).then(function (response) {
                     $scope.patientSelfRegConfig = response.entity;
+                    console.log($scope.patientSelfRegConfig);
+                    $scope.lister($scope.patientSelfRegConfig.patientIdLabelConfigs);
                     $alert({
                         content: 'The team self reg configuration has been updated successfully.'
                     });
