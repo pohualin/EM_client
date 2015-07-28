@@ -27,6 +27,7 @@ angular.module('emmiManager')
          * Save selected locations when selectAll is false
          */
         $scope.save = function(addAnother) {
+            $scope.whenSaving = true;
             var locationsAcrossTabs = angular.extend({}, AddTeamLocationsFactory.getSelectedClientLocations(), AddTeamLocationsFactory.getSelectedLocations());    
             var locationsToAdd = TeamSearchLocation.getTeamProviderTeamLocationSaveRequest(locationsAcrossTabs, AddTeamLocationsFactory.getTeamProviders());
             TeamSearchLocation.save($scope.teamClientResource.teamResource.link.teamLocations, locationsToAdd).then(function () {
@@ -48,6 +49,7 @@ angular.module('emmiManager')
          * to Search all locations tab after selected locations been added.
          */
         $scope.saveAndAddAnother = function () {
+            $scope.whenSaving = true;
             var locationsAcrossTabs = angular.extend({}, AddTeamLocationsFactory.getSelectedClientLocations(), AddTeamLocationsFactory.getSelectedLocations());
             var locationsToAdd = TeamSearchLocation.getTeamProviderTeamLocationSaveRequest(locationsAcrossTabs, AddTeamLocationsFactory.getTeamProviders());
             TeamSearchLocation.save($scope.teamClientResource.teamResource.link.teamLocations, locationsToAdd).then(function () {
@@ -68,6 +70,7 @@ angular.module('emmiManager')
          * Save when selectAll is true
          */
         $scope.saveAll = function () {
+            $scope.whenSaving = true;
             var locationsAcrossTabs = angular.extend({}, AddTeamLocationsFactory.getSelectedClientLocations(), AddTeamLocationsFactory.getSelectedLocations());
             TeamSearchLocation.saveAllLocationsExcept($scope.teamClientResource.teamResource, 
                     locationsAcrossTabs, AddTeamLocationsFactory.getTeamProviders(), SelectAllTeamLocationsFactory.getExclusionSet())
@@ -87,6 +90,7 @@ angular.module('emmiManager')
          * Save and add another when selectAll is true
          */
         $scope.saveAllAndAddAnother = function () {
+            $scope.whenSaving = true;
             var locationsAcrossTabs = angular.extend({}, AddTeamLocationsFactory.getSelectedClientLocations(), AddTeamLocationsFactory.getSelectedLocations());
             TeamSearchLocation.saveAllLocationsExcept($scope.teamClientResource.teamResource, 
                     locationsAcrossTabs, AddTeamLocationsFactory.getTeamProviders(), SelectAllTeamLocationsFactory.getExclusionSet())

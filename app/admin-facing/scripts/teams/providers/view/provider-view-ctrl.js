@@ -204,17 +204,6 @@ angular.module('emmiManager')
             });
         };
 
-        $scope.fetchPage = function (href) {
-            $scope.loading = true;
-            ProviderSearch.fetchPageLink(href).then(function (providerPage) {
-                $scope.handleResponse(providerPage, 'searchedProvidersList');
-                $scope.setCheckboxesForChanged($scope[searchedProvidersList]);
-            }, function () {
-                // error happened
-                $scope.loading = false;
-            });
-        };
-
         $scope.changePageSize = function (pageSize) {
             $scope.loading = true;
             ProviderSearch.search($scope.teamResource, $scope.searchAll.providerQuery, $scope.status, $scope.sortProperty, pageSize).then( function (providerPage) {

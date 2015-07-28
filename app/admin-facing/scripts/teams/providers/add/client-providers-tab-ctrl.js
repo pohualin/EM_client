@@ -8,7 +8,6 @@ angular.module('emmiManager')
         window.paul = $scope;
         $controller('CommonSearch', {$scope: $scope});
 
-        var searchedProvidersList = 'searchedProvidersList';
         var managedClientProviderList = 'clientProviders';
         
         /**
@@ -51,7 +50,6 @@ angular.module('emmiManager')
         $scope.sortClientProviders = function (property) {
             $scope.loading = true;
             TeamProviderService.getPossibleClientProviders($scope.teamResource, $scope.createSortProperty(property)).then(function (clientProviders) {
-                console.log(clientProviders);
                 $scope.handleResponse(clientProviders, managedClientProviderList);
                 $scope.setSelectedProviders($scope.clientProviders);
             }, function () {

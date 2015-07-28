@@ -97,9 +97,6 @@ angular.module('emmiManager')
               * Get possible (client) providers to associate to a team
               */
              getPossibleClientProviders: function(teamResource, sort){
-                 console.log(UriTemplate.create(teamResource.link.possibleClientProviders).stringify({
-                         sort: sort && sort.property ? sort.property + ',' + (sort.ascending ? 'asc' : 'desc') : ''    
-                     }));
                  return $http.get(UriTemplate.create(teamResource.link.possibleClientProviders).stringify({
                          sort: sort && sort.property ? sort.property + ',' + (sort.ascending ? 'asc' : 'desc') : ''    
                      })).then(function(response){
