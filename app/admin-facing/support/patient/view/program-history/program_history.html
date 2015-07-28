@@ -14,38 +14,39 @@
                   data-unsaved-warning-form novalidate>
                 <div class="panel panel-secondary"
                      data-ng-class="{ 'panel-open': scheduledProgram.activePanel === 0 }">
-                    <div class="panel-heading" data-bs-collapse-toggle>
-                        <div class="panel-title">
-                            <span class="icon-caret-right"></span>
-                            <span class="panel-title-text" data-ng-hide="scheduledProgram.activePanel === 0">
-                                1 program <em>({{ scheduledProgram.entity.program.name}})</em>
-                            </span>
-                            <span class="panel-title-text" data-ng-if="scheduledProgram.activePanel === 0">
-                                1 program
-                            </span>
-
-                            <div class="pull-right" data-ng-if="scheduledProgram.activePanel === 0">
-                                Access Code: <strong>{{scheduledProgram.entity.accessCode}}</strong>
+                    <div class="panel-heading pointer" data-bs-collapse-toggle>
+                        <div class="row panel-title">
+                            <div class="col-md-12" data-ng-hide="scheduledProgram.activePanel === 0">
+                                <span class="icon-caret-right"></span>
+                                <span class="panel-title-text">
+                                    1 program <span style="color: #C7D0D8;">
+                                        <em>({{ scheduledProgram.entity.program.name}})</em>
+                                    </span>
+                                </span>
+                            </div>
+                            <div class="col-md-5" data-ng-if="scheduledProgram.activePanel === 0">
+                                <span class="icon-caret-right"></span>
+                                <span class="panel-title-text">
+                                    1 program
+                                </span>
+                            </div>
+                            <div class="col-md-7" style="margin-top: 3px;"
+                                 data-ng-if="scheduledProgram.activePanel === 0">
+                                <div class="pull-right">
+                                    Access Code: <strong>{{scheduledProgram.entity.accessCode}}</strong>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="panel-collapse" data-bs-collapse-target>
-                        <div class="panel-body" style="padding: 0;">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <table class="table table-hover table-striped" style="margin-bottom: 10px;"
-                                           border="0"
-                                           cellpadding="0" cellspacing="0">
+                        <div class="panel-body" style="padding-bottom: 8px;">
+                            <div class="row" style="margin: -16px -53px -10px -53px;padding-bottom: 0px;">
+                                <div class="col-md-12" style="margin-bottom: -17px;">
+                                    <table class="table table-hover table-striped"
+                                           border="0" cellpadding="0" cellspacing="0">
                                         <tr data-ng-mouseover="showEnable = true" data-ng-mouseout="showEnable = false">
-                                            <td>
-                                                <span
-                                                    class="col-wrap"
-                                                    data-ng-class="{'text-muted': !scheduledProgram.entity.active}"
-                                                    data-ng-style="{
-                                                        'margin-left': '5px',
-                                                        'font-size': '16px',
-                                                        'font-style': !scheduledProgram.entity.active ? 'italic' : ''
-                                                    }">
+                                            <td style="padding: 10px 8px 10px 39px;">
+                                                <span class="text-muted" style="margin-right: 3px;">
                                                     <span
                                                         data-ng-show="scheduledProgram.entity.program.type.name === 'MULTIMEDIA PROGRAM'"
                                                         class="icon-film"
@@ -71,22 +72,25 @@
                                                         data-ng-show="scheduledProgram.entity.program.type.name === 'MESSAGE'"
                                                         class="icon-telephone"
                                                         aria-label="Message" title="Message"></span>
-                                                    <span>
-                                                        {{scheduledProgram.entity.program.name}}
-                                                        </span>
-                                                    <span
-                                                        data-ng-hide="scheduledProgram.entity.active">(inactive)</span>
                                                 </span>
+                                                <span class="col-wrap"
+                                                      data-ng-class="{'text-muted': !scheduledProgram.entity.active}">
+                                                    {{scheduledProgram.entity.program.name}}
+
+                                                    <span
+                                                        data-ng-hide="scheduledProgram.entity.active"><em>(inactive)</em></span>
+                                                </span>
+
 
                                                 <div class="pull-right" data-ng-show="showEnable">
                                                     <button type="button" class="btn btn-link btn-link-nopad"
+                                                            style="text-transform: lowercase"
                                                             data-ng-disabled="scheduledProgram.whenSaving"
                                                             data-ng-click="toggleProgramActivation(scheduledProgram)"
                                                             aria-label="Disable Scheduled Program">
-                                                        <span
-                                                            data-ng-show="scheduledProgram.entity.active">deactivate</span>
-                                                        <span
-                                                            data-ng-hide="scheduledProgram.entity.active">reactivate</span>
+                                                        <span style="margin-right: 23px;">
+                                                            {{scheduledProgram.entity.active ? 'deactivate' : 'reactivate'}}
+                                                        </span>
                                                     </button>
                                                 </div>
                                             </td>
@@ -94,9 +98,9 @@
                                     </table>
                                 </div>
                             </div>
-                            <div class="row" style="padding: 0 20px;">
-                                <div class="col-md-12">
-                                    <div class="form-group pull-left" style="padding-top: 25px;">
+                            <div class="row">
+                                <div class="col-md-12" style="margin-bottom: -12px;">
+                                    <div class="form-group pull-left" style="padding-top: 20px;">
                                         <button type="button" class="btn btn-default "
                                                 id="resendInstructions_{{scheduledProgram.entity.id}}"
                                                 data-ng-disabled="scheduledProgram.whenSaving"
@@ -104,15 +108,18 @@
                                             resend instructions
                                         </button>
                                     </div>
-                                    <div class="form-group pull-right"
+                                    <div class="form-group pull-right entity-info"
                                          data-ng-class="{ 'has-error' : scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$invalid &&
                                                         scheduledProgramForm_{{scheduledProgram.entity.id}}.programFormSubmitted  &&
                                                         scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$dirty}">
 
-                                        <label class="control-label"
-                                               for="viewByDate_{{scheduledProgram.entity.id}}">
+
+                                        <h5 style="margin-bottom: 1px;">
+                                            <label class="control-label"
+                                                   for="viewByDate_{{scheduledProgram.entity.id}}">
                                             View-by Date:
-                                        </label>
+                                            </label>
+                                        </h5>
 
                                         <div class="error-circle fa-exclamation-circle" role="alert"
                                              data-ng-show="
@@ -140,8 +147,8 @@
                                                             scheduledProgramForm_{{scheduledProgram.entity.id}}.programFormSubmitted"
                                              data-bs-tooltip data-placement="right" data-type="danger"
                                              data-container="body"
-                                             data-title="Please enter a valid view by date"
-                                             aria-label="Please enter a valid view by date"></div>
+                                             data-title="Please enter a valid view-by date"
+                                             aria-label="Please enter a valid view-by date"></div>
                                         <div class="has-input-icon has-input-icon-calendar">
                                             <input id="viewByDate_{{scheduledProgram.entity.id}}"
                                                    class="form-control"
@@ -151,6 +158,7 @@
                                                    data-ng-disabled="scheduledProgram.whenSaving"
                                                    data-container="body"
                                                    data-date-format="M/d/yyyy"
+                                                   data-input-icon
                                                    data-dateType="iso" data-bs-datepicker
                                                    data-min-date="today" required>
                                             <span class="input-icon"><i class="icon-calendar"></i></span>
@@ -160,7 +168,7 @@
                             </div>
                             <div class="row"
                                  data-ng-hide="isUnchanged(scheduledProgram, scheduledProgramForm_{{scheduledProgram.entity.id}})"
-                                 style="padding: 0 20px; margin-bottom: 20px;">
+                                 style="margin-bottom: 12px;">
                                 <div class="col-md-12">
                                     <button type="button" class="btn btn-success"
                                             data-ng-disabled="scheduledProgram.whenSaving"
@@ -176,20 +184,22 @@
                                     </button>
                                 </div>
                             </div>
-                            <div class="row" style="border-top: 1px solid #ddd;
-                            background-color: #fbfcfc;padding-top: 10px; padding-bottom: 10px;">
+                            <div class="row" style="border-top: 1px solid #ddd; margin: 0 -53px -8px -53px;">
+                                &nbsp;</div>
+                            <div class="row" style="background-color: #fbfcfc;">
                                 <div class="col-md-12">
                                     <div class="pull-right">
-                                        <button type="button" class="btn btn-link"
+                                        <button type="button" class="btn btn-link btn-link-nopad"
                                                 data-ng-hide="scheduledProgram.showDetails"
                                                 data-ng-disabled="scheduledProgram.whenSaving"
                                                 data-ng-click="showDetails(scheduledProgram)"
+                                                style="font-size: 13px;"
                                                 aria-label="SHOW DETAILS">
                                             SHOW DETAILS
                                         </button>
                                     </div>
                                     <div data-ng-if="scheduledProgram.showDetails"
-                                         style="padding-left: 33px;padding-right: 33px; padding-top: 20px;"
+
                                          data-ng-include="'admin-facing/support/patient/view/program-history/details.html'"></div>
                                 </div>
                             </div>
