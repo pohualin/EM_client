@@ -50,8 +50,8 @@ angular.module('emmiManager')
                     newClientProviders.push(providerResource.entity);
                 });
                 $scope.whenSaving = true;
-                // save the new providers
-                ClientProviderService.addProvidersToClient(Client.getClient(), newClientProviders).then(function () {
+                // need to return here to not break promise chain for saveAndAddAnother
+                return ClientProviderService.addProvidersToClient(Client.getClient(), newClientProviders).then(function () {
                     // reload the existing providers
                     $scope.performSearch();
 

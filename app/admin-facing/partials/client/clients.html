@@ -67,8 +67,11 @@
                                     <th class="sort col-sm-3" data-ng-click="sort('salesForceAccount.name')">Salesforce Account <span
                                             data-ng-show="sortProperty.property === 'salesForceAccount.name'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
                                     </th>
-                                    <th class="sort col-sm-3" data-ng-click="sort('contractOwner.lastName')">Contract Owner <span
-                                            data-ng-show="sortProperty.property === 'contractOwner.lastName'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
+                                    <th class="sort col-sm-3" data-ng-click="sort('contractOwner.normalizedName')">
+                                        Contract Owner <span
+                                        data-ng-show="sortProperty.property === 'contractOwner.normalizedName'"><span
+                                        class="sort-icon"
+                                        data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
                                     </th>
                                     <th class="sort col-sm-2" data-ng-click="sort('type.typeKey')">Type <span data-ng-show="sortProperty.property === 'type.typeKey'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
                                     </th>

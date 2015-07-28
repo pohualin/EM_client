@@ -32,21 +32,7 @@ angular.module('emmiManager')
                                 deferred.resolve('/');
                             }
                             return deferred.promise;
-                        }],
-
-                    userClientReqdResource: ['AuthSharedService', 'ProfileService', '$q','CommonService', function (AuthSharedService, ProfileService, $q,CommonService) {
-                        var deferred = $q.defer();
-                        AuthSharedService.currentUser().then(function (loggedInUser) {
-                            ProfileService.get(loggedInUser).then(function (refreshedUserResponse) {
-                                deferred.resolve(refreshedUserResponse);
-                            }, function(){
-                                deferred.reject();
-                            });
-                        },function(){
-                            deferred.reject();
-                        });
-                        return deferred.promise;
-                    }]
+                        }]
 
                 }
             });

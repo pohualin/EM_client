@@ -99,7 +99,7 @@ angular.module('emmiManager')
                     });
             },
             findSalesForceAccount: function (href, searchString) {
-                return $http.get(UriTemplate.create(href).stringify({q: searchString}))
+                return $http.get(UriTemplate.create(href).stringify({q: searchString}), {timeout: 180000})
                     .then(function (response) {
                         return response.data;
                     });
