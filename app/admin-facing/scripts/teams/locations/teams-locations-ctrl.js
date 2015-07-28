@@ -80,7 +80,7 @@ angular.module('emmiManager')
         };
 
         $scope.refresh = function() {
-            ClientTeamSchedulingConfigurationService.getTeamSchedulingConfiguration($scope.teamResource).then(function(schedulingConfiguration){
+            return ClientTeamSchedulingConfigurationService.getTeamSchedulingConfiguration($scope.teamResource).then(function (schedulingConfiguration) {
                 $scope.schedulingConfiguration = schedulingConfiguration;
                 if($scope.schedulingConfiguration.entity.useLocation){
                     $scope.teamLocations = {};
