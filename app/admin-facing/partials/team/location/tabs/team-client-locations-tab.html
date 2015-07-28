@@ -3,14 +3,7 @@
                cellspacing="0" data-ng-show="teamLocations" data-ng-controller="ClientLocationsTabController">
             <thead>
             <tr>
-                <th class="sort col-checkbox">
-                  <div class="checkbox">
-                      <input type="checkbox" id="selectAllClientTeams" 
-                        data-ng-model="selectAllClientTeams"
-                        data-select-all />
-                      <label for="selectAllClientTeams"></label>
-                  </div>
-                </th>
+                <th class="sort col-checkbox">&nbsp;</th>
                 <th class="sort" data-ng-click="sortClient('location.name')">
                     Name
                     <span data-ng-show="sortProperty.property === 'location.name'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span>
@@ -33,6 +26,19 @@
             </tr>
             </thead>
             <tbody>
+            <tr>
+              <td>
+                <div class="checkbox">
+                  <input type="checkbox" id="selectAllClientTeams" 
+                    data-ng-model="selectAllClientTeams"
+                    data-select-all />
+                  <label for="selectAllClientTeams"></label>
+                </div>
+              </td>
+              <td colspan='5'>
+                Select All ({{totalPossibleClientLocationsCount}})
+              </td>
+            </tr>
             <tr data-ng-repeat="location in teamLocations" data-ng-class="location.location.entity.disabled ? 'text-muted' : ''">
                 <td>
                     <div class="checkbox">
