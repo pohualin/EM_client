@@ -102,6 +102,7 @@ angular.module('emmiManager')
         
         $scope.setPossibleLocations = function() {
             TeamLocation.getPossibleClientLocations($scope.teamResource).then(function (allLocations) {
+                $scope.totalPossibleClientLocationsCount = allLocations.page.totalElements;
                 $scope.handleResponse(allLocations, managedClientLocationList);
                 TeamLocation.getTeamLocationsCount($scope.teamResource).then(function(count){
                     SelectAllFactory.setTotalPossibleLocationsCount(allLocations.page.totalElements - count);
