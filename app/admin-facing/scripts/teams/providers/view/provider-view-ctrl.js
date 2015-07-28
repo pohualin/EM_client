@@ -24,7 +24,8 @@ angular.module('emmiManager')
         });
 
         $scope.refreshLocationsAndProviders = function () {
-            ClientTeamSchedulingConfigurationService.getTeamSchedulingConfiguration($scope.teamResource).then(function(schedulingConfiguration){
+            // need to return the promise
+            return ClientTeamSchedulingConfigurationService.getTeamSchedulingConfiguration($scope.teamResource).then(function (schedulingConfiguration) {
                 $scope.schedulingConfiguration = schedulingConfiguration;
                 if($scope.schedulingConfiguration.entity.useProvider){
                     $scope.teamProviders = {};
