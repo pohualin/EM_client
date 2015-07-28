@@ -1,19 +1,19 @@
 'use strict';
 angular.module('emmiManager')
-.directive('selectAllTeamLocations', ['SelectAllTeamLocationsFactory',
-    function (SelectAllTeamLocationsFactory) {
+.directive('selectAllTeamProviders', ['SelectAllTeamProvidersFactory',
+    function (SelectAllTeamProvidersFactory) {
         return {
             restrict: 'A',
             link: function (scope, element, attributes) {
                 
                 /**
-                 * Watch selectAllClientLocations
+                 * Watch selectAllClientProviders
                  * 
-                 * Call SelectAllTeamLocationsFactory.setSelectAll whenever it changed. Fire event depending on the new value.
+                 * Call SelectAllTeamProvidersFactory.setSelectAll whenever it changed. Fire event depending on the new value.
                  */
-                scope.$watch('selectAllClientLocations', function(newVal, oldVal){
-                    SelectAllTeamLocationsFactory.setSelectAll(scope.selectAllClientLocations);
-                    if (scope.selectAllClientLocations){
+                scope.$watch('selectAllClientProviders', function(newVal, oldVal){
+                    SelectAllTeamProvidersFactory.setSelectAll(scope.selectAllClientProviders);
+                    if (scope.selectAllClientProviders){
                         scope.$emit('selectAllChecked');
                     } else {
                         scope.$emit('selectAllUnchecked');
@@ -23,16 +23,16 @@ angular.module('emmiManager')
                 /**
                  * When allPossibleCheck is true and hasExclusion is false.
                  * 
-                 * Check selectAllClientLocations and setSelectAll to true
+                 * Check selectAllClientProviders and setSelectAll to true
                  */
                 scope.$watch(
                     function(){
-                        return SelectAllTeamLocationsFactory.isAllPossibleChecked();
+                        return SelectAllTeamProvidersFactory.isAllPossibleChecked();
                     }, 
                     function(newValue, oldValue){
-                        if(!SelectAllTeamLocationsFactory.hasExclusion()) {
-                            scope.selectAllClientLocations = newValue;
-                            SelectAllTeamLocationsFactory.setSelectAll(newValue);
+                        if(!SelectAllTeamProvidersFactory.hasExclusion()) {
+                            scope.selectAllClientProviders = newValue;
+                            SelectAllTeamProvidersFactory.setSelectAll(newValue);
                         }
                     }
                 );
@@ -44,7 +44,7 @@ angular.module('emmiManager')
                  */
                 scope.$watch(
                     function(){
-                        return SelectAllTeamLocationsFactory.hasExclusion();
+                        return SelectAllTeamProvidersFactory.hasExclusion();
                     }, 
                     function(newValue, oldValue){
                         element.prop('indeterminate', newValue);
@@ -54,16 +54,16 @@ angular.module('emmiManager')
                 /**
                  * When excludeSet has all possible locations
                  * 
-                 * Uncheck selectAllClientLocations and setSelectAll to false
+                 * Uncheck selectAllClientProviders and setSelectAll to false
                  */
                 scope.$watch(
                     function(){
-                        return SelectAllTeamLocationsFactory.isAllSelectedUnchecked();
+                        return SelectAllTeamProvidersFactory.isAllSelectedUnchecked();
                     }, 
                     function(newValue){
                         if(newValue){
-                            scope.selectAllClientLocations = false;
-                            SelectAllTeamLocationsFactory.setSelectAll(false);
+                            scope.selectAllClientProviders = false;
+                            SelectAllTeamProvidersFactory.setSelectAll(false);
                         }
                     }
                 );

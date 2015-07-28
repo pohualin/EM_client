@@ -1,22 +1,32 @@
 <br/>
 <table class="table table-bordered table-striped table-hover table-condensed" border="0" cellpadding="0"
-        cellspacing="0" data-ng-show="clientProviders">
+        cellspacing="0" data-ng-show="clientProviders" data-ng-controller="ClientProvidersTabController" >
   <thead>
     <tr>
-      <th class="sort col-checkbox">&nbsp;</th>
-        <th class="sort" data-ng-click="sortClientProviders('provider.normalizedName')">
-         Name
-            <span data-ng-show="sortProperty.property === 'provider.normalizedName'"><span class="sort-icon"
-                                                                                           data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
+      <th class="sort col-checkbox">
+        <div class="checkbox">
+            <input type="checkbox" id="selectAllClientProviders" 
+              data-ng-model="selectAllClientProviders"
+              data-select-all-team-providers />
+            <label for="selectAllClientProviders"></label>
+        </div>
       </th>
-        <th class="col-sm-3">
-         Primary Specialty
-         <span data-ng-show="sortProperty.property === 'provider.specialty.name'"><span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
+      <th class="sort" data-ng-click="sortClientProviders('provider.normalizedName')">Name
+        <span data-ng-show="sortProperty.property === 'provider.normalizedName'">
+          <span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span>
+        </span>
+      </th>
+      <th class="col-sm-3" data-ng-click="sortClientProviders('specialty.name')">
+        Primary Specialty
+        <span data-ng-show="sortProperty.property === 'specialty.name'">
+          <span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span>
+        </span>
       </th>
       <th class="sort col-sm-3" data-ng-click="sortClientProviders('provider.email')">
-         Email
-          <span data-ng-show="sortProperty.property === 'provider.email'"><span class="sort-icon"
-                                                                                data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
+        Email
+        <span data-ng-show="sortProperty.property === 'provider.email'">
+          <span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span>
+        </span>
       </th >
       <th class="col-sm-3" data-ng-if="allTeamLocations.length > 0">Use Locations</th>
     </tr>
@@ -24,9 +34,16 @@
   <tbody>
     <tr data-ng-repeat="clientProvider in clientProviders" data-ng-class="clientProvider.provider.entity.disabled || !clientProvider.provider.entity.active ? 'text-muted' : ''">
       <td class="col-checkbox">
-          <div class="checkbox">
-              <input type="checkbox" id="clientProviderCb{{$index}}" data-ng-model="clientProvider.provider.entity.checked"  data-ng-disabled="clientProvider.provider.entity.disabled || !clientProvider.provider.entity.active"
-                     data-ng-change="onCheckboxChange(clientProvider.provider)">
+        <div class="checkbox">
+              <input type="checkbox" id="clientProviderCb{{$index}}" 
+                data-ng-model="clientProvider.provider.entity.checked"
+                data-ng-disabled="clientProvider.provider.entity.disabled"
+                data-ng-change="onCheckboxChange(clientProvider)"
+                data-ng-if="!clientProvider.link.self" />
+              <input type="checkbox" id="clientProviderCb{{$index}}" 
+                data-ng-checked="true" 
+                data-ng-disabled="true"
+                data-ng-if="clientProvider.link.self" />  
               <label for="clientProviderCb{{$index}}"></label>
           </div>
       </td>
@@ -36,7 +53,7 @@
       <td>{{clientProvider.provider.entity.specialty.name}}</td>
       <td>{{clientProvider.provider.entity.email}}</td>
       <td class="col-has-multiselect" data-ng-if="allTeamLocations.length > 0" >
-        <div data-ng-show="clientProvider.provider.entity.showLocations"
+        <div data-ng-show="allTeamLocations && clientProvider.provider.entity.checked && !clientProvider.provider.entity.disabled"
              data-ng-class="{'has-error': clientProvider.provider.entity.selectedTeamLocations < 1 && associateRequestSubmitted}">
           <div data-multi-select
                data-ng-class="{'col-md-11': clientProvider.provider.entity.selectedTeamLocations < 1 && associateRequestSubmitted}"

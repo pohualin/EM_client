@@ -2,8 +2,8 @@
 
 angular.module('emmiManager')
 
-    .controller('ClientLocationsTabController', ['$scope', '$controller', 'TeamSearchLocation', 'Location', 'TeamProviderService', 'TeamLocation', 'SelectAllFactory', 'AddTeamLocationsFactory',
-       function ($scope, $controller,TeamSearchLocation, Location, TeamProviderService, TeamLocation, SelectAllFactory, AddTeamLocationsFactory) {
+    .controller('ClientLocationsTabController', ['$scope', '$controller', 'TeamSearchLocation', 'Location', 'TeamProviderService', 'TeamLocation', 'SelectAllTeamLocationsFactory', 'AddTeamLocationsFactory',
+       function ($scope, $controller,TeamSearchLocation, Location, TeamProviderService, TeamLocation, SelectAllTeamLocationsFactory, AddTeamLocationsFactory) {
 
         $controller('LocationCommon', {$scope: $scope});
         $controller('CommonSearch', {$scope: $scope});
@@ -50,7 +50,7 @@ angular.module('emmiManager')
             Location.fetchPageLink(href).then(function (locationPage) {
                 $scope.handleResponse(locationPage, managedClientLocationList);
                 $scope.setSelectedLocations($scope.teamLocations);
-                if(SelectAllFactory.isSelectAll()){
+                if(SelectAllTeamLocationsFactory.isSelectAll()){
                     $scope.$emit('selectAllChecked');
                 }
             }, function () {
@@ -64,7 +64,7 @@ angular.module('emmiManager')
          * Delete location from selectedLocation when it's unchecked.
          */
         $scope.onCheckboxChange = function (locationResource) {
-            if(!SelectAllFactory.isSelectAll()) {
+            if(!SelectAllTeamLocationsFactory.isSelectAll()) {
                 if (!locationResource.location.entity.checked) {
                     $scope.removeFromSelectedLocations(locationResource);
                 } else {
@@ -82,29 +82,29 @@ angular.module('emmiManager')
         };
         
         $scope.addToExclusionSet = function(locationResource) {
-            SelectAllFactory.getExclusionSet()[locationResource.location.entity.id] = locationResource.location.entity;
+            SelectAllTeamLocationsFactory.getExclusionSet()[locationResource.location.entity.id] = locationResource.location.entity;
         };
         
         $scope.removeFromExclusionSet = function(locationResource) {
-            delete SelectAllFactory.getExclusionSet()[locationResource.location.entity.id];
+            delete SelectAllTeamLocationsFactory.getExclusionSet()[locationResource.location.entity.id];
         };
         
         $scope.addToSelectedLocations = function(locationResource) {
             AddTeamLocationsFactory.getSelectedClientLocations()[locationResource.location.entity.id] = locationResource.location.entity;
             locationResource.location.entity.providersSelected =  angular.copy($scope.providersData);
-            SelectAllFactory.getSelectedPossibleLocationIds()[locationResource.location.entity.id] = locationResource.location.entity.id;
+            SelectAllTeamLocationsFactory.getSelectedPossibleLocationIds()[locationResource.location.entity.id] = locationResource.location.entity.id;
         };
         
         $scope.removeFromSelectedLocations = function(locationResource) {
             delete AddTeamLocationsFactory.getSelectedClientLocations()[locationResource.location.entity.id];
-            delete SelectAllFactory.getSelectedPossibleLocationIds()[locationResource.location.entity.id];
+            delete SelectAllTeamLocationsFactory.getSelectedPossibleLocationIds()[locationResource.location.entity.id];
         };
         
         $scope.setPossibleLocations = function() {
             TeamLocation.getPossibleClientLocations($scope.teamResource).then(function (allLocations) {
                 $scope.handleResponse(allLocations, managedClientLocationList);
                 TeamLocation.getTeamLocationsCount($scope.teamResource).then(function(count){
-                    SelectAllFactory.setTotalPossibleLocationsCount(allLocations.page.totalElements - count);
+                    SelectAllTeamLocationsFactory.setTotalPossibleLocationsCount(allLocations.page.totalElements - count);
                 });
             });
         };
@@ -123,7 +123,7 @@ angular.module('emmiManager')
             angular.forEach($scope.teamLocations, function(teamLocation){
                 if(!teamLocation.link.self && 
                         !AddTeamLocationsFactory.getSelectedClientLocations()[teamLocation.location.entity.id] && 
-                        !SelectAllFactory.getExclusionSet()[teamLocation.location.entity.id]){
+                        !SelectAllTeamLocationsFactory.getExclusionSet()[teamLocation.location.entity.id]){
                     teamLocation.location.entity.checked = true;
                     $scope.onCheckboxChange(teamLocation);
                 }
@@ -139,8 +139,8 @@ angular.module('emmiManager')
          */
         $scope.$on('selectAllUnchecked', function () {
             AddTeamLocationsFactory.resetSelectedClientLocations();
-            SelectAllFactory.resetSelectedPossibleLocationIds();
-            SelectAllFactory.resetExclusionSet();
+            SelectAllTeamLocationsFactory.resetSelectedPossibleLocationIds();
+            SelectAllTeamLocationsFactory.resetExclusionSet();
             $scope.setSelectedLocations($scope.teamLocations);
         });
         

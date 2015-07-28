@@ -120,17 +120,17 @@ angular.module('emmiManager')
         	TeamLocation.getTeamLocations($scope.teamResource.link.teamLocations).then(function (response) {
                 $scope.allTeamLocations = TeamProviderService.buildMultiSelectData(response);
             });
-       		$scope.addProvidersModalOnScope = {};
        		return ClientProviderService.findForClient(Client.getClient()).then(function (clientProviders) {
-       			var providerTemplate = clientProviders.content && clientProviders.content.length > 0 ? 'admin-facing/partials/team/provider/search-with-client-provider-tabs.html'
-                                                                                                     : 'admin-facing/partials/team/provider/search-without-client-provider-tabs.html';
-       			$scope.addProvidersModalOnScope = $modal({
-       				                              scope: $scope,
-                    template: providerTemplate,
-       				                              animation: 'none',
-       				                              backdropAnimation: 'emmi-fade',
-       				                              show: true,
-       				                              backdrop: 'static'});
+   			  var providerTemplate = clientProviders.content && clientProviders.content.length > 0 
+   			      ? 'admin-facing/partials/team/provider/search-with-client-provider-tabs.html'
+                  : 'admin-facing/partials/team/provider/search-without-client-provider-tabs.html';
+		      $modal({
+   			      scope: $scope,
+                  template: providerTemplate,
+                  animation: 'none',
+                  backdropAnimation: 'emmi-fade',
+                  show: true,
+                  backdrop: 'static'});
        	   });
         };
 

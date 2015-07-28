@@ -2,8 +2,8 @@
 
 angular.module('emmiManager')
 
-    .controller('SearchTeamsLocationsController', ['$scope', '$modal', '$controller', 'Location', 'STATUS', 'SelectAllTeamLocationsFactory', 'AddTeamLocationsFactory',
-       function ($scope, $modal, $controller, Location, STATUS, SelectAllTeamLocationsFactory, AddTeamLocationsFactory) {
+    .controller('SearchTeamsLocationsController', ['$scope', '$modal', '$controller', 'Location', 'STATUS', 'SelectAllTeamProvidersFactory', 'AddTeamLocationsFactory',
+       function ($scope, $modal, $controller, Location, STATUS, SelectAllTeamProvidersFactory, AddTeamLocationsFactory) {
 
         $controller('LocationCommon', {$scope: $scope});
         $controller('CommonSearch', {$scope: $scope});
