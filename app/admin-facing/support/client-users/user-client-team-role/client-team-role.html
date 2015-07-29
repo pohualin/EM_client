@@ -31,7 +31,7 @@
                              data-ng-class="{ 'panel-open': clientTeamRole.activePanel === 0, 'panel-muted': !clientTeamRole.existingTeams.length }">
                             <div class="panel-heading">
                                 <div class="panel-title">
-                                    <a data-bs-collapse-toggle data-ng-click="panelStateChange(clientTeamRole)"
+                                    <a data-bs-collapse-toggle href="#teamRole-collapsible-{{clientTeamRole.entity.id}}" role="button" data-ng-click="panelStateChange(clientTeamRole)"
                                        aria-expanded="{{clientTeamRole.activePanel === 0}}"
                                        aria-controls="teamRole-collapsible-{{clientTeamRole.entity.id}}">
                                         <span class="icon-caret-right"></span>

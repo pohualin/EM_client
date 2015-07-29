@@ -16,10 +16,9 @@
                     <form name="existingUserClientUserClientRoleForm_{{existingUserClientUserClientRole.entity.id}}" class="form" novalidate>
                         <div class="panel panel-secondary"
                              data-ng-class="{ 'panel-open': existingUserClientUserClientRole.activePanel === 0 }">
-                            <div class="panel-heading pointer" data-bs-collapse-toggle>
+                            <div class="panel-heading">
                                 <div class="panel-title">
-                                    <a aria-expanded="{{existingUserClientUserClientRole.activePanel === 0}}"
-                                       aria-controls="clientRole-collapsible-{{existingUserClientUserClientRole.entity.id}}">
+                                    <a data-bs-collapse-toggle href="#clientRole-collapsible-{{existingUserClientUserClientRole.entity.id}}" role="button" aria-expanded="{{existingUserClientUserClientRole.activePanel === 0}}" aria-controls="clientRole-collapsible-{{existingUserClientUserClientRole.entity.id}}">
                                         <span class="icon-caret-right"></span>
                                         <span class="panel-title-text">{{ existingUserClientUserClientRole.entity.userClientRole.name}}</span>
                                     </a>
