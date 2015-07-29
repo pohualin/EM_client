@@ -19,7 +19,7 @@
                             <div class="col-md-12" data-ng-hide="scheduledProgram.activePanel === 0">
                                 <span class="icon-caret-right"></span>
                                 <span class="panel-title-text">
-                                    1 program <span style="color: #C7D0D8;">
+                                    1 program <span style="color: #ECF5F8;">
                                         <em>({{ scheduledProgram.entity.program.name}})</em>
                                     </span>
                                 </span>
@@ -33,19 +33,20 @@
                             <div class="col-md-7" style="margin-top: 3px;"
                                  data-ng-if="scheduledProgram.activePanel === 0">
                                 <div class="pull-right">
-                                    Access Code: <strong>{{scheduledProgram.entity.accessCode}}</strong>
+                                    <small>Access Code: <strong>{{scheduledProgram.entity.accessCode}}</strong></small>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="panel-collapse" data-bs-collapse-target>
-                        <div class="panel-body" style="padding-bottom: 8px;">
-                            <div class="row" style="margin: -16px -53px -10px -53px;padding-bottom: 0;">
-                                <div class="col-md-12" style="margin-bottom: -17px;">
+                        <div class="panel-body" style="margin: 0;padding:0">
+                            <div class="row" style="margin: -16px -53px -10px -53px;padding-bottom: 0;
+                            border-bottom:1px solid #ddd; ">
+                                <div class="col-md-12" style="margin-bottom: -20px;">
                                     <table class="table table-hover table-striped"
                                            border="0" cellpadding="0" cellspacing="0">
                                         <tr data-ng-mouseover="showEnable = true" data-ng-mouseout="showEnable = false">
-                                            <td style="padding: 10px 8px 10px 39px;">
+                                            <td style="padding: 25px 33px 10px 80px;">
                                                 <span class="text-muted" style="margin-right: 3px;">
                                                     <span
                                                         data-ng-show="scheduledProgram.entity.program.type.name === 'MULTIMEDIA PROGRAM'"
@@ -98,10 +99,12 @@
                                     </table>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-12" style="margin-bottom: -12px;">
-                                    <div class="form-group pull-left" style="padding-top: 25px;">
-                                        <button type="button" class="btn btn-default "
+                            <div class="row" style="padding: 0; margin-top: 17px;">
+                                <div class="col-md-12"
+                                     style="margin-bottom: -15px; padding-left: 33px; padding-right: 28px;">
+                                    <div class="form-group pull-left">
+                                        <button type="button" class="btn btn-default"
+                                                style="padding: 8px 15px;"
                                                 id="resendInstructions_{{scheduledProgram.entity.id}}"
                                                 data-ng-disabled="scheduledProgram.whenSaving"
                                                 aria-label="Resend Instructions">
@@ -114,68 +117,85 @@
                                                         scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$dirty}">
 
                                         <!-- don't give it control-label or the error state will darken the label -->
-                                        <label class="text-muted"
-                                               for="viewByDate_{{scheduledProgram.entity.id}}">
-                                            View-by Date:
-                                        </label>
+                                        <div class="pull-left" style="margin-left:15px;"
+                                             data-ng-style="{'width': scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$invalid &&
+                                                        scheduledProgramForm_{{scheduledProgram.entity.id}}.programFormSubmitted  &&
+                                                        scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$dirty ? '120px' : '105px'}">
+                                            <label class="text-muted"
+                                                   style="padding: 10px 0 0 7px;"
+                                                   for="viewByDate_{{scheduledProgram.entity.id}}">
+                                                View-by Date:
+                                            </label>
 
-
-                                        <div class="error-circle fa-exclamation-circle" role="alert"
-                                             data-ng-show="
+                                            <div class="error-circle fa-exclamation-circle" role="alert"
+                                                 data-ng-show="
                                                             !scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.date &&
                                                             scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.required &&
                                                             scheduledProgramForm_{{scheduledProgram.entity.id}}.programFormSubmitted"
-                                             data-bs-tooltip data-placement="right" data-type="danger"
-                                             data-container="body"
-                                             data-title="Required" aria-label="Required"></div>
-                                        <div class="error-circle fa-exclamation-circle" role="alert"
-                                             data-ng-show="!scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.required &&
+                                                 data-bs-tooltip data-placement="right" data-type="danger"
+                                                 data-container="body"
+                                                 style="margin-left: 0px;"
+                                                 data-title="Required" aria-label="Required"></div>
+                                            <div class="error-circle fa-exclamation-circle" role="alert"
+                                                 data-ng-show="!scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.required &&
                                                             scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.min &&
                                                             scheduledProgramForm_{{scheduledProgram.entity.id}}.programFormSubmitted &&
                                                             scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$dirty"
-                                             data-bs-tooltip data-placement="right" data-type="danger"
-                                             data-container="body"
-                                             data-title="Please enter a date in the future"
-                                             aria-label="Please enter a date in the future"></div>
-                                        <div class="error-circle fa-exclamation-circle" role="alert"
-                                             data-ng-show="(scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.min &&
+                                                 data-bs-tooltip data-placement="right" data-type="danger"
+                                                 data-container="body"
+                                                 style="margin-left: 0px;"
+                                                 data-title="Please enter a date in the future"
+                                                 aria-label="Please enter a date in the future"></div>
+                                            <div class="error-circle fa-exclamation-circle" role="alert"
+                                                 data-ng-show="(scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.min &&
                                                             scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.date &&
                                                             scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.required ||
                                                             scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.date &&
                                                             scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.required) &&
                                                             scheduledProgramForm_{{scheduledProgram.entity.id}}.programFormSubmitted"
-                                             data-bs-tooltip data-placement="right" data-type="danger"
-                                             data-container="body"
-                                             data-title="Please enter a valid view-by date"
-                                             aria-label="Please enter a valid view-by date"></div>
-                                        <div class="has-input-icon has-input-icon-calendar">
-                                            <input id="viewByDate_{{scheduledProgram.entity.id}}"
-                                                   class="form-control"
-                                                   type="text" name="viewByDate"
-                                                   data-ng-model="scheduledProgram.entity.viewByDate"
-                                                   data-autoclose="true"
-                                                   data-ng-disabled="scheduledProgram.whenSaving"
-                                                   data-container="body"
-                                                   data-date-format="M/d/yyyy"
-                                                   data-input-icon
-                                                   data-dateType="iso" data-bs-datepicker
-                                                   data-min-date="today" required>
-                                            <span class="input-icon"><i class="icon-calendar"></i></span>
+                                                 data-bs-tooltip data-placement="right" data-type="danger"
+                                                 data-container="body"
+                                                 style="margin-left: 0px;"
+                                                 data-title="Please enter a valid view-by date"
+                                                 aria-label="Please enter a valid view-by date"></div>
                                         </div>
+                                        <div class="pull-right">
+                                            <div class="has-input-icon has-input-icon-calendar" style="width: 115px;">
+                                                <input id="viewByDate_{{scheduledProgram.entity.id}}"
+                                                       class="form-control"
+                                                       type="text" name="viewByDate"
+                                                       data-ng-model="scheduledProgram.entity.viewByDate"
+                                                       data-autoclose="true"
+                                                       data-ng-disabled="scheduledProgram.whenSaving"
+                                                       data-container="body"
+                                                       data-date-format="M/d/yyyy"
+                                                       data-input-icon
+                                                       data-dateType="iso" data-bs-datepicker
+                                                       data-min-date="today" required
+                                                       style="padding: 8px 10px;height: 37px;"
+                                                    >
+                                            <span class="input-icon" style="margin: 1px 6px;">
+                                                <i class="icon-calendar"></i>
+                                            </span>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
                             <div class="row"
                                  data-ng-hide="isUnchanged(scheduledProgram, scheduledProgramForm_{{scheduledProgram.entity.id}})"
-                                 style="margin-bottom: 12px;">
-                                <div class="col-md-12">
+                                 style="margin-bottom: 8px;">
+                                <div class="col-md-12" style="padding-left: 33px; padding-right: 28px;">
                                     <button type="button" class="btn btn-success"
+                                            style="padding: 8px 15px;"
                                             data-ng-disabled="scheduledProgram.whenSaving"
                                             data-ng-click="save(scheduledProgram, scheduledProgramForm_{{scheduledProgram.entity.id}})"
                                             aria-label="SAVE">
                                         SAVE
                                     </button>
                                     <button type="button" class="btn btn-cancel"
+                                            style="padding: 8px 15px;"
                                             data-ng-disabled="scheduledProgram.whenSaving"
                                             data-ng-click="cancel(scheduledProgram, scheduledProgramForm_{{scheduledProgram.entity.id}})"
                                             aria-label="CANCEL">
@@ -183,11 +203,10 @@
                                     </button>
                                 </div>
                             </div>
-                            <div class="row" style="border-top: 1px solid #ddd; margin: 0 -53px -8px -53px;">
-                                &nbsp;</div>
-                            <div class="row" style="background-color: #fbfcfc;">
-                                <div class="col-md-12">
-                                    <div class="pull-right">
+                            <div class="row" style="border-top:1px solid #ddd; background-color: #fbfcfc;">
+                                <div class="col-md-12"
+                                     style="padding-left: 33px; padding-right: 28px; background-color:  #fbfcfc;">
+                                    <div class="pull-right" style="margin-top: 2px;">
                                         <button type="button" class="btn btn-link btn-link-nopad"
                                                 data-ng-hide="scheduledProgram.showDetails"
                                                 data-ng-disabled="scheduledProgram.whenSaving"
@@ -198,8 +217,10 @@
                                         </button>
                                     </div>
                                     <div data-ng-if="scheduledProgram.showDetails"
+                                         style="margin-top: 7px; margin-bottom: -12px;"
 
                                          data-ng-include="'admin-facing/support/patient/view/program-history/details.html'"></div>
+
                                 </div>
                             </div>
                         </div>
