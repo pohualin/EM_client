@@ -2,7 +2,7 @@
 
 angular.module('emmiManager')
 
-    .controller('ViewEditCommon', function ($scope, Client, focus, debounce, $alert) {
+    .controller('ViewEditCommon', function ($scope, Client, focus, debounce, $alert, $timeout) {
 
         $scope.sfSearch = {};
         $scope.sfResult = {};
@@ -57,6 +57,10 @@ angular.module('emmiManager')
             if (account && !account.clientName) {
                 $scope.clientToEdit.salesForceAccount = account;
                 $scope.updatingSalesForceAccount = false;
+                // set focus on Salesforce update button after typeahead loses focus
+                $timeout(function() {
+                    angular.element('[data-focus-after-typeahead]')[0].focus();
+                });
                 return true;
             } else {
                 return false;
