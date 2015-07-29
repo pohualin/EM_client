@@ -43,7 +43,7 @@
                                         <i class="icon-trashcan"></i>
                                     </button>
                                 </div>
-                                <a data-bs-collapse-toggle data-ng-hide="role.editName"
+                                <a data-bs-collapse-toggle href="#clientRole-collapsible-{{role.entity.id}}" role="button" data-ng-hide="role.editName"
                                    data-ng-dblclick="startEditName(role)"
                                    aria-expanded="{{role.activePanel === 0}}"
                                    aria-controls="clientRole-collapsible-{{role.entity.id}}">
