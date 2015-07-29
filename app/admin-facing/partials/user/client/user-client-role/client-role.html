@@ -14,7 +14,7 @@
                         <div class="panel panel-secondary" data-ng-class="{ 'panel-open': existingUserClientUserClientRole.activePanel === 1 }">
                             <div class="panel-heading" data-ng-click="toggleUserClientUserClienRolePanel(existingUserClientUserClientRole)">
                                 <div class="panel-title">
-                                    <a data-bs-collapse-toggle aria-expanded="{{existingUserClientUserClientRole.activePanel === 1}}" aria-controls="clientRole-collapsible-{{existingUserClientUserClientRole.entity.id}}">
+                                    <a data-bs-collapse-toggle href="#clientRole-collapsible-{{existingUserClientUserClientRole.entity.id}}" role="button" aria-expanded="{{existingUserClientUserClientRole.activePanel === 1}}" aria-controls="clientRole-collapsible-{{existingUserClientUserClientRole.entity.id}}">
                                         <span class="icon-caret-right"></span>
                                         <span class="panel-title-text">{{ existingUserClientUserClientRole.entity.userClientRole.name}}</span>
                                     </a>

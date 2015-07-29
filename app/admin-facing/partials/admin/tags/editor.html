@@ -51,7 +51,7 @@
                                                     activate
                                                 </button>
                                             </div>
-                                            <a data-bs-collapse-toggle data-ng-hide="group.editName" data-ng-dblclick="startEditName(group)" aria-expanded="{{group.activePanel === 0}}" aria-controls="collapsible-{{group.entity.id}}">
+                                            <a data-bs-collapse-toggle href="#collapsible-{{group.entity.id}}" role="button" data-ng-hide="group.editName" data-ng-dblclick="startEditName(group)" aria-expanded="{{group.activePanel === 0}}" aria-controls="collapsible-{{group.entity.id}}">
                                                 <span class="icon-caret-right"></span>
                                                 <span class="panel-title-text">{{ group.title }}</span>
                                             </a>
