@@ -2,7 +2,7 @@
 
 angular.module('emmiManager')
 
-    .controller('SalesForceCtrl',function ($scope, SalesForce, team, debounce, focus){
+    .controller('SalesForceCtrl',function ($scope, SalesForce, team, debounce, focus, $timeout){
         $scope.sfSearch = {};
         $scope.sfResult = {};
         $scope.sfResult.account = [];
@@ -27,6 +27,10 @@ angular.module('emmiManager')
             if (account && !account.teamName) {
                 $scope.teamToSave.salesForceAccount = account;
                 $scope.updatingSalesForceAccount = false;
+                // set focus on Salesforce update button after typeahead loses focus
+                $timeout(function() {
+                    angular.element('[data-focus-after-typeahead]')[0].focus();
+                });
                 return true;
             } else {
                 return false;
