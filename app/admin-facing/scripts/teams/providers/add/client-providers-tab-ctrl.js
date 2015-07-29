@@ -2,10 +2,9 @@
 
 angular.module('emmiManager')
 
-    .controller('ClientProvidersTabController', ['$scope', 'SelectAllTeamProvidersFactory', 'AddTeamProvidersFactory', '$modal', 'ProviderView', 'TeamLocation', 'TeamProviderService', 'ProviderSearch', '$controller', 'arrays', 'ProviderCreate', 'ClientProviderService', 'Client', 'focus', 'STATUS',
-         function ($scope, SelectAllTeamProvidersFactory, AddTeamProvidersFactory, $modal, ProviderView, TeamLocation, TeamProviderService, ProviderSearch, $controller, arrays, ProviderCreate, ClientProviderService, Client, focus, STATUS) {
+    .controller('ClientProvidersTabController', ['$scope', '$controller', 'SelectAllTeamProvidersFactory', 'AddTeamProvidersFactory', 'TeamProviderService', 'ProviderSearch',
+         function ($scope, $controller, SelectAllTeamProvidersFactory, AddTeamProvidersFactory, TeamProviderService, ProviderSearch) {
 
-        window.paul = $scope;
         $controller('CommonSearch', {$scope: $scope});
 
         var managedClientProviderList = 'clientProviders';
@@ -29,6 +28,23 @@ angular.module('emmiManager')
         };
 
         /**
+         * Called when a column header in client providers result table is clicked.
+         */
+        $scope.sortClientProviders = function (property) {
+            $scope.loading = true;
+            TeamProviderService.getPossibleClientProviders($scope.teamResource, $scope.createSortProperty(property)).then(function (clientProviders) {
+                $scope.handleResponse(clientProviders, managedClientProviderList);
+                $scope.setSelectedProviders($scope.clientProviders);
+                if(SelectAllTeamProvidersFactory.isSelectAll()){
+                    $scope.$emit('selectAllChecked');
+                }
+            }, function () {
+                // error happened
+                $scope.loading = false;
+            });
+        };
+        
+        /**
          * Fetch next/previous page in Client Providers tab
          */
         $scope.fetchPageClientProviders = function (href) {
@@ -40,20 +56,6 @@ angular.module('emmiManager')
                     $scope.$emit('selectAllChecked');
                 }
             }, function () {
-                $scope.loading = false;
-            });
-        };
-
-        /**
-         * Called when a column header in client providers result table is clicked.
-         */
-        $scope.sortClientProviders = function (property) {
-            $scope.loading = true;
-            TeamProviderService.getPossibleClientProviders($scope.teamResource, $scope.createSortProperty(property)).then(function (clientProviders) {
-                $scope.handleResponse(clientProviders, managedClientProviderList);
-                $scope.setSelectedProviders($scope.clientProviders);
-            }, function () {
-                // error happened
                 $scope.loading = false;
             });
         };
@@ -145,10 +147,18 @@ angular.module('emmiManager')
         });
         
         /**
+         * Listen on 'setTeamLocations' event
+         */
+        $scope.$on('setTeamLocations', function(){
+            $scope.allTeamLocations = TeamProviderService.buildMultiSelectData(AddTeamProvidersFactory.getTeamLocations());
+        });
+        
+        /**
          * Listen on 'refreshClientProvidersPage' event
          */
         $scope.$on('refreshClientProvidersPage', function(){
             $scope.clientProviders = null;
+            SelectAllTeamProvidersFactory.setSelectAll(false);
             AddTeamProvidersFactory.resetSelectedClientProviders();
             $scope.setPossibleProviders();
         });

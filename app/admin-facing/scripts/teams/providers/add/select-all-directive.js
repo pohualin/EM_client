@@ -67,6 +67,17 @@ angular.module('emmiManager')
                         }
                     }
                 );
+                
+                scope.$watch(
+                    function(){
+                        return SelectAllTeamProvidersFactory.isSelectAll();
+                    }, 
+                    function(newValue){
+                        if(newValue){
+                            scope.selectAllClientProviders = newValue;
+                        }
+                    }
+                );
             }
         };
     }

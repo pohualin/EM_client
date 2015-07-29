@@ -2,37 +2,30 @@
 
 angular.module('emmiManager')
 
-    .controller('AddTeamsProvidersController', ['$scope', 'TeamLocation', 'TeamProviderService', 'focus', 'ProviderSearch', 'SelectAllTeamProvidersFactory', 'AddTeamProvidersService', 'AddTeamProvidersFactory',
-        function ($scope, TeamLocation, TeamProviderService, focus, ProviderSearch, SelectAllTeamProvidersFactory, AddTeamProvidersService, AddTeamProvidersFactory) {
+    .controller('AddTeamsProvidersController', ['$scope', 'focus', 'TeamLocation', 'TeamProviderService', 'ProviderSearch', 'SelectAllTeamProvidersFactory', 'AddTeamProvidersService', 'AddTeamProvidersFactory',
+        function ($scope, focus, TeamLocation, TeamProviderService, ProviderSearch, SelectAllTeamProvidersFactory, AddTeamProvidersService, AddTeamProvidersFactory) {
 
         $scope.tabs = AddTeamProvidersService.setAllTabs();
 
         /**
+         * Get TeamLocations for the provider, set it to AddTeamProvidersFactory and broadcast 'setTeamLocations' event
+         */
+        TeamLocation.getTeamLocations($scope.teamResource.link.teamLocations).then(function (response) {
+            AddTeamProvidersFactory.setTeamLocations(response);
+            $scope.$broadcast('setTeamLocations');
+        });
+        
+        /**
          * Return true if any provider is selected or SelectAllTeamProvidersFactory.isSelectAll() returns true
          */
         $scope.hasProvidersAdded = function() {
-            // Any provider selected or select all is checked
+            // Any provider is selected or select all is checked
             return SelectAllTeamProvidersFactory.isSelectAll() || !angular.equals({}, AddTeamProvidersFactory.getSelectedClientProviders()) || !angular.equals({}, AddTeamProvidersFactory.getSelectedProviders());
         };
-        
-        $scope.saveAssociationAndAddAnotherProvider = function () {
-            $scope.associateSelectedProvidersToTeam(true).then(function (providersToAdd) {
-                $scope.refreshLocationsAndProviders().then(function () {
-                    $scope.successAlert(providersToAdd, '#modal-messages-container');
-                    $scope.resetState();
-                    // if on the client providers tab
-                    if ($scope.tabs.activeTab === 0) {
-                        // disable previously selected providers
-                        $scope.setClientProviderSelected($scope.clientProviders);
-                    }
-                    // set the active tab to search per UAT ticket EM-1029
-                    $scope.tabs.activeTab = 1;
-                    $scope.cleanSearch();
-                    focus('ProviderSearchFocus');
-                });
-            });
-        };
 
+        /**
+         * Save method to call when selectAll is false
+         */
         $scope.save = function () {
             $scope.associateRequestSubmitted = true;
             var providersAcrossTabs = angular.extend({}, AddTeamProvidersFactory.getSelectedClientProviders(), AddTeamProvidersFactory.getSelectedProviders());    
@@ -53,6 +46,9 @@ angular.module('emmiManager')
             });
         };
         
+        /**
+         * SaveAndAnother method to call when selectAll is false
+         */
         $scope.saveAndAddAnother = function () {
             $scope.associateRequestSubmitted = true;
             var providersAcrossTabs = angular.extend({}, AddTeamProvidersFactory.getSelectedClientProviders(), AddTeamProvidersFactory.getSelectedProviders());    
@@ -68,6 +64,7 @@ angular.module('emmiManager')
                             $scope.successAlert(providersToAdd, '#modal-messages-container');
                             $scope.$broadcast('refreshClientProvidersPage');
                             $scope.$broadcast('refreshTeamProvidersSearchPage');
+                            focus('ProviderSearchFocus');
                         }).finally(function () {
                             $scope.whenSaving = false;
                         });
@@ -75,6 +72,9 @@ angular.module('emmiManager')
             });
         };
         
+        /**
+         * Save method to call when selectAll is true
+         */
         $scope.saveAll = function () {
             $scope.associateRequestSubmitted = true;
             var providersAcrossTabs = angular.extend({}, AddTeamProvidersFactory.getSelectedClientProviders(), AddTeamProvidersFactory.getSelectedProviders());    
@@ -94,7 +94,10 @@ angular.module('emmiManager')
                 }
             });
         };
-        
+      
+        /**
+         * SaveAndAddAnother method to call when selectAll is true
+         */
         $scope.saveAllAndAddAnother = function () {
             $scope.associateRequestSubmitted = true;
             var providersAcrossTabs = angular.extend({}, AddTeamProvidersFactory.getSelectedClientProviders(), AddTeamProvidersFactory.getSelectedProviders());    
@@ -104,12 +107,13 @@ angular.module('emmiManager')
                     ProviderSearch
                         .saveAllProvidersExcept($scope.teamResource, providersAcrossTabs, 
                                 AddTeamProvidersFactory.getTeamLocations(), SelectAllTeamProvidersFactory.getExclusionSet())
-                        .then(function () {
+                        .then(function (providersToAdd) {
                             $scope.refreshLocationsAndProviders();
                             $scope.tabs.activeTab = 1;
                             $scope.successAlert(providersToAdd, '#modal-messages-container');
                             $scope.$broadcast('refreshClientProvidersPage');
                             $scope.$broadcast('refreshTeamProvidersSearchPage');
+                            focus('ProviderSearchFocus');
                         }).finally(function () {
                             $scope.whenSaving = false;
                         });
@@ -118,7 +122,7 @@ angular.module('emmiManager')
         };
         
         /**
-         * Hide model when cancel button is hit
+         * Hide model when cancel button is hit. Also reset selectedClientProviders and selectedProviders
          */
         $scope.hideAddProvidersModal = function () {
             $scope.$hide();
@@ -136,12 +140,4 @@ angular.module('emmiManager')
                 $scope.selectAll = newValue;
             }
         );
-        
-        /**
-         * Get TeamLocations for the provider, set it to AddTeamProvidersFactory and broadcast 'setTeamLocations' event
-         */
-        TeamLocation.getTeamLocations($scope.teamResource.link.teamLocations).then(function (response) {
-            AddTeamProvidersFactory.setTeamLocations(response);
-            $scope.$broadcast('setTeamLocations');
-        });
     }]);

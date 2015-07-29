@@ -42,7 +42,7 @@ angular.module('emmiManager')
     };
     
     selectAllTeamLocationsFactory.isAllPossibleChecked = function() {
-        return _totalPossibleLocationsCount === Object.keys(_selectedPossibleLocationIds).length;
+        return _totalPossibleLocationsCount !== 0 && _totalPossibleLocationsCount === Object.keys(_selectedPossibleLocationIds).length;
     };
     
     selectAllTeamLocationsFactory.isAllSelectedUnchecked = function() {

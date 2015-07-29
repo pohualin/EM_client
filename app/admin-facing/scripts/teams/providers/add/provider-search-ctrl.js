@@ -1,8 +1,8 @@
 'use strict';
 angular.module('emmiManager')
 
-    .controller('ProviderSearchController', ['$scope', '$modal', '$controller', 'arrays', 'ProviderSearch', 'ClientProviderService', 'Client', 'STATUS', 'AddTeamProvidersFactory',
-         function ($scope, $modal, $controller, arrays, ProviderSearch, ClientProviderService, Client, STATUS, AddTeamProvidersFactory) {
+    .controller('ProviderSearchController', ['$scope', '$controller', '$modal', 'arrays', 'focus', 'ProviderSearch', 'ClientProviderService', 'Client', 'TeamProviderService', 'STATUS', 'AddTeamProvidersFactory',
+         function ($scope, $controller, $modal, arrays, focus, ProviderSearch, ClientProviderService, Client, TeamProviderService, STATUS, AddTeamProvidersFactory) {
 
         $controller('CommonSearch', {$scope: $scope});
 
@@ -97,6 +97,27 @@ angular.module('emmiManager')
             }
         };
         
+        /**
+         * Add new provider button in search all providers tab
+         */
+        $scope.createNewProvider = function () {
+            $scope.$hide();
+            $modal({
+                scope: $scope,
+                template: 'admin-facing/partials/team/provider/new.html',
+                animation: 'none',
+                backdropAnimation: 'emmi-fade',
+                backdrop: 'static'
+            });
+        };
+
+        /**
+         * Listen on 'setTeamLocations' event
+         */
+        $scope.$on('setTeamLocations', function(){
+            $scope.allTeamLocations = AddTeamProvidersFactory.getTeamLocations();
+        });
+        
         $scope.$on('refreshTeamProvidersSearchPage', function(){
             $scope.providers = null;
             $scope.searchAll = {};
@@ -109,6 +130,7 @@ angular.module('emmiManager')
             $scope.searchAll = {};
             $scope.allProvidersSearch = false;
             AddTeamProvidersFactory.resetSelectedProviders();
+            focus('ProviderSearchFocus');
         }
         init();
     }])

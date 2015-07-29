@@ -36,6 +36,9 @@ angular.module('emmiManager')
             TeamLocation.getPossibleClientLocations($scope.teamResource, $scope.createSortProperty(property)).then(function (locationPage) {
                 $scope.handleResponse(locationPage, managedClientLocationList);
                 $scope.setSelectedLocations($scope.teamLocations);
+                if(SelectAllTeamLocationsFactory.isSelectAll()){
+                    $scope.$emit('selectAllChecked');
+                }
             }, function () {
                 // error happened
                 $scope.loading = false;
@@ -158,6 +161,7 @@ angular.module('emmiManager')
          */
         $scope.$on('refreshClientLocationsPage', function(){
             $scope.teamLocations = null;
+            SelectAllTeamLocationsFactory.setSelectAll(false);
             AddTeamLocationsFactory.resetSelectedClientLocations();
             $scope.setPossibleLocations();
         });

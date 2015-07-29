@@ -42,7 +42,7 @@ angular.module('emmiManager')
     };
     
     selectAllTeamProvidersFactory.isAllPossibleChecked = function() {
-        return _totalPossibleProvidersCount === Object.keys(_selectedPossibleProviderIds).length;
+        return _totalPossibleProvidersCount !== 0 && _totalPossibleProvidersCount === Object.keys(_selectedPossibleProviderIds).length;
     };
     
     selectAllTeamProvidersFactory.isAllSelectedUnchecked = function() {
