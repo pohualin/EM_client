@@ -83,7 +83,10 @@
                         onSaveSuccess: '=',
                         onCancel: '=',
                         defaultCaseType: '=',
-                        defaultCaseDescription: '='
+                        defaultCaseDescription: '=',
+                        defaultUserId: '=',
+                        defaultWebName: '=',
+                        defaultEmail: '='
                     },
                     controller: function ($scope) {
 
@@ -92,11 +95,18 @@
                                 $scope.form = response;
 
                                 // populate the description if it has been passed in
-                                if ($scope.defaultCaseDescription) {
+                                if ($scope.defaultCaseDescription || $scope.defaultUserId ||
+                                    $scope.defaultWebName || $scope.defaultEmail) {
                                     angular.forEach($scope.form.entity.sections, function (section) {
                                         angular.forEach(section.fields, function (field) {
-                                            if (field.type === 'TEXTAREA' && field.name === 'Description') {
+                                            if (field.name === 'Description') {
                                                 field.value = $scope.defaultCaseDescription;
+                                            } else if (field.name === 'User_ID__c') {
+                                                field.value = $scope.defaultUserId;
+                                            } else if (field.name === 'SuppliedName') {
+                                                field.value = $scope.defaultWebName;
+                                            } else if (field.name === 'SuppliedEmail') {
+                                                field.value = $scope.defaultEmail;
                                             }
                                         });
                                     });
