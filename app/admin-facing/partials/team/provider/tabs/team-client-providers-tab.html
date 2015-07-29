@@ -3,14 +3,7 @@
         cellspacing="0" data-ng-show="clientProviders" data-ng-controller="ClientProvidersTabController" >
   <thead>
     <tr>
-      <th class="sort col-checkbox">
-        <div class="checkbox">
-            <input type="checkbox" id="selectAllClientProviders" 
-              data-ng-model="selectAllClientProviders"
-              data-select-all-team-providers />
-            <label for="selectAllClientProviders"></label>
-        </div>
-      </th>
+      <th class="sort col-checkbox">&nbsp;</th>
       <th class="sort" data-ng-click="sortClientProviders('provider.normalizedName')">Name
         <span data-ng-show="sortProperty.property === 'provider.normalizedName'">
           <span class="sort-icon" data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span>
@@ -32,6 +25,19 @@
     </tr>
   </thead>
   <tbody>
+    <tr>
+      <td>
+        <div class="checkbox">
+            <input type="checkbox" id="selectAllClientProviders" 
+              data-ng-model="selectAllClientProviders"
+              data-select-all-team-providers />
+            <label for="selectAllClientProviders"></label>
+        </div>
+      </td>
+      <td colspan='5'>
+        Select All ({{totalPossibleClientProvidersCount}})
+      </td>
+    </tr>
     <tr data-ng-repeat="clientProvider in clientProviders" data-ng-class="clientProvider.provider.entity.disabled ? 'text-muted' : ''">
       <td class="col-checkbox">
         <div class="checkbox">

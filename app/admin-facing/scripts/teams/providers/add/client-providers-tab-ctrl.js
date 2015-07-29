@@ -104,6 +104,7 @@ angular.module('emmiManager')
         
         $scope.setPossibleProviders = function() {
             TeamProviderService.getPossibleClientProviders($scope.teamResource).then(function (clientProviders) {
+                $scope.totalPossibleClientProvidersCount = clientProviders.page.totalElements;
                 $scope.handleResponse(clientProviders, managedClientProviderList);
                 TeamProviderService.getTeamProvidersCount($scope.teamResource).then(function(count){
                     SelectAllTeamProvidersFactory.setTotalPossibleProvidersCount(clientProviders.page.totalElements - count);
