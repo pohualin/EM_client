@@ -7,14 +7,18 @@
         </div>
         <div class="row">
             <div class="col-md-6">
-                <div class="panel-group" data-ng-repeat="existingUserClientUserClientRole in existingUserClientUserClientRoles"
+                <div class="panel-group"
+                     data-ng-model="existingUserClientUserClientRole.activePanel"
+                     data-ng-repeat="existingUserClientUserClientRole in existingUserClientUserClientRoles"
+                     data-ng-change="toggleUserClientUserClientRolePanel(existingUserClientUserClientRole)"
                      data-start-collapsed="true"
                      data-bs-collapse>
                     <form name="existingUserClientUserClientRoleForm_{{existingUserClientUserClientRole.entity.id}}" class="form" novalidate>
-                        <div class="panel panel-secondary" data-ng-class="{ 'panel-open': existingUserClientUserClientRole.activePanel === 1 }">
-                            <div class="panel-heading" data-ng-click="toggleUserClientUserClienRolePanel(existingUserClientUserClientRole)">
+                        <div class="panel panel-secondary"
+                             data-ng-class="{ 'panel-open': existingUserClientUserClientRole.activePanel === 0 }">
+                            <div class="panel-heading">
                                 <div class="panel-title">
-                                    <a data-bs-collapse-toggle href="#clientRole-collapsible-{{existingUserClientUserClientRole.entity.id}}" role="button" aria-expanded="{{existingUserClientUserClientRole.activePanel === 1}}" aria-controls="clientRole-collapsible-{{existingUserClientUserClientRole.entity.id}}">
+                                    <a data-bs-collapse-toggle href="#clientRole-collapsible-{{existingUserClientUserClientRole.entity.id}}" role="button" aria-expanded="{{existingUserClientUserClientRole.activePanel === 0}}" aria-controls="clientRole-collapsible-{{existingUserClientUserClientRole.entity.id}}">
                                         <span class="icon-caret-right"></span>
                                         <span class="panel-title-text">{{ existingUserClientUserClientRole.entity.userClientRole.name}}</span>
                                     </a>
@@ -27,7 +31,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="panel-collapse" data-bs-collapse-target aria-hidden="{{existingUserClientUserClientRole.activePanel !== 1}}" id="clientRole-collapsible-{{existingUserClientUserClientRole.entity.id}}">
+                            <div class="panel-collapse" data-bs-collapse-target
+                                 aria-hidden="{{existingUserClientUserClientRole.activePanel !== 0}}"
+                                 id="clientRole-collapsible-{{existingUserClientUserClientRole.entity.id}}">
                                 <div class="panel-body">
                                     Permissions:<br/>
                                     <div class="permissions-list">

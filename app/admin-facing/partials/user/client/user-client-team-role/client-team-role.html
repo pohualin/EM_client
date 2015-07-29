@@ -24,6 +24,7 @@
             <div class="col-md-6">
                 <div class="panel-group" data-ng-model="clientTeamRole.activePanel"
                      data-ng-repeat="clientTeamRole in clientTeamRoles | orderBy:'-existingTeams.length'"
+                     data-ng-change="panelStateChange(clientTeamRole)"
                      data-start-collapsed="true"
                      data-bs-collapse>
                     <form name="clientTeamRoleForm_{{clientTeamRole.entity.id}}" class="form" novalidate>
@@ -31,7 +32,7 @@
                              data-ng-class="{ 'panel-open': clientTeamRole.activePanel === 0, 'panel-muted': !clientTeamRole.existingTeams.length }">
                             <div class="panel-heading">
                                 <div class="panel-title">
-                                    <a data-bs-collapse-toggle href="#teamRole-collapsible-{{clientTeamRole.entity.id}}" role="button" data-ng-click="panelStateChange(clientTeamRole)"
+                                    <a data-bs-collapse-toggle href="#teamRole-collapsible-{{clientTeamRole.entity.id}}" role="button"
                                        aria-expanded="{{clientTeamRole.activePanel === 0}}"
                                        aria-controls="teamRole-collapsible-{{clientTeamRole.entity.id}}">
                                         <span class="icon-caret-right"></span>
