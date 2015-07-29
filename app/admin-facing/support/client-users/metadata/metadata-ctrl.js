@@ -1,5 +1,4 @@
 (function (angular) {
-// jshint ignore: start
     'use strict';
 
     angular.module('emmiManager')
