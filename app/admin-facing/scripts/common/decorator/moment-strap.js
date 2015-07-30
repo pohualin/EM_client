@@ -35,7 +35,7 @@
                         var ret = parseFn(value, baseDate, format);
                         if (!ret) {
                             // try to parse with moment
-                            ret = moment(value, ['MM-DD-YYYY', 'YYYY-MM-DD', 'MMDDYYYY']);
+                            ret = moment(value, ['MM-DD-YYYY', 'YYYY-MM-DD', 'MMDDYYYY'], true);
                             ret = ret.isValid() ? ret.toDate() : false;
                         }
                         return ret;
