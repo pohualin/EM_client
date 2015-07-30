@@ -2,7 +2,8 @@
 
 angular.module('emmiManager')
 
-    .service('TeamProviderService', function ($http, $q, Session, UriTemplate, ProviderView) {
+    .service('TeamProviderService', ['$http', '$q', 'Session', 'UriTemplate', 'ProviderView', 'CommonService',
+        function ($http, $q, Session, UriTemplate, ProviderView, CommonService) {
         return {
         	 updateTeamProvider: function (url, teamProviderTeamLocationSaveRequest) {
         		 return $http.post(UriTemplate.create(url).stringify(), teamProviderTeamLocationSaveRequest)
@@ -92,22 +93,26 @@ angular.module('emmiManager')
             	 });
             	 return deferred.promise;
              },
-
              /**
-              * Return two tabs with one being active
+              * Get possible (client) providers to associate to a team
               */
-             setAllTabs: function(){
-                 return {'activeTab' : 0, 'data' : [
-                     {
-                         'title': 'Client Providers',
-                         'template': 'admin-facing/partials/team/provider/tabs/team-client-providers-tab.html'
-                     },
-                     {
-                         'title': 'Search all providers',
-                         'template': 'admin-facing/partials/team/provider/tabs/team-search-providers-tab.html'
-                     }]};
-             }
+             getPossibleClientProviders: function(teamResource, sort){
+                 return $http.get(UriTemplate.create(teamResource.link.possibleClientProviders).stringify({
+                         sort: sort && sort.property ? sort.property + ',' + (sort.ascending ? 'asc' : 'desc') : ''    
+                     })).then(function(response){
+                     CommonService.convertPageContentLinks(response.data);
+                     return response.data;
+                 });
+             },
+             getTeamProvidersCount: function(teamResource) {
+                 return $http.get(UriTemplate.create(teamResource.link.teamProviders).stringify())
+                     .then(function(response){
+                     if(response.data && response.data.page) {
+                         return response.data.page.totalElements;
+                     } else {
+                         return 0;
+                     }
+                 });
+             },
         };
-    })
-
-;
+    }]);

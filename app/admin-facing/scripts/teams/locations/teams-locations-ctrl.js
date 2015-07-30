@@ -44,9 +44,10 @@ angular.module('emmiManager')
             });
         };
 
-        $scope.addLocations = function () {
+        $scope.addLocations = function (activeTab) {
         	return Location.findForClient(Client.getClient()).then(function (allLocations) {
             	var locationTemplate = allLocations.content && allLocations.content.length > 0 ? 'admin-facing/partials/team/location/search-with-client-location-tabs.html' : 'admin-facing/partials/team/location/search-without-client-location-tabs.html';
+            	$scope.activeTab = activeTab ? activeTab : 0;
                	$modal({
             		scope: $scope,
                     template: locationTemplate,
@@ -57,7 +58,7 @@ angular.module('emmiManager')
             });
 
         };
-
+        
         $scope.cancelPopup = function() {
             //doing this to remove the teamLocations those locations that was clicked in the search and them press cancel
             var teamLocationsAux = {};
