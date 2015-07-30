@@ -122,7 +122,7 @@
                 <div class="has-input-icon has-input-icon-calendar">
                     <input id="contractStart" class="form-control" placeholder="MM/DD/YYYY" type="text" name="clientContractStart"
                            data-ng-model="clientToEdit.contractStart" data-autoclose="true"
-                           data-dateType="string" data-bs-datepicker required data-date-format="M/d/yyyy"
+                           data-dateType="string" data-bs-datepicker required data-date-format="MM/dd/yyyy"
                            data-max-date="{{clientToEdit.contractEnd}}" data-input-icon>
                     <span class="input-icon"><i class="icon-calendar"></i></span>
                 </div>
@@ -151,7 +151,7 @@
                 <div class="has-input-icon has-input-icon-calendar">
                     <input id="contractEnd" class="form-control" placeholder="MM/DD/YYYY" type="text" name="clientContractEnd"
                            data-ng-model="clientToEdit.contractEnd" data-autoclose="true"
-                           data-dateType="string" data-bs-datepicker required data-date-format="M/d/yyyy"
+                           data-dateType="string" data-bs-datepicker required data-date-format="MM/dd/yyyy"
                            data-min-date="{{clientToEdit.contractStart | addDays:1}}" data-input-icon>
                     <span class="input-icon"><i class="icon-calendar"></i></span>
                 </div>
@@ -170,6 +170,7 @@
                         data-ng-show="clientToEdit.salesForceAccount.city && clientToEdit.salesForceAccount.state">,&nbsp;</span>{{clientToEdit.salesForceAccount.state}}
                 </span>
             <button class="btn btn-link btn-salesforce-update" type="button"
+                    data-focus-after-typeahead
                     data-ng-disabled="whenSaving"
                     data-ng-click="changeClientSfAccount()">update
             </button>
