@@ -166,7 +166,7 @@ angular.module('emmiManager')
 
         function init() {
             $scope.clientProviders = null;
-            $scope.setPossibleProviders()
+            $scope.setPossibleProviders();
         }
         init();
-    }])
+    }]);

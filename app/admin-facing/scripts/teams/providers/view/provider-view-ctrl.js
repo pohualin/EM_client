@@ -92,8 +92,7 @@ angular.module('emmiManager')
             });
        		return ClientProviderService.findForClient(Client.getClient()).then(function (clientProviders) {
    			  var providerTemplate = clientProviders.content && clientProviders.content.length > 0 
-   			      ? 'admin-facing/partials/team/provider/search-with-client-provider-tabs.html'
-                  : 'admin-facing/partials/team/provider/search-without-client-provider-tabs.html';
+   			      ? 'admin-facing/partials/team/provider/search-with-client-provider-tabs.html' : 'admin-facing/partials/team/provider/search-without-client-provider-tabs.html';
 		      $modal({
    			      scope: $scope,
                   template: providerTemplate,

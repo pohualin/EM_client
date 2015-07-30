@@ -119,6 +119,9 @@ angular.module('emmiManager')
             	});
             },
             
+            /**
+             * Check if all selectedProviders contain at least one TeamLocation if there is any
+             */
             isSaveRequestValid: function(allTeamLocations, selectedProviders){
                 var deferred = $q.defer();
                 var valid = true;
@@ -135,6 +138,9 @@ angular.module('emmiManager')
                 return deferred.promise;
             },
             
+            /**
+             * Compose teamProviderTeamLocatioSaveRequest for save calls
+             */
             getTeamProviderTeamLocationSaveRequest: function(allTeamLocations, selectedProviders) {
                 var teamProviderTeamLocationSaveRequest = [];
                 angular.forEach(selectedProviders, function(provider){
@@ -148,6 +154,9 @@ angular.module('emmiManager')
                 return teamProviderTeamLocationSaveRequest;
             },
             
+            /**
+             * Associate all (client) providers to a team except those in selectAllBut
+             */
             saveAllProvidersExcept: function(teamResource, selectedProviders, teamLocations, selectAllBut){
                 var deferred = $q.defer();
                 var self = this;
