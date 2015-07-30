@@ -265,6 +265,10 @@ angular.module('emmiManager', [
             if (tooltips.indexOf($tooltip) === -1) {
                 tooltips.push($tooltip);
             }
+            // make popovers focusable when triggered by click (this is broken in AngularStrap)
+            if ($tooltip.$options.keyboard && $tooltip.$options.trigger !== 'focus') {
+                $tooltip.focus();
+            }
         });
 
         $rootScope.$on('tooltip.hide', function (e, $tooltip) {
