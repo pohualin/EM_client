@@ -185,7 +185,11 @@
                     $input.bind('keydown', function (e) {
 
                         if ((!tabDoesNotSelectActive && e.keyCode === 9) || e.keyCode === 13 || e.keyCode === 27) {
-                            e.preventDefault();
+                            if (e.keyCode === 9 && scope.hide) {
+                                return;
+                            } else {
+                                e.preventDefault();
+                            }
                         }
 
                         if (e.keyCode === 40) {
