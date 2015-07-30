@@ -5,7 +5,7 @@ angular.module('emmiManager')
     .controller('AddTeamsProvidersController', ['$scope', 'focus', 'TeamLocation', 'TeamProviderService', 'ProviderSearch', 'SelectAllTeamProvidersFactory', 'AddTeamProvidersService', 'AddTeamProvidersFactory',
         function ($scope, focus, TeamLocation, TeamProviderService, ProviderSearch, SelectAllTeamProvidersFactory, AddTeamProvidersService, AddTeamProvidersFactory) {
 
-        $scope.tabs = AddTeamProvidersService.setAllTabs();
+        $scope.tabs = AddTeamProvidersService.setAllTabs($scope.activeTab);
 
         /**
          * Get TeamLocations for the provider, set it to AddTeamProvidersFactory and broadcast 'setTeamLocations' event

@@ -7,8 +7,8 @@ angular.module('emmiManager')
             /**
              * Return two tabs with one being active
              */
-            setAllTabs: function(){
-                return {'activeTab' : 0, 'data' : [
+            setAllTabs: function(activeTab){
+                return {'activeTab' : activeTab, 'data' : [
                     {
                         'title': 'Client Providers',
                         'template': 'admin-facing/partials/team/provider/tabs/team-client-providers-tab.html'

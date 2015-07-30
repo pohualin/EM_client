@@ -82,7 +82,7 @@ angular.module('emmiManager')
         /**
          * Add providers to a team
          */
-        $scope.addProviders = function () {
+        $scope.addProviders = function (activeTab) {
             if ($scope.providerErrorAlertForCreate) {
                 $scope.providerErrorAlertForCreate.hide();
             }
@@ -92,6 +92,7 @@ angular.module('emmiManager')
             });
        		return ClientProviderService.findForClient(Client.getClient()).then(function (clientProviders) {
    			  var providerTemplate = clientProviders.content && clientProviders.content.length > 0 ? 'admin-facing/partials/team/provider/search-with-client-provider-tabs.html' : 'admin-facing/partials/team/provider/search-without-client-provider-tabs.html';
+   			  $scope.activeTab = activeTab ? activeTab : 0;
 		      $modal({
    			      scope: $scope,
                   template: providerTemplate,

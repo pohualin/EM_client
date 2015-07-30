@@ -39,7 +39,7 @@ angular.module('emmiManager')
                         $scope.successAlert(providersToAdd, '#messages-container');
                     } else {
                         $scope.refreshLocationsAndProviders().then(function () {
-                            $scope.addProviders().then(function () {
+                            $scope.addProviders(1).then(function () {
                                 $scope.successAlert(providersToAdd, '#modal-messages-container');
                             });
                         });
