@@ -2,11 +2,11 @@
 
 angular.module('emmiManager')
 
-    .controller('AddTeamsLocationsController', ['$rootScope', '$scope', 'TeamSearchLocation', 'TeamProviderService', 'SelectAllFactory', 'AddTeamLocationsService', 'AddTeamLocationsFactory',
-       function ($rootScope, $scope, TeamSearchLocation, TeamProviderService, SelectAllFactory, AddTeamLocationsService, AddTeamLocationsFactory) {
+    .controller('AddTeamsLocationsController', ['$rootScope', '$scope', 'TeamSearchLocation', 'TeamProviderService', 'SelectAllTeamLocationsFactory', 'AddTeamLocationsService', 'AddTeamLocationsFactory',
+       function ($rootScope, $scope, TeamSearchLocation, TeamProviderService, SelectAllTeamLocationsFactory, AddTeamLocationsService, AddTeamLocationsFactory) {
         
-        $scope.tabs = AddTeamLocationsService.setAllTabs();
-
+        $scope.tabs = AddTeamLocationsService.setAllTabs($scope.activeTab);
+        
         /**
          * Get TeamProviders for the team, set it to AddTeamLocationsFactory and broadcast 'setTeamProviders' event
          */
@@ -16,17 +16,18 @@ angular.module('emmiManager')
         });
         
         /**
-         * Return true if any location is selected or SelectAllFactory.isSelectAll() returns true
+         * Return true if any location is selected or SelectAllTeamLocationsFactory.isSelectAll() returns true
          */
         $scope.hasLocationsAdded = function() {
             // Any location selected or select all is checked
-            return SelectAllFactory.isSelectAll() || !angular.equals({}, AddTeamLocationsFactory.getSelectedClientLocations()) || !angular.equals({}, AddTeamLocationsFactory.getSelectedLocations());
+            return SelectAllTeamLocationsFactory.isSelectAll() || !angular.equals({}, AddTeamLocationsFactory.getSelectedClientLocations()) || !angular.equals({}, AddTeamLocationsFactory.getSelectedLocations());
         };
         
         /**
          * Save selected locations when selectAll is false
          */
         $scope.save = function(addAnother) {
+            $scope.whenSaving = true;
             var locationsAcrossTabs = angular.extend({}, AddTeamLocationsFactory.getSelectedClientLocations(), AddTeamLocationsFactory.getSelectedLocations());    
             var locationsToAdd = TeamSearchLocation.getTeamProviderTeamLocationSaveRequest(locationsAcrossTabs, AddTeamLocationsFactory.getTeamProviders());
             TeamSearchLocation.save($scope.teamClientResource.teamResource.link.teamLocations, locationsToAdd).then(function () {
@@ -48,6 +49,7 @@ angular.module('emmiManager')
          * to Search all locations tab after selected locations been added.
          */
         $scope.saveAndAddAnother = function () {
+            $scope.whenSaving = true;
             var locationsAcrossTabs = angular.extend({}, AddTeamLocationsFactory.getSelectedClientLocations(), AddTeamLocationsFactory.getSelectedLocations());
             var locationsToAdd = TeamSearchLocation.getTeamProviderTeamLocationSaveRequest(locationsAcrossTabs, AddTeamLocationsFactory.getTeamProviders());
             TeamSearchLocation.save($scope.teamClientResource.teamResource.link.teamLocations, locationsToAdd).then(function () {
@@ -68,9 +70,10 @@ angular.module('emmiManager')
          * Save when selectAll is true
          */
         $scope.saveAll = function () {
+            $scope.whenSaving = true;
             var locationsAcrossTabs = angular.extend({}, AddTeamLocationsFactory.getSelectedClientLocations(), AddTeamLocationsFactory.getSelectedLocations());
             TeamSearchLocation.saveAllLocationsExcept($scope.teamClientResource.teamResource, 
-                    locationsAcrossTabs, AddTeamLocationsFactory.getTeamProviders(), SelectAllFactory.getExclusionSet())
+                    locationsAcrossTabs, AddTeamLocationsFactory.getTeamProviders(), SelectAllTeamLocationsFactory.getExclusionSet())
                 .then(function (locationsToAdd) {
                 // close the modal and show the message
                 $scope.$hide();
@@ -87,9 +90,10 @@ angular.module('emmiManager')
          * Save and add another when selectAll is true
          */
         $scope.saveAllAndAddAnother = function () {
+            $scope.whenSaving = true;
             var locationsAcrossTabs = angular.extend({}, AddTeamLocationsFactory.getSelectedClientLocations(), AddTeamLocationsFactory.getSelectedLocations());
             TeamSearchLocation.saveAllLocationsExcept($scope.teamClientResource.teamResource, 
-                    locationsAcrossTabs, AddTeamLocationsFactory.getTeamProviders(), SelectAllFactory.getExclusionSet())
+                    locationsAcrossTabs, AddTeamLocationsFactory.getTeamProviders(), SelectAllTeamLocationsFactory.getExclusionSet())
                 .then(function (locationsToAdd) {
                 // refresh the parent scope locations in the background
                 $scope.refresh();
@@ -105,11 +109,11 @@ angular.module('emmiManager')
         };
         
         /**
-         * Set $scope.selectAll whenever SelectAllFactory.isSelectAll changed
+         * Set $scope.selectAll whenever SelectAllTeamLocationsFactory.isSelectAll changed
          */
         $scope.$watch(
             function() {
-                return SelectAllFactory.isSelectAll();
+                return SelectAllTeamLocationsFactory.isSelectAll();
             }, function(newValue) {
                 $scope.selectAll = newValue;
             }

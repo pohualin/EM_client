@@ -1,7 +1,7 @@
 'use strict';
 angular.module('emmiManager')
-.factory('SelectAllFactory', [function(){
-    var selectAllFactory = {};
+.factory('SelectAllTeamLocationsFactory', [function(){
+    var selectAllTeamLocationsFactory = {};
     var _isSelectAll = false;
     var _exclusionSet = {};
 
@@ -9,49 +9,49 @@ angular.module('emmiManager')
     var _selectedPossibleLocationIds = {};
     var _selectedLocations = {};
 
-    selectAllFactory.setSelectAll = function(isSelectAll){
+    selectAllTeamLocationsFactory.setSelectAll = function(isSelectAll){
         _isSelectAll = isSelectAll;
     };
     
-    selectAllFactory.isSelectAll = function(){
+    selectAllTeamLocationsFactory.isSelectAll = function(){
         return _isSelectAll;
     };
     
-    selectAllFactory.hasExclusion = function() {
+    selectAllTeamLocationsFactory.hasExclusion = function() {
         return !angular.equals({}, _exclusionSet);
     };
     
-    selectAllFactory.getExclusionSet = function() {
+    selectAllTeamLocationsFactory.getExclusionSet = function() {
         return _exclusionSet;
     };
     
-    selectAllFactory.resetExclusionSet = function() {
+    selectAllTeamLocationsFactory.resetExclusionSet = function() {
         _exclusionSet = {};
     };
     
-    selectAllFactory.getSelectedPossibleLocationIds = function() {
+    selectAllTeamLocationsFactory.getSelectedPossibleLocationIds = function() {
         return _selectedPossibleLocationIds;
     };
     
-    selectAllFactory.resetSelectedPossibleLocationIds = function() {
+    selectAllTeamLocationsFactory.resetSelectedPossibleLocationIds = function() {
         _selectedPossibleLocationIds = {};
     };
     
-    selectAllFactory.setTotalPossibleLocationsCount = function(total) {
+    selectAllTeamLocationsFactory.setTotalPossibleLocationsCount = function(total) {
         _totalPossibleLocationsCount = total;
     };
     
-    selectAllFactory.isAllPossibleChecked = function() {
-        return _totalPossibleLocationsCount === Object.keys(_selectedPossibleLocationIds).length;
+    selectAllTeamLocationsFactory.isAllPossibleChecked = function() {
+        return _totalPossibleLocationsCount !== 0 && _totalPossibleLocationsCount === Object.keys(_selectedPossibleLocationIds).length;
     };
     
-    selectAllFactory.isAllSelectedUnchecked = function() {
+    selectAllTeamLocationsFactory.isAllSelectedUnchecked = function() {
         return _totalPossibleLocationsCount === Object.keys(_exclusionSet).length;
     };
     
-    selectAllFactory.getSelectedLocations = function() {
+    selectAllTeamLocationsFactory.getSelectedLocations = function() {
         return _selectedLocations;
     };
     
-    return selectAllFactory;
+    return selectAllTeamLocationsFactory;
 }]);
