@@ -21,7 +21,8 @@ angular.module('emmiManager', [
     'angularMoment',
     'emmi-angular-multiselect',
     'truncate',
-    'emmi.noDirtyCheck'
+    'emmi.noDirtyCheck',
+    'emmi.momentStrap'
 ])
 
     .constant('USER_ROLES', {
