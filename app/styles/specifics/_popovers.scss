@@ -121,6 +121,9 @@
         font-size: 19px;
         line-height: .9;
     }
+    &:focus {
+        outline: 0;
+    }
 }
 
 .popover-table {
