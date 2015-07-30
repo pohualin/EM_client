@@ -83,17 +83,16 @@
                                                 </span>
 
 
-                                                <div class="pull-right" data-ng-show="showEnable">
-                                                    <button type="button" class="btn btn-link btn-link-nopad"
-                                                            style="text-transform: lowercase"
-                                                            data-ng-disabled="scheduledProgram.whenSaving"
-                                                            data-ng-click="toggleProgramActivation(scheduledProgram)"
-                                                            aria-label="Disable Scheduled Program">
+                                                <button data-ng-show="showEnable" type="button"
+                                                        class="pull-right btn btn-link btn-link-nopad"
+                                                        style="text-transform: lowercase"
+                                                        data-ng-disabled="scheduledProgram.whenSaving"
+                                                        data-ng-click="toggleProgramActivation(scheduledProgram)"
+                                                        aria-label="Disable Scheduled Program">
                                                         <span style="margin-right: 23px;">
                                                             {{scheduledProgram.entity.active ? 'deactivate' : 'reactivate'}}
                                                         </span>
-                                                    </button>
-                                                </div>
+                                                </button>
                                             </td>
                                         </tr>
                                     </table>
@@ -127,6 +126,7 @@
                                                    for="viewByDate_{{scheduledProgram.entity.id}}">
                                                 View-by Date:
                                             </label>
+
                                             <div class="error-circle fa-exclamation-circle" role="alert"
                                                  data-ng-show="
                                                             !scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.date &&
