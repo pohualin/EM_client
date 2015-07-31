@@ -26,7 +26,8 @@ angular.module('emmiManager', [
     'unsavedChanges',
     'ivh.treeview',
     'headroom',
-    'ngTinyScrollbar'
+    'ngTinyScrollbar',
+    'emmi.momentStrap'
 ])
 
     .constant('USER_ROLES', {
@@ -263,6 +264,10 @@ angular.module('emmiManager', [
             // if tooltip is not already in list
             if (tooltips.indexOf($tooltip) === -1) {
                 tooltips.push($tooltip);
+            }
+            // make popovers focusable when triggered by click (this is broken in AngularStrap)
+            if ($tooltip.$options.keyboard && $tooltip.$options.trigger !== 'focus') {
+                $tooltip.focus();
             }
         });
 

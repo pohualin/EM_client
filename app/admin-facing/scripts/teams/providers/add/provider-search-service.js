@@ -117,6 +117,71 @@ angular.module('emmiManager')
                  	 });
                  	 return page;
             	});
+            },
+            
+            /**
+             * Check if all selectedProviders contain at least one TeamLocation if there is any
+             */
+            isSaveRequestValid: function(allTeamLocations, selectedProviders){
+                var deferred = $q.defer();
+                var valid = true;
+                if(allTeamLocations.length > 0){
+                    angular.forEach(selectedProviders, function (provider) {
+                        if (provider.selectedTeamLocations.length === 0) {
+                            valid = false;
+                        }
+                    });
+                    deferred.resolve(valid);
+                } else {
+                    deferred.resolve(valid);  
+                }
+                return deferred.promise;
+            },
+            
+            /**
+             * Compose teamProviderTeamLocatioSaveRequest for save calls
+             */
+            getTeamProviderTeamLocationSaveRequest: function(allTeamLocations, selectedProviders) {
+                var teamProviderTeamLocationSaveRequest = [];
+                angular.forEach(selectedProviders, function(provider){
+                   var request = {provider: {}, teamLocations: []};
+                   request.provider = provider;
+                   if (allTeamLocations.length !== provider.selectedTeamLocations.length) {
+                       request.teamLocations = provider.selectedTeamLocations;
+                   }
+                   teamProviderTeamLocationSaveRequest.push(request);
+                });
+                return teamProviderTeamLocationSaveRequest;
+            },
+            
+            /**
+             * Associate all (client) providers to a team except those in selectAllBut
+             */
+            saveAllProvidersExcept: function(teamResource, selectedProviders, teamLocations, selectAllBut){
+                var deferred = $q.defer();
+                var self = this;
+                // Only keep providers with subset of locations
+                angular.forEach(selectedProviders, function(provider){
+                    if (teamLocations.length === provider.selectedTeamLocations.length){
+                        delete selectedProviders[provider.id];
+                    }
+                });
+                
+                var providersToAdd = self.getTeamProviderTeamLocationSaveRequest(teamLocations, selectedProviders);
+                
+                // First save locations with subset of providers
+                self.updateProviderTeamAssociations(providersToAdd, teamResource).then(function(response){
+                    var excludeSet = [];
+                    // collect a set of location ids to be excluded
+                    angular.forEach(selectAllBut, function(exclusion){
+                        excludeSet.push(exclusion.id);
+                    });
+                    // associate all locations except the ones in excludeSet
+                    $http.post(UriTemplate.create(teamResource.link.associateAllClientProvidersExcept).stringify(), excludeSet).then(function(response){
+                        deferred.resolve(providersToAdd);
+                    });
+                });
+                return deferred.promise;
             }
 		};
 	})
