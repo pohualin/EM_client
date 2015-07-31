@@ -1,3 +1,4 @@
+<div data-ng-controller="ProviderSearchController">      
      <div class="row">
           <div class="col-md-7">
           	 <br />
@@ -16,7 +17,7 @@
                  </div>
              </form>
          </div>
-         <div class="col-md-5" data-ng-hide="noSearch">
+         <div class="col-md-5" data-ng-show="allProvidersSearch">
              <br />
              <button type="button" class="btn btn-default pull-right"
                      data-ng-disabled="whenSaving"
@@ -27,7 +28,7 @@
          </div>
      </div>
      <br />
-     <div data-ng-hide="noSearch">
+     <div data-ng-show="allProvidersSearch">
          <div class="row table-search-filters">
              <div class="col-md-12">
                  <div class="pull-right table-results-count" aria-live="polite" aria-atomic="true" data-ng-hide="total === 0">
@@ -47,7 +48,7 @@
                  </form>
              </div>
          </div>
-         <table class="table table-bordered table-striped table-hover table-condensed" border="0" cellpadding="0" cellspacing="0" data-ng-show="searchedProvidersList">
+         <table class="table table-bordered table-striped table-hover table-condensed" border="0" cellpadding="0" cellspacing="0" data-ng-show="providers">
              <thead>
                  <tr>
                      <th class="sort col-checkbox">&nbsp;</th>
@@ -69,34 +70,36 @@
                  </tr>
              </thead>
              <tbody>
-                 <tr data-ng-repeat="teamProvider in searchedProvidersList"  data-ng-class="teamProvider.link.self || !teamProvider.provider.entity.active ? 'text-muted' : ''">
+                 <tr data-ng-repeat="teamProvider in providers">
     				 <td class="col-checkbox">
-                             <div class="checkbox">
-                                 <input type="checkbox" id="teamProviderSearchCb{{$index}}" data-ng-model="teamProvider.provider.entity.checked"
-                                    data-ng-change="onCheckboxChange(teamProvider.provider)" data-ng-disabled="teamProvider.link.self || !teamProvider.provider.entity.active" data-ng-checked="teamProvider.link.self">
-                                 <label for="teamProviderSearchCb{{$index}}"></label>
-                             </div>
+                       <div class="checkbox">
+                           <input type="checkbox" id="teamProviderSearchCb{{$index}}" 
+                              data-ng-model="teamProvider.provider.entity.checked"
+                              data-ng-change="onCheckboxChange(teamProvider)" 
+                              data-ng-disabled="teamProvider.provider.entity.disabled">
+                           <label for="teamProviderSearchCb{{$index}}"></label>
+                       </div>
     				 </td>
     				 <td>{{teamProvider.provider.entity.firstName}} {{teamProvider.provider.entity.middleName}} {{teamProvider.provider.entity.lastName}} <em>{{teamProvider.provider.entity.active ? '' : "(inactive)"}}</em></td>
                      <td>{{teamProvider.provider.entity.specialty.name}}</td>
                      <td>{{teamProvider.provider.entity.email}}</td>
-                     <td class="col-has-multiselect" data-ng-if="allTeamLocations.length > 0" >
-                         <div data-ng-show="teamProvider.provider.entity.showLocations">
-                             <div data-ng-class="{'has-error col-md-11': teamProvider.provider.entity.selectedTeamLocations < 1 && associateRequestSubmitted}" data-multi-select
-                                  data-name=".nonClientProvider[{{teamProvider.provider.entity.id}}].allTeamLocations{{$index}}"
-                                  data-values="allTeamLocations"
-                                  data-model="teamProvider.provider.entity.selectedTeamLocations"
-                                  data-show-filters="true"
-                                  data-value-field="id"
-                                  data-label-field="label"
-                                  data-template-path="admin-facing/partials/common/directives/multi-select/multi-select.html">
-                             </div>
-                             <div class="error-circle fa-exclamation-circle glyphicon-form-inline-right" role="alert"
-              					data-ng-show="teamProvider.provider.entity.selectedTeamLocations < 1 && associateRequestSubmitted"
-              					data-bs-tooltip data-placement="top" data-type="danger" data-container="body"
-              					data-title="At least one location is required" aria-label="At least one location is required">
-              				</div>
-                       </div>
+                     <td class="col-has-multiselect" data-ng-if="allTeamLocations" >
+                       <div data-ng-if="allTeamLocations && teamProvider.provider.entity.checked && !teamProvider.provider.entity.disabled">
+                         <div data-ng-class="{'has-error col-md-11': teamProvider.provider.entity.selectedTeamLocations < 1 && associateRequestSubmitted}" data-multi-select
+                              data-name=".nonClientProvider[{{teamProvider.provider.entity.id}}].allTeamLocations{{$index}}"
+                              data-values="allTeamLocations"
+                              data-model="teamProvider.provider.entity.selectedTeamLocations"
+                              data-show-filters="true"
+                              data-value-field="id"
+                              data-label-field="label"
+                              data-template-path="admin-facing/partials/common/directives/multi-select/multi-select.html">
+                         </div>
+                         <div class="error-circle fa-exclamation-circle glyphicon-form-inline-right" role="alert"
+          					data-ng-show="teamProvider.provider.entity.selectedTeamLocations < 1 && associateRequestSubmitted"
+          					data-bs-tooltip data-placement="top" data-type="danger" data-container="body"
+          					data-title="At least one location is required" aria-label="At least one location is required">
+          			     </div>
+                      </div>
              		</td>
                  </tr>
                  <tr class="pagination-row no-hover">
@@ -114,7 +117,8 @@
                  </tr>
              </tbody>
          </table>
-         <div class="table-no-results" data-ng-hide="searchedProvidersList">
+         <div class="table-no-results" data-ng-hide="!allProvidersSearch || providers">
              <p><span data-translate="global.messages.search.no_results_found"></span></p>
          </div>
      </div>
+</div>

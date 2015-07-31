@@ -54,19 +54,19 @@
 
             <!--there is a display template that shows ungrouped teams and a display template that shows groups of teams-->
             <!-- show teams un-grouped -->
-            <div class="form-group" data-ng-hide="useGroupDisplay">
+            <div class="form-group" data-ng-if="!useGroupDisplay">
                 <ul class="sidebar-list teams-filter-list list-unstyled">
                     <li data-ng-repeat="team in clientTeams">
                         <!--when a user clicks on a team they are taken to that team's page-->
-                        <a data-ng-if="!isCurrentTeam(team)" data-ng-click="selectTeam(team.id)">{{team.name}} <span data-ng-if="!team.active"><i>(inactive)</i></span> </a>
-                        <a class="active" data-ng-if="isCurrentTeam(team)">{{team.name}} <span data-ng-if="!team.active"><i>(inactive)</i></span> </a>
+                        <a href data-ng-if="!isCurrentTeam(team)" data-ng-click="selectTeam(team.id)">{{team.name}} <span data-ng-if="!team.active"><i>(inactive)</i></span></a>
+                        <a class="active" data-ng-if="isCurrentTeam(team)">{{team.name}} <span data-ng-if="!team.active"><i>(inactive)</i></span></a>
                     </li>
                 </ul>
                 <div data-ng-show="clientTeams===null">No teams exist for this search.</div>
             </div>
 
             <!--show teams in groups-->
-            <div class="form-group" data-ng-show="useGroupDisplay">
+            <div class="form-group" data-ng-if="useGroupDisplay">
                 <div class="teams-filter-group" data-ng-repeat="tag in listOfTeamsByTag | orderBy:'name'">
                     <!--show the tag with the number of teams -->
                     <h4 class="h4 teams-filter-heading">
@@ -79,8 +79,8 @@
                         <!--show the teams that have the above tag-->
                         <li data-ng-repeat="team in tag.teams | orderBy:'name'">
                             <!--take user to the team's page when the link is clicked-->
-                            <a data-ng-if="!isCurrentTeam(team)" data-ng-click="selectTeam(team.id)">{{team.name}} <span data-ng-if="!team.active">(inactive)</span></a>
-                            <a class="active" data-ng-if="isCurrentTeam(team)">{{team.name}} <span data-ng-if="!team.active">(inactive)</span> </a>
+                            <a href data-ng-if="!isCurrentTeam(team)" data-ng-click="selectTeam(team.id)">{{team.name}} <span data-ng-if="!team.active">(inactive)</span></a>
+                            <a class="active" data-ng-if="isCurrentTeam(team)">{{team.name}} <span data-ng-if="!team.active">(inactive)</span></a>
                         </li>
                     </ul>
                 </div>
@@ -91,13 +91,13 @@
                 <div data-ng-show="!listOfTeamsByTag">No matches found.</div>
             </div>
 
-            <div class="form-group" data-ng-show="useGroupDisplay && teamsNotInGroup">
+            <div class="form-group" data-ng-if="useGroupDisplay && teamsNotInGroup">
                 <h4 class="h4 teams-filter-heading">Teams without a '{{selectedGroupDisplay.entity.name}}' tag</h4>
                 <ul class="sidebar-list teams-filter-list list-unstyled">
                     <li data-ng-repeat="team in teamsNotInGroup | orderBy:'name'">
                         <!--show all the teams that do not have a tag in the organize by group that was selected-->
-                        <a data-ng-if="!isCurrentTeam(team)" data-ng-click="selectTeam(team.id)">{{team.name}} <span data-ng-if="!team.active">(inactive)</span></a>
-                        <a class="active" data-ng-if="isCurrentTeam(team)">{{team.name}} <span data-ng-if="!team.active">(inactive)</span> </a>
+                        <a href data-ng-if="!isCurrentTeam(team)" data-ng-click="selectTeam(team.id)">{{team.name}} <span data-ng-if="!team.active">(inactive)</span></a>
+                        <a class="active" data-ng-if="isCurrentTeam(team)">{{team.name}} <span data-ng-if="!team.active">(inactive)</span></a>
                     </li>
                 </ul>
             </div>

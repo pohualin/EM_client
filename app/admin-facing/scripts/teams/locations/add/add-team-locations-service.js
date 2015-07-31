@@ -7,8 +7,8 @@ angular.module('emmiManager')
             /**
              * Set all tabs' title and template for add location modal
              */
-            setAllTabs: function(){
-            	return {'activeTab' : 0, 'data' : [
+            setAllTabs: function(activeTab){
+            	return {'activeTab' : activeTab, 'data' : [
             	        {
             	            'title': 'Client locations',
             	            'template': 'admin-facing/partials/team/location/tabs/team-client-locations-tab.html',

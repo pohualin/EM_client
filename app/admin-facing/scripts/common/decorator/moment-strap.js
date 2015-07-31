@@ -32,14 +32,10 @@
                      */
                     dateParser.parse = function (value, baseDate, format) {
                         format = format || dateParser.$format; // use the configured format if not passed
-                        if (isFinite(value)) {
-                            // value is a number, attempt to parse using MMddyyyy format
-                            format = 'MMddyyyy';
-                        }
                         var ret = parseFn(value, baseDate, format);
-                        if (!ret && !isFinite(value)) {
+                        if (!ret) {
                             // try to parse with moment
-                            ret = moment(value);
+                            ret = moment(value, ['MM-DD-YYYY', 'YYYY-MM-DD', 'MMDDYYYY'], true);
                             ret = ret.isValid() ? ret.toDate() : false;
                         }
                         return ret;

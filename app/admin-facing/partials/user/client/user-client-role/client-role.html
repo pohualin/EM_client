@@ -1,8 +1,8 @@
 <div data-ng-controller="UsersClientUserClientRolesListController" data-ng-cloak>
-    <div class="col-md-12" data-ng-show="existingUserClientUserClientRoles || teamRoles.length === 0">
+    <div class="col-md-12" data-ng-if="existingUserClientUserClientRoles || (clientRoles.length && teamRoles.length === 0)">
         <div class="row">
-            <div class="col-md-6" data-ng-controller="UsersClientUserClientRolesListController">
-                <h2 class="pull-left" data-ng-show="clientRoles">Client Roles</h2>
+            <div class="col-md-6">
+                <h2 class="pull-left">Client Roles</h2>
             </div>
         </div>
         <div class="row">
@@ -49,7 +49,7 @@
             </div>
         </div><!-- .row -->
     </div><!-- .col-md-12 -->
-    <div class="col-md-12" data-ng-show="!existingUserClientUserClientRoles && clientRoles.length && teamRoles.length === 0">
+    <div class="col-md-12" data-ng-if="!existingUserClientUserClientRoles && clientRoles.length && teamRoles.length === 0">
         <button class="btn btn-default" type="button"
                 data-placement="right"
                 data-template="admin-facing/partials/user/client/user-client-role/add-client-role.html"
