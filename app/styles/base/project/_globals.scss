@@ -510,7 +510,7 @@
         box-shadow: inset 0px 0px 0px 3px rgba(255,255,255,1);
     }
     input[type="radio"]:focus + label:before {
-        border-color: #9EA9B5;
+        border-color: #6CC5DC;
     }
     input[type="radio"]:checked:focus + label:before {
         border-color: #21A4C7;
@@ -540,7 +540,7 @@
         padding-left: 1px;
     }
     input[type="checkbox"]:focus + label:before {
-        border-color: #9EA9B5;
+        border-color: #6CC5DC;
     }
     input[type="checkbox"]:indeterminate:focus + label:before,
     input[type="checkbox"]:checked:focus + label:before {

@@ -2,8 +2,8 @@
 
 angular.module('emmiManager')
 
-    .controller('SearchTeamsLocationsController', ['$scope', '$modal', '$controller', 'Location', 'STATUS', 'SelectAllFactory', 'AddTeamLocationsFactory',
-       function ($scope, $modal, $controller, Location, STATUS, SelectAllFactory, AddTeamLocationsFactory) {
+    .controller('SearchTeamsLocationsController', ['$scope', '$modal', '$controller', 'Location', 'STATUS', 'SelectAllTeamLocationsFactory', 'AddTeamLocationsFactory',
+       function ($scope, $modal, $controller, Location, STATUS, SelectAllTeamLocationsFactory, AddTeamLocationsFactory) {
 
         $controller('LocationCommon', {$scope: $scope});
         $controller('CommonSearch', {$scope: $scope});
@@ -100,7 +100,7 @@ angular.module('emmiManager')
             }
         };
 
-           /**
+        /**
          * Add new location button in search all locations tab
          */
         $scope.createNewTeamLocation = function () {
@@ -114,7 +114,7 @@ angular.module('emmiManager')
             });
         };
 
-           /**
+        /**
          * Listen on 'setTeamProviders' event
          */
         $scope.$on('setTeamProviders', function(){
@@ -122,8 +122,8 @@ angular.module('emmiManager')
             $scope.sizeClass = AddTeamLocationsFactory.getTeamProviders().length === 0 ? 'sort col-sm-4' : 'sort col-sm-3';
         });
 
-           /**
-         * Listen on 'refreshClientLocationsPage' event
+        /**
+         * Listen on 'refreshTeamLocationsSearchPage' event
          */
         $scope.$on('refreshTeamLocationsSearchPage', function(){
             $scope.locations = null;
@@ -132,7 +132,7 @@ angular.module('emmiManager')
             AddTeamLocationsFactory.resetSelectedLocations();
         });
 
-           function init() {
+        function init() {
             $scope.locations = null;
             $scope.searchAll = {};
             $scope.allLocationsSearch = false;

@@ -170,6 +170,7 @@
                         data-ng-show="clientToEdit.salesForceAccount.city && clientToEdit.salesForceAccount.state">,&nbsp;</span>{{clientToEdit.salesForceAccount.state}}
                 </span>
             <button class="btn btn-link btn-salesforce-update" type="button"
+                    data-focus-after-typeahead
                     data-ng-disabled="whenSaving"
                     data-ng-click="changeClientSfAccount()">update
             </button>
