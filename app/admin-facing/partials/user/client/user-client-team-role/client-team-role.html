@@ -1,9 +1,9 @@
 <div data-ng-controller="UsersClientUserClientTeamRolesListController" data-ng-cloak>
-    <div class="col-md-12" data-ng-show="isSuperUser && possibleClientRoles.length > 0">
+    <div class="col-md-12" data-ng-if="isSuperUser">
         <p class="disclaimer">Team roles aren't required because this user has been given all permissions at this client
             (including all teams within this client).</p>
     </div>
-    <div class="col-md-12" data-ng-show="clientTeamRoles.length > 0 && !isSuperUser">
+    <div class="col-md-12" data-ng-if="clientTeamRoles.length > 0 && !isSuperUser">
         <div class="row">
             <div class="col-md-6" data-ng-controller="UsersClientUserClientRolesListController">
                 <h2 class="pull-left">Team Roles</h2>
