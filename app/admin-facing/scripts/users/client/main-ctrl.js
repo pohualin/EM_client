@@ -92,13 +92,14 @@ angular.module('emmiManager')
                 UsersClientService.findTeamsValidForFilter($scope.teamTagFilter).then(function (teams) {
                     $scope.teamsWithinTag = teams;
                 });
-                performSearch($scope.query, $scope.status, $scope.sortProperty, false, $scope.teamTagFilter);
+                performSearch($scope.query, $scope.status, $scope.sortProperty, $scope.teamTagFilter);
             };
 
             /**
              * init method called when page is loading
              */
             function init() {
+                window.paul = $scope;
                 $controller('CommonSearch', {$scope: $scope});
                 $scope.client = Client.getClient();
                 $scope.page.setTitle('Manage Users - ' + $scope.client.entity.name + ' | ClientManager');
