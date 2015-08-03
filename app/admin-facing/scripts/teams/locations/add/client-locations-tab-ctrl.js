@@ -109,6 +109,11 @@ angular.module('emmiManager')
                 $scope.handleResponse(allLocations, managedClientLocationList);
                 TeamLocation.getTeamLocationsCount($scope.teamResource).then(function(count){
                     SelectAllTeamLocationsFactory.setTotalPossibleLocationsCount(allLocations.page.totalElements - count);
+                    
+                    // In this case, all ClientLocations are already associated with the team
+                    if(allLocations.page.totalElements - count === 0) {
+                        $scope.$emit('allPossibleAlreadyAssociated');
+                    }
                 });
             });
         };
