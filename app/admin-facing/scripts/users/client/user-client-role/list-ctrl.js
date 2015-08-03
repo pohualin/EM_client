@@ -14,46 +14,11 @@ angular.module('emmiManager')
             $scope.associateClientRole = function (form) {
                 $scope.whenSaving = true;
                 UserClientUserClientRolesService.associateUserClientUserClientRole($scope.selectedUserClient, form.selectedClientRole).then(function () {
-                    $scope.clientRolesChanged();
+                    $scope.$emit('client-roles-changed');
                 }).finally(function () {
                     $scope.whenSaving = false;
                 });
                 _paq.push(['trackEvent', 'Form Action', 'User Client Role Edit', 'Add']);
-            };
-
-            /**
-             * Load existingUserClientUserClientRoles for the UserClient
-             */
-            $scope.loadExistingUserClientUserClientRoles = function () {
-                UserClientUserClientRolesService.
-                    getUserClientUserClientRoles($scope.selectedUserClient).then(function (response) {
-                        // Set existingUserClientUserClientRoles if it exists
-                        if (response.length > 0) {
-                            UserClientUserClientRolesService
-                                .loadPermissionsForUserClientUserClientRoles(response).then(function (response) {
-                                    $scope.existingUserClientUserClientRoles = response;
-                                    $scope.setIsSuperUser();
-                                });
-                            // update parent controller with roles
-                            $scope.setClientRoles(response);
-                        } else {
-                            // Load existing UserClientRoles for the Client
-                            $scope.existingUserClientUserClientRoles = null;
-                            $scope.setClientRoles(null);
-                            $scope.loadClientRoles();
-                        }
-                    });
-            };
-
-            /**
-             * load all UserClientRoles for the client
-             */
-            $scope.loadClientRoles = function () {
-                ManageUserRolesService.loadClientRolesWithPermissions(Client.getClient()).then(function (clientRoles) {
-                    $scope.clientRoles = clientRoles;
-                    $scope.setIsSuperUser();
-                    $scope.setPossibleClientRoles(clientRoles);
-                });
             };
 
             /**
@@ -63,7 +28,7 @@ angular.module('emmiManager')
                 $scope.whenSaving = true;
                 UserClientUserClientRolesService.deleteUserClientUserClientRole(userClientUserClientRole)
                     .then(function () {
-                        $scope.clientRolesChanged();
+                        $scope.$emit('client-roles-changed');
                     }).finally(function () {
                         $scope.whenSaving = false;
                     });
@@ -102,19 +67,5 @@ angular.module('emmiManager')
                     $scope.selectedRoleHasSuperPermission = false;
                 }
             };
-
-            /**
-             * init method called when the page is loading
-             */
-            function init() {
-                // Check if there is an existed UserClientUserClientRole
-                $scope.loadExistingUserClientUserClientRoles();
-                $scope.$on('client-roles-changed', function () {
-                    $scope.loadExistingUserClientUserClientRoles();
-                });
-            }
-
-            init();
         }
-    ])
-;
+    ]);
