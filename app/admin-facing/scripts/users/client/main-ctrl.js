@@ -99,7 +99,6 @@ angular.module('emmiManager')
              * init method called when page is loading
              */
             function init() {
-                window.paul = $scope;
                 $controller('CommonSearch', {$scope: $scope});
                 $scope.client = Client.getClient();
                 $scope.page.setTitle('Manage Users - ' + $scope.client.entity.name + ' | ClientManager');
