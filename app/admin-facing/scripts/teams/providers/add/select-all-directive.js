@@ -7,6 +7,16 @@ angular.module('emmiManager')
             link: function (scope, element, attributes) {
                 
                 /**
+                 * Listen on 'allPossibleAlreadyAssociated' which 
+                 * will be fired when all possible ClientProviders
+                 * are all associated with the team.
+                 */
+                scope.$on('allPossibleAlreadyAssociated', function(){
+                    element.prop('checked', true);
+                    element.prop('disabled', true);
+                });
+                
+                /**
                  * Watch selectAllClientProviders
                  * 
                  * Call SelectAllTeamProvidersFactory.setSelectAll whenever it changed. Fire event depending on the new value.
