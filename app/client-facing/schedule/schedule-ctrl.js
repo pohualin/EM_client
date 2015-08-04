@@ -7,9 +7,9 @@
      * Controller for Patient-Program Scheduling
      */
         .controller('ScheduleController', ['$scope', 'team', 'client', 'ScheduledProgramFactory',
-            '$alert', 'ScheduleService', '$location', 'UriTemplate', 'PatientEmailService', 'PatientPhoneService',
-            function ($scope, team, client, ScheduledProgramFactory, $alert, ScheduleService, $location, UriTemplate, PatientEmailService, PatientPhoneService) {
-
+            '$alert', 'ScheduleService', '$location', 'UriTemplate', 'PatientEmailService', 'PatientPhoneService', 'AddProgramService',
+            function ($scope, team, client, ScheduledProgramFactory, $alert, ScheduleService, $location, UriTemplate, PatientEmailService, PatientPhoneService, AddProgramService) {
+                
                 $scope.team = team;
                 $scope.page.setTitle('Schedule Emmi Program - ' + team.entity.name);
                 $scope.client = client;
@@ -43,7 +43,7 @@
                     });
                 }
                 getPhoneConfiguration();
-
+                
                 /**
                  * Broadcasts event so that Patient save and Program save are kicked off
                  */
@@ -55,7 +55,7 @@
                  * Saves schedule for valid patient and program on click of 'Finish Scheduling'
                  */
                 $scope.saveScheduledProgramForPatient = function () {
-                    if (ScheduledProgramFactory.valid()) {
+                	if (ScheduledProgramFactory.valid()) {
                         $scope.whenSaving = true;
                         ScheduleService.schedule($scope.team, $scope.scheduledProgram)
                             .then(function (response) {
@@ -76,7 +76,7 @@
                             });
                     }
                 };
-
+                
                 $scope.scheduledProgram = ScheduledProgramFactory;
             }
         ])

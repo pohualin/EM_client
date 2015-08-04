@@ -108,13 +108,9 @@ angular.module('emmiManager')
                  * @returns schedulingConfigurations
                  */
                 loadSchedulingConfigurations: function (teamResource) {
-                    var schedulingConfigurations = [];
                     return $http.get(UriTemplate.create(teamResource.link.teamSchedulingConfig).stringify(
                         )).then(function success(response) {
-                        var schedulingConfigurations = response.data;
-                        console.log('scheduling configurations');
-                        console.log(schedulingConfigurations);
-                       return schedulingConfigurations;
+                        return response.data.entity;
                     });
                 },
 
