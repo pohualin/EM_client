@@ -53,7 +53,7 @@ angular.module('emmiManager')
              */
             $scope.saveScheduledProgram = function (addProgramForm) {
                 $scope.addProgramFormSubmitted = true;
-                if ($scope.scheduledProgram.program ) {
+                if ($scope.scheduledProgram.program && addProgramForm.$valid) {
                 	// save the scheduled program
                     ScheduledProgramFactory.scheduledProgram = $scope.scheduledProgram;
                     ScheduledProgramFactory.useLocation = $scope.useLocation;
