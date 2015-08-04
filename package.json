@@ -37,8 +37,7 @@
     "phantomjs": "~1.9.7-8",
     "protractor": "~0.24.0",
     "require-dir": "~0.1.0",
-    "wiredep": "^1.4.3",
-    "gulp-maven-deploy": "~0.2.0"
+    "wiredep": "^1.4.3"
   },
   "engines": {
     "node": ">=0.10.0"
