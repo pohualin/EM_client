@@ -55,8 +55,8 @@ angular.module('emmiManager')
                         rolePermissions.push(permission.name);
                     });
                     var existingTeamRole = false;
-                    if ($scope.teamRoles && $scope.teamRoles.length) {
-                        angular.forEach($scope.teamRoles, function (teamRole) {
+                    if ($scope.clientTeamRoles && $scope.clientTeamRoles.length) {
+                        angular.forEach($scope.clientTeamRoles, function (teamRole) {
                             if (teamRole.existingTeams && teamRole.existingTeams.length) {
                                 existingTeamRole = true;
                             }

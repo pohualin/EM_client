@@ -30,7 +30,7 @@
             <div class="layout-card" data-ng-controller="UserRolesController">
   
     <div data-ng-show="selectedUserClient">
-        <div class="row" data-ng-if="clientRoles.length === 0 && teamRoles.length === 0 ">
+        <div class="row" data-ng-if="clientRoles.length === 0 && clientTeamRoles.length === 0 ">
             <div class="col-md-6">
                 There are no client level or team level roles
                 <a href="#/clients/{{client.entity.id}}/roles">available for this client</a>.
@@ -45,7 +45,7 @@
         only show the activate and reset choices when the selected user client has
         least one role (either client or team)
     -->
-    <div data-ng-show="selectedUserClient && (existingUserClientUserClientRoles || (teamRoles | teamSetOnRole))"
+    <div data-ng-show="selectedUserClient && (existingUserClientUserClientRoles || (clientTeamRoles | teamSetOnRole))"
          class="row" data-ng-include="'admin-facing/partials/user/client/activation/form.html'"></div>
 
             </div><!-- .layout-card -->
