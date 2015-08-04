@@ -1,0 +1,32 @@
+<div class="col-md-12" data-ng-controller="PatientIdLabelDropDownController" data-ng-cloak>
+    <form name="patientIdLabelForm" class="form" novalidate>
+        <div class="form-group">
+            <div class="form-group">
+                <label for="idLabelType">ID Label</label>&nbsp;&nbsp;
+                <select class="form-control input-sm" style="width:200px;" id="idLabelType" name="idLabelType"
+                        data-ng-model="patientSelfRegConfig.entity.patientIdLabelType"
+                        data-ng-options="idLabelType.typeKey | translate for idLabelType in idLabelTypes track by idLabelType.id"
+                        data-chosen data-disable-search="true" data-width="'200px'"
+                        data-ng-change="updatePatientIDLabelTypeTranslations(patientSelfRegConfig.entity.patientIdLabelType)">
+                    <option value=""></option>
+                </select>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <label class="control-label" for="patientIdLabelEnglish">Patient Id Label (English)</label>
+                    <input class="form-control" name="patientIdLabelEnglish" type="text"
+                           data-ng-model="idLabelConfigEnglish.config.entity.value"
+                           data-ng-disabled="!idLabelConfigEnglish.config.entity.idLabelType.isModifiable"
+                           id="patientIdLabelEnglish" maxlength="100">
+                </div>
+                <div class="col-sm-6">
+                    <label class="control-label" for="patientIdLabelSpanish">Patient Id Label (Spanish)</label>
+                    <input class="form-control" name="patientIdLabelSpanish" type="text"
+                           data-ng-model="idLabelConfigSpanish.config.entity.value"
+                           data-ng-disabled="!idLabelConfigEnglish.config.entity.idLabelType.isModifiable"
+                           id="patientIdLabelSpanish" maxlength="100">
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
