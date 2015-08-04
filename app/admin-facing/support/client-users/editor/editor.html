@@ -24,14 +24,14 @@
             only show the activate and reset choices when the selected user client has
             least one role (either client or team)
         -->
-        <div data-ng-show="selectedUserClient && (clientRoles || (teamRoles | teamSetOnRole))"
+        <div data-ng-show="selectedUserClient && (existingUserClientUserClientRoles || (clientTeamRoles | teamSetOnRole))"
           class="row" data-ng-include="'admin-facing/support/client-users/activation/form.html'">
         </div>
       </div>
     </div>
     <div class="row">
       <div class="col-md-12 row-same-height row-full-height">
-        <div class="col-md-6 col-xs-height col-full-height" style="padding-right: 6px" data-ng-controller="UserClientSupportUserRolesController">
+        <div class="col-md-6 col-xs-height col-full-height" style="padding-right: 6px">
           <div class="row-same-height row-full-height">
             <div class="layout-content layout-card">
             <div data-ng-show="selectedUserClient">
