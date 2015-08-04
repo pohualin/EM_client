@@ -36,18 +36,6 @@
                         $scope.originalUserClient.entity.firstName,
                         $scope.originalUserClient.entity.lastName
                     ].join(' ');
-                    var client = $scope.originalUserClient.entity;
-                    $scope.defaultCaseDescription = [
-                        'Client User Information:', '\n',
-                        '\t* Login: ', client.login, '\n',
-                        '\t* Name: ', client.firstName, ' ', client.lastName];
-                    if (client.email) {
-                        $scope.defaultCaseDescription.push(
-                            '\n', '\t* Email: ', client.email
-                        );
-                    }
-                    $scope.defaultCaseDescription.push('\n');
-                    $scope.defaultCaseDescription = $scope.defaultCaseDescription.join('');
                     salesforceCaseModal.$promise.then(salesforceCaseModal.show);
                 };
             }])

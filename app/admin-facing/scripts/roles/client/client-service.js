@@ -391,15 +391,11 @@ angular.module('emmiManager')
                         angular.forEach(all, function (group) {
                             // for all non-super user permissions...
                             if (!angular.equals(changedOption, group)) {
-                                if (isSelected) {
-                                    group.active = false;
-                                }
+                                group.active = isSelected;
                                 group.disabled = isSelected;
                                 angular.forEach(group.children, function (child) {
+                                    child.active = isSelected;
                                     child.disabled = isSelected;
-                                    if (isSelected) {
-                                        child.active = false;
-                                    }
                                 });
                             }
                         });

@@ -1,6 +1,6 @@
 {
-  "name": "emmiManager",
-  "version": "2.0.0",
+  "name": "angular-client",
+  "version": "2.0.0-SNAPSHOT",
   "dependencies": {},
   "devDependencies": {
     "browser-sync": "~2.2.1",
@@ -17,6 +17,7 @@
     "gulp-jshint": "^1.5.3",
     "gulp-karma": "0.0.4",
     "gulp-load-plugins": "^0.8.0",
+    "gulp-maven-deploy": "^0.2.0",
     "gulp-minify-html": "~0.1.3",
     "gulp-ng-annotate": "^0.5.2",
     "gulp-ng-html2js": "~0.1.6",

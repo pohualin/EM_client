@@ -1,6 +1,6 @@
 <header class="app-header with-breadcrumbs" data-emmi-navbar>
     <!-- Secondary menu for transclusion -->
-    <ul class="secondary-nav" data-ng-if="!team.id">
+    <ul class="secondary-nav" data-ng-if="!team.id && loaded" >
         <li data-ng-if="!isProduction"><a href="#/clients/{{client.id}}/password_policy">Client Configurations</a></li>
         <li>
             <a data-ng-if="existingClientRoles.length > 0 || existingClientTeamRoles.length > 0" href="#/clients/{{client.id}}/users">Manage Users</a>
@@ -8,23 +8,23 @@
         </li>
         <li><a href="#/clients/{{client.id}}/roles">Manage Roles</a></li>
     </ul>
-    <ul class="secondary-nav" data-ng-if="team.id">
-        <li data-ng-if="!isProduction"><a target="create_patient" href="{{clientBaseUrl}}#/impersonate/{{client.id}}/teams/{{team.id}}/schedule/patients">Schedule Programs</a></li>
-        <li data-ng-if="!isProduction"><a target="client_patients" href="{{clientBaseUrl}}#/impersonate/{{client.id}}/teams/{{team.id}}/allPatients">Patients List</a></li>
+    <ul class="secondary-nav" data-ng-if="team.id && loaded" >
+        <li data-ng-if="!isProduction"><a href="#/clients/{{client.id}}/teams/{{team.id}}/configuration?team={{team.id}}&{{currentRouteQueryString}}">Team Configurations</a></li>
         <li>
             <a data-ng-if="existingClientRoles.length > 0 || existingClientTeamRoles.length > 0" href="#/clients/{{client.id}}/users">Manage Users</a>
             <a data-ng-if="existingClientRoles.length === 0 && existingClientTeamRoles.length === 0" data-ng-class="{'disabled':(existingClientRoles.length === 0 && existingClientTeamRoles.length === 0)}" data-bs-tooltip data-type="info" data-placement="bottom" data-title="Set up user roles before adding users" aria-label="Set up user roles before adding users">Manage Users</a>
         </li>
-        <li data-ng-if="!isProduction"><a href="#/clients/{{client.id}}/teams/{{team.id}}/configuration?team={{team.id}}&{{currentRouteQueryString}}">Team Configurations</a></li>
+        <li data-ng-if="!isProduction"><a target="create_patient" href="{{clientBaseUrl}}#/impersonate/{{client.id}}/teams/{{team.id}}/schedule/patients">Schedule Programs</a></li>
+        <li data-ng-if="!isProduction"><a target="client_patients" href="{{clientBaseUrl}}#/impersonate/{{client.id}}/teams/{{team.id}}/allPatients">Patients List</a></li>
     </ul>
     <!-- Breadcrumb for transclusion -->
-    <ol class="breadcrumb">
-        <li><a href="#/clients?{{currentRouteQueryString}}">Search</a></li>
+    <ol class="breadcrumb" >
+        <li data-ng-if="loaded"><a href="#/clients?{{currentRouteQueryString}}">Search</a></li>
         <li data-ng-class="{'active': !team.id}"><a data-ng-href="#/clients/{{client.id}}?{{currentRouteQueryString}}">{{client.name}}</a></li>
         <li data-ng-if="team.id" class="active">{{team.name}}</li>
     </ol>
 </header>
-<div id="app-content" role="main" class="app-content app-content-with-sidebar container" data-ng-cloak>
+<div id="app-content" role="main" class="app-content app-content-with-sidebar container" data-ng-if="loaded" data-ng-cloak>
     <div class="row" data-ng-switch on="showTeam">
         <div data-emmi-sidebar class="sidebar"
              data-ng-include="'admin-facing/partials/client/teamsFilter/teams_filter.html'"></div>

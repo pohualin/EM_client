@@ -1,4 +1,4 @@
-<div class="modal" tabindex="-1" role="dialog" aria-labelledby="modal-dialog-title">
+<div class="modal" tabindex="-1" role="dialog" aria-labelledby="modal-dialog-title" data-ng-controller="ProviderCreateController">
     <div class="modal-dialog modal-lg">
         <form name="providerForm" class="form" data-ng-submit="saveProvider(providerForm.$valid)" novalidate>
             <div class="modal-content">
@@ -62,22 +62,22 @@
                         </div>
                     </div>
                     <div class="row">
-                    	<div class="col-md-4">
-        	                <div class="form-group" data-ng-class="{ 'has-error' : providerForm.specialty.$invalid && providerFormSubmitted }">
-        	                    <label class="control-label" for="specialty">Primary Specialty</label>
-        						<div class="error-circle fa-exclamation-circle" role="alert"
+                      <div class="col-md-4">
+                          <div class="form-group" data-ng-class="{ 'has-error' : providerForm.specialty.$invalid && providerFormSubmitted }">
+                              <label class="control-label" for="specialty">Primary Specialty</label>
+                    <div class="error-circle fa-exclamation-circle" role="alert"
                                      data-ng-show="providerForm.specialty.$error.pattern && providerFormSubmitted"
                                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                                      data-title="Please enter a specialty" aria-label="Please enter a specialty"></div>
                                 <span class="field-note field-optional">optional</span>
-        	                    <select class="form-control" id="specialty" data-ng-model="provider.specialty"
-        	                            data-ng-options="specialty.name for specialty in specialties | orderBy:'name'" name="specialty"
-        	                            data-ng-disabled="providerForm.specialty.$error.unique"
+                              <select class="form-control" id="specialty" data-ng-model="provider.specialty"
+                                      data-ng-options="specialty.name for specialty in specialties | orderBy:'name'" name="specialty"
+                                      data-ng-disabled="providerForm.specialty.$error.unique"
                                         data-chosen data-disable-search="true" data-placeholder="Select...">
-        	                        <option value="">Select...</option>
-        	                    </select>
-        	                </div>
-                    	</div>
+                                  <option value="">Select...</option>
+                              </select>
+                          </div>
+                      </div>
                         <div class="col-md-4">
                             <div class="form-group"
                                  data-ng-class="{ 'has-error' : providerForm.email.$invalid && providerFormSubmitted }">
@@ -92,10 +92,10 @@
                                        maxlength="255" data-ng-pattern="emailPattern" />
                             </div>
                         </div>
-                        <div class="col-md-4" data-ng-show="potentialLocations.length > 0">
+                        <div class="col-md-4" data-ng-show="allTeamLocations.length > 0">
                             <div class="form-group"
                                  data-ng-class="{ 'has-error' : selectedItems < 1 && providerFormSubmitted }">
-        	                    <label class="control-label" for="locations">Use Locations</label>
+                              <label class="control-label" for="locations">Use Locations</label>
                                 <div class="error-circle fa-exclamation-circle" role="alert"
                                      data-ng-show="selectedItems < 1 && providerFormSubmitted"
                                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
@@ -107,10 +107,10 @@
                                      data-value-field="id"
                                      data-label-field="label"
                                      data-template-path="admin-facing/partials/common/directives/multi-select/multi-select.html">
-        			          	</div>
+                          </div>
 
                             </div>
-                    	</div>
+                      </div>
                     </div>
                 </div>
                 <div class="modal-footer">

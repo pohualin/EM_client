@@ -1,19 +1,29 @@
 'use strict';
 angular.module('emmiManager')
-.directive('selectAll', ['SelectAllFactory',
-    function (SelectAllFactory) {
+.directive('selectAllTeamLocations', ['SelectAllTeamLocationsFactory',
+    function (SelectAllTeamLocationsFactory) {
         return {
             restrict: 'A',
             link: function (scope, element, attributes) {
                 
                 /**
-                 * Watch selectAllClientTeams
-                 * 
-                 * Call SelectAllFactory.setSelectAll whenever it changed. Fire event depending on the new value.
+                 * Listen on 'allPossibleAlreadyAssociated' which 
+                 * will be fired when all possible ClientProviders
+                 * are all associated with the team.
                  */
-                scope.$watch('selectAllClientTeams', function(newVal, oldVal){
-                    SelectAllFactory.setSelectAll(scope.selectAllClientTeams);
-                    if (scope.selectAllClientTeams){
+                scope.$on('allPossibleAlreadyAssociated', function(){
+                    element.prop('checked', true);
+                    element.prop('disabled', true);
+                });
+                
+                /**
+                 * Watch selectAllClientLocations
+                 * 
+                 * Call SelectAllTeamLocationsFactory.setSelectAll whenever it changed. Fire event depending on the new value.
+                 */
+                scope.$watch('selectAllClientLocations', function(newVal, oldVal){
+                    SelectAllTeamLocationsFactory.setSelectAll(scope.selectAllClientLocations);
+                    if (scope.selectAllClientLocations){
                         scope.$emit('selectAllChecked');
                     } else {
                         scope.$emit('selectAllUnchecked');
@@ -23,16 +33,16 @@ angular.module('emmiManager')
                 /**
                  * When allPossibleCheck is true and hasExclusion is false.
                  * 
-                 * Check selectAllClientTeams and setSelectAll to true
+                 * Check selectAllClientLocations and setSelectAll to true
                  */
                 scope.$watch(
                     function(){
-                        return SelectAllFactory.isAllPossibleChecked();
+                        return SelectAllTeamLocationsFactory.isAllPossibleChecked();
                     }, 
                     function(newValue, oldValue){
-                        if(!SelectAllFactory.hasExclusion()) {
-                            scope.selectAllClientTeams = newValue;
-                            SelectAllFactory.setSelectAll(newValue);
+                        if(!SelectAllTeamLocationsFactory.hasExclusion()) {
+                            scope.selectAllClientLocations = newValue;
+                            SelectAllTeamLocationsFactory.setSelectAll(newValue);
                         }
                     }
                 );
@@ -44,7 +54,7 @@ angular.module('emmiManager')
                  */
                 scope.$watch(
                     function(){
-                        return SelectAllFactory.hasExclusion();
+                        return SelectAllTeamLocationsFactory.hasExclusion();
                     }, 
                     function(newValue, oldValue){
                         element.prop('indeterminate', newValue);
@@ -54,16 +64,27 @@ angular.module('emmiManager')
                 /**
                  * When excludeSet has all possible locations
                  * 
-                 * Uncheck selectAllClientTeams and setSelectAll to false
+                 * Uncheck selectAllClientLocations and setSelectAll to false
                  */
                 scope.$watch(
                     function(){
-                        return SelectAllFactory.isAllSelectedUnchecked();
+                        return SelectAllTeamLocationsFactory.isAllSelectedUnchecked();
                     }, 
                     function(newValue){
                         if(newValue){
-                            scope.selectAllClientTeams = false;
-                            SelectAllFactory.setSelectAll(false);
+                            scope.selectAllClientLocations = false;
+                            SelectAllTeamLocationsFactory.setSelectAll(false);
+                        }
+                    }
+                );
+                
+                scope.$watch(
+                    function(){
+                        return SelectAllTeamLocationsFactory.isSelectAll();
+                    }, 
+                    function(newValue){
+                        if(newValue){
+                            scope.selectAllClientLocations = newValue;
                         }
                     }
                 );

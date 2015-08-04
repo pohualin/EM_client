@@ -46,7 +46,7 @@ angular.module('emmiManager')
                             $scope.displaySuccessfull(teamProviderTeamLocationSaveRequest, '#messages-container');
                         } else {
                             $scope.refresh().then(function () {
-                                $scope.addLocations().then(function () {
+                                $scope.addLocations(1).then(function () {
                                     $scope.displaySuccessfull(teamProviderTeamLocationSaveRequest, '#modal-messages-container');
                                 });
                             });
