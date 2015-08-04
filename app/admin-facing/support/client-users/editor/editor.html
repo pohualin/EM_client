@@ -5,7 +5,7 @@
     </ul>
     <!-- Breadcrumb for transclusion -->
     <ol class="breadcrumb">
-        <li><a href="#/support">Search</a></li>
+        <li><a href="#/support/client_users?{{currentRouteQueryString}}">Search</a></li>
         <li class="active">{{selectedUserClient.entity.firstName}} {{selectedUserClient.entity.lastName}}</li>
     </ol>
 </header>
@@ -31,7 +31,7 @@
     </div>
     <div class="row">
       <div class="col-md-12 row-same-height row-full-height">
-        <div class="col-md-6 col-xs-height col-full-height" style="padding-right: 6px">
+        <div class="col-md-6 col-xs-height col-full-height" style="padding-right: 6px" data-ng-controller="UserClientSupportUserRolesController">
           <div class="row-same-height row-full-height">
             <div class="layout-content layout-card">
             <div data-ng-show="selectedUserClient">
