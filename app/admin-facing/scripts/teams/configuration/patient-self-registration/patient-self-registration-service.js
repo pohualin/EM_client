@@ -63,6 +63,6 @@ angular.module('emmiManager')
                     return response.data.idLabelTypes;
                 });
             }
-        }
+        };
     }])
 ;

@@ -37,7 +37,7 @@ angular.module('emmiManager')
                 create: function (patientIdLabelConfig, patientSelfRegConfig) {
                     patientIdLabelConfig.patientSelfRegConfig = patientSelfRegConfig.entity;
                     return $http.post(UriTemplate.create(patientSelfRegConfig.link.patientIdLabelConfig).stringify(), patientIdLabelConfig.config.entity).then(function (response) {
-                        return response.data
+                        return response.data;
                     });
                 },
                 /**
@@ -50,6 +50,6 @@ angular.module('emmiManager')
                         return response.data;
                     });
                 }
-            }
+            };
         }])
 ;
