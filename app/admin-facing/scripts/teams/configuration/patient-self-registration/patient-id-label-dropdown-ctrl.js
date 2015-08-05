@@ -42,12 +42,11 @@ angular.module('emmiManager')
                 listOfIdLabelConfigs.push($scope.idLabelConfigEnglish);
                 listOfIdLabelConfigs.push($scope.idLabelConfigSpanish);
 
-                if ($scope.patientSelfRegConfig.entity.patientIdLabelType &&
-                    $scope.patientSelfRegConfig.entity.patientIdLabelType.id &&
-                    $scope.idLabelConfigEnglish.config.entity.id &&
-                    $scope.originalIdLabelConfig &&
-                    (!(angular.equals($scope.originalIdLabelConfig, $scope.patientSelfRegConfig.entity.patientIdLabelType))
-                    || !(angular.equals($scope.originalIdLabelConfigEnglish, $scope.idLabelConfigEnglish.config))
+                if ($scope.patientSelfRegConfig.entity.patientIdLabelType
+                    && $scope.patientSelfRegConfig.entity.patientIdLabelType.id
+                    && $scope.idLabelConfigEnglish.config.entity.id
+                    && $scope.originalIdLabelConfig
+                    && (!(angular.equals($scope.originalIdLabelConfig, $scope.patientSelfRegConfig.entity.patientIdLabelType)) || !(angular.equals($scope.originalIdLabelConfigEnglish, $scope.idLabelConfigEnglish.config))
                     || !(angular.equals($scope.originalIdLabelConfigSpanish, $scope.idLabelConfigSpanish.config)))) {
 
                     angular.forEach(listOfIdLabelConfigs, function (config) {
