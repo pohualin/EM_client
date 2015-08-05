@@ -1,0 +1,14 @@
+<div class="col-md-12">
+    <h2>
+        <span>Notes for {{client.entity.name}}</span>
+        <span data-ng-if="isEmmiSuperAdmin()">
+          <button class="btn btn-icon icon-size-lg" data-ng-click="edit()" aria-label="Edit"><i class="icon-compose"></i></button>
+        </span>
+    </h2>
+    <div class="row">
+        <div class="col-md-12">
+            <span class="textwrap-output">{{originalClientNote.entity.note}}</span>
+        </div>
+    </div>
+</div>
+

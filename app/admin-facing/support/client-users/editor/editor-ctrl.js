@@ -5,13 +5,12 @@ angular.module('emmiManager')
 /**
  *   Manage Client Level users
  */
-.controller('UsersClientSupportEditorController', ['$alert', '$location', '$scope', 'Client', 'UsersClientService', 'UserClientUserClientRolesService',
-        function ($alert, $location, $scope, Client, UsersClientService, UserClientUserClientRolesService) {
+.controller('UsersClientSupportEditorController', ['$alert', '$location', '$scope', 'Client', 'UsersClientService', 'UserClientUserClientRolesService', 'ManageUserRolesService', 'ManageUserTeamRolesService',
+        function ($alert, $location, $scope, Client, UsersClientService, UserClientUserClientRolesService, ManageUserRolesService, ManageUserTeamRolesService) {
 
             $scope.client = Client.getClient();
             $scope.selectedUserClient = UsersClientService.getUserClient();
             $scope.page.setTitle('View User - ' + $scope.client.entity.name + ' | ClientManager');
-            $scope.isSuperUser = false;
 
             /**
              * Allows the top level editor to evaluate conditions
@@ -20,15 +19,7 @@ angular.module('emmiManager')
              * @param roles on the user client
              */
             $scope.setClientRoles = function (roles) {
-                $scope.clientRoles = roles;
-            };
-
-            $scope.setPossibleClientRoles = function (possibleRoles) {
-                $scope.possibleClientRoles = possibleRoles;
-            };
-
-            $scope.clientRolesChanged = function (){
-                $scope.$broadcast('client-roles-changed');
+                $scope.existingUserClientUserClientRoles = roles;
             };
 
             /**
@@ -37,7 +28,7 @@ angular.module('emmiManager')
              *
              * @param roles on the user client
              */
-            $scope.setTeamRoles = function (roles) {
+            $scope.setClientTeamRoles = function (roles) {
                 $scope.teamRoles = roles;
             };
 
@@ -55,17 +46,62 @@ angular.module('emmiManager')
                 UserClientUserClientRolesService.clearAllPermissions();
                 $location.path('/clients/' + $scope.client.entity.id + '/users/new');
             };
-
+            
             /**
-             * Call and check if user is assigned to Super user.
+             * Load existing UserClientRole and UserClientTeamRoles
              */
-            $scope.setIsSuperUser = function(){
-                $scope.isSuperUser = UserClientUserClientRolesService.isSuperUser();
+            $scope.loadUserRolesSection = function() {
+                // 1. Load user client roles
+                ManageUserRolesService.loadClientRolesWithPermissions(Client.getClient()).then(function (clientRoles) {
+                    $scope.clientRoles = clientRoles;
+                });
+                // 2. Load user client team roles
+                ManageUserTeamRolesService.loadClientTeamRoles(Client.getClient()).then(function(clientTeamRoles){
+                    $scope.clientTeamRoles = clientTeamRoles;
+                    $scope.$broadcast('loadTeamsForClientTeamRoles');
+                });
             };
 
+            /**
+             * Load existingUserClientUserClientRoles for the UserClient
+             */
+            $scope.loadExistingUserClientUserClientRoles = function () {
+                UserClientUserClientRolesService.
+                    getUserClientUserClientRoles($scope.selectedUserClient).then(function (response) {
+                        // Set existingUserClientUserClientRoles if it exists
+                        if (response.length > 0) {
+                            UserClientUserClientRolesService
+                                .loadPermissionsForUserClientUserClientRoles(response).then(function (response) {
+                                    $scope.existingUserClientUserClientRoles = response;
+                                    $scope.setClientRoles($scope.existingUserClientUserClientRoles);
+                                });
+                        } else {
+                            // Load existing UserClientRoles for the Client
+                            $scope.existingUserClientUserClientRoles = null;
+                            $scope.setClientRoles($scope.existingUserClientUserClientRoles);
+                            UserClientUserClientRolesService.clearAllPermissions();
+                        }
+                    });
+            };
+
+            $scope.$watch(function(){
+                return UserClientUserClientRolesService.isSuperUser();
+            }, function(newValue) {
+                $scope.isSuperUser = newValue;
+            });
+            
+            $scope.$on('client-roles-changed', function () {
+                $scope.loadExistingUserClientUserClientRoles();
+            });
+            
+            (function init(){
+                $scope.existingUserClientUserClientRoles = null;
+                UserClientUserClientRolesService.clearAllPermissions();
+                $scope.loadUserRolesSection();
+                $scope.loadExistingUserClientUserClientRoles();
+            })();
         }
     ])
-
 /**
  * This filter loops over the set of team roles on the client
  * and looks for existingTeam roles. It returns true if

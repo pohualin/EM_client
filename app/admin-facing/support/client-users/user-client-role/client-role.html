@@ -1,5 +1,5 @@
 <div data-ng-controller="UsersClientUserClientRolesSupportListController" data-ng-cloak>
-    <div class="col-md-12" data-ng-show="existingUserClientUserClientRoles || teamRoles.length === 0">
+    <div class="col-md-12" data-ng-if="existingUserClientUserClientRoles || (clientRoles.length && clientTeamRoles.length === 0)">
         <h2>Client Roles</h2>
 
         <div class="row">
@@ -15,7 +15,7 @@
                             <div class="panel-heading">
                               <div class="panel-title">
                                   <a data-bs-collapse-toggle
-                                     data-ng-click="toggleUserClientUserClienRolePanel(existingUserClientUserClientRole)"
+                                     data-ng-click="toggleUserClientUserClientRolePanel(existingUserClientUserClientRole)"
                                      href="#clientRole-collapsible-{{existingUserClientUserClientRole.entity.id}}"
                                      role="button"
                                      aria-expanded="{{existingUserClientUserClientRole.activePanel === 1}}"
@@ -54,7 +54,7 @@
     </div>
     <!-- .col-md-12 -->
     <div class="col-md-12"
-         data-ng-show="!existingUserClientUserClientRoles && clientRoles.length && teamRoles.length === 0">
+         data-ng-if="!existingUserClientUserClientRoles && clientRoles.length && clientTeamRoles.length === 0">
         <button class="btn btn-default" type="button"
                 data-placement="right"
                 data-template="admin-facing/support/client-users/user-client-role/add-client-role.html"
