@@ -43,6 +43,7 @@
                                 });
                                 // let anyone listening know about the update
                                 $scope.$emit('patient-updated', updatedPatientResource);
+                                _paq.push(['trackEvent', 'Form Action', 'Patient Support Edit', 'Save']);
                             }).finally(
                             function () {
                                 $scope.saving = false;
@@ -59,6 +60,7 @@
                 $scope.cancel = function () {
                     $scope.formSubmitted = false;
                     $scope.patientResource = angular.copy($scope.master);
+                    _paq.push(['trackEvent', 'Form Action', 'Patient Support Edit', 'Cancel']);
                 };
 
                 /**

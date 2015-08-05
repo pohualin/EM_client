@@ -66,6 +66,7 @@
                                     '</strong> has been successfully updated.'
                                 ].join(' ')
                             });
+                            _paq.push(['trackEvent', 'Form Action', 'Patient Support Program History', 'Save']);
                         }).finally(function () {
                             scheduledProgramResource.whenSaving = false;
                         });
@@ -90,6 +91,7 @@
                     scheduledProgramResource.entity = angular.copy(scheduledProgramResource.original);
                     form.programFormSubmitted = false;
                     form.$setPristine();
+                    _paq.push(['trackEvent', 'Form Action', 'Patient Support Program History', 'Cancel']);
                 };
 
                 /**
