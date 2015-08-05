@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('emmiManager')
-    .service('PatientSelfRegService', ['$http', 'API', 'UriTemplate', '$translate', '$q', function ($http, API, UriTemplate, $translate, $q) {
+    .service('PatientSelfRegService', ['$http', 'Session', 'UriTemplate', '$translate', '$q', function ($http, Session, UriTemplate, $translate, $q) {
         return {
             /**
              * gets a patient self-reg configuration for the team
@@ -59,7 +59,7 @@ angular.module('emmiManager')
              * @returns {*}
              */
             refData: function () {
-                return $http.get(UriTemplate.create(API.patientSelfRegReferenceData).stringify()).then(function (response) {
+                return $http.get(UriTemplate.create(Session.link.patientSelfRegReferenceData).stringify()).then(function (response) {
                     return response.data.idLabelTypes;
                 });
             }

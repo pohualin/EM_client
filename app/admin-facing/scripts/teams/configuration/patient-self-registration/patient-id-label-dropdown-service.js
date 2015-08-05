@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('emmiManager')
-    .service('PatientIdLabelDropDownService', ['$http', 'API', 'UriTemplate', '$translate', '$q', 'CommonService',
-        function ($http, API, UriTemplate, $translate, $q, CommonService) {
+    .service('PatientIdLabelDropDownService', ['$http', 'Session', 'UriTemplate', '$translate', '$q', 'CommonService',
+        function ($http, Session, UriTemplate, $translate, $q, CommonService) {
             return {
                 getPatientIdLabelConfig: function (patientSelfRegConfig) {
                     return $http.get(UriTemplate.create(patientSelfRegConfig.link.patientIdLabelConfig).stringify())
@@ -12,7 +12,7 @@ angular.module('emmiManager')
                         });
                 },
                 translate: function (string) {
-                    return $http.get(UriTemplate.create(API.translations).stringify({
+                    return $http.get(UriTemplate.create(Session.link.translations).stringify({
                         key: string
                     })).then(function (response) {
                         return response.data;

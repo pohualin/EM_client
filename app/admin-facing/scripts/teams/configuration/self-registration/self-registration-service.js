@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('emmiManager')
-    .service('SelfRegistrationService', ['$http', 'UriTemplate', '$q', 'API', function ($http, UriTemplate, $q, API) {
+    .service('SelfRegistrationService', ['$http', 'UriTemplate', '$q', 'Session', function ($http, UriTemplate, $q, Session) {
         return {
             /**
              * Calls the back end to get the self registration configuration for a client-team
@@ -42,7 +42,7 @@ angular.module('emmiManager')
             getLanguages: function() {
                 var deferred = $q.defer();
                 var languages = [];
-                $http.get(UriTemplate.create(API.languages).stringify()).then(function addToLanguages(response) {
+                $http.get(UriTemplate.create(Session.link.languages).stringify()).then(function addToLanguages(response) {
                     var page = response.data;
                     angular.forEach(page.content, function(language){
                         languages.push(language);
