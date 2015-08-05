@@ -83,7 +83,7 @@
     				 <td>{{teamProvider.provider.entity.firstName}} {{teamProvider.provider.entity.middleName}} {{teamProvider.provider.entity.lastName}} <em>{{teamProvider.provider.entity.active ? '' : "(inactive)"}}</em></td>
                      <td>{{teamProvider.provider.entity.specialty.name}}</td>
                      <td>{{teamProvider.provider.entity.email}}</td>
-                     <td class="col-has-multiselect" data-ng-if="allTeamLocations" >
+                     <td class="col-has-multiselect" data-ng-if="allTeamLocations.length > 0" >
                        <div data-ng-if="allTeamLocations && teamProvider.provider.entity.checked && !teamProvider.provider.entity.disabled">
                          <div data-ng-class="{'has-error col-md-11': teamProvider.provider.entity.selectedTeamLocations < 1 && associateRequestSubmitted}" data-multi-select
                               data-name=".nonClientProvider[{{teamProvider.provider.entity.id}}].allTeamLocations{{$index}}"

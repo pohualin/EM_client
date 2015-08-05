@@ -87,7 +87,7 @@
                                     </span>
                                 </span>
                             </th>
-                            <th class="sort col-sm-3" data-ng-if="providersData">
+                            <th class="sort col-sm-3" data-ng-if="providersData.length > 0">
                                 Add to Providers
                             </th>
                         </tr>
@@ -111,7 +111,7 @@
                                     data-ng-show="location.location.entity.city && location.location.entity.state">,&nbsp;</span>{{location.location.entity.state}}
                             </td>
                             <td>{{location.location.entity.phone}}</td>
-                            <td class="col-has-multiselect" data-ng-if="providersData">
+                            <td class="col-has-multiselect" data-ng-if="providersData.length > 0">
                                 <div data-ng-if="providersData && location.location.entity.checked && !location.location.entity.disabled">
                                        <div data-multi-select
                                             data-name=".allLocation[{{location.location.entity.id}}].providersData[{{$index}}]"
