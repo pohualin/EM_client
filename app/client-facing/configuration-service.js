@@ -13,7 +13,7 @@ angular.module('emmiManager')
                         $location.path('/passwordInformation').replace();
                     } else if ($location.path() === '/login') {
                         var priorRequestPath = $rootScope.locationBeforeLogin;
-                        if (priorRequestPath) {
+                        if (priorRequestPath && priorRequestPath.path() !== "/login") {
                             //if user was trying to access a url
                             $location.path(priorRequestPath.path()).replace();
                         } else {
