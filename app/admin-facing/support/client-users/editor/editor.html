@@ -5,7 +5,7 @@
     </ul>
     <!-- Breadcrumb for transclusion -->
     <ol class="breadcrumb">
-        <li><a href="#/support">Search</a></li>
+        <li><a href="#/support/client_users?{{currentRouteQueryString}}">Search</a></li>
         <li class="active">{{selectedUserClient.entity.firstName}} {{selectedUserClient.entity.lastName}}</li>
     </ol>
 </header>
@@ -24,7 +24,7 @@
             only show the activate and reset choices when the selected user client has
             least one role (either client or team)
         -->
-        <div data-ng-show="selectedUserClient && (clientRoles || (teamRoles | teamSetOnRole))"
+        <div data-ng-show="selectedUserClient && (existingUserClientUserClientRoles || (clientTeamRoles | teamSetOnRole))"
           class="row" data-ng-include="'admin-facing/support/client-users/activation/form.html'">
         </div>
       </div>

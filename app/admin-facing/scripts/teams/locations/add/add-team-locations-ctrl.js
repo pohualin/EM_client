@@ -2,17 +2,24 @@
 
 angular.module('emmiManager')
 
-    .controller('AddTeamsLocationsController', ['$rootScope', '$scope', 'TeamSearchLocation', 'TeamProviderService', 'SelectAllTeamLocationsFactory', 'AddTeamLocationsService', 'AddTeamLocationsFactory',
-       function ($rootScope, $scope, TeamSearchLocation, TeamProviderService, SelectAllTeamLocationsFactory, AddTeamLocationsService, AddTeamLocationsFactory) {
+    .controller('AddTeamsLocationsController', ['$rootScope', '$scope', 'TeamSearchLocation', 'TeamProviderService', 'SelectAllTeamLocationsFactory', 'AddTeamLocationsService', 'AddTeamLocationsFactory', 'ClientTeamSchedulingConfigurationService',
+       function ($rootScope, $scope, TeamSearchLocation, TeamProviderService, SelectAllTeamLocationsFactory, AddTeamLocationsService, AddTeamLocationsFactory, ClientTeamSchedulingConfigurationService) {
         
         $scope.tabs = AddTeamLocationsService.setAllTabs($scope.activeTab);
         
         /**
          * Get TeamProviders for the team, set it to AddTeamLocationsFactory and broadcast 'setTeamProviders' event
          */
-        TeamProviderService.buildMultiSelectProvidersData($scope.teamResource).then(function(response){
-            AddTeamLocationsFactory.setTeamProviders(response);
-            $scope.$broadcast('setTeamProviders');
+        ClientTeamSchedulingConfigurationService.getTeamSchedulingConfiguration($scope.teamResource).then(function(schedulingConfig){
+            if (schedulingConfig.entity.useProvider) {
+                TeamProviderService.buildMultiSelectProvidersData($scope.teamResource).then(function(response){
+                    AddTeamLocationsFactory.setTeamProviders(response);
+                    $scope.$broadcast('setTeamProviders');
+                });
+            } else {
+                AddTeamLocationsFactory.setTeamProviders([]);
+                $scope.$broadcast('setTeamProviders');
+            }
         });
         
         /**
