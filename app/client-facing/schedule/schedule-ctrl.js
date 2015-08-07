@@ -7,8 +7,8 @@
      * Controller for Patient-Program Scheduling
      */
         .controller('ScheduleController', ['$scope', 'team', 'client', 'ScheduledProgramFactory',
-            '$alert', 'ScheduleService', '$location', 'UriTemplate', 'PatientEmailService', 'PatientPhoneService', 'AddProgramService',
-            function ($scope, team, client, ScheduledProgramFactory, $alert, ScheduleService, $location, UriTemplate, PatientEmailService, PatientPhoneService, AddProgramService) {
+            '$alert', 'ScheduleService', '$location', 'UriTemplate', 'PatientEmailService', 'PatientPhoneService', 
+            function ($scope, team, client, ScheduledProgramFactory, $alert, ScheduleService, $location, UriTemplate, PatientEmailService, PatientPhoneService) {
                 
                 $scope.team = team;
                 $scope.page.setTitle('Schedule Emmi Program - ' + team.entity.name);
@@ -48,33 +48,35 @@
                  * Broadcasts event so that Patient save and Program save are kicked off
                  */
                 $scope.savePatientAndProgram = function () {
-                    $scope.$broadcast('event:update-patient-and-programs');
+                	$scope.$broadcast('event:update-patient-and-programs');
                 };
 
                 /**
                  * Saves schedule for valid patient and program on click of 'Finish Scheduling'
                  */
                 $scope.saveScheduledProgramForPatient = function () {
-                	if (ScheduledProgramFactory.valid()) {
-                        $scope.whenSaving = true;
-                        ScheduleService.schedule($scope.team, $scope.scheduledProgram)
-                            .then(function (response) {
-                                var scheduledProgramResource = response.data;
-
-                                $location.path(UriTemplate
-                                    .create('/teams/{teamId}/schedule/{scheduleId}/instructions')
-                                    .stringify({
-                                        teamId: scheduledProgramResource.entity.team.id,
-                                        scheduleId: scheduledProgramResource.entity.id
-                                    }));
-
-                                $alert({
-                                    content: 'Program has been scheduled successfully'
-                                });
-                            }).finally(function () {
-                                $scope.whenSaving = false;
-                            });
-                    }
+                 	if((angular.isDefined($scope.scheduledProgram))&&
+                	        ($scope.scheduledProgram !== null)){
+                    ScheduleService.schedule($scope.team, $scope.scheduledProgram)
+                      .then(function (response) {
+                          $scope.whenSaving = true;
+                         var scheduledProgramResource = response.data;
+                           $location.path(UriTemplate
+                            .create('/teams/{teamId}/schedule/{scheduleId}/instructions')
+                               .stringify({
+                                    teamId: scheduledProgramResource.entity.team.id,
+                                    scheduleId: scheduledProgramResource.entity.id
+                                }));
+                         $alert({
+                               content: 'Program has been scheduled successfully'
+                               });
+                         }).finally(function () {
+                            $scope.whenSaving = false;
+                         });
+                	}
+                	else{
+                	     $scope.whenSaving = false;
+                	}
                 };
                 
                 $scope.scheduledProgram = ScheduledProgramFactory;

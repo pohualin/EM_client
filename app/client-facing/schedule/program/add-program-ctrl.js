@@ -20,30 +20,24 @@ angular.module('emmiManager')
                 $scope.specialties = specialties;
             });
             
-            /**
-             * Retrieve team scheduling configuration for scheduling
-             */
-            function getScheduleConfiguration(){
-            	AddProgramService.loadSchedulingConfigurations($scope.team).then(function(response){
-            		$scope.useLocation = response.useLocation;
-                	$scope.useProvider = response.useProvider;
-                	if($scope.useLocation){
-                		AddProgramService.loadLocations($scope.team).then(function (locations) {
-                			$scope.locations = locations;
-                        });
-                	}
-                	if($scope.useProvider){
-                		AddProgramService.loadProviders($scope.team).then(function (providers) {
-                			$scope.providers = providers;
-                        });
-                	}
-                });
-            }
-            getScheduleConfiguration();
-
-
+            AddProgramService.loadSchedulingConfigurations($scope.team).then(function(response){
+            	$scope.useLocation = response.useLocation;
+                $scope.useProvider = response.useProvider;
+                ScheduledProgramFactory.useLocation = $scope.useLocation;
+                ScheduledProgramFactory.useProvider = $scope.useProvider;
+                if($scope.useLocation){
+                	AddProgramService.loadLocations($scope.team).then(function (locations) {
+                		$scope.locations = locations;
+                       });
+                }
+                if($scope.useProvider){
+                	AddProgramService.loadProviders($scope.team).then(function (providers) {
+                		$scope.providers = providers;
+                       });
+                }
+            });
             $scope.$on('event:update-patient-and-programs', function(){
-                $scope.saveScheduledProgram($scope.addProgramForm);
+            	$scope.saveScheduledProgram($scope.addProgramForm);
             });
 
 
@@ -52,14 +46,12 @@ angular.module('emmiManager')
              * @param addProgramForm to save
              */
             $scope.saveScheduledProgram = function (addProgramForm) {
-                $scope.addProgramFormSubmitted = true;
+            	$scope.addProgramFormSubmitted = true;
                 if ($scope.scheduledProgram.program && addProgramForm.$valid) {
                 	// save the scheduled program
-                    ScheduledProgramFactory.scheduledProgram = $scope.scheduledProgram;
-                    ScheduledProgramFactory.useLocation = $scope.useLocation;
-                    ScheduledProgramFactory.useProvider = $scope.useProvider;
-                } else {
-                    $scope.showError();
+                	ScheduledProgramFactory.scheduledProgram = $scope.scheduledProgram;
+                 } else {
+                     $scope.showError();
                 }
             };
 
@@ -117,14 +109,14 @@ angular.module('emmiManager')
              * @param form for date carrying function
              */
             $scope.selectProgram = function (programResource, form) {
-                resetViewByDateField(form);
+            	resetViewByDateField(form);
                 if ($scope.scheduledProgram.program) {
-                    $scope.scheduledProgram.program.selected = false;
+                	$scope.scheduledProgram.program.selected = false;
                 }
                 if (programResource && programResource.selected) {
-                    $scope.scheduledProgram.program = programResource;
+                	$scope.scheduledProgram.program = programResource;
                 } else {
-                    $scope.scheduledProgram.program = '';
+                	$scope.scheduledProgram.program = '';
                 }
             };
             
@@ -135,12 +127,12 @@ angular.module('emmiManager')
              * that are valid for that location
              */
             $scope.onLocationChange = function () {
-                $scope.loadingProviderLocation = true;
+            	$scope.loadingProviderLocation = true;
                 AddProgramService.loadProviders($scope.team, $scope.scheduledProgram.location).then(
                     function (providers) {
-                        $scope.providers = providers;
+                    	$scope.providers = providers;
                         if (providers.length === 1) {
-                            $scope.scheduledProgram.provider = providers[0];
+                        	$scope.scheduledProgram.provider = providers[0];
                         }
                     }).finally(function () {
                         $scope.loadingProviderLocation = false;
@@ -153,16 +145,17 @@ angular.module('emmiManager')
              */
             $scope.onProviderChange = function () {
                 // no location selected, refresh the list of possible locations
-                $scope.loadingProviderLocation = true;
+            	$scope.loadingProviderLocation = true;
                 AddProgramService.loadLocations($scope.team, $scope.scheduledProgram.provider).then(
-                    function (locations) {
-                        $scope.locations = locations;
-                        if (locations.length === 1) {
-                            $scope.scheduledProgram.location = locations[0];
-                        }
-                    }).finally(function () {
-                        $scope.loadingProviderLocation = false;
-                    });
+               			function (locations) {
+               				$scope.locations = locations;
+                			if (locations.length === 1) {
+                				$scope.scheduledProgram.location = locations[0];
+                			}
+                			}).finally(function () {
+                			    $scope.loadingProviderLocation = false;
+               	});
+              
             };
 
             /**

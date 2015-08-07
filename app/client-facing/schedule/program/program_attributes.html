@@ -1,6 +1,6 @@
 <div class="col-md-12">
 
-    <div class="row" data-ng-show="useProvider">
+    <div class="row" data-ng-if="useProvider">
         <div class="form-group col-md-12"
              data-ng-class="{ 'has-error' : addProgramForm.provider.$invalid && addProgramFormSubmitted }">
             <label class="control-label" for="provider">
@@ -30,7 +30,7 @@
         </div>
     </div>
 
-    <div class="row" data-ng-show="useLocation">
+    <div class="row" data-ng-if="useLocation">
         <div class="form-group col-md-12"
              data-ng-class="{ 'has-error' : addProgramForm.location.$invalid && addProgramFormSubmitted }">
             <label class="control-label" for="location">
