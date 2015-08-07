@@ -36,6 +36,9 @@
                             content: ['Salesforce case <strong>',
                                 newId, '</strong> has been successfully created.'].join('')
                         });
+                        _paq.push(['trackEvent', 'Form Action', 'Patient Salesforce', 'Complete']);
+                    } else {
+                        _paq.push(['trackEvent', 'Form Action', 'Patient Salesforce', 'Cancel']);
                     }
                 };
 
@@ -77,6 +80,7 @@
                     $scope.defaultCaseDescription.push('\n');
                     $scope.defaultCaseDescription = $scope.defaultCaseDescription.join('');
                     salesforceCaseModal.$promise.then(salesforceCaseModal.show);
+                    _paq.push(['trackEvent', 'Form Action', 'Patient Salesforce', 'Start']);
                 };
             }
         ])

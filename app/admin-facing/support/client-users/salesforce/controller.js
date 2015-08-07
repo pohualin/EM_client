@@ -25,6 +25,9 @@
                             content: ['Salesforce case <strong>',
                                 newId, '</strong> has been successfully created.'].join('')
                         });
+                        _paq.push(['trackEvent', 'Form Action', 'Client User Salesforce', 'Complete']);
+                    } else {
+                        _paq.push(['trackEvent', 'Form Action', 'Client User Salesforce', 'Cancel']);
                     }
                 };
 
@@ -37,6 +40,7 @@
                         $scope.originalUserClient.entity.lastName
                     ].join(' ');
                     salesforceCaseModal.$promise.then(salesforceCaseModal.show);
+                    _paq.push(['trackEvent', 'Form Action', 'Client User Salesforce', 'Start']);
                 };
             }])
     ;
