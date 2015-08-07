@@ -33,7 +33,7 @@ angular.module('emmiManager')
         /**
          * Save selected locations when selectAll is false
          */
-        $scope.save = function(addAnother) {
+        $scope.save = function() {
             $scope.whenSaving = true;
             var locationsAcrossTabs = angular.extend({}, AddTeamLocationsFactory.getSelectedClientLocations(), AddTeamLocationsFactory.getSelectedLocations());    
             var locationsToAdd = TeamSearchLocation.getTeamProviderTeamLocationSaveRequest(locationsAcrossTabs, AddTeamLocationsFactory.getTeamProviders());
@@ -43,6 +43,8 @@ angular.module('emmiManager')
                 $scope.displaySuccessfull(locationsToAdd, '#messages-container');
                 // refresh the parent scope locations in the background
                 $scope.refresh();
+                $scope.$broadcast('refreshClientLocationsPage');
+                $scope.$broadcast('refreshTeamLocationsSearchPage');
                 $rootScope.$broadcast('event:teamLocationSavedWithProvider');
             }).finally(function () {
                 $scope.whenSaving = false;
@@ -87,6 +89,8 @@ angular.module('emmiManager')
                 $scope.displaySuccessfull(locationsToAdd, '#messages-container');
                 // refresh the parent scope locations in the background
                 $scope.refresh();
+                $scope.$broadcast('refreshClientLocationsPage');
+                $scope.$broadcast('refreshTeamLocationsSearchPage');
                 $rootScope.$broadcast('event:teamLocationSavedWithProvider');
             }).finally(function () {
                 $scope.whenSaving = false;

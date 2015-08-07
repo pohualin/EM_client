@@ -46,6 +46,8 @@ angular.module('emmiManager')
                             $scope.successAlert(providersToAdd, '#messages-container');
                             $scope.hideAddProvidersModal();
                             $scope.refreshLocationsAndProviders();
+                            $scope.$broadcast('refreshClientProvidersPage');
+                            $scope.$broadcast('refreshTeamProvidersSearchPage');
                         }).finally(function () {
                             $scope.whenSaving = false;
                         });
@@ -95,6 +97,8 @@ angular.module('emmiManager')
                             $scope.successAlert(providersToAdd, '#messages-container');
                             $scope.hideAddProvidersModal();
                             $scope.refreshLocationsAndProviders();
+                            $scope.$broadcast('refreshClientProvidersPage');
+                            $scope.$broadcast('refreshTeamProvidersSearchPage');
                         }).finally(function () {
                             $scope.whenSaving = false;
                         });
