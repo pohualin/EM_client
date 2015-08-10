@@ -33,14 +33,20 @@ angular.module('emmiManager')
         /**
          * Save selected locations when selectAll is false
          */
-        $scope.save = function() {
+        $scope.save = function(addAnother) {
             $scope.whenSaving = true;
             var locationsAcrossTabs = angular.extend({}, AddTeamLocationsFactory.getSelectedClientLocations(), AddTeamLocationsFactory.getSelectedLocations());    
             var locationsToAdd = TeamSearchLocation.getTeamProviderTeamLocationSaveRequest(locationsAcrossTabs, AddTeamLocationsFactory.getTeamProviders());
             TeamSearchLocation.save($scope.teamClientResource.teamResource.link.teamLocations, locationsToAdd).then(function () {
-                // close the modal and show the message
-                $scope.$hide();
-                $scope.displaySuccessfull(locationsToAdd, '#messages-container');
+                if (addAnother) {
+                    $scope.tabs.activeTab = 1;
+                    $scope.displaySuccessfull(locationsToAdd, '#modal-messages-container');
+                    focus('LocationSearchFocus');
+                } else {
+                    // close the modal and show the message
+                    $scope.$hide();
+                    $scope.displaySuccessfull(locationsToAdd, '#messages-container');
+                }
                 // refresh the parent scope locations in the background
                 $scope.refresh();
                 $scope.$broadcast('refreshClientLocationsPage');
@@ -58,35 +64,27 @@ angular.module('emmiManager')
          * to Search all locations tab after selected locations been added.
          */
         $scope.saveAndAddAnother = function () {
-            $scope.whenSaving = true;
-            var locationsAcrossTabs = angular.extend({}, AddTeamLocationsFactory.getSelectedClientLocations(), AddTeamLocationsFactory.getSelectedLocations());
-            var locationsToAdd = TeamSearchLocation.getTeamProviderTeamLocationSaveRequest(locationsAcrossTabs, AddTeamLocationsFactory.getTeamProviders());
-            TeamSearchLocation.save($scope.teamClientResource.teamResource.link.teamLocations, locationsToAdd).then(function () {
-                // refresh the parent scope locations in the background
-                $scope.refresh();
-                $scope.tabs.activeTab = 1;
-                $scope.displaySuccessfull(locationsToAdd, '#modal-messages-container');
-                focus('LocationSearchFocus');
-                $scope.$broadcast('refreshClientLocationsPage');
-                $scope.$broadcast('refreshTeamLocationsSearchPage');
-                $rootScope.$broadcast('event:teamLocationSavedWithProvider');
-            }).finally(function () {
-                $scope.whenSaving = false;
-            });
+            $scope.save(true);
         };
 
         /**
          * Save when selectAll is true
          */
-        $scope.saveAll = function () {
+        $scope.saveAll = function (addAnother) {
             $scope.whenSaving = true;
             var locationsAcrossTabs = angular.extend({}, AddTeamLocationsFactory.getSelectedClientLocations(), AddTeamLocationsFactory.getSelectedLocations());
             TeamSearchLocation.saveAllLocationsExcept($scope.teamClientResource.teamResource, 
                     locationsAcrossTabs, AddTeamLocationsFactory.getTeamProviders(), SelectAllTeamLocationsFactory.getExclusionSet())
                 .then(function (locationsToAdd) {
-                // close the modal and show the message
-                $scope.$hide();
-                $scope.displaySuccessfull(locationsToAdd, '#messages-container');
+                if (addAnother) {
+                    $scope.tabs.activeTab = 1;
+                    $scope.displaySuccessfull(locationsToAdd, '#modal-messages-container');
+                    focus('LocationSearchFocus');
+                } else {
+                    // close the modal and show the message
+                    $scope.$hide();
+                    $scope.displaySuccessfull(locationsToAdd, '#messages-container');
+                }
                 // refresh the parent scope locations in the background
                 $scope.refresh();
                 $scope.$broadcast('refreshClientLocationsPage');
@@ -101,22 +99,7 @@ angular.module('emmiManager')
          * Save and add another when selectAll is true
          */
         $scope.saveAllAndAddAnother = function () {
-            $scope.whenSaving = true;
-            var locationsAcrossTabs = angular.extend({}, AddTeamLocationsFactory.getSelectedClientLocations(), AddTeamLocationsFactory.getSelectedLocations());
-            TeamSearchLocation.saveAllLocationsExcept($scope.teamClientResource.teamResource, 
-                    locationsAcrossTabs, AddTeamLocationsFactory.getTeamProviders(), SelectAllTeamLocationsFactory.getExclusionSet())
-                .then(function (locationsToAdd) {
-                // refresh the parent scope locations in the background
-                $scope.refresh();
-                $scope.tabs.activeTab = 1;
-                $scope.displaySuccessfull(locationsToAdd, '#modal-messages-container');
-                focus('LocationSearchFocus');
-                $scope.$broadcast('refreshClientLocationsPage');
-                $scope.$broadcast('refreshTeamLocationsSearchPage');
-                $rootScope.$broadcast('event:teamLocationSavedWithProvider');
-            }).finally(function () {
-                $scope.whenSaving = false;
-            });
+            $scope.saveAll(true);
         };
         
         /**
