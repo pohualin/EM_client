@@ -80,6 +80,7 @@ angular.module('emmiManager')
 
         (function init(){
             Client.selectClient(holder.patient().entity.client.id).then(function(clientResource){
+                $scope.client = clientResource;
                 ClientNoteService.getClientNote(clientResource).then(function(response){
                     $scope.originalClientNote = response;
                 });
