@@ -22,7 +22,6 @@ angular.module('emmiManager')
                         teamClientResource.teamResource = teamResource;
                         $controller('ClientDetailCtrl', {$scope: $scope, clientResource: clientResource});
                         $controller('TeamEditController', {$scope: $scope, teamClientResource: teamClientResource});
-                        $scope.loaded = true;
                     } else {
                         console.log('No such team found!');
                     }
@@ -31,7 +30,6 @@ angular.module('emmiManager')
 
             // Initialize Client-related code
             $scope.showTeam = 'no';
-            $scope.loaded = false;
 
             if ($routeParams.team && !$scope.team) {
                 setupTeam();
@@ -39,7 +37,6 @@ angular.module('emmiManager')
                 $scope.currentRouteQueryString = $scope.currentRouteQueryString.replace(/(team=)\w+/, '');
             } else {
                 $controller('ClientDetailCtrl', {$scope: $scope, clientResource: clientResource});
-                $scope.loaded = true;
             }
 
             $scope.flagTagChanges = function (value) {
