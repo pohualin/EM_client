@@ -16,7 +16,7 @@ angular.module('emmiManager')
                     if (clientResource) {
                     	ViewTeam.selectTeam(clientResource.link.teamByTeamId, $route.current.params.teamId).then(function (teamResource) {
                             deferred.resolve(teamResource);
-                        });      
+                        });
                     } else {
                         deferred.reject();
                     }
@@ -24,16 +24,9 @@ angular.module('emmiManager')
             });
             return deferred.promise;
         }];
-        
+
         // Routes
         $routeProvider
-        .when('/clients/:clientId/teams/:teamId/configuration', {
-            redirectTo: '/clients/:clientId/teams/:teamId/configuration/email_reminders',
-            access: {
-                authorizedRoles: [USER_ROLES.all]
-            },
-            resolve: requiredResources
-        })
         .when('/clients/:clientId/teams/:teamId/configuration/email_reminders', {
            	templateUrl: 'admin-facing/partials/team/configuration/email/main.html',
             controller: 'ClientTeamEmailConfigurationCtrl',
@@ -82,7 +75,7 @@ angular.module('emmiManager')
                    'teamResource' : teamResource
             }
         });
-          
+
     })
 ;
 
