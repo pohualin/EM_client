@@ -37,7 +37,7 @@ angular.module('emmiManager')
                 }
             });
             $scope.$on('event:update-patient-and-programs', function(){
-            	$scope.saveScheduledProgram($scope.addProgramForm);
+                $scope.saveScheduledProgram($scope.addProgramForm);
             });
 
 
@@ -47,11 +47,10 @@ angular.module('emmiManager')
              */
             $scope.saveScheduledProgram = function (addProgramForm) {
             	$scope.addProgramFormSubmitted = true;
-                if ($scope.scheduledProgram.program && addProgramForm.$valid) {
-                	// save the scheduled program
-                	ScheduledProgramFactory.scheduledProgram = $scope.scheduledProgram;
-                 } else {
-                     $scope.showError();
+            	ScheduledProgramFactory.scheduledProgram = $scope.scheduledProgram;
+                if (($scope.scheduledProgram.program !== null) &&
+                     !(addProgramForm.$valid)) {
+                    $scope.showError();
                 }
             };
 
