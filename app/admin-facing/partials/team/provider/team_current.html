@@ -13,7 +13,7 @@
             <th>Name</th>
             <th>Primary Specialty</th>
             <th>Email</th>
-            <th data-ng-if="allTeamLocations.length > 0">Locations</th>
+            <th data-ng-if="allTeamLocations.length > 0 && schedulingConfiguration.entity.useLocation">Locations</th>
             <th class="text-center">Edit</th>
         </tr>
         </thead>
@@ -23,7 +23,7 @@
                 ? '' : "(inactive)"}}</em></span></td>
             <td class="col-sm-2">{{teamProvider.entity.provider.specialty.name}}</td>
             <td class="col-sm-3"><span class="col-wrap">{{teamProvider.entity.provider.email}}</span></td>
-            <td class="col-sm-2" data-ng-if="allTeamLocations.length > 0">
+            <td class="col-sm-2" data-ng-if="allTeamLocations.length > 0 && schedulingConfiguration.entity.useLocation">
                 <div>
                     <div data-placement="top" class="pointer"
                          data-ng-show="teamProvider.entity.locations && teamProvider.entity.locations.length > locationsColumnCharLimit"
