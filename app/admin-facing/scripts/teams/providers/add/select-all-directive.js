@@ -40,7 +40,7 @@ angular.module('emmiManager')
                         return SelectAllTeamProvidersFactory.isAllPossibleChecked();
                     }, 
                     function(newValue, oldValue){
-                        if(!SelectAllTeamProvidersFactory.hasExclusion()) {
+                        if(!SelectAllTeamProvidersFactory.hasExclusion()  && !scope.selectAllClientProviders) {
                             scope.selectAllClientProviders = newValue;
                             SelectAllTeamProvidersFactory.setSelectAll(newValue);
                         }
