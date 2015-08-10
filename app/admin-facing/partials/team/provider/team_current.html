@@ -5,7 +5,7 @@
                 data-ng-click="addProviders()"><i class="icon-plus"></i> add providers
         </button>
     </div>
-    <h2>Providers</h2>
+    <h2 data-ng-if="schedulingConfiguration.entity.useProvider">Providers</h2>
     <table class="table table-bordered table-striped table-hover table-condensed" border="0" cellpadding="0"
            data-ng-show="listOfTeamProviders.length > 0" data-ng-if="schedulingConfiguration.entity.useProvider">
         <thead>
@@ -73,6 +73,6 @@
             data-ng-show="team.name">&nbsp;for {{team.name}}</span>.</em></span>
     </div>
     <div class="table-no-results" data-ng-if="!schedulingConfiguration.entity.useProvider">
-        <span><em>Providers are not in use for this team click <span><a href="#/clients/{{client.id}}/teams/{{team.id}}/configuration/scheduling?team={{team.id}}&{{currentRouteQueryString}}">here</a></span> to edit this.</em></span>
+        <span><em>Providers are not in use for this team.</em></span>&nbsp;&nbsp;<span class="font-style-normal"><a href="#/clients/{{client.id}}/teams/{{team.id}}/configuration/scheduling?team={{team.id}}&{{currentRouteQueryString}}">edit</a></span>
     </div>
 </div>
