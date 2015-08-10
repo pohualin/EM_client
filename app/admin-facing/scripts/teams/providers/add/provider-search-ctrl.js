@@ -115,7 +115,7 @@ angular.module('emmiManager')
          * Listen on 'setTeamLocations' event
          */
         $scope.$on('setTeamLocations', function(){
-            $scope.allTeamLocations = AddTeamProvidersFactory.getTeamLocations();
+            $scope.allTeamLocations = TeamProviderService.buildMultiSelectData(AddTeamProvidersFactory.getTeamLocations());
         });
         
         $scope.$on('refreshTeamProvidersSearchPage', function(){
