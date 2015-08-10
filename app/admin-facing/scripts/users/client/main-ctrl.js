@@ -67,6 +67,7 @@ angular.module('emmiManager')
                     });
                 }).finally(function () {
                     $scope.whenSaving = false;
+                    performSearch($scope.query, $scope.status, null);
                 });
             };
 
