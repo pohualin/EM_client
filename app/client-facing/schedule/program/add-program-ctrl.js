@@ -8,6 +8,8 @@ angular.module('emmiManager')
             // add common pagination and sorting functions
             $controller('CommonPagination', {$scope: $scope});
             $controller('CommonSort', {$scope: $scope});
+            $scope.locations = {};
+            $scope.providers = {};
 
             // initial loading
             var contentProperty = 'programs';
@@ -15,27 +17,24 @@ angular.module('emmiManager')
                 specialty: ''
             };
             $scope.scheduledProgram = AddProgramService.newScheduledProgram();
-            
+            $scope.useLocation = ScheduledProgramFactory.useLocation;
+            $scope.useProvider = ScheduledProgramFactory.useProvider;
+                 
             AddProgramService.loadSpecialties($scope.team).then(function (specialties) {
                 $scope.specialties = specialties;
             });
             
-            AddProgramService.loadSchedulingConfigurations($scope.team).then(function(response){
-            	$scope.useLocation = response.useLocation;
-                $scope.useProvider = response.useProvider;
-                ScheduledProgramFactory.useLocation = $scope.useLocation;
-                ScheduledProgramFactory.useProvider = $scope.useProvider;
-                if($scope.useLocation){
-                	AddProgramService.loadLocations($scope.team).then(function (locations) {
-                		$scope.locations = locations;
-                       });
-                }
-                if($scope.useProvider){
-                	AddProgramService.loadProviders($scope.team).then(function (providers) {
-                		$scope.providers = providers;
-                       });
-                }
-            });
+            if($scope.useLocation){
+                AddProgramService.loadLocations($scope.team).then(function (locations) {
+              		$scope.locations = locations;
+                 });
+            }
+            if($scope.useProvider){
+                AddProgramService.loadProviders($scope.team).then(function (providers) {
+            		$scope.providers = providers;
+                 });
+            }
+           
             $scope.$on('event:update-patient-and-programs', function(){
                 $scope.saveScheduledProgram($scope.addProgramForm);
             });
@@ -46,10 +45,11 @@ angular.module('emmiManager')
              * @param addProgramForm to save
              */
             $scope.saveScheduledProgram = function (addProgramForm) {
-            	$scope.addProgramFormSubmitted = true;
-            	ScheduledProgramFactory.scheduledProgram = $scope.scheduledProgram;
-                if (($scope.scheduledProgram.program !== null) &&
-                     !(addProgramForm.$valid)) {
+                $scope.addProgramFormSubmitted = true;
+                if ($scope.scheduledProgram.program && addProgramForm.$valid) {
+                    // save the scheduled program
+                    ScheduledProgramFactory.scheduledProgram = $scope.scheduledProgram;
+                } else {
                     $scope.showError();
                 }
             };

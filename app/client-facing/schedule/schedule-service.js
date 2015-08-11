@@ -2,8 +2,8 @@
 
 angular.module('emmiManager')
 
-    .service('ScheduleService', ['$http', '$q', 'UriTemplate', 'moment', 'ScheduledProgramFactory', 
-        function ($http, $q, UriTemplate, moment, ScheduledProgramFactory ) {
+    .service('ScheduleService', ['$http', '$q', 'UriTemplate', 'moment',
+        function ($http, $q, UriTemplate, moment) {
             return {
 
                 /**
@@ -18,94 +18,6 @@ angular.module('emmiManager')
                         .success(function (response) {
                             return response.data;
                         });
-                },
-                
-                /**
-                 * Create a schedule object 
-                 */
-                toBeSchedule: function (teamResource, toSchedule) {
-                	return {
-                		patient: {
-                			id: toSchedule.patient.id
-                		},
-                		program: {
-                			id: toSchedule.scheduledProgram.program.entity.id
-                		},
-                		team: {
-                			id: teamResource.entity.id
-                		},
-                		location: {
-                			// scheduledProgram.location is a TeamLocation
-                			id: toSchedule.scheduledProgram.location.entity.location.id 
-                		},
-                		provider: {
-                			// scheduledProgram.provider is a TeamProvider
-                			id: toSchedule.scheduledProgram.provider.entity.provider.id
-                		},
-                		viewByDate: moment(toSchedule.scheduledProgram.viewByDate).utc().format('YYYY-MM-DD')
-                	};
-                },
-                /**
-                 * Create a schedule object with no provider 
-                 * when the team scheduling configuration use provider off
-                 */
-                toBeScheduleNoProvider: function (teamResource, toSchedule){
-                	return {
-                		patient: {
-                			id: toSchedule.patient.id
-                		},
-                		program: {
-                			id: toSchedule.scheduledProgram.program.entity.id
-                		},
-                		team: {
-                			id: teamResource.entity.id
-                		},
-                		location: {
-                			// scheduledProgram.location is a TeamLocation
-                			id: toSchedule.scheduledProgram.location.entity.location.id 
-                		},
-                		viewByDate: moment(toSchedule.scheduledProgram.viewByDate).utc().format('YYYY-MM-DD')
-                	};
-                },
-                /**
-                 * Create a schedule object with no location
-                 * when the team scheduling configuration use location off
-                 */
-                toBeScheduleNoLocation: function (teamResource, toSchedule){
-                	return {
-                		patient: {
-                			id: toSchedule.patient.id
-                		},
-                		program: {
-                			id: toSchedule.scheduledProgram.program.entity.id
-                		},
-                		team: {
-                			id: teamResource.entity.id
-                		},
-                		provider: {
-                			// scheduledProgram.provider is a TeamProvider
-                			id: toSchedule.scheduledProgram.provider.entity.provider.id
-                		},
-                		viewByDate: moment(toSchedule.scheduledProgram.viewByDate).utc().format('YYYY-MM-DD')
-                	};
-                },
-                /**
-                 * Create a schedule object with no provider and no location 
-                 * when the team scheduling configuration use provider off and use location off
-                 */ 
-                toBeScheduleNoLocationNoProvider: function (teamResource, toSchedule){
-                	return {
-                		patient: {
-                			id: toSchedule.patient.id
-                		},
-                		program: {
-                			id: toSchedule.scheduledProgram.program.entity.id
-                		},
-                		team: {
-                			id: teamResource.entity.id
-                		},
-                		viewByDate: moment(toSchedule.scheduledProgram.viewByDate).utc().format('YYYY-MM-DD')
-                	};
                 },
                 
                 /**
@@ -140,24 +52,29 @@ angular.module('emmiManager')
                  * @param toSchedule an instance of the ScheduledProgramFactory
                  * @returns {*} a promise
                  */
-                schedule: function (teamResource, toSchedule) {
-                	var toBeSchedule = {};
-                	if((!toSchedule.useLocation) &&
-                		(!toSchedule.useProvider)){
-                		toBeSchedule = this.toBeScheduleNoLocationNoProvider(teamResource, toSchedule);
-                	}
-                	else if(!toSchedule.useLocation){
-                		toBeSchedule = this.toBeScheduleNoLocation(teamResource, toSchedule);
-                	}
-                	else if(!toSchedule.useProvider){
-                		toBeSchedule = this.toBeScheduleNoProvider(teamResource, toSchedule);
-                	}
-                	else{
-                		toBeSchedule = this.toBeSchedule(teamResource, toSchedule);
-                	}
-                	return $http.post(UriTemplate.create(teamResource.link.schedulePrograms).stringify(),
-                    		toBeSchedule
-                    );
+                schedule: function (toSchedule) {
+                    
+                    return $http.post(UriTemplate.create(toSchedule.team.link.schedulePrograms).stringify(),
+                    {
+                           patient: {
+                                   id: toSchedule.patient.id
+                           },
+                           program: {
+                                   id: toSchedule.scheduledProgram.program.entity.id
+                           },
+                           team: {
+                                  id: toSchedule.team.entity.id
+                           },
+                           location: {
+                                  // scheduledProgram.location is a TeamLocation
+                                 id: toSchedule.scheduledProgram.location ? toSchedule.scheduledProgram.location.entity.location.id : ''
+                           },
+                           provider: {
+                                 // scheduledProgram.provider is a TeamProvider
+                                 id: toSchedule.scheduledProgram.provider ? toSchedule.scheduledProgram.provider.entity.provider.id : ''
+                           },
+                                 viewByDate: moment(toSchedule.scheduledProgram.viewByDate).utc().format('YYYY-MM-DD')
+                    });
                 }
             };
         }])

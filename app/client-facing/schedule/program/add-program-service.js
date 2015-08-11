@@ -102,19 +102,6 @@ angular.module('emmiManager')
                 },
                 
                 /**
-                 * Load team scheduling configuration
-                 *
-                 * @param teamResource to find the scheduling configurations 
-                 * @returns schedulingConfigurations
-                 */
-                loadSchedulingConfigurations: function (teamResource) {
-                    return $http.get(UriTemplate.create(teamResource.link.teamSchedulingConfig).stringify(
-                        )).then(function success(response) {
-                        return response.data.entity;
-                    });
-                },
-
-                /**
                  * Loads all possible program specialties
                  *
                  * @param teamResource to find the providers link
