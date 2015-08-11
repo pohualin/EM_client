@@ -48,7 +48,6 @@ angular.module('emmiManager')
                 /**
                  * Schedule the passed program
                  *
-                 * @param teamResource to schedule it for
                  * @param toSchedule an instance of the ScheduledProgramFactory
                  * @returns {*} a promise
                  */
