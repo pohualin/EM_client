@@ -1,11 +1,12 @@
 'use strict';
 
 angular.module('emmiManager')
-    .controller('SelfRegistrationController', ['$scope', 'teamResource', 'SelfRegistrationService', '$alert', 'PatientSelfRegService',
-        function ($scope, teamResource, SelfRegistrationService, $alert, PatientSelfRegService) {
+    .controller('SelfRegistrationController', ['$scope', 'Session', 'teamResource', 'SelfRegistrationService', '$alert', 'PatientSelfRegService',
+        function ($scope, Session, teamResource, SelfRegistrationService, $alert, PatientSelfRegService) {
 
             $scope.team = teamResource;
             $scope.client = teamResource.entity.client;
+            $scope.url = Session.link.findBySelfRegCode;
 
             SelfRegistrationService.get($scope.team).then(function (response) {
                 $scope.selfRegConfig = response.entity ? angular.copy(response.entity) : {};
@@ -25,15 +26,15 @@ angular.module('emmiManager')
                 if (selfRegForm.$valid) {
                     $scope.whenSaving = true;
                     if ($scope.selfRegConfig && $scope.selfRegConfig.id) {
-                        $scope.update(selfRegForm);
+                        $scope.update();
                     }
                     else {
-                        $scope.create(selfRegForm);
+                        $scope.create();
                     }
                 }
             };
 
-            $scope.create = function (selfRegForm) {
+            $scope.create = function () {
                 SelfRegistrationService.create($scope.team, $scope.selfRegConfig).success(function (response) {
                     $scope.originalSelfRegConfig = angular.copy(response.entity);
                     $scope.selfRegConfig = angular.copy(response.entity);
@@ -48,15 +49,12 @@ angular.module('emmiManager')
                         dismissable: true
                     });
                 })
-                    .error(function () {
-                        selfRegForm.code.$setValidity('unique', false);
-                    })
                     .finally(function () {
                         $scope.whenSaving = false;
                     });
             };
 
-            $scope.update = function (selfRegForm) {
+            $scope.update = function () {
                 SelfRegistrationService.update($scope.team, $scope.selfRegConfig).success(function (response) {
                     $scope.selfRegConfig = angular.copy(response.entity);
                     $scope.originalSelfRegConfig = angular.copy(response.entity);
@@ -71,21 +69,9 @@ angular.module('emmiManager')
                         dismissable: true
                     });
                 })
-                    .error(function () {
-                        selfRegForm.code.$setValidity('unique', false);
-                    })
                     .finally(function () {
                         $scope.whenSaving = false;
                     });
-            }
-            ;
-
-            /**
-             * Reset all validity
-             */
-            $scope.resetValidity = function (form) {
-                form.$setDirty(true);
-                form.code.$setValidity('unique', true);
             };
 
             $scope.cancel = function () {

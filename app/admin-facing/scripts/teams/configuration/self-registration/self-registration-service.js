@@ -56,6 +56,12 @@ angular.module('emmiManager')
                     }
                 });
                 return deferred.promise;
+            },
+            getByCode: function (url, code) {
+                return $http.get(UriTemplate.create(url).stringify({code:code}))
+                    .then(function (response) {
+                        return response.data;
+                    });
             }
         };
     }])
