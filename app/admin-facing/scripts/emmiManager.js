@@ -63,7 +63,7 @@ angular.module('emmiManager', [
     })
 
     .constant('PATTERN', {
-        EMAIL: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$/,
+        EMAIL: /^[a-zA-Z0-9_.+-]{1,63}@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$/,
         PROVIDER_NAME: /^[a-zA-Z- '(),.]*$/
     })
 

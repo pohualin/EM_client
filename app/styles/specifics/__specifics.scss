@@ -511,6 +511,10 @@ TR.nowrap TD, TH {
   padding-left: 0;
 }
 
+.font-style-normal {
+  font-style: normal;
+}
+
 // various example component implementations
 @include example();
 @include example('.example2');

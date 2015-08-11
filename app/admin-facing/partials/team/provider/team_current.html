@@ -5,7 +5,7 @@
                 data-ng-click="addProviders()"><i class="icon-plus"></i> add providers
         </button>
     </div>
-    <h2>Providers</h2>
+    <h2 data-ng-if="schedulingConfiguration.entity.useProvider">Providers</h2>
     <table class="table table-bordered table-striped table-hover table-condensed" border="0" cellpadding="0"
            data-ng-show="listOfTeamProviders.length > 0" data-ng-if="schedulingConfiguration.entity.useProvider">
         <thead>
@@ -13,7 +13,7 @@
             <th>Name</th>
             <th>Primary Specialty</th>
             <th>Email</th>
-            <th data-ng-if="allTeamLocations.length > 0">Locations</th>
+            <th data-ng-if="allTeamLocations.length > 0 && schedulingConfiguration.entity.useLocation">Locations</th>
             <th class="text-center">Edit</th>
         </tr>
         </thead>
@@ -23,7 +23,7 @@
                 ? '' : "(inactive)"}}</em></span></td>
             <td class="col-sm-2">{{teamProvider.entity.provider.specialty.name}}</td>
             <td class="col-sm-3"><span class="col-wrap">{{teamProvider.entity.provider.email}}</span></td>
-            <td class="col-sm-2" data-ng-if="allTeamLocations.length > 0">
+            <td class="col-sm-2" data-ng-if="allTeamLocations.length > 0 && schedulingConfiguration.entity.useLocation">
                 <div>
                     <div data-placement="top" class="pointer"
                          data-ng-show="teamProvider.entity.locations && teamProvider.entity.locations.length > locationsColumnCharLimit"
@@ -73,6 +73,6 @@
             data-ng-show="team.name">&nbsp;for {{team.name}}</span>.</em></span>
     </div>
     <div class="table-no-results" data-ng-if="!schedulingConfiguration.entity.useProvider">
-        <span><em>Providers are not in use for this team click <span><a href="#/clients/{{client.id}}/teams/{{team.id}}/configuration/scheduling?team={{team.id}}&{{currentRouteQueryString}}">here</a></span> to edit this.</em></span>
+        <span><em>Providers are not in use for this team.</em></span>&nbsp;&nbsp;<span class="font-style-normal"><a href="#/clients/{{client.id}}/teams/{{team.id}}/configuration/scheduling?team={{team.id}}&{{currentRouteQueryString}}">edit</a></span>
     </div>
 </div>
