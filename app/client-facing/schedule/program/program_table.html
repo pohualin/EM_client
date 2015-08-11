@@ -2,14 +2,14 @@
     <div class="row">
         <div class="col-md-12">
             <div class="pull-left"
-                 data-ng-class="{ 'has-error' : !scheduledProgram.program && addProgramFormSubmitted }">
+                 data-ng-class="{ 'has-error' : selectedPrograms.length === 0 && addProgramFormSubmitted }">
                 <label class="control-label" data-ng-hide="showAll">Top 10 Programs</label>
                 <button data-ng-show="showAll" class="btn-link" data-ng-click="showAllResults(false)">
                     <label class="control-label"><span class="icon-list-bullet"></span> show top 10
                         only</label>
                 </button>
                 <div class="error-circle fa-exclamation-circle" role="alert"
-                     data-ng-show="!scheduledProgram.program && addProgramFormSubmitted"
+                     data-ng-show="selectedPrograms.length === 0 && addProgramFormSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                      data-title="Required" aria-label="Required"></div>
             </div>
@@ -71,6 +71,14 @@
             </ul>
         </div>
     </div>
+    
+    <div>
+      <button class="btn btn-default" type="button"
+              data-ng-disabled="whenSaving"
+              data-ng-click="addSelectedPrograms()">ADD SELECTED
+      </button>
+    </div>
+    
     <div data-ng-hide="programs">
         <span data-translate="global.messages.search.no_results_found"></span>
     </div>

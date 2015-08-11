@@ -14,7 +14,6 @@ angular.module('emmiManager')
             $scope.programSearch = {
                 specialty: ''
             };
-            $scope.scheduledProgram = AddProgramService.newScheduledProgram();
             AddProgramService.loadLocations($scope.team).then(function (locations) {
                 $scope.locations = locations;
             });
@@ -24,7 +23,9 @@ angular.module('emmiManager')
             AddProgramService.loadSpecialties($scope.team).then(function (specialties) {
                 $scope.specialties = specialties;
             });
-
+            
+            $scope.selectedPrograms = [];
+            $scope.selectedProgramsHolder = [];
 
             $scope.$on('event:update-patient-and-programs', function(){
                 $scope.saveScheduledProgram($scope.addProgramForm);
@@ -37,9 +38,9 @@ angular.module('emmiManager')
              */
             $scope.saveScheduledProgram = function (addProgramForm) {
                 $scope.addProgramFormSubmitted = true;
-                if ($scope.scheduledProgram.program && addProgramForm.$valid) {
+                if (addProgramForm.$valid && $scope.selectedPrograms.length !== 0) {
                     // save the scheduled program
-                    ScheduledProgramFactory.scheduledProgram = $scope.scheduledProgram;
+                    ScheduledProgramFactory.selectedPrograms = $scope.selectedPrograms;
                 } else {
                     $scope.showError();
                 }
@@ -99,31 +100,41 @@ angular.module('emmiManager')
              * @param form for date carrying function
              */
             $scope.selectProgram = function (programResource, form) {
-                resetViewByDateField(form);
-                if ($scope.scheduledProgram.program) {
-                    $scope.scheduledProgram.program.selected = false;
-                }
-                if (programResource && programResource.selected) {
-                    $scope.scheduledProgram.program = programResource;
+                if (programResource.selected) {
+                    var selectedProgram = AddProgramService.newScheduledProgram();
+                    selectedProgram.program = programResource
+                    $scope.selectedProgramsHolder.push(selectedProgram);
                 } else {
-                    $scope.scheduledProgram.program = '';
+                    $scope.selectedProgramsHolder = $scope.selectedProgramsHolder.filter(function(element){
+                        return element.program.entity.id !== programResource.entity.id;
+                    });
                 }
+            };
+            
+            /**
+             * Remove a schedule program card
+             */
+            $scope.deselectProgram = function (programResource) {
+                programResource.program.selected = false;
+                $scope.selectedPrograms = $scope.selectedPrograms.filter(function(element){
+                    return element.program.entity.id !== programResource.program.entity.id;
+                });
             };
 
             /**
              * When a location selection is changed, we need to load the providers
              * that are valid for that location
              */
-            $scope.onLocationChange = function () {
-                $scope.loadingProviderLocation = true;
-                AddProgramService.loadProviders($scope.team, $scope.scheduledProgram.location).then(
+            $scope.onLocationChange = function (selectedProgram) {
+                selectedProgram.loadingProviderLocation = true;
+                AddProgramService.loadProviders($scope.team, selectedProgram.location).then(
                     function (providers) {
-                        $scope.providers = providers;
+                        selectedProgram.providers = providers;
                         if (providers.length === 1) {
-                            $scope.scheduledProgram.provider = providers[0];
+                            selectedProgram.provider = providers[0];
                         }
                     }).finally(function () {
-                        $scope.loadingProviderLocation = false;
+                        selectedProgram.loadingProviderLocation = false;
                     });
             };
 
@@ -131,17 +142,17 @@ angular.module('emmiManager')
              * When a provider selection has changed, we need to load the
              * list of possible locations for the selected provider
              */
-            $scope.onProviderChange = function () {
+            $scope.onProviderChange = function (selectedProgram) {
                 // no location selected, refresh the list of possible locations
-                $scope.loadingProviderLocation = true;
-                AddProgramService.loadLocations($scope.team, $scope.scheduledProgram.provider).then(
+                selectedProgram.loadingProviderLocation = true;
+                AddProgramService.loadLocations($scope.team, selectedProgram.provider).then(
                     function (locations) {
-                        $scope.locations = locations;
+                        selectedProgram.locations = locations;
                         if (locations.length === 1) {
-                            $scope.scheduledProgram.location = locations[0];
+                            selectedProgram.location = locations[0];
                         }
                     }).finally(function () {
-                        $scope.loadingProviderLocation = false;
+                        selectedProgram.loadingProviderLocation = false;
                     });
             };
 
@@ -153,6 +164,8 @@ angular.module('emmiManager')
             };
 
             /**
+             * @Obsolete
+             * 
              * Called when the program has already been selected and the
              * user hits 'edit'
              *
@@ -172,7 +185,6 @@ angular.module('emmiManager')
              * @param specialty to filter the results on
              */
             var performSearch = function (sort, size, specialty) {
-                $scope.scheduledProgram.program = '';
                 return AddProgramService.findPrograms($scope.team, sort, size, specialty).then(function (programPage) {
                     $scope.handleResponse(programPage, contentProperty);
                     return programPage;
@@ -199,11 +211,16 @@ angular.module('emmiManager')
                 AddProgramService.fetchProgramPage(href).then(function (programPage) {
                     $scope.handleResponse(programPage, contentProperty);
                 });
-                $scope.scheduledProgram.program = '';
+            };
+            
+            $scope.addSelectedPrograms = function() {
+                $scope.selectedPrograms = $scope.selectedPrograms.concat($scope.selectedProgramsHolder);
+                $scope.selectedProgramsHolder = [];
             };
 
             // load the programs
             performSearch();
+            window.paul = $scope;
         }
     ])
 ;
