@@ -8,7 +8,8 @@ angular.module('emmiManager')
             $scope.client = teamResource.entity.client;
 
             SelfRegistrationService.get($scope.team).then(function (response) {
-                $scope.selfRegConfig = response.entity;
+                $scope.selfRegConfig = response.entity ? response.entity : {};
+                $scope.originalSelfRegConfig = response.entity ? response.entity : {};
             });
 
             PatientSelfRegService.refData($scope.team).then(function (response) {
@@ -19,22 +20,23 @@ angular.module('emmiManager')
                 $scope.languagesAvailable = response;
             });
 
-            $scope.continue = function (selfRegForm, regConfig) {
+            $scope.continue = function (selfRegForm) {
                 $scope.selfRegFormSubmitted = true;
                 if (selfRegForm.$valid) {
                     $scope.whenSaving = true;
                     if ($scope.selfRegConfig && $scope.selfRegConfig.id) {
-                        $scope.update(selfRegForm, regConfig);
+                        $scope.update(selfRegForm);
                     }
                     else {
-                        $scope.create(selfRegForm, regConfig);
+                        $scope.create(selfRegForm);
                     }
                 }
             };
 
-            $scope.create = function (selfRegForm, regConfig) {
-                SelfRegistrationService.create($scope.team, regConfig).success(function (response) {
-                    $scope.selfRegConfig = response.entity;
+            $scope.create = function (selfRegForm) {
+                SelfRegistrationService.create($scope.team, $scope.selfRegConfig).success(function (response) {
+                    $scope.originalSelfRegConfig = angular.copy(response.entity);
+                    $scope.selfRegConfig = angular.copy(response.entity);
                     $alert({
                         title: '',
                         content: '<strong>' + $scope.team.entity.name + '</strong> has been updated successfully.',
@@ -54,9 +56,10 @@ angular.module('emmiManager')
                     });
             };
 
-            $scope.update = function (selfRegForm, regConfig) {
-                SelfRegistrationService.update($scope.team, regConfig).success(function (response) {
-                    $scope.selfRegConfig = response.entity;
+            $scope.update = function (selfRegForm) {
+                SelfRegistrationService.update($scope.team, $scope.selfRegConfig).success(function (response) {
+                    $scope.selfRegConfig = angular.copy(response.entity);
+                    $scope.originalSelfRegConfig = angular.copy(response.entity);
                     $alert({
                         title: ' ',
                         content: 'The team self reg configuration has been updated successfully.',

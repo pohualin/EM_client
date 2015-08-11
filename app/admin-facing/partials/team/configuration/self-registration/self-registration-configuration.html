@@ -33,12 +33,12 @@
                 <span class="enumerate-value"><em><br/>There is no existing Self-Registration site for this team.</em></span>
             </div>
         </div>
-        <div class="pull-right">
+        <div class="pull-right" data-ng-show="selfRegConfig.code">
             <button class="btn btn-cancel" type="button" data-ng-click="cancel()">
                 <span>cancel</span>
             </button>
-            <button class="btn btn-success" type="submit" data-ng-click="continue(selfRegForm, selfRegConfig)">
-                <span>Continue</span>
+            <button class="btn btn-success" type="submit" data-ng-click="continue(selfRegForm)">
+                <span>{{originalSelfRegConfig.code ? 'Edit' : 'Continue'}}</span>
             </button>
         </div>
     </form>
