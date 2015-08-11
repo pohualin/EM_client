@@ -8,8 +8,8 @@ angular.module('emmiManager')
             $scope.client = teamResource.entity.client;
 
             SelfRegistrationService.get($scope.team).then(function (response) {
-                $scope.selfRegConfig = response.entity ? response.entity : {};
-                $scope.originalSelfRegConfig = response.entity ? response.entity : {};
+                $scope.selfRegConfig = response.entity ? angular.copy(response.entity) : {};
+                $scope.originalSelfRegConfig = response.entity ? angular.copy(response.entity) : {};
             });
 
             PatientSelfRegService.refData($scope.team).then(function (response) {
@@ -86,6 +86,10 @@ angular.module('emmiManager')
             $scope.resetValidity = function (form) {
                 form.$setDirty(true);
                 form.code.$setValidity('unique', true);
+            };
+
+            $scope.cancel = function () {
+                $scope.selfRegConfig = angular.copy($scope.originalSelfRegConfig);
             };
         }])
 ;
