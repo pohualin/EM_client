@@ -4,6 +4,7 @@ angular.module('emmiManager')
     .controller('CreatePatientController', ['$scope', 'CreatePatientService', '$alert',
         '$location', 'ScheduledProgramFactory', '$q', 'moment',
         function ($scope, CreatePatientService, $alert, $location, ScheduledProgramFactory, $q, moment) {
+
             $scope.minDate = moment().subtract(125, 'years').calendar();
 
             /**
