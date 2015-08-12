@@ -23,6 +23,7 @@ angular.module('emmiManager')
             AddProgramService.loadSpecialties($scope.team).then(function (specialties) {
                 $scope.specialties = specialties;
             });
+            $scope.patient = ScheduledProgramFactory.patient;
             $scope.selectedPrograms = [];
             $scope.selectedProgramsHolder = [];
 

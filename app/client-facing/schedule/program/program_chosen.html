@@ -1,4 +1,16 @@
 <div class="col-md-12">
+<div class="row" data-ng-if="patient.id" data-ng-include="'client-facing/schedule/schedule_buttons.html'"></div>
+<br>
+<br>
+<div data-ng-if="selectedPrograms.length === 0">
+  <div class="panel panel-default" data-start-collapsed="false" >
+    <div class="panel-body">
+      <p>Please select programs to schedule</p>
+    </div>
+  </div>
+</div>
+
+<div data-ng-if="selectedPrograms.length > 0" >
 
   <div class="panel panel-default" data-start-collapsed="false" data-bs-collapse data-ng-repeat="selectedProgram in selectedPrograms" >
   <div data-ng-form="selectedProgramForm">
@@ -107,5 +119,7 @@
   </div>
   </div>
 </div>
-
+<br>
+<div class="row" data-ng-if="patient.id" data-ng-include="'client-facing/schedule/schedule_buttons.html'"></div>
+</div>
 
