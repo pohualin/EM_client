@@ -8,9 +8,7 @@ angular.module('emmiManager')
             // add common pagination and sorting functions
             $controller('CommonPagination', {$scope: $scope});
             $controller('CommonSort', {$scope: $scope});
-            $scope.locations = {};
-            $scope.providers = {};
-
+  
             // initial loading
             var contentProperty = 'programs';
             $scope.programSearch = {
