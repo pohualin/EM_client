@@ -8,25 +8,35 @@ angular.module('emmiManager')
             // add common pagination and sorting functions
             $controller('CommonPagination', {$scope: $scope});
             $controller('CommonSort', {$scope: $scope});
-
+  
             // initial loading
             var contentProperty = 'programs';
             $scope.programSearch = {
                 specialty: ''
             };
-            AddProgramService.loadLocations($scope.team).then(function (locations) {
-                $scope.locations = locations;
-            });
-            AddProgramService.loadProviders($scope.team).then(function (providers) {
-                $scope.providers = providers;
-            });
+
+            $scope.useLocation = ScheduledProgramFactory.useLocation;
+            $scope.useProvider = ScheduledProgramFactory.useProvider;
+                 
             AddProgramService.loadSpecialties($scope.team).then(function (specialties) {
                 $scope.specialties = specialties;
             });
+            
+            if($scope.useLocation){
+                AddProgramService.loadLocations($scope.team).then(function (locations) {
+              		$scope.locations = locations;
+                 });
+            }
+            if($scope.useProvider){
+                AddProgramService.loadProviders($scope.team).then(function (providers) {
+            		$scope.providers = providers;
+                 });
+            }
+            
             $scope.patient = ScheduledProgramFactory.patient;
             $scope.selectedPrograms = [];
             $scope.selectedProgramsHolder = [];
-
+           
             $scope.$on('event:update-patient-and-programs', function(){
                 $scope.saveScheduledProgram($scope.addProgramForm);
             });
@@ -45,6 +55,7 @@ angular.module('emmiManager')
                     $scope.showError();
                 }
             };
+
 
             /**
              * When show all is clicked
@@ -159,7 +170,7 @@ angular.module('emmiManager')
                         selectedProgram.loadingProviderLocation = false;
                     });
             };
-
+            
             /**
              * When a specialty has been chosen or un-chosen
              */
@@ -180,6 +191,7 @@ angular.module('emmiManager')
                 $scope.addProgramFormSubmitted = false;
                 $scope.showAllResults(!!$scope.programSearch.specialty);
             };
+
 
             /**
              * The actual 'search' function
@@ -262,3 +274,4 @@ angular.module('emmiManager')
         }
     ])
 ;
+

@@ -100,7 +100,7 @@ angular.module('emmiManager')
                         return providers;
                     });
                 },
-
+                
                 /**
                  * Loads all possible program specialties
                  *
