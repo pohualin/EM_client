@@ -2,8 +2,8 @@
 
 angular.module('emmiManager')
 
-    .service('ScheduleService', ['$http', '$q', 'UriTemplate', 'moment',
-        function ($http, $q, UriTemplate, moment) {
+    .service('ScheduleService', ['$http', '$q', 'UriTemplate', 'moment', 'ScheduledProgramFactory',
+        function ($http, $q, UriTemplate, moment, ScheduledProgramFactory) {
             return {
 
                 /**
@@ -74,6 +74,31 @@ angular.module('emmiManager')
                            },
                                  viewByDate: moment(toSchedule.scheduledProgram.viewByDate).utc().format('YYYY-MM-DD')
                     });
+                },
+                /**
+                 * Schedule one or more selected programs
+                 * 
+                 * @param teamResource to schedule it for
+                 * @returns {*} a promise
+                 */
+                scheduleBulk: function (teamResource) {
+                    var self = this;
+                    var deferred = $q.defer();
+                    var saveRequests = [];
+                    
+                    angular.forEach(ScheduledProgramFactory.selectedPrograms, function (selectedProgram) {
+                        selectedProgram.patient = ScheduledProgramFactory.patient;
+                        var deferred = $q.defer();
+                        self.schedule(teamResource, selectedProgram).then(function(response){
+                            deferred.resolve(response.data);
+                        });
+                        saveRequests.push(deferred.promise);
+                    });
+
+                    $q.all(saveRequests).then(function(response){
+                        deferred.resolve(response);
+                    });
+                    return deferred.promise;
                 }
             };
         }])
