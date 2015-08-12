@@ -48,5 +48,6 @@ angular.module('emmiManager')
            }
        };
        return this;
+
     }])
 ;

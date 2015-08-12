@@ -16,7 +16,7 @@ angular.module('emmiManager')
             $scope.programSearch = {
                 specialty: ''
             };
-            $scope.scheduledProgram = AddProgramService.newScheduledProgram();
+
             $scope.useLocation = ScheduledProgramFactory.useLocation;
             $scope.useProvider = ScheduledProgramFactory.useProvider;
                  
@@ -122,7 +122,7 @@ angular.module('emmiManager')
                     });
                 }
             };
-
+            
             /**
              * Remove a schedule program card
              */
@@ -137,7 +137,7 @@ angular.module('emmiManager')
                     return element.program.entity.id !== programResource.program.entity.id;
                 });
             };
- 
+
             /**
              * When a location selection is changed, we need to load the providers
              * that are valid for that location
