@@ -7,16 +7,35 @@ angular.module('emmiManager')
     .factory('ScheduledProgramFactory', [function () {
         this.patient = {};
         this.scheduledProgram = null;
+        this.selectedPrograms = null;
 
         /**
          * valid is set if patient is selected and program selected is complete (program has location, provider, viewByDate, program)
          */
         this.valid = function () {
             return this.patient && this.patient.id && this.scheduledProgram &&
-                this.scheduledProgram.program && this.scheduledProgram.program.entity.id &&
-                this.scheduledProgram.location.entity.id && this.scheduledProgram.provider.entity.id &&
-                this.scheduledProgram.viewByDate;
+                scheduledProgram.program && scheduledProgram.program.entity.id &&
+                scheduledProgram.location.entity.id && scheduledProgram.provider.entity.id &&
+                scheduledProgram.viewByDate;
         };
+        
+        /**
+         * Check and see if all selected programs are valid
+         */
+        this.allValid = function () {
+            var self = this;
+            if (this.selectedPrograms) {
+                this.selectedPrograms.forEach(function(program){
+                    if (!self.valid(program)) {
+                        return false;
+                    }
+                });
+                return true;
+            } else {
+                return false;
+            }
+        };
+        
         return this;
     }])
 ;

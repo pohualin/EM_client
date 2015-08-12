@@ -55,11 +55,14 @@
                  * Saves schedule for valid patient and program on click of 'Finish Scheduling'
                  */
                 $scope.saveScheduledProgramForPatient = function () {
-                    if (ScheduledProgramFactory.valid()) {
+                    if (ScheduledProgramFactory.allValid()) {
                         $scope.whenSaving = true;
-                        ScheduleService.schedule($scope.team, $scope.scheduledProgram)
+                        ScheduleService.scheduleBulk($scope.team)
                             .then(function (response) {
-                                var scheduledProgramResource = response.data;
+                                // TODO PL: 
+                                // Only show instruction for the first scheduled program
+                                // this will need to be addressed in another ticket
+                                var scheduledProgramResource = response[0];
 
                                 $location.path(UriTemplate
                                     .create('/teams/{teamId}/schedule/{scheduleId}/instructions')
@@ -73,6 +76,7 @@
                                 });
                             }).finally(function () {
                                 $scope.whenSaving = false;
+                                ScheduledProgramFactory.selectedPrograms = null;
                             });
                     }
                 };
