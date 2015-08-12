@@ -259,7 +259,6 @@ angular.module('emmiManager')
 
             // load the programs
             performSearch();
-            window.paul = $scope;
         }
     ])
 ;
