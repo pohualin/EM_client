@@ -51,28 +51,27 @@ angular.module('emmiManager')
                  * @param toSchedule an instance of the ScheduledProgramFactory
                  * @returns {*} a promise
                  */
-                schedule: function (toSchedule) {
-                    
-                    return $http.post(UriTemplate.create(toSchedule.team.link.schedulePrograms).stringify(),
+                schedule: function (teamResource, selectedProgram) {
+                    return $http.post(UriTemplate.create(teamResource.link.schedulePrograms).stringify(),
                     {
                            patient: {
-                                   id: toSchedule.patient.id
+                                   id: selectedProgram.patient.id
                            },
                            program: {
-                                   id: toSchedule.scheduledProgram.program.entity.id
+                                   id: selectedProgram.program.entity.id
                            },
                            team: {
-                                  id: toSchedule.team.entity.id
+                                  id: teamResource.entity.id
                            },
                            location: {
-                                  // scheduledProgram.location is a TeamLocation
-                                 id: toSchedule.scheduledProgram.location ? toSchedule.scheduledProgram.location.entity.location.id : ''
+                                  // selectedProgram.location is a TeamLocation
+                                 id: selectedProgram.location ? selectedProgram.location.entity.location.id : ''
                            },
                            provider: {
-                                 // scheduledProgram.provider is a TeamProvider
-                                 id: toSchedule.scheduledProgram.provider ? toSchedule.scheduledProgram.provider.entity.provider.id : ''
+                                 // selectedProgram.provider is a TeamProvider
+                                 id: selectedProgram.provider ? selectedProgram.provider.entity.provider.id : ''
                            },
-                                 viewByDate: moment(toSchedule.scheduledProgram.viewByDate).utc().format('YYYY-MM-DD')
+                                 viewByDate: moment(selectedProgram.viewByDate).utc().format('YYYY-MM-DD')
                     });
                 },
                 /**
