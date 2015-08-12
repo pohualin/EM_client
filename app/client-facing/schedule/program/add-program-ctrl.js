@@ -23,7 +23,6 @@ angular.module('emmiManager')
             AddProgramService.loadSpecialties($scope.team).then(function (specialties) {
                 $scope.specialties = specialties;
             });
-            
             $scope.selectedPrograms = [];
             $scope.selectedProgramsHolder = [];
 
@@ -97,12 +96,11 @@ angular.module('emmiManager')
              * When a program is selected
              *
              * @param programResource to be selected
-             * @param form for date carrying function
              */
-            $scope.selectProgram = function (programResource, form) {
+            $scope.selectProgram = function (programResource) {
                 if (programResource.selected) {
                     var selectedProgram = AddProgramService.newScheduledProgram();
-                    selectedProgram.program = programResource
+                    selectedProgram.program = programResource;
                     $scope.selectedProgramsHolder.push(selectedProgram);
                 } else {
                     $scope.selectedProgramsHolder = $scope.selectedProgramsHolder.filter(function(element){
@@ -115,7 +113,12 @@ angular.module('emmiManager')
              * Remove a schedule program card
              */
             $scope.deselectProgram = function (programResource) {
-                programResource.program.selected = false;
+                $scope.programs.filter(function(element){
+                    if (element.entity.id === programResource.program.entity.id) {
+                        element.selected = false;
+                        element.disabled = false;
+                    }
+                });
                 $scope.selectedPrograms = $scope.selectedPrograms.filter(function(element){
                     return element.program.entity.id !== programResource.program.entity.id;
                 });
@@ -187,6 +190,7 @@ angular.module('emmiManager')
             var performSearch = function (sort, size, specialty) {
                 return AddProgramService.findPrograms($scope.team, sort, size, specialty).then(function (programPage) {
                     $scope.handleResponse(programPage, contentProperty);
+                    $scope.setSelectedProgramsCheckbox();
                     return programPage;
                 });
             };
@@ -210,12 +214,46 @@ angular.module('emmiManager')
                 $scope.loading = true;
                 AddProgramService.fetchProgramPage(href).then(function (programPage) {
                     $scope.handleResponse(programPage, contentProperty);
+                    $scope.setSelectedProgramsCheckbox();
                 });
             };
             
+            /**
+             * Call when ADD SELECTED button is clicked
+             * Add all selected programs from selectedProgramsHolder to selectedPrograms
+             * Clear selectedProgramsHolder
+             */
             $scope.addSelectedPrograms = function() {
                 $scope.selectedPrograms = $scope.selectedPrograms.concat($scope.selectedProgramsHolder);
+                angular.forEach($scope.selectedProgramsHolder, function (programInHolder) {
+                    $scope.programs.filter(function(element){
+                        if (element.entity.id === programInHolder.program.entity.id) {
+                            element.disabled = true;
+                        }
+                    });
+                });
                 $scope.selectedProgramsHolder = [];
+            };
+            
+            /**
+             * Set checkbox to selected and disabled when the program is already added
+             * Set checkbox to selected when the program is in holder but yet added
+             */
+            $scope.setSelectedProgramsCheckbox = function () {
+                angular.forEach($scope.programs, function (program) {
+                    $scope.selectedPrograms.filter(function(element){
+                        if (element.program.entity.id === program.entity.id) {
+                            program.selected = true;
+                            program.disabled = true;
+                        }
+                    });
+                    
+                    $scope.selectedProgramsHolder.filter(function(element){
+                        if (element.program.entity.id === program.entity.id) {
+                            program.selected = true;
+                        }
+                    });
+                });
             };
 
             // load the programs

@@ -39,7 +39,8 @@
         </tr>
         <tr data-ng-repeat="program in programs | orderBy:'program.sortIdx'">
             <td>
-                <input type="checkbox" id="program_{{program.entity.id}}" data-ng-model="program.selected" data-ng-change="selectProgram(program,addProgramForm)"/>
+                <input type="checkbox" id="program_{{program.entity.id}}" 
+                       data-ng-disabled="program.disabled" data-ng-model="program.selected" data-ng-change="selectProgram(program,addProgramForm)"/>
                 <label for="program_{{program.entity.id}}"></label>
             </td>
             <td><span data-ng-show="program.entity.type.name === 'MULTIMEDIA PROGRAM'" class="icon-film"
