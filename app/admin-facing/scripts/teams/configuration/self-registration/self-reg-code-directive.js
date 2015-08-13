@@ -2,10 +2,10 @@
 angular.module('emmiManager')
 
 /**
- * Ensures that the self reg code is unique across all teams and clients.
+ * Ensures that the self reg code is unique.
  */
-    .directive('uniqueSelfRegCode', ['$popover', 'SelfRegistrationService', '$translate', '$timeout',
-        function ($popover, SelfRegistrationService, $translate, $timeout) {
+    .directive('uniqueSelfRegCode', ['$popover', 'SelfRegistrationService',
+        function ($popover, SelfRegistrationService) {
             return {
                 restrict: 'A',
                 require: 'ngModel',
@@ -25,7 +25,7 @@ angular.module('emmiManager')
                         reset();
                     });
 
-                    element.on('blur', function () {
+                    scope.$on('submitSelfRegCode', function () {
                         SelfRegistrationService.getByCode(scope.url, element.val()).then(function (response) {
                             scope.selfRefConfig = response;
                             if (scope.selfRefConfig === undefined) {

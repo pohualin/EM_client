@@ -23,6 +23,7 @@ angular.module('emmiManager')
 
             $scope.continue = function (selfRegForm) {
                 $scope.selfRegFormSubmitted = true;
+                $scope.$broadcast('submitSelfRegCode');
                 if (selfRegForm.$valid) {
                     $scope.whenSaving = true;
                     if ($scope.selfRegConfig && $scope.selfRegConfig.id) {
@@ -72,9 +73,11 @@ angular.module('emmiManager')
                     .finally(function () {
                         $scope.whenSaving = false;
                     });
-            };
+            }
+            ;
 
             $scope.cancel = function () {
+                $scope.selfRegFormSubmitted = false;
                 $scope.selfRegConfig = angular.copy($scope.originalSelfRegConfig);
             };
         }])
