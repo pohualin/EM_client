@@ -8,36 +8,37 @@ angular.module('emmiManager')
             // add common pagination and sorting functions
             $controller('CommonPagination', {$scope: $scope});
             $controller('CommonSort', {$scope: $scope});
-  
+
             // initial loading
             var contentProperty = 'programs';
             $scope.programSearch = {
-                specialty: ''
+                specialty: '',
+                query: ''
             };
 
             $scope.useLocation = ScheduledProgramFactory.useLocation;
             $scope.useProvider = ScheduledProgramFactory.useProvider;
-                 
+
             AddProgramService.loadSpecialties($scope.team).then(function (specialties) {
                 $scope.specialties = specialties;
             });
-            
-            if($scope.useLocation){
+
+            if ($scope.useLocation) {
                 AddProgramService.loadLocations($scope.team).then(function (locations) {
-              		$scope.locations = locations;
-                 });
+                    $scope.locations = locations;
+                });
             }
-            if($scope.useProvider){
+            if ($scope.useProvider) {
                 AddProgramService.loadProviders($scope.team).then(function (providers) {
-            		$scope.providers = providers;
-                 });
+                    $scope.providers = providers;
+                });
             }
-            
+
             $scope.patient = ScheduledProgramFactory.patient;
             $scope.selectedPrograms = [];
             $scope.selectedProgramsHolder = [];
-           
-            $scope.$on('event:update-patient-and-programs', function(){
+
+            $scope.$on('event:update-patient-and-programs', function () {
                 $scope.saveScheduledProgram($scope.addProgramForm);
             });
 
@@ -63,7 +64,7 @@ angular.module('emmiManager')
              */
             $scope.showAllResults = function (show) {
                 var search = !show ? performSearch() :
-                    performSearch($scope.sortProperty,
+                    performSearch($scope.programSearch.query, $scope.sortProperty,
                         $scope.currentPageSize, $scope.programSearch.specialty);
                 search.finally(function () {
                     $scope.showAll = show;
@@ -115,23 +116,23 @@ angular.module('emmiManager')
                     selectedProgram.program = programResource;
                     $scope.selectedProgramsHolder.push(selectedProgram);
                 } else {
-                    $scope.selectedProgramsHolder = $scope.selectedProgramsHolder.filter(function(element){
+                    $scope.selectedProgramsHolder = $scope.selectedProgramsHolder.filter(function (element) {
                         return element.program.entity.id !== programResource.entity.id;
                     });
                 }
             };
-            
+
             /**
              * Remove a schedule program card
              */
             $scope.deselectProgram = function (programResource) {
-                $scope.programs.filter(function(element){
+                $scope.programs.filter(function (element) {
                     if (element.entity.id === programResource.program.entity.id) {
                         element.selected = false;
                         element.disabled = false;
                     }
                 });
-                $scope.selectedPrograms = $scope.selectedPrograms.filter(function(element){
+                $scope.selectedPrograms = $scope.selectedPrograms.filter(function (element) {
                     return element.program.entity.id !== programResource.program.entity.id;
                 });
             };
@@ -170,7 +171,7 @@ angular.module('emmiManager')
                         selectedProgram.loadingProviderLocation = false;
                     });
             };
-            
+
             /**
              * When a specialty has been chosen or un-chosen
              */
@@ -178,9 +179,13 @@ angular.module('emmiManager')
                 $scope.showAllResults(true);
             };
 
+            $scope.search = function () {
+                $scope.showAllResults(true);
+            };
+
             /**
              * @Obsolete
-             * 
+             *
              * Called when the program has already been selected and the
              * user hits 'edit'
              *
@@ -189,7 +194,7 @@ angular.module('emmiManager')
             $scope.editProgram = function (form) {
                 $scope.selectProgram(null, form);
                 $scope.addProgramFormSubmitted = false;
-                $scope.showAllResults(!!$scope.programSearch.specialty);
+                $scope.showAllResults(!!$scope.programSearch.specialty || !!$scope.programSearch.query);
             };
 
 
@@ -199,9 +204,10 @@ angular.module('emmiManager')
              * @param sort the sort component
              * @param size the size of the page
              * @param specialty to filter the results on
+             * @param query typed by the user in the search box
              */
-            var performSearch = function (sort, size, specialty) {
-                return AddProgramService.findPrograms($scope.team, sort, size, specialty).then(function (programPage) {
+            var performSearch = function (query, sort, size, specialty) {
+                return AddProgramService.findPrograms(query, $scope.team, sort, size, specialty).then(function (programPage) {
                     $scope.handleResponse(programPage, contentProperty);
                     $scope.setSelectedProgramsCheckbox();
                     return programPage;
@@ -215,7 +221,7 @@ angular.module('emmiManager')
              */
             $scope.sort = function (property) {
                 var sort = $scope.createSortProperty(property);
-                performSearch(sort, $scope.currentPageSize, $scope.programSearch.specialty);
+                performSearch($scope.programSearch.query, sort, $scope.currentPageSize, $scope.programSearch.specialty);
             };
 
             /**
@@ -230,16 +236,16 @@ angular.module('emmiManager')
                     $scope.setSelectedProgramsCheckbox();
                 });
             };
-            
+
             /**
              * Call when ADD SELECTED button is clicked
              * Add all selected programs from selectedProgramsHolder to selectedPrograms
              * Clear selectedProgramsHolder
              */
-            $scope.addSelectedPrograms = function() {
+            $scope.addSelectedPrograms = function () {
                 $scope.selectedPrograms = $scope.selectedPrograms.concat($scope.selectedProgramsHolder);
                 angular.forEach($scope.selectedProgramsHolder, function (programInHolder) {
-                    $scope.programs.filter(function(element){
+                    $scope.programs.filter(function (element) {
                         if (element.entity.id === programInHolder.program.entity.id) {
                             element.disabled = true;
                         }
@@ -247,21 +253,21 @@ angular.module('emmiManager')
                 });
                 $scope.selectedProgramsHolder = [];
             };
-            
+
             /**
              * Set checkbox to selected and disabled when the program is already added
              * Set checkbox to selected when the program is in holder but yet added
              */
             $scope.setSelectedProgramsCheckbox = function () {
                 angular.forEach($scope.programs, function (program) {
-                    $scope.selectedPrograms.filter(function(element){
+                    $scope.selectedPrograms.filter(function (element) {
                         if (element.program.entity.id === program.entity.id) {
                             program.selected = true;
                             program.disabled = true;
                         }
                     });
-                    
-                    $scope.selectedProgramsHolder.filter(function(element){
+
+                    $scope.selectedProgramsHolder.filter(function (element) {
                         if (element.program.entity.id === program.entity.id) {
                             program.selected = true;
                         }

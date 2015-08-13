@@ -9,16 +9,19 @@ angular.module('emmiManager')
                 /**
                  * Finds Programs
                  *
+                 * @param query the search query
                  * @param teamResource for this team
                  * @param sort order
                  * @param pageSize how many per page
+                 * @param specialty if the user chose one
                  * @returns {*}
                  */
-                findPrograms: function (teamResource, sort, pageSize, specialty) {
+                findPrograms: function (query, teamResource, sort, pageSize, specialty) {
                     return $http.get(UriTemplate.create(teamResource.link.programs).stringify({
                             sort: sort && sort.property ? sort.property + ',' + (sort.ascending ? 'asc' : 'desc') : '',
                             size: pageSize,
-                            s: specialty ? specialty.entity.id : ''
+                            s: specialty ? specialty.entity.id : '',
+                            q: query
                         }
                     )).then(function (response) {
                         return response.data;
@@ -100,7 +103,7 @@ angular.module('emmiManager')
                         return providers;
                     });
                 },
-                
+
                 /**
                  * Loads all possible program specialties
                  *
