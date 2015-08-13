@@ -124,7 +124,7 @@ angular.module('emmiManager')
                         angular.forEach(clientRoleResource.entity.userClientPermissions, function (group) {
                             // set the disabled
                             $scope.permissionSelectionChange(group, group.active,
-                                clientRoleResource.entity.userClientPermissions, false);
+                                clientRoleResource.entity.userClientPermissions, true);
                         });
                         // Set the form back to pristine after loading permissions from server
                         form.$setPristine();
@@ -138,11 +138,11 @@ angular.module('emmiManager')
             /**
              * Called when an existing role is changed.
              */
-            $scope.permissionSelectionChange = function (changedOption, isSelected, all) {
+            $scope.permissionSelectionChange = function (changedOption, isSelected, all, init) {
                 // process selection changes
                 var form = $scope.existingForms[changedOption.parentRoleId];
                 if (form) {
-                    if (ManageUserRolesService.doesChangeNeedSave(changedOption, isSelected, all)) {
+                    if (ManageUserRolesService.doesChangeNeedSave(changedOption, isSelected, all, init)) {
                         // set the form dirty if there are any deltas
                         form.$setDirty();
                     } else {

@@ -384,9 +384,10 @@ angular.module('emmiManager')
                  * @param all  possible options
                  * @returns {*|boolean} true if the values are different than the loaded values
                  */
-                doesChangeNeedSave: function (changedOption, isSelected, all) {
+                doesChangeNeedSave: function (changedOption, isSelected, all, init) {
 
-                    if ('PERM_CLIENT_SUPER_USER' === changedOption.name) {
+                    // Not initial load or initial load and PERM_CLIENT_SUPER_USER is selected
+                    if ('PERM_CLIENT_SUPER_USER' === changedOption.name && ((init && isSelected) || !init)) {
                         // enable or disable based upon the selection state of admin permission
                         angular.forEach(all, function (group) {
                             // for all non-super user permissions...
