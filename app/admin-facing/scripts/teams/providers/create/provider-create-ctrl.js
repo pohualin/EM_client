@@ -1,12 +1,12 @@
 'use strict';
 angular.module('emmiManager')
 
-	.controller('ProviderCreateController', ['$scope', 'TeamProviderService', 'ProviderCreate',
-        function ($scope, TeamProviderService, ProviderCreate) {
+	.controller('ProviderCreateController', ['$scope', 'TeamProviderService', 'ProviderCreate', 'AddTeamProvidersFactory',
+        function ($scope, TeamProviderService, ProviderCreate, AddTeamProvidersFactory) {
 
         $scope.provider = ProviderCreate.newProvider();
-        $scope.selectedItems = TeamProviderService.buildMultiSelectData($scope.allTeamLocations);
-        $scope.multiSelectData = TeamProviderService.buildMultiSelectData($scope.allTeamLocations);
+        $scope.selectedItems = TeamProviderService.buildMultiSelectData(AddTeamProvidersFactory.getTeamLocations());
+        $scope.multiSelectData = TeamProviderService.buildMultiSelectData(AddTeamProvidersFactory.getTeamLocations());
         if ($scope.searchAll.providerQuery) {
             var strings = $scope.searchAll.providerQuery.split(',');
             if (strings.length > 1) {
