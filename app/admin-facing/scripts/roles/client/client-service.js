@@ -1,8 +1,8 @@
 'use strict';
 angular.module('emmiManager')
 
-    .service('ManageUserRolesService', ['$filter', '$q', '$http', '$translate', 'UriTemplate', 'CommonService', 'ivhTreeviewMgr',
-        function ($filter, $q, $http, $translate, UriTemplate, CommonService, ivhTreeviewMgr) {
+    .service('ManageUserRolesService', ['$filter', '$q', '$http', '$translate', 'UriTemplate', 'CommonService', 'ivhTreeviewMgr', 'RolesFactory',
+        function ($filter, $q, $http, $translate, UriTemplate, CommonService, ivhTreeviewMgr, RolesFactory) {
             var cachedReferenceData;
             var existingClientRoles = [];
             return {
@@ -255,18 +255,18 @@ angular.module('emmiManager')
                     return deferred.promise;
                 },
                 /**
-                 * Disables a library role when it is already present in the savedClientRoles
+                 * Disables a library role when it is already present in the existing client roles or client team roles
                  *
-                 * @param savedClientRoles what is already saved
                  * @param libraryRole to disable or not
                  * @returns libraryRole modified
                  */
-                disableSelectedLibraries: function (savedClientRoles, libraryRole) {
+                disableSelectedLibraries: function (libraryRole) {
                     libraryRole.disableNameMatch = false;
                     libraryRole.disabled = false;
-                    angular.forEach(savedClientRoles, function (existingClientRole) {
+                    var allRoles = RolesFactory.getClientRoles().concat(RolesFactory.getClientTeamRoles());
+                    angular.forEach(allRoles, function (existingClientRole) {
                         var type = existingClientRole.entity ? existingClientRole.entity.type : null;
-                        if (type && libraryRole.entity.type.id === type.id) {
+                        if (type && libraryRole.entity.type.name === type.name) {
                             libraryRole.disabled = true;
                         } else if (libraryRole.entity.normalizedName === existingClientRole.entity.normalizedName) {
                             libraryRole.disableNameMatch = true;
@@ -384,9 +384,10 @@ angular.module('emmiManager')
                  * @param all  possible options
                  * @returns {*|boolean} true if the values are different than the loaded values
                  */
-                doesChangeNeedSave: function (changedOption, isSelected, all) {
+                doesChangeNeedSave: function (changedOption, isSelected, all, init) {
 
-                    if ('PERM_CLIENT_SUPER_USER' === changedOption.name) {
+                    // Not initial load or initial load and PERM_CLIENT_SUPER_USER is selected
+                    if ('PERM_CLIENT_SUPER_USER' === changedOption.name && ((init && isSelected) || !init)) {
                         // enable or disable based upon the selection state of admin permission
                         angular.forEach(all, function (group) {
                             // for all non-super user permissions...
