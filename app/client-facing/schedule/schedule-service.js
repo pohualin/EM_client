@@ -44,6 +44,18 @@ angular.module('emmiManager')
                         });
                     return deferred.promise;
                 },
+                
+                /**
+                 * Load the team configuration for a given team
+                 * 
+                 * @param team to load for
+                 */
+                loadTeamSchedulingConfiguration: function (team) {
+                    return $http.get(UriTemplate.create(team.link.teamSchedulingConfig).stringify())
+                        .then(function (response) {
+                            return response.data;
+                        });
+                },
 
                 /**
                  * Schedule the passed program

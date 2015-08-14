@@ -2,8 +2,8 @@
 
 angular.module('emmiManager')
 
-    .service('AddProgramService', ['$http', 'UriTemplate', 'moment',
-        function ($http, UriTemplate, moment) {
+    .service('AddProgramService', ['$http', 'UriTemplate', 'moment', 'ScheduledProgramFactory',
+        function ($http, UriTemplate, moment, ScheduledProgramFactory) {
             return {
 
                 /**
@@ -52,8 +52,25 @@ angular.module('emmiManager')
                         location: '',
                         program: '',
                         specialty: '',
-                        viewByDate: moment().add(30, 'days').format('YYYY-MM-DD')
+                        viewByDate: this.calculateViewByDate()
                     };
+                },
+                
+                /**
+                 * Calculate viewByDate based on teamSchedulingConfiguration
+                 * 
+                 * @return null or a date
+                 */
+                calculateViewByDate: function() {
+                    var viewByDate = null;
+                    if (ScheduledProgramFactory.teamSchedulingConfiguration) {
+                        if (ScheduledProgramFactory.teamSchedulingConfiguration.entity.useViewByDays) {
+                            viewByDate = moment()
+                                .add(ScheduledProgramFactory.teamSchedulingConfiguration.entity.viewByDays, 'days')
+                                .format('YYYY-MM-DD');
+                        }
+                    }
+                    return viewByDate;
                 },
 
                 /**
