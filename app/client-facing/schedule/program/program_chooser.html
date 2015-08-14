@@ -1,24 +1,14 @@
-<form name="addProgramForm" novalidate data-ng-switch="!!scheduledProgram.program" data-ng-controller="AddProgramController">
+<form name="addProgramForm" novalidate data-ng-controller="AddProgramController">
     <div id="add-program-alerts-container"
          data-ng-show="addProgramFormSubmitted &&
-                      (addProgramForm.$invalid || !scheduledProgram.program)"></div>
-    <div class="row" data-ng-switch-when="false">
+                      (addProgramForm.$invalid || selectedPrograms.length === 0)"></div>
+    <div class="row">
         <div class="col-md-4 pull-right"
-             data-ng-include="'client-facing/schedule/program/program_attributes.html'"></div>
-        <div class="col-md-8" data-ng-hide="scheduledProgram.program">
+             data-ng-include="'client-facing/schedule/program/program_chosen.html'"></div>
+        <div class="col-md-8">
             <div class="row" data-ng-include="'client-facing/schedule/program/program_table_filter.html'"></div>
             <br/>
-            <div class="row" data-ng-hide="scheduledProgram.program"
-                 data-ng-include="'client-facing/schedule/program/program_table.html'"></div>
-        </div>
-    </div>
-    <div class="row" data-ng-switch-when="true">
-        <div class="row">
-            <div class="col-md-8" data-ng-include="'client-facing/schedule/program/program_selected.html'"></div>
-        </div>
-        <div class="row">
-            <div class="col-md-3"
-                 data-ng-include="'client-facing/schedule/program/program_attributes.html'"></div>
+            <div class="row" data-ng-include="'client-facing/schedule/program/program_table.html'"></div>
         </div>
     </div>
 </form>
