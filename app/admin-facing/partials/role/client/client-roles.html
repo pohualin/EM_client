@@ -1,7 +1,7 @@
 <div class="col-md-12" data-ng-controller="ClientRoleAdminCtrl">
     <div class="row">
         <div class="col-md-6">
-            <div class="pull-right" data-ng-if="existingClientRoles">
+            <div class="pull-right" data-ng-if="existingClientRoles" data-ng-hide="newClientRole" >
                 <button class="btn btn-link btn-link-nopad btn-heading btn-tag-library" type="button"
                         data-ng-disabled="whenSaving"
                         title="Select client roles to add:"

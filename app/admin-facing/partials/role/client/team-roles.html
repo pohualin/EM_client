@@ -1,7 +1,7 @@
 <div class="col-md-12" data-ng-controller="ClientTeamRoleAdminCtrl">
     <div class="row">
         <div class="col-md-6">
-            <div class="pull-right" data-ng-if="existingClientTeamRoles">
+            <div class="pull-right" data-ng-if="existingClientTeamRoles" data-ng-hide="newClientTeamRole">
                 <button class="btn btn-link btn-link-nopad btn-heading btn-tag-library" type="button" title="Select team roles to add:"
                         data-placement="right" data-template="admin-facing/partials/role/client/role-library.html"
                         data-ng-disabled="whenSaving"
