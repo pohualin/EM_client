@@ -207,10 +207,13 @@ angular.module('emmiManager')
              * @param query typed by the user in the search box
              */
             var performSearch = function (query, sort, size, specialty) {
+                $scope.searching = true;
                 return AddProgramService.findPrograms(query, $scope.team, sort, size, specialty).then(function (programPage) {
                     $scope.handleResponse(programPage, contentProperty);
                     $scope.setSelectedProgramsCheckbox();
                     return programPage;
+                }).finally(function () {
+                    $scope.searching = false;
                 });
             };
 
