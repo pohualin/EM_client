@@ -8,9 +8,11 @@
             <input class="form-control" id="query" name="query" data-ng-model="programSearch.query" type="text"
                    placeholder="Name, keyword..." data-auto-focus>
 
-            <div class="input-group-addon" data-ng-click="!loading ? search() : false"
-                 data-ng-disabled="loading">
-                Search
+            <div class="input-group-addon" data-ng-click="!searching ? search() : false"
+                 data-ng-style="{'padding': searching ? '8px 16px' : ''}"
+                 data-ng-disabled="searching">
+                <span class="search-spinner" data-ng-show="searching" style="margin-left: 8px;margin-right:8px;"></span>
+                <span data-ng-hide="searching">Search</span>
             </div>
         </div>
     </div>
