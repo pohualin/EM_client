@@ -19,7 +19,7 @@ angular.module('emmiManager')
                             return response.data;
                         });
                 },
-
+                
                 /**
                  * Loads the scheduled program by id
                  *
@@ -48,33 +48,31 @@ angular.module('emmiManager')
                 /**
                  * Schedule the passed program
                  *
-                 * @param teamResource to schedule it for
                  * @param toSchedule an instance of the ScheduledProgramFactory
                  * @returns {*} a promise
                  */
-                schedule: function (teamResource, toSchedule) {
+                schedule: function (teamResource, selectedProgram) {
                     return $http.post(UriTemplate.create(teamResource.link.schedulePrograms).stringify(),
-                        {
-                            patient: {
-                                id: toSchedule.patient.id
-                            },
-                            program: {
-                                id: toSchedule.program.entity.id
-                            },
-                            team: {
-                                id: teamResource.entity.id
-                            },
-                            location: {
-                                // scheduledProgram.location is a TeamLocation
-                                id: toSchedule.location.entity.location.id
-                            },
-                            provider: {
-                                // scheduledProgram.provider is a TeamProvider
-                                id: toSchedule.provider.entity.provider.id
-                            },
-                            viewByDate: moment(toSchedule.viewByDate).utc().format('YYYY-MM-DD')
-                        }
-                    );
+                    {
+                           patient: {
+                                   id: selectedProgram.patient.id
+                           },
+                           program: {
+                                   id: selectedProgram.program.entity.id
+                           },
+                           team: {
+                                  id: teamResource.entity.id
+                           },
+                           location: {
+                                  // selectedProgram.location is a TeamLocation
+                                 id: selectedProgram.location ? selectedProgram.location.entity.location.id : ''
+                           },
+                           provider: {
+                                 // selectedProgram.provider is a TeamProvider
+                                 id: selectedProgram.provider ? selectedProgram.provider.entity.provider.id : ''
+                           },
+                                 viewByDate: moment(selectedProgram.viewByDate).utc().format('YYYY-MM-DD')
+                    });
                 },
                 /**
                  * Schedule one or more selected programs

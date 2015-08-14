@@ -39,7 +39,7 @@
         </tr>
         <tr data-ng-repeat="program in programs | orderBy:'program.sortIdx'">
             <td>
-                <input type="checkbox" id="program_{{program.entity.id}}" 
+                <input type="checkbox" id="program_{{program.entity.id}}"
                        data-ng-disabled="program.disabled" data-ng-model="program.selected" data-ng-change="selectProgram(program,addProgramForm)"/>
                 <label for="program_{{program.entity.id}}"></label>
             </td>
@@ -72,14 +72,14 @@
             </ul>
         </div>
     </div>
-    
+
     <div>
       <button class="btn btn-default" type="button"
               data-ng-disabled="whenSaving"
               data-ng-click="addSelectedPrograms()">ADD SELECTED
       </button>
     </div>
-    
+
     <div data-ng-hide="programs">
         <span data-translate="global.messages.search.no_results_found"></span>
     </div>
