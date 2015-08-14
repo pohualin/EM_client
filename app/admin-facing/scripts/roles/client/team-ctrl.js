@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  *   Manage Team Level roles for a client
  */
-    .controller('ClientTeamRoleAdminCtrl', ['$scope', '$alert', 'ManageUserTeamRolesService', 'focus',
-        function ($scope, $alert, ManageUserTeamRolesService, focus) {
+    .controller('ClientTeamRoleAdminCtrl', ['$scope', '$alert', 'ManageUserTeamRolesService', 'focus', 'RolesFactory',
+        function ($scope, $alert, ManageUserTeamRolesService, focus, RolesFactory) {
 
             // these are loaded by the route/main controller
             $scope.clientTeamReferenceData = $scope.clientResource.ref.clientTeamReferenceData;
@@ -18,6 +18,7 @@ angular.module('emmiManager')
             $scope.loadExisting = function () {
                 ManageUserTeamRolesService.loadClientTeamRoles($scope.clientResource).then(function (rolesResources) {
                     $scope.existingClientTeamRoles = rolesResources;
+                    RolesFactory.setClientTeamRoles(rolesResources);
                     $scope.setHasExistingRoles();
                 });
             };
@@ -214,7 +215,7 @@ angular.module('emmiManager')
              */
             $scope.disableLibrary = function () {
                 return function (libraryRole) {
-                    return ManageUserTeamRolesService.disableSelectedLibraries($scope.existingClientTeamRoles, libraryRole);
+                    return ManageUserTeamRolesService.disableSelectedLibraries(libraryRole);
                 };
             };
 
