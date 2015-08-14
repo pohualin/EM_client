@@ -21,7 +21,7 @@
             View programs by Specialty:
         </label>
         <select id="specialtyFilter" name="specialtyFilter" class="form-control"
-                data-ng-disabled="!specialties || specialties.length == 0"
+                data-ng-disabled="!specialties || specialties.length == 0 || searching"
                 data-ng-model="programSearch.specialty" data-ng-change="onSpecialtyFilterChange()"
                 data-ng-options="specialty.entity.name for specialty in specialties | orderBy:'entity.name' track by specialty.entity.id"
                 data-disable-search-threshold="10" data-allow-single-deselect="true"
