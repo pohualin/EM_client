@@ -16,23 +16,28 @@ angular.module('emmiManager')
                 query: ''
             };
 
-            $scope.useLocation = ScheduledProgramFactory.useLocation;
-            $scope.useProvider = ScheduledProgramFactory.useProvider;
+            /**
+             * Watch teamSchdulingConfiguration and set new values to scope
+             */
+            $scope.$watch(function(){
+                return ScheduledProgramFactory.teamSchedulingConfiguration;
+            }, function(newValue){
+                $scope.teamSchedulingConfiguration = newValue ? newValue.entity : {};
+                if ($scope.teamSchedulingConfiguration && $scope.teamSchedulingConfiguration.useLocation) {
+                    AddProgramService.loadLocations($scope.team).then(function (locations) {
+                        $scope.locations = locations;
+                    });
+                }
+                if ($scope.teamSchedulingConfiguration && $scope.teamSchedulingConfiguration.useProvider) {
+                    AddProgramService.loadProviders($scope.team).then(function (providers) {
+                        $scope.providers = providers;
+                    });
+                }
+            });
 
             AddProgramService.loadSpecialties($scope.team).then(function (specialties) {
                 $scope.specialties = specialties;
             });
-
-            if ($scope.useLocation) {
-                AddProgramService.loadLocations($scope.team).then(function (locations) {
-                    $scope.locations = locations;
-                });
-            }
-            if ($scope.useProvider) {
-                AddProgramService.loadProviders($scope.team).then(function (providers) {
-                    $scope.providers = providers;
-                });
-            }
 
             $scope.patient = ScheduledProgramFactory.patient;
             $scope.selectedPrograms = [];
