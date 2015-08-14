@@ -23,8 +23,7 @@
                     <label class="control-label" for="code">Create a Code</label>
                     <input class="form-control" name="code" type="text" data-ng-pattern="/^[a-zA-Z0-9-_]+$/" required
                            data-ng-model="selfRegConfig.code"
-                           data-unique-self-reg-code data-edit-mode="editMode" data-unique-url="url" data-team="team"
-                           id="code" maxlength="100" data-auto-focus data-focus-on="code">
+                           id="code" maxlength="100" data-auto-focus data-focus-on="code" data-ng-change="resetValidity(selfRegForm)">
                 </div>
             </div>
             <div class="col-md-6" data-ng-hide="originalSelfRegConfig.code">
@@ -36,7 +35,7 @@
             <button class="btn btn-cancel" type="button" data-ng-click="cancel()">
                 <span>cancel</span>
             </button>
-            <button class="btn btn-success" type="submit" data-ng-click="continue(selfRegForm)">
+            <button class="btn btn-success" type="submit" data-ng-click="continue(selfRegForm, $event)">
                 <span>{{originalSelfRegConfig.code ? 'Edit' : 'Continue'}}</span>
             </button>
         </div>

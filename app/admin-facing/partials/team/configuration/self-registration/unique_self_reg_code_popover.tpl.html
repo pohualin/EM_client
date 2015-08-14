@@ -1,5 +1,6 @@
 <div class="popover-text">
     <span>This Code is already in use. Team: </span>
-    <a href="#/clients/{{selfRefConfig.entity.team.client.id}}?team={{selfRefConfig.entity.team.id}}">{{selfRefConfig.entity.team.name}}</a>.
-    <span>Client: </span><a href="#/clients/{{selfRefConfig.entity.team.client.id}}">{{selfRefConfig.entity.team.client.name}}</a>.
+    <a href="#/clients/{{conflictingConfig.team.client.id}}?team={{conflictingConfig.team.id}}">{{conflictingConfig.team.name}}</a>.
+    <span>Client: </span><a
+    href="#/clients/{{conflictingConfig.team.client.id}}">{{conflictingConfig.team.client.name}}</a>.
 </div>

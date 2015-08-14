@@ -60,18 +60,6 @@ angular.module('emmiManager')
                     }
                 });
                 return deferred.promise;
-            },
-            /**
-             * get self reg configuration for any team/client by given code
-             * @param url
-             * @param code
-             * @returns {*}
-             */
-            getByCode: function (url, code) {
-                return $http.get(UriTemplate.create(url).stringify({code:code}))
-                    .then(function (response) {
-                        return response.data;
-                    });
             }
         };
     }])
