@@ -266,7 +266,7 @@ angular.module('emmiManager')
                     var allRoles = RolesFactory.getClientRoles().concat(RolesFactory.getClientTeamRoles());
                     angular.forEach(allRoles, function (existingClientRole) {
                         var type = existingClientRole.entity ? existingClientRole.entity.type : null;
-                        if (type && libraryRole.entity.type.id === type.id) {
+                        if (type && libraryRole.entity.type.name === type.name) {
                             libraryRole.disabled = true;
                         } else if (libraryRole.entity.normalizedName === existingClientRole.entity.normalizedName) {
                             libraryRole.disableNameMatch = true;
