@@ -1,8 +1,8 @@
 'use strict';
 angular.module('emmiManager')
 
-    .service('ManageUserRolesService', ['$filter', '$q', '$http', '$translate', 'UriTemplate', 'CommonService', 'ivhTreeviewMgr',
-        function ($filter, $q, $http, $translate, UriTemplate, CommonService, ivhTreeviewMgr) {
+    .service('ManageUserRolesService', ['$filter', '$q', '$http', '$translate', 'UriTemplate', 'CommonService', 'ivhTreeviewMgr', 'RolesFactory',
+        function ($filter, $q, $http, $translate, UriTemplate, CommonService, ivhTreeviewMgr, RolesFactory) {
             var cachedReferenceData;
             var existingClientRoles = [];
             return {
@@ -255,16 +255,16 @@ angular.module('emmiManager')
                     return deferred.promise;
                 },
                 /**
-                 * Disables a library role when it is already present in the savedClientRoles
+                 * Disables a library role when it is already present in the existing client roles or client team roles
                  *
-                 * @param savedClientRoles what is already saved
                  * @param libraryRole to disable or not
                  * @returns libraryRole modified
                  */
-                disableSelectedLibraries: function (savedClientRoles, libraryRole) {
+                disableSelectedLibraries: function (libraryRole) {
                     libraryRole.disableNameMatch = false;
                     libraryRole.disabled = false;
-                    angular.forEach(savedClientRoles, function (existingClientRole) {
+                    var allRoles = RolesFactory.getClientRoles().concat(RolesFactory.getClientTeamRoles());
+                    angular.forEach(allRoles, function (existingClientRole) {
                         var type = existingClientRole.entity ? existingClientRole.entity.type : null;
                         if (type && libraryRole.entity.type.id === type.id) {
                             libraryRole.disabled = true;

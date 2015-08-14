@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  *   Manage Client Level roles for a client
  */
-    .controller('ClientRoleAdminCtrl', ['$scope', '$alert', 'ManageUserRolesService', '$filter', 'focus',
-        function ($scope, $alert, ManageUserRolesService, $filter, focus) {
+    .controller('ClientRoleAdminCtrl', ['$scope', '$alert', 'ManageUserRolesService', '$filter', 'focus', 'RolesFactory',
+        function ($scope, $alert, ManageUserRolesService, $filter, focus, RolesFactory) {
 
             // these are loaded by the route/main controller
             $scope.clientReferenceData = $scope.clientResource.ref.clientRoleReferenceData;
@@ -19,6 +19,7 @@ angular.module('emmiManager')
             $scope.loadExisting = function () {
                 ManageUserRolesService.loadClientRoles($scope.clientResource).then(function (rolesResources) {
                     $scope.existingClientRoles = rolesResources;
+                    RolesFactory.setClientRoles(rolesResources);
                     $scope.setHasExistingRoles();
                 });
             };
@@ -243,7 +244,7 @@ angular.module('emmiManager')
              */
             $scope.disableLibrary = function () {
                 return function (libraryRole) {
-                    return ManageUserRolesService.disableSelectedLibraries($scope.existingClientRoles, libraryRole);
+                    return ManageUserRolesService.disableSelectedLibraries(libraryRole);
                 };
             };
 

@@ -1,8 +1,8 @@
 'use strict';
 angular.module('emmiManager')
 
-    .service('ManageUserTeamRolesService', ['$filter', '$q', '$http', '$translate', 'UriTemplate', 'CommonService',
-        function ($filter, $q, $http, $translate, UriTemplate, CommonService) {
+    .service('ManageUserTeamRolesService', ['$filter', '$q', '$http', '$translate', 'UriTemplate', 'CommonService', 'RolesFactory',
+        function ($filter, $q, $http, $translate, UriTemplate, CommonService, RolesFactory) {
             var referenceData;
             var existingClientTeamRoles = [];
             return {
@@ -252,18 +252,18 @@ angular.module('emmiManager')
                     return deferred.promise;
                 },
                 /**
-                 * Disables a library role when it is already present in the savedClientTeamRoles
+                 * Disables a library role when it is already present in the existing client roles or client team roles
                  *
-                 * @param savedClientTeamRoles what is already saved
                  * @param libraryRole to disable or not
                  * @returns libraryRole modified
                  */
-                disableSelectedLibraries: function (savedClientTeamRoles, libraryRole) {
+                disableSelectedLibraries: function (libraryRole) {
                     libraryRole.disableNameMatch = false;
                     libraryRole.disabled = false;
-                    angular.forEach(savedClientTeamRoles, function (existingClientTeamRole) {
+                    var allRoles = RolesFactory.getClientRoles().concat(RolesFactory.getClientTeamRoles());
+                    angular.forEach(allRoles, function (existingClientTeamRole) {
                         var type = existingClientTeamRole.entity ? existingClientTeamRole.entity.type : null;
-                        if (type && libraryRole.entity.type.id === type.id) {
+                        if (type && libraryRole.entity.type.name === type.name) {
                             libraryRole.disabled = true;
                         } else if(libraryRole.entity.normalizedName === existingClientTeamRole.entity.normalizedName){
                             libraryRole.disableNameMatch = true;
