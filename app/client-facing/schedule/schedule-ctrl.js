@@ -13,7 +13,12 @@
                 $scope.page.setTitle('Schedule Emmi Program - ' + team.entity.name);
                 $scope.client = client;
                 $scope.patient = team.patient.entity;
+                ScheduledProgramFactory.team = team;
                 ScheduledProgramFactory.patient = team.patient.entity;
+                
+                ScheduleService.loadTeamSchedulingConfiguration(team).then(function (teamSchedulingConfiguration) {
+                    ScheduledProgramFactory.teamSchedulingConfiguration = teamSchedulingConfiguration;
+                });
                                 
                 /**
                  * Retrieve team email configuration for scheduling

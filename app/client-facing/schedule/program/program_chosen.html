@@ -28,7 +28,7 @@
         </div>
       </div>
       <h3>{{selectedProgram.program.entity.name}}</h3>
-      <div class="row" data-ng-if="useProvider">
+      <div class="row" data-ng-if="teamSchedulingConfiguration.useProvider">
            <div class="form-group col-md-12"
                data-ng-class="{ 'has-error' : selectedProgramForm.provider.$invalid && addProgramFormSubmitted }">
               <label class="control-label" for="provider">
@@ -58,7 +58,7 @@
           </div>
       </div>
   
-      <div class="row" data-ng-if="useLocation">
+      <div class="row" data-ng-if="teamSchedulingConfiguration.useLocation">
           <div class="form-group col-md-12"
                data-ng-class="{ 'has-error' : selectedProgramForm.location.$invalid && addProgramFormSubmitted }">
               <label class="control-label" for="location">
