@@ -23,9 +23,10 @@ angular.module('emmiManager')
          * valid is set if patient is selected and program selected is complete (program has location, provider, viewByDate, program)
          */
         this.valid = function (scheduledProgram) {
-            return this.patient && this.patient.id && this.scheduledProgram &&
+            return this.patient && this.patient.id && this.teamSchedulingConfiguration &&
                 scheduledProgram.program && scheduledProgram.program.entity.id &&
-                scheduledProgram.location.entity.id && scheduledProgram.provider.entity.id &&
+                (!this.teamSchedulingConfiguration.useLocation || (this.teamSchedulingConfiguration.useLocation && scheduledProgram.location.entity.id)) && 
+                (!this.teamSchedulingConfiguration.useProvider || (this.teamSchedulingConfiguration.useProvider && scheduledProgram.provider.entity.id)) && 
                 scheduledProgram.viewByDate;
         };
              

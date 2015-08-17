@@ -147,16 +147,18 @@ angular.module('emmiManager')
              * that are valid for that location
              */
             $scope.onLocationChange = function (selectedProgram) {
-                selectedProgram.loadingProviderLocation = true;
-                AddProgramService.loadProviders($scope.team, selectedProgram.location).then(
-                    function (providers) {
-                        selectedProgram.providers = providers;
-                        if (providers.length === 1) {
-                            selectedProgram.provider = providers[0];
-                        }
-                    }).finally(function () {
-                        selectedProgram.loadingProviderLocation = false;
-                    });
+                if ($scope.teamSchedulingConfiguration && $scope.teamSchedulingConfiguration.useProvider) {
+                    selectedProgram.loadingProviderLocation = true;
+                    AddProgramService.loadProviders($scope.team, selectedProgram.location).then(
+                        function (providers) {
+                            selectedProgram.providers = providers;
+                            if (providers.length === 1) {
+                                selectedProgram.provider = providers[0];
+                            }
+                        }).finally(function () {
+                            selectedProgram.loadingProviderLocation = false;
+                        });
+                }
             };
 
             /**
@@ -164,17 +166,19 @@ angular.module('emmiManager')
              * list of possible locations for the selected provider
              */
             $scope.onProviderChange = function (selectedProgram) {
-                // no location selected, refresh the list of possible locations
-                selectedProgram.loadingProviderLocation = true;
-                AddProgramService.loadLocations($scope.team, selectedProgram.provider).then(
-                    function (locations) {
-                        selectedProgram.locations = locations;
-                        if (locations.length === 1) {
-                            selectedProgram.location = locations[0];
-                        }
-                    }).finally(function () {
-                        selectedProgram.loadingProviderLocation = false;
-                    });
+                if ($scope.teamSchedulingConfiguration && $scope.teamSchedulingConfiguration.useLocation) {
+                    // no location selected, refresh the list of possible locations
+                    selectedProgram.loadingProviderLocation = true;
+                    AddProgramService.loadLocations($scope.team, selectedProgram.provider).then(
+                        function (locations) {
+                            selectedProgram.locations = locations;
+                            if (locations.length === 1) {
+                                selectedProgram.location = locations[0];
+                            }
+                        }).finally(function () {
+                            selectedProgram.loadingProviderLocation = false;
+                        });
+                }
             };
 
             /**
