@@ -1,30 +1,31 @@
 'use strict';
 
 angular.module('emmiManager')
-    .controller('PatientIdLabelDropDownController', ['$scope', 'PatientSelfRegService', '$alert', 'PatientIdLabelDropDownService', '$controller',
-        function ($scope, PatientSelfRegService, $alert, PatientIdLabelDropDownService, $controller) {
+    .controller('PatientIdLabelDropDownController', ['$scope', 'PatientSelfRegService', '$alert', 'PatientIdLabelDropDownService',
+        function ($scope, PatientSelfRegService, $alert, PatientIdLabelDropDownService) {
 
             /**
              * GET to find patient self reg config for a given team.
              * Loads patient id label config if patient self reg config is present,
              * else sets default value Patient Id in the dropdown for idLabelType
              */
-            PatientSelfRegService.get($scope.team).then(function (response) {
-                $scope.patientSelfRegConfig = response;
-                if ($scope.patientSelfRegConfig) {
-                    $scope.originalIdLabelConfig = $scope.patientSelfRegConfig.entity.patientIdLabelType;
-                    if ($scope.patientSelfRegConfig.entity.patientIdLabelType) {
-                        $scope.loadAllConfigs();
+            $scope.loadPatientSelfRegConfig = function () {
+                PatientSelfRegService.get($scope.team).then(function (response) {
+                    $scope.patientSelfRegConfig = response;
+                    if ($scope.patientSelfRegConfig) {
+                        $scope.originalIdLabelConfig = $scope.patientSelfRegConfig.entity.patientIdLabelType;
+                        if ($scope.patientSelfRegConfig.entity.patientIdLabelType) {
+                            $scope.loadAllConfigs();
+                        } else {
+                            $scope.setDefaultIdLabel();
+                        }
                     } else {
+                        $scope.patientSelfRegConfig = {};
+                        $scope.patientSelfRegConfig.entity = {};
                         $scope.setDefaultIdLabel();
                     }
-                } else {
-                    $scope.patientSelfRegConfig = {};
-                    $scope.patientSelfRegConfig.entity = {};
-                    $scope.setDefaultIdLabel();
-                }
-            });
-
+                });
+            };
             /**
              * Sets default label to be Patient Id and grabs it's translations
              */
@@ -45,9 +46,7 @@ angular.module('emmiManager')
                 if ($scope.patientSelfRegConfig.entity.patientIdLabelType &&
                     $scope.patientSelfRegConfig.entity.patientIdLabelType.id &&
                     $scope.idLabelConfigEnglish.config.entity.id && $scope.originalIdLabelConfig &&
-                    (!(angular.equals($scope.originalIdLabelConfig, $scope.patientSelfRegConfig.entity.patientIdLabelType)) ||
-                    !(angular.equals($scope.originalIdLabelConfigEnglish, $scope.idLabelConfigEnglish.config)) ||
-                    !(angular.equals($scope.originalIdLabelConfigSpanish, $scope.idLabelConfigSpanish.config)))) {
+                    (!(angular.equals($scope.originalIdLabelConfig, $scope.patientSelfRegConfig.entity.patientIdLabelType)) || !(angular.equals($scope.originalIdLabelConfigEnglish, $scope.idLabelConfigEnglish.config)) || !(angular.equals($scope.originalIdLabelConfigSpanish, $scope.idLabelConfigSpanish.config)))) {
 
                     angular.forEach(listOfIdLabelConfigs, function (config) {
                         PatientIdLabelDropDownService.update(config).then(function (response) {
@@ -100,5 +99,18 @@ angular.module('emmiManager')
                     }
                 });
             };
+
+            $scope.$on('event-resetPatientSelfRegConfig', function () {
+                    $scope.loadPatientSelfRegConfig();
+                }
+            );
+
+            $scope.$on('event-refreshPatientIdLabelFields', function () {
+                    $scope.setDefaultIdLabel();
+                }
+            );
+
+            $scope.loadPatientSelfRegConfig();
+
         }])
 ;
