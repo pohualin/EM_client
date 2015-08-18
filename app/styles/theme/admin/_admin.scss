@@ -1,0 +1,251 @@
+/*
+ * Admin-specific theme styles and overrides
+ */
+
+/* _____ BUTTONS _____ */
+.btn {
+    @include button-size($padding-base-vertical, $padding-base-vertical*2, $font-size-base, $line-height-base, $border-radius-base);
+    text-transform: uppercase;
+    box-shadow: 2px 2px 0px 0px rgba(110,124,136,0.25);
+    // Icons inside of buttons
+    [class^="icon-"], [class*=" icon-"] {
+        vertical-align: text-top;
+    }
+}
+
+.btn-default,
+.btn-grey,
+.btn-link,
+.btn-cancel {
+    box-shadow: none;
+}
+
+.btn-default {
+    &:hover,
+    &:focus,
+    &.focus,
+    &:active,
+    &.active,
+    .open > &.dropdown-toggle {
+        background-color: #e9f7fa;
+    }
+}
+
+.btn-primary {
+    &:hover,
+    &:focus,
+    &.focus,
+    &:active,
+    &.active,
+    .open > &.dropdown-toggle {
+        background-color: #1C94B4;
+        border-color: #1C94B4;
+    }
+}
+
+.btn-success {
+    &:hover,
+    &:focus,
+    &.focus,
+    &:active,
+    &.active,
+    .open > &.dropdown-toggle {
+        background-color: #6ABB10;
+        border-color: #6ABB10;
+    }
+}
+
+.btn-info {
+    &:hover,
+    &:focus,
+    &.focus,
+    &:active,
+    &.active,
+    .open > &.dropdown-toggle {
+        background-color: #5FB5CB;
+        border-color: #5FB5CB;
+    }
+}
+
+.btn-danger {
+    &:hover,
+    &:focus,
+    &.focus,
+    &:active,
+    &.active,
+    .open > &.dropdown-toggle {
+        background-color: #DC6B56;
+        border-color: #DC6B56;
+    }
+}
+
+.btn-grey {
+    @include button-variant($gray, #ECEDEF, #ECEDEF);
+}
+
+.btn-icon {
+    @include button-variant(#6CC5DC, transparent, transparent);
+    border: 0;
+    box-shadow: none;
+    padding: 0 .25em;
+    &:hover,
+    &:focus,
+    &.focus,
+    &:active,
+    &.active,
+    .open > &.dropdown-toggle {
+        color: #21A4C7;
+    }
+    [class^="icon-"], [class*=" icon-"] {
+        vertical-align: baseline;
+    }
+}
+
+.btn-link {
+    &:hover,
+    &:focus {
+        text-decoration: none;
+    }
+}
+
+.btn-link-nopad {
+    padding: 0;
+    cursor: pointer;
+}
+
+.btn-cancel {
+    @extend .btn-link;
+    padding-left: 20px;
+    padding-right: 20px;
+    color: #BBC5CF;
+    &:hover,
+    &:focus {
+        color: #9EA9B5;
+        text-decoration: none;
+    }
+}
+
+// Button class that inherits it's color from it's containing element
+.btn-inherit {
+    color: inherit;
+}
+
+.btn-lg {
+    // line-height: ensure even-numbered height of button next to large input
+    @include button-size($padding-large-vertical, $padding-large-vertical*2, $font-size-base, $line-height-large, $border-radius-base);
+}
+.btn-sm {
+    // line-height: ensure proper height of button next to small input
+    @include button-size($padding-small-vertical, $padding-small-horizontal, $font-size-small, $line-height-small, $border-radius-base);
+}
+.btn-xs {
+    @include button-size($padding-xs-vertical, $padding-xs-horizontal, $font-size-small, $line-height-small, $border-radius-base);
+}
+
+/* _____ FORMS _____ */
+
+// Custom checkbox and radio buttons
+.radio,
+.radio-inline,
+.checkbox,
+.checkbox-inline {
+    label {
+         // For custom checkbox radio alignment...
+        line-height: 25px; // height of custom control
+    }
+}
+
+/*
+Position and hide the real checkboxes and radio buttons.
+The inputs are made transparent instead of completely hidden to preserve
+clickability in browsers that don't have clickable labels, like Safari for
+iOS 5 and older.
+*/
+input[type="checkbox"],
+input[type="radio"] {
+    position: absolute;
+    /* Match the image dimensions */
+    width: 25px;
+    height: 25px;
+    /* Reset anything that could peek out or interfere with dimensions */
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background-color: transparent;
+    outline: 0;
+    opacity: 0;
+    //visibility: hidden; //can't take away visibility or element becomes not tabbable
+    cursor: pointer;
+}
+/*
+Insert a pseudo element inside each label and give it a background
+image that will become the custom checkbox or radio button.
+Using inline-block lets you use vertical-align to adjust it vertically
+as needed.
+*/
+input[type="checkbox"] + label:before,
+input[type="radio"] + label:before {
+    cursor: pointer;
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    margin-right: 8px;
+    //background: url('../images/radio-checkbox.png') no-repeat;
+    background: #FAFBFB;
+    border: 1px solid #C2C2C2;
+    content: " ";
+    vertical-align: top;
+    border-radius: 3px;
+    transition: background-color 0.3s ease;
+}
+input[type="radio"] + label:before {
+    border-radius: 25px;
+}
+input[type="radio"]:checked + label:before {
+    background-color: #6CC5DC;
+    border-color: #6CC5DC;
+    box-shadow: inset 0px 0px 0px 3px rgba(255,255,255,1);
+}
+input[type="radio"]:focus + label:before {
+    border-color: #6CC5DC;
+}
+input[type="radio"]:checked:focus + label:before {
+    border-color: #21A4C7;
+}
+input[type="radio"]:disabled + label:before {
+    background-color: $input-bg-disabled;
+    border-color: #CFD2D5;
+    cursor: $cursor-disabled;
+}
+input[type="checkbox"]:checked + label:before {
+    font-family: 'ui-font-solid';
+    font-size: 24px;
+    line-height: .9;
+    content: '\E435';
+    color: #fff;
+    background-color: #6CC5DC;
+    border-color: #6CC5DC;
+}
+input[type="checkbox"]:indeterminate + label:before {
+    font-family: 'ui-font-solid';
+    font-size: 24px;
+    line-height: .9;
+    content: '\E465';
+    color: #fff;
+    background-color: #6CC5DC;
+    border-color: #6CC5DC;
+    padding-left: 1px;
+}
+input[type="checkbox"]:focus + label:before {
+    border-color: #6CC5DC;
+}
+input[type="checkbox"]:indeterminate:focus + label:before,
+input[type="checkbox"]:checked:focus + label:before {
+    border-color: #21A4C7;
+}
+input[type="checkbox"]:disabled + label:before {
+    background-color: $input-bg-disabled;
+    border-color: #CFD2D5;
+    cursor: $cursor-disabled;
+}

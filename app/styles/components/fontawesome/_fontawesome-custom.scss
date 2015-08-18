@@ -31,11 +31,11 @@ app using the *Import Icons* button (or via Main Menu > Manage Projects) to retr
 
 @font-face {
     font-family: 'fontawesome';
-    src:url('../fonts/fontawesome.eot?czfjrk');
-    src:url('../fonts/fontawesome.eot?#iefixczfjrk') format('embedded-opentype'),
-        url('../fonts/fontawesome.woff?czfjrk') format('woff'),
-        url('../fonts/fontawesome.ttf?czfjrk') format('truetype'),
-        url('../fonts/fontawesome.svg?czfjrk#fontawesome') format('svg');
+    src:url('/fonts/fontawesome.eot?czfjrk');
+    src:url('/fonts/fontawesome.eot?#iefixczfjrk') format('embedded-opentype'),
+        url('/fonts/fontawesome.woff?czfjrk') format('woff'),
+        url('/fonts/fontawesome.ttf?czfjrk') format('truetype'),
+        url('/fonts/fontawesome.svg?czfjrk#fontawesome') format('svg');
     font-weight: normal;
     font-style: normal;
 }

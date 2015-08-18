@@ -7,7 +7,7 @@ var maven = require('gulp-maven-deploy');
 var mainBowerFiles = require('main-bower-files');
 
 gulp.task('styles', function () {
-    return gulp.src('app/styles/main.scss')
+    return gulp.src('app/styles/**/main.scss')
         .pipe($.rubySass({ style: 'expanded' }))
         .pipe($.autoprefixer('last 1 version'))
         .pipe(gulp.dest('.tmp/styles'))
@@ -152,8 +152,8 @@ gulp.task('fonts', function () {
 });
 
 gulp.task('font-paths', ['html'], function () {
-    return gulp.src('dist/styles/*.css')
-        .pipe($.replace('../../bower_components/bootstrap-sass/assets/fonts/bootstrap/', '../fonts/'))
+    return gulp.src('dist/styles/**/*.css')
+        .pipe($.replace('../../bower_components/bootstrap-sass/assets/fonts/bootstrap/', '/fonts/'))
         .pipe(gulp.dest('dist/styles'));
 });
 
