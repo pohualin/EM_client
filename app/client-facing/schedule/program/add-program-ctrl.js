@@ -167,7 +167,7 @@ angular.module('emmiManager')
                         });
                 } else {
                     var deferred = $q.defer();
-                    deferred.resolve(selectedProgram)
+                    deferred.resolve(selectedProgram);
                     return deferred.promise;
                 }
             };
@@ -210,7 +210,7 @@ angular.module('emmiManager')
                         });
                 } else {
                     var deferred = $q.defer();
-                    deferred.resolve(selectedProgram)
+                    deferred.resolve(selectedProgram);
                     return deferred.promise;
                 }
             };
@@ -388,12 +388,12 @@ angular.module('emmiManager')
             $scope.$on('useIndividualProgram', function () {
                 angular.forEach($scope.selectedPrograms, function (program) {
                     program.useFirstProgram = false;
-                }) 
+                });
                 $scope.firstProgramResource = {
                     provider:'',
                     location:'',
                     viewByDate: ''
-                }
+                };
             });
 
             // load the programs
