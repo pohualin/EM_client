@@ -52,10 +52,13 @@ angular.module('emmiManager')
                     authorizedRoles: [USER_ROLES.all]
                 },
                 resolve: {
-                    activationCode: ['$route', '$q', function ($route, $q) {
+                    activationCode: ['$route', '$q', 'ActivateClientUserService', function ($route, $q, svc) {
                         var deferred = $q.defer();
-                        if ($route.current.params.activationKey) {
-                            deferred.resolve($route.current.params.activationKey);
+                        var activationKey = $route.current.params.activationKey;
+                        if (activationKey) {
+                            svc.validateActivationToken(activationKey).success(function () {
+                                deferred.resolve(activationKey);
+                            });
                         } else {
                             deferred.reject();
                         }
@@ -85,10 +88,15 @@ angular.module('emmiManager')
                                             deferred.resolve(resetToken);
                                         }
                                     },
-                                    function error() {
-                                        // problem with validate call
-                                        angular.extend(LoginErrorMessageFactory,{showResetPasswordTokenExpired:true});
-                                        $location.path('/login').replace();
+                                    function error(err) {
+                                        if (err.status === 403) {
+                                            // not authorized for an not authenticated route
+                                            $location.path('/unauthorized').replace();
+                                        } else {
+                                            // problem with validate call
+                                            angular.extend(LoginErrorMessageFactory, {showResetPasswordTokenExpired: true});
+                                            $location.path('/login').replace();
+                                        }
                                     }
                                 );
                             } else {

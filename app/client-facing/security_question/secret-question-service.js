@@ -74,7 +74,7 @@ angular.module('emmiManager')
                 validateUserSecurityResponse: function (resetToken, userClientSecretQuestionResponse) {
                     userClientSecretQuestionResponse = userClientSecretQuestionResponse || {};
                     return $http.put(UriTemplate.create(API.validateSecurityResponse).stringify({token: resetToken}),
-                        userClientSecretQuestionResponse)
+                        userClientSecretQuestionResponse, {override403: true})
                         .then(function (response) {
                             return response.data;
                         });
