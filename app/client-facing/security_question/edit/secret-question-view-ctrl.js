@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  * This manages interactions when a user needs to select secret questions and responses.
  */
-    .controller('SecretQuestionViewController', ['$scope', '$location', 'SecretQuestionService',
-        function ($scope, $location, SecretQuestionService) {
+    .controller('SecretQuestionViewController', ['$scope', '$location', 'SecretQuestionService', 'securityQuestions',
+        function ($scope, $location, SecretQuestionService, securityQuestions) {
 
             $scope.secretQuestionFormSubmitted = false;
 
@@ -24,9 +24,7 @@ angular.module('emmiManager')
 
             function init() {
 
-                SecretQuestionService.getSecretQuestions().then(function (response) {
-                    $scope.secretQuestions = response.data.content;
-                });
+                $scope.secretQuestions = securityQuestions;
 
                 SecretQuestionService.getAllUserSecretQuestionAsteriskResponse($scope.account.id).then(function (response) {
                     var existingResponse = response.data.content;
