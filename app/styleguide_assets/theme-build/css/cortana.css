@@ -502,3 +502,9 @@
 .cortana-search-wrapper .dropdown-menu .active a:focus {
   padding: 0 !important;
   background: transparent !important; }
+
+#style-selector {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}

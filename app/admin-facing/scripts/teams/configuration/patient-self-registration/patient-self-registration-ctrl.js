@@ -74,5 +74,29 @@ angular.module('emmiManager')
                     });
                 });
             };
+
+            $scope.updateEmailFields = function () {
+                if (!$scope.patientSelfRegConfig.entity.exposeEmail) {
+                    $scope.patientSelfRegConfig.entity.requireEmail = false;
+                }
+            };
+
+            $scope.updatePhoneFields = function () {
+                if (!$scope.patientSelfRegConfig.entity.exposePhone) {
+                    $scope.patientSelfRegConfig.entity.requirePhone = false;
+                }
+            };
+
+            $scope.updatePatientIdFields = function () {
+                if (!$scope.patientSelfRegConfig.entity.exposeId) {
+                    $scope.patientSelfRegConfig.entity.requireId = false;
+                }
+                $scope.$broadcast('event-refreshPatientIdLabelFields');
+            };
+
+            $scope.cancel = function () {
+                $scope.$broadcast('event-resetPatientSelfRegConfig');
+            };
+
         }])
 ;

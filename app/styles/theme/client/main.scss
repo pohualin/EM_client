@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-$icon-font-path: "../../bower_components/bootstrap-sass/assets/fonts/bootstrap/";
+$icon-font-path: "../../../bower_components/bootstrap-sass/assets/fonts/bootstrap/";
 
 /*!
 ========== INIT
@@ -8,6 +8,7 @@ $icon-font-path: "../../bower_components/bootstrap-sass/assets/fonts/bootstrap/"
 @import 'vendor/_normalize';
 @import 'components/ui-font/_ui-font-solid'; // Icons should be declared early on
 @import 'components/fontawesome/_fontawesome-custom'; // Icons should be declared early on
+@import 'theme/client/_bootstrap-variables';
 @import 'vendor/_bootstrap-custom';
 @import 'vendor/_angular-strap';
 
@@ -33,4 +34,4 @@ $icon-font-path: "../../bower_components/bootstrap-sass/assets/fonts/bootstrap/"
 */
 // more specific declarations, may be built on a per page basis
 @import 'specifics/__specifics';
-
+@import 'theme/client/_client';
