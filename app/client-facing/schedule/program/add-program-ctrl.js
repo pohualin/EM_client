@@ -318,6 +318,11 @@ angular.module('emmiManager')
                         }
                     });
                 });
+                if ($scope.useFirstProgram) {
+                    $scope.$broadcast('useFirstProgramResource');
+                } else {
+                    $scope.$broadcast('useIndividualProgram');
+                }
                 $scope.selectedProgramsHolder = [];
             };
 
