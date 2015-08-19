@@ -125,6 +125,18 @@ angular.module('emmiManager')
                 if (programResource.selected) {
                     var selectedProgram = AddProgramService.newScheduledProgram();
                     selectedProgram.program = programResource;
+                    
+                    // Set provider if there is only one possible provider
+                    if ($scope.providers && $scope.providers.length === 1) {
+                        selectedProgram.provider = $scope.providers[0];
+                        $scope.onProviderChange(selectedProgram);
+                    }
+                    
+                    // Set location if there is only one possible location
+                    if ($scope.locations && $scope.locations.length === 1) {
+                        selectedProgram.location = $scope.locations[0];
+                        $scope.onLocationChange(selectedProgram);
+                    }
                     $scope.selectedProgramsHolder.push(selectedProgram);
                 } else {
                     $scope.selectedProgramsHolder = $scope.selectedProgramsHolder.filter(function (element) {
@@ -152,13 +164,13 @@ angular.module('emmiManager')
              * When a location selection is changed, we need to load the providers
              * that are valid for that location
              */
-            $scope.onLocationChange = function (selectedProgram, firstProgram) {
+            $scope.onLocationChange = function (selectedProgram) {
                 if ($scope.teamSchedulingConfiguration && $scope.teamSchedulingConfiguration.useProvider) {
                     selectedProgram.loadingProviderLocation = true;
                     return AddProgramService.loadProviders($scope.team, selectedProgram.location).then(
                         function (providers) {
-                            selectedProgram.providers = providers;
-                            if (providers.length === 1) {
+                            $scope.providers = providers;
+                            if (providers.length === 1 && selectedProgram.location !== '') {
                                 selectedProgram.provider = providers[0];
                             }
                             return selectedProgram;
@@ -200,8 +212,8 @@ angular.module('emmiManager')
                     selectedProgram.loadingProviderLocation = true;
                     return AddProgramService.loadLocations($scope.team, selectedProgram.provider).then(
                         function (locations) {
-                            selectedProgram.locations = locations;
-                            if (locations.length === 1) {
+                            $scope.locations = locations;
+                            if (locations.length === 1 && selectedProgram.provider !== '') {
                                 selectedProgram.location = locations[0];
                             }
                             return selectedProgram;
@@ -318,6 +330,11 @@ angular.module('emmiManager')
                         }
                     });
                 });
+                if ($scope.useFirstProgram) {
+                    $scope.$broadcast('useFirstProgramResource');
+                } else {
+                    $scope.$broadcast('useIndividualProgram');
+                }
                 $scope.selectedProgramsHolder = [];
             };
 
