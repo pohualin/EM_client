@@ -25,8 +25,8 @@ angular.module('emmiManager')
         this.valid = function (scheduledProgram) {
             return this.patient && this.patient.id && this.teamSchedulingConfiguration &&
                 scheduledProgram.program && scheduledProgram.program.entity.id &&
-                (!this.teamSchedulingConfiguration.useLocation || (this.teamSchedulingConfiguration.useLocation && scheduledProgram.location.entity.id)) && 
-                (!this.teamSchedulingConfiguration.useProvider || (this.teamSchedulingConfiguration.useProvider && scheduledProgram.provider.entity.id)) && 
+                (!this.teamSchedulingConfiguration.entity.useLocation || (this.teamSchedulingConfiguration.entity.useLocation && scheduledProgram.location.entity.id)) && 
+                (!this.teamSchedulingConfiguration.entity.useProvider || (this.teamSchedulingConfiguration.entity.useProvider && scheduledProgram.provider.entity.id)) && 
                 scheduledProgram.viewByDate;
         };
              
