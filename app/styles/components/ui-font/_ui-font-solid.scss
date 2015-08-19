@@ -340,10 +340,10 @@ Just use the `icon-` prefix followed by the specific icon class.
 
 @font-face {
     font-family: 'ui-font-solid';
-    src: url('../fonts/uifont-solid.eot');
-    src: url('../fonts/uifont-solid.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/uifont-solid.ttf') format('truetype'),
-         url('../fonts/uifont-solid.svg') format('svg');
+    src: url('/fonts/uifont-solid.eot');
+    src: url('/fonts/uifont-solid.eot?#iefix') format('embedded-opentype'),
+         url('/fonts/uifont-solid.ttf') format('truetype'),
+         url('/fonts/uifont-solid.svg') format('svg');
     font-weight: normal;
     font-style: normal;
 
