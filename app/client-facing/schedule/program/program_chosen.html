@@ -46,7 +46,7 @@
                               data-ng-disabled="!providers || providers.length == 0 || selectedProgram.loadingProviderLocation"
                               data-ng-model="selectedProgram.firstProgramResource.provider" data-ng-change="onProviderChangeAndUseFirstProgram(selectedProgram, $first)"
                               data-ng-options="teamProvider.name for teamProvider in providers track by teamProvider.entity.id"
-                              data-disable-search-threshold="10" data-allow-single-deselect="true"
+                              data-disable-search-threshold="10" data-allow-single-deselect="providers.length > 1"
                               data-no-results-text="'No team providers'"
                               data-placeholder="Choose Provider"
                               required
@@ -60,7 +60,7 @@
                               data-ng-disabled="!providers || providers.length == 0 || selectedProgram.loadingProviderLocation"
                               data-ng-model="selectedProgram.provider" data-ng-change="onProviderChange(selectedProgram)"
                               data-ng-options="teamProvider.name for teamProvider in providers track by teamProvider.entity.id"
-                              data-disable-search-threshold="10" data-allow-single-deselect="true"
+                              data-disable-search-threshold="10" data-allow-single-deselect="providers.length > 1"
                               data-no-results-text="'No team providers'"
                               data-placeholder="Choose Provider"
                               required
@@ -90,7 +90,7 @@
                               data-ng-disabled="!locations || locations.length == 0 || selectedProgram.loadingProviderLocation"
                               data-ng-model="selectedProgram.firstProgramResource.location" data-ng-change="onLocationChangeAndUseFirstProgram(selectedProgram, $first)"
                               data-ng-options="teamLocation.entity.location.name for teamLocation in locations track by teamLocation.entity.id"
-                              data-disable-search-threshold="10" data-allow-single-deselect="true"
+                              data-disable-search-threshold="10" data-allow-single-deselect="locations.length > 1"
                               data-no-results-text="'No team locations'"
                               data-placeholder="Choose Location"
                               required
@@ -104,7 +104,7 @@
                               data-ng-disabled="!locations || locations.length == 0 || selectedProgram.loadingProviderLocation"
                               data-ng-model="selectedProgram.location" data-ng-change="onLocationChange(selectedProgram)"
                               data-ng-options="teamLocation.entity.location.name for teamLocation in locations track by teamLocation.entity.id"
-                              data-disable-search-threshold="10" data-allow-single-deselect="true"
+                              data-disable-search-threshold="10" data-allow-single-deselect="locations.length > 1"
                               data-no-results-text="'No team locations'"
                               data-placeholder="Choose Location"
                               required
