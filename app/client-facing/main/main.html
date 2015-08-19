@@ -10,6 +10,16 @@
                     <span data-ng-hide="account.id">The date is {{ today | date:'fullDate' }}.</span>
                 </p>
 
+      <div class="form-group">
+        <label class="control-label" for="programCard1ViewBy">View-by Date</label>
+        <div class="has-input-icon has-input-icon-calendar">
+          <input id="programCard1ViewBy" class="form-control" placeholder="MM/DD/YYYY" type="text" name="programCard1ViewBy"
+            data-ng-model="selectedDate">
+          <span class="input-icon" data-ng-model="selectedDate" data-autoclose="true"
+            data-dateType="iso" data-bs-datepicker data-trigger="click" data-placement="bottom-left"><i class="icon-calendar"></i></span>
+        </div>
+      </div>
+
                 <div data-ng-hide="account.impersonated">
                     User
                     <ul>

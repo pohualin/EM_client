@@ -1,33 +1,40 @@
 <div class="dropdown-menu datepicker" ng-class="'datepicker-mode-' + $mode" style="max-width: 320px;">
+<button type="button" class="close" aria-hidden="true" ng-click="$hide()"><i class="icon-delete"></i></button>
 <table style="table-layout: fixed; height: 100%; width: 100%;">
   <thead>
-    <tr class="text-center">
-      <th>
-        <button tabindex="-1" type="button" class="btn btn-default pull-left" ng-click="$selectPane(-1)" aria-label="Go to previous month">
+    <tr>
+      <th colspan="{{ rows[0].length }}">
+        <button tabindex="-1" type="button" class="btn btn-icon btn-block btn-datepicker-prev" ng-click="$selectPane(-1)" aria-label="Go to previous month">
           <i class="{{$iconLeft}}"></i>
-        </button>
-      </th>
-      <th colspan="{{ rows[0].length - 2 }}">
-        <button tabindex="-1" type="button" class="btn btn-default btn-block text-strong"  ng-click="$toggleMode()">
-          <strong style="text-transform: capitalize;" ng-bind="title" role="heading" aria-live="assertive" aria-atomic="true"></strong>
-        </button>
-      </th>
-      <th>
-        <button tabindex="-1" type="button" class="btn btn-default pull-right" ng-click="$selectPane(+1)" aria-label="Go to next month">
-          <i class="{{$iconRight}}"></i>
         </button>
       </th>
     </tr>
     <tr ng-show="showLabels" ng-bind-html="labels" aria-hidden="true"></tr>
+    <tr>
+      <th colspan="{{ rows[0].length }}">
+        <button tabindex="-1" type="button" class="btn btn-default btn-block btn-datepicker-heading"  ng-click="$toggleMode()">
+          <strong ng-bind="title" role="heading" aria-live="assertive" aria-atomic="true"></strong>
+        </button>
+      </th>
+    </tr>
   </thead>
   <tbody aria-label="use arrows to navigate, and press enter to select a day">
     <tr ng-repeat="(i, row) in rows" height="{{ 100 / rows.length }}%">
       <td class="text-center" ng-repeat="(j, el) in row">
-        <button tabindex="-1" type="button" class="btn btn-default" style="width: 100%" ng-class="{'btn-primary': el.selected, 'btn-info btn-today': el.isToday && !el.selected}" ng-click="$select(el.date)" ng-disabled="el.disabled" aria-selected="{{el.selected}}">
+        <button tabindex="-1" type="button" class="btn btn-default" style="width: 100%" ng-class="{'btn-primary': el.selected, 'btn-today': el.isToday && !el.selected}" ng-click="$select(el.date)" ng-disabled="el.disabled" aria-selected="{{el.selected}}">
           <span ng-class="{'text-muted': el.muted}" ng-bind="el.label"></span>
         </button>
       </td>
     </tr>
   </tbody>
+  <tfoot>
+    <tr>
+      <th colspan="{{ rows[0].length }}">
+        <button tabindex="-1" type="button" class="btn btn-icon btn-block btn-datepicker-next" ng-click="$selectPane(+1)" aria-label="Go to next month">
+          <i class="{{$iconRight}}"></i>
+        </button>
+      </th>
+    </tr>
+  </tfoot>
 </table>
 </div>
