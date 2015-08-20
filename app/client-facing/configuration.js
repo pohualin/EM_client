@@ -86,9 +86,9 @@ angular.module('emmiManager', [
             dateFormat: 'MM/dd/yyyy',
             modelDateFormat: 'yyyy-MM-dd',
             dateType: 'string',
-            iconLeft: 'fa-angle-left',
-            iconRight: 'fa-angle-right',
-            template: 'admin-facing/partials/common/directives/datepicker/datepicker.tpl.html'
+            iconLeft: 'fa-angle-up',
+            iconRight: 'fa-angle-down',
+            template: 'client-facing/common/directives/datepicker/datepicker.tpl.html'
         });
 
         // custom global angularstrap configurations

@@ -1,0 +1,538 @@
+/*
+ * Client-specific theme styles and overrides
+ */
+
+/* _____ HEADINGS _____ */
+
+h3, .h3 {
+    color: $gray;
+}
+
+/* _____ BUTTONS _____ */
+
+.btn {
+    @include button-size($padding-base-vertical, $padding-base-horizontal*3, $font-size-base, $line-height-base, $border-radius-base);
+    font-weight: bold;
+    text-transform: uppercase;
+    // Icons inside of buttons
+    [class^="icon-"], [class*=" icon-"] {
+        vertical-align: text-top;
+    }
+}
+
+.btn-default {
+    &:hover,
+    &:focus,
+    &.focus,
+    &:active,
+    &.active,
+    .open > &.dropdown-toggle {
+        background-color: $gray-lighter;
+        color: $gray;
+    }
+}
+
+.btn-primary,
+.btn-success,
+.btn-info,
+.btn-warning,
+.btn-danger {
+    &:hover,
+    &:focus,
+    &.focus,
+    &:active,
+    &.active,
+    .open > &.dropdown-toggle {
+        background-color: $gray;
+        border-color: $gray;
+        color: #fff;
+    }
+}
+
+.btn-grey {
+    @include button-variant($gray, $gray-light, $gray-light);
+}
+
+.btn-icon {
+    @include button-variant($brand-primary, transparent, transparent);
+    border: 0;
+    box-shadow: none;
+    padding: 0 .25em;
+    &:hover,
+    &:focus,
+    &.focus,
+    &:active,
+    &.active,
+    .open > &.dropdown-toggle {
+        color: $brand-secondary;
+    }
+    [class^="icon-"], [class*=" icon-"] {
+        vertical-align: baseline;
+    }
+}
+
+.btn-link {
+    &:hover,
+    &:focus {
+        text-decoration: none;
+    }
+}
+
+.btn-link-nopad {
+    padding: 0;
+    cursor: pointer;
+}
+
+.btn-cancel {
+    @extend .btn-link;
+    padding-left: 20px;
+    padding-right: 20px;
+    color: $gray-light;
+    &:hover,
+    &:focus {
+        color: $gray;
+        text-decoration: none;
+    }
+}
+
+// Button class that inherits it's color from it's containing element
+.btn-inherit {
+    color: inherit;
+}
+
+.btn-lg {
+    // line-height: ensure even-numbered height of button next to large input
+    @include button-size($padding-large-vertical, $padding-large-vertical*2, $font-size-base, $line-height-large, $border-radius-base);
+}
+.btn-sm {
+    // line-height: ensure proper height of button next to small input
+    @include button-size($padding-small-vertical, $padding-small-horizontal, $font-size-small, $line-height-small, $border-radius-base);
+}
+.btn-xs {
+    @include button-size($padding-xs-vertical, $padding-xs-horizontal, $font-size-small, $line-height-small, $border-radius-base);
+}
+
+// close button
+.close {
+    font-size: 22px;
+    color: $gray;
+    opacity: 1;
+    filter: alpha(opacity=100);
+    &:hover, &:focus {
+        color: #000;
+        opacity: 1;
+        filter: alpha(opacity=100);
+    }
+}
+
+/* _____ FORMS _____ */
+
+.form-control {
+    &:focus {
+        background-color: #e4e4e4;
+    }
+}
+
+// Placeholder text
+.form-control::-moz-placeholder {
+    font-style: normal;
+}
+.form-control:-ms-input-placeholder {
+    font-style: normal;
+}
+.form-control::-webkit-input-placeholder {
+    font-style: normal;
+}
+
+.has-feedback label ~ .form-control-feedback {
+    top: 22px;
+    font-size: 24px;
+}
+// Validation states
+.has-success {
+    // Override the input form control text color (otherwise normal)
+    .form-control,
+    .form-control:focus {
+        color: $brand-success;
+        border-color: $brand-success;
+    }
+    // Override the input form control label text color (otherwise validation state color)
+    .control-label {
+        color: inherit;
+    }
+    // Color any icons based on the validation state color
+    [class^="icon-"], [class*=" icon-"],
+    [class^="fa-"], [class*=" fa-"],
+    .glyphicon {
+        color: $brand-success;
+    }
+}
+.has-warning {
+    // Override the input form control text color (otherwise normal)
+    .form-control,
+    .form-control:focus {
+        color: $brand-warning;
+        border-color: $brand-warning;
+    }
+    // Override the input form control label text color (otherwise validation state color)
+    .control-label {
+        color: inherit;
+    }
+    // Color any icons based on the validation state color
+    [class^="icon-"], [class*=" icon-"],
+    [class^="fa-"], [class*=" fa-"],
+    .glyphicon {
+        color: $brand-warning;
+    }
+}
+.has-error {
+    // Override the input form control text color (otherwise normal)
+    .form-control,
+    .form-control:focus {
+        color: $brand-danger;
+        border-color: $brand-danger;
+    }
+    // Override the input form control label text color (otherwise validation state color)
+    .control-label {
+        color: inherit;
+    }
+    // Color any icons based on the validation state color
+    [class^="icon-"], [class*=" icon-"],
+    [class^="fa-"], [class*=" fa-"],
+    .glyphicon {
+        color: $brand-danger;
+    }
+}
+
+// Custom checkbox and radio buttons
+.radio,
+.radio-inline,
+.checkbox,
+.checkbox-inline {
+    label {
+
+        font-weight: 300;
+         // For custom checkbox radio alignment...
+        line-height: 17px; // height of custom control
+    }
+}
+
+/*
+Position and hide the real checkboxes and radio buttons.
+The inputs are made transparent instead of completely hidden to preserve
+clickability in browsers that don't have clickable labels, like Safari for
+iOS 5 and older.
+*/
+input[type="checkbox"],
+input[type="radio"] {
+    position: absolute;
+    /* Match the image dimensions */
+    width: 17px;
+    height: 17px;
+    /* Reset anything that could peek out or interfere with dimensions */
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background-color: transparent;
+    outline: 0;
+    opacity: 0;
+    //visibility: hidden; //can't take away visibility or element becomes not tabbable
+    cursor: pointer;
+}
+/*
+Insert a pseudo element inside each label and give it a background
+image that will become the custom checkbox or radio button.
+Using inline-block lets you use vertical-align to adjust it vertically
+as needed.
+*/
+input[type="checkbox"] + label:before,
+input[type="radio"] + label:before {
+    cursor: pointer;
+    display: inline-block;
+    width: 17px;
+    height: 17px;
+    margin-right: 8px;
+    background: $gray-lighter;
+    border: 1px solid $gray-lighter;
+    content: " ";
+    vertical-align: top;
+    border-radius: 0;
+    transition: all 0.3s ease;
+    color: $gray-lighter;
+}
+input[type="radio"] + label:before {
+    border-radius: 17px;
+}
+input[type="radio"]:checked + label:before {
+    background-color: $brand-success;
+    border-color: $brand-success;
+    box-shadow: inset 0px 0px 0px 2px rgba(255,255,255,1);
+}
+input[type="radio"]:focus + label:before {
+    border-color: $brand-success;
+}
+input[type="radio"]:checked:focus + label:before {
+    border-color: $brand-success;
+}
+input[type="radio"]:disabled + label:before {
+    background-color: #e4e4e4;
+    border-color: #e4e4e4;
+    cursor: $cursor-disabled;
+}
+input[type="checkbox"]:checked + label:before {
+    font-family: 'ui-font-solid';
+    font-size: 16px;
+    line-height: .9;
+    content: '\E435';
+    color: $brand-success;
+    background-color: $gray-lighter;
+    border-color: $gray-lighter;
+}
+input[type="checkbox"]:indeterminate + label:before {
+    font-family: 'ui-font-solid';
+    font-size: 16px;
+    line-height: .9;
+    content: '\E465';
+    color: $brand-success;
+    background-color: $gray-lighter;
+    border-color: $gray-lighter;
+    padding-left: 1px;
+}
+input[type="checkbox"]:focus + label:before {
+    border-color: $brand-success;
+}
+input[type="checkbox"]:indeterminate:focus + label:before,
+input[type="checkbox"]:checked:focus + label:before {
+    border-color: $brand-success;
+}
+input[type="checkbox"]:disabled + label:before {
+    background-color: #e4e4e4;
+    border-color: #e4e4e4;
+    cursor: $cursor-disabled;
+}
+
+// Chosen dropdown
+select.form-control {
+    + .chosen-container {
+        .chosen-drop {
+            margin: 0;
+            border: 0;
+            box-shadow: 0px 2px 0px 0px rgba(0,0,0,0.50);
+        }
+        .chosen-results {
+            background: $gray-lighter;
+            font-size: 12px;
+            li {
+                padding-top: 6px;
+                padding-bottom: 6px;
+                &.highlighted {
+                    font-weight: 300;
+                }
+                &.active-result {
+                    &:hover{
+                        font-weight: 300;
+                    }
+                }
+            }
+        }
+        &.chosen-container-single {
+            .chosen-single {
+                position: static;
+                padding: 6px $padding-base-horizontal;
+                div {
+                    width: $input-height-base;
+                    background: $brand-secondary;
+                    color: #fff;
+                    text-align: center;
+                    &:before {
+                        padding: 7px 0;
+                    }
+                }
+                // &:active div {
+                //     background: $brand-primary;
+                // }
+            }
+            .chosen-default {
+                font-style: normal;
+            }
+            &.chosen-container-active {
+                .chosen-single {
+                    background-color: #e4e4e4;
+                    div {
+                        background: $brand-primary;
+                    }
+                }
+            }
+        }
+        &.chosen-container-single-nosearch {
+            .chosen-results {
+                padding: 0;
+            }
+        }
+    }
+}
+
+.has-error {
+    select.form-control + .chosen-container.chosen-container-single {
+        .chosen-single {
+            border-color: $brand-danger;
+            span {
+                color: $brand-danger;
+            }
+            div {
+                background: $brand-danger;
+            }
+        }
+    }
+}
+
+/* _____ DATEPICKER _____ */
+
+.has-input-icon-calendar {
+    @include clearfix;
+    .form-control {
+        float: left;
+        width: auto;
+    }
+    .input-icon {
+        cursor: pointer;
+        display: inline-block;
+        position: static;
+        right: auto;
+        margin-left: 6px;
+        color: $brand-secondary;
+        &:hover {
+            color: $brand-primary;
+        }
+    }
+    .datepicker {
+        left: 0 !important;
+    }
+}
+
+.datepicker.dropdown-menu {
+    width: 304px;
+    border-bottom-width: 3px;
+    margin: 7px 0;
+    padding: 0 10px;
+    &.top-left {
+        margin-top: -7px;
+    }
+    .close {
+        position: absolute;
+        top: 4px;
+        right: 10px;
+    }
+    .btn-datepicker-prev,
+    .btn-datepicker-next {
+        font-size: 19px;
+        font-weight: normal;
+        padding-top: 6px;
+        padding-bottom: 6px;
+        &:active {
+            box-shadow: none;
+        }
+    }
+    .btn-datepicker-heading {
+        @include remIt(font-size, 11);
+        color: $brand-secondary;
+        padding: 8px 11px;
+        text-align: left;
+    }
+    tbody {
+        border-bottom: 1px solid #eaeaea;
+    }
+    tbody tr:first-child td {
+        border-top: 2px solid $brand-secondary;
+    }
+    tbody tr td {
+        padding: 0;
+        border-top: 1px solid #eaeaea;
+        button {
+            @include remIt(font-size, 12);
+            font-weight: 400;
+            padding: 10px 6px;
+            &:hover {
+                background: #caf6ec;
+            }
+        }
+    }
+    th.dow {
+        @include remIt(font-size, 12);
+        font-weight: 500;
+        border-bottom: 1px solid #eaeaea;
+    }
+}
+
+/* _____ PROGRAM CARD _____ */
+
+.program-card {
+    border: 5px solid $gray-light;
+    padding: 14px;
+    .control-label {
+        color: $brand-secondary;
+        margin-bottom: 11px;
+    }
+    .form-group:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.program-card_title {
+    margin: 20px 0 30px;
+}
+
+.program-list {
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+    li {
+        position: relative;
+        padding: 12px 12px 10px;
+        border-top: 1px solid #dadddc;
+        &:hover {
+            background: #cbf6ed;
+        }
+        &:first-child {
+            border: 0;
+        }
+        &.added {
+            .program-list_item-icon,
+            .program-list_item-text {
+                color: $brand-success;
+            }
+            input[type="checkbox"]:checked + label:before {
+                color: #fff;
+                background-color: $brand-success;
+                border-color: $brand-success;
+                border-radius: 17px;
+                line-height: 1;
+            }
+        }
+    }
+    .checkbox {
+        margin: 0;
+        padding-left: 50px;
+    }
+    input[type="checkbox"] + label:before {
+        position: absolute;
+        top: 50%;
+        margin-top: -9px;
+        left: 0;
+    }
+    .program-list_item-icon {
+        position: absolute;
+        top: 50%;
+        margin-top: -10px;
+        left: 28px;
+        color: $brand-primary;
+        font-size: 18px;
+    }
+    .program-list_item-text {
+        @include remIt(font-size, 15);
+        font-weight: 400;
+    }
+}

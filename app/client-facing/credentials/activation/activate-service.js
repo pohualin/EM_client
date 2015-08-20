@@ -4,8 +4,8 @@ angular.module('emmiManager')
 /**
  * Service for change password
  */
-    .service('ActivateClientUserService', ['$http', 'UriTemplate', 'API','LoginErrorMessageFactory','$location',
-        function ($http, UriTemplate, api, LoginErrorMessageFactory,$location) {
+    .service('ActivateClientUserService', ['$http', 'UriTemplate', 'API', 'LoginErrorMessageFactory', '$location',
+        function ($http, UriTemplate, api, LoginErrorMessageFactory, $location) {
             return {
                 /**
                  * Create the object used on the form.
@@ -35,12 +35,12 @@ angular.module('emmiManager')
                             return response;
                         })
                         .error(function (response) {
-                            angular.extend(LoginErrorMessageFactory,{showAccountActivationTokenExpired:true});
+                            angular.extend(LoginErrorMessageFactory, {showAccountActivationTokenExpired: true});
                             return response;
                         });
                 },
 
-                 /**
+                /**
                  * Calls the backend activate link on the API
                  *
                  * @param activationToken the user's temporary auth
@@ -48,16 +48,24 @@ angular.module('emmiManager')
                  */
                 validateActivationToken: function (activationToken) {
                     return $http.get(UriTemplate.create(api.activate).stringify(), {
-                        params: { activationToken: activationToken}
+                        params: {
+                            activationToken: activationToken
+                        },
+                        override403: true
                     })
-                    .success(function (response) {
-                        return response;
-                    })
-                    .error(function (response) {
-                        $location.path('/login').replace();
-                        angular.extend(LoginErrorMessageFactory,{showAccountActivationTokenExpired:true});
-                        return response;
-                    });
+                        .success(function (response) {
+                            return response;
+                        })
+                        .error(function (response) {
+                            if (response.status === 403) {
+                                // not authorized for an not authenticated route
+                                $location.path('/unauthorized').replace();
+                            } else {
+                                $location.path('/login').replace();
+                                angular.extend(LoginErrorMessageFactory, {showAccountActivationTokenExpired: true});
+                            }
+                            return response;
+                        });
                 },
 
                 /**
@@ -66,9 +74,16 @@ angular.module('emmiManager')
                 loadPolicy: function (activationToken) {
                     return $http.get(UriTemplate.create(api.activationPasswordPolicy).stringify({
                         token: activationToken
-                    })).success(function (response) {
-                        return response.data;
-                    });
+                    }), {override403: true})
+                        .success(function (response) {
+                            return response.data;
+                        })
+                        .error(function (response) {
+                            if (response.status === 403) {
+                                // not authorized for an not authenticated route
+                                $location.path('/unauthorized').replace();
+                            }
+                        });
                 }
             };
         }

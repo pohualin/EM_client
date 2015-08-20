@@ -10,7 +10,6 @@ angular.module('emmiManager')
 
             $scope.passwordChange = ActivateClientUserService.createNewPasswordHolder();
             $scope.changePasswordFormSubmitted = false;
-            ActivateClientUserService.validateActivationToken(activationCode);
 
             /**
              * Load the password policy for display

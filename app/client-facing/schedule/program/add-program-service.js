@@ -52,7 +52,8 @@ angular.module('emmiManager')
                         location: '',
                         program: '',
                         specialty: '',
-                        viewByDate: this.calculateViewByDate()
+                        viewByDate: this.calculateViewByDate(),
+                        useFirstProgram: false
                     };
                 },
                 

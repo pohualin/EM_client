@@ -1,6 +1,7 @@
 <div data-ng-controller="PatientSelfRegController" data-ng-cloak>
     <form name="patientSelfRegForm" class="form" novalidate>
         <h1>Patient Information</h1>
+
         <div class="form-group">
             <div class="checkbox">
                 <input id="patientNameRequire" type="checkbox"
@@ -17,26 +18,30 @@
             <div class=" row">
                 <div class="checkbox col-sm-6">
                     <input id="exposePatientID" type="checkbox"
-                           data-ng-model="patientSelfRegConfig.entity.exposeId"/>
+                           data-ng-model="patientSelfRegConfig.entity.exposeId"
+                           data-ng-change="updatePatientIdFields()"/>
                     <label for="exposePatientID">Patient ID</label>
                 </div>
-                <div class="checkbox col-sm-6">
+                <div class="checkbox col-sm-6" data-ng-show="patientSelfRegConfig.entity.exposeId">
                     <input id="requirePatientId" type="checkbox"
                            data-ng-model="patientSelfRegConfig.entity.requireId"/>
                     <label for="requirePatientId">Required</label>
                 </div>
             </div>
 
-            <div data-ng-include="'admin-facing/partials/team/configuration/patient-self-reg/patient-id-label-type-dropdown.html'"></div>
+            <div data-ng-show="patientSelfRegConfig.entity.exposeId"
+                 data-ng-include="'admin-facing/partials/team/configuration/patient-self-reg/patient-id-label-type-dropdown.html'"></div>
 
             <br/>
+
             <div class="row">
                 <div class="checkbox col-sm-6">
                     <input id="exposePatientPhone" type="checkbox"
-                           data-ng-model="patientSelfRegConfig.entity.exposePhone"/>
+                           data-ng-model="patientSelfRegConfig.entity.exposePhone"
+                           data-ng-change="updatePhoneFields()"/>
                     <label for="exposePatientPhone">Phone</label>
                 </div>
-                <div class="checkbox col-sm-6">
+                <div class="checkbox col-sm-6" data-ng-show="patientSelfRegConfig.entity.exposePhone">
                     <input id="requirePatientPhone" type="checkbox"
                            data-ng-model="patientSelfRegConfig.entity.requirePhone"/>
                     <label for="requirePatientPhone">Required</label>
@@ -45,10 +50,11 @@
             <div class="row">
                 <div class="checkbox col-sm-6">
                     <input id="exposePatientEmail" type="checkbox"
-                           data-ng-model="patientSelfRegConfig.entity.exposeEmail"/>
+                           data-ng-model="patientSelfRegConfig.entity.exposeEmail"
+                           data-ng-change="updateEmailFields()"/>
                     <label for="exposePatientEmail">Email</label>
                 </div>
-                <div class="checkbox col-sm-6">
+                <div class="checkbox col-sm-6" data-ng-show="patientSelfRegConfig.entity.exposeEmail">
                     <input id="requirePatientEmail" type="checkbox"
                            data-ng-model="patientSelfRegConfig.entity.requireEmail"/>
                     <label for="requirePatientEmail">Required</label>
