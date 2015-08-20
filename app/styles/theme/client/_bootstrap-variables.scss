@@ -15,8 +15,9 @@ $gray:                   #515356 !default;
 $gray-light:             #cecece !default;
 $gray-lighter:           #f1f3f3 !default;
 
-$brand-primary:         #58036a !default;
+$brand-primary:         #9C27B0 !default;
 $brand-secondary:       #7e0696 !default;
+$brand-tertiary:        #58036A !default;
 $brand-success:         #50e3c2 !default;
 $brand-info:            #5bc0de !default;
 $brand-warning:         #f5a623 !default;
@@ -33,9 +34,9 @@ $body-bg:               #F0F1F3 !default;
 $text-color:            $gray !default;
 
 //** Global textual link color.
-$link-color:            #6CC5DC !default;
+$link-color:            $brand-secondary !default;
 //** Link hover color set via `darken()` function.
-$link-hover-color:      #21A4C7 !default;
+$link-hover-color:      $brand-tertiary !default;
 //** Link hover decoration.
 $link-hover-decoration: underline !default;
 
@@ -70,7 +71,7 @@ $line-height-computed:    floor(($font-size-base * $line-height-base)) !default;
 $headings-font-family:    inherit !default;
 $headings-font-weight:    400 !default;
 $headings-line-height:    1.15 !default;
-$headings-color:          $brand-primary !default;
+$headings-color:          $brand-secondary !default;
 
 
 //== Iconography
@@ -461,7 +462,7 @@ $pagination-hover-bg:                  $gray-lighter !default;
 $pagination-hover-border:              transparent !default;
 
 $pagination-active-color:              #fff !default;
-$pagination-active-bg:                 $brand-secondary !default;
+$pagination-active-bg:                 $brand-tertiary !default;
 $pagination-active-border:             transparent !default;
 
 $pagination-disabled-color:            $gray-light !default;
