@@ -211,11 +211,11 @@ $input-border-focus:             #aaaaaa !default;
 $input-color-placeholder:        $gray-dark !default;
 
 //** Default `.form-control` height
-$input-height-base:              ($line-height-computed + ($padding-base-vertical * 2)) !default;
+$input-height-base:              (($line-height-computed / 2) + ($padding-base-vertical * 2) + 2) !default;
 //** Large `.form-control` height
-$input-height-large:             (ceil($font-size-large * $line-height-large) + ($padding-large-vertical * 2)) !default;
+$input-height-large:             ($line-height-computed + ($padding-base-vertical * 2)) !default;
 //** Small `.form-control` height
-$input-height-small:             (floor($font-size-small * $line-height-small) + ($padding-small-vertical * 2)) !default;
+$input-height-small:             (floor($font-size-small * $line-height-small) + $padding-small-vertical + 2) !default;
 
 //** `.form-group` margin
 $form-group-margin-bottom:       15px !default;
@@ -239,23 +239,23 @@ $cursor-disabled:                not-allowed !default;
 //** Background for the dropdown menu.
 $dropdown-bg:                    #fff !default;
 //** Dropdown menu `border-color`.
-$dropdown-border:                #CFD2D5 !default;
+$dropdown-border:                $gray !default;
 //** Dropdown menu `border-color` **for IE8**.
-$dropdown-fallback-border:       #CFD2D5 !default;
+$dropdown-fallback-border:       $gray !default;
 //** Divider color for between dropdown items.
-$dropdown-divider-bg:            #e5e5e5 !default;
+$dropdown-divider-bg:            #979797 !default;
 
 //** Dropdown link text color.
 $dropdown-link-color:            $gray !default;
 //** Hover color for dropdown links.
 $dropdown-link-hover-color:      $gray !default;
 //** Hover background for dropdown links.
-$dropdown-link-hover-bg:         rgba(108,197,220,0.15) !default;
+$dropdown-link-hover-bg:         $brand-success !default;
 
 //** Active dropdown menu item text color.
 $dropdown-link-active-color:     $gray !default;
 //** Active dropdown menu item background color.
-$dropdown-link-active-bg:        rgba(108,197,220,0.15) !default;
+$dropdown-link-active-bg:        $brand-success !default;
 
 //** Disabled dropdown menu item background color.
 $dropdown-link-disabled-color:   $gray-light !default;
