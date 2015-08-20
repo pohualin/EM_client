@@ -7,20 +7,23 @@
      * Controller for Patient-Program Scheduling
      */
         .controller('ScheduleController', ['$scope', 'team', 'client', 'ScheduledProgramFactory',
-            '$alert', 'ScheduleService', '$location', 'UriTemplate', 'PatientEmailService', 'PatientPhoneService',
+            '$alert', 'ScheduleService', '$location', 'UriTemplate', 'PatientEmailService', 'PatientPhoneService', 
             function ($scope, team, client, ScheduledProgramFactory, $alert, ScheduleService, $location, UriTemplate, PatientEmailService, PatientPhoneService) {
-
                 $scope.team = team;
                 $scope.page.setTitle('Schedule Emmi Program - ' + team.entity.name);
                 $scope.client = client;
                 $scope.patient = team.patient.entity;
+                ScheduledProgramFactory.team = team;
                 ScheduledProgramFactory.patient = team.patient.entity;
-
+                
+                ScheduleService.loadTeamSchedulingConfiguration(team).then(function (teamSchedulingConfiguration) {
+                    ScheduledProgramFactory.teamSchedulingConfiguration = teamSchedulingConfiguration;
+                });
+                                
                 /**
                  * Retrieve team email configuration for scheduling
                  */
-                function getEmailConfiguration(){
-                    PatientEmailService.getTeamEmailConfiguration(team).then(function(emailConfigsResponse){
+                PatientEmailService.getTeamEmailConfiguration(team).then(function(emailConfigsResponse){
                       angular.forEach(emailConfigsResponse, function (emailConfig){
                 		if(angular.equals(emailConfig.entity.type, 'COLLECT_EMAIL')){
                 			$scope.showEmail = emailConfig.entity.emailConfig;
@@ -29,21 +32,17 @@
                 			$scope.isEmailRequired = emailConfig.entity.emailConfig;
                    		}
                 	 });
-                   });
-                }
-                getEmailConfiguration();
-
+                });
+               
                 /**
                  * Retrieve team phone configuration for scheduling
                  */
-                function getPhoneConfiguration(){
-                    PatientPhoneService.getTeamPhoneConfiguration(team).then(function(response){
+               PatientPhoneService.getTeamPhoneConfiguration(team).then(function(response){
                     	$scope.showPhone = (response.collectPhone) ? true : false;
                     	$scope.isPhoneRequired = (response.requirePhone) ? true : false;
-                    });
-                }
-                getPhoneConfiguration();
-
+               });
+               
+                
                 /**
                  * Broadcasts event so that Patient save and Program save are kicked off
                  */
@@ -55,11 +54,14 @@
                  * Saves schedule for valid patient and program on click of 'Finish Scheduling'
                  */
                 $scope.saveScheduledProgramForPatient = function () {
-                    if (ScheduledProgramFactory.valid()) {
+                    if (ScheduledProgramFactory.allValid()) {
                         $scope.whenSaving = true;
-                        ScheduleService.schedule($scope.team, $scope.scheduledProgram)
+                        ScheduleService.scheduleBulk($scope.team)
                             .then(function (response) {
-                                var scheduledProgramResource = response.data;
+                                // TODO PL: 
+                                // Only show instruction for the first scheduled program
+                                // this will need to be addressed in another ticket
+                                var scheduledProgramResource = response[0];
 
                                 $location.path(UriTemplate
                                     .create('/teams/{teamId}/schedule/{scheduleId}/instructions')
@@ -73,10 +75,11 @@
                                 });
                             }).finally(function () {
                                 $scope.whenSaving = false;
+                                ScheduledProgramFactory.selectedPrograms = null;
                             });
                     }
                 };
-
+                
                 $scope.scheduledProgram = ScheduledProgramFactory;
             }
         ])

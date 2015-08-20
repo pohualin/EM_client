@@ -3,11 +3,11 @@
 var gulp = require('gulp');
 
 var $ = require('gulp-load-plugins')();
-
+var maven = require('gulp-maven-deploy');
 var mainBowerFiles = require('main-bower-files');
 
 gulp.task('styles', function () {
-    return gulp.src('app/styles/main.scss')
+    return gulp.src('app/styles/**/main.scss')
         .pipe($.rubySass({ style: 'expanded' }))
         .pipe($.autoprefixer('last 1 version'))
         .pipe(gulp.dest('.tmp/styles'))
@@ -47,10 +47,10 @@ gulp.task('admin-partials', function () {
             quotes: true
         }))
         .pipe($.ngHtml2js({
-            moduleName: "emmiManager",
-            prefix: "admin-facing/"
+            moduleName: 'emmiManager',
+            prefix: 'admin-facing/'
         }))
-        .pipe(gulp.dest(".tmp/partials"))
+        .pipe(gulp.dest('.tmp/partials'))
         .pipe($.size({title: 'admin partials', showFiles:true}));
 });
 
@@ -62,10 +62,10 @@ gulp.task('client-partials', function () {
             quotes: true
         }))
         .pipe($.ngHtml2js({
-            moduleName: "emmiManager",
-            prefix: "client-facing/"
+            moduleName: 'emmiManager',
+            prefix: 'client-facing/'
         }))
-        .pipe(gulp.dest(".tmp/client-partials"))
+        .pipe(gulp.dest('.tmp/client-partials'))
         .pipe($.size({title: 'client-partials', showFiles: true}));
 });
 
@@ -77,10 +77,10 @@ gulp.task('router-partials', function () {
             quotes: true
         }))
         .pipe($.ngHtml2js({
-            moduleName: "emmiRouter",
-            prefix: "app-router/"
+            moduleName: 'emmiRouter',
+            prefix: 'app-router/'
         }))
-        .pipe(gulp.dest(".tmp/router-partials"))
+        .pipe(gulp.dest('.tmp/router-partials'))
         .pipe($.size({title: 'router-partials', showFiles: true}));
 });
 
@@ -152,8 +152,8 @@ gulp.task('fonts', function () {
 });
 
 gulp.task('font-paths', ['html'], function () {
-    return gulp.src('dist/styles/*.css')
-        .pipe($.replace('../../bower_components/bootstrap-sass/assets/fonts/bootstrap/', '../fonts/'))
+    return gulp.src('dist/styles/**/*.css')
+        .pipe($.replace('../../bower_components/bootstrap-sass/assets/fonts/bootstrap/', '/fonts/'))
         .pipe(gulp.dest('dist/styles'));
 });
 
@@ -180,6 +180,40 @@ gulp.task('styleguide', ['hologram'], function () {
     // Make sure Hologram has built before moving assets
     return gulp.src('app/styleguide/theme-build/**/*')
         .pipe(gulp.dest('dist/styleguide/theme-build'));
+});
+
+gulp.task('deploy-snapshot', function () {
+    gulp.src('.')
+        .pipe(maven.deploy({
+            'config': {
+                'groupId': 'com.emmisolutions.emmimanager',
+                'finalName': '{name}-{version}',
+                'type': 'jar',
+                'repositories': [
+                    {
+                        'id': 'emmi-snapshots',
+                        'url': 'https://build1.emmisolutions.com/nexus/content/repositories/snapshots/'
+                    }
+                ]
+            }
+        }))
+});
+
+gulp.task('deploy-release', function () {
+    gulp.src('.')
+        .pipe(maven.deploy({
+            'config': {
+                'groupId': 'com.emmisolutions.emmimanager',
+                'finalName': '{name}-{version}',
+                'type': 'jar',
+                'repositories': [
+                    {
+                        'id': 'emmi-releases',
+                        'url': 'https://build1.emmisolutions.com/nexus/content/repositories/releases/'
+                    }
+                ]
+            }
+        }))
 });
 
 gulp.task('clean', function () {

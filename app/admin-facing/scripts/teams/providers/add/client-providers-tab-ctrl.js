@@ -108,6 +108,11 @@ angular.module('emmiManager')
                 $scope.handleResponse(clientProviders, managedClientProviderList);
                 TeamProviderService.getTeamProvidersCount($scope.teamResource).then(function(count){
                     SelectAllTeamProvidersFactory.setTotalPossibleProvidersCount(clientProviders.page.totalElements - count);
+                    
+                    // In this case, all ClientProviders are already associated with the team
+                    if(clientProviders.page.totalElements - count === 0) {
+                        $scope.$emit('allPossibleAlreadyAssociated');
+                    }
                 });
             });
         };

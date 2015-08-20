@@ -14,8 +14,12 @@ angular.module('emmiManager')
                         content: 'Thanks! Your email address has been verified.'
                     });
                     $location.path('/login').replace();
-                }, function error() {
-                    $location.path('/login').replace();
+                }, function error(err) {
+                    if (err.status === 403) {
+                        $location.path('/unauthorized').replace();
+                    } else {
+                        $location.path('/login').replace();
+                    }
 
                 });
 

@@ -215,8 +215,9 @@ h3 .btn-icon, .h3 .btn-icon {
     top: 0;
     left: 0;
     font-size: 24px;
+    line-height: 1;
     color: #C7D0D8;
-    margin: 7px $padding-base-horizontal - 2;
+    margin: (($input-height-base - 24)/2) $padding-base-horizontal - 2;
     transition: all 0.2s ease;
 }
 
@@ -456,7 +457,7 @@ th.sort {
     transform: rotate(90deg);
 }
 
-TR.nowrap TD, TH {
+tr.nowrap td, th {
     white-space: nowrap;
 }
 
@@ -475,21 +476,11 @@ TR.nowrap TD, TH {
     border-color: #ddd;
 }
 
-/*
-.conflictingTeamForm{
-  width: 15em;
-}
-
-.conflictingTeamRow{
-  font-size: 14px;
-}
-*/
-
-.teamFilterSelect{
+.teamFilterSelect {
   padding-right: 0;
 }
 
-.pointer{
+.pointer {
   cursor:pointer;
 }
 
@@ -509,6 +500,10 @@ TR.nowrap TD, TH {
 
 .padding-left-zero {
   padding-left: 0;
+}
+
+.font-style-normal {
+  font-style: normal;
 }
 
 // various example component implementations

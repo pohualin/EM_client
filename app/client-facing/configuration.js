@@ -50,7 +50,7 @@ angular.module('emmiManager', [
     })
 
     .constant('PATTERN', {
-        EMAIL: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$/
+        EMAIL: /^[a-zA-Z0-9_.+-]{1,63}@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$/
     })
 
     .config(function ($httpProvider, $translateProvider, tmhDynamicLocaleProvider, HateoasInterceptorProvider, $datepickerProvider, $alertProvider, API) {
@@ -86,9 +86,9 @@ angular.module('emmiManager', [
             dateFormat: 'MM/dd/yyyy',
             modelDateFormat: 'yyyy-MM-dd',
             dateType: 'string',
-            iconLeft: 'fa-angle-left',
-            iconRight: 'fa-angle-right',
-            template: 'admin-facing/partials/common/directives/datepicker/datepicker.tpl.html'
+            iconLeft: 'fa-angle-up',
+            iconRight: 'fa-angle-down',
+            template: 'client-facing/common/directives/datepicker/datepicker.tpl.html'
         });
 
         // custom global angularstrap configurations
@@ -259,7 +259,7 @@ angular.module('emmiManager', [
 
         // Call when the 401 response is returned by the server
         $rootScope.$on('event:auth-loginRequired', function (event, rejection) {
-            if ($rootScope.account) {
+            if ($rootScope.account && $rootScope.account.login) {
                 $rootScope.username = $rootScope.account.login;
             }
             Session.destroy();

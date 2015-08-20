@@ -27,11 +27,18 @@
             </div>
 
             <div class="col-md-5 col-xs-height col-full-height" style="padding-left: 6px">
-                <div class="row-same-height row-full-height">
-                    <div class="layout-content layout-card">
-                        <div data-ng-include="'admin-facing/support/patient/view/notes/notes.html'"></div>
+              <div class="row-same-height row-full-height">
+                <div class="layout-content layout-card" data-ng-class="{'outlined':editMode}" data-ng-switch="editMode" data-ng-controller="PatientSupportClientNoteMainController">
+                  <form name="clientNoteForm" class="form" novalidate data-unsaved-warning-form>
+                    <div class="row" data-ng-switch-default>
+                        <div data-ng-include="'admin-facing/support/patient/view/note/main.html'"></div>
                     </div>
+                    <div class="row" data-ng-switch-when="true">
+                        <div data-ng-include="'admin-facing/support/patient/view/note/edit.html'"></div>
+                    </div>
+                  </form>
                 </div>
+              </div>
             </div>
         </div>
     </div>

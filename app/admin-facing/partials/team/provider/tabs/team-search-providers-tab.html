@@ -1,4 +1,4 @@
-<div data-ng-controller="ProviderSearchController">      
+<div data-ng-controller="ProviderSearchController">
      <div class="row">
           <div class="col-md-7">
           	 <br />
@@ -7,7 +7,7 @@
                      <label class="sr-only" for="providerQuery">Search providers:</label>
                      <div class="input-group has-input-icon has-input-icon-search">
                          <input class="form-control" id="providerQuery" name="providerQuery" data-ng-model="searchAll.providerQuery"
-                                type="text" placeholder="search by name last, first" required data-auto-focus data-focus-on="ProviderSearchFocus">
+                                type="text" placeholder="search by name: last name, first name" required data-auto-focus data-focus-on="ProviderSearchFocus">
                          <span class="input-icon"><i class="icon-search"></i></span>
                          <span class="input-group-btn">
                              <button class="btn btn-success" data-ng-click="search(searchForm.providerQuery.$valid)"
@@ -73,9 +73,9 @@
                  <tr data-ng-repeat="teamProvider in providers">
     				 <td class="col-checkbox">
                        <div class="checkbox">
-                           <input type="checkbox" id="teamProviderSearchCb{{$index}}" 
+                           <input type="checkbox" id="teamProviderSearchCb{{$index}}"
                               data-ng-model="teamProvider.provider.entity.checked"
-                              data-ng-change="onCheckboxChange(teamProvider)" 
+                              data-ng-change="onCheckboxChange(teamProvider)"
                               data-ng-disabled="teamProvider.provider.entity.disabled">
                            <label for="teamProviderSearchCb{{$index}}"></label>
                        </div>
@@ -83,7 +83,7 @@
     				 <td>{{teamProvider.provider.entity.firstName}} {{teamProvider.provider.entity.middleName}} {{teamProvider.provider.entity.lastName}} <em>{{teamProvider.provider.entity.active ? '' : "(inactive)"}}</em></td>
                      <td>{{teamProvider.provider.entity.specialty.name}}</td>
                      <td>{{teamProvider.provider.entity.email}}</td>
-                     <td class="col-has-multiselect" data-ng-if="allTeamLocations" >
+                     <td class="col-has-multiselect" data-ng-if="allTeamLocations.length > 0" >
                        <div data-ng-if="allTeamLocations && teamProvider.provider.entity.checked && !teamProvider.provider.entity.disabled">
                          <div data-ng-class="{'has-error col-md-11': teamProvider.provider.entity.selectedTeamLocations < 1 && associateRequestSubmitted}" data-multi-select
                               data-name=".nonClientProvider[{{teamProvider.provider.entity.id}}].allTeamLocations{{$index}}"

@@ -1,9 +1,9 @@
 <div data-ng-controller="UsersClientUserClientTeamRolesSupportListController" data-ng-cloak>
-    <div class="col-md-12" data-ng-show="isSuperUser && possibleClientRoles.length > 0">
+    <div class="col-md-12" data-ng-if="isSuperUser">
         <p class="disclaimer">Team roles aren't required because this user has been given all permissions at this client
             (including all teams within this client).</p>
     </div>
-    <div class="col-md-12" data-ng-show="clientTeamRoles.length > 0 && !isSuperUser">
+    <div class="col-md-12" data-ng-if="clientTeamRoles.length > 0 && !isSuperUser">
         <div class="row">
             <div class="col-md-12" data-ng-controller="UsersClientUserClientRolesSupportListController">
                 <h2 class="pull-left">Team Roles</h2>
@@ -24,6 +24,7 @@
             <div class="col-md-12">
                 <div class="panel-group" data-ng-model="clientTeamRole.activePanel"
                      data-ng-repeat="clientTeamRole in clientTeamRoles | orderBy:'-existingTeams.length'"
+                     data-ng-change="panelStateChange(clientTeamRole)"
                      data-start-collapsed="true"
                      data-bs-collapse>
                     <form name="clientTeamRoleForm_{{clientTeamRole.entity.id}}" class="form" novalidate>
@@ -64,7 +65,7 @@
                                     Permissions:<br/>
                                     <div class="permissions-list">
 				                        <span
-                                            data-ng-repeat="permission in clientTeamRole.entity.permissions | orderBy:'permission.rank'">
+                                            data-ng-repeat="permission in clientTeamRole.entity.permissions | orderBy:permission.rank">
 			                    			{{permission.name  | translate }}{{!$last ? ',' : ''}}&nbsp;
 			                    		</span>
                                     </div>

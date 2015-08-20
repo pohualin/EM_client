@@ -6,7 +6,7 @@
             <i class="icon-plus"></i> add locations
         </button>
     </div>
-    <h2>Locations</h2>
+    <h2 data-ng-if="schedulingConfiguration.entity.useLocation">Locations</h2>
     <table class="table table-bordered table-striped table-hover table-condensed" border="0" cellpadding="0"
            cellspacing="0" data-ng-show="locations" data-ng-if="schedulingConfiguration.entity.useLocation">
         <thead>
@@ -53,7 +53,7 @@
         <span><em>There are no existing locations<span data-ng-show="team.name">&nbsp;for {{team.name}}</span>.</em></span>
     </div>
     <div class="table-no-results" data-ng-if="!schedulingConfiguration.entity.useLocation">
-        <span><em>Locations are not in use for this team click <span><a href="#/clients/{{client.entity.id}}/teams/{{team.id}}/configuration/scheduling?team={{team.id}}&{{currentRouteQueryString}}">here</a></span> to edit this.</em></span>
+        <span><em>Locations are not in use for this team.</em></span>&nbsp;&nbsp;<span class="font-style-normal"><a href="#/clients/{{client.entity.id}}/teams/{{team.id}}/configuration/scheduling?team={{team.id}}&{{currentRouteQueryString}}">edit</a></span>
     </div>
 </div>
 

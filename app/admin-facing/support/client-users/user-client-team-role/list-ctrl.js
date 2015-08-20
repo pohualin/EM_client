@@ -6,29 +6,15 @@ angular.module('emmiManager')
  * Controller for list of UserClientUserClientTeamRole
  */
     .controller('UsersClientUserClientTeamRolesSupportListController',
-		['$controller', '$scope', 'Client', 'TeamsFilter', 'ManageUserTeamRolesService', 'UsersClientService', 'UserClientUserClientRolesService', 'UserClientUserClientTeamRolesService',
-        function ($controller, $scope, Client, TeamsFilter, ManageUserTeamRolesService, UsersClientService, UserClientUserClientRolesService, UserClientUserClientTeamRolesService) {
-
-            $scope.userClientUserClientRolesService = UserClientUserClientRolesService;
-
-			/**
-    		 * load all UserClientTeamRoles for the client
-    		 */
-    		$scope.loadClientTeamRoles = function(){
-    			ManageUserTeamRolesService.loadClientTeamRoles(Client.getClient()).then(function(clientTeamRoles){
-					$scope.clientTeamRoles = clientTeamRoles;
-					UserClientUserClientTeamRolesService.refreshTeamRoleCards($scope.clientTeamRoles);
-                    // update parent controller with roles
-                    $scope.setTeamRoles(clientTeamRoles);
-				});
-    		};
+		['$controller', '$scope', 'Client', 'TeamsFilter', 'ManageUserTeamRolesService', 'UsersClientService', 'UserClientUserClientTeamRolesService',
+        function ($controller, $scope, Client, TeamsFilter, ManageUserTeamRolesService, UsersClientService, UserClientUserClientTeamRolesService) {
 
             /**
     		 * Called when ClientTeamRole panel changed
     		 */
 			$scope.panelStateChange = function(clientTeamRole){
 				// Fetch all permissions tied to clientTeamRole if panel is open
-                if (clientTeamRole.activePanel !== 0) { // this fires before bs-collapse
+                if (clientTeamRole.activePanel === 0) { // this fires before bs-collapse
 				    ManageUserTeamRolesService.loadAllPermissions(clientTeamRole);
                 }
 			};
@@ -58,6 +44,13 @@ angular.module('emmiManager')
                 });
 				_paq.push(['trackEvent', 'Form Action', 'User Team Role Team', 'Remove']);
 			};
+			
+			/**
+             * load all UserClientTeamRoles for the client
+             */
+            $scope.$on('loadTeamsForClientTeamRoles', function(){
+                UserClientUserClientTeamRolesService.refreshTeamRoleCards($scope.clientTeamRoles);
+            });
 
             /**
 	         * init method called when the page is loading
@@ -65,7 +58,6 @@ angular.module('emmiManager')
             function init(){
             	$controller('CommonSearch', {$scope: $scope});
             	$scope.client = Client.getClient();
-                $scope.loadClientTeamRoles();
             }
 
             init();

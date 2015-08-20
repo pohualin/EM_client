@@ -1,0 +1,53 @@
+@charset "UTF-8";
+
+/*doc
+---
+title: Program Card
+name: a-program-card
+category: 2. Components - Scheduling
+---
+
+```html_example
+<div class="program-card">
+  <button type="button" class="close" aria-hidden="true"><i class="icon-delete"></i></button>
+  <h3 class="program-card_title">Anesthesia</h3>
+  <div class="program-card_wrapper">
+    <form role="form">
+      <div class="form-group">
+        <label class="control-label" for="programCard1Provider">Provider</label>
+        <select class="form-control" id="programCard1Provider" name="programCard1Provider" data-ng-model="programCard1.provider"
+                data-ng-options="provider.name for provider in providerCardProviders" required
+                data-chosen data-disable-search="true" data-placeholder="Please select a provider">
+            <option value=""></option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="control-label" for="programCard1Location">Location</label>
+        <select class="form-control" id="programCard1Location" name="programCard1Location" data-ng-model="programCard1.location"
+                data-ng-options="location.name for location in providerCardLocations" required
+                data-chosen data-disable-search="true" data-placeholder="Please select a provider">
+            <option value=""></option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="control-label" for="programCard1ViewBy">View-by Date</label>
+        <div class="has-input-icon has-input-icon-calendar">
+          <input id="programCard1ViewBy" class="form-control" placeholder="MM/DD/YYYY" type="text" name="programCard1ViewBy"
+            data-ng-model="selectedDate">
+          <span class="input-icon" data-ng-model="selectedDate" data-autoclose="true"
+            data-dateType="iso" data-bs-datepicker data-trigger="click" data-placement="top-left"><i class="icon-calendar"></i></span>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="checkbox">
+            <input type="checkbox" id="programCard1UseInfo" value="">
+            <label for="programCard1UseInfo">Use information above for all programs</label>
+          </label>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+```
+
+*/

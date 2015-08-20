@@ -3,12 +3,6 @@
 angular.module('emmiManager')
     .config(function ($routeProvider, USER_ROLES) {
 
-        var requiredResources = {
-            account: ['AuthSharedService', function (AuthSharedService) {
-                return AuthSharedService.currentUser();
-            }]
-        };
-
         // Routes
         $routeProvider
             .when('/editSecurityQuestions', {
@@ -39,7 +33,22 @@ angular.module('emmiManager')
                 access: {
                     authorizedRoles: [USER_ROLES.all]
                 },
-                resolve: requiredResources
+                resolve: {
+                    securityQuestions: ['$q', 'AuthSharedService', 'SecretQuestionService',
+                        function ($q, AuthSharedService, SecretQuestionService) {
+                            var deferred = $q.defer();
+                            AuthSharedService.currentUser().then(function () {
+                                SecretQuestionService.getSecretQuestions().then(function (response) {
+                                    if (response) {
+                                        deferred.resolve(response.data.content);
+                                    } else {
+                                        deferred.reject();
+                                    }
+                                });
+                            });
+                            return deferred.promise;
+                        }]
+                }
             });
 
     })

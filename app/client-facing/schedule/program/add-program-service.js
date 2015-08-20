@@ -2,23 +2,26 @@
 
 angular.module('emmiManager')
 
-    .service('AddProgramService', ['$http', 'UriTemplate', 'moment',
-        function ($http, UriTemplate, moment) {
+    .service('AddProgramService', ['$http', 'UriTemplate', 'moment', 'ScheduledProgramFactory',
+        function ($http, UriTemplate, moment, ScheduledProgramFactory) {
             return {
 
                 /**
                  * Finds Programs
                  *
+                 * @param query the search query
                  * @param teamResource for this team
                  * @param sort order
                  * @param pageSize how many per page
+                 * @param specialty if the user chose one
                  * @returns {*}
                  */
-                findPrograms: function (teamResource, sort, pageSize, specialty) {
+                findPrograms: function (query, teamResource, sort, pageSize, specialty) {
                     return $http.get(UriTemplate.create(teamResource.link.programs).stringify({
                             sort: sort && sort.property ? sort.property + ',' + (sort.ascending ? 'asc' : 'desc') : '',
                             size: pageSize,
-                            s: specialty ? specialty.entity.id : ''
+                            s: specialty ? specialty.entity.id : '',
+                            q: query
                         }
                     )).then(function (response) {
                         return response.data;
@@ -49,8 +52,26 @@ angular.module('emmiManager')
                         location: '',
                         program: '',
                         specialty: '',
-                        viewByDate: moment().add(30, 'days').format('YYYY-MM-DD')
+                        viewByDate: this.calculateViewByDate(),
+                        useFirstProgram: false
                     };
+                },
+                
+                /**
+                 * Calculate viewByDate based on teamSchedulingConfiguration
+                 * 
+                 * @return null or a date
+                 */
+                calculateViewByDate: function() {
+                    var viewByDate = null;
+                    if (ScheduledProgramFactory.teamSchedulingConfiguration) {
+                        if (ScheduledProgramFactory.teamSchedulingConfiguration.entity.useViewByDays) {
+                            viewByDate = moment()
+                                .add(ScheduledProgramFactory.teamSchedulingConfiguration.entity.viewByDays, 'days')
+                                .format('YYYY-MM-DD');
+                        }
+                    }
+                    return viewByDate;
                 },
 
                 /**

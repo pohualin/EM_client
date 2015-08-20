@@ -1,13 +1,17 @@
 'use strict';
 
 angular.module('emmiManager')
-    .controller('SearchPatientController', ['$scope', '$controller', 'SearchPatientService', 'client', 'team',
-        function ($scope, $controller, SearchPatientService, client, team) {
-
+    .controller('SearchPatientController', ['$scope', '$controller', 'SearchPatientService', 'client', 'team', 'ScheduledProgramFactory',
+        function ($scope, $controller, SearchPatientService, client, team, ScheduledProgramFactory) {
+            
             $controller('ClientCommonSearch', {$scope: $scope});
-
+            
+            // Reset the variables from the ScheduledProgramFactory before searching for patients
+            ScheduledProgramFactory.reset();
+            
             var contentProperty = 'patients';
             $scope.team = team;
+            ScheduledProgramFactory.team = team;
             $scope.removeStatusFilterAndTotal = false;
 
             $scope.search = function () {

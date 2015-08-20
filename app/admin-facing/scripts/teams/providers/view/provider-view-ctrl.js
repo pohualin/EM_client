@@ -44,22 +44,32 @@ angular.module('emmiManager')
                 $scope.clientProvider = angular.copy(response);
 
 			});
-			// get a list of team locations by team
-			TeamLocation.getTeamLocations($scope.teamProvider.link.teamLocations).then(function (response) {
-                $scope.potentialLocations = response;
-                $scope.multiSelectData = TeamProviderService.buildMultiSelectData($scope.potentialLocations);
-				// get a list of existing team locations by team provider
+			
+			ClientTeamSchedulingConfigurationService.getTeamSchedulingConfiguration($scope.teamResource).then(function(schedulingConfig){
+	            if (schedulingConfig.entity.useLocation) {
+	                // get a list of team locations by team
+	                TeamLocation.getTeamLocations($scope.teamProvider.link.teamLocations).then(function (response) {
+	                    $scope.potentialLocations = response;
+	                    $scope.multiSelectData = TeamProviderService.buildMultiSelectData($scope.potentialLocations);
+	                    // get a list of existing team locations by team provider
 
-				TeamProviderService.getTeamLocationsByTeamProvider($scope.teamProviderToBeEdit.link.findTeamLocationsByTeamProvider).then(function (response) {
-					if (response.length > 0) {
-						$scope.selectedItems = TeamProviderService.buildSelectedItem(response);
-					} else {
-                        $scope.selectedItems = TeamProviderService.buildMultiSelectData($scope.potentialLocations);
-					}
-					// show the dialog box
-					editProviderModal.$promise.then(editProviderModal.show);
-				});
-			});
+	                    TeamProviderService.getTeamLocationsByTeamProvider($scope.teamProviderToBeEdit.link.findTeamLocationsByTeamProvider).then(function (response) {
+	                        if (response.length > 0) {
+	                            $scope.selectedItems = TeamProviderService.buildSelectedItem(response);
+	                        } else {
+	                            $scope.selectedItems = TeamProviderService.buildMultiSelectData($scope.potentialLocations);
+	                        }
+	                        // show the dialog box
+	                        editProviderModal.$promise.then(editProviderModal.show);
+	                    });
+	                });
+	            } else {
+	                $scope.potentialLocations = [];
+	                $scope.selectedItems = [];
+	                editProviderModal.$promise.then(editProviderModal.show);
+	            }
+	        });
+			
 			_paq.push(['trackEvent', 'Form Action', 'Team Provider', 'Edit']);
 		};
 

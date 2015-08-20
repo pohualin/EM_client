@@ -67,6 +67,7 @@ angular.module('emmiManager')
                     });
                 }).finally(function () {
                     $scope.whenSaving = false;
+                    performSearch($scope.query, $scope.status, null);
                 });
             };
 
@@ -92,7 +93,7 @@ angular.module('emmiManager')
                 UsersClientService.findTeamsValidForFilter($scope.teamTagFilter).then(function (teams) {
                     $scope.teamsWithinTag = teams;
                 });
-                performSearch($scope.query, $scope.status, $scope.sortProperty, false, $scope.teamTagFilter);
+                performSearch($scope.query, $scope.status, $scope.sortProperty, $scope.teamTagFilter);
             };
 
             /**
