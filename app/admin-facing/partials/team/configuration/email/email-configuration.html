@@ -9,6 +9,9 @@
                 <label for="emailConfiguration{{$index}}">{{emailConfiguration.entity.type | translate }}</label>
             </div>
         </div>
+        <div data-ng-show="showEmailReminders">
+            <div data-ng-include="'admin-facing/partials/team/configuration/email/email-reminders.html'"></div>
+        </div>
         <div class="pull-right" data-ng-show="showEmailButton">
             <button class="btn btn-cancel" type="button"
                 data-ng-disabled="whenSaving"
