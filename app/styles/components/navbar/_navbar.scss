@@ -59,9 +59,6 @@
     padding-right: 25px;
     strong {
         color: $brand-secondary;
-        .client-header & {
-            color: rgb(250,212,107);
-        }
     }
 }
 
@@ -152,6 +149,102 @@
     }
     .input-icon {
         margin: 4px 10px;
+    }
+}
+
+.section-nav-account {
+    position: relative;
+    float: right;
+    width: 25%;
+    @include clearfix();
+    @include remIt(font-size, 13);
+    // Option for vertical centering
+    //top: 50%;
+    //transform: translateY(-50%);
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    .dropdown-toggle {
+        display: block;
+        color: #fff;
+        overflow: hidden;
+        padding: 22px 0 21px;
+    }
+    .fa-angle-down {
+        display: inline-block;
+        font-size: 18px;
+        display: inline-block;
+        height: 10px;
+        vertical-align: middle;
+    }
+    .section-nav-account_avatar {
+        display: block;
+        width: 30px;
+        height: 30px;
+        border-radius: 30px;
+        background: #fff;
+        float: left;
+        color: $gray;
+        text-align: center;
+        font-weight: bold;
+        padding-top: 6px;
+    }
+    .section-nav-account_text {
+        float: left;
+        overflow: hidden;
+        width: 80%;
+        padding: 0 0 0 17px;
+        margin-right: 7px;
+        line-height: 1;
+        text-overflow: clip;
+        /* Required for text-overflow to do anything */
+        white-space: nowrap;
+        overflow: hidden;
+    }
+    .section-nav-account_name {
+        display: block;
+        padding-bottom: 5px;
+    }
+    .section-nav-account_client {
+        display: block;
+        font-weight: 300;
+    }
+}
+
+.section-nav-menu-btn {
+    display: inline-block;
+    float: left;
+    padding: 28px 0 27px;
+    width: 80px;
+    color: #fff;
+    text-transform: uppercase;
+    .lines {
+        float: left;
+        width: 20px;
+        height: 20px;
+        margin-right: 11px;
+    }
+    .text {
+        float: left;
+        font-weight: bold;
+        line-height: 20px;
+    }
+    span {
+        display: block;
+        width: 100%;
+        height: 2px;
+        border-radius: 1px;
+        margin: 4px 0;
+        background: rgba(255,255,255,0.8);
+        transition: background 0.3s;
+    }
+    &:hover {
+        cursor: pointer;
+        span {
+            background: rgba(255,255,255,1);
+        }
     }
 }
 
