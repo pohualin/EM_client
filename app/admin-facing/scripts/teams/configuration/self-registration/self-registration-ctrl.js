@@ -49,14 +49,7 @@ angular.module('emmiManager')
                     $scope.originalSelfRegConfig = angular.copy(response.entity);
                     $scope.selfRegConfig = angular.copy(response.entity);
                     $alert({
-                        title: '',
-                        content: '<strong>' + $scope.team.entity.name + '</strong> has been updated successfully.',
-                        container: 'body',
-                        type: 'success',
-                        placement: 'top',
-                        show: true,
-                        duration: 5,
-                        dismissable: true
+                        content: '<strong>' + $scope.team.entity.name + '</strong> has been updated successfully.'
                     });
                 })
                     .error(function (response, status) {
@@ -78,14 +71,7 @@ angular.module('emmiManager')
                     $scope.selfRegConfig = angular.copy(response.entity);
                     $scope.originalSelfRegConfig = angular.copy(response.entity);
                     $alert({
-                        title: ' ',
-                        content: 'The team self reg configuration has been updated successfully.',
-                        container: 'body',
-                        type: 'success',
-                        placement: 'top',
-                        show: true,
-                        duration: 5,
-                        dismissable: true
+                        content: 'The team self reg configuration has been updated successfully.'
                     });
                 })
                     .error(function (response, status) {
