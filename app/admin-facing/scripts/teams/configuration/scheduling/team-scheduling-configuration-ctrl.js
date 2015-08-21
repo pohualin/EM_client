@@ -22,14 +22,7 @@ angular.module('emmiManager')
                 	  $scope.originalSchedulingConfigs = response;
               		  $scope.schedulingConfigs = angular.copy($scope.originalSchedulingConfigs);
                     	$alert({
-                    	    title: '',
-                            content: '<strong>' + $scope.team.entity.name + '</strong> has been updated successfully.',
-                            container: 'body',
-                            type: 'success',
-                            placement: 'top',
-                            show: true,
-                            duration: 5,
-                            dismissable: true
+                            content: '<strong>' + $scope.team.entity.name + '</strong> has been updated successfully.'
                         });
                      }).finally(function () {
                       $scope.whenSaving = false;
@@ -42,7 +35,7 @@ angular.module('emmiManager')
         $scope.onChange = function(){
         	$scope.showSchedulingButton  = true;
         };
-        
+
         /**
          * Called when cancel is clicked.. takes the original
          * objects and copies them back into the bound objects.
@@ -58,7 +51,7 @@ angular.module('emmiManager')
          */
         function init() {
             $scope.showSchedulingButton = false;
-            
+
             $scope.clientTeamSchedulingConfigurationFormSubmitted = false;
             $scope.client = teamResource.entity.client;
         	$scope.team = teamResource;

@@ -7,7 +7,7 @@ angular.module('emmiManager')
  */
     .controller('ClientTeamEmailConfigurationCtrl', ['$scope', '$alert', 'teamResource', 'ClientTeamEmailConfigurationService',
         function ($scope, $alert, teamResource, ClientTeamEmailConfigurationService) {
-            
+
             /**
              * When the save button is clicked. Sends all updates
              * to the back, then re-binds the form objects with the
@@ -22,14 +22,7 @@ angular.module('emmiManager')
                         	    $scope.originalEmailConfigs = response;
                         	    $scope.emailConfigs = angular.copy($scope.originalEmailConfigs);
                             	$alert({
-                                    title: '',
-                                    content: '<strong>' + $scope.team.entity.name + '</strong> has been updated successfully.',
-                                    container: 'body',
-                                    type: 'success',
-                                    placement: 'top',
-                                    show: true,
-                                    duration: 5,
-                                    dismissable: true
+                                    content: '<strong>' + $scope.team.entity.name + '</strong> has been updated successfully.'
                                 });
                              }).finally(function () {
                               $scope.whenSaving = false;
@@ -82,8 +75,8 @@ angular.module('emmiManager')
              */
             function init() {
                 $scope.showEmailButton = false;
-                
-                $scope.client = teamResource.entity.client;
+
+                 $scope.client = teamResource.entity.client;
             	$scope.team = teamResource;
             	ClientTeamEmailConfigurationService.getTeamEmailConfiguration($scope.team).then(function (response) {
                 		$scope.originalEmailConfigs = response;
