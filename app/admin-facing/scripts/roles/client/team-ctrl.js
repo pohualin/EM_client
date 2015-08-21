@@ -104,6 +104,7 @@ angular.module('emmiManager')
                     ManageUserTeamRolesService.saveNewClientTeamRole(clientTeamRoleEntity, $scope.clientResource)
                         .then(function () {
                             delete $scope.newClientTeamRole;
+                            $scope.newClientTeamRoleFormSubmitted = false;
                             $scope.loadExisting();
                             $scope.successAlert(clientTeamRoleEntity);
                             form.$setPristine();
