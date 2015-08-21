@@ -54,7 +54,7 @@ h3, .h3 {
 }
 
 .btn-icon {
-    @include button-variant($brand-primary, transparent, transparent);
+    @include button-variant($brand-secondary, transparent, transparent);
     border: 0;
     box-shadow: none;
     padding: 0 .25em;
@@ -64,7 +64,7 @@ h3, .h3 {
     &:active,
     &.active,
     .open > &.dropdown-toggle {
-        color: $brand-secondary;
+        color: $brand-tertiary;
     }
     [class^="icon-"], [class*=" icon-"] {
         vertical-align: baseline;
@@ -348,10 +348,10 @@ select.form-control {
                     &:before {
                         padding: 7px 0;
                     }
+                    &:hover {
+                        background: $brand-tertiary;
+                    }
                 }
-                // &:active div {
-                //     background: $brand-primary;
-                // }
             }
             .chosen-default {
                 font-style: normal;
@@ -360,7 +360,7 @@ select.form-control {
                 .chosen-single {
                     background-color: #e4e4e4;
                     div {
-                        background: $brand-primary;
+                        background: $brand-tertiary;
                     }
                 }
             }
@@ -403,7 +403,7 @@ select.form-control {
         margin-left: 6px;
         color: $brand-secondary;
         &:hover {
-            color: $brand-primary;
+            color: $brand-tertiary;
         }
     }
     .datepicker {
@@ -436,7 +436,7 @@ select.form-control {
     }
     .btn-datepicker-heading {
         @include remIt(font-size, 11);
-        color: $brand-secondary;
+        color: $brand-primary;
         padding: 8px 11px;
         text-align: left;
     }
@@ -444,7 +444,7 @@ select.form-control {
         border-bottom: 1px solid #eaeaea;
     }
     tbody tr:first-child td {
-        border-top: 2px solid $brand-secondary;
+        border-top: 2px solid $brand-primary;
     }
     tbody tr td {
         padding: 0;
@@ -471,7 +471,7 @@ select.form-control {
     border: 5px solid $gray-light;
     padding: 14px;
     .control-label {
-        color: $brand-secondary;
+        color: $brand-primary;
         margin-bottom: 11px;
     }
     .form-group:last-child {
@@ -528,7 +528,7 @@ select.form-control {
         top: 50%;
         margin-top: -10px;
         left: 28px;
-        color: $brand-primary;
+        color: $brand-secondary;
         font-size: 18px;
     }
     .program-list_item-text {
