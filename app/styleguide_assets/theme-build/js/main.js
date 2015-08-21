@@ -126,15 +126,35 @@ var jQuery_no_conflict = $.noConflict(true);
 
   });
   // Stylesheet selector
+  function setActiveStyleSheet(title) {
+    var i, a, main;
+    for(i=0; (a = document.getElementsByTagName('link')[i]); i++) {
+      if(a.getAttribute('rel').indexOf('style') != -1 && a.getAttribute('title')) {
+        a.disabled = true;
+        if(a.getAttribute('title') == title) a.disabled = false;
+      }
+    }
+  }
+  function getPreferredStyleSheet() {
+    var i, a;
+    for(i=0; (a = document.getElementsByTagName('link')[i]); i++) {
+      if(a.getAttribute('rel').indexOf('style') != -1
+         && a.getAttribute('rel').indexOf('alt') == -1
+         && a.getAttribute('title')
+         ) return a.getAttribute('title');
+    }
+    return null;
+  }
   var stylesheetCookie = document.cookie.replace(/(?:(?:^|.*;\s*)theme\s*\=\s*([^;]*).*$)|^.*$/, '$1'),
       stylesheetSelector = $('#style-selector');
   stylesheetSelector.on('change', function(e){
-    var stylesheet = $('link[title=theme]'),
-        newSource = $(this).val();
-    stylesheet.attr('href', newSource);
+    var newSource = $(this).val();
     document.cookie = 'theme='+newSource;
+    setActiveStyleSheet(newSource);
   });
-  if (stylesheetCookie && stylesheetCookie.length) {
+  if (stylesheetCookie && stylesheetCookie.length && stylesheetCookie !== 'null') {
     stylesheetSelector.val(stylesheetCookie).trigger('change');
+  } else {
+    setActiveStyleSheet(getPreferredStyleSheet());
   }
 }) (jQuery_no_conflict);
