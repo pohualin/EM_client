@@ -7,8 +7,8 @@ angular.module('emmiManager')
  */
     .controller('ClientTeamPhoneConfigurationCtrl', ['$scope', '$alert', 'teamResource', 'ClientTeamPhoneConfigurationService',
         function ($scope, $alert, teamResource, ClientTeamPhoneConfigurationService) {
-            
-    	    /**
+
+            /**
              * When the save button is clicked. Sends all updates
              * to the back, then re-binds the form objects with the
              * results
@@ -22,14 +22,7 @@ angular.module('emmiManager')
                         	  $scope.originalPhoneConfigs = response;
                       		  $scope.phoneConfigs = angular.copy($scope.originalPhoneConfigs);
                             	$alert({
-                                    title: '',
-                                    content: '<strong>' + $scope.team.entity.name + '</strong> has been updated successfully.',
-                                    container: 'body',
-                                    type: 'success',
-                                    placement: 'top',
-                                    show: true,
-                                    duration: 5,
-                                    dismissable: true
+                                    content: '<strong>' + $scope.team.entity.name + '</strong> has been updated successfully.'
                                 });
                              }).finally(function () {
                               $scope.whenSaving = false;
@@ -76,7 +69,7 @@ angular.module('emmiManager')
              */
             function init() {
                 $scope.showPhoneButton = false;
-                
+
                 $scope.client = teamResource.entity.client;
             	$scope.team = teamResource;
             	ClientTeamPhoneConfigurationService.getTeamPhoneConfiguration($scope.team).then(function (response) {
