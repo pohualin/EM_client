@@ -25,12 +25,33 @@ angular.module('emmiManager')
 
             /**
              * Puts a role into a mode where the role name is editable
+             *
+             * @param form to be edited
              * @param clientTeamRoleResource to be put in edit name mode
              */
-            $scope.startEditName = function (clientTeamRoleResource) {
+            $scope.startEditName = function (clientTeamRoleResource, form) {
                 clientTeamRoleResource.activePanel = 0;
                 clientTeamRoleResource.editName = true;
                 focus('focus-' + clientTeamRoleResource.entity.id);
+                $scope.panelStateChange(clientTeamRoleResource, form);
+            };
+
+            /**
+             * Happens from single click of role name
+             *
+             * @param clientTeamRoleResource clicked
+             * @param form to be edited
+             */
+            $scope.singleClick = function (clientTeamRoleResource, form) {
+                if (!clientTeamRoleResource.editName) {
+                    // only toggle when not in edit mode
+                    if (clientTeamRoleResource.activePanel === 0) {
+                        clientTeamRoleResource.activePanel = -1;
+                    } else {
+                        clientTeamRoleResource.activePanel = 0;
+                    }
+                }
+                $scope.panelStateChange(clientTeamRoleResource, form);
             };
 
             /**
@@ -113,11 +134,12 @@ angular.module('emmiManager')
              * @param form for unsaved changes
              */
             $scope.cancelExisting = function (clientTeamRoleResource, form) {
-                clientTeamRoleResource.editName = false;
                 angular.extend(clientTeamRoleResource, clientTeamRoleResource.original);
+                clientTeamRoleResource.editName = false;
                 $scope.resetValidity(form);
                 form.$setPristine();
                 delete clientTeamRoleResource.original;
+                $scope.panelStateChange(clientTeamRoleResource, form);
             };
 
             /**
@@ -132,22 +154,15 @@ angular.module('emmiManager')
                 if (clientTeamRoleResource.activePanel === 0 && !clientTeamRoleResource.original) {
                     ManageUserTeamRolesService.loadPermissions(clientTeamRoleResource).then(function (){
                         // Set the form back to pristine after loading permissions from server
-                        form.$setPristine();
+                        if (form) {
+                            form.$setPristine();
+                        }
                     });
                 } else {
                     // Set the form back to pristine after initialization
-                    form.$setPristine();
-                }
-            };
-
-            /**
-             * This collapses a panel but does not 'cancel' the changes
-             * @param clientTeamRoleResource to perform this on
-             */
-            $scope.collapseButDontCancel = function (clientTeamRoleResource) {
-                // ensures double click on collapsed doesn't re-collapse
-                if (!clientTeamRoleResource.editName) {
-                    clientTeamRoleResource.activePanel = 1;
+                    if (form) {
+                        form.$setPristine();
+                    }
                 }
             };
 
