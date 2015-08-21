@@ -81,10 +81,13 @@
                                     data-ng-class="clientProvider.link.self ? 'text-muted' : ''">
                                     <td class="col-checkbox">
                                         <div class="checkbox">
-                                            <input type="checkbox" id="clientProviderCb{{$index}}" data-ng-model="clientProvider.provider.entity.newprovider"
+                                            <input type="checkbox" id="clientProviderCb{{$index}}"
+                                                   data-ng-model="clientProvider.provider.entity.newprovider"
                                                    data-ng-change="onCheckboxChange(clientProvider.provider)"
-                                                   data-ng-disabled="clientProvider.link.self"
-                                                   data-ng-checked="clientProvider.link.self">
+                                                   data-ng-if="!clientProvider.link.self">
+                                            <input type="checkbox" id="clientProviderCb{{$index}}"
+                                                   data-ng-if="clientProvider.link.self"
+                                                   data-ng-disabled="true" data-ng-checked="true">
                                             <label class="empty" for="clientProviderCb{{$index}}"></label>
                                         </div>
                                     </td>
