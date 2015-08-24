@@ -31,11 +31,11 @@
                     team.</em></span>
             </div>
         </div>
-        <div class="pull-right" data-ng-show="selfRegConfig.code">
+        <div class="pull-right" data-ng-show="originalSelfRegConfig.code || !selfRegForm.code.$pristine">
             <button class="btn btn-cancel" type="button" data-ng-click="cancel()">
                 <span>cancel</span>
             </button>
-            <button class="btn btn-success" type="submit" data-ng-click="continue(selfRegForm, $event)" data-ng-disabled="selfRegConfig.code === originalSelfRegConfig.code">
+            <button class="btn btn-success" type="submit" data-ng-click="continue(selfRegForm, $event)">
                 <span>{{originalSelfRegConfig.code ? 'Edit' : 'Continue'}}</span>
             </button>
         </div>
