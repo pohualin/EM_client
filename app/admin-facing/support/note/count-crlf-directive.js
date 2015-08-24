@@ -11,10 +11,10 @@ angular.module('emmiManager')
                 restrict: 'A',
                 require: 'ngModel',
                 link: function (scope, element, attrs, ctrl) {
-                    var max = attrs.ngMaxlength | attrs.maxlength;
+                    var max = attrs.ngMaxlength || attrs.maxlength;
                     ctrl.$formatters.push(function (value) {
                         if (value) {
-                            scope.remainingCharacters = max - value.replace(/\n/g, "\n\r").length;
+                            scope.remainingCharacters = max - value.replace(/\n/g, '\n\r').length;
                         } else {
                             scope.remainingCharacters = max;
                         }
@@ -22,7 +22,7 @@ angular.module('emmiManager')
                     });
                     ctrl.$parsers.push(function (value) {
                         if (value) {
-                            scope.remainingCharacters = max - value.replace(/\n/g, "\n\r").length;
+                            scope.remainingCharacters = max - value.replace(/\n/g, '\n\r').length;
                         } else {
                             scope.remainingCharacters = max;
                         }
