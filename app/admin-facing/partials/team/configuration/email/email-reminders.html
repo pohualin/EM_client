@@ -1,33 +1,26 @@
 <hr/>
-<div class="form-group">
-    <div class="checkbox">
-        <input id="reminderTwoDays" type="checkbox"
-               data-ng-model="emailReminderConfigs.entity.reminderTwoDays"
-               data-ng-change="onChange(emailReminderConfigs)" />
-        <label for="reminderTwoDays">Send email 2 days before VBD</label>
-    </div>
-    <div class="checkbox">
-        <input id="reminderFourDays" type="checkbox"
-               data-ng-model="emailReminderConfigs.entity.reminderFourDays"
-               data-ng-change="onChange(emailReminderConfigs)" />
-        <label for="reminderFourDays">Send email 4 days before VBD</label>
-    </div>
-    <div class="checkbox">
-        <input id="reminderSixDays" type="checkbox"
-               data-ng-model="emailReminderConfigs.entity.reminderSixDays"
-               data-ng-change="onChange(emailReminderConfigs)" />
-        <label for="reminderSixDays">Send email 6 days before VBD</label>
-    </div>
-    <div class="checkbox">
-        <input id="reminderEightDays" type="checkbox"
-               data-ng-model="emailReminderConfigs.entity.reminderEightDays"
-               data-ng-change="onChange(emailReminderConfigs)" />
-        <label for="reminderEightDays">Send email 8 days before VBD</label>
-    </div>
-    <div class="checkbox">
-        <input id="reminderArticles" type="checkbox"
-               data-ng-model="emailReminderConfigs.entity.reminderArticles"
-               data-ng-change="onChange(emailReminderConfigs)" />
-        <label for="reminderArticles">Send reminders for articles</label>
-    </div>
+<div class="checkbox">
+    <input id="reminderTwoDays" type="checkbox"
+           data-ng-model="emailConfigs.entity.reminderTwoDays"/>
+    <label for="reminderTwoDays">Send email 2 days before VBD</label>
+</div>
+<div class="checkbox">
+    <input id="reminderFourDays" type="checkbox"
+           data-ng-model="emailConfigs.entity.reminderFourDays"/>
+    <label for="reminderFourDays">Send email 4 days before VBD</label>
+</div>
+<div class="checkbox">
+    <input id="reminderSixDays" type="checkbox"
+           data-ng-model="emailConfigs.entity.reminderSixDays"/>
+    <label for="reminderSixDays">Send email 6 days before VBD</label>
+</div>
+<div class="checkbox">
+    <input id="reminderEightDays" type="checkbox"
+           data-ng-model="emailConfigs.entity.reminderEightDays"/>
+    <label for="reminderEightDays">Send email 8 days before VBD</label>
+</div>
+<div class="checkbox">
+    <input id="reminderArticles" type="checkbox"
+           data-ng-model="emailConfigs.entity.reminderArticles"/>
+    <label for="reminderArticles">Send reminders for articles</label>
 </div>

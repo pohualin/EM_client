@@ -1,32 +1,32 @@
 'use strict';
 angular.module('emmiManager')
 
-    .service('ClientTeamEmailConfigurationService', ['$q', '$http', 'UriTemplate', 
-              function ($q, $http, UriTemplate) {
-    	      return {
-    	    	  
-    	    	 /**
-                 * Calls the back end to get all email configuration for a client-team
-                 *
-                 * @param teamResource
-                 * @returns all questions and responses for a client user
-                 */
-                getTeamEmailConfiguration: function (team) {
-                    return $http.get(UriTemplate.create(team.link.teamEmailConfig).stringify())
-                        .then(function (response) {
-                        	return response.data.content;
-                        });
-                },
-                
+    .service('ClientTeamEmailConfigurationService', ['$q', '$http', 'UriTemplate',
+    function ($q, $http, UriTemplate) {
+        return {
+
+            /**
+            * Calls the back end to get all email configuration for a client-team
+            *
+            * @param teamResource
+            * @returns all questions and responses for a client user
+            */
+            getTeamEmailConfiguration: function (team) {
+                return $http.get(UriTemplate.create(team.link.teamEmailConfig).stringify())
+                    .then(function (response) {
+                    return response.data;
+                });
+            },
+
                 /**
                  * Calls the back end to save or update a client-team email configuration.
                  * @param team
-                 * @param emailConfigs all the email configuration for a team 
+                 * @param emailConfigs all the email configuration for a team
                  * @returns {*} the promise
                  */
                 saveOrUpdateTeamEmailConfiguration: function (team,
                 		                                      emailConfigs){
-                	
+
                 	// looping thru the email configs and save them
                 	var deferred = $q.defer();
                 	var promises = [];
@@ -40,16 +40,16 @@ angular.module('emmiManager')
                                 });
                     	promises.push(deferred.promise);
                     });
-                    
+
                     $q.all(promises).then(function () {
                     	deferred.resolve(updatedEmailConfigurations);
                     });
-                    
+
                    return deferred.promise;
                 }
     	       };
 
-       
+
     }
 ])
 ;
