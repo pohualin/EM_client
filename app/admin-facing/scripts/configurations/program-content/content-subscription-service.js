@@ -12,7 +12,6 @@ angular.module('emmiManager')
                  * Call server to get a page of ContentSubscription list 
                  */
                 getContentSubscriptionList: function () {
-                    console.log(Client.getClient().link);
                     return $http.get(UriTemplate.create(Client.getClient().link.contentSubscriptions).stringify())
                         .then(function (response) {
                             CommonService.convertPageContentLinks(response.data);

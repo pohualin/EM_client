@@ -7,7 +7,6 @@ angular.module('emmiManager')
  */
     .controller('ClientProgramContentConfigurationController', ['$alert', '$scope', '$controller', 'clientResource', 'Client', 'ContentSubscriptionConfigurationService',
         function ($alert, $scope, $controller, clientResource, Client, ContentSubscriptionConfigurationService) {
-        console.log('at the program content controller');  
         $scope.faithBased = false;
         $scope.sourceProgram = false;
         $scope.primaryContentList = [];
@@ -17,9 +16,7 @@ angular.module('emmiManager')
         $scope.emmiEngagePlus = {};
         $scope.noneContent = {name:'None', id:0};
         $scope.deleteContentSubscription = false;
-        
-        console.log(clientResource);
-               
+                      
         /**
          * Cancel any changes
          */
@@ -103,7 +100,6 @@ angular.module('emmiManager')
         };
         
         $scope.onChangePrimaryList = function(contentSubscriptionForm){
-            console.log($scope.selectedContentSubscription);
             $scope.showContentButton = true;
             if($scope.selectedContentSubscription.entity.contentSubscription.name === 'None'){
                 $scope.deleteContentSubscription = true;
@@ -111,13 +107,11 @@ angular.module('emmiManager')
                 $scope.sourceProgram = false;
             }
             else if(($scope.selectedContentSubscription.entity.contentSubscription.id === 1288) &&
-                    ($scope.selectedContentSubscription.entity.contentSubscription.name === 'EmmiEngage+')){
-                    console.log('Emmi Engage plus base');
-                    $scope.faithBased = true;
-                    $scope.sourceProgram = true;
+                ($scope.selectedContentSubscription.entity.contentSubscription.name === 'EmmiEngage+')){
+                $scope.faithBased = true;
+                $scope.sourceProgram = true;
             }
             else if($scope.selectedContentSubscription.entity.contentSubscription.id === 128){
-                console.log('Emmi Engage  base');
                 $scope.faithBased = true;
                 $scope.sourceProgram = false;
             }
