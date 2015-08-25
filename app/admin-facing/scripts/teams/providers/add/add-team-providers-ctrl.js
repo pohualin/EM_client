@@ -66,7 +66,7 @@ angular.module('emmiManager')
                     $scope.whenSaving = false;
                 }
             });
-        }
+        };
         
         /**
          * SaveAndAnother method to call when selectAll is false
