@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  *   Manage Client Level roles for a client
  */
-    .controller('ClientRoleAdminCtrl', ['$scope', '$alert', 'ManageUserRolesService', '$filter', 'focus',
-        function ($scope, $alert, ManageUserRolesService, $filter, focus) {
+    .controller('ClientRoleAdminCtrl', ['$scope', '$alert', 'ManageUserRolesService', '$filter', 'focus', 'RolesFactory',
+        function ($scope, $alert, ManageUserRolesService, $filter, focus, RolesFactory) {
 
             // these are loaded by the route/main controller
             $scope.clientReferenceData = $scope.clientResource.ref.clientRoleReferenceData;
@@ -18,9 +18,29 @@ angular.module('emmiManager')
              */
             $scope.loadExisting = function () {
                 ManageUserRolesService.loadClientRoles($scope.clientResource).then(function (rolesResources) {
+                    angular.forEach(rolesResources, function (clientRoleResource) {
+                        $scope.addWatch(clientRoleResource);
+                    });
                     $scope.existingClientRoles = rolesResources;
+
+                    RolesFactory.setClientRoles(rolesResources);
                     $scope.setHasExistingRoles();
                 });
+            };
+
+            /**
+             * Happens from single click of role name
+             * @param clientRoleResource clicked
+             */
+            $scope.singleClick = function (clientRoleResource) {
+                if (!clientRoleResource.editName) {
+                    // only toggle when not in edit mode
+                    if (clientRoleResource.activePanel === 0) {
+                        clientRoleResource.activePanel = -1;
+                    } else {
+                        clientRoleResource.activePanel = 0;
+                    }
+                }
             };
 
             /**
@@ -90,7 +110,7 @@ angular.module('emmiManager')
              */
             $scope.cancelNew = function (form) {
                 $scope.resetValidity(form);
-                form.$setPristine(true);
+                form.$setPristine();
                 $scope.newClientRoleFormSubmitted = false;
                 delete $scope.newClientRole;
             };
@@ -102,47 +122,21 @@ angular.module('emmiManager')
              * @param form for unsaved changes
              */
             $scope.cancelExisting = function (clientRoleResource, form) {
-                clientRoleResource.editName = false;
                 angular.extend(clientRoleResource, clientRoleResource.original);
+                clientRoleResource.editName = false;
                 $scope.resetValidity(form);
-                form.$setPristine(true);
-                delete clientRoleResource.original;
-            };
-
-            /**
-             * When a client role panel is opened or closed. Copy the original
-             * resource into a .original property, then load permissions from
-             * the back.
-             *
-             * @param clientRoleResource for the panel
-             * @param form for unsaved changes
-             */
-            $scope.panelStateChange = function (clientRoleResource, form) {
-                if (clientRoleResource.activePanel === 0 && !clientRoleResource.original) {
-                    // load the permissions selected for this role
-                    ManageUserRolesService.loadPermissions(clientRoleResource).then(function () {
-                        angular.forEach(clientRoleResource.entity.userClientPermissions, function (group) {
-                            // set the disabled
-                            $scope.permissionSelectionChange(group, group.active,
-                                clientRoleResource.entity.userClientPermissions, false);
-                        });
-                        // Set the form back to pristine after loading permissions from server
-                        form.$setPristine();
-                    });
-
-                }
-                // Set the form back to pristine after initialization
                 form.$setPristine();
+                delete clientRoleResource.original;
             };
 
             /**
              * Called when an existing role is changed.
              */
-            $scope.permissionSelectionChange = function (changedOption, isSelected, all) {
+            $scope.permissionSelectionChange = function (changedOption, isSelected, all, init) {
                 // process selection changes
                 var form = $scope.existingForms[changedOption.parentRoleId];
                 if (form) {
-                    if (ManageUserRolesService.doesChangeNeedSave(changedOption, isSelected, all)) {
+                    if (ManageUserRolesService.doesChangeNeedSave(changedOption, isSelected, all, init)) {
                         // set the form dirty if there are any deltas
                         form.$setDirty();
                     } else {
@@ -160,17 +154,6 @@ angular.module('emmiManager')
             };
 
             /**
-             * This collapses a panel but does not 'cancel' the changes
-             * @param clientRoleResource to perform this on
-             */
-            $scope.collapseButDontCancel = function (clientRoleResource) {
-                // ensures double click on collapsed doesn't re-collapse
-                if (!clientRoleResource.editName) {
-                    clientRoleResource.activePanel = 1;
-                }
-            };
-
-            /**
              * Called when a client role resource 'save' button is clicked for
              * an existing role
              *
@@ -181,7 +164,7 @@ angular.module('emmiManager')
                 form.$setPristine();
                 $scope.whenSaving = true;
                 ManageUserRolesService.saveExistingClientRole(clientRoleResource).then(function () {
-                    clientRoleResource.activePanel = 1;
+                    clientRoleResource.activePanel = -1;
                     $alert({
                         content: 'The role <b>' + clientRoleResource.entity.name + '</b> has been updated successfully.'
                     });
@@ -243,7 +226,7 @@ angular.module('emmiManager')
              */
             $scope.disableLibrary = function () {
                 return function (libraryRole) {
-                    return ManageUserRolesService.disableSelectedLibraries($scope.existingClientRoles, libraryRole);
+                    return ManageUserRolesService.disableSelectedLibraries(libraryRole);
                 };
             };
 
@@ -269,6 +252,40 @@ angular.module('emmiManager')
             $scope.resetValidity = function (form) {
                 form.$setValidity('unique', true);
                 form.$setDirty(true);
+            };
+
+            /**
+             * Add an attribute activePanel with a change listener
+             * @param clientRoleResource
+             */
+            $scope.addWatch = function (clientRoleResource) {
+                clientRoleResource.activePanel = -1; // 0 means expanded
+                // adding a $watch instead of using ng-change so we can programmatically change the value
+                $scope.$watch(function () {
+                    return clientRoleResource.activePanel;
+                }, function (newVal, oldVal, scope) {
+                    if (newVal !== oldVal) {
+                        var form = scope.existingForms[clientRoleResource.entity.id];
+                        if (clientRoleResource.activePanel === 0 && !clientRoleResource.original) {
+                            // load the permissions selected for this role, if they haven't been loaded already
+                            ManageUserRolesService.loadPermissions(clientRoleResource).then(function () {
+                                angular.forEach(clientRoleResource.entity.userClientPermissions, function (group) {
+                                    // set the disabled
+                                    scope.permissionSelectionChange(group, group.active,
+                                        clientRoleResource.entity.userClientPermissions, true);
+                                });
+                                // Set the form back to pristine after loading permissions from server
+                                if (form) {
+                                    form.$setPristine();
+                                }
+                            });
+                        }
+                        // Set the form back to pristine after initialization
+                        if (form) {
+                            form.$setPristine();
+                        }
+                    }
+                });
             };
 
             // start by loading the currently saved roles

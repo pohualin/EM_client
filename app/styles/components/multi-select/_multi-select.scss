@@ -1,5 +1,5 @@
 .multi-select > .multi-select-container[readonly] {
-  background: $input-bg url('../images/icon-multi-select-arrow.png') no-repeat 94% center;
+  background: $input-bg url('/images/icon-multi-select-arrow.png') no-repeat 94% center;
   background-position: right 12px center; // fixed positioning from right for modern browsers
   cursor: pointer;
   //height: 34px; // height will be received from Bootstrap .form-control

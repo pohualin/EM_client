@@ -39,6 +39,10 @@ angular.module('emmiManager')
                         return response.data;
                     });
             },
+            /**
+             * get available languages
+             * @returns {*}
+             */
             getLanguages: function() {
                 var deferred = $q.defer();
                 var languages = [];

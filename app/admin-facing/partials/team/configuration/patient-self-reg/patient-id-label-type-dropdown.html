@@ -1,4 +1,4 @@
-<div class="col-md-12" data-ng-controller="PatientIdLabelDropDownController" data-ng-cloak>
+<div data-ng-controller="PatientIdLabelDropDownController" data-ng-cloak>
     <form name="patientIdLabelForm" class="form" novalidate>
         <div class="form-group">
             <div class="form-group">
@@ -11,7 +11,8 @@
                     <option value=""></option>
                 </select>
             </div>
-            <div class="row">
+            <div class="row"
+                 data-ng-show="patientSelfRegConfig.entity.patientIdLabelType.typeKey === 'PATIENT_SELF_REG_LABEL_OTHER'">
                 <div class="col-sm-6">
                     <label class="control-label" for="patientIdLabelEnglish">Patient Id Label (English)</label>
                     <input class="form-control" name="patientIdLabelEnglish" type="text"

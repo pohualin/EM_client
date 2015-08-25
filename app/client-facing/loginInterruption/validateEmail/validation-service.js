@@ -67,7 +67,8 @@ angular.module('emmiManager')
                  */
                 validateEmailToken: function (emailValidationToken) {
                     var deferred = $q.defer();
-                    $http.put(UriTemplate.create(API.validateEmailToken).stringify(), {validationToken: emailValidationToken})
+                    $http.put(UriTemplate.create(API.validateEmailToken).stringify(),
+                        {validationToken: emailValidationToken}, {override403: true})
                         .success(function(response) {
                             deferred.resolve(response);
                         })

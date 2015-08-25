@@ -24,6 +24,7 @@
             <div class="col-md-12">
                 <div class="panel-group" data-ng-model="clientTeamRole.activePanel"
                      data-ng-repeat="clientTeamRole in clientTeamRoles | orderBy:'-existingTeams.length'"
+                     data-ng-change="panelStateChange(clientTeamRole)"
                      data-start-collapsed="true"
                      data-bs-collapse>
                     <form name="clientTeamRoleForm_{{clientTeamRole.entity.id}}" class="form" novalidate>
@@ -64,7 +65,7 @@
                                     Permissions:<br/>
                                     <div class="permissions-list">
 				                        <span
-                                            data-ng-repeat="permission in clientTeamRole.entity.permissions | orderBy:'permission.rank'">
+                                            data-ng-repeat="permission in clientTeamRole.entity.permissions | orderBy:permission.rank">
 			                    			{{permission.name  | translate }}{{!$last ? ',' : ''}}&nbsp;
 			                    		</span>
                                     </div>

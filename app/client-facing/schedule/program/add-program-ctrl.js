@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('emmiManager')
-    .controller('AddProgramController', ['$scope', '$controller', 'AddProgramService',
+    .controller('AddProgramController', ['$scope', '$q', '$controller', 'AddProgramService',
         'moment', '$alert', '$timeout', 'ScheduledProgramFactory',
-        function ($scope, $controller, AddProgramService, moment, $alert, $timeout, ScheduledProgramFactory) {
+        function ($scope, $q, $controller, AddProgramService, moment, $alert, $timeout, ScheduledProgramFactory) {
 
             // add common pagination and sorting functions
             $controller('CommonPagination', {$scope: $scope});
@@ -15,24 +15,35 @@ angular.module('emmiManager')
                 specialty: '',
                 query: ''
             };
+            $scope.useFirstProgram = false;
+            $scope.firstProgramResource = {
+                provider: '',
+                location: '',
+                viewByDate: ''
+            };
 
-            $scope.useLocation = ScheduledProgramFactory.useLocation;
-            $scope.useProvider = ScheduledProgramFactory.useProvider;
+            /**
+             * Watch teamSchdulingConfiguration and set new values to scope
+             */
+            $scope.$watch(function(){
+                return ScheduledProgramFactory.teamSchedulingConfiguration;
+            }, function(newValue){
+                $scope.teamSchedulingConfiguration = newValue ? newValue.entity : {};
+                if ($scope.teamSchedulingConfiguration && $scope.teamSchedulingConfiguration.useLocation) {
+                    AddProgramService.loadLocations($scope.team).then(function (locations) {
+                        $scope.locations = locations;
+                    });
+                }
+                if ($scope.teamSchedulingConfiguration && $scope.teamSchedulingConfiguration.useProvider) {
+                    AddProgramService.loadProviders($scope.team).then(function (providers) {
+                        $scope.providers = providers;
+                    });
+                }
+            });
 
             AddProgramService.loadSpecialties($scope.team).then(function (specialties) {
                 $scope.specialties = specialties;
             });
-
-            if ($scope.useLocation) {
-                AddProgramService.loadLocations($scope.team).then(function (locations) {
-                    $scope.locations = locations;
-                });
-            }
-            if ($scope.useProvider) {
-                AddProgramService.loadProviders($scope.team).then(function (providers) {
-                    $scope.providers = providers;
-                });
-            }
 
             $scope.patient = ScheduledProgramFactory.patient;
             $scope.selectedPrograms = [];
@@ -114,6 +125,18 @@ angular.module('emmiManager')
                 if (programResource.selected) {
                     var selectedProgram = AddProgramService.newScheduledProgram();
                     selectedProgram.program = programResource;
+                    
+                    // Set provider if there is only one possible provider
+                    if ($scope.providers && $scope.providers.length === 1) {
+                        selectedProgram.provider = $scope.providers[0];
+                        $scope.onProviderChange(selectedProgram);
+                    }
+                    
+                    // Set location if there is only one possible location
+                    if ($scope.locations && $scope.locations.length === 1) {
+                        selectedProgram.location = $scope.locations[0];
+                        $scope.onLocationChange(selectedProgram);
+                    }
                     $scope.selectedProgramsHolder.push(selectedProgram);
                 } else {
                     $scope.selectedProgramsHolder = $scope.selectedProgramsHolder.filter(function (element) {
@@ -142,16 +165,41 @@ angular.module('emmiManager')
              * that are valid for that location
              */
             $scope.onLocationChange = function (selectedProgram) {
-                selectedProgram.loadingProviderLocation = true;
-                AddProgramService.loadProviders($scope.team, selectedProgram.location).then(
-                    function (providers) {
-                        selectedProgram.providers = providers;
-                        if (providers.length === 1) {
-                            selectedProgram.provider = providers[0];
-                        }
-                    }).finally(function () {
-                        selectedProgram.loadingProviderLocation = false;
-                    });
+                if ($scope.teamSchedulingConfiguration && $scope.teamSchedulingConfiguration.useProvider) {
+                    selectedProgram.loadingProviderLocation = true;
+                    return AddProgramService.loadProviders($scope.team, selectedProgram.location).then(
+                        function (providers) {
+                            $scope.providers = providers;
+                            if (providers.length === 1 && selectedProgram.location !== '') {
+                                selectedProgram.provider = providers[0];
+                            }
+                            return selectedProgram;
+                        }).finally(function () {
+                            selectedProgram.loadingProviderLocation = false;
+                        });
+                } else {
+                    var deferred = $q.defer();
+                    deferred.resolve(selectedProgram);
+                    return deferred.promise;
+                }
+            };
+            
+            /**
+             * onLocationChange when use first program is checked.
+             * 1. set selectedProgram.location to selectedProgram.firstProgramResource.location
+             * 2. call onLocationChange to get potential providers or set the only provider
+             * 3. Fire 'useFirstProgramResource' event if it's called from first card. 
+             *    Otherwise, fire 'useIndividualProgram' event
+             */
+            $scope.onLocationChangeAndUseFirstProgram = function (selectedProgram, firstProgram) {
+                selectedProgram.location = selectedProgram.firstProgramResource.location;
+                $scope.onLocationChange(selectedProgram).then(function (selectedProgram) {
+                    if (firstProgram) {
+                        $scope.$broadcast('useFirstProgramResource');
+                    } else {
+                        $scope.$broadcast('useIndividualProgram');
+                    }
+                });
             };
 
             /**
@@ -159,18 +207,44 @@ angular.module('emmiManager')
              * list of possible locations for the selected provider
              */
             $scope.onProviderChange = function (selectedProgram) {
-                // no location selected, refresh the list of possible locations
-                selectedProgram.loadingProviderLocation = true;
-                AddProgramService.loadLocations($scope.team, selectedProgram.provider).then(
-                    function (locations) {
-                        selectedProgram.locations = locations;
-                        if (locations.length === 1) {
-                            selectedProgram.location = locations[0];
-                        }
-                    }).finally(function () {
-                        selectedProgram.loadingProviderLocation = false;
-                    });
+                if ($scope.teamSchedulingConfiguration && $scope.teamSchedulingConfiguration.useLocation) {
+                    // no location selected, refresh the list of possible locations
+                    selectedProgram.loadingProviderLocation = true;
+                    return AddProgramService.loadLocations($scope.team, selectedProgram.provider).then(
+                        function (locations) {
+                            $scope.locations = locations;
+                            if (locations.length === 1 && selectedProgram.provider !== '') {
+                                selectedProgram.location = locations[0];
+                            }
+                            return selectedProgram;
+                        }).finally(function () {
+                            selectedProgram.loadingProviderLocation = false;
+                        });
+                } else {
+                    var deferred = $q.defer();
+                    deferred.resolve(selectedProgram);
+                    return deferred.promise;
+                }
             };
+            
+            /**
+             * onProviderChange when use first program is checked.
+             * 1. set selectedProgram.provider to selectedProgram.firstProgramResource.provider
+             * 2. call onProviderChange to get potential locations or set the only location
+             * 3. Fire 'useFirstProgramResource' event if it's called from first card. 
+             *    Otherwise, fire 'useIndividualProgram' event
+             */
+            $scope.onProviderChangeAndUseFirstProgram = function (selectedProgram, firstProgram) {
+                selectedProgram.provider = selectedProgram.firstProgramResource.provider;
+                $scope.onProviderChange(selectedProgram).then(function (selectedProgram) {
+                    if (firstProgram) {
+                        $scope.$broadcast('useFirstProgramResource');
+                    } else {
+                        $scope.$broadcast('useIndividualProgram');
+                    }
+                });
+            };
+            
 
             /**
              * When a specialty has been chosen or un-chosen
@@ -207,10 +281,13 @@ angular.module('emmiManager')
              * @param query typed by the user in the search box
              */
             var performSearch = function (query, sort, size, specialty) {
+                $scope.searching = true;
                 return AddProgramService.findPrograms(query, $scope.team, sort, size, specialty).then(function (programPage) {
                     $scope.handleResponse(programPage, contentProperty);
                     $scope.setSelectedProgramsCheckbox();
                     return programPage;
+                }).finally(function () {
+                    $scope.searching = false;
                 });
             };
 
@@ -245,12 +322,19 @@ angular.module('emmiManager')
             $scope.addSelectedPrograms = function () {
                 $scope.selectedPrograms = $scope.selectedPrograms.concat($scope.selectedProgramsHolder);
                 angular.forEach($scope.selectedProgramsHolder, function (programInHolder) {
+                    programInHolder.useFirstProgram = $scope.useFirstProgram;
+                    programInHolder.firstProgramResource = $scope.firstProgramResource;
                     $scope.programs.filter(function (element) {
                         if (element.entity.id === programInHolder.program.entity.id) {
                             element.disabled = true;
                         }
                     });
                 });
+                if ($scope.useFirstProgram) {
+                    $scope.$broadcast('useFirstProgramResource');
+                } else {
+                    $scope.$broadcast('useIndividualProgram');
+                }
                 $scope.selectedProgramsHolder = [];
             };
 
@@ -274,6 +358,60 @@ angular.module('emmiManager')
                     });
                 });
             };
+            
+            $scope.onViewByDateChangeAndUseFirstProgram = function (selectedProgram, firstProgram) {
+                selectedProgram.viewByDate = selectedProgram.firstProgramResource.viewByDate;
+                if (firstProgram) {
+                    $scope.$broadcast('useFirstProgramResource');
+                } else {
+                    $scope.$broadcast('useIndividualProgram');
+                }
+            };
+            
+            /**
+             * Monitor useFirstProgram from the first card
+             * Fire 'useFirstProgramResource' event when it's checked. Fire 'useIndividualProgram' event when it's unchecked.
+             */
+            $scope.$watch('selectedPrograms[0].useFirstProgram', function (newValue) {
+                $scope.useFirstProgram = newValue;
+                if (newValue) {
+                    $scope.$broadcast('useFirstProgramResource');
+                } else {
+                    $scope.$broadcast('useIndividualProgram');
+                }
+            });
+            
+            /**
+             * Copy provider, location and viewByDate to $scope.firstProgramResource from first card
+             * For each card, set useFirstProgram to true and copy provider, location, viewByDate from $scope.firstProgramResource
+             */
+            $scope.$on('useFirstProgramResource', function () {
+                $scope.firstProgramResource.provider = angular.copy($scope.selectedPrograms[0].provider);
+                $scope.firstProgramResource.location = angular.copy($scope.selectedPrograms[0].location);
+                $scope.firstProgramResource.viewByDate = angular.copy($scope.selectedPrograms[0].viewByDate);
+                angular.forEach($scope.selectedPrograms, function (program) {
+                    program.useFirstProgram = true;
+                    program.provider = $scope.firstProgramResource.provider;
+                    program.location = $scope.firstProgramResource.location;
+                    program.viewByDate = $scope.firstProgramResource.viewByDate;
+                    program.firstProgramResource = $scope.firstProgramResource;
+                });
+            });
+            
+            /**
+             * Set useFirstProgram to false on all selectedPrograms.
+             * Reset $scope.firstProgramProgram
+             */
+            $scope.$on('useIndividualProgram', function () {
+                angular.forEach($scope.selectedPrograms, function (program) {
+                    program.useFirstProgram = false;
+                });
+                $scope.firstProgramResource = {
+                    provider:'',
+                    location:'',
+                    viewByDate: ''
+                };
+            });
 
             // load the programs
             performSearch();

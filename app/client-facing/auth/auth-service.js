@@ -151,6 +151,8 @@ angular.module('emmiManager')
                             angular.extend(LoginErrorMessageFactory,{showTemporaryPasswordTokenExpired:true});
                         } else if (error.entity.reason === 'XSRF_MISSING') {
                             $rootScope.$broadcast('event:auth-xsrf-token-missing');
+                        } else if (error.entity.reason === 'INVALID_IP_ADDRESS') {
+                            $rootScope.$broadcast('event:auth-totallyNotAuthorized');
                         }
                     } else {
                         $rootScope.authenticationError = true;

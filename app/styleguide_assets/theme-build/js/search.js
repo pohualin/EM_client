@@ -730,6 +730,26 @@
 
 
               {
+              "title": "Program Card",
+              "breadcrumb": "2. Components - Scheduling > Program Card",
+              "path": "2._components_-_scheduling.html#a-program-card"
+              },
+
+
+
+              {
+              "title": "Program List",
+              "breadcrumb": "2. Components - Scheduling > Program List",
+              "path": "2._components_-_scheduling.html#a-program-list"
+              },
+
+
+
+
+
+
+
+              {
               "title": "Tabs",
               "breadcrumb": "2. Components - Nav > Tabs",
               "path": "2._components_-_nav.html#a-tabs"
@@ -917,14 +937,6 @@
 
 
 
-              {
-              "title": "Glyphicons",
-              "breadcrumb": "1. Layout - Icons > Glyphicons",
-              "path": "1._layout_-_icons.html#c-glyphicons"
-              },
-
-
-
 
 
 
@@ -941,18 +953,6 @@
               "title": "Sizes",
               "breadcrumb": "2. Components - Well > Sizes",
               "path": "2._components_-_well.html#b-sizes"
-              },
-
-
-
-
-
-
-
-              {
-              "title": "Widgets",
-              "breadcrumb": "2. Components - Widget > Widgets",
-              "path": "2._components_-_widget.html#widget"
               },
 
 

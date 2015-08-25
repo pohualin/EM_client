@@ -1,7 +1,7 @@
 <div class="col-md-12" data-ng-controller="ClientRoleAdminCtrl">
     <div class="row">
         <div class="col-md-6">
-            <div class="pull-right" data-ng-if="existingClientRoles">
+            <div class="pull-right" data-ng-if="existingClientRoles" data-ng-hide="newClientRole" >
                 <button class="btn btn-link btn-link-nopad btn-heading btn-tag-library" type="button"
                         data-ng-disabled="whenSaving"
                         title="Select client roles to add:"
@@ -17,8 +17,7 @@
     <div class="row" data-ng-if="existingClientRoles">
         <div class="col-md-6">
             <div class="panel-group" data-ng-model="role.activePanel" data-ng-repeat="role in existingClientRoles"
-                 data-ng-change="panelStateChange(role, existingForms[role.entity.id])" data-start-collapsed="true"
-                 data-bs-collapse>
+                 data-start-collapsed="true" data-bs-collapse>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="label label-danger role-error" role="alert"
@@ -43,12 +42,15 @@
                                         <i class="icon-trashcan"></i>
                                     </button>
                                 </div>
-                                <a data-bs-collapse-toggle href="#clientRole-collapsible-{{role.entity.id}}" role="button" data-ng-hide="role.editName"
-                                   data-ng-dblclick="startEditName(role)"
+                                <a href role="button" data-ng-hide="role.editName"
                                    aria-expanded="{{role.activePanel === 0}}"
                                    aria-controls="clientRole-collapsible-{{role.entity.id}}">
-                                    <span class="icon-caret-right"></span>
-                                    <span class="panel-title-text">{{ role.entity.name }}</span>
+                                    <span class="icon-caret-right" data-bs-collapse-toggle></span>
+                                    <span class="panel-title-text"
+                                          data-sglclick="singleClick(role)"
+                                          data-ng-dblclick="startEditName(role)">
+                                        {{ role.entity.name }}
+                                    </span>
                                 </a>
                                 <div data-ng-class="{ 'has-error' : existingForms[role.entity.id].$error.unique}">
                                     <div class="form-inline" data-ng-if="role.editName" style="width:50%">
@@ -73,13 +75,19 @@
                                      class="ivh-treeview-container" id="clientRoleTV_{{role.entity.id}}"></div>
                             </div>
                             <div class="panel-footer"
-                                 data-ng-show="existingForms[role.entity.id].$dirty && existingForms[role.entity.id].$valid && hasAPermissionChecked(role.entity)">
-                                <button class="btn btn-success" type="button"
+                                 data-ng-show="existingForms[role.entity.id].$dirty &&
+                                 existingForms[role.entity.id].$valid && hasAPermissionChecked(role.entity)">
+                                <!--
+                                    if you make this not 'submit' then the unsaved warning directive
+                                    will blank erase the form.$dirty which will then cause this section to
+                                    not appear when enter/return is pressed and the form is active
+                                -->
+                                <button class="btn btn-success" type="submit"
                                         data-ng-disabled="whenSaving"
                                         data-ng-click="update(role, existingForms[role.entity.id])"
                                     >Save
                                 </button>
-                                <button type="button" class="btn btn-cancel"
+                                <button type="reset" class="btn btn-cancel"
                                         data-ng-disabled="whenSaving"
                                         data-ng-click="cancelExisting(role, existingForms[role.entity.id])"
                                         data-bs-collapse-toggle>cancel

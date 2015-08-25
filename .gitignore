@@ -15,7 +15,7 @@ dist
 .sass-cache
 app/bower_components
 app/styleguide
-app/styles/*.css*
+app/styles/**/*.css*
 app/logs
 
 # Intellij
