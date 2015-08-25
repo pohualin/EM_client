@@ -27,7 +27,7 @@
            <div class="col-md-4">
            <div class="form-group" data-ng-class="{ 'has-error' : (contentSubscriptionForm.primaryContentList.$invalid && contentSubscriptionFormSubmitted)}">
                 <select id="primaryContentList" name="primaryContentList" class="form-control"
-                    data-ng-options="primaryContentList.name for primaryContentList in primaryContentList track by primaryContentList.id"
+                    data-ng-options="primaryContentList.name for primaryContentList in primaryContentList track by primaryContentList.name"
                     data-ng-model="selectedContentSubscription.entity.contentSubscription"
                     required
                     data-ng-change="onChangePrimaryList()">

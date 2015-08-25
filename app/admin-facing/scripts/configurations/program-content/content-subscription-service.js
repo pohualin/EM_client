@@ -55,28 +55,50 @@ angular.module('emmiManager')
                 },
                 
                 /**
-                 * Save contentSubscriptionConfiguration
-                 */ 
-                saveOrUpdate: function(selectedContentSubscription){
-                    if(angular.isDefined(selectedContentSubscription.entity.id)){
-                        return $http.put(UriTemplate.create(Client.getClient().link.clientContentSubscriptionConfigurations).stringify(), 
-                                selectedContentSubscription.entity)
-                            .then(function (response) {
-                                CommonService.convertPageContentLinks(response.data);
-                                return response.data;
-                            });
-                    }
-                    else{
-                        return $http.post(UriTemplate.create(Client.getClient().link.clientContentSubscriptionConfigurations).stringify(), 
+                 * Create/save ContentSubscriptionConfiguration
+                 * @param contentSubscriptionConfiguration to save
+                 * 
+                 */
+                save: function(selectedContentSubscription){
+                    return $http.post(UriTemplate.create(Client.getClient().link.clientContentSubscriptionConfigurations).stringify(), 
                             selectedContentSubscription.entity)
                         .then(function (response) {
                             CommonService.convertPageContentLinks(response.data);
                             return response.data;
                         });
-                    }
-                }
+                },
                 
-            
+                /**
+                 * Update single ContentSubscriptionConfiguration
+                 * @param contentSubscriptionConfiguration to update
+                 * 
+                 */
+                update: function(selectedContentSubscription){
+                    return $http.put(UriTemplate.create(Client.getClient().link.clientContentSubscriptionConfigurations).stringify(), 
+                            selectedContentSubscription.entity)
+                        .then(function (response) {
+                            CommonService.convertPageContentLinks(response.data);
+                            return response.data;
+                        });
+                },
+                
+                /**
+                 * save or Update contentSubscriptionConfiguration
+                 */ 
+                saveOrUpdate: function(selectedContentSubscription){
+                    var deferred = $q.defer();
+                    if(angular.isDefined(selectedContentSubscription.entity.id)){
+                        this.update(selectedContentSubscription).then(function(response){
+                            deferred.resolve(response);
+                        });
+                    } else {
+                        this.save(selectedContentSubscription).then(function(response){
+                            deferred.resolve(response);
+                        });
+                    }
+                    return deferred.promise;
+                }
+ 
             };
         }])
 ;

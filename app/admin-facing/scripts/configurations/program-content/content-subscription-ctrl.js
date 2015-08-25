@@ -33,7 +33,7 @@ angular.module('emmiManager')
             $scope.contentSubscriptionFormSubmitted = true;
             if(valid){
                 $scope.whenSaving = true;
-                if($scope.deleteContentSubscription){
+                if($scope.selectedContentSubscription.entity.contentSubscription.name === 'None'){
                     ContentSubscriptionConfigurationService.deleteContent($scope.selectedContentSubscription).then(function(response){
                     $alert({
                         content: '<b>' + $scope.client.name + '</b> has been updated successfully.'
@@ -43,9 +43,8 @@ angular.module('emmiManager')
                     });
                 }
                 else{
-                      if($scope.selectedContentSubscription.entity.contentSubscription.id === 1288){
-                      $scope.selectedContentSubscription.entity.contentSubscription.id = 128;
-                      $scope.selectedContentSubscription.entity.contentSubscription.name = 'EmmiEngage';
+                      if($scope.selectedContentSubscription.entity.contentSubscription.name === 'EmmiEngage+'){
+                          $scope.selectedContentSubscription.entity.contentSubscription.name = 'EmmiEngage';
                       }
                       ContentSubscriptionConfigurationService.saveOrUpdate($scope.selectedContentSubscription).then(function(response){
                       $alert({
@@ -55,8 +54,7 @@ angular.module('emmiManager')
                           $scope.whenSaving = false;
                       });
                 }
-                
-            }else {
+              }else {
                 if (!$scope.formAlert) {
                     $scope.formAlert = $alert({
                         content: 'Please correct the below information.',
@@ -67,8 +65,6 @@ angular.module('emmiManager')
                     });
                 }
             }
-
-             
         };
         
         /**
@@ -80,9 +76,9 @@ angular.module('emmiManager')
         
         $scope.createLists = function(contentList){
             angular.forEach(contentList, function (aContent){
-                if(aContent.primarySbscrptn){
+                if(aContent.primarySubscription){
                    $scope.primaryContentList.push(aContent);
-                }else if(aContent.sourceSbscrptn){
+                }else if(aContent.sourceSubscription){
                    $scope.sourceContentList.push(aContent);
                 }
             });
@@ -90,24 +86,16 @@ angular.module('emmiManager')
             angular.forEach($scope.primaryContentList, function (pContent){
                 if(pContent.id === 128){
                     angular.copy(pContent, $scope.emmiEngagePlus);
-                    $scope.emmiEngagePlus.id = 1288;
                     $scope.emmiEngagePlus.name = 'EmmiEngage+';
                  }
             });
             $scope.primaryContentList.splice(0, 0, $scope.emmiEngagePlus);
-            
             $scope.primaryContentList.push($scope.noneContent);
         };
         
         $scope.onChangePrimaryList = function(contentSubscriptionForm){
             $scope.showContentButton = true;
-            if($scope.selectedContentSubscription.entity.contentSubscription.name === 'None'){
-                $scope.deleteContentSubscription = true;
-                $scope.faithBased = false;
-                $scope.sourceProgram = false;
-            }
-            else if(($scope.selectedContentSubscription.entity.contentSubscription.id === 1288) &&
-                ($scope.selectedContentSubscription.entity.contentSubscription.name === 'EmmiEngage+')){
+            if($scope.selectedContentSubscription.entity.contentSubscription.name === 'EmmiEngage+'){
                 $scope.faithBased = true;
                 $scope.sourceProgram = true;
             }
@@ -130,10 +118,8 @@ angular.module('emmiManager')
            $scope.showContentButton = true;
            if(angular.isDefined($scope.selectedSourceContent)){
                 $scope.selectedContentSubscription.entity.source = true;
-               
            }
-           
-           
+   
        };
        
        // Will implement for story 1307
@@ -153,32 +139,24 @@ angular.module('emmiManager')
                  
             });
             ContentSubscriptionConfigurationService.getContentSubscriptionConfiguration().then(function (response) {
-                
                 $scope.originalContentSubscriptionConfiguration = response.content;
                 if(angular.isDefined(response.content)){
                     $scope.selectedContentSubscription = $scope.originalContentSubscriptionConfiguration[0];
-                    if(($scope.selectedContentSubscription.entity.contentSubscription.id === 128) ||
-                        ($scope.selectedContentSubscription.entity.contentSubscription.id === 1288)){
-  
+                    if($scope.selectedContentSubscription.entity.contentSubscription.id === 128){
                         $scope.faithBased = $scope.selectedContentSubscription.entity.faithBased;
                         $scope.selectedSourceContent = $scope.selectedContentSubscription.entity.source;
                         if($scope.selectedContentSubscription.entity.source){
-                            $scope.selectedContentSubscription.entity.contentSubscription.id = 1288;
                             $scope.selectedContentSubscription.entity.contentSubscription.name = 'EmmiEngage+';
                             $scope.sourceProgram = true;
                         }
-                       
-                    }
-                   
+                     }
                 }
                 else{
                     $scope.selectedContentSubscription = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
                 }
    
             });
- 
-       }
-
+        }
         init();
     }]);
 
