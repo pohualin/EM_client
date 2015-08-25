@@ -1,0 +1,68 @@
+<h1>
+    Available Program Content
+</h1>
+<div data-ng-show="contentSubscriptionForm.$invalid" id="message-container">
+      </div>
+      <div class="row">
+           <div class="col-md-4">
+           <label class="control-label" for="primaryContentList">CONTENT SUBSCRIPTION</label>
+           <div class="error-circle fa-exclamation-circle" role="alert"
+             data-ng-show="contentSubscriptionForm.primaryContentList.$error.required && contentSubscriptionFormSubmitted"
+             data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+             data-title="Required" aria-label="Required">
+           </div>
+           </div>
+           <div class="col-md-4">
+           <label data-ng-if="sourceProgram" class="control-label" for="sourceContentList">SOURCE</label>
+           <div class="error-circle fa-exclamation-circle" role="alert"
+             data-ng-show="contentSubscriptionForm.sourceContentList.$error.required && contentSubscriptionFormSubmitted"
+             data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+             data-title="Required" aria-label="Required">
+           </div>
+           </div>
+           <div class="col-md-4">
+           </div>
+      </div>
+      <div class="row">
+           <div class="col-md-4">
+           <div class="form-group" data-ng-class="{ 'has-error' : (contentSubscriptionForm.primaryContentList.$invalid && contentSubscriptionFormSubmitted)}">
+                <select id="primaryContentList" name="primaryContentList" class="form-control"
+                    data-ng-options="primaryContentList.name for primaryContentList in primaryContentList track by primaryContentList.id"
+                    data-ng-model="selectedContentSubscription.entity.contentSubscription"
+                    required
+                    data-ng-change="onChangePrimaryList()">
+                <option value="" title="primaryContentList"></option>
+                </select>
+           </div>
+           </div>
+           <div class="col-md-4" >
+           <div data-ng-if="sourceProgram" class="form-group" data-ng-class="{ 'has-error' : (contentSubscriptionForm.sourceContentList.$invalid && contentSubscriptionFormSubmitted)}">
+                <select id="sourceContentList" name="sourceContentList" class="form-control"
+                    data-ng-options="sourceContentList.name for sourceContentList in sourceContentList track by sourceContentList.id"
+                    data-ng-model="selectedContentSubscription.entity.sourceContentSubscription"
+                    required
+                    data-ng-change="onChangeSourceList()">
+                <option value="" title="sourceContentList"></option>
+                </select>
+           </div>
+           </div>
+           <div class="col-md-4">
+           		<button disabled type="button" class="btn btn-link btn-link-nopad btn-heading" data-ng-click="addAnotherSubscription()">
+        			<i class="icon-plus"></i> ADD ANOTHER SUBSCRIPTION
+    			</button>
+           </div>
+     </div>
+     <div class="row" data-ng-if="faithBased">
+     <div class="col-md-6">
+     <div class="form-group">
+          <div class="checkbox">
+               <input id="faithBased" type="checkbox"
+                      data-ng-model="selectedContentSubscription.entity.faithBased"
+                      data-ng-change="onChangeFaithBased()"/>
+                <label for="faithBased">Apply Faith-Based Filter for this Client</label>
+           </div>
+     </div>
+     </div>
+</div>
+    
+

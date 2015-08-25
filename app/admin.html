@@ -12,12 +12,12 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <link href="favicon.ico" rel="icon" type="image/x-icon"/>
 
-    <!-- build:css({.tmp,app}) styles/main.css -->
+    <!-- build:css({.tmp,app}) styles/theme/admin/main.css -->
     <link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.min.css">
     <link rel="stylesheet" href="bower_components/bootstrap-additions/dist/bootstrap-additions.css">
     <link rel="stylesheet" href="bower_components/angular/angular-csp.css"/>
     <link rel="stylesheet" href="bower_components/angular-ivh-treeview/dist/ivh-treeview.min.css"/>
-    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/theme/admin/main.css">
     <!-- endbuild -->
 
     <!-- build:js scripts/modernizr.js -->
@@ -132,6 +132,9 @@
 <script src="admin-facing/scripts/clients/provider/edit/edit-directives.js"></script>
 <script src="admin-facing/scripts/clients/tags/tags-ctrl.js"></script>
 <script src="admin-facing/scripts/clients/tags/tags-service.js"></script>
+<script src="admin-facing/scripts/configurations/program-content/content-subscription-route.js"></script>
+<script src="admin-facing/scripts/configurations/program-content/content-subscription-ctrl.js"></script>
+<script src="admin-facing/scripts/configurations/program-content/content-subscription-service.js"></script>
 <script src="admin-facing/scripts/clients/teamsFilter/teams-filter-url-persistence-ctrl.js"></script>
 <script src="admin-facing/scripts/clients/teamsFilter/teams-filter-init-ctrl.js"></script>
 <script src="admin-facing/scripts/clients/teamsFilter/teams-filter-behavior-ctrl.js"></script>
@@ -204,6 +207,7 @@
 <script src="admin-facing/scripts/locations/service.js"></script>
 <script src="admin-facing/scripts/common/service.js"></script>
 <script src="admin-facing/scripts/roles/client/route.js"></script>
+<script src="admin-facing/scripts/roles/client/roles-factory.js"></script>
 <script src="admin-facing/scripts/roles/client/client-ctrl.js"></script>
 <script src="admin-facing/scripts/roles/client/client-service.js"></script>
 <script src="admin-facing/scripts/roles/client/team-ctrl.js"></script>
@@ -247,7 +251,7 @@
 <script src="admin-facing/support/client-users/user-client-team-role/search-ctrl.js"></script>
 <script src="admin-facing/support/client-users/note/main-ctrl.js"></script>
 <script src="admin-facing/support/client-users/salesforce/controller.js"></script>
-<script src="admin-facing/support/note/trim-extra-directive.js"></script>
+<script src="admin-facing/support/note/count-crlf-directive.js"></script>
 <script src="admin-facing/support/note/service.js"></script>
 <script src="admin-facing/scripts/users/client/user-client-team-role/add-teams-ctrl.js"></script>
 <script src="admin-facing/scripts/users/client/user-client-team-role/add-teams-directives.js"></script>
