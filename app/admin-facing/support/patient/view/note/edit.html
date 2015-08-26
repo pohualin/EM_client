@@ -2,19 +2,22 @@
     <h2>
         <span>Notes for {{client.entity.name}}</span>
     </h2>
-    <span class="field-note field-optional pull-right" data-ng-if="800-clientNoteEdit.entity.note.length > 1">{{800 - clientNoteEdit.entity.note.length}} characters remaining</span>
-    <span class="field-note field-optional pull-right" data-ng-if="800 - clientNoteEdit.entity.note.length === 1">1 character remaining</span>
-    <span class="field-note field-optional text-danger pull-right"
-          data-ng-if="800 - clientNoteEdit.entity.note.length === 0">0 characters remaining</span>
+    <span class="field-note field-optional pull-right" data-ng-if="remainingCharacters > 1">{{remainingCharacters}} characters remaining</span>
+    <span class="field-note field-optional pull-right"
+          data-ng-if="remainingCharacters === 1">1 character remaining</span>
+    <span class="field-note field-optional text-danger pull-right" data-ng-if="remainingCharacters<= 0">0 characters remaining</span>
 
     <div class="row">
         <div class="col-md-12">
             <div class="form-group"
                  data-ng-class="{ 'has-error' : clientNoteForm.$invalid && clientNoteFormSubmitted }">
                 <label for="clientNote" class="sr-only sr-only-focusable">client note</label>
-                <textarea class="form-control" rows="5" id="clientNote" data-ng-maxlength="800" data-ng-trim="false"
-                          maxlength="801"
-                          data-ng-model="clientNoteEdit.entity.note"></textarea>
+          <textarea class="form-control" rows="5" id="clientNote"
+                    data-ng-maxlength="800"
+                    maxlength="800"
+                    data-ng-trim="false"
+                    data-count-crlf
+                    data-ng-model="clientNoteEdit.entity.note"></textarea>
             </div>
             <div class="form-group">
                 <button data-ng-if="showCancelSave() && !originalClientNote.link.self"

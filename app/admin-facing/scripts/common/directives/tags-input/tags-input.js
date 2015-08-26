@@ -272,7 +272,7 @@ tagsInput.directive('tagsInput', ['$timeout','$document','tagsInputConfig','focu
                 tabindex: [Number],
                 removeTagSymbol: [String, String.fromCharCode(215)],
                 replaceSpacesWithDashes: [Boolean, true],
-                minLength: [Number, 3],
+                minLength: [Number, 1],
                 maxLength: [Number],
                 addOnEnter: [Boolean, true],
                 addOnSpace: [Boolean, false],

@@ -67,12 +67,12 @@
                          data-title="Required" aria-label="Required"></div>
                     <div class="error-circle fa-exclamation-circle" role="alert"
                          data-ng-show="newPatientForm.dateOfBirth.$error.date &&
-                                      !newPatientForm.dateOfBirth.$error.min && formSubmitted"
+                                      !newPatientForm.dateOfBirth.$error.min &&
+                                      !newPatientForm.dateOfBirth.$error.max && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Dates must be in the format MM/DD/YYYY" aria-label="Dates must be in the format MM/DD/YYYY"></div>
                     <div class="error-circle fa-exclamation-circle" role="alert"
-                         data-ng-show="newPatientForm.dateOfBirth.$error.date &&
-                                       newPatientForm.dateOfBirth.$error.min && formSubmitted"
+                         data-ng-show="(newPatientForm.dateOfBirth.$error.max || newPatientForm.dateOfBirth.$error.min) && formSubmitted"
                          data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                          data-title="Please select a valid date of birth" aria-label="Please select a valid date of birth"></div>
                     <input id="dateOfBirth" class="form-control" type="text" name="dateOfBirth"
