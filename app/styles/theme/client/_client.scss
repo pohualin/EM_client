@@ -2,6 +2,12 @@
  * Client-specific theme styles and overrides
  */
 
+/* _____ LAYOUT _____ */
+
+.layout-card {
+    box-shadow: none;
+}
+
 /* _____ HEADINGS _____ */
 
 h3, .h3 {
@@ -534,5 +540,43 @@ select.form-control {
     .program-list_item-text {
         @include remIt(font-size, 15);
         font-weight: 400;
+    }
+}
+
+/* _____ NAVBAR _____ */
+
+.navbar-brand {
+    strong {
+        color: $brand-primary;
+    }
+}
+
+.navbar-nav {
+    > li {
+        > a {
+            font-weight: 300;
+            border: 0
+        }
+    }
+    > li a.non-link:hover {
+        background: none;
+        color: $gray
+    }
+}
+
+.section-nav {
+    .client-header & {
+        background: $brand-primary;
+    }
+}
+
+/* _____ DROPDOWN MENU _____ */
+
+.dropdown-menu {
+    > li > a {
+        &:hover,
+        &:focus {
+            font-weight: 300;
+        }
     }
 }
