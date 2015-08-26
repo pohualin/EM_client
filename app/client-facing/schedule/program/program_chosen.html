@@ -23,7 +23,7 @@
                     data-container="body"
                     aria-label="Delete"
                     data-ng-click="deselectProgram(selectedProgram)">
-                <i class="icon-trashcan"></i>
+                <i class="icon-delete"></i>
             </button>
         </div>
       </div>
@@ -48,7 +48,7 @@
                               data-ng-options="teamProvider.name for teamProvider in providers track by teamProvider.entity.id"
                               data-disable-search-threshold="10" data-allow-single-deselect="providers.length > 1"
                               data-no-results-text="'No team providers'"
-                              data-placeholder="Choose Provider"
+                              data-placeholder="Please select a provider"
                               required
                               data-chosen>
                           <option></option>
@@ -62,7 +62,7 @@
                               data-ng-options="teamProvider.name for teamProvider in providers track by teamProvider.entity.id"
                               data-disable-search-threshold="10" data-allow-single-deselect="providers.length > 1"
                               data-no-results-text="'No team providers'"
-                              data-placeholder="Choose Provider"
+                              data-placeholder="Please select a provider"
                               required
                               data-chosen>
                           <option></option>
@@ -92,7 +92,7 @@
                               data-ng-options="teamLocation.entity.location.name for teamLocation in locations track by teamLocation.entity.id"
                               data-disable-search-threshold="10" data-allow-single-deselect="locations.length > 1"
                               data-no-results-text="'No team locations'"
-                              data-placeholder="Choose Location"
+                              data-placeholder="Please select a location"
                               required
                               data-chosen>
                           <option></option>
@@ -106,7 +106,7 @@
                               data-ng-options="teamLocation.entity.location.name for teamLocation in locations track by teamLocation.entity.id"
                               data-disable-search-threshold="10" data-allow-single-deselect="locations.length > 1"
                               data-no-results-text="'No team locations'"
-                              data-placeholder="Choose Location"
+                              data-placeholder="Please select a location"
                               required
                               data-chosen>
                           <option></option>
@@ -142,14 +142,14 @@
                      id="viewByDate" class="form-control" type="text" name="viewByDate"
                      data-ng-model="selectedProgram.firstProgramResource.viewByDate" data-autoclose="true"
                      data-ng-change="onViewByDateChangeAndUseFirstProgram(selectedProgram, $first)"
-                     data-dateType="iso" data-bs-datepicker
+                     data-dateType="iso" data-bs-datepicker placeholder="MM/DD/YYYY"
                      data-min-date="today" required>
               </span>
               <span data-ng-if="!selectedProgram.useFirstProgram">
                 <input
                      id="viewByDate" class="form-control" type="text" name="viewByDate"
                      data-ng-model="selectedProgram.viewByDate" data-autoclose="true"
-                     data-dateType="iso" data-bs-datepicker
+                     data-dateType="iso" data-bs-datepicker placeholder="MM/DD/YYYY"
                      data-min-date="today" required>              
               </span>
           </div>
