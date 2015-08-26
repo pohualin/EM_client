@@ -24,7 +24,9 @@
                       </div>
                   </div>
                 </div>
-                <form name="existingClientTeamRoleForm_{{role.entity.id}}" class="form" novalidate data-unsaved-warning-form>
+                <form name="existingClientTeamRoleForm_{{role.entity.id}}"
+                      data-ng-init="theForm = this['existingClientTeamRoleForm_' + role.entity.id]" class="form"
+                      novalidate data-unsaved-warning-form>
                     <div class="panel panel-secondary" data-ng-class="{ 'panel-open': role.activePanel === 0 }">
                         <div class="panel-heading  panel-heading-form">
                             <div class="panel-title">
@@ -40,11 +42,15 @@
                                         <i class="icon-trashcan"></i>
                                     </button>
                                 </div>
-                                <a data-bs-collapse-toggle href="#teamRole-collapsible-{{role.entity.id}}" role="button" data-ng-hide="role.editName" data-ng-dblclick="startEditName(role)"
+                                <a href role="button" data-ng-hide="role.editName"
                                    aria-expanded="{{role.activePanel === 0}}"
                                    aria-controls="teamRole-collapsible-{{role.entity.id}}">
-                                    <span class="icon-caret-right"></span>
-                                    <span class="panel-title-text">{{ role.entity.name }}</span>
+                                    <span class="icon-caret-right" data-bs-collapse-toggle></span>
+                                    <span class="panel-title-text"
+                                          data-sglclick="singleClick(role, theForm)"
+                                          data-ng-dblclick="startEditName(role, theForm)">
+                                        {{ role.entity.name }}
+                                    </span>
                                 </a>
                                 <div data-ng-class="{ 'has-error' : existingClientTeamRoleForm_{{role.entity.id}}.$invalid}">
                                   <div data-ng-show="role.editName" style="width:50%">
@@ -66,11 +72,11 @@
                                 <div data-ivh-treeview="role.entity.userClientTeamPermissions" class="ivh-treeview-container" id="clientTeamRoleTV_{{role.entity.id}}"></div>
                             </div>
                             <div class="panel-footer" data-ng-show="existingClientTeamRoleForm_{{role.entity.id}}.$valid && existingHasChanged(role) && hasAPermissionChecked(role.entity)">
-                                <button type="button" class="btn btn-success"
+                                <button type="submit" class="btn btn-success"
                                         data-ng-disabled="whenSaving"
                                         data-ng-click="update(role, existingClientTeamRoleForm_{{role.entity.id}})"
                                         >Save</button>
-                                <button type="button" class="btn btn-cancel"
+                                <button type="reset" class="btn btn-cancel"
                                         data-ng-disabled="whenSaving"
                                         data-ng-click="cancelExisting(role, existingClientTeamRoleForm_{{role.entity.id}})"
                                         data-bs-collapse-toggle>cancel</button>

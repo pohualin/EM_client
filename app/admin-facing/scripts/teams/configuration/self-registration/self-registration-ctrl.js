@@ -125,7 +125,8 @@ angular.module('emmiManager')
              */
             $scope.cancel = function () {
                 $scope.selfRegFormSubmitted = false;
-                $scope.selfRegConfig = angular.copy($scope.originalSelfRegConfig);
+                $scope.selfRegConfig.code = $scope.originalSelfRegConfig.code ? angular.copy($scope.originalSelfRegConfig.code) : {'code':''};
+
             };
         }])
 ;
