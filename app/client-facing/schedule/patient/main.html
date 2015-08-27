@@ -1,1 +1,2 @@
-<div data-ng-include="'client-facing/schedule/patient/create/new.html'"></div>
+<div data-ng-if="!patient.id" data-ng-include="'client-facing/schedule/patient/create/new.html'"></div>
+<div data-ng-if="patient.id" data-ng-include="'client-facing/schedule/patient/edit/view.html'"></div>

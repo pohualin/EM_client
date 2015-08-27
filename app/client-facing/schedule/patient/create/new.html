@@ -1,11 +1,7 @@
-<div class="container" data-ng-cloak data-ng-controller="CreatePatientController">
-    <h1 data-ng-hide="patient.id">New Patient</h1>
-    <h1 data-ng-show="patient.id">Edit Patient</h1>
+<div class="col-md-12" data-ng-cloak data-ng-controller="CreatePatientController">
+    <h1>New Patient</h1>
     <form name="newPatientForm" class="form" novalidate data-unsaved-warning-form>
         <div id="alerts-container" data-ng-show="formSubmitted && newPatientForm.$invalid"></div>
-        <div class="row">
-            <div class="col-md-12" id="modal-messages-container"></div>
-        </div>
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group"
@@ -80,14 +76,14 @@
         </div>
 
         <div class="row" data-ng-show="showEmail">
-           <div data-ng-include="'client-facing/schedule/patient/email/patient-email.html'"></div>
+            <div class="col-md-4" data-ng-include="'client-facing/schedule/patient/email/patient-email.html'">
         </div>
 
         <div class="row" data-ng-show="showPhone">
-           <div data-ng-include="'client-facing/schedule/patient/phone/patient-phone.html'"></div>
+           <div class="col-md-4" data-ng-include="'client-facing/schedule/patient/phone/patient-phone.html'"></div>
         </div>
 
-        <div class="row" data-ng-hide="patient.id">
+        <div class="row">
             <div class="col-md-8">
                 <div class="actions pull-right">
                     <div class="form-group">
