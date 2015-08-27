@@ -1,13 +1,17 @@
-<div class="container" data-ng-cloak>
+<header class="app-header client-header" data-emmi-navbar>
+    <!-- Breadcrumb for transclusion -->
+    <ol class="breadcrumb">
+        <li><a href="#/teams/{{team.entity.id}}/schedule/patients?{{currentRouteQueryString}}">Search</a></li>
+        <li class="active">Schedule an Emmi Program - {{team.entity.name}}</li>
+    </ol>
+</header>
+<div id="app-content" role="main" class="app-content container" data-ng-cloak>
     <div class="row">
-        <ol class="breadcrumb h3">
-            <li><a href="#/">Emmi Manager</a></li>
-            <li class="active">Schedule an Emmi Program - {{team.entity.name}}</li>
-        </ol>
-    </div>
-    <div class="row" data-ng-include="'client-facing/schedule/patient/main.html'"></div>
-    <div class="row container" data-ng-if="scheduledProgram.patient.id">
-        <h3>Choose Programs:</h3>
-        <div class="row container" data-ng-include="'client-facing/schedule/program/program_chooser.html'"></div>
+        <div class="col-md-12">
+            <div class="layout-card">
+                <div class="row" data-ng-include="'client-facing/schedule/patient/main.html'"></div>
+            </div>
+            <div data-ng-if="scheduledProgram.patient.id" data-ng-include="'client-facing/schedule/program/program_chooser.html'"></div>
+        </div>
     </div>
 </div>
