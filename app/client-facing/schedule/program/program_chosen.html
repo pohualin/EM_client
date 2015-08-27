@@ -1,174 +1,129 @@
-<div class="col-md-12">
-<div class="row" data-ng-if="patient.id" data-ng-include="'client-facing/schedule/schedule_buttons.html'"></div>
-<br>
-<br>
-<div data-ng-if="selectedPrograms.length === 0">
-  <div class="panel panel-default" data-start-collapsed="false" >
-    <div class="panel-body">
-      <p>Please select programs to schedule</p>
+    <div data-ng-include="'client-facing/schedule/schedule_buttons.html'"></div>
+    <div class="program-cards-empty" data-ng-if="!selectedPrograms.length">
+        <p class="program-cards-empty_text">Please select programs to schedule</p>
     </div>
-  </div>
-</div>
-
-<div data-ng-if="selectedPrograms.length > 0" >
-
-  <div class="panel panel-default" data-start-collapsed="false" data-bs-collapse data-ng-repeat="selectedProgram in selectedPrograms" >
-  <div data-ng-form="selectedProgramForm">
-    <div class="panel-body">
-      <div class="row">
-        <div class="pull-right">
-            <button type="button" class="btn btn-icon btn-inherit"
-                    data-ng-disabled="whenSaving"
-                    data-placement="bottom"
-                    data-container="body"
-                    aria-label="Delete"
-                    data-ng-click="deselectProgram(selectedProgram)">
-                <i class="icon-trashcan"></i>
-            </button>
-        </div>
-      </div>
-      <h3>{{selectedProgram.program.entity.name}}</h3>
-      <div class="row" data-ng-if="teamSchedulingConfiguration.useProvider">
-           <div class="form-group col-md-12"
-               data-ng-class="{ 'has-error' : selectedProgramForm.provider.$invalid && addProgramFormSubmitted }">
-              <label class="control-label" for="provider">
-                  Provider:
-              </label>
-  
-              <div class="error-circle fa-exclamation-circle" role="alert"
-                   data-ng-show="selectedProgramForm.provider.$error.required && addProgramFormSubmitted"
-                   data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                   data-title="Required" aria-label="Required"></div>
-              <div class="row">
-                  <div class="col-md-12" data-ng-if="selectedProgram.useFirstProgram">
-                      <select id="provider" name="provider" class="form-control"
-                              data-ng-class="{'loading' : selectedProgram.loadingProviderLocation}"
-                              data-ng-disabled="!providers || providers.length == 0 || selectedProgram.loadingProviderLocation"
-                              data-ng-model="selectedProgram.firstProgramResource.provider" data-ng-change="onProviderChangeAndUseFirstProgram(selectedProgram, $first)"
-                              data-ng-options="teamProvider.name for teamProvider in providers track by teamProvider.entity.id"
-                              data-disable-search-threshold="10" data-allow-single-deselect="providers.length > 1"
-                              data-no-results-text="'No team providers'"
-                              data-placeholder="Choose Provider"
-                              required
-                              data-chosen>
-                          <option></option>
-                      </select>
-                  </div>
-                  <div class="col-md-12" data-ng-if="!selectedProgram.useFirstProgram">
-                      <select id="provider" name="provider" class="form-control"
-                              data-ng-class="{'loading' : selectedProgram.loadingProviderLocation}"
-                              data-ng-disabled="!providers || providers.length == 0 || selectedProgram.loadingProviderLocation"
-                              data-ng-model="selectedProgram.provider" data-ng-change="onProviderChange(selectedProgram)"
-                              data-ng-options="teamProvider.name for teamProvider in providers track by teamProvider.entity.id"
-                              data-disable-search-threshold="10" data-allow-single-deselect="providers.length > 1"
-                              data-no-results-text="'No team providers'"
-                              data-placeholder="Choose Provider"
-                              required
-                              data-chosen>
-                          <option></option>
-                      </select>
-                  </div>
-              </div>
-          </div>
-      </div>
-  
-      <div class="row" data-ng-if="teamSchedulingConfiguration.useLocation">
-          <div class="form-group col-md-12"
-               data-ng-class="{ 'has-error' : selectedProgramForm.location.$invalid && addProgramFormSubmitted }">
-              <label class="control-label" for="location">
-                  Location:
-              </label>
-  
-              <div class="error-circle fa-exclamation-circle" role="alert"
-                   data-ng-show="selectedProgramForm.location.$error.required && addProgramFormSubmitted"
-                   data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                   data-title="Required" aria-label="Required"></div>
-              <div class="row">
-                  <div class="col-md-12" data-ng-if="selectedProgram.useFirstProgram">
-                      <select id="location" name="location" class="form-control"
-                              data-ng-class="{'loading' : selectedProgram.loadingProviderLocation}"
-                              data-ng-disabled="!locations || locations.length == 0 || selectedProgram.loadingProviderLocation"
-                              data-ng-model="selectedProgram.firstProgramResource.location" data-ng-change="onLocationChangeAndUseFirstProgram(selectedProgram, $first)"
-                              data-ng-options="teamLocation.entity.location.name for teamLocation in locations track by teamLocation.entity.id"
-                              data-disable-search-threshold="10" data-allow-single-deselect="locations.length > 1"
-                              data-no-results-text="'No team locations'"
-                              data-placeholder="Choose Location"
-                              required
-                              data-chosen>
-                          <option></option>
-                      </select>
-                  </div>
-                  <div class="col-md-12" data-ng-if="!selectedProgram.useFirstProgram">
-                      <select id="location" name="location" class="form-control"
-                              data-ng-class="{'loading' : selectedProgram.loadingProviderLocation}"
-                              data-ng-disabled="!locations || locations.length == 0 || selectedProgram.loadingProviderLocation"
-                              data-ng-model="selectedProgram.location" data-ng-change="onLocationChange(selectedProgram)"
-                              data-ng-options="teamLocation.entity.location.name for teamLocation in locations track by teamLocation.entity.id"
-                              data-disable-search-threshold="10" data-allow-single-deselect="locations.length > 1"
-                              data-no-results-text="'No team locations'"
-                              data-placeholder="Choose Location"
-                              required
-                              data-chosen>
-                          <option></option>
-                      </select>
-                  </div>
-              </div>
-          </div>
-      </div>
-  
-      <div class="row">
-          <div class="form-group col-md-12"
-               data-ng-class="{ 'has-error' : selectedProgramForm.viewByDate.$invalid && addProgramFormSubmitted }">
-              <label class="control-label" for="viewByDate">
-                  View-by Date:
-              </label>
-              <div class="error-circle fa-exclamation-circle" role="alert"
-                   data-ng-show="!selectedProgramForm.viewByDate.$error.date &&
-                                 selectedProgramForm.viewByDate.$error.required &&
-                                 addProgramFormSubmitted"
-                   data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                   data-title="Required" aria-label="Required"></div>
-              <div class="error-circle fa-exclamation-circle" role="alert"
-                   data-ng-show="!selectedProgramForm.viewByDate.$error.required && selectedProgramForm.viewByDate.$error.min && addProgramFormSubmitted"
-                   data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                   data-title="Please enter a date in the future" aria-label="Please enter a date in the future"></div>
-              <div class="error-circle fa-exclamation-circle" role="alert"
-                   data-ng-show="(selectedProgramForm.viewByDate.$error.min && selectedProgramForm.viewByDate.$error.date && selectedProgramForm.viewByDate.$error.required
-                    || selectedProgramForm.viewByDate.$error.date && selectedProgramForm.viewByDate.$error.required) && addProgramFormSubmitted"
-                   data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                   data-title="Please select a valid date" aria-label="Please select a valid date"></div>
-              <span data-ng-if="selectedProgram.useFirstProgram" >
-                <input 
-                     id="viewByDate" class="form-control" type="text" name="viewByDate"
-                     data-ng-model="selectedProgram.firstProgramResource.viewByDate" data-autoclose="true"
-                     data-ng-change="onViewByDateChangeAndUseFirstProgram(selectedProgram, $first)"
-                     data-dateType="iso" data-bs-datepicker
-                     data-min-date="today" required>
-              </span>
-              <span data-ng-if="!selectedProgram.useFirstProgram">
-                <input
-                     id="viewByDate" class="form-control" type="text" name="viewByDate"
-                     data-ng-model="selectedProgram.viewByDate" data-autoclose="true"
-                     data-dateType="iso" data-bs-datepicker
-                     data-min-date="today" required>              
-              </span>
-          </div>
-      </div>
-      
-      <div class="row" data-ng-if="$first">
-          <div class="form-group form-horizontal col-md-12">
-            <div class="checkbox">
-              <input id="useFirstProgram" type="checkbox"
-                     data-ng-model="selectedProgram.useFirstProgram" />
-              <label for="useFirstProgram">Use information above for all programs</label>
+    <div class="program-cards" data-ng-if="selectedPrograms.length">
+        <div class="program-card" data-ng-repeat="selectedProgram in selectedPrograms">
+            <button type="button" class="close" aria-label="Remove"
+                data-ng-disabled="whenSaving"
+                data-ng-click="deselectProgram(selectedProgram)"><i class="icon-delete"></i></button>
+            <div data-ng-form="selectedProgramForm">
+                <h3 class="program-card_title">{{selectedProgram.program.entity.name}}</h3>
+                <div class="program-card_wrapper">
+                    <form role="form">
+                        <div class="form-group" data-ng-if="teamSchedulingConfiguration.useProvider"
+                            data-ng-class="{ 'has-error' : selectedProgramForm.provider.$invalid && addProgramFormSubmitted }">
+                            <label class="control-label" for="programCard{{selectedProgram.program.entity.id}}Provider">Provider</label>
+                            <div class="error-circle fa-exclamation-circle" role="alert"
+                               data-ng-show="selectedProgramForm.provider.$error.required && addProgramFormSubmitted"
+                               data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                               data-title="Required" aria-label="Required"></div>
+                            <select data-ng-if="selectedProgram.useFirstProgram" id="programCard{{selectedProgram.program.entity.id}}Provider" name="programCard{{selectedProgram.program.entity.id}}Provider" class="form-control"
+                                  data-ng-class="{'loading' : selectedProgram.loadingProviderLocation}"
+                                  data-ng-disabled="!providers || providers.length === 0 || selectedProgram.loadingProviderLocation"
+                                  data-ng-model="selectedProgram.firstProgramResource.provider" data-ng-change="onProviderChangeAndUseFirstProgram(selectedProgram, $first)"
+                                  data-ng-options="teamProvider.name for teamProvider in providers track by teamProvider.entity.id"
+                                  data-disable-search-threshold="10" data-allow-single-deselect="providers.length > 1"
+                                  data-no-results-text="'No team providers'"
+                                  data-placeholder="Please select a provider"
+                                  required
+                                  data-chosen>
+                                <option></option>
+                            </select>
+                            <select data-ng-if="!selectedProgram.useFirstProgram" id="programCard{{selectedProgram.program.entity.id}}Provider" name="programCard{{selectedProgram.program.entity.id}}Provider" class="form-control"
+                                  data-ng-class="{'loading' : selectedProgram.loadingProviderLocation}"
+                                  data-ng-disabled="!providers || providers.length === 0 || selectedProgram.loadingProviderLocation"
+                                  data-ng-model="selectedProgram.provider" data-ng-change="onProviderChange(selectedProgram)"
+                                  data-ng-options="teamProvider.name for teamProvider in providers track by teamProvider.entity.id"
+                                  data-disable-search-threshold="10" data-allow-single-deselect="providers.length > 1"
+                                  data-no-results-text="'No team providers'"
+                                  data-placeholder="Please select a provider"
+                                  required
+                                  data-chosen>
+                                <option></option>
+                            </select>
+                        </div>
+                        <div class="form-group" data-ng-if="teamSchedulingConfiguration.useLocation"
+                            data-ng-class="{ 'has-error' : selectedProgramForm.location.$invalid && addProgramFormSubmitted }">
+                            <label class="control-label" for="programCard{{selectedProgram.program.entity.id}}Location">Location</label>
+                            <div class="error-circle fa-exclamation-circle" role="alert"
+                               data-ng-show="selectedProgramForm.location.$error.required && addProgramFormSubmitted"
+                               data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                               data-title="Required" aria-label="Required"></div>
+                            <select data-ng-if="selectedProgram.useFirstProgram" id="programCard{{selectedProgram.program.entity.id}}Location" name="programCard{{selectedProgram.program.entity.id}}Location" class="form-control"
+                                  data-ng-class="{'loading' : selectedProgram.loadingProviderLocation}"
+                                  data-ng-disabled="!locations || locations.length === 0 || selectedProgram.loadingProviderLocation"
+                                  data-ng-model="selectedProgram.firstProgramResource.location" data-ng-change="onLocationChangeAndUseFirstProgram(selectedProgram, $first)"
+                                  data-ng-options="teamLocation.entity.location.name for teamLocation in locations track by teamLocation.entity.id"
+                                  data-disable-search-threshold="10" data-allow-single-deselect="locations.length > 1"
+                                  data-no-results-text="'No team locations'"
+                                  data-placeholder="Please select a location"
+                                  required
+                                  data-chosen>
+                              <option></option>
+                            </select>
+                            <select data-ng-if="!selectedProgram.useFirstProgram" id="programCard{{selectedProgram.program.entity.id}}Location" name="programCard{{selectedProgram.program.entity.id}}Location" class="form-control"
+                                  data-ng-class="{'loading' : selectedProgram.loadingProviderLocation}"
+                                  data-ng-disabled="!locations || locations.length === 0 || selectedProgram.loadingProviderLocation"
+                                  data-ng-model="selectedProgram.location" data-ng-change="onLocationChange(selectedProgram)"
+                                  data-ng-options="teamLocation.entity.location.name for teamLocation in locations track by teamLocation.entity.id"
+                                  data-disable-search-threshold="10" data-allow-single-deselect="locations.length > 1"
+                                  data-no-results-text="'No team locations'"
+                                  data-placeholder="Please select a location"
+                                  required
+                                  data-chosen>
+                              <option></option>
+                            </select>
+                        </div>
+                        <div class="form-group"
+                            data-ng-class="{ 'has-error' : selectedProgramForm.viewByDate.$invalid && addProgramFormSubmitted }">
+                            <label class="control-label" for="programCard{{selectedProgram.program.entity.id}}ViewBy">View-by Date</label>
+                            <div class="error-circle fa-exclamation-circle" role="alert"
+                               data-ng-show="!selectedProgramForm.viewByDate.$error.date &&
+                                             selectedProgramForm.viewByDate.$error.required &&
+                                             addProgramFormSubmitted"
+                               data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                               data-title="Required" aria-label="Required"></div>
+                            <div class="error-circle fa-exclamation-circle" role="alert"
+                               data-ng-show="!selectedProgramForm.viewByDate.$error.required &&
+                                             selectedProgramForm.viewByDate.$error.min &&
+                                             addProgramFormSubmitted"
+                               data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                               data-title="Please enter a date in the future" aria-label="Please enter a date in the future"></div>
+                            <div class="error-circle fa-exclamation-circle" role="alert"
+                               data-ng-show="(selectedProgramForm.viewByDate.$error.min &&
+                                             selectedProgramForm.viewByDate.$error.date &&
+                                             selectedProgramForm.viewByDate.$error.required ||
+                                             selectedProgramForm.viewByDate.$error.date &&
+                                             selectedProgramForm.viewByDate.$error.required) &&
+                                             addProgramFormSubmitted"
+                               data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                               data-title="Please select a valid date" aria-label="Please select a valid date"></div>
+                            <div class="has-input-icon has-input-icon-calendar" data-ng-if="selectedProgram.useFirstProgram">
+                                <input id="programCard{{selectedProgram.program.entity.id}}ViewBy" class="form-control" placeholder="MM/DD/YYYY" type="text" name="programCard{{selectedProgram.program.entity.id}}ViewBy"
+                                    data-ng-model="selectedProgram.firstProgramResource.viewByDate"
+                                    data-ng-change="onViewByDateChangeAndUseFirstProgram(selectedProgram, $first)" required>
+                                <span class="input-icon" data-ng-model="selectedProgram.firstProgramResource.viewByDate" data-autoclose="true"
+                                    data-dateType="iso" data-bs-datepicker data-min-date="today" data-trigger="click" data-placement="top-left"><i class="icon-calendar"></i></span>
+                            </div>
+                            <div class="has-input-icon has-input-icon-calendar" data-ng-if="!selectedProgram.useFirstProgram">
+                                <input id="programCard{{selectedProgram.program.entity.id}}ViewBy" class="form-control" placeholder="MM/DD/YYYY" type="text" name="programCard{{selectedProgram.program.entity.id}}ViewBy"
+                                    data-ng-model="selectedProgram.viewByDate" required>
+                                <span class="input-icon" data-ng-model="selectedProgram.viewByDate" data-autoclose="true"
+                                    data-dateType="iso" data-bs-datepicker data-min-date="today" data-trigger="click" data-placement="top-left"><i class="icon-calendar"></i></span>
+                            </div>
+                        </div>
+                        <div class="form-group" data-ng-if="$first">
+                            <div class="checkbox">
+                                    <input type="checkbox" id="useFirstProgram" data-ng-model="selectedProgram.useFirstProgram">
+                                    <label for="useFirstProgram">Use information above for all programs</label>
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
-          </div>
-      </div>
+        </div>
     </div>
-  </div>
-  </div>
-</div>
-<br>
-<div class="row" data-ng-if="patient.id" data-ng-include="'client-facing/schedule/schedule_buttons.html'"></div>
-</div>
+    <div data-ng-include="'client-facing/schedule/schedule_buttons.html'"></div>
 

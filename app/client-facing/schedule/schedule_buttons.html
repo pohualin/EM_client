@@ -1,6 +1,4 @@
-<div class="container" data-ng-cloak >
-    <button class="btn btn-default" type="button"
-            data-ng-disabled="whenSaving"
+    <button class="btn btn-success btn-block" type="button"
+            data-ng-disabled="!selectedPrograms.length || whenSaving"
             data-ng-click="savePatientAndProgram()">Schedule Now
     </button>
-</div>
