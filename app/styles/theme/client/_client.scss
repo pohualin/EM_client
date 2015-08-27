@@ -516,6 +516,29 @@ select.form-control {
     }
 }
 
+/* _____ PATIENT INFO _____ */
+
+.patient-info {
+    .patient-info_title {
+        display: inline-block;
+    }
+    .patient-info_name {
+        @include remIt(font-size, 20);
+        color: $gray;
+    }
+    .patient-info_entity {
+        display: inline-block;
+        margin-left: 30px;
+        @include remIt(font-size, 15);
+    }
+    .patient-info_label {
+        text-transform: uppercase;
+    }
+    .patient-info_value {
+        font-weight: bold;
+    }
+}
+
 /* _____ PROGRAM CARD _____ */
 
 .program-cards,

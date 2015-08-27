@@ -1,0 +1,22 @@
+<div class="col-md-12" data-ng-cloak data-ng-controller="CreatePatientController">
+    <div class="patient-info">
+        <h1 class="patient-info_title">
+            <span class="patient-info_name">{{ patient.firstName }} {{ patient.lastName }}</span>
+        </h1>
+        <div class="patient-info_entity">
+            <span class="patient-info_label">DOB</span>
+            <span class="patient-info_value">{{ patient.dateOfBirth | date : 'MM/dd/yyyy' }}</span>
+        </div>
+        <div class="patient-info_entity">
+            <span class="patient-info_label">Patient ID</span>
+            <span class="patient-info_value">{{ patient.id }}</span>
+        </div>
+    </div>
+    <form name="newPatientForm" class="form" novalidate data-unsaved-warning-form>
+        <div id="alerts-container" data-ng-show="formSubmitted && newPatientForm.$invalid"></div>
+        <div class="row">
+            <div class="col-md-3" data-ng-show="showEmail" data-ng-include="'client-facing/schedule/patient/email/patient-email.html'"></div>
+            <div class="col-md-3" data-ng-show="showPhone" data-ng-include="'client-facing/schedule/patient/phone/patient-phone.html'"></div>
+        </div>
+    </form>
+</div>

@@ -1,7 +1,6 @@
-<div class="col-md-4">
             <div class="form-group"
                  data-ng-class="{ 'has-error' : formSubmitted && newPatientForm.email.$invalid}">
-                <label class="control-label" for="email">Patient's Email:</label>
+                <label class="control-label" for="email">Email</label>
                 <div data-ng-show="isEmailRequired">
                     <div class="error-circle fa-exclamation-circle" role="alert"
                      data-ng-show="newPatientForm.email.$error.required && formSubmitted"
@@ -17,6 +16,5 @@
                        maxlength="255" data-focus-on="email"
                        data-ng-pattern="emailPattern" data-ng-required="isEmailRequired"/>
              </div>
-</div>
 
 
