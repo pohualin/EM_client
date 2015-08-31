@@ -51,6 +51,7 @@ angular.module('emmiManager')
                     $alert({
                         content: '<strong>' + $scope.team.entity.name + '</strong> has been updated successfully.'
                     });
+                    selfRegForm.$setPristine(true);
                 })
                     .error(function (response, status) {
                         $scope.errorHandler(response, status, selfRegForm, $event);
@@ -73,6 +74,7 @@ angular.module('emmiManager')
                     $alert({
                         content: 'The team self reg configuration has been updated successfully.'
                     });
+                    selfRegForm.$setPristine(true);
                 })
                     .error(function (response, status) {
                         $scope.errorHandler(response, status, selfRegForm, $event);
@@ -123,7 +125,8 @@ angular.module('emmiManager')
             /**
              * on click of cancel button for self-registration edit section
              */
-            $scope.cancel = function () {
+            $scope.cancel = function (form) {
+                form.$setPristine(true);
                 $scope.selfRegFormSubmitted = false;
                 $scope.selfRegConfig.code = $scope.originalSelfRegConfig.code ? angular.copy($scope.originalSelfRegConfig.code) : {'code':''};
 
