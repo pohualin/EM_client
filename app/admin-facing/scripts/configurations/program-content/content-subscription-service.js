@@ -38,30 +38,27 @@ angular.module('emmiManager')
                         entity: {
                             contentSubscription: {name:'None', id:0},
                             faithBased: false,
-                            source: false,
-                            sourceContentSubscription: null
-                        }
+                         }
                     };
                 },
                 
                 /**
-                 * Remove single ContentSubscriptionConfigurationService
-                 * @param contentSubscriptionConfiguration to remove
+                 * Delete single ContentSubscriptionConfigurationService
                  * 
                  */
-                remove: function(contentSubscriptionConfiguration){
+                deleteContent: function(){
                     return $http.delete(UriTemplate.create(Client.getClient().link.clientContentSubscriptionConfigurations)
                             .stringify()).then();
                 },
                 
                 /**
-                 * Create/save ContentSubscriptionConfiguration
-                 * @param contentSubscriptionConfiguration to save
+                 * Create ContentSubscriptionConfiguration for a Client
+                 * @param contentSubscriptionConfiguration to create for a client
                  * 
                  */
-                save: function(selectedContentSubscription){
+                create: function(selectedContentSubscription){
                     return $http.post(UriTemplate.create(Client.getClient().link.clientContentSubscriptionConfigurations).stringify(), 
-                            selectedContentSubscription.entity)
+                            selectedContentSubscription.entity, {override500: true})
                         .then(function (response) {
                             CommonService.convertPageContentLinks(response.data);
                             return response.data;
@@ -69,36 +66,18 @@ angular.module('emmiManager')
                 },
                 
                 /**
-                 * Update single ContentSubscriptionConfiguration
-                 * @param contentSubscriptionConfiguration to update
+                 * Update ContentSubscriptionConfiguration for a Client
+                 * @param contentSubscriptionConfiguration to update for a client
                  * 
                  */
                 update: function(selectedContentSubscription){
-                    return $http.put(UriTemplate.create(Client.getClient().link.clientContentSubscriptionConfigurations).stringify(), 
-                            selectedContentSubscription.entity)
+                   return $http.put(UriTemplate.create(Client.getClient().link.clientContentSubscriptionConfigurations).stringify(), 
+                            selectedContentSubscription.entity, {override500: true})
                         .then(function (response) {
                             CommonService.convertPageContentLinks(response.data);
                             return response.data;
                         });
-                },
-                
-                /**
-                 * save or Update contentSubscriptionConfiguration
-                 */ 
-                saveOrUpdate: function(selectedContentSubscription){
-                    var deferred = $q.defer();
-                    if(angular.isDefined(selectedContentSubscription.entity.id)){
-                        this.update(selectedContentSubscription).then(function(response){
-                            deferred.resolve(response);
-                        });
-                    } else {
-                        this.save(selectedContentSubscription).then(function(response){
-                            deferred.resolve(response);
-                        });
-                    }
-                    return deferred.promise;
                 }
- 
             };
         }])
 ;
