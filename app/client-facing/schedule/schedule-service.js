@@ -83,7 +83,8 @@ angular.module('emmiManager')
                                  // selectedProgram.provider is a TeamProvider
                                  id: selectedProgram.provider ? selectedProgram.provider.entity.provider.id : ''
                            },
-                                 viewByDate: moment(selectedProgram.viewByDate).utc().format('YYYY-MM-DD')
+                           encounter: selectedProgram.encounter ? selectedProgram.encounter : null
+                           , viewByDate: moment(selectedProgram.viewByDate).utc().format('YYYY-MM-DD')
                     });
                 },
                 /**
@@ -97,14 +98,24 @@ angular.module('emmiManager')
                     var deferred = $q.defer();
                     var saveRequests = [];
                     
-                    angular.forEach(ScheduledProgramFactory.selectedPrograms, function (selectedProgram) {
-                        selectedProgram.patient = ScheduledProgramFactory.patient;
-                        var deferred = $q.defer();
-                        self.schedule(teamResource, selectedProgram).then(function(response){
-                            deferred.resolve(response.data);
+                    var selectedPrograms = angular.copy(ScheduledProgramFactory.selectedPrograms);
+                    var firstProgramDeferred = $q.defer();
+                    var firstProgram = ScheduledProgramFactory.selectedPrograms[0];
+                    firstProgram.patient = ScheduledProgramFactory.patient;
+                    self.schedule(teamResource, firstProgram).then(function(response){
+                        firstProgramDeferred.resolve(response.data);
+                        selectedPrograms.shift();
+                        angular.forEach(selectedPrograms, function (selectedProgram) {
+                            selectedProgram.patient = ScheduledProgramFactory.patient;
+                            selectedProgram.encounter = response.data.entity.encounter;
+                            var deferred = $q.defer();
+                            self.schedule(teamResource, selectedProgram).then(function(response){
+                                deferred.resolve(response.data);
+                            });
+                            saveRequests.push(deferred.promise);
                         });
-                        saveRequests.push(deferred.promise);
                     });
+                    saveRequests.push(firstProgramDeferred.promise);
 
                     $q.all(saveRequests).then(function(response){
                         deferred.resolve(response);
