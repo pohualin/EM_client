@@ -1,35 +1,35 @@
-
+<div class="row">
+    <div class="col-md-12">
+        <h2>Select Programs to Schedule</h2>
+    </div>
+    <div class="col-md-5">
+        <div class="form-group">
+            <label class="sr-only control-label" for="specialtyFilter">View programs by Specialty</label>
+            <select id="specialtyFilter" name="specialtyFilter" class="form-control"
+                    data-ng-disabled="!specialties || specialties.length == 0 || searching"
+                    data-ng-model="programSearch.specialty" data-ng-change="onSpecialtyFilterChange()"
+                    data-ng-options="specialty.entity.name for specialty in specialties | orderBy:'entity.name' track by specialty.entity.id"
+                    data-disable-search-threshold="10" data-allow-single-deselect="true"
+                    data-no-results-text="'All Specialties'"
+                    data-placeholder="Filter programs by"
+                    data-chosen>
+                <option></option>
+            </select>
+        </div>
+    </div>
     <div class="col-md-7">
-        <label class="control-label" for="query">
-            Search by keyword or Emmi program name:
-        </label>
-
-        <div class="input-group">
-            <input class="form-control" id="query" name="query" data-ng-model="programSearch.query" type="text"
-                   placeholder="Name, keyword..." data-auto-focus>
-
-            <div class="input-group-addon" data-ng-click="!searching ? search() : false"
-                 data-ng-style="{'padding': searching ? '8px 16px' : ''}"
-                 data-ng-disabled="searching">
-                <span class="search-spinner" data-ng-show="searching" style="margin-left: 8px;margin-right:8px;"></span>
-                <span data-ng-hide="searching">Search</span>
+        <div class="form-group">
+            <label class="sr-only control-label" for="query">Search by keyword or program name</label>
+            <div class="input-group">
+                <input class="form-control" id="query" name="query" data-ng-model="programSearch.query" type="text"
+                       placeholder="Search by keyword or program name">
+                <div class="input-group-btn">
+                    <button class="btn btn-primary btn-search" data-ng-click="!searching ? search() : false"
+                        data-ng-disabled="searching"><span class="icon-search"></span></button>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-md-5">
-        <label class="control-label" for="specialtyFilter">
-            View programs by Specialty:
-        </label>
-        <select id="specialtyFilter" name="specialtyFilter" class="form-control"
-                data-ng-disabled="!specialties || specialties.length == 0 || searching"
-                data-ng-model="programSearch.specialty" data-ng-change="onSpecialtyFilterChange()"
-                data-ng-options="specialty.entity.name for specialty in specialties | orderBy:'entity.name' track by specialty.entity.id"
-                data-disable-search-threshold="10" data-allow-single-deselect="true"
-                data-no-results-text="'All Specialties'"
-                data-placeholder="Choose Specialty"
-                data-chosen>
-            <option></option>
-        </select>
-    </div>
+</div>
 
 

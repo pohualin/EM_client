@@ -46,6 +46,7 @@
                                    aria-expanded="{{role.activePanel === 0}}"
                                    aria-controls="teamRole-collapsible-{{role.entity.id}}">
                                     <span class="icon-caret-right" data-bs-collapse-toggle></span>
+                                    <span class="icon-link" data-ng-if="role.entity.type || role.type" aria-hidden="true">&nbsp;</span>
                                     <span class="panel-title-text"
                                           data-sglclick="singleClick(role, theForm)"
                                           data-ng-dblclick="startEditName(role, theForm)">

@@ -14,78 +14,89 @@ angular.module('emmiManager')
              * results
              */
             $scope.saveOrUpdateEmailConfig = function (valid) {
-            	if (valid) {
+                if (valid) {
                     $scope.whenSaving = true;
-            		  ClientTeamEmailConfigurationService
-                          .saveOrUpdateTeamEmailConfiguration($scope.team, $scope.emailConfigs).then(function (response)
-                             {
-                        	    $scope.originalEmailConfigs = response;
-                        	    $scope.emailConfigs = angular.copy($scope.originalEmailConfigs);
-                            	$alert({
-                                    content: '<strong>' + $scope.team.entity.name + '</strong> has been updated successfully.'
-                                });
-                             }).finally(function () {
-                              $scope.whenSaving = false;
-                          });
-            		  $scope.showEmailButton = false;
+
+                    ClientTeamEmailConfigurationService
+                        .saveOrUpdateTeamEmailConfiguration($scope.team, $scope.emailConfigs).then(function (response) {
+                            $scope.originalEmailConfigs = response;
+                            $scope.emailConfigs = angular.copy($scope.originalEmailConfigs);
+                            $scope.updateRemindersVisibility();
+
+                            $alert({
+                                content: '<strong>' + $scope.team.entity.name + '</strong> has been updated successfully.'
+                            });
+                        }).finally(function () {
+                            $scope.whenSaving = false;
+                    });
+
+                    $scope.showEmailButton = false;
                 }
             };
 
             /**
-             * If user checks "Require email"
-             * "Collect email" needs to automatically check.
-             * If user un-check "Collect email"
-             * "Require email" needs to un-check
+             * If user un-checks "Collect Email"
+             * "Require Email" needs to automatically un-check.
              */
-            $scope.onChange = function(emailConfig){
-            	$scope.showEmailButton = true;
-            	//If the type is REQUIRE_EMAIL and it is true
-            	if(angular.equals(emailConfig.entity.type, 'REQUIRE_EMAIL')&&
-		                 (emailConfig.entity.emailConfig)){
-            	   //Loop thru the emailConfigs again and find the COLLECT_EMAIL type and set it to true
-            		angular.forEach($scope.emailConfigs, function (email){
-            			if(angular.equals(email.entity.type, 'COLLECT_EMAIL')){
-            				email.entity.emailConfig = true;
-            			}
-            		});
-                }
-            	else if(angular.equals(emailConfig.entity.type, 'COLLECT_EMAIL')&&
-		                 (!emailConfig.entity.emailConfig)){
-             	   //Loop thru the emailConfigs again and find the REQUIRE_EMAIL type and set it to false
-             		angular.forEach($scope.emailConfigs, function (email){
-             			if(angular.equals(email.entity.type, 'REQUIRE_EMAIL')){
-             				email.entity.emailConfig = false;
-             			}
-             		});
-                 }
+            $scope.onChangeCollect = function() {
+                $scope.showEmailButton = true;
 
-           };
+                if (!$scope.emailConfigs.entity.collectEmail) {
+                    $scope.emailConfigs.entity.requireEmail = false;
+                }
+
+                $scope.updateRemindersVisibility();
+            };
+
+            /**
+             * If user checks "Require Email"
+             * If yes, "Collect Email" needs to automatically check.
+             */
+            $scope.onChangeRequire = function() {
+                $scope.showEmailButton = true;
+
+                if ($scope.emailConfigs.entity.requireEmail) {
+                    $scope.emailConfigs.entity.collectEmail = true;
+                }
+
+                $scope.updateRemindersVisibility();
+            };
 
             /**
              * Called when cancel is clicked.. takes the original
              * objects and copies them back into the bound objects.
              */
-           $scope.cancel = function () {
-        	  $scope.emailConfigs = angular.copy($scope.originalEmailConfigs);
-        	  $scope.showEmailButton = false;
-           };
+            $scope.cancel = function () {
+                $scope.emailConfigs = angular.copy($scope.originalEmailConfigs);
+                $scope.showEmailButton = false;
+                $scope.updateRemindersVisibility();
+            };
 
-             /**
+            $scope.updateReminders = function() {
+                $scope.showEmailButton = true;
+            };
+
+            $scope.updateRemindersVisibility = function() {
+                $scope.showEmailReminders = $scope.emailConfigs.entity.collectEmail;
+            };
+
+            /**
              * init method called when page is loading
              */
             function init() {
                 $scope.showEmailButton = false;
+                $scope.showEmailReminders = false;
 
-                 $scope.client = teamResource.entity.client;
-            	$scope.team = teamResource;
-            	ClientTeamEmailConfigurationService.getTeamEmailConfiguration($scope.team).then(function (response) {
-                		$scope.originalEmailConfigs = response;
-                		$scope.emailConfigs = angular.copy($scope.originalEmailConfigs);
-               });
+                $scope.client = teamResource.entity.client;
+                $scope.team = teamResource;
 
+                ClientTeamEmailConfigurationService.getTeamEmailConfiguration($scope.team).then(function (response) {
+                    $scope.originalEmailConfigs = response;
+                    $scope.emailConfigs = angular.copy($scope.originalEmailConfigs);
+                    $scope.updateRemindersVisibility();
+                });
             }
 
             init();
-
     }])
 ;

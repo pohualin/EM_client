@@ -6,12 +6,13 @@
 
 .layout-card {
     box-shadow: none;
+    margin: 0 0 15px;
 }
 
 /* _____ HEADINGS _____ */
 
 h3, .h3 {
-    color: $gray;
+    color: $brand-secondary;
 }
 
 /* _____ BUTTONS _____ */
@@ -52,6 +53,16 @@ h3, .h3 {
         background-color: $gray;
         border-color: $gray;
         color: #fff;
+    }
+}
+
+.btn-success,
+.btn-info,
+.btn-warning {
+    &.disabled,
+    &[disabled],
+    fieldset[disabled] & {
+        color: $gray;
     }
 }
 
@@ -131,7 +142,29 @@ h3, .h3 {
     }
 }
 
+.btn-search {
+    font-size: 29px;
+    line-height: 1;
+    padding: 0 4px;
+    background-color: $brand-secondary;
+    &:hover {
+        background-color: $brand-tertiary;
+    }
+}
+
+.input-group-btn {
+    .btn {
+        height: $input-height-base;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+}
+
 /* _____ FORMS _____ */
+
+.control-label {
+    color: $brand-primary;
+}
 
 .form-control {
     &:focus {
@@ -358,6 +391,18 @@ select.form-control {
                         background: $brand-tertiary;
                     }
                 }
+                abbr {
+                    color: $gray;
+                    right: $input-height-base + 4;
+                    &:before {
+                        content: '\E132'; // icon-delete-circle
+                        font-size: 26px;
+                        padding: 3px 0;
+                    }
+                    &:hover {
+                        color: $gray-base;
+                    }
+                }
             }
             .chosen-default {
                 font-style: normal;
@@ -471,11 +516,52 @@ select.form-control {
     }
 }
 
+/* _____ PATIENT INFO _____ */
+
+.patient-info {
+    .patient-info_title {
+        display: inline-block;
+    }
+    .patient-info_name {
+        @include remIt(font-size, 20);
+        color: $gray;
+    }
+    .patient-info_entity {
+        display: inline-block;
+        margin-left: 30px;
+        @include remIt(font-size, 15);
+    }
+    .patient-info_label {
+        text-transform: uppercase;
+    }
+    .patient-info_value {
+        font-weight: bold;
+    }
+}
+
 /* _____ PROGRAM CARD _____ */
 
+.program-cards,
+.program-cards-empty {
+    margin: 26px auto;
+}
+
+.program-cards-empty {
+    background: $gray-light;
+    height: 400px;
+    text-align: center;
+    transform-style: preserve-3d;
+    .program-cards-empty_text {
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+}
+
 .program-card {
+    background: #fff;
     border: 5px solid $gray-light;
-    padding: 14px;
+    padding: 14px 14px 26px 14px;
     .control-label {
         color: $brand-primary;
         margin-bottom: 11px;
@@ -483,13 +569,23 @@ select.form-control {
     .form-group:last-child {
         margin-bottom: 0;
     }
+    & + .program-card {
+        border-top: 0;
+    }
 }
 
 .program-card_title {
+    @include remIt(font-size, 20);
+    color: $gray;
     margin: 20px 0 30px;
 }
 
 .program-list {
+    .program-list_wrapper {
+        max-height: 430px;
+        overflow: auto;
+        margin: 0 0 26px;
+    }
     ul {
         margin: 0;
         padding: 0;

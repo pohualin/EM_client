@@ -1,14 +1,21 @@
 <div class="col-md-12" data-ng-cloak>
-    <form name="clientTeamEmailConfigurationForm" class="form"  novalidate>
-       	<h1>Email Reminders</h1>
+    <form name="clientTeamEmailConfigurationForm" class="form" novalidate>
+        <h1>Email Reminders</h1>
         <div class="form-group">
-            <div class="checkbox" data-ng-repeat="emailConfiguration in emailConfigs | orderBy:'entity.rank'" >
-                <input type="checkbox" id="emailConfiguration{{$index}}"
-                  data-ng-model="emailConfiguration.entity.emailConfig"
-                  data-ng-change="onChange(emailConfiguration)" />
-                <label for="emailConfiguration{{$index}}">{{emailConfiguration.entity.type | translate }}</label>
+            <div class="checkbox">
+                <input type="checkbox" id="collectEmail"
+                    data-ng-model="emailConfigs.entity.collectEmail"
+                    data-ng-change="onChangeCollect()" />
+                <label for="collectEmail">Collect Email</label>
+            </div>
+            <div class="checkbox">
+                <input type="checkbox" id="requireEmail"
+                    data-ng-model="emailConfigs.entity.requireEmail"
+                    data-ng-change="onChangeRequire()" />
+                <label for="requireEmail">Require Email</label>
             </div>
         </div>
+        <div class="form-group" data-ng-show="showEmailReminders" data-ng-include="'admin-facing/partials/team/configuration/email/email-reminders.html'"></div>
         <div class="pull-right" data-ng-show="showEmailButton">
             <button class="btn btn-cancel" type="button"
                 data-ng-disabled="whenSaving"

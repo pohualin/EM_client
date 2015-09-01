@@ -15,6 +15,7 @@ angular.module('emmiManager')
                 specialty: '',
                 query: ''
             };
+            $scope.programSearchPerformed = false;
             $scope.useFirstProgram = false;
             $scope.firstProgramResource = {
                 provider: '',
@@ -74,9 +75,7 @@ angular.module('emmiManager')
              * @param show true means show all, false means show top 10 only
              */
             $scope.showAllResults = function (show) {
-                var search = !show ? performSearch() :
-                    performSearch($scope.programSearch.query, $scope.sortProperty,
-                        $scope.currentPageSize, $scope.programSearch.specialty);
+                var search = !show ? performSearch() : performSearch($scope.programSearch.query, $scope.sortProperty, $scope.currentPageSize, $scope.programSearch.specialty);
                 search.finally(function () {
                     $scope.showAll = show;
                 });
@@ -125,13 +124,13 @@ angular.module('emmiManager')
                 if (programResource.selected) {
                     var selectedProgram = AddProgramService.newScheduledProgram();
                     selectedProgram.program = programResource;
-                    
+
                     // Set provider if there is only one possible provider
                     if ($scope.providers && $scope.providers.length === 1) {
                         selectedProgram.provider = $scope.providers[0];
                         $scope.onProviderChange(selectedProgram);
                     }
-                    
+
                     // Set location if there is only one possible location
                     if ($scope.locations && $scope.locations.length === 1) {
                         selectedProgram.location = $scope.locations[0];
@@ -183,12 +182,12 @@ angular.module('emmiManager')
                     return deferred.promise;
                 }
             };
-            
+
             /**
              * onLocationChange when use first program is checked.
              * 1. set selectedProgram.location to selectedProgram.firstProgramResource.location
              * 2. call onLocationChange to get potential providers or set the only provider
-             * 3. Fire 'useFirstProgramResource' event if it's called from first card. 
+             * 3. Fire 'useFirstProgramResource' event if it's called from first card.
              *    Otherwise, fire 'useIndividualProgram' event
              */
             $scope.onLocationChangeAndUseFirstProgram = function (selectedProgram, firstProgram) {
@@ -226,12 +225,12 @@ angular.module('emmiManager')
                     return deferred.promise;
                 }
             };
-            
+
             /**
              * onProviderChange when use first program is checked.
              * 1. set selectedProgram.provider to selectedProgram.firstProgramResource.provider
              * 2. call onProviderChange to get potential locations or set the only location
-             * 3. Fire 'useFirstProgramResource' event if it's called from first card. 
+             * 3. Fire 'useFirstProgramResource' event if it's called from first card.
              *    Otherwise, fire 'useIndividualProgram' event
              */
             $scope.onProviderChangeAndUseFirstProgram = function (selectedProgram, firstProgram) {
@@ -244,16 +243,20 @@ angular.module('emmiManager')
                     }
                 });
             };
-            
+
 
             /**
              * When a specialty has been chosen or un-chosen
              */
             $scope.onSpecialtyFilterChange = function () {
+                $scope.programSearchPerformed = true;
                 $scope.showAllResults(true);
             };
-
+            /**
+             * When a keyword search happens
+             */
             $scope.search = function () {
+                $scope.programSearchPerformed = true;
                 $scope.showAllResults(true);
             };
 
@@ -358,7 +361,7 @@ angular.module('emmiManager')
                     });
                 });
             };
-            
+
             $scope.onViewByDateChangeAndUseFirstProgram = function (selectedProgram, firstProgram) {
                 selectedProgram.viewByDate = selectedProgram.firstProgramResource.viewByDate;
                 if (firstProgram) {
@@ -367,7 +370,7 @@ angular.module('emmiManager')
                     $scope.$broadcast('useIndividualProgram');
                 }
             };
-            
+
             /**
              * Monitor useFirstProgram from the first card
              * Fire 'useFirstProgramResource' event when it's checked. Fire 'useIndividualProgram' event when it's unchecked.
@@ -380,7 +383,7 @@ angular.module('emmiManager')
                     $scope.$broadcast('useIndividualProgram');
                 }
             });
-            
+
             /**
              * Copy provider, location and viewByDate to $scope.firstProgramResource from first card
              * For each card, set useFirstProgram to true and copy provider, location, viewByDate from $scope.firstProgramResource
@@ -397,7 +400,7 @@ angular.module('emmiManager')
                     program.firstProgramResource = $scope.firstProgramResource;
                 });
             });
-            
+
             /**
              * Set useFirstProgram to false on all selectedPrograms.
              * Reset $scope.firstProgramProgram
