@@ -58,14 +58,14 @@ angular.module('emmiManager')
                             if (language.entity.languageTag === translation.entity.language.languageTag && translation.entity.language.languageTag === 'en') {
                                 $scope.idLabelConfigEnglish.config = $scope.idLabelConfigEnglish.config ? $scope.idLabelConfigEnglish.config : {};
                                 $scope.idLabelConfigEnglish.config.entity = $scope.idLabelConfigEnglish.config && $scope.idLabelConfigEnglish.config.entity ? $scope.idLabelConfigEnglish.config.entity : {};
-                                $scope.idLabelConfigEnglish.config.entity.value = type.isModifiable && $scope.originalIdLabelConfigEnglish && $scope.originalIdLabelConfigEnglish.entity.idLabelType.isModifiable ? $scope.originalIdLabelConfigEnglish.entity.value : translation.entity.value ? translation.entity.value : '';
+                                $scope.idLabelConfigEnglish.config.entity.value = type.isModifiable && $scope.originalIdLabelConfigEnglish && $scope.originalIdLabelConfigEnglish.entity.idLabelType.isModifiable ? $scope.originalIdLabelConfigEnglish.entity.value : '';
                                 $scope.idLabelConfigEnglish.config.entity.idLabelType = $scope.patientSelfRegConfig.entity.patientIdLabelType;
                                 $scope.idLabelConfigEnglish.config.entity.patientSelfRegConfig = $scope.patientSelfRegConfig.entity;
                                 $scope.idLabelConfigEnglish.config.entity.language = translation.entity.language;
                             } else if (language.entity.languageTag === translation.entity.language.languageTag && translation.entity.language.languageTag === 'es') {
                                 $scope.idLabelConfigSpanish.config = $scope.idLabelConfigSpanish.config ? $scope.idLabelConfigSpanish.config : {};
                                 $scope.idLabelConfigSpanish.config.entity = $scope.idLabelConfigSpanish.config && $scope.idLabelConfigSpanish.config.entity ? $scope.idLabelConfigSpanish.config.entity : {};
-                                $scope.idLabelConfigSpanish.config.entity.value = type.isModifiable && $scope.originalIdLabelConfigSpanish && $scope.originalIdLabelConfigSpanish.entity.idLabelType.isModifiable ? $scope.originalIdLabelConfigSpanish.entity.value : translation.entity.value ? translation.entity.value : '';
+                                $scope.idLabelConfigSpanish.config.entity.value = type.isModifiable && $scope.originalIdLabelConfigSpanish && $scope.originalIdLabelConfigSpanish.entity.idLabelType.isModifiable ? $scope.originalIdLabelConfigSpanish.entity.value : '';
                                 $scope.idLabelConfigSpanish.config.entity.idLabelType = $scope.patientSelfRegConfig.entity.patientIdLabelType;
                                 $scope.idLabelConfigSpanish.config.entity.patientSelfRegConfig = $scope.patientSelfRegConfig.entity;
                                 $scope.idLabelConfigSpanish.config.entity.language = translation.entity.language;
