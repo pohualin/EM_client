@@ -1,0 +1,40 @@
+<header class="app-header with-breadcrumbs" data-emmi-navbar>
+    <!-- Secondary menu for transclusion -->
+    <ul class="secondary-nav">
+        <li>
+            <a data-ng-if="existingClientRoles.length > 0 || existingClientTeamRoles.length > 0" href="#/clients/{{client.id}}/users">Manage Users</a>
+            <a data-ng-if="existingClientRoles.length === 0 && existingClientTeamRoles.length === 0" data-ng-class="{'disabled':(existingClientRoles.length === 0 && existingClientTeamRoles.length === 0)}" data-bs-tooltip data-type="info" data-placement="bottom" data-title="Set up user roles before adding users" aria-label="Set up user roles before adding users">Manage Users</a>
+        </li>
+    </ul>
+    <!-- Breadcrumb for transclusion -->
+    <ol class="breadcrumb">
+        <li><a href="#/clients?{{currentRouteQueryString}}">Search</a></li>
+        <li><a data-ng-href="#/clients/{{client.id}}?{{currentRouteQueryString}}">{{client.name}}</a></li>
+        <li class="active">Client Configurations</li>
+    </ol>
+</header>
+<div id="app-content" role="main" class="app-content app-content-with-sidebar container" data-ng-cloak>
+	<form name="contentSubscriptionForm" novalidate data-unsaved-warning-form>
+    <div class="row">
+        <div data-emmi-sidebar class="sidebar" data-ng-include="'admin-facing/partials/configurations/nav.html'"></div>
+        <div class="main-content">
+            <div class="layout-card">
+                <div class="row" data-ng-include="'admin-facing/partials/configurations/program-content/form.html'"></div>
+                <div  data-ng-show="showContentButton">
+                <hr/>
+                        <span class="pull-right">
+                            <a class="btn btn-cancel" data-ng-click="cancel(contentSubscriptionForm)">cancel</a>
+                        </span>
+                        <span class="pull-right">
+                            <button class="btn btn-success" type="submit"
+                                    data-ng-disabled="whenSaving"
+                                    data-ng-click="save(contentSubscriptionForm.$valid)">Save
+                            </button>
+                        </span>
+                </div>
+            </div><!-- .layout-card -->
+        </div><!-- .main-content -->
+    </div><!-- .row -->
+    </form>
+</div><!-- .container -->
+<footer class="footer" data-ng-include="'admin-facing/partials/common/footer.tpl.html'"></footer>
