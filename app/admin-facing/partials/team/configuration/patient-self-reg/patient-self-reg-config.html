@@ -9,13 +9,21 @@
                        data-ng-checked="true"/>
                 <label for="patientNameRequire">Patient Name (always required)</label>
             </div>
-            <div class="checkbox">
-                <input id="dateOfBirthRequire" type="checkbox"
-                       data-ng-model="patientSelfRegConfig.entity.requireDateOfBirth" data-ng-disabled="true"
-                       data-ng-checked="true"/>
-                <label for="dateOfBirthRequire">Date of birth (always required)</label>
+
+            <div class="row">
+                <div class="checkbox col-sm-6">
+                    <input id="exposeDateOfBirth" type="checkbox"
+                           data-ng-model="patientSelfRegConfig.entity.exposeDateOfBirth"/>
+                    <label for="exposeDateOfBirth">Date of birth</label>
+                </div>
+                <div class="checkbox col-sm-6" data-ng-show="patientSelfRegConfig.entity.exposeDateOfBirth">
+                    <input id="requirePatientDob" type="checkbox"
+                           data-ng-model="patientSelfRegConfig.entity.requireDateOfBirth"/>
+                    <label for="requirePatientDob">Required</label>
+                </div>
             </div>
-            <div class=" row">
+
+            <div class="row">
                 <div class="checkbox col-sm-6">
                     <input id="exposePatientID" type="checkbox"
                            data-ng-model="patientSelfRegConfig.entity.exposeId"
