@@ -44,7 +44,7 @@
                 <div data-ng-repeat="scheduledProgram in encounter.entity.scheduledPrograms">
                     <form name="scheduledProgramForm_{{scheduledProgram.entity.id}}"
                           data-unsaved-warning-form novalidate>
-                        <div class="row" data-ng-click="toggleScheduledProgramPanel(scheduledProgram)" >
+                        <div class="row" data-ng-click="toggleScheduledProgramPanel(scheduledProgram, scheduledProgramForm_{{scheduledProgram.entity.id}})" >
                             <div class="col-md-12">
                                 <table class="table table-hover table-striped"
                                        border="0" cellpadding="0" cellspacing="0">
@@ -89,7 +89,7 @@
                                                     class="pull-right btn btn-link btn-link-nopad"
                                                     style="text-transform: lowercase"
                                                     data-ng-disabled="scheduledProgram.whenSaving"
-                                                    data-ng-click="toggleProgramActivation(scheduledProgram)"
+                                                    data-ng-click="toggleProgramActivation(encounter, scheduledProgram, scheduledProgramForm_{{scheduledProgram.entity.id}}, {{$index}})"
                                                     aria-label="Disable Scheduled Program">
                                                     <span style="margin-right: 23px;">
                                                         {{scheduledProgram.entity.active ? 'deactivate' : 'reactivate'}}

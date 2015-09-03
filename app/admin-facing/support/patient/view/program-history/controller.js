@@ -15,8 +15,9 @@
                  * Called when program panel is toggled, make a copy of the original program
                  * when the panel is opened so that we can cancel changes
                  */
-                $scope.toggleScheduledProgramPanel = function (scheduledProgramResource) {
-                    if (scheduledProgramResource.showDetails) {
+                $scope.toggleScheduledProgramPanel = function (scheduledProgramResource, form) {
+                    console.log(scheduledProgramResource);
+                    if (scheduledProgramResource.showDetails && !form.$dirty) {
                         scheduledProgramResource.showDetails = false;
                     } else {
                         scheduledProgramResource.showDetails = true;
@@ -46,9 +47,11 @@
                 $scope.isUnchanged = function (encounterResource, scheduledProgramResource, form, index) {
                     var unchanged = scheduledProgramResource.original ?
                         angular.equals(scheduledProgramResource.entity, scheduledProgramResource.original) : true;
+                    // An array of changed forms
                     if (!encounterResource.dirtyForms) {
                         encounterResource.dirtyForms = [];
                     }
+                    // A map that holds all updated schedule programs
                     if (!encounterResource.updatedSchedulePrograms) {
                         encounterResource.updatedSchedulePrograms = {};
                     }
@@ -57,7 +60,7 @@
                         encounterResource.dirtyForms = encounterResource.dirtyForms.filter(function (element) {
                             return element.$pristine !== true;
                         });
-                        if (encounterResource.updatedSchedulePrograms[scheduledProgramResource.entity.id]) {
+                        if (encounterResource.updatedSchedulePrograms[index]) {
                             delete encounterResource.updatedSchedulePrograms[index];
                         }
                     } else {
@@ -77,7 +80,6 @@
                     // form.programFormSubmitted = true;
                     if ((form.viewByDate.$dirty && form.$valid) || !form.viewByDate.$dirty) {
                         scheduledProgramResource.whenSaving = true;
-                        console.log(scheduledProgramResource.original)
                         return service.save(scheduledProgramResource).then(function ok(savedResource) {
                             // created by isn't returned on updates, save it
                             var createdBy = scheduledProgramResource.original.createdBy;
@@ -86,6 +88,7 @@
                             // put the created by back onto the new original
                             scheduledProgramResource.original.createdBy = createdBy;
                             scheduledProgramResource.entity = angular.copy(scheduledProgramResource.original);
+                            scheduledProgramResource.showDetails = false;
                             $alert({
                                 content: [
                                     'Program <strong>',
@@ -166,8 +169,9 @@
                  * Toggles the program activation to !whatItIsNow
                  * @param scheduledProgramResource to toggle
                  */
-                $scope.toggleProgramActivation = function (scheduledProgramResource) {
+                $scope.toggleProgramActivation = function (encounterResource, scheduledProgramResource, form, index) {
                     scheduledProgramResource.entity.active = !scheduledProgramResource.entity.active;
+                    $scope.isUnchanged(encounterResource, scheduledProgramResource, form, index);
                 };
 
                 /**

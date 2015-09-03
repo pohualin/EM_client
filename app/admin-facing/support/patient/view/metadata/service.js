@@ -112,12 +112,13 @@
                         return this.loadScheduledPrograms(patientResource).then(function (scheduledPrograms) {
                             var map = {};
                             angular.forEach(scheduledPrograms, function(scheduledProgram){
-                                var encounter = { entity : scheduledProgram.entity.encounter };
+                                var encounter = scheduledProgram.entity.encounter;
                                 delete scheduledProgram.entity.encounter;
                                 if (!map[encounter.id]) {
-                                    encounter.scheduledProgramsMap = {};
-                                    encounter.scheduledProgramsMap[scheduledProgram.entity.id] = scheduledProgram;
-                                    map[encounter.id] = encounter;
+                                    var encounterResource = { entity : encounter };
+                                    encounterResource.scheduledProgramsMap = {};
+                                    encounterResource.scheduledProgramsMap[scheduledProgram.entity.id] = scheduledProgram;
+                                    map[encounter.id] = encounterResource;
                                 } else {
                                     map[encounter.id].scheduledProgramsMap[scheduledProgram.entity.id] = scheduledProgram;
                                 }
