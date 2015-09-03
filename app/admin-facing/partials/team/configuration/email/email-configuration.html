@@ -4,7 +4,7 @@
         <div class="form-group">
             <div class="radio" ng-repeat="emailOption in emailOptions | orderBy:'rank'">
                 <input type="radio" id="{{emailOption.id}}"
-                       data-ng-model="$parent.$parent.selectedEmailOption"
+                       data-ng-model="emailOptions.selected"
                        data-ng-value="emailOption"
                        data-ng-change="update()"/>
                 <label for="{{emailOption.id}}">{{ emailOption.displayText }}</label>

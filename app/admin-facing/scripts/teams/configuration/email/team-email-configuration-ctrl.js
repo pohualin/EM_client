@@ -54,13 +54,13 @@ angular.module('emmiManager')
             };
 
             $scope.update = function() {
-                if ($scope.selectedEmailOption === $scope.emailOptions[0]) {
+                if ($scope.emailOptions.selected === $scope.emailOptions[0]) {
                     $scope.emailConfigs.entity.collectEmail = true;
                     $scope.emailConfigs.entity.requireEmail = false;
-                } else if ($scope.selectedEmailOption === $scope.emailOptions[1]) {
+                } else if ($scope.emailOptions.selected === $scope.emailOptions[1]) {
                     $scope.emailConfigs.entity.collectEmail = true;
                     $scope.emailConfigs.entity.requireEmail = true;
-                } else if ($scope.selectedEmailOption === $scope.emailOptions[2]) {
+                } else if ($scope.emailOptions.selected === $scope.emailOptions[2]) {
                     $scope.emailConfigs.entity.collectEmail = false;
                     $scope.emailConfigs.entity.requireEmail = false;
                 }
@@ -72,12 +72,12 @@ angular.module('emmiManager')
             $scope.setEmailOption = function() {
                 if ($scope.emailConfigs.entity.collectEmail === true) {
                     if ($scope.emailConfigs.entity.requireEmail === true) {
-                        $scope.selectedEmailOption = $scope.emailOptions[1];
+                        $scope.emailOptions.selected = $scope.emailOptions[1];
                     } else {
-                        $scope.selectedEmailOption = $scope.emailOptions[0];
+                        $scope.emailOptions.selected = $scope.emailOptions[0];
                     }
                 } else {
-                    $scope.selectedEmailOption = $scope.emailOptions[2];
+                    $scope.emailOptions.selected = $scope.emailOptions[2];
                 }
             };
 
@@ -93,7 +93,7 @@ angular.module('emmiManager')
                     { id: 'emailExposedRequired', displayText: 'Email exposed and required', rank: 1 },
                     { id: 'dontCollectEmail', displayText: 'Don\'t collect email', rank: 2 }
                 ];
-                $scope.selectedEmailOption = $scope.emailOptions[0];
+                $scope.emailOptions.selected = $scope.emailOptions[0];
 
                 $scope.client = teamResource.entity.client;
                 $scope.team = teamResource;
