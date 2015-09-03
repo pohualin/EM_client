@@ -15,8 +15,8 @@ angular.module('emmiManager')
         $scope.selectedSourceContent = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
         $scope.emmiEngagePlus = {};
         $scope.noneContent = {name:'None', id:0};
-        $scope.deleteContentSubscription = false;
-       
+        $scope.selectedContentList = [];
+               
         /**
          * Cancel any changes
          */
@@ -179,19 +179,28 @@ angular.module('emmiManager')
         };
         
         $scope.onChangePrimaryList = function(){
-            $scope.showButtons(true);
-            if($scope.selectedContentSubscription.entity.contentSubscription.name === 'None'){
-            	$scope.faithBased = false;
-            	$scope.sourceProgram = false;
-            	$scope.selectedContentSubscription.entity.faithBased = false;
-            }
-            else if($scope.selectedContentSubscription.entity.contentSubscription.name === 'EmmiEngage+'){
-               $scope.faithBased = true;
-               $scope.sourceProgram = true;
-            }
+        	if(angular.isDefined($scope.selectedContentSubscription.entity.contentSubscription)){
+        		if($scope.selectedContentSubscription.entity.contentSubscription.name === 'None'){
+                	$scope.faithBased = false;
+                	$scope.sourceProgram = false;
+                	$scope.selectedContentSubscription.entity.faithBased = false;
+                	$scope.showButtons(false);
+                }
+                else if($scope.selectedContentSubscription.entity.contentSubscription.name === 'EmmiEngage+'){
+                   $scope.faithBased = true;
+                   $scope.sourceProgram = true;
+                   $scope.showButtons(true);
+                }
+                else{
+                	$scope.faithBased = true;
+                    $scope.sourceProgram = false;
+                    $scope.showButtons(true);
+                }
+        	}
             else{
-            	$scope.faithBased = true;
+            	$scope.faithBased = false;
                 $scope.sourceProgram = false;
+                $scope.showButtons(false);
             }
        };
        
