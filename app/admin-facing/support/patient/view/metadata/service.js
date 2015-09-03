@@ -106,6 +106,37 @@
                             deferred.resolve(scheduledPrograms);
                         });
                         return deferred.promise;
+                    },
+                    
+                    loadEncounters: function(patientResource) {
+                        return this.loadScheduledPrograms(patientResource).then(function (scheduledPrograms) {
+                            var map = {};
+                            angular.forEach(scheduledPrograms, function(scheduledProgram){
+                                var encounter = { entity : scheduledProgram.entity.encounter };
+                                delete scheduledProgram.entity.encounter;
+                                if (!map[encounter.id]) {
+                                    encounter.scheduledProgramsMap = {};
+                                    encounter.scheduledProgramsMap[scheduledProgram.entity.id] = scheduledProgram;
+                                    map[encounter.id] = encounter;
+                                } else {
+                                    map[encounter.id].scheduledProgramsMap[scheduledProgram.entity.id] = scheduledProgram;
+                                }
+                            });
+                            
+                            var encounters = [];
+                            angular.forEach(map, function (encounter) {
+                                encounter.entity.scheduledPrograms = [];
+                                angular.forEach(encounter.scheduledProgramsMap, function (scheduleProgram) {
+                                    encounter.entity.scheduledPrograms.push(scheduleProgram);
+                                });
+                                delete encounter.scheduledProgramsMap;
+                                encounter.entity.accessCode = encounter.entity.scheduledPrograms[0].entity.accessCode;
+                                encounter.entity.createdBy = encounter.entity.scheduledPrograms[0].entity.createdBy;
+                                encounter.entity.team = encounter.entity.scheduledPrograms[0].entity.team;
+                                encounters.push(encounter); 
+                            });
+                            return encounters;
+                        });
                     }
                 };
             }])
