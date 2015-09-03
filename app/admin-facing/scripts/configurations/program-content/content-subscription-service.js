@@ -36,7 +36,7 @@ angular.module('emmiManager')
                 createContentSubscriptionConfiguration: function () {
                     return {
                         entity: {
-                            contentSubscription: {name:'None', id:0},
+                            contentSubscription: {},
                             faithBased: false,
                          }
                     };

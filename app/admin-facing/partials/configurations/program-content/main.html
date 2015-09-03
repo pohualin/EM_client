@@ -20,7 +20,7 @@
         <div class="main-content">
             <div class="layout-card">
                 <div class="row" data-ng-include="'admin-facing/partials/configurations/program-content/form.html'"></div>
-                <div  data-ng-show="showContentButton">
+                <div data-ng-if="showContentButton">
                 <hr/>
                         <span class="pull-right">
                             <a class="btn btn-cancel" data-ng-click="cancel(contentSubscriptionForm)">cancel</a>

@@ -31,7 +31,7 @@
                     data-ng-model="selectedContentSubscription.entity.contentSubscription"
                     required
                     data-ng-change="onChangePrimaryList()">
-                <option value="" title="primaryContentList"></option>
+                <option value="" title="primaryContentList">Select...</option>
                 </select>
            </div>
            </div>
@@ -39,9 +39,9 @@
            <div data-ng-if="sourceProgram" class="form-group" data-ng-class="{ 'has-error' : (contentSubscriptionForm.sourceContentList.$invalid && contentSubscriptionFormSubmitted)}">
                 <select id="sourceContentList" name="sourceContentList" class="form-control"
                     data-ng-options="sourceContentList.name for sourceContentList in sourceContentList track by sourceContentList.id"
-                    data-ng-model="selectedContentSubscription.entity.sourceContentSubscription"
+                    data-ng-model="selectedSourceContent.entity.contentSubscription"
                     required
-                    data-ng-change="onChangeSourceList()">
+                    data-ng-change="onChange()">
                 <option value="" title="sourceContentList"></option>
                 </select>
            </div>
@@ -58,7 +58,7 @@
           <div class="checkbox">
                <input id="faithBased" type="checkbox"
                       data-ng-model="selectedContentSubscription.entity.faithBased"
-                      data-ng-change="onChangeFaithBased()"/>
+                      data-ng-change="onChange()"/>
                 <label for="faithBased">Apply Faith-Based Filter for this Client</label>
            </div>
      </div>
