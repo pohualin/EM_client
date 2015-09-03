@@ -1,5 +1,33 @@
-<div data-ng-controller="AddAnotherContentConfigurationController">
-    <button type="button" class="btn btn-link btn-link-nopad btn-heading" data-ng-click="addAnotherContentSubscription()">
-        <i class="icon-plus"></i> ADD ANOTHER SUBSCRIPTION
-    </button>
+<div class="row">
+<div data-ng-if="selectedContentList.length">
+     <div data-ng-repeat="selectedContent in selectedContentList">
+     <div class="col-md-4">
+      		<div class="form-group">
+               	<select id="selectedPrimaryContentList" name="selectedPrimaryContentList" class="form-control"
+                   	data-ng-options="primaryContentList.name for primaryContentList in primaryContentList track by primaryContentList.name"
+                   	data-ng-model="selectedContent.entity.contentSubscription"
+                   	required
+                   	data-ng-change="onChangePrimaryList()">
+               	<option value="" title="primaryContentList"></option>
+               	</select>
+       		</div>
+            </div>
+        	
+        	<div class="col-md-4" >
+          	<div data-ng-if="sourceProgram">
+               	<select id="selectedSourceContentList" name="selectedSourceContentList" class="form-control"
+                   	data-ng-options="sourceContentList.name for sourceContentList in sourceContentList track by sourceContentList.id"
+                   	data-ng-model="selectedContent.entity.contentSubscription"
+                   	required
+                   	data-ng-change="onChange()">
+               	<option value="" title="sourceContentList"></option>
+               	</select>
+           	</div>
+       		</div>
+       		
+      	</div>
+   	</div>
 </div>
+ 
+    
+

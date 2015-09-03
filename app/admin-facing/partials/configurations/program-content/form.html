@@ -1,9 +1,8 @@
 <h1>
     Available Program Content
 </h1>
-<div data-ng-show="contentSubscriptionForm.$invalid" id="message-container">
-      </div>
-      <div class="row">
+<div data-ng-show="contentSubscriptionForm.$invalid" id="message-container"></div>
+<div class="row">
            <div class="col-md-4">
            <label class="control-label" for="primaryContentList">CONTENT SUBSCRIPTION</label>
            <div class="error-circle fa-exclamation-circle" role="alert"
@@ -22,8 +21,9 @@
            </div>
            <div class="col-md-4">
            </div>
-      </div>
-      <div class="row">
+</div>
+<div data-ng-include="'admin-facing/partials/configurations/program-content/add-content-subscription.html'"></div>
+<div class="row">
            <div class="col-md-4">
            <div class="form-group" data-ng-class="{ 'has-error' : (contentSubscriptionForm.primaryContentList.$invalid && contentSubscriptionFormSubmitted)}">
                 <select id="primaryContentList" name="primaryContentList" class="form-control"
@@ -31,7 +31,7 @@
                     data-ng-model="selectedContentSubscription.entity.contentSubscription"
                     required
                     data-ng-change="onChangePrimaryList()">
-                <option value="" title="primaryContentList"></option>
+                <option value="" title="primaryContentList">Select...</option>
                 </select>
            </div>
            </div>
@@ -47,22 +47,30 @@
            </div>
            </div>
            <div class="col-md-4">
-           		<button disabled type="button" class="btn btn-link btn-link-nopad btn-heading" data-ng-click="addAnotherSubscription()">
+           		<button type="button" class="btn btn-link btn-link-nopad btn-heading" data-ng-click="addAnotherSubscription()">
         			<i class="icon-plus"></i> ADD ANOTHER SUBSCRIPTION
     			</button>
            </div>
-     </div>
-     <div class="row" data-ng-if="faithBased">
-     <div class="col-md-6">
-     <div class="form-group">
+</div>
+<div class="row" data-ng-if="faithBased">
+     	<div class="col-md-6">
+     	<div class="form-group">
           <div class="checkbox">
                <input id="faithBased" type="checkbox"
                       data-ng-model="selectedContentSubscription.entity.faithBased"
                       data-ng-change="onChange()"/>
                 <label for="faithBased">Apply Faith-Based Filter for this Client</label>
-           </div>
-     </div>
-     </div>
+          </div>
+    	</div>
+     	</div>
 </div>
+<div class="row">
+     	<div class="col-md-6">
+           		<button type="button" disabled="disabled" class="btn btn-link btn-link-nopad btn-heading" data-ng-click="addAnotherSubscription()">
+        			 VIEW & EDIT PROGRAMS
+    			</button>
+     	</div>
+</div>
+
     
 

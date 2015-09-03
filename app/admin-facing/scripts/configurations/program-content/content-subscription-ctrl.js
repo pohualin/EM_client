@@ -177,7 +177,7 @@ angular.module('emmiManager')
                 }
             });
         };
-        
+                   
         $scope.onChangePrimaryList = function(){
         	if(angular.isDefined($scope.selectedContentSubscription.entity.contentSubscription)){
         		if($scope.selectedContentSubscription.entity.contentSubscription.name === 'None'){
@@ -211,6 +211,8 @@ angular.module('emmiManager')
        
        // Will implement for story 1307 multiple content subscriptions
        $scope.addAnotherSubscription = function(){
+    	   $scope.selectedContentList.push($scope.selectedContentSubscription);
+       	   console.log($scope.selectedContentList);
            $scope.showContentButton = true;
        };
        
