@@ -159,19 +159,19 @@ angular.module('emmiManager')
         
         $scope.seperateSavedLists = function(contentList){
             var emmiEngage = false;
+            $scope.faithBased = true;
             angular.forEach(contentList, function (aContent){
                 if(aContent.entity.contentSubscription.primarySubscription){
-                    angular.copy($scope.selectedContentSubscription, aContent);
+                	$scope.selectedContentSubscription = aContent;
                     if($scope.selectedContentSubscription.entity.contentSubscription.id === 128){
                        emmiEngage = true;
                     }
-                    
-                }
+                 }
             });
             angular.forEach(contentList, function (aContent){
                 if((aContent.entity.contentSubscription.sourceSubscription) &&
                     (emmiEngage)){
-                    $scope.selectedSourceContent = aContent.entity.contentSubscription;
+                    $scope.selectedSourceContent = aContent;
                     $scope.sourceProgram = true;
                     $scope.selectedContentSubscription.entity.contentSubscription.name = 'EmmiEngage+';
                 }
@@ -230,7 +230,7 @@ angular.module('emmiManager')
                 if(angular.isDefined(response.content)){
                     // Needs to restructure this for the next multiple content subscriptions story EM-1307
                     if(response.content.length > 1){
-                        $scope.seperateSavedLists(response.content);
+                    	$scope.seperateSavedLists(response.content);
                     }
                     else{
                         $scope.selectedContentSubscription = $scope.originalContentSubscriptionConfiguration[0];
