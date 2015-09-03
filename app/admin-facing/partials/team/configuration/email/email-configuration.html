@@ -2,7 +2,7 @@
     <form name="clientTeamEmailConfigurationForm" class="form" novalidate>
         <h1>Email Reminders</h1>
         <div class="form-group">
-            <div class="radio" ng-repeat="emailOption in emailOptions">
+            <div class="radio" ng-repeat="emailOption in emailOptions | orderBy:'rank'">
                 <input type="radio" id="{{emailOption.id}}"
                        data-ng-model="$parent.$parent.selectedEmailOption"
                        data-ng-value="emailOption"

@@ -89,9 +89,9 @@ angular.module('emmiManager')
                 $scope.showEmailReminders = false;
 
                 $scope.emailOptions = [
-                    { id: 'emailExposed', displayText: 'Email exposed' },
-                    { id: 'emailExposedRequired', displayText: 'Email exposed and required' },
-                    { id: 'dontCollectEmail', displayText: 'Don\'t collect email' }
+                    { id: 'emailExposed', displayText: 'Email exposed', rank: 0 },
+                    { id: 'emailExposedRequired', displayText: 'Email exposed and required', rank: 1 },
+                    { id: 'dontCollectEmail', displayText: 'Don\'t collect email', rank: 2 }
                 ];
                 $scope.selectedEmailOption = $scope.emailOptions[0];
 
