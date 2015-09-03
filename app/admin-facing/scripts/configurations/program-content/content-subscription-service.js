@@ -25,7 +25,7 @@ angular.module('emmiManager')
                 getContentSubscriptionConfiguration: function () {
                     return $http.get(UriTemplate.create(Client.getClient().link.clientContentSubscriptionConfigurations).stringify())
                         .then(function (response) {
-                            CommonService.convertPageContentLinks(response.data);
+                        	CommonService.convertPageContentLinks(response.data);
                             return response.data;
                         });
                 },
@@ -36,7 +36,7 @@ angular.module('emmiManager')
                 createContentSubscriptionConfiguration: function () {
                     return {
                         entity: {
-                            contentSubscription: {name:'None', id:0},
+                            contentSubscription: {},
                             faithBased: false,
                          }
                     };
