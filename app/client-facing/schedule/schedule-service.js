@@ -83,8 +83,8 @@ angular.module('emmiManager')
                                  // selectedProgram.provider is a TeamProvider
                                  id: selectedProgram.provider ? selectedProgram.provider.entity.provider.id : ''
                            },
-                           encounter: selectedProgram.encounter ? selectedProgram.encounter : null
-                           , viewByDate: moment(selectedProgram.viewByDate).utc().format('YYYY-MM-DD')
+                           encounter: selectedProgram.encounter ? selectedProgram.encounter : null, 
+                           viewByDate: moment(selectedProgram.viewByDate).utc().format('YYYY-MM-DD')
                     });
                 },
                 /**

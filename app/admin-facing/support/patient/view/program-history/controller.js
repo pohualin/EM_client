@@ -99,8 +99,8 @@
                                     '</strong> has been successfully updated.'
                                 ].join(' ')
                             });
-                            return scheduledProgramResource;
                             _paq.push(['trackEvent', 'Form Action', 'Patient Support Program History', 'Save']);
+                            return scheduledProgramResource;
                         }).finally(function () {
                             scheduledProgramResource.whenSaving = false;
                         });
