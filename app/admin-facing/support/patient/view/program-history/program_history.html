@@ -53,11 +53,12 @@
                     <form name="scheduledProgramForm_{{scheduledProgram.entity.id}}"
                           data-unsaved-warning-form novalidate>
                         <div class="row" data-ng-click="toggleScheduledProgramPanel(scheduledProgram, scheduledProgramForm_{{scheduledProgram.entity.id}})" >
-                            <div class="col-md-12">
+                            <div class="col-md-12"> 
                                 <table class="table table-hover table-striped"
                                        border="0" cellpadding="0" cellspacing="0" style="margin-bottom: 0px">
                                     <tr data-ng-mouseover="showEnable = true" data-ng-mouseout="showEnable = false">
                                         <td>
+                                            <span class="icon-caret-right" data-ng-style="{'transform': scheduledProgram.showDetails ? 'rotate(90deg)' : 'none'}"></span>
                                             <span class="text-muted" style="margin-right: 3px;">
                                                 <span
                                                     data-ng-show="scheduledProgram.entity.program.type.name === 'MULTIMEDIA PROGRAM'"
