@@ -17,24 +17,32 @@
               <div class="row panel-title">
                 <div class="row panel-title">
                   <div class="col-md-12" data-ng-hide="encounter.activePanel === 0">
+                    <div class="col-md-12">
                       <span class="icon-caret-right"></span>
                       <span class="panel-title-text">
-                          {{encounter.entity.scheduledPrograms.length}} program <span style="color: #ECF5F8;">
-                              <em>({{ encounter.entity.scheduledPrograms[0].entity.program.name}})</em>
+                          {{encounter.entity.scheduledPrograms.length}} 
+                          <span data-ng-if="encounter.entity.scheduledPrograms.length === 1"> program</span>
+                          <span data-ng-if="encounter.entity.scheduledPrograms.length !== 1"> programs</span> 
+                          <span style="color: #ECF5F8;">
+                              <em>({{encounter.entity.names | characters:50}})</em>
                           </span>
                       </span>
+                    </div>
                   </div>
-                  <div class="col-md-5" data-ng-if="encounter.activePanel === 0">
-                      <span class="icon-caret-right"></span>
-                      <span class="panel-title-text">
-                          {{encounter.entity.scheduledPrograms.length}} program
-                      </span>
-                  </div>
-                  <div class="col-md-7" style="margin-top: 3px;"
-                       data-ng-if="encounter.activePanel === 0">
-                      <div class="pull-right">
-                          <small>Access Code: <strong>{{encounter.entity.accessCode}}</strong></small>
-                      </div>
+                  <div class="col-md-12" data-ng-show="encounter.activePanel === 0">
+                    <div class="col-md-5">
+                        <span class="icon-caret-right"></span>
+                        <span class="panel-title-text">
+                            {{encounter.entity.scheduledPrograms.length}}
+                            <span data-ng-if="encounter.entity.scheduledPrograms.length === 1"> program</span>
+                            <span data-ng-if="encounter.entity.scheduledPrograms.length !== 1"> programs</span> 
+                        </span>
+                    </div>
+                    <div class="col-md-7" style="margin-top: 3px;">
+                        <div class="pull-right">
+                            <small>Access Code: <strong>{{encounter.entity.accessCode}}</strong></small>
+                        </div>
+                    </div>
                   </div>
                 </div>
               </div>

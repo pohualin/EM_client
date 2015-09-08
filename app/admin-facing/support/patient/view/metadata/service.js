@@ -135,15 +135,18 @@
                             
                             var encounters = [];
                             angular.forEach(map, function (encounter) {
+                                var programNames = '';
                                 encounter.entity.scheduledPrograms = [];
                                 angular.forEach(encounter.scheduledProgramsMap, function (scheduleProgram) {
                                     encounter.entity.scheduledPrograms.push(scheduleProgram);
+                                    programNames += scheduleProgram.entity.program.name + ';';
                                 });
                                 delete encounter.scheduledProgramsMap;
                                 // Set accessCOde, createdBy and team from first scheduled program
                                 encounter.entity.accessCode = encounter.entity.scheduledPrograms[0].entity.accessCode;
                                 encounter.entity.createdBy = encounter.entity.scheduledPrograms[0].entity.createdBy;
                                 encounter.entity.team = encounter.entity.scheduledPrograms[0].entity.team;
+                                encounter.entity.names = programNames.slice(0, -1);
                                 encounters.push(encounter); 
                             });
                             return encounters;
