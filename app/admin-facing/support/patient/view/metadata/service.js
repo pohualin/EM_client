@@ -108,8 +108,17 @@
                         return deferred.promise;
                     },
                     
+                    /**
+                     * Loads encounters
+                     * 
+                     * This method constructs encounters after all scheduled programs have been loaded.
+                     * 
+                     * @param patientResource to load encounters
+                     * @returns encounters
+                     */
                     loadEncounters: function(patientResource) {
                         return this.loadScheduledPrograms(patientResource).then(function (scheduledPrograms) {
+                            // A map to hold encounters
                             var map = {};
                             angular.forEach(scheduledPrograms, function(scheduledProgram){
                                 var encounter = scheduledProgram.entity.encounter;
@@ -131,6 +140,7 @@
                                     encounter.entity.scheduledPrograms.push(scheduleProgram);
                                 });
                                 delete encounter.scheduledProgramsMap;
+                                // Set accessCOde, createdBy and team from first scheduled program
                                 encounter.entity.accessCode = encounter.entity.scheduledPrograms[0].entity.accessCode;
                                 encounter.entity.createdBy = encounter.entity.scheduledPrograms[0].entity.createdBy;
                                 encounter.entity.team = encounter.entity.scheduledPrograms[0].entity.team;

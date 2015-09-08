@@ -27,6 +27,10 @@
                     }
                 };
                 
+                /**
+                 * Called when encounter panel is toggled, make a copy of the original encounter
+                 * when the panel is opened so that we can cancel changes
+                 */
                 $scope.toggleEncounterPanel = function (encounterResource) {
                     if (encounterResource.activePanel === 0) {
                         encounterResource.showDetails = false;
@@ -44,7 +48,6 @@
                  * @returns {boolean}
                  */
                 $scope.isUnchanged = function (encounterResource, scheduledProgramResource, form, index) {
-                    console.log(scheduledProgramResource);
                     var unchanged = scheduledProgramResource.original ?
                         angular.equals(scheduledProgramResource.entity, scheduledProgramResource.original) : true;
                     // An array of changed forms
@@ -78,7 +81,6 @@
                  * @param form to be submitted
                  */
                 $scope.save = function (scheduledProgramResource, form) {
-                    // form.programFormSubmitted = true;
                     if ((form.viewByDate.$dirty && form.$valid) || !form.viewByDate.$dirty) {
                         scheduledProgramResource.whenSaving = true;
                         return service.save(scheduledProgramResource).then(function ok(savedResource) {
@@ -105,8 +107,12 @@
                     }
                 };
                 
+                /**
+                 * Saves changes made in an encounter
+                 */
                 $scope.saveEncounter = function (encounterResource) {
                     var allValid = true;
+                    // Loop through all changed scheduled programs and see if they are all valid
                     angular.forEach(encounterResource.updatedSchedulePrograms, function (toUpdate) {
                         var form = toUpdate[1];
                         form.programFormSubmitted = true;
@@ -120,12 +126,14 @@
                         angular.forEach(encounterResource.updatedSchedulePrograms, function (toUpdate) {
                             var deferred = $q.defer();
                             $scope.save(toUpdate[0], toUpdate[1]).then(function(response){
+                                // Replace the {{index}} scheduled program with new version
                                 angular.extend(encounterResource.original.scheduledPrograms[toUpdate[2]] = response);
                                 deferred.resolve(response);
                             });
                             promises.push(deferred.promise);
                         });
                         
+                        // Wait until all update requests being processed
                         $q.all(promises).then(function(){
                             $scope.cancelEncounterChanges(encounterResource);
                         });
@@ -151,7 +159,6 @@
                  * @param form to be canceled
                  */
                 $scope.cancel = function (form) {
-                    // scheduledProgramResource.entity = angular.copy(scheduledProgramResource.original);
                     form.programFormSubmitted = false;
                     form.$setPristine();
                     _paq.push(['trackEvent', 'Form Action', 'Patient Support Program History', 'Cancel']);
@@ -182,14 +189,12 @@
                  * When scheduled programs load, set the variable and activate the first one
                  */
                 $scope.$on('scheduled-programs-loaded', function () {
-                    $scope.scheduledPrograms = holder.scheduledPrograms();
                     $scope.encounters = holder.encounters();
                     $scope.scheduledProgramsLoaded = true;
                     if ($scope.encounters.length > 0) {
                         $scope.encounters[0].activePanel = 0;
                         $scope.toggleEncounterPanel($scope.encounters[0]);
                     }
-                    window.paul = $scope;
                 });
 
                 $scope.goToUser = function (encounterResource) {
