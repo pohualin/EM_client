@@ -6,7 +6,7 @@
            <div class="col-md-4">
            <label class="control-label" for="primaryContentList">CONTENT SUBSCRIPTION</label>
            <div class="error-circle fa-exclamation-circle" role="alert"
-             data-ng-show="contentSubscriptionForm.primaryContentList.$error.required && contentSubscriptionFormSubmitted"
+             data-ng-show="contentSubscriptionForm.latestPrimaryContentList.$error.required && contentSubscriptionFormSubmitted"
              data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
              data-title="Required" aria-label="Required">
            </div>
@@ -25,13 +25,13 @@
 <div data-ng-include="'admin-facing/partials/configurations/program-content/add-content-subscription.html'"></div>
 <div class="row">
            <div class="col-md-4">
-           <div class="form-group" data-ng-class="{ 'has-error' : (contentSubscriptionForm.primaryContentList.$invalid && contentSubscriptionFormSubmitted)}">
-                <select id="primaryContentList" name="primaryContentList" class="form-control"
-                    data-ng-options="primaryContentList.name for primaryContentList in primaryContentList track by primaryContentList.name"
+           <div class="form-group" data-ng-class="{ 'has-error' : (contentSubscriptionForm.latestPrimaryContentList.$invalid && contentSubscriptionFormSubmitted)}">
+                <select id="latestPrimaryContentList" name="latestPrimaryContentList" class="form-control"
+                    data-ng-options="latestPrimaryContentList.name for latestPrimaryContentList in latestPrimaryContentList track by latestPrimaryContentList.name"
                     data-ng-model="selectedContentSubscription.entity.contentSubscription"
                     required
                     data-ng-change="onChangePrimaryList()">
-                <option value="" title="primaryContentList">Select...</option>
+                <option value="" title="latestPrimaryContentList">Select...</option>
                 </select>
            </div>
            </div>

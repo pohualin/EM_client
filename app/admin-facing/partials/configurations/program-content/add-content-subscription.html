@@ -1,14 +1,14 @@
 <div class="row">
 <div data-ng-if="selectedContentList.length">
-     <div data-ng-repeat="selectedContent in selectedContentList">
+     <div data-ng-repeat="selectedContentList in selectedContentList">
      <div class="col-md-4">
       		<div class="form-group">
-               	<select id="selectedPrimaryContentList" name="selectedPrimaryContentList" class="form-control"
+               	<select id="primaryContentList" name="primaryContentList" class="form-control"
                    	data-ng-options="primaryContentList.name for primaryContentList in primaryContentList track by primaryContentList.name"
-                   	data-ng-model="selectedContent.entity.contentSubscription"
+                   	data-ng-model="selectedContentList.entity.contentSubscription"
                    	required
-                   	data-ng-change="onChangePrimaryList()">
-               	<option value="" title="primaryContentList"></option>
+                   	data-ng-change="onChangeSelectedPrimaryList(selectedContentList.entity.contentSubscription)">
+               	<option value="" title="primaryContentList">Select...</option>
                	</select>
        		</div>
             </div>
