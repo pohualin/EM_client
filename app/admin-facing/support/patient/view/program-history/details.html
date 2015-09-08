@@ -4,8 +4,8 @@
 
         <div class="entity-value" style="line-height: 1.2;">
             <small class="col-wrap">
-                <a href="#/clients/{{scheduledProgram.entity.team.client.id}}" target="_blank">
-                    {{scheduledProgram.entity.team.client.name}}
+                <a href="#/clients/{{encounter.entity.team.client.id}}" target="_blank">
+                    {{encounter.entity.team.client.name}}
                 </a>
             </small>
         </div>
@@ -15,9 +15,9 @@
 
         <div class="entity-value" style="line-height: 1.2;">
             <small class="col-wrap">
-                <a href="#/clients/{{scheduledProgram.entity.team.client.id}}?team={{scheduledProgram.entity.team.id}}"
+                <a href="#/clients/{{encounter.entity.team.client.id}}?team={{encounter.entity.team.id}}"
                    target="_blank">
-                    {{scheduledProgram.entity.team.name}}
+                    {{encounter.entity.team.name}}
                 </a>
             </small>
         </div>
@@ -26,15 +26,16 @@
         <h5 class="entity-value-label">SCHEDULED</h5>
 
         <div class="entity-value" style="line-height: 1.2;">
-            <small class="col-wrap">{{scheduledProgram.entity.created_date | date:'MM/dd/yyyy'}}
-                <a href data-ng-if="scheduledProgram.entity.createdBy"
-                   data-ng-click="goToUser(scheduledProgram)">
-                    ({{scheduledProgram.entity.createdBy.login}})
+            <small class="col-wrap">{{encounter.entity.encounterDateTime | date:'MM/dd/yyyy'}}
+                <a href data-ng-if="encounter.entity.createdBy"
+                   data-ng-click="goToUser(encounter)">
+                    ({{encounter.entity.createdBy.login}})
                 </a>
             </small>
         </div>
     </div>
 </div>
+<!-- 
 <div class="row entity-info">
     <div class="col-md-4">
         <h5 class="entity-value-label">PROVIDER</h5>
@@ -59,3 +60,4 @@
         </div>
     </div>
 </div>
+ -->

@@ -65,8 +65,8 @@
                 });
 
                 // scheduled programs are shared in child controllers
-                PatientSupportViewService.loadScheduledPrograms(patientResource).then(function (scheduledPrograms) {
-                    holder.setScheduledPrograms(scheduledPrograms);
+                PatientSupportViewService.loadEncounters(patientResource).then(function (encounters) {
+                    holder.setEncounters(encounters);
                     $scope.$broadcast('scheduled-programs-loaded');
                 });
 
@@ -87,6 +87,11 @@
                 this._scheduledPrograms = scheduledPrograms;
                 return this;
             };
+            
+            this.setEncounters = function (encounters) {
+                this._encounters = encounters;
+                return this;
+            };
 
             this.patient = function () {
                 return this._patientResource;
@@ -95,10 +100,15 @@
             this.scheduledPrograms = function () {
                 return this._scheduledPrograms;
             };
+            
+            this.encounters = function () {
+                return this._encounters;
+            };
 
             this.clear = function () {
                 this._patientResource = null;
                 this._scheduledPrograms = null;
+                this._encounters = null;
             };
 
             return this;

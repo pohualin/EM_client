@@ -20,12 +20,12 @@
 
                     /**
                      * Redirects to the proper user from the login
-                     * @param scheduledProgramResource to create link from
+                     * @param encounterResource to create link from
                      * @returns {promise}
                      */
-                    createUserLink: function (scheduledProgramResource) {
+                    createUserLink: function (encounterResource) {
                         var deferred = $q.defer(),
-                            user = scheduledProgramResource.entity.createdBy;
+                            user = encounterResource.entity.createdBy;
                         if (user) {
                             var current = $location.url(), link;
                             if (user.type === 'A') {
