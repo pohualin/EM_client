@@ -67,7 +67,7 @@ angular.module('emmiManager')
                 } else {
                     $scope.phoneOptions.selected = $scope.phoneOptions[2];
                 }
-            }
+            };
 
             /**
             * init method called when page is loading
