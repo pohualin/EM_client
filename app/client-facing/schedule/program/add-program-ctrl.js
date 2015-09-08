@@ -64,8 +64,6 @@ angular.module('emmiManager')
                 if (addProgramForm.$valid && $scope.selectedPrograms.length !== 0) {
                     // save the scheduled program
                     ScheduledProgramFactory.selectedPrograms = $scope.selectedPrograms;
-                } else {
-                    $scope.showError();
                 }
             };
 
