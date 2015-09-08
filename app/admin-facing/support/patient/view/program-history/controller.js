@@ -16,7 +16,6 @@
                  * when the panel is opened so that we can cancel changes
                  */
                 $scope.toggleScheduledProgramPanel = function (scheduledProgramResource, form) {
-                    console.log(scheduledProgramResource);
                     if (scheduledProgramResource.showDetails && !form.$dirty) {
                         scheduledProgramResource.showDetails = false;
                     } else {
@@ -45,6 +44,7 @@
                  * @returns {boolean}
                  */
                 $scope.isUnchanged = function (encounterResource, scheduledProgramResource, form, index) {
+                    console.log(scheduledProgramResource);
                     var unchanged = scheduledProgramResource.original ?
                         angular.equals(scheduledProgramResource.entity, scheduledProgramResource.original) : true;
                     // An array of changed forms
@@ -55,6 +55,7 @@
                     if (!encounterResource.updatedSchedulePrograms) {
                         encounterResource.updatedSchedulePrograms = {};
                     }
+                    console.log(unchanged);
                     if (unchanged) {
                         form.$setPristine();
                         encounterResource.dirtyForms = encounterResource.dirtyForms.filter(function (element) {
@@ -170,6 +171,9 @@
                  * @param scheduledProgramResource to toggle
                  */
                 $scope.toggleProgramActivation = function (encounterResource, scheduledProgramResource, form, index) {
+                    if (!scheduledProgramResource.original) {
+                        scheduledProgramResource.original = angular.copy(scheduledProgramResource.entity);
+                    }
                     scheduledProgramResource.entity.active = !scheduledProgramResource.entity.active;
                     $scope.isUnchanged(encounterResource, scheduledProgramResource, form, index);
                 };
