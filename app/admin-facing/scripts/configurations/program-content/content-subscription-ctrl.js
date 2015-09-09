@@ -60,7 +60,7 @@ angular.module('emmiManager')
                 	}
                 });
                 $scope.addAnotherContentSubscription = false;
-                $scope.contentSubscriptionHolder = {};
+               // $scope.contentSubscriptionHolder = {};
               }else {
                 if (!$scope.formAlert) {
                     $scope.formAlert = $alert({
@@ -157,6 +157,10 @@ angular.module('emmiManager')
             return ($scope.showContentButton = showButton);
          };
         
+         /**
+          * Create the primarySubscription and sourceSubscription
+          * content list
+          */
         $scope.createLists = function(contentList){
         	console.log('at create list +++++++');
             angular.forEach(contentList, function (aContent){
@@ -179,7 +183,11 @@ angular.module('emmiManager')
             
         };
         
-        $scope.seperateSavedLists = function(contentList){
+        /*
+         * Separate the content subscription list 
+         * that was query from the database
+         */
+        $scope.separateSavedLists = function(contentList){
         	console.log('separate save list ++++++++++++');
             var emmiEngage = false;
             $scope.faithBased = true;
@@ -277,17 +285,26 @@ angular.module('emmiManager')
            
        };
        
-       // Will implement for story 1307 multiple content subscriptions
-       $scope.addAnotherSubscription = function(newContent){
-    	   console.log(newContent);
-    	   console.log($scope.contentSubscriptionHolder);
-    	   $scope.selectedContentList.push(newContent);
-       	   angular.forEach($scope.latestPrimaryContentList, function (aContent, index){
+       $scope.filterLatestPrimaryContentList = function(addContentSubscription){
+    	   
+    	   if(addContentSubscription.entity.contentSubscription.id === 128){
+    		   $scope.latestPrimaryContentList;
+    	   }
+    	   angular.forEach($scope.latestPrimaryContentList, function (aContent, index){
        		   if(angular.equals(aContent.name, newContent.entity.contentSubscription.name)){
        			   console.log('equal++++++++++++++++++++++ ');
           		   $scope.latestPrimaryContentList.splice(index,1);
           	   }
        	   });
+       }
+       
+       // Will implement for story 1307 multiple content subscriptions
+       $scope.addAnotherSubscription = function(newContent){
+    	   console.log(newContent);
+    	   console.log($scope.contentSubscriptionHolder);
+    	   $scope.selectedContentList.push(newContent);
+    	   $scope.filterLatestPrimaryContentList(newContent);
+       	 
        	   console.log($scope.contentSubscriptionHolder);
        	console.log($scope.selectedContentSubscription);
     	   console.log($scope.selectedContentList);
@@ -316,7 +333,7 @@ angular.module('emmiManager')
                     // Needs to restructure this for the next multiple content subscriptions story EM-1307
                     if(response.content.length > 0){
                     	console.log(response.content.length);
-                    	$scope.seperateSavedLists(response.content);
+                    	$scope.separateSavedLists(response.content);
                     
                     }
                 }
