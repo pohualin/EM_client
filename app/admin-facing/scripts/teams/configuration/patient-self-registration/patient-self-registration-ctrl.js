@@ -94,6 +94,18 @@ angular.module('emmiManager')
                 $scope.$broadcast('event-refreshPatientIdLabelFields');
             };
 
+            $scope.updateReqDobFields = function () {
+                if (!$scope.patientSelfRegConfig.entity.exposeDateOfBirth) {
+                    $scope.patientSelfRegConfig.entity.requireDateOfBirth = false;
+                }
+            };
+
+            $scope.updatePatientNameFields = function () {
+                if (!$scope.patientSelfRegConfig.entity.exposeName) {
+                    $scope.patientSelfRegConfig.entity.requireName = false;
+                }
+            };
+
             $scope.cancel = function () {
                 $scope.$broadcast('event-resetPatientSelfRegConfig');
             };

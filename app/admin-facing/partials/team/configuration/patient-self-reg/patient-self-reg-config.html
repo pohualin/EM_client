@@ -3,16 +3,25 @@
         <h1>Patient Information</h1>
 
         <div class="form-group">
-            <div class="checkbox">
-                <input id="patientNameRequire" type="checkbox"
-                       data-ng-model="patientSelfRegConfig.entity.exposeName" data-ng-disabled="true"
-                       data-ng-checked="true"/>
-                <label for="patientNameRequire">Patient Name (always required)</label>
+
+            <div class="row">
+                <div class="checkbox col-sm-6">
+                    <input id="exposePatientName" type="checkbox"
+                           data-ng-change="updatePatientNameFields()"
+                           data-ng-model="patientSelfRegConfig.entity.exposeName"/>
+                    <label for="exposePatientName">Patient Name</label>
+                </div>
+                <div class="checkbox col-sm-6" data-ng-show="patientSelfRegConfig.entity.exposeName">
+                    <input id="requirePatientName" type="checkbox"
+                           data-ng-model="patientSelfRegConfig.entity.requireName"/>
+                    <label for="requirePatientName">Required</label>
+                </div>
             </div>
 
             <div class="row">
                 <div class="checkbox col-sm-6">
                     <input id="exposeDateOfBirth" type="checkbox"
+                           data-ng-change="updateReqDobFields()"
                            data-ng-model="patientSelfRegConfig.entity.exposeDateOfBirth"/>
                     <label for="exposeDateOfBirth">Date of birth</label>
                 </div>
