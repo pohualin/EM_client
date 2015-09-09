@@ -1,5 +1,6 @@
 
 <div data-ng-if="selectedContentList.length">
+     
      <div data-ng-repeat="selectedContentSubscription in selectedContentList">
      <div class="row">
      <div class="col-md-4">
@@ -7,7 +8,6 @@
                	<select id="primaryContentList" name="primaryContentList" class="form-control"
                    	data-ng-options="primaryContentList.name for primaryContentList in primaryContentList track by primaryContentList.name"
                    	data-ng-model="selectedContentSubscription.entity.contentSubscription"
-                   	required
                    	data-ng-change="onChangeSelectedPrimaryList()">
                	<option value="" title="primaryContentList">Select...</option>
                	</select>
@@ -15,21 +15,26 @@
             </div>
         	
         	<div class="col-md-4" >
-          	<div data-ng-if="selectedContentSubscription.entity.contentSubscription.id=='128'">
+          	<div data-ng-if="selectedContentSubscription.entity.contentSubscription.name=='EmmiEngage+'">
           	   	   	<select id="selectedSourceContentList" name="selectedSourceContentList" class="form-control"
                    	data-ng-options="sourceContentList.name for sourceContentList in sourceContentList track by sourceContentList.id"
                    	data-ng-model="selectedSourceContent.entity.contentSubscription"
-                   	required
-                   	data-ng-change="onChange()">
+                   	data-ng-change="onChangeSourceContentSubscription(selectedSourceContent)">
                	<option value="" title="selectedSourceContentList"></option>
                	</select>
            	</div>
        		</div>
        		
        		<div class="col-md-4">
-           		
+           		<div data-ng-if="initialAddAnotherContentSubscription && $last">
+           		<button  type="button" class="btn btn-link btn-link-nopad btn-heading" data-ng-click="initialAddSubscription()">
+        			<i class="icon-plus"></i> ADD ANOTHER SUBSCRIPTION
+    			</button>
+    			</div>
            </div>
+       		
        		</div>
+       		
       	</div>
    	</div>
 

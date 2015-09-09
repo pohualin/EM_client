@@ -7,21 +7,25 @@ angular.module('emmiManager')
  */
     .controller('ClientProgramContentConfigurationController', ['$alert', '$scope', '$controller', 'clientResource', 'Client', 'ContentSubscriptionConfigurationService',
         function ($alert, $scope, $controller, clientResource, Client, ContentSubscriptionConfigurationService) {
-        $scope.faithBased = false;
-        $scope.sourceProgram = false;
-        $scope.selectedSourceProgram = false;
+       
+    	// Store the original content subscription list
         $scope.primaryContentList = [];
         $scope.sourceContentList = [];
+        $scope.originalContentSubscriptionConfiguration = [];
+                 
+        // Variables for the html to show or hide certain section
+        $scope.faithBased = false;
         $scope.showContentButton = false;
-        $scope.selectedSourceContent = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
+        $scope.addAnotherContentSubscription = false;
+        $scope.initialAddAnotherContentSubscription = false;
+        $scope.newSelectList = false;
+        
         $scope.emmiEngagePlus = {};
         $scope.noneContent = {name:'None', id:0};
-        $scope.selectedContentSubscription = {};
+        $scope.selectedSourceContent = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
+        $scope.selectedContentSubscription = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
         $scope.selectedContentList = [];
-        $scope.selectedSourceContentList = [];
-        $scope.contentSubscriptionHolder = {};
-        $scope.sourceContentSubscriptionHolder = {};
-        $scope.addAnotherContentSubscription = false;
+        $scope.contentSubscriptionHolder = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
                
         /**
          * Cancel any changes
@@ -37,15 +41,17 @@ angular.module('emmiManager')
          */
         $scope.save = function(valid){
             $scope.contentSubscriptionFormSubmitted = true;
-            console.log($scope.contentSubscriptionHolder);
-            if(angular.isDefined($scope.contentSubscriptionHolder)){
+            if((angular.isDefined($scope.contentSubscriptionHolder)) &&
+               (angular.isDefined($scope.contentSubscriptionHolder.entity.contentSubscription))){
             	$scope.selectedContentList.push($scope.contentSubscriptionHolder);
             }
-            if(angular.isDefined($scope.sourceContentSubscriptionHolder)){
-            	console.log($scope.sourceContentSubscriptionHolder);
-            	console.log('there is spurcrerw');
-            	$scope.selectedContentList.push($scope.sourceContentSubscriptionHolder);
+               
+            console.log($scope.selectedContentList);
+            if($scope.originalContentSubscriptionConfiguration.length > 0){
+            	console.log('there is orignala ');
+            	console.log($scope.originalContentSubscriptionConfiguration);
             }
+            
             if(valid){
                 $scope.whenSaving = true;
                 angular.forEach($scope.selectedContentList, function (aContent){
@@ -59,9 +65,9 @@ angular.module('emmiManager')
                 		$scope.createContentSubscription(aContent);    
                 	}
                 });
-                $scope.addAnotherContentSubscription = false;
-               // $scope.contentSubscriptionHolder = {};
-              }else {
+                $scope.initialAddAnotherContentSubscription = true;
+                $scope.newSelectList = false;
+             }else {
                 if (!$scope.formAlert) {
                     $scope.formAlert = $alert({
                         content: 'Please correct the below information.',
@@ -84,7 +90,7 @@ angular.module('emmiManager')
                 content: '<b>' + $scope.client.name + '</b> has been updated successfully.'
             });
             }).finally(function () {
-                $scope.whenSaving = false;
+            	$scope.whenSaving = false;
                 $scope.showButtons(false);
             });
         };
@@ -114,8 +120,7 @@ angular.module('emmiManager')
             content: '<b>' + $scope.client.name + '</b> has been updated successfully.'
             });
             }).finally(function () {
-                $scope.whenSaving = false;
-                emmiEngage = false;
+            	$scope.whenSaving = false;
                 $scope.showButtons(false);
             });
         };
@@ -145,7 +150,7 @@ angular.module('emmiManager')
                   content: '<b>' + $scope.client.name + '</b> has been updated successfully.'
               });
               }).finally(function () {
-                  $scope.whenSaving = false;
+            	  $scope.whenSaving = false;
                   $scope.showButtons(false);
               });
         };
@@ -158,19 +163,17 @@ angular.module('emmiManager')
          };
         
          /**
-          * Create the primarySubscription and sourceSubscription
-          * content list
+          * Create the primaryContentSubscription and sourceContentSubscription
+          * drop down list
           */
         $scope.createLists = function(contentList){
-        	console.log('at create list +++++++');
-            angular.forEach(contentList, function (aContent){
+        	angular.forEach(contentList, function (aContent){
                 if(aContent.primarySubscription){
                    $scope.primaryContentList.push(aContent);
                 }else if(aContent.sourceSubscription){
                    $scope.sourceContentList.push(aContent);
                 }
             });
-            
             angular.forEach($scope.primaryContentList, function (pContent){
                 if(pContent.id === 128){
                     angular.copy(pContent, $scope.emmiEngagePlus);
@@ -181,135 +184,156 @@ angular.module('emmiManager')
             $scope.primaryContentList.push($scope.noneContent);
             angular.copy($scope.primaryContentList, $scope.latestPrimaryContentList);
             
-        };
+         };
         
         /*
          * Separate the content subscription list 
-         * that was query from the database
+         * that was selected from the database
          */
         $scope.separateSavedLists = function(contentList){
-        	console.log('separate save list ++++++++++++');
-            var emmiEngage = false;
+        	var emmiEngage = false;
             $scope.faithBased = true;
             angular.forEach(contentList, function (aContent){
                 if(aContent.entity.contentSubscription.primarySubscription){
-                	console.log('addind the list ');
-                	console.log(aContent);
                 	angular.copy(aContent, $scope.selectedContentSubscription);
-                	
                     if(aContent.entity.contentSubscription.id === 128){
                     	angular.forEach(contentList, function (sourceContent){
                             if(sourceContent.entity.contentSubscription.sourceSubscription){
                             	angular.copy(sourceContent, $scope.selectedSourceContent);
-                            	console.log(sourceContent);
-                            	console.log($scope.selectedSourceContent);
-                            	$scope.selectedSourceProgram = true;
                             	aContent.entity.contentSubscription.name = 'EmmiEngage+';
-                            	$scope.selectedSourceContentList.push(sourceContent);
-                            }
+                              }
                         });	
-                      
                     }
-                    
                     $scope.selectedContentList.push(aContent);
                     $scope.addNewContentSubscription = true;
                  }
             });
-            console.log($scope.selectedSourceProgram );
-            console.log($scope.selectedSourceContentList);
-            console.log($scope.selectedContentSubscription);
-     	   console.log($scope.selectedContentList);  
+            $scope.initialAddAnotherContentSubscription = true;
+            angular.forEach($scope.selectedContentList, function (aContent){
+     		    $scope.filterLatestPrimaryContentList(aContent);
+     	    });
         };
         
         $scope.onChangeSelectedPrimaryList = function(){
-                      	console.log('change selected list');
-            	if(angular.isDefined($scope.selectedContentSubscription.entity.contentSubscription)){
-            		if($scope.selectedContentSubscription.entity.contentSubscription.name === 'None'){
+                if(angular.isDefined($scope.selectedContentSubscription.entity.contentSubscription)){
+                	if($scope.selectedContentSubscription.entity.contentSubscription.name === 'None'){
                     	$scope.faithBased = false;
-                    	$scope.selectedSourceProgram = false;
-                    	$scope.selectedContentSubscription.entity.faithBased = false;
+                       	$scope.selectedContentSubscription.entity.faithBased = false;
                     	$scope.showButtons(false);
                     }
-                    else if($scope.selectedContentSubscription.entity.contentSubscription.name === 'EmmiEngage+'){
+                    else{
                        $scope.faithBased = true;
-                       $scope.selectedSourceProgram = true;
                        $scope.showButtons(true);
                     }
-                    else{
-                    	$scope.faithBased = true;
-                        $scope.selectedSourceProgram = false;
-                        $scope.showButtons(true);
-                    }
-            	}
+               	}
          };
                    
         $scope.onChangePrimaryList = function(){
-        	console.log('change primary list');
-        	         	
-        	if(angular.isDefined($scope.contentSubscriptionHolder.entity.contentSubscription)){
-        		if($scope.contentSubscriptionHolder.entity.contentSubscription.name === 'None'){
+          	if(angular.isDefined($scope.contentSubscriptionHolder.entity.contentSubscription)){
+          		if($scope.contentSubscriptionHolder.entity.contentSubscription.name === 'None'){
                 	$scope.faithBased = false;
-                	$scope.sourceProgram = false;
                 	$scope.contentSubscriptionHolder.entity.faithBased = false;
                 	$scope.showButtons(false);
                 }
-                else if($scope.contentSubscriptionHolder.entity.contentSubscription.name === 'EmmiEngage+'){
-                   $scope.faithBased = true;
-                   $scope.sourceProgram = true;
-                   $scope.showButtons(true);
-                   $scope.addAnotherContentSubscription = true;
-                }
                 else{
                 	$scope.faithBased = true;
-                    $scope.sourceProgram = false;
                     $scope.showButtons(true);
-                    $scope.addAnotherContentSubscription = true;
+                    if($scope.latestPrimaryContentList.length > 0){
+                    	$scope.addAnotherContentSubscription = true;
+                    }
                 }
-        	}
-         	  /* angular.forEach($scope.latestPrimaryContentList, function (aContent, index){
-         		   if(angular.equals(aContent.name, $scope.contentSubscriptionHolder.entity.contentSubscription.name)){
-         			   console.log('equal++++++++++++++++++++++ ');
-            		   $scope.latestPrimaryContentList.splice(index,1);
-            	   }
-         	   });*/
-         	   console.log($scope.contentSubscriptionHolder);
-         	console.log($scope.selectedContentSubscription);
-      	   console.log($scope.selectedContentList);
-      	   
-      	
- 
+         	}
+        };
+       
+        $scope.onChangeSourceContentSubscription = function(sourceContentSubscription){
+    	     $scope.showButtons(true);
+           
        };
        
-       $scope.onChange = function(){
+       $scope.onChangeFaithBased = function(faithBased){
     	   $scope.showButtons(true);
            
        };
        
-       $scope.filterLatestPrimaryContentList = function(addContentSubscription){
-    	   
-    	   if(addContentSubscription.entity.contentSubscription.id === 128){
-    		   $scope.latestPrimaryContentList;
+       /*
+        * Filter the primary content list based from the requirement
+        */    
+       $scope.filterLatestPrimaryContentList = function(newContentSubscription){
+    	   var newPrimaryList = [];
+    	   if(newContentSubscription.entity.contentSubscription.name !== 'None'){
+    		   angular.forEach($scope.latestPrimaryContentList, function (aContent, index){
+    			   if(aContent.id === 0){
+        			  $scope.latestPrimaryContentList.splice(index,1);
+        			   
+        		   }
+    		   });
     	   }
-    	   angular.forEach($scope.latestPrimaryContentList, function (aContent, index){
-       		   if(angular.equals(aContent.name, newContent.entity.contentSubscription.name)){
-       			   console.log('equal++++++++++++++++++++++ ');
-          		   $scope.latestPrimaryContentList.splice(index,1);
-          	   }
-       	   });
-       }
+    	   if(newContentSubscription.entity.contentSubscription.id === 128){
+     		   angular.forEach($scope.latestPrimaryContentList, function (aContent){
+    			   if(aContent.id === 124){
+           		   	  newPrimaryList.push(aContent);
+				   }
+           	   });
+    		   $scope.latestPrimaryContentList = [];
+    		   angular.copy(newPrimaryList, $scope.latestPrimaryContentList);
+     	   }
+    	   else if((newContentSubscription.entity.contentSubscription.id !== 124) &&
+        		   (newContentSubscription.entity.contentSubscription.id !== 128)){
+        	   console.log('are u jserererrs');
+        	  	angular.forEach($scope.latestPrimaryContentList, function (aContent, index){
+		   			if(aContent.id === 128){
+		   				$scope.latestPrimaryContentList.splice(index,1);
+		   			}
+		   			if(angular.equals(aContent.id, newContentSubscription.entity.contentSubscription.id)){
+		   				console.log('are u try to remove ');
+ 				       $scope.latestPrimaryContentList.splice(index,1);
+		   			}
+		   		});  
+	   
+	       } 
+    	   else if((newContentSubscription.entity.contentSubscription.id === 124) &&
+    			   ($scope.selectedContentList.length > 1)){
+    		   console.log('in the 124s');
+    		   angular.forEach($scope.latestPrimaryContentList, function (aContent, index){
+    			   if(aContent.id === 128){
+        			  $scope.latestPrimaryContentList.splice(index,1);
+        			   
+        		   }
+    			   if(angular.equals(aContent.id, newContentSubscription.entity.contentSubscription.id)){
+    				   console.log('are u try  darararerew to remove ');
+    				   $scope.latestPrimaryContentList.splice(index,1);
+    			   }
+        	   });  
+       	   } 
+           
+    	   else{
+    		   angular.forEach($scope.latestPrimaryContentList, function (aContent, index){
+    			   if(angular.equals(aContent.id, newContentSubscription.entity.contentSubscription.id)){
+    				   console.log('are u try  darararerew to remove ');
+    				   $scope.latestPrimaryContentList.splice(index,1);
+    			   }
+    		   });
+    	   }
+    	   console.log($scope.latestPrimaryContentList);
+      };
        
-       // Will implement for story 1307 multiple content subscriptions
-       $scope.addAnotherSubscription = function(newContent){
-    	   console.log(newContent);
-    	   console.log($scope.contentSubscriptionHolder);
-    	   $scope.selectedContentList.push(newContent);
-    	   $scope.filterLatestPrimaryContentList(newContent);
-       	 
-       	   console.log($scope.contentSubscriptionHolder);
-       	console.log($scope.selectedContentSubscription);
-    	   console.log($scope.selectedContentList);
+       /* 
+        * Added another content subscription for a client
+        * push the new content subscription to the selectedContentList
+        */
+       $scope.addAnotherSubscription = function(newContentSubscription){
+    	   $scope.initialAddAnotherContentSubscription = false;
+    	   $scope.selectedContentList.push(newContentSubscription);
+    	   $scope.filterLatestPrimaryContentList(newContentSubscription);
     	   $scope.addAnotherContentSubscription = false;
-           $scope.showContentButton = true;
+    	   $scope.newSelectList = true;
+    	   $scope.showButtons(true);
+           $scope.contentSubscriptionHolder = {};
+       };
+       
+       $scope.initialAddSubscription = function(){
+    	   $scope.initialAddAnotherContentSubscription = false;
+    	   $scope.newSelectList = true;
            $scope.contentSubscriptionHolder = {};
        };
        
@@ -317,9 +341,7 @@ angular.module('emmiManager')
          * init method called when page is loading
          */
        function init() {
-    	   console.log('at initt  ++++++++');
-    	   console.log($scope.addAnotherContentSubscription);
-            $scope.client = Client.getClient().entity;
+    	    $scope.client = Client.getClient().entity;
             $scope.page.setTitle('Client Configurations - ' + $scope.client.name + ' | ClientManager');
             ContentSubscriptionConfigurationService.getContentSubscriptionList().then(function(response){
                 $scope.primaryContentList = [];
@@ -328,20 +350,21 @@ angular.module('emmiManager')
                 $scope.createLists(response.content);
             });
             ContentSubscriptionConfigurationService.getContentSubscriptionConfiguration().then(function (response) {
-                $scope.originalContentSubscriptionConfiguration = response.content;
+                
                 if(angular.isDefined(response.content)){
-                    // Needs to restructure this for the next multiple content subscriptions story EM-1307
                     if(response.content.length > 0){
-                    	console.log(response.content.length);
                     	$scope.separateSavedLists(response.content);
-                    
                     }
+                    angular.copy(response.content, $scope.originalContentSubscriptionConfiguration);
+                    console.log( $scope.originalContentSubscriptionConfiguration);
                 }
                 else{
                       $scope.selectedContentSubscription = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
+                      $scope.newSelectList = true;
                 }
    
             });
+            
         }
         init();
     }]);

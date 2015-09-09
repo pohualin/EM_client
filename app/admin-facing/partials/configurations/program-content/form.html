@@ -4,25 +4,23 @@
 <div data-ng-show="contentSubscriptionForm.$invalid" id="message-container"></div>
 
 <div data-ng-include="'admin-facing/partials/configurations/program-content/add-content-subscription.html'"></div>
-<div class="row">
+<div class="row" data-ng-if="latestPrimaryContentList.length > 0 && newSelectList">
            <div class="col-md-4">
            <div class="form-group" >
                 <select id="latestPrimaryContentList" name="latestPrimaryContentList" class="form-control"
                     data-ng-options="latestPrimaryContentList.name for latestPrimaryContentList in latestPrimaryContentList track by latestPrimaryContentList.name"
                     data-ng-model="contentSubscriptionHolder.entity.contentSubscription"
-                    required
                     data-ng-change="onChangePrimaryList()">
                 <option value="" title="latestPrimaryContentList">Select...</option>
                 </select>
            </div>
            </div>
            <div class="col-md-4" >
-           <div data-ng-if="sourceProgram" class="form-group" >
+           <div data-ng-if="contentSubscriptionHolder.entity.contentSubscription.name=='EmmiEngage+'">
                 <select id="sourceContentList" name="sourceContentList" class="form-control"
                     data-ng-options="sourceContentList.name for sourceContentList in sourceContentList track by sourceContentList.id"
-                    data-ng-model="sourceContentSubscriptionHolder.entity.contentSubscription"
-                    required
-                    data-ng-change="onChange()">
+                    data-ng-model="selectedSourceContent.entity.contentSubscription"
+                    data-ng-change="onChangeSourceContentSubscription(selectedSourceContent)">
                 <option value="" title="sourceContentList"></option>
                 </select>
            </div>
@@ -40,8 +38,8 @@
      	<div class="form-group">
           <div class="checkbox">
                <input id="faithBased" type="checkbox"
-                      data-ng-model="selectedContentSubscription.entity.faithBased"
-                      data-ng-change="onChange()"/>
+                      data-ng-model="contentSubscriptionHolder.entity.faithBased"
+                      data-ng-change="onChangeFaithBased(contentSubscriptionHolder.entity.faithBased)"/>
                 <label for="faithBased">Apply Faith-Based Filter for this Client</label>
           </div>
     	</div>
