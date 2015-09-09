@@ -8,9 +8,9 @@
      * scheduled program
      */
         .controller('ScheduleProgramInstructionsViewController',
-        ['$scope', 'scheduledProgram',
-            function ($scope, scheduledProgram) {
-                $scope.scheduledProgram = scheduledProgram;
+        ['$scope', 'scheduledPrograms',
+            function ($scope, scheduledPrograms) {
+                $scope.scheduledPrograms = scheduledPrograms;
             }
         ])
 

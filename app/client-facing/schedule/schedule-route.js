@@ -66,22 +66,31 @@ angular.module('emmiManager')
                     authorizedRoles: [USER_ROLES.all]
                 },
                 resolve: {
-                    'scheduledProgram': ['$q', '$route', 'AuthSharedService', 'ScheduleService',
+                    'scheduledPrograms': ['$q', '$route', 'AuthSharedService', 'ScheduleService',
                         function ($q, $route, AuthSharedService, ScheduleService) {
+                            var ids = $route.current.params.scheduleId.split(',');
                             var deferred = $q.defer();
+                            var promises = [];
                             AuthSharedService.currentUser().then(function (loggedInUser) {
-                                ScheduleService.loadSchedule(loggedInUser.clientResource,
-                                    $route.current.params.teamId,
-                                    $route.current.params.scheduleId)
-                                    .then(function (response) {
-                                        if (response) {
-                                            deferred.resolve(response);
-                                        } else {
+                                angular.forEach(ids, function (id) {
+                                    var deferred = $q.defer();
+                                    ScheduleService.loadSchedule(loggedInUser.clientResource,
+                                        $route.current.params.teamId, id)
+                                        .then(function (response) {
+                                            if (response) {
+                                                deferred.resolve(response);
+                                            } else {
+                                                deferred.reject();
+                                            }
+                                        }, function error() {
                                             deferred.reject();
-                                        }
-                                    }, function error() {
-                                        deferred.reject();
-                                    });
+                                        })
+                                    promises.push(deferred.promise);
+                                });
+                                
+                                $q.all(promises).then(function(response){
+                                    deferred.resolve(response);
+                                });
                             });
                             return deferred.promise;
                         }
