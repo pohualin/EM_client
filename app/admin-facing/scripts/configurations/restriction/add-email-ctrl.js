@@ -29,24 +29,41 @@ angular.module('emmiManager')
              */
             $scope.add = function (emailRestrictConfigurationForm, addAnother) {
                 $scope.emailRestrictConfigurationFormSubmitted = true;
+                emailRestrictConfigurationForm.emailEnding.duplicate = false;
+
                 if (emailRestrictConfigurationForm.$valid) {
                     $scope.whenSaving = true;
-                    EmailRestrictConfigurationsService.save($scope.emailRestrictConfiguration).then(function () {
-                        $scope.$emit('requestEmailList');
-                        $scope.emailRestrictConfiguration = EmailRestrictConfigurationsService.newEmailRestrictConfiguration();
-                        $scope.emailRestrictConfigurationFormSubmitted = false;
-                        if (!addAnother) {
-                            $scope.$hide();
-                        }
-                        EmailRestrictConfigurationsService.getEmailsThatDoNotFollowRestrictions().then(function (emailsThatDoNotFollowRestrictions) {
-                            $scope.setEmailsThatDoNotFollowRestrictions(emailsThatDoNotFollowRestrictions);
-                        });
-                    }).finally(function () {
-                        $scope.whenSaving = false;
-                    });
 
-                    $alert({
-                        content: '<b>' + $scope.client.name + '</b> has been updated successfully.'
+                    EmailRestrictConfigurationsService.save($scope.emailRestrictConfiguration).then(
+                        function (response) {
+                            $alert({
+                                content: '<b>' + $scope.client.name + '</b> has been updated successfully.'
+                            });
+
+                            $scope.$emit('requestEmailList');
+                            $scope.emailRestrictConfiguration = EmailRestrictConfigurationsService.newEmailRestrictConfiguration();
+                            $scope.emailRestrictConfigurationFormSubmitted = false;
+
+                            if (!addAnother) {
+                                $scope.$hide();
+                            }
+
+                            EmailRestrictConfigurationsService.getEmailsThatDoNotFollowRestrictions().then(function (emailsThatDoNotFollowRestrictions) {
+                                $scope.setEmailsThatDoNotFollowRestrictions(emailsThatDoNotFollowRestrictions);
+                            });
+                        }, function(response) {
+                            if (response.status === 406) {
+                                emailRestrictConfigurationForm.emailEnding.duplicate = true;
+                                $scope.showErrorBanner();
+                            } else {
+                                $alert({
+                                    content: '<b>ERROR:</b> ' + $scope.client.name + ' has not been updated.',
+                                    type: 'danger'
+                                });
+                            }
+                        }
+                    ).finally(function () {
+                        $scope.whenSaving = false;
                     });
                 } else {
                     $scope.showErrorBanner();
