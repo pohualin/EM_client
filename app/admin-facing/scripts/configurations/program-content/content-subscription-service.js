@@ -46,9 +46,9 @@ angular.module('emmiManager')
                  * Delete single ContentSubscriptionConfigurationService
                  * 
                  */
-                deleteContent: function(){
-                    return $http.delete(UriTemplate.create(Client.getClient().link.clientContentSubscriptionConfigurations)
-                            .stringify()).then();
+                 deleteContent: function(deleteContentSubscription){
+                	return $http.delete(UriTemplate.create(Client.getClient().link.deleteClientContentSubscriptionConfiguration)
+                            .stringify({id: deleteContentSubscription.entity.id})).then();
                 },
                 
                 /**

@@ -19,7 +19,7 @@
           	   	   	<select id="selectedSourceContentList" name="selectedSourceContentList" class="form-control"
                    	data-ng-options="sourceContentList.name for sourceContentList in sourceContentList track by sourceContentList.id"
                    	data-ng-model="selectedSourceContent.entity.contentSubscription"
-                   	data-ng-change="onChangeSourceContentSubscription(selectedSourceContent)">
+                   	data-ng-change="showButtons({{true}})">
                	<option value="" title="selectedSourceContentList"></option>
                	</select>
            	</div>

@@ -20,7 +20,7 @@
                 <select id="sourceContentList" name="sourceContentList" class="form-control"
                     data-ng-options="sourceContentList.name for sourceContentList in sourceContentList track by sourceContentList.id"
                     data-ng-model="selectedSourceContent.entity.contentSubscription"
-                    data-ng-change="onChangeSourceContentSubscription(selectedSourceContent)">
+                    data-ng-change="showButtons({{true}})">
                 <option value="" title="sourceContentList"></option>
                 </select>
            </div>
@@ -39,7 +39,7 @@
           <div class="checkbox">
                <input id="faithBased" type="checkbox"
                       data-ng-model="contentSubscriptionHolder.entity.faithBased"
-                      data-ng-change="onChangeFaithBased(contentSubscriptionHolder.entity.faithBased)"/>
+                      data-ng-change="showButtons({{true}})"/>
                 <label for="faithBased">Apply Faith-Based Filter for this Client</label>
           </div>
     	</div>

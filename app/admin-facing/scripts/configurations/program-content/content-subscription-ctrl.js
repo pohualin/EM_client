@@ -26,6 +26,7 @@ angular.module('emmiManager')
         $scope.selectedContentSubscription = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
         $scope.selectedContentList = [];
         $scope.contentSubscriptionHolder = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
+        
                
         /**
          * Cancel any changes
@@ -45,8 +46,7 @@ angular.module('emmiManager')
                 $scope.whenSaving = true;
                 $scope.filterSaveList();
                 $scope.initialAddAnotherContentSubscription = true;
-                $scope.newSelectList = false;
-             }else {
+            }else {
                 if (!$scope.formAlert) {
                     $scope.formAlert = $alert({
                         content: 'Please correct the below information.',
@@ -61,9 +61,6 @@ angular.module('emmiManager')
         
         $scope.filterSaveList = function(){
         	var notInList = true;
-            var finalCreateContentSubscritpionList = [];
-            var finalUpdateContentSubscritpionList = [];
-            var finalDeleteContentList = [];
             if((angular.isDefined($scope.contentSubscriptionHolder)) &&
                (angular.isDefined($scope.contentSubscriptionHolder.entity.contentSubscription))){
             	angular.forEach($scope.selectedContentList, function (aContent){
@@ -73,57 +70,33 @@ angular.module('emmiManager')
             	});
             }
             if(notInList){
-            	console.log('not in list');
             	$scope.selectedContentList.push($scope.contentSubscriptionHolder);
+            	$scope.contentSubscriptionHolder = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
             }
-               
-            console.log($scope.selectedContentList);
-            if($scope.originalContentSubscriptionConfiguration.length > 0){
-            	console.log('there is orignala ');
-            	console.log($scope.originalContentSubscriptionConfiguration);
-            	angular.forEach($scope.selectedContentList, function (aNewContent){
-            		angular.forEach($scope.originalContentSubscriptionConfiguration, function (aOriginalContent){
-            			if(angular.equals(aOriginalContent.entity.contentSubscription.id, aNewContent.entity.contentSubscription.id)){
-            				finalUpdateContentSubscritpionList.push(aNewContent);
-            				$scope.updateContentSubscription(aNewContent);
-            				console.log(aNewContent);
-            				console.log('for update +++++++');
-                		}
-            			else{
-            				finalDeleteContentList.push(aOriginalContent);
-            				$scope.deleteContentSubscription(aOriginalContent);
-            				console.log(aOriginalContent);
-            				console.log('for delete');
-            			}
-            		}
-            		
-            	});
-            }
-            else{
-            	angular.forEach($scope.selectedContentList, function (aContent){
-                	if(aContent.entity.contentSubscription.name !== 'None'){
-                		console.log('for create+++');
-                		console.log(aContent);
-                		$scope.createContentSubscription(aContent);
-                	}                	
-                });
-            	
-            }
-        };
+       		angular.forEach($scope.selectedContentList, function (aNewContent){
+       			if((angular.isDefined(aNewContent.entity.id)) &&
+       			   (aNewContent.entity.contentSubscription === null)){
+       				$scope.deleteContentSubscription(aNewContent);
+       			}
+      			else if(angular.isDefined(aNewContent.entity.id)){
+   					$scope.updateContentSubscription(aNewContent);
+   				}
+       			else if(angular.isDefined(aNewContent.entity.contentSubscription.id)){
+               		$scope.createContentSubscription(aNewContent);
+               	} 
+       		});
+       };
         
         /**
          * Delete the Content Subscriptions for a Client
          */
         $scope.deleteContentSubscription = function(aContent){
-        	//Need to change this
-            //ContentSubscriptionConfigurationService.deleteContent().then(function(response){
-            init();
+        	ContentSubscriptionConfigurationService.deleteContent(aContent).then(function(response){
             $alert({
                 content: '<b>' + $scope.client.name + '</b> has been updated successfully.'
             });
             }).finally(function () {
-            	$scope.whenSaving = false;
-                $scope.showButtons(false);
+            	$scope.reset();
             });
         };
         
@@ -152,8 +125,7 @@ angular.module('emmiManager')
             content: '<b>' + $scope.client.name + '</b> has been updated successfully.'
             });
             }).finally(function () {
-            	$scope.whenSaving = false;
-                $scope.showButtons(false);
+            	$scope.reset();
             });
         };
          
@@ -182,9 +154,15 @@ angular.module('emmiManager')
                   content: '<b>' + $scope.client.name + '</b> has been updated successfully.'
               });
               }).finally(function () {
-            	  $scope.whenSaving = false;
-                  $scope.showButtons(false);
+            	 $scope.reset();
               });
+        };
+        
+        $scope.reset = function(){
+        	$scope.newSelectList = false;
+       	  	$scope.whenSaving = false;
+       	  	$scope.contentSubscriptionHolder = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
+         	$scope.showButtons(false);
         };
        
         /**
@@ -276,17 +254,7 @@ angular.module('emmiManager')
                 }
          	}
         };
-       
-        $scope.onChangeSourceContentSubscription = function(sourceContentSubscription){
-    	     $scope.showButtons(true);
            
-       };
-       
-       $scope.onChangeFaithBased = function(faithBased){
-    	   $scope.showButtons(true);
-           
-       };
-       
        /*
         * Filter the primary content list based from the requirement
         */    
@@ -311,42 +279,35 @@ angular.module('emmiManager')
      	   }
     	   else if((newContentSubscription.entity.contentSubscription.id !== 124) &&
         		   (newContentSubscription.entity.contentSubscription.id !== 128)){
-        	   console.log('are u jserererrs');
-        	  	angular.forEach($scope.latestPrimaryContentList, function (aContent, index){
+        	 angular.forEach($scope.latestPrimaryContentList, function (aContent, index){
 		   			if(aContent.id === 128){
 		   				$scope.latestPrimaryContentList.splice(index,1);
 		   			}
 		   			if(angular.equals(aContent.id, newContentSubscription.entity.contentSubscription.id)){
-		   				console.log('are u try to remove ');
- 				       $scope.latestPrimaryContentList.splice(index,1);
+		   				$scope.latestPrimaryContentList.splice(index,1);
 		   			}
 		   		});  
 	   
 	       } 
     	   else if((newContentSubscription.entity.contentSubscription.id === 124) &&
     			   ($scope.selectedContentList.length > 1)){
-    		   console.log('in the 124s');
     		   angular.forEach($scope.latestPrimaryContentList, function (aContent, index){
     			   if(aContent.id === 128){
         			  $scope.latestPrimaryContentList.splice(index,1);
         			   
         		   }
     			   if(angular.equals(aContent.id, newContentSubscription.entity.contentSubscription.id)){
-    				   console.log('are u try  darararerew to remove ');
     				   $scope.latestPrimaryContentList.splice(index,1);
     			   }
         	   });  
        	   } 
-           
     	   else{
     		   angular.forEach($scope.latestPrimaryContentList, function (aContent, index){
     			   if(angular.equals(aContent.id, newContentSubscription.entity.contentSubscription.id)){
-    				   console.log('are u try  darararerew to remove ');
-    				   $scope.latestPrimaryContentList.splice(index,1);
+    				  $scope.latestPrimaryContentList.splice(index,1);
     			   }
     		   });
     	   }
-    	   console.log($scope.latestPrimaryContentList);
       };
        
        /* 
@@ -360,13 +321,13 @@ angular.module('emmiManager')
     	   $scope.addAnotherContentSubscription = false;
     	   $scope.newSelectList = true;
     	   $scope.showButtons(true);
-           $scope.contentSubscriptionHolder = {};
+           $scope.contentSubscriptionHolder = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
        };
        
        $scope.initialAddSubscription = function(){
     	   $scope.initialAddAnotherContentSubscription = false;
     	   $scope.newSelectList = true;
-           $scope.contentSubscriptionHolder = {};
+           $scope.contentSubscriptionHolder = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
        };
        
         /**
@@ -388,15 +349,12 @@ angular.module('emmiManager')
                     	$scope.separateSavedLists(response.content);
                     }
                     angular.copy(response.content, $scope.originalContentSubscriptionConfiguration);
-                    console.log( $scope.originalContentSubscriptionConfiguration);
                 }
                 else{
                       $scope.selectedContentSubscription = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
                       $scope.newSelectList = true;
                 }
-   
-            });
-            
+             });
         }
         init();
     }]);
