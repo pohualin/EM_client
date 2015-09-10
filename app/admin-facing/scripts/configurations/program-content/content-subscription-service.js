@@ -25,6 +25,7 @@ angular.module('emmiManager')
                 getContentSubscriptionConfiguration: function () {
                     return $http.get(UriTemplate.create(Client.getClient().link.clientContentSubscriptionConfigurations).stringify())
                         .then(function (response) {
+                        	console.log(response);
                         	CommonService.convertPageContentLinks(response.data);
                             return response.data;
                         });
@@ -47,8 +48,8 @@ angular.module('emmiManager')
                  * 
                  */
                  deleteContent: function(deleteContentSubscription){
-                	return $http.delete(UriTemplate.create(Client.getClient().link.deleteClientContentSubscriptionConfiguration)
-                            .stringify({id: deleteContentSubscription.entity.id})).then();
+                	 return $http.delete(UriTemplate.create(deleteContentSubscription.link.self)
+                			.stringify()).then();
                 },
                 
                 /**

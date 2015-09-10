@@ -169,7 +169,7 @@ angular.module('emmiManager')
          * Show/hide cancel and save buttons
          */
         $scope.showButtons = function (showButton) {
-            return ($scope.showContentButton = showButton);
+        	return ($scope.showContentButton = showButton);
          };
         
          /**
@@ -343,7 +343,6 @@ angular.module('emmiManager')
                 $scope.createLists(response.content);
             });
             ContentSubscriptionConfigurationService.getContentSubscriptionConfiguration().then(function (response) {
-                
                 if(angular.isDefined(response.content)){
                     if(response.content.length > 0){
                     	$scope.separateSavedLists(response.content);
