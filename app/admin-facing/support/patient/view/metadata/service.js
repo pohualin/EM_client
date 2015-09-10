@@ -106,6 +106,51 @@
                             deferred.resolve(scheduledPrograms);
                         });
                         return deferred.promise;
+                    },
+                    
+                    /**
+                     * Loads encounters
+                     * 
+                     * This method constructs encounters after all scheduled programs have been loaded.
+                     * 
+                     * @param patientResource to load encounters
+                     * @returns encounters
+                     */
+                    loadEncounters: function(patientResource) {
+                        return this.loadScheduledPrograms(patientResource).then(function (scheduledPrograms) {
+                            // A map to hold encounters
+                            var map = {};
+                            angular.forEach(scheduledPrograms, function(scheduledProgram){
+                                var encounter = scheduledProgram.entity.encounter;
+                                delete scheduledProgram.entity.encounter;
+                                if (!map[encounter.id]) {
+                                    var encounterResource = { entity : encounter };
+                                    encounterResource.scheduledProgramsMap = {};
+                                    encounterResource.scheduledProgramsMap[scheduledProgram.entity.id] = scheduledProgram;
+                                    map[encounter.id] = encounterResource;
+                                } else {
+                                    map[encounter.id].scheduledProgramsMap[scheduledProgram.entity.id] = scheduledProgram;
+                                }
+                            });
+                            
+                            var encounters = [];
+                            angular.forEach(map, function (encounter) {
+                                var programNames = [];
+                                encounter.entity.scheduledPrograms = [];
+                                angular.forEach(encounter.scheduledProgramsMap, function (scheduleProgram) {
+                                    encounter.entity.scheduledPrograms.push(scheduleProgram);
+                                    programNames.push(scheduleProgram.entity.program.name);
+                                });
+                                delete encounter.scheduledProgramsMap;
+                                // Set accessCOde, createdBy and team from first scheduled program
+                                encounter.entity.accessCode = encounter.entity.scheduledPrograms[0].entity.accessCode;
+                                encounter.entity.createdBy = encounter.entity.scheduledPrograms[0].entity.createdBy;
+                                encounter.entity.team = encounter.entity.scheduledPrograms[0].entity.team;
+                                encounter.entity.names = programNames.join('; ');
+                                encounters.push(encounter); 
+                            });
+                            return encounters;
+                        });
                     }
                 };
             }])

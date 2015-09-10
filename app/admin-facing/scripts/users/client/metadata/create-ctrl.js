@@ -22,10 +22,10 @@ angular.module('emmiManager')
             $scope.save = function (isValid, event, addAnother) {
                 $scope.userClientFormSubmitted = true;
                 if (isValid) {
-                    $scope.userClientForm.$setPristine();
                     $scope.whenSaving = true;
                     UsersClientService.createUserClient($scope.client, $scope.userClientEdit).then(
                         function success(response) {
+                            $scope.userClientForm.$setPristine();
                             var savedUserClientResource = response.data;
                             $alert({
                                 content: 'User <b>' + savedUserClientResource.entity.login + '</b> has been successfully created.'

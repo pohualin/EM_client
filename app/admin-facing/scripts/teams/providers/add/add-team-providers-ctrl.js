@@ -38,8 +38,8 @@ angular.module('emmiManager')
             var providersAcrossTabs = angular.extend({}, AddTeamProvidersFactory.getSelectedClientProviders(), AddTeamProvidersFactory.getSelectedProviders());    
             return ProviderSearch.isSaveRequestValid(AddTeamProvidersFactory.getTeamLocations(), AddTeamProvidersFactory.getSelectedClientProviders()).then(function(valid){
                 if (valid) {
-                    ProviderSearch.isSaveRequestValid(AddTeamProvidersFactory.getTeamLocations(), providersAcrossTabs).then(function(valid){
-                        if(valid){
+                    ProviderSearch.isSaveRequestValid(AddTeamProvidersFactory.getTeamLocations(), AddTeamProvidersFactory.getSelectedProviders()).then(function(valid){
+                        if (valid) {
                             $scope.whenSaving = true;
                             var providersToAdd = ProviderSearch.getTeamProviderTeamLocationSaveRequest(AddTeamProvidersFactory.getTeamLocations(), providersAcrossTabs);
                             ProviderSearch
@@ -59,6 +59,9 @@ angular.module('emmiManager')
                                 }).finally(function () {
                                     $scope.whenSaving = false;
                                 });
+                        } else {
+                            $scope.tabs.activeTab = 1;
+                            $scope.whenSaving = false;
                         }
                     });
                 } else {
@@ -83,28 +86,35 @@ angular.module('emmiManager')
             var providersAcrossTabs = angular.extend({}, AddTeamProvidersFactory.getSelectedClientProviders(), AddTeamProvidersFactory.getSelectedProviders()); 
             ProviderSearch.isSaveRequestValid(AddTeamProvidersFactory.getTeamLocations(), AddTeamProvidersFactory.getSelectedClientProviders()).then(function(valid){
                 if (valid) {
-                    ProviderSearch.isSaveRequestValid(AddTeamProvidersFactory.getTeamLocations(), providersAcrossTabs).then(function(valid){
-                        if(valid){
-                            $scope.whenSaving = true;
-                            ProviderSearch
-                                .saveAllProvidersExcept($scope.teamResource, providersAcrossTabs, 
-                                        AddTeamProvidersFactory.getTeamLocations(), SelectAllTeamProvidersFactory.getExclusionSet())
-                                .then(function (providersToAdd) {
-                                    if (addAnother) {
-                                        $scope.tabs.activeTab = 1;
-                                        $scope.successAlert(providersToAdd, '#modal-messages-container');
-                                        focus('ProviderSearchFocus');
-                                    } else {
-                                        $scope.successAlert(providersToAdd, '#messages-container');
-                                        $scope.hideAddProvidersModal();
-                                    }
-                                    $scope.refreshLocationsAndProviders();
-                                    $scope.$broadcast('refreshClientProvidersPage');
-                                    $scope.$broadcast('refreshTeamProvidersSearchPage');
-                                }).finally(function () {
-                                    $scope.whenSaving = false;
-                                });
-                        }
+                    ProviderSearch.isSaveRequestValid(AddTeamProvidersFactory.getTeamLocations(), AddTeamProvidersFactory.getSelectedProviders()).then(function(valid){
+                       if (valid) {
+                           ProviderSearch.isSaveRequestValid(AddTeamProvidersFactory.getTeamLocations(), providersAcrossTabs).then(function(valid){
+                               if(valid){
+                                   $scope.whenSaving = true;
+                                   ProviderSearch
+                                       .saveAllProvidersExcept($scope.teamResource, providersAcrossTabs, 
+                                               AddTeamProvidersFactory.getTeamLocations(), SelectAllTeamProvidersFactory.getExclusionSet())
+                                       .then(function (providersToAdd) {
+                                           if (addAnother) {
+                                               $scope.tabs.activeTab = 1;
+                                               $scope.successAlert(providersToAdd, '#modal-messages-container');
+                                               focus('ProviderSearchFocus');
+                                           } else {
+                                               $scope.successAlert(providersToAdd, '#messages-container');
+                                               $scope.hideAddProvidersModal();
+                                           }
+                                           $scope.refreshLocationsAndProviders();
+                                           $scope.$broadcast('refreshClientProvidersPage');
+                                           $scope.$broadcast('refreshTeamProvidersSearchPage');
+                                       }).finally(function () {
+                                           $scope.whenSaving = false;
+                                       });
+                               }
+                           });
+                       } else {
+                           $scope.tabs.activeTab = 1;
+                           $scope.whenSaving = false;
+                       }
                     });
                 } else {
                     $scope.tabs.activeTab = 0;
