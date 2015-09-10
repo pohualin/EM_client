@@ -58,7 +58,6 @@
                     if (!encounterResource.updatedSchedulePrograms) {
                         encounterResource.updatedSchedulePrograms = {};
                     }
-                    console.log(unchanged);
                     if (unchanged) {
                         form.$setPristine();
                         encounterResource.dirtyForms = encounterResource.dirtyForms.filter(function (element) {

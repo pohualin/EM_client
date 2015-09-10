@@ -17,24 +17,32 @@
               <div class="row panel-title">
                 <div class="row panel-title">
                   <div class="col-md-12" data-ng-hide="encounter.activePanel === 0">
+                    <div class="col-md-12">
                       <span class="icon-caret-right"></span>
                       <span class="panel-title-text">
-                          {{encounter.entity.scheduledPrograms.length}} program <span style="color: #ECF5F8;">
-                              <em>({{ encounter.entity.scheduledPrograms[0].entity.program.name}})</em>
+                          {{encounter.entity.scheduledPrograms.length}} 
+                          <span data-ng-if="encounter.entity.scheduledPrograms.length === 1"> program</span>
+                          <span data-ng-if="encounter.entity.scheduledPrograms.length !== 1"> programs</span> 
+                          <span style="color: #ECF5F8;">
+                              <em>({{encounter.entity.names | characters:50}})</em>
                           </span>
                       </span>
+                    </div>
                   </div>
-                  <div class="col-md-5" data-ng-if="encounter.activePanel === 0">
-                      <span class="icon-caret-right"></span>
-                      <span class="panel-title-text">
-                          {{encounter.entity.scheduledPrograms.length}} program
-                      </span>
-                  </div>
-                  <div class="col-md-7" style="margin-top: 3px;"
-                       data-ng-if="encounter.activePanel === 0">
-                      <div class="pull-right">
-                          <small>Access Code: <strong>{{encounter.entity.accessCode}}</strong></small>
-                      </div>
+                  <div class="col-md-12" data-ng-show="encounter.activePanel === 0">
+                    <div class="col-md-5">
+                        <span class="icon-caret-right"></span>
+                        <span class="panel-title-text">
+                            {{encounter.entity.scheduledPrograms.length}}
+                            <span data-ng-if="encounter.entity.scheduledPrograms.length === 1"> program</span>
+                            <span data-ng-if="encounter.entity.scheduledPrograms.length !== 1"> programs</span> 
+                        </span>
+                    </div>
+                    <div class="col-md-7" style="margin-top: 3px;">
+                        <div class="pull-right">
+                            <small>Access Code: <strong>{{encounter.entity.accessCode}}</strong></small>
+                        </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -45,11 +53,12 @@
                     <form name="scheduledProgramForm_{{scheduledProgram.entity.id}}"
                           data-unsaved-warning-form novalidate>
                         <div class="row" data-ng-click="toggleScheduledProgramPanel(scheduledProgram, scheduledProgramForm_{{scheduledProgram.entity.id}})" >
-                            <div class="col-md-12">
+                            <div class="col-md-12"> 
                                 <table class="table table-hover table-striped"
-                                       border="0" cellpadding="0" cellspacing="0">
+                                       border="0" cellpadding="0" cellspacing="0" style="margin-bottom: 0px">
                                     <tr data-ng-mouseover="showEnable = true" data-ng-mouseout="showEnable = false">
                                         <td>
+                                            <span class="icon-caret-right" data-ng-style="{'transform': scheduledProgram.showDetails ? 'rotate(90deg)' : 'none'}"></span>
                                             <span class="text-muted" style="margin-right: 3px;">
                                                 <span
                                                     data-ng-show="scheduledProgram.entity.program.type.name === 'MULTIMEDIA PROGRAM'"
@@ -101,52 +110,47 @@
                             </div>
                         </div>
                         <div class="row" data-ng-show="scheduledProgram.showDetails">
+                          <div class="col-md-12">
                           <div class="col-md-4">
                             <div class="form-group" 
                                data-ng-class="{ 'has-error' : scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$invalid &&
                                               scheduledProgramForm_{{scheduledProgram.entity.id}}.programFormSubmitted  &&
                                               scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$dirty}">
 
-                              <!-- don't give it control-label or the error state will darken the label -->
-                              <div data-ng-style="{'margin-left': '15px',
-                                   'width': scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$invalid &&
-                                              scheduledProgramForm_{{scheduledProgram.entity.id}}.programFormSubmitted  &&
-                                              scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$dirty ? '120px' : '105px'}">
-                                  <label class="text-muted"
-                                         style="padding: 10px 0 0 4px;"
-                                         for="viewByDate_{{scheduledProgram.entity.id}}">
-                                      View-by Date:
-                                  </label>
+                              <label class="text-muted"
+                                     style="padding: 10px 0 0 0;"
+                                     for="viewByDate_{{scheduledProgram.entity.id}}">
+                                  View-by Date
+                              </label>
 
-                                  <div class="error-circle fa-exclamation-circle" role="alert"
-                                       data-ng-show="
-                                                  !scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.date &&
-                                                  scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.required &&
-                                                  scheduledProgramForm_{{scheduledProgram.entity.id}}.programFormSubmitted"
-                                       data-bs-tooltip data-placement="right" data-type="danger"
-                                       data-container="body"
-                                       data-title="Required" aria-label="Required"></div>
-                                  <div class="error-circle fa-exclamation-circle" role="alert"
-                                       data-ng-show="!scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.required &&
-                                                  scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.min &&
-                                                  scheduledProgramForm_{{scheduledProgram.entity.id}}.programFormSubmitted &&
-                                                  scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$dirty"
-                                       data-bs-tooltip data-placement="right" data-type="danger"
-                                       data-container="body"
-                                       data-title="Please enter a date in the future"
-                                       aria-label="Please enter a date in the future"></div>
-                                  <div class="error-circle fa-exclamation-circle" role="alert"
-                                       data-ng-show="(scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.min &&
-                                                  scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.date &&
-                                                  scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.required ||
-                                                  scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.date &&
-                                                  scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.required) &&
-                                                  scheduledProgramForm_{{scheduledProgram.entity.id}}.programFormSubmitted"
-                                       data-bs-tooltip data-placement="right" data-type="danger"
-                                       data-container="body"
-                                       data-title="Please enter a valid view-by date"
-                                       aria-label="Please enter a valid view-by date"></div>
-                              </div>
+                              <div class="error-circle fa-exclamation-circle" role="alert"
+                                   data-ng-show="
+                                              !scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.date &&
+                                              scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.required &&
+                                              scheduledProgramForm_{{scheduledProgram.entity.id}}.programFormSubmitted"
+                                   data-bs-tooltip data-placement="right" data-type="danger"
+                                   data-container="body"
+                                   data-title="Required" aria-label="Required"></div>
+                              <div class="error-circle fa-exclamation-circle" role="alert"
+                                   data-ng-show="!scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.required &&
+                                              scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.min &&
+                                              scheduledProgramForm_{{scheduledProgram.entity.id}}.programFormSubmitted &&
+                                              scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$dirty"
+                                   data-bs-tooltip data-placement="right" data-type="danger"
+                                   data-container="body"
+                                   data-title="Please enter a date in the future"
+                                   aria-label="Please enter a date in the future"></div>
+                              <div class="error-circle fa-exclamation-circle" role="alert"
+                                   data-ng-show="(scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.min &&
+                                              scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.date &&
+                                              scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.required ||
+                                              scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.date &&
+                                              scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.required) &&
+                                              scheduledProgramForm_{{scheduledProgram.entity.id}}.programFormSubmitted"
+                                   data-bs-tooltip data-placement="right" data-type="danger"
+                                   data-container="body"
+                                   data-title="Please enter a valid view-by date"
+                                   aria-label="Please enter a valid view-by date"></div>
                               <div>
                                   <div class="has-input-icon has-input-icon-calendar" style="width: 115px;">
                                       <input id="viewByDate_{{scheduledProgram.entity.id}}"
@@ -173,31 +177,28 @@
                           </div>
                           <div class="col-md-4">
                             <label class="text-muted"
-                                   style="padding: 10px 0 0 4px;"
+                                   style="padding: 10px 0 0 0;"
                                    for="location_{{scheduledProgram.entity.id}}">
                                 PROVIDER
                             </label>
                             <div class="entity-value" style="line-height: 1.2;">
-                                <small class="col-wrap">
-                                    <a href="#/providers/{{scheduledProgram.entity.provider.id}}" target="_blank">
-                                        {{scheduledProgram.entity.provider.fullName}}
-                                    </a>
-                                </small>
+                                <a href="#/providers/{{scheduledProgram.entity.provider.id}}" target="_blank">
+                                    {{scheduledProgram.entity.provider.fullName}}
+                                </a>
                             </div>
                           </div>
                           <div class="col-md-4">
                             <label class="text-muted"
-                                   style="padding: 10px 0 0 4px;"
+                                   style="padding: 10px 0 0 0;"
                                    for="provider_{{scheduledProgram.entity.id}}">
                                 LOCATION
                             </label>
                             <div class="entity-value" style="line-height: 1.2;">
-                                <small class="col-wrap">
-                                    <a href="#/locations/{{scheduledProgram.entity.location.id}}" target="_blank">
-                                        {{scheduledProgram.entity.location.name}}
-                                    </a>
-                                </small>
+                                <a href="#/locations/{{scheduledProgram.entity.location.id}}" target="_blank">
+                                    {{scheduledProgram.entity.location.name}}
+                                </a>
                             </div>
+                          </div>
                           </div>
                         </div>
                     </form>

@@ -73,13 +73,15 @@
                      data-title="Required" aria-label="Required"></div>
                 <div class="error-circle fa-exclamation-circle" role="alert"
                      data-ng-show="editPatientForm.dateOfBirth.$error.date &&
-                                      !editPatientForm.dateOfBirth.$error.min && formSubmitted"
+                                      !editPatientForm.dateOfBirth.$error.min &&
+                                      !editPatientForm.dateOfBirth.$error.max && formSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                      data-title="Dates must be in the format MM/DD/YYYY"
                      aria-label="Dates must be in the format MM/DD/YYYY"></div>
                 <div class="error-circle fa-exclamation-circle" role="alert"
                      data-ng-show="editPatientForm.dateOfBirth.$error.date &&
-                                       editPatientForm.dateOfBirth.$error.min && formSubmitted"
+                                       (editPatientForm.dateOfBirth.$error.min || editPatientForm.dateOfBirth.$error.max) &&
+                                       formSubmitted"
                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                      data-title="Please select a valid date of birth"
                      aria-label="Please select a valid date of birth"></div>
@@ -87,7 +89,7 @@
                        data-ng-model="patientResource.entity.dateOfBirth" data-autoclose="true"
                        data-dateType="iso" data-bs-datepicker data-max-date="today"
                        data-min-date="{{minDate}}" data-date-format="MM/dd/yyyy" placeholder="MM/DD/YYYY"
-                       required>
+                       required data-trigger="manual">
             </div>
         </div>
     </div>
