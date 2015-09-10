@@ -61,6 +61,7 @@ angular.module('emmiManager')
         
         $scope.filterSaveList = function(){
         	var notInList = true;
+        	
             if((angular.isDefined($scope.contentSubscriptionHolder)) &&
                (angular.isDefined($scope.contentSubscriptionHolder.entity.contentSubscription))){
             	angular.forEach($scope.selectedContentList, function (aContent){
@@ -71,6 +72,7 @@ angular.module('emmiManager')
             }
             if(notInList){
             	$scope.selectedContentList.push($scope.contentSubscriptionHolder);
+            	
             	$scope.contentSubscriptionHolder = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
             }
        		angular.forEach($scope.selectedContentList, function (aNewContent){
@@ -328,6 +330,13 @@ angular.module('emmiManager')
     	   $scope.initialAddAnotherContentSubscription = false;
     	   $scope.newSelectList = true;
            $scope.contentSubscriptionHolder = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
+       };
+       
+       $scope.onChangeFaithBased = function(faithBased){
+    	   angular.forEach($scope.selectedContentList, function (aContent){
+    		   aContent.entity.faithBased = faithBased;
+       	   });
+    	   $scope.showButtons(true);
        };
        
         /**

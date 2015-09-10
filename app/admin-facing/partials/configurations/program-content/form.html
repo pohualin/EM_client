@@ -38,8 +38,8 @@
      	<div class="form-group">
           <div class="checkbox">
                <input id="faithBased" type="checkbox"
-                      data-ng-model="contentSubscriptionHolder.entity.faithBased"
-                      data-ng-change="showButtons({{true}})"/>
+                      data-ng-model="selectedContentSubscription.entity.faithBased"
+                      data-ng-change="onChangeFaithBased(selectedContentSubscription.entity.faithBased)"/>
                 <label for="faithBased">Apply Faith-Based Filter for this Client</label>
           </div>
     	</div>
