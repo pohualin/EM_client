@@ -40,31 +40,10 @@ angular.module('emmiManager')
          * Save content subscription configuration for the client
          */
         $scope.save = function(valid){
-            $scope.contentSubscriptionFormSubmitted = true;
-            if((angular.isDefined($scope.contentSubscriptionHolder)) &&
-               (angular.isDefined($scope.contentSubscriptionHolder.entity.contentSubscription))){
-            	$scope.selectedContentList.push($scope.contentSubscriptionHolder);
-            }
-               
-            console.log($scope.selectedContentList);
-            if($scope.originalContentSubscriptionConfiguration.length > 0){
-            	console.log('there is orignala ');
-            	console.log($scope.originalContentSubscriptionConfiguration);
-            }
-            
+            $scope.contentSubscriptionFormSubmitted = true;          
             if(valid){
                 $scope.whenSaving = true;
-                angular.forEach($scope.selectedContentList, function (aContent){
-                	if(aContent.entity.contentSubscription.name === 'None'){
-                		$scope.deleteContentSubscription(aContent);
-                	}
-                   	else if(angular.isDefined(aContent.entity.id)){
-                		$scope.updateContentSubscription(aContent);
-                	}
-                	else{
-                		$scope.createContentSubscription(aContent);    
-                	}
-                });
+                $scope.filterSaveList();
                 $scope.initialAddAnotherContentSubscription = true;
                 $scope.newSelectList = false;
              }else {
@@ -80,11 +59,64 @@ angular.module('emmiManager')
             }
         };
         
+        $scope.filterSaveList = function(){
+        	var notInList = true;
+            var finalCreateContentSubscritpionList = [];
+            var finalUpdateContentSubscritpionList = [];
+            var finalDeleteContentList = [];
+            if((angular.isDefined($scope.contentSubscriptionHolder)) &&
+               (angular.isDefined($scope.contentSubscriptionHolder.entity.contentSubscription))){
+            	angular.forEach($scope.selectedContentList, function (aContent){
+            		if(angular.equals(aContent.id, $scope.contentSubscriptionHolder.entity.contentSubscription.id)){
+            			notInList = false; 			
+            		}
+            	});
+            }
+            if(notInList){
+            	console.log('not in list');
+            	$scope.selectedContentList.push($scope.contentSubscriptionHolder);
+            }
+               
+            console.log($scope.selectedContentList);
+            if($scope.originalContentSubscriptionConfiguration.length > 0){
+            	console.log('there is orignala ');
+            	console.log($scope.originalContentSubscriptionConfiguration);
+            	angular.forEach($scope.selectedContentList, function (aNewContent){
+            		angular.forEach($scope.originalContentSubscriptionConfiguration, function (aOriginalContent){
+            			if(angular.equals(aOriginalContent.entity.contentSubscription.id, aNewContent.entity.contentSubscription.id)){
+            				finalUpdateContentSubscritpionList.push(aNewContent);
+            				$scope.updateContentSubscription(aNewContent);
+            				console.log(aNewContent);
+            				console.log('for update +++++++');
+                		}
+            			else{
+            				finalDeleteContentList.push(aOriginalContent);
+            				$scope.deleteContentSubscription(aOriginalContent);
+            				console.log(aOriginalContent);
+            				console.log('for delete');
+            			}
+            		}
+            		
+            	});
+            }
+            else{
+            	angular.forEach($scope.selectedContentList, function (aContent){
+                	if(aContent.entity.contentSubscription.name !== 'None'){
+                		console.log('for create+++');
+                		console.log(aContent);
+                		$scope.createContentSubscription(aContent);
+                	}                	
+                });
+            	
+            }
+        };
+        
         /**
          * Delete the Content Subscriptions for a Client
          */
         $scope.deleteContentSubscription = function(aContent){
-            ContentSubscriptionConfigurationService.deleteContent().then(function(response){
+        	//Need to change this
+            //ContentSubscriptionConfigurationService.deleteContent().then(function(response){
             init();
             $alert({
                 content: '<b>' + $scope.client.name + '</b> has been updated successfully.'
