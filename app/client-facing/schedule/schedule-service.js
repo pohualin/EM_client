@@ -64,7 +64,6 @@ angular.module('emmiManager')
                                     encounter: encounterId
                                 }
                             )).then(function (response) {
-                                console.log(response);
                                 deferred.resolve(response.data);
                             });
                         });
@@ -144,7 +143,6 @@ angular.module('emmiManager')
                     saveRequests.push(firstProgramDeferred.promise);
 
                     $q.all(saveRequests).then(function(response){
-                        console.log(response);
                         deferred.resolve(response);
                     });
                     return deferred.promise;
