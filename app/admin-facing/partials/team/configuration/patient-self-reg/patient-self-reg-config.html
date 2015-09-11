@@ -11,10 +11,12 @@
                            data-ng-model="patientSelfRegConfig.entity.exposeName"/>
                     <label for="exposePatientName">Patient Name</label>
                 </div>
-                <div class="checkbox col-sm-6" data-ng-show="patientSelfRegConfig.entity.exposeName">
-                    <input id="requirePatientName" type="checkbox"
-                           data-ng-model="patientSelfRegConfig.entity.requireName"/>
-                    <label for="requirePatientName">Required</label>
+                <div class="col-sm-6">
+                    <div class="checkbox" data-ng-if="patientSelfRegConfig.entity.exposeName">
+                        <input id="requirePatientName" type="checkbox"
+                               data-ng-model="patientSelfRegConfig.entity.requireName"/>
+                        <label for="requirePatientName">Required</label>
+                    </div>
                 </div>
             </div>
 
@@ -25,10 +27,12 @@
                            data-ng-model="patientSelfRegConfig.entity.exposeDateOfBirth"/>
                     <label for="exposeDateOfBirth">Date of birth</label>
                 </div>
-                <div class="checkbox col-sm-6" data-ng-show="patientSelfRegConfig.entity.exposeDateOfBirth">
-                    <input id="requirePatientDob" type="checkbox"
-                           data-ng-model="patientSelfRegConfig.entity.requireDateOfBirth"/>
-                    <label for="requirePatientDob">Required</label>
+                <div class="col-sm-6">
+                    <div class="checkbox" data-ng-if="patientSelfRegConfig.entity.exposeDateOfBirth">
+                        <input id="requirePatientDob" type="checkbox"
+                               data-ng-model="patientSelfRegConfig.entity.requireDateOfBirth"/>
+                        <label for="requirePatientDob">Required</label>
+                    </div>
                 </div>
             </div>
 
@@ -39,10 +43,12 @@
                            data-ng-change="updatePatientIdFields()"/>
                     <label for="exposePatientID">Patient ID</label>
                 </div>
-                <div class="checkbox col-sm-6" data-ng-show="patientSelfRegConfig.entity.exposeId">
-                    <input id="requirePatientId" type="checkbox"
-                           data-ng-model="patientSelfRegConfig.entity.requireId"/>
-                    <label for="requirePatientId">Required</label>
+                <div class="col-sm-6">
+                    <div class="checkbox" data-ng-if="patientSelfRegConfig.entity.exposeId">
+                        <input id="requirePatientId" type="checkbox"
+                               data-ng-model="patientSelfRegConfig.entity.requireId"/>
+                        <label for="requirePatientId">Required</label>
+                    </div>
                 </div>
             </div>
 
@@ -58,10 +64,12 @@
                            data-ng-change="updatePhoneFields()"/>
                     <label for="exposePatientPhone">Phone</label>
                 </div>
-                <div class="checkbox col-sm-6" data-ng-show="patientSelfRegConfig.entity.exposePhone">
-                    <input id="requirePatientPhone" type="checkbox"
-                           data-ng-model="patientSelfRegConfig.entity.requirePhone"/>
-                    <label for="requirePatientPhone">Required</label>
+                <div class="col-sm-6">
+                    <div class="checkbox" data-ng-if="patientSelfRegConfig.entity.exposePhone">
+                        <input id="requirePatientPhone" type="checkbox"
+                               data-ng-model="patientSelfRegConfig.entity.requirePhone"/>
+                        <label for="requirePatientPhone">Required</label>
+                    </div>
                 </div>
             </div>
             <div class="row">
@@ -71,10 +79,12 @@
                            data-ng-change="updateEmailFields()"/>
                     <label for="exposePatientEmail">Email</label>
                 </div>
-                <div class="checkbox col-sm-6" data-ng-show="patientSelfRegConfig.entity.exposeEmail">
-                    <input id="requirePatientEmail" type="checkbox"
-                           data-ng-model="patientSelfRegConfig.entity.requireEmail"/>
-                    <label for="requirePatientEmail">Required</label>
+                <div class="col-sm-6">
+                    <div class="checkbox" data-ng-if="patientSelfRegConfig.entity.exposeEmail">
+                        <input id="requirePatientEmail" type="checkbox"
+                               data-ng-model="patientSelfRegConfig.entity.requireEmail"/>
+                        <label for="requirePatientEmail">Required</label>
+                    </div>
                 </div>
             </div>
         </div>
