@@ -1,8 +1,8 @@
 <div data-ng-controller="PatientIdLabelDropDownController" data-ng-cloak>
     <form name="patientIdLabelForm" class="form" novalidate>
-        <div class="form-group">
-            <div class="form-group">
-                <label for="idLabelType">ID Label</label>&nbsp;&nbsp;
+        <div class="form-group" style="padding-left:34px">
+            <div class="form-group" >
+                <label for="idLabelType">Label</label>&nbsp;&nbsp;
                 <select class="form-control input-sm" style="width:200px;" id="idLabelType" name="idLabelType"
                         data-ng-model="patientSelfRegConfig.entity.patientIdLabelType"
                         data-ng-options="idLabelType.typeKey | translate for idLabelType in idLabelTypes track by idLabelType.id"
@@ -14,14 +14,14 @@
             <div class="row"
                  data-ng-show="patientSelfRegConfig.entity.patientIdLabelType.typeKey === 'PATIENT_SELF_REG_LABEL_OTHER'">
                 <div class="col-sm-6">
-                    <label class="control-label" for="patientIdLabelEnglish">Patient Id Label (English)</label>
+                    <label class="control-label" for="patientIdLabelEnglish">CUSTOM PATIENT ID LABEL (ENGLISH)</label>
                     <input class="form-control" name="patientIdLabelEnglish" type="text"
                            data-ng-model="idLabelConfigEnglish.config.entity.value"
                            data-ng-disabled="!idLabelConfigEnglish.config.entity.idLabelType.isModifiable"
                            id="patientIdLabelEnglish" maxlength="100">
                 </div>
                 <div class="col-sm-6">
-                    <label class="control-label" for="patientIdLabelSpanish">Patient Id Label (Spanish)</label>
+                    <label class="control-label" for="patientIdLabelSpanish">CUSTOM PATIENT ID LABEL (SPANISH)</label>
                     <input class="form-control" name="patientIdLabelSpanish" type="text"
                            data-ng-model="idLabelConfigSpanish.config.entity.value"
                            data-ng-disabled="!idLabelConfigEnglish.config.entity.idLabelType.isModifiable"

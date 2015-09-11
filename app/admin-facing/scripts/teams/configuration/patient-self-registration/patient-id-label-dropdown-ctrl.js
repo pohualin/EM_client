@@ -104,6 +104,7 @@ angular.module('emmiManager')
 
             $scope.$on('event-resetPatientSelfRegConfig', function () {
                     $scope.loadPatientSelfRegConfig();
+                    $scope.$emit('event-resetPatientDetailsOutline');
                 }
             );
 
