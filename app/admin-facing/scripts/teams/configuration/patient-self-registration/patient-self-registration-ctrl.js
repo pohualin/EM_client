@@ -35,7 +35,6 @@ angular.module('emmiManager')
                     .finally(function () {
                         $scope.whenSaving = false;
                         $scope.$emit('event-resetPatientDetailsOutline');
-
                     });
             };
 

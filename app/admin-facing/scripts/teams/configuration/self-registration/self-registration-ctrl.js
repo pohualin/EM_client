@@ -132,7 +132,6 @@ angular.module('emmiManager')
              */
             $scope.cancel = function (form) {
                 $scope.outlineSelfRegCard = false;
-
                 form.$setPristine(true);
                 $scope.selfRegFormSubmitted = false;
                 $scope.selfRegConfig.code = $scope.originalSelfRegConfig.code ? angular.copy($scope.originalSelfRegConfig.code) : {'code': ''};
