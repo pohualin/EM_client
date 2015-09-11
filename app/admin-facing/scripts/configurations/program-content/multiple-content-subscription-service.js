@@ -4,7 +4,7 @@ angular.module('emmiManager')
 /**
  * This service is responsible CRUD operations for ContentSubscriptionConfiguration resources
  */
-    .service('ContentSubscriptionConfigurationService', ['$filter', '$q', '$http', 'UriTemplate', 'CommonService', 'Client',
+    .service('MultipleContentSubscriptionConfigurationService', ['$filter', '$q', '$http', 'UriTemplate', 'CommonService', 'Client',
         function ($filter, $q, $http, UriTemplate, CommonService, Client) {
             return {
                 
@@ -71,7 +71,7 @@ angular.module('emmiManager')
                  * 
                  */
                 update: function(selectedContentSubscription){
-                   return $http.put(UriTemplate.create(selectedContentSubscription.link.self).stringify(), 
+                   return $http.put(UriTemplate.create(Client.getClient().link.clientContentSubscriptionConfigurations).stringify(), 
                             selectedContentSubscription.entity, {override500: true})
                         .then(function (response) {
                             CommonService.convertPageContentLinks(response.data);

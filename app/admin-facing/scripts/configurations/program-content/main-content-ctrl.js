@@ -5,7 +5,7 @@ angular.module('emmiManager')
 /**
  * Controller for ClientProgramContentConfiguration page
  */
-    .controller('ClientProgramContentConfigurationController', ['$alert', '$scope', '$controller', 'clientResource', 'Client', 'ContentSubscriptionConfigurationService',
+    .controller('MainContentConfigurationController', ['$alert', '$scope', '$controller', 'clientResource', 'Client', 'ContentSubscriptionConfigurationService',
         function ($alert, $scope, $controller, clientResource, Client, ContentSubscriptionConfigurationService) {
        
     	// Store the original content subscription list

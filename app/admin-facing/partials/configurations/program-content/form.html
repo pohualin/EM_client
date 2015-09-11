@@ -1,10 +1,11 @@
+<form name="contentSubscriptionForm" novalidate data-ng-controller="ClientProgramContentConfigurationController">
 <h1>
     Available Program Content
 </h1>
 <div data-ng-show="contentSubscriptionForm.$invalid" id="message-container"></div>
 
 <div data-ng-include="'admin-facing/partials/configurations/program-content/add-content-subscription.html'"></div>
-<div class="row" data-ng-if="latestPrimaryContentList.length > 0 && newSelectList">
+<div class="row" data-ng-if="latestPrimaryContentList.length > 1 && newSelectList">
            <div class="col-md-4">
            <div class="form-group" >
                 <select id="latestPrimaryContentList" name="latestPrimaryContentList" class="form-control"
@@ -52,6 +53,6 @@
     			</button>
      	</div>
 </div>
-
+</form>
     
 
