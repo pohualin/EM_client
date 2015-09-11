@@ -46,6 +46,32 @@ angular.module('emmiManager')
                 },
                 
                 /**
+                 * Loads scheduled program with the encounter id
+                 * 
+                 * @param clientResource to get the team
+                 * @param teamId
+                 * @param encounterId
+                 * @return a promise
+                 */
+                loadEncounter: function (clientResource, teamId, encounterId) {
+                    var deferred = $q.defer();
+                    $http.get(UriTemplate.create(clientResource.link.team).stringify({teamId: teamId}))
+                        .success(function (teamResource) {
+                            $http.get(UriTemplate.create(teamResource.link.schedulePrograms)
+                                .stringify({
+                                    clientId: clientResource.entity.id,
+                                    teamId: teamId,
+                                    encounter: encounterId
+                                }
+                            )).then(function (response) {
+                                console.log(response);
+                                deferred.resolve(response.data);
+                            });
+                        });
+                    return deferred.promise;
+                },
+                
+                /**
                  * Load the team configuration for a given team
                  * 
                  * @param team to load for
@@ -118,6 +144,7 @@ angular.module('emmiManager')
                     saveRequests.push(firstProgramDeferred.promise);
 
                     $q.all(saveRequests).then(function(response){
+                        console.log(response);
                         deferred.resolve(response);
                     });
                     return deferred.promise;

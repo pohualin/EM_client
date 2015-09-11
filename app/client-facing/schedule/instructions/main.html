@@ -1,47 +1,30 @@
-<div class="container" data-ng-cloak>
+<header class="app-header client-header" data-emmi-navbar>
+    <!-- Breadcrumb for transclusion -->
+</header>
+<div id="app-content" role="main" class="app-content container" data-ng-cloak>
+    
+  <div class="layout-card">
     <div class="row">
-        <ol class="breadcrumb h3">
-            <li><a href="#/">Emmi Manager</a></li>
-            <li class="active">Patient Instructions</li>
-        </ol>
+      <h2>Success: {{scheduledPrograms.length}} 
+        <span data-ng-if="scheduledPrograms.length === 1">program</span>
+        <span data-ng-if="scheduledPrograms.length !== 1">programs</span> 
+        have been scheduled!
+      </h2>
     </div>
+  </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <h2>Scheduled Summary</h2>
-        </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Scheduled Summary</h2>
     </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-md-12">
+      <div class="layout-card">
+        <div class="row" data-ng-include="'client-facing/schedule/instructions/programs.html'"></div>
+      </div>
+    </div>
+  </div>
 
-    <div data-ng-repeat="scheduledProgram in scheduledPrograms">
-        <div class="row">
-            <div class="col-md-6">
-                <table>
-                    <tr>
-                        <th class="col-md-3">Patient:</th>
-                        <td class="col-md-5">{{scheduledProgram.entity.patient.firstName}} {{scheduledProgram.entity.patient.lastName}}</td>
-                    </tr>
-                    <tr>
-                        <th class="col-md-3">Access Code:</th>
-                        <td class="col-md-5">{{scheduledProgram.entity.accessCode}}</td>
-                    </tr>
-                    <tr>
-                        <th class="col-md-3">Program:</th>
-                        <td class="col-md-5">{{scheduledProgram.entity.program.name}}</td>
-                    </tr>
-                    <tr>
-                        <th class="col-md-3">Provider:</th>
-                        <td class="col-md-5">{{scheduledProgram.entity.provider.fullName}}</td>
-                    </tr>
-                    <tr>
-                        <th class="col-md-3">Location:</th>
-                        <td class="col-md-5">{{scheduledProgram.entity.location.name}}</td>
-                    </tr>
-                    <tr>
-                        <th class="col-md-3">View By Date:</th>
-                        <td class="col-md-5">{{scheduledProgram.entity.viewByDate | localDate:'MM/DD/YYYY'}}</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-    </div>
 </div>

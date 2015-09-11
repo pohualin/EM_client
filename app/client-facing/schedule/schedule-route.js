@@ -97,6 +97,35 @@ angular.module('emmiManager')
                     ]
                 }
             })
+            .when('/teams/:teamId/encounter/:encounterId/instructions', {
+                templateUrl: 'client-facing/schedule/instructions/main.html',
+                controller: 'ScheduleProgramInstructionsViewController',
+                access: {
+                    authorizedRoles: [USER_ROLES.all]
+                },
+                resolve: {
+                    'scheduledPrograms': ['$q', '$route', 'AuthSharedService', 'ScheduleService',
+                        function ($q, $route, AuthSharedService, ScheduleService) {
+                            var deferred = $q.defer();
+                            AuthSharedService.currentUser().then(function (loggedInUser) {
+                                ScheduleService.loadEncounter(loggedInUser.clientResource,
+                                    $route.current.params.teamId, 
+                                    $route.current.params.encounterId)
+                                    .then(function (response) {
+                                        if (response) {
+                                            deferred.resolve(response);
+                                        } else {
+                                            deferred.reject();
+                                        }
+                                    }, function error() {
+                                        deferred.reject();
+                                    })
+                            });
+                            return deferred.promise;
+                        }
+                    ]
+                }
+            })
             .when('/teams/:teamId/allPatients', {
                 templateUrl: 'client-facing/schedule/patient/view/list.html',
                 controller: 'ViewPatientController',
