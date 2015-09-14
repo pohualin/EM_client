@@ -81,7 +81,7 @@ angular.module('emmiManager')
                                         }
                                     }, function error() {
                                         deferred.reject();
-                                    })
+                                    });
                             });
                             return deferred.promise;
                         }
