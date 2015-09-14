@@ -6,7 +6,19 @@ angular.module('emmiManager')
  */
     .service('EmailRestrictConfigurationsService', ['$filter', '$q', '$http', 'UriTemplate', 'CommonService', 'Client',
         function ($filter, $q, $http, UriTemplate, CommonService, Client) {
+            var data = {
+                emailRestrictConfigurations: []
+            };
+
             return {
+
+                setEmailRestrictConfigurations: function(emailRestrictConfigurations) {
+                    data.emailRestrictConfigurations = angular.copy(emailRestrictConfigurations);
+                },
+
+                getEmailRestrictConfigurations: function() {
+                    return angular.copy(data.emailRestrictConfigurations);
+                },
 
                 /**
                  * Call server to fetch next batch of EmailRestrictConfiguration
@@ -97,7 +109,6 @@ angular.module('emmiManager')
                         return responseArray;
                     });
                 }
-
             };
         }])
 ;

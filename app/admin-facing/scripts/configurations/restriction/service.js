@@ -7,7 +7,7 @@ angular.module('emmiManager')
     .service('ClientRestrictConfigurationsService', ['$filter', '$q', '$http', 'UriTemplate', 'CommonService', 'Client', 'Session',
         function ($filter, $q, $http, UriTemplate, CommonService, Client, Session) {
             return {
-                
+
                 /**
                  * Get ClientRestrictConfiguration by Client
                  */
@@ -18,9 +18,9 @@ angular.module('emmiManager')
                             return response.data;
                         });
                 },
-                
+
                 /**
-                 * Save a new ClientRestrictConfiuration
+                 * Save a new ClientRestrictConfiguration
                  */
                 save: function(clientRestrictConfiguration){
                     return $http.post(UriTemplate.create(Client.getClient().link.restrictConfiguration).stringify(), clientRestrictConfiguration.entity)
@@ -29,10 +29,10 @@ angular.module('emmiManager')
                             return response.data;
                         });
                 },
-                
+
                 /**
                  * Call save if clientRestrictConfigurationId is null or update if clientRestrictConfigurationId is not null
-                 */ 
+                 */
                 saveOrUpdate: function(clientRestrictConfiguration){
                     var deferred = $q.defer();
                     if(clientRestrictConfiguration.link.self){
@@ -46,7 +46,7 @@ angular.module('emmiManager')
                     }
                     return deferred.promise;
                 },
-                
+
                 /**
                  * Update an existing ClientRestrictConfiguration
                  */
@@ -57,7 +57,7 @@ angular.module('emmiManager')
                             return response.data;
                         });
                 }
-            
+
             };
         }])
 ;
