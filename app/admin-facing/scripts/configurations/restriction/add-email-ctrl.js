@@ -16,6 +16,20 @@ angular.module('emmiManager')
                     show: false, backdrop: 'static'
                 });
 
+            $scope.hasDuplicateEmailEnding = function(emailEnding) {
+                var duplicate = false;
+                var emailConfigurations = EmailRestrictConfigurationsService.getEmailRestrictConfigurations();
+
+                for (var i = 0, len = emailConfigurations.length; i < len; i++) {
+                    if (emailConfigurations[i].entity.emailEnding === emailEnding) {
+                        duplicate = true;
+                        break;
+                    }
+                }
+
+                return duplicate;
+            };
+
             /**
              * Called when add another is clicked to add a new emailRestrictConfiguration
              */
@@ -31,11 +45,15 @@ angular.module('emmiManager')
                 $scope.emailRestrictConfigurationFormSubmitted = true;
                 emailRestrictConfigurationForm.emailEnding.duplicate = false;
 
-                if (emailRestrictConfigurationForm.$valid) {
+                var duplicate = $scope.hasDuplicateEmailEnding($scope.emailRestrictConfiguration.entity.emailEnding.toLowerCase());
+
+                if (emailRestrictConfigurationForm.$valid && !duplicate) {
                     $scope.whenSaving = true;
 
+                    $scope.emailRestrictConfiguration.entity.emailEnding = $scope.emailRestrictConfiguration.entity.emailEnding.toLowerCase();
+
                     EmailRestrictConfigurationsService.save($scope.emailRestrictConfiguration).then(
-                        function (response) {
+                        function success(response) {
                             $alert({
                                 content: '<b>' + $scope.client.name + '</b> has been updated successfully.'
                             });
@@ -51,7 +69,7 @@ angular.module('emmiManager')
                             EmailRestrictConfigurationsService.getEmailsThatDoNotFollowRestrictions().then(function (emailsThatDoNotFollowRestrictions) {
                                 $scope.setEmailsThatDoNotFollowRestrictions(emailsThatDoNotFollowRestrictions);
                             });
-                        }, function(response) {
+                        }, function error(response) {
                             if (response.status === 406) {
                                 emailRestrictConfigurationForm.emailEnding.duplicate = true;
                                 $scope.showErrorBanner();
@@ -66,23 +84,27 @@ angular.module('emmiManager')
                         $scope.whenSaving = false;
                     });
                 } else {
+                    if (duplicate) {
+                        emailRestrictConfigurationForm.emailEnding.duplicate = true;
+                    }
+
                     $scope.showErrorBanner();
                 }
             };
 
-        /**
-         * Create and show error banner
-         */
-        $scope.showErrorBanner = function () {
-            if (!$scope.addEmailRestrictErrorAlert) {
-                $scope.addEmailRestrictErrorAlert = $alert({
-                    content: 'Please correct the below information.',
-                    container: '#email-message-container',
-                    type: 'danger',
-                    placement: '',
-                    duration: false,
-                    dismissable: false
-                });
-            }
-        };
+            /**
+             * Create and show error banner
+             */
+            $scope.showErrorBanner = function () {
+                if (!$scope.addEmailRestrictErrorAlert) {
+                    $scope.addEmailRestrictErrorAlert = $alert({
+                        content: 'Please correct the below information.',
+                        container: '#email-message-container',
+                        type: 'danger',
+                        placement: '',
+                        duration: false,
+                        dismissable: false
+                    });
+                }
+            };
     }]);
