@@ -8,7 +8,7 @@
     </div>
     <h2 data-ng-if="schedulingConfiguration.entity.useLocation">Locations</h2>
     <table class="table table-bordered table-striped table-hover table-condensed" border="0" cellpadding="0"
-           cellspacing="0" data-ng-show="locations" data-ng-if="schedulingConfiguration.entity.useLocation">
+           cellspacing="0" data-ng-if="locations && schedulingConfiguration.entity.useLocation">
         <thead>
         <tr>
             <th>Name</th>
@@ -49,10 +49,10 @@
         </tr>
         </tbody>
     </table>
-    <div class="table-no-results" data-ng-hide="locations" data-ng-if="schedulingConfiguration.entity.useLocation">
+    <div class="table-no-results" data-ng-if="schedulingConfiguration.entity.useLocation && !loading && !locations.length">
         <span><em>There are no existing locations<span data-ng-show="team.name">&nbsp;for {{team.name}}</span>.</em></span>
     </div>
-    <div class="table-no-results" data-ng-if="!schedulingConfiguration.entity.useLocation">
+    <div class="table-no-results" data-ng-if="!schedulingConfiguration.entity.useLocation && !loading">
         <span><em>Locations are not in use for this team.</em></span>&nbsp;&nbsp;<span class="font-style-normal"><a href="#/clients/{{client.entity.id}}/teams/{{team.id}}/configuration/scheduling?team={{team.id}}&{{currentRouteQueryString}}">edit</a></span>
     </div>
 </div>
