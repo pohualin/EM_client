@@ -59,44 +59,6 @@ angular.module('emmiManager')
                 },
                 resolve: requiredResources
             })
-            .when('/teams/:teamId/schedule/:scheduleId/instructions', {
-                templateUrl: 'client-facing/schedule/instructions/main.html',
-                controller: 'ScheduleProgramInstructionsViewController',
-                access: {
-                    authorizedRoles: [USER_ROLES.all]
-                },
-                resolve: {
-                    'scheduledPrograms': ['$q', '$route', 'AuthSharedService', 'ScheduleService',
-                        function ($q, $route, AuthSharedService, ScheduleService) {
-                            var ids = $route.current.params.scheduleId.split(',');
-                            var deferred = $q.defer();
-                            var promises = [];
-                            AuthSharedService.currentUser().then(function (loggedInUser) {
-                                angular.forEach(ids, function (id) {
-                                    var deferred = $q.defer();
-                                    ScheduleService.loadSchedule(loggedInUser.clientResource,
-                                        $route.current.params.teamId, id)
-                                        .then(function (response) {
-                                            if (response) {
-                                                deferred.resolve(response);
-                                            } else {
-                                                deferred.reject();
-                                            }
-                                        }, function error() {
-                                            deferred.reject();
-                                        })
-                                    promises.push(deferred.promise);
-                                });
-                                
-                                $q.all(promises).then(function(response){
-                                    deferred.resolve(response);
-                                });
-                            });
-                            return deferred.promise;
-                        }
-                    ]
-                }
-            })
             .when('/teams/:teamId/encounter/:encounterId/instructions', {
                 templateUrl: 'client-facing/schedule/instructions/main.html',
                 controller: 'ScheduleProgramInstructionsViewController',
