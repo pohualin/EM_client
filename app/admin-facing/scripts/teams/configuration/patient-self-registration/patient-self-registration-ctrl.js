@@ -34,6 +34,7 @@ angular.module('emmiManager')
                 })
                     .finally(function () {
                         $scope.whenSaving = false;
+                        $scope.$emit('event-resetPatientDetailsOutline');
                     });
             };
 
@@ -42,11 +43,12 @@ angular.module('emmiManager')
                     $scope.patientSelfRegConfig = response;
                     $scope.createOrUpdateIdLabelConfig();
                     $alert({
-                        content: 'The team self reg configuration has been updated successfully.'
+                        content: 'The patient self reg configuration has been updated successfully.'
                     });
                 })
                     .finally(function () {
                         $scope.whenSaving = false;
+                        $scope.$emit('event-resetPatientDetailsOutline');
                     });
             };
 
@@ -79,12 +81,14 @@ angular.module('emmiManager')
                 if (!$scope.patientSelfRegConfig.entity.exposeEmail) {
                     $scope.patientSelfRegConfig.entity.requireEmail = false;
                 }
+                $scope.updatePatientDetails();
             };
 
             $scope.updatePhoneFields = function () {
                 if (!$scope.patientSelfRegConfig.entity.exposePhone) {
                     $scope.patientSelfRegConfig.entity.requirePhone = false;
                 }
+                $scope.updatePatientDetails();
             };
 
             $scope.updatePatientIdFields = function () {
@@ -92,10 +96,29 @@ angular.module('emmiManager')
                     $scope.patientSelfRegConfig.entity.requireId = false;
                 }
                 $scope.$broadcast('event-refreshPatientIdLabelFields');
+                $scope.updatePatientDetails();
+            };
+
+            $scope.updateReqDobFields = function () {
+                if (!$scope.patientSelfRegConfig.entity.exposeDateOfBirth) {
+                    $scope.patientSelfRegConfig.entity.requireDateOfBirth = false;
+                }
+                $scope.updatePatientDetails();
+            };
+
+            $scope.updatePatientNameFields = function () {
+                if (!$scope.patientSelfRegConfig.entity.exposeName) {
+                    $scope.patientSelfRegConfig.entity.requireName = false;
+                }
+                $scope.updatePatientDetails();
             };
 
             $scope.cancel = function () {
                 $scope.$broadcast('event-resetPatientSelfRegConfig');
+            };
+
+            $scope.updatePatientDetails = function () {
+                $scope.$emit('event-updateCardOutline');
             };
 
         }])

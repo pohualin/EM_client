@@ -27,7 +27,7 @@ angular.module('emmiManager')
                 $scope.loading = false;
             });
         };
-		
+
         /**
          * Edit team provider on a team
          */
@@ -44,7 +44,7 @@ angular.module('emmiManager')
                 $scope.clientProvider = angular.copy(response);
 
 			});
-			
+
 			ClientTeamSchedulingConfigurationService.getTeamSchedulingConfiguration($scope.teamResource).then(function(schedulingConfig){
 	            if (schedulingConfig.entity.useLocation) {
 	                // get a list of team locations by team
@@ -69,7 +69,7 @@ angular.module('emmiManager')
 	                editProviderModal.$promise.then(editProviderModal.show);
 	            }
 	        });
-			
+
 			_paq.push(['trackEvent', 'Form Action', 'Team Provider', 'Edit']);
 		};
 
@@ -112,11 +112,12 @@ angular.module('emmiManager')
                   backdrop: 'static'});
        	   });
         };
-        
+
         /**
          * Refresh team locations and team providers
          */
         $scope.refreshLocationsAndProviders = function () {
+            $scope.loading = true;
             // need to return the promise
             return ClientTeamSchedulingConfigurationService.getTeamSchedulingConfiguration($scope.teamResource).then(function (schedulingConfiguration) {
                 $scope.schedulingConfiguration = schedulingConfiguration;
@@ -132,6 +133,8 @@ angular.module('emmiManager')
                         $scope.handleResponse(response[0], 'listOfTeamProviders');
                         $scope.allTeamLocations = TeamProviderService.buildMultiSelectData(response[1]);
                     });
+                } else {
+                    $scope.loading = false;
                 }
             });
         };
@@ -166,11 +169,11 @@ angular.module('emmiManager')
                 $scope.providerErrorAlertForCreate.show();
             }
         };
-        
+
         $scope.$on('event:teamLocationSavedWithProvider', function () {
             $scope.refreshLocationsAndProviders();
         });
-        
+
         function init() {
             $scope.locationsColumnCharLimit = 25;
             $scope.allLocationsForTeam = 'All Locations';

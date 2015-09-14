@@ -58,7 +58,7 @@ angular.module('emmiManager')
             });
 
         };
-        
+
         $scope.cancelPopup = function() {
             //doing this to remove the teamLocations those locations that was clicked in the search and them press cancel
             var teamLocationsAux = {};
@@ -81,9 +81,10 @@ angular.module('emmiManager')
         };
 
         $scope.refresh = function() {
+            $scope.loading = true;
             return ClientTeamSchedulingConfigurationService.getTeamSchedulingConfiguration($scope.teamResource).then(function (schedulingConfiguration) {
                 $scope.schedulingConfiguration = schedulingConfiguration;
-                if($scope.schedulingConfiguration.entity.useLocation){
+                if ($scope.schedulingConfiguration.entity.useLocation) {
                     $scope.teamLocations = {};
                     return TeamLocation.loadTeamLocationsSimple($scope.teamClientResource.teamResource.link.teamLocations).then(function(pageLocations) {
                         angular.forEach(pageLocations.content, function (teamLocation) {
@@ -91,6 +92,8 @@ angular.module('emmiManager')
                         });
                         $scope.handleResponse(pageLocations, managedLocationList);
                     });
+                } else {
+                    $scope.loading = false;
                 }
             });
         };

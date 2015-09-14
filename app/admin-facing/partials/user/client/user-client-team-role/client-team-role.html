@@ -65,7 +65,7 @@
                                     Permissions:<br/>
                                     <div class="permissions-list">
 				                        <span
-                                            data-ng-repeat="permission in clientTeamRole.entity.permissions | orderBy:permission.rank">
+                                            data-ng-repeat="permission in clientTeamRole.entity.permissions | orderBy:'rank'">
 			                    			{{permission.name  | translate }}{{!$last ? ',' : ''}}&nbsp;
 			                    		</span>
                                     </div>

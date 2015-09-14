@@ -58,6 +58,8 @@ angular.module('emmiManager')
                     })
                     .finally(function () {
                         $scope.whenSaving = false;
+                        $scope.outlineSelfRegCard = false;
+
                     });
             };
 
@@ -81,6 +83,7 @@ angular.module('emmiManager')
                     })
                     .finally(function () {
                         $scope.whenSaving = false;
+                        $scope.outlineSelfRegCard = false;
                     });
             };
 
@@ -115,6 +118,8 @@ angular.module('emmiManager')
              */
 
             $scope.resetValidity = function (form) {
+                $scope.outlineSelfRegCard = true;
+                $scope.showPatientDetailsOutline = false;
                 form.$setDirty(true);
                 form.code.$setValidity('unique', true);
                 if ($scope.uniquePopup) {
@@ -126,10 +131,22 @@ angular.module('emmiManager')
              * on click of cancel button for self-registration edit section
              */
             $scope.cancel = function (form) {
+                $scope.outlineSelfRegCard = false;
                 form.$setPristine(true);
                 $scope.selfRegFormSubmitted = false;
-                $scope.selfRegConfig.code = $scope.originalSelfRegConfig.code ? angular.copy($scope.originalSelfRegConfig.code) : {'code':''};
-
+                $scope.selfRegConfig.code = $scope.originalSelfRegConfig.code ? angular.copy($scope.originalSelfRegConfig.code) : {'code': ''};
             };
+
+            $scope.$on('event-updateCardOutline', function () {
+                    $scope.outlineSelfRegCard = false;
+                    $scope.showPatientDetailsOutline = true;
+                }
+            );
+
+            $scope.$on('event-resetPatientDetailsOutline', function () {
+                    $scope.showPatientDetailsOutline = false;
+                }
+            );
+
         }])
 ;
