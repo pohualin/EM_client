@@ -19,7 +19,7 @@
                 </div> -->
                 <div class="program-list_wrapper" data-ng-show="programs">
                     <ul>
-                        <li data-ng-repeat="program in programs | orderBy:'program.sortIdx'" data-ng-class="{ 'added' : program.disabled }">
+                        <li data-ng-repeat="program in programs" data-ng-class="{ 'added' : program.disabled }">
                             <div class="checkbox">
                                 <input type="checkbox" id="program_{{program.entity.id}}"
                                     data-ng-disabled="program.disabled" data-ng-model="program.selected" data-ng-change="selectProgram(program,addProgramForm)"/>
