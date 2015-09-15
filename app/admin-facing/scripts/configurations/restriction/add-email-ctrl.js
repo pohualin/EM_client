@@ -29,6 +29,7 @@ angular.module('emmiManager')
              */
             $scope.add = function (emailRestrictConfigurationForm, addAnother) {
                 $scope.emailRestrictConfigurationFormSubmitted = true;
+                $scope.emailRestrictConfiguration.entity.emailEnding = $scope.emailRestrictConfiguration.entity.emailEnding.toLowerCase();
 
                 if (emailRestrictConfigurationForm.$valid) {
                     $scope.whenSaving = true;
