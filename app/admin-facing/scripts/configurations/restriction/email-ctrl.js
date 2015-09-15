@@ -16,8 +16,6 @@ angular.module('emmiManager')
             $scope.loading = true;
             EmailRestrictConfigurationsService.fetchPage(href).then(function (emailRestrictResponse) {
                 $scope.handleResponse(emailRestrictResponse, contentProperty);
-
-                EmailRestrictConfigurationsService.setEmailRestrictConfigurations($scope.emailRestrictConfigurations);
             }, function () {
                 $scope.loading = false;
             });
@@ -79,8 +77,6 @@ angular.module('emmiManager')
                         $scope.sortProperty = sort;
                     }
                     $scope.handleResponse(emailRestrictResponse, contentProperty);
-
-                    EmailRestrictConfigurationsService.setEmailRestrictConfigurations($scope.emailRestrictConfigurations);
             });
             $scope.sortProperty = null;
         }

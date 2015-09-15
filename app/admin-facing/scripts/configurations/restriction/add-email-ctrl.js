@@ -16,20 +16,6 @@ angular.module('emmiManager')
                     show: false, backdrop: 'static'
                 });
 
-            $scope.hasDuplicateEmailEnding = function(emailEnding) {
-                var duplicate = false;
-                var emailConfigurations = EmailRestrictConfigurationsService.getEmailRestrictConfigurations();
-
-                for (var i = 0, len = emailConfigurations.length; i < len; i++) {
-                    if (emailConfigurations[i].entity.emailEnding === emailEnding) {
-                        duplicate = true;
-                        break;
-                    }
-                }
-
-                return duplicate;
-            };
-
             /**
              * Called when add another is clicked to add a new emailRestrictConfiguration
              */
@@ -43,14 +29,9 @@ angular.module('emmiManager')
              */
             $scope.add = function (emailRestrictConfigurationForm, addAnother) {
                 $scope.emailRestrictConfigurationFormSubmitted = true;
-                emailRestrictConfigurationForm.emailEnding.duplicate = false;
 
-                var duplicate = $scope.hasDuplicateEmailEnding($scope.emailRestrictConfiguration.entity.emailEnding.toLowerCase());
-
-                if (emailRestrictConfigurationForm.$valid && !duplicate) {
+                if (emailRestrictConfigurationForm.$valid) {
                     $scope.whenSaving = true;
-
-                    $scope.emailRestrictConfiguration.entity.emailEnding = $scope.emailRestrictConfiguration.entity.emailEnding.toLowerCase();
 
                     EmailRestrictConfigurationsService.save($scope.emailRestrictConfiguration).then(
                         function success(response) {
@@ -70,24 +51,15 @@ angular.module('emmiManager')
                                 $scope.setEmailsThatDoNotFollowRestrictions(emailsThatDoNotFollowRestrictions);
                             });
                         }, function error(response) {
-                            if (response.status === 406) {
-                                emailRestrictConfigurationForm.emailEnding.duplicate = true;
-                                $scope.showErrorBanner();
-                            } else {
-                                $alert({
-                                    content: '<b>ERROR:</b> ' + $scope.client.name + ' has not been updated.',
-                                    type: 'danger'
-                                });
-                            }
+                            $alert({
+                                content: '<b>ERROR:</b> ' + $scope.client.name + ' has not been updated.',
+                                type: 'danger'
+                            });
                         }
                     ).finally(function () {
                         $scope.whenSaving = false;
                     });
                 } else {
-                    if (duplicate) {
-                        emailRestrictConfigurationForm.emailEnding.duplicate = true;
-                    }
-
                     $scope.showErrorBanner();
                 }
             };
