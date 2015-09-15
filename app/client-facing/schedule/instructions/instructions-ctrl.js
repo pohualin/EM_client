@@ -8,9 +8,15 @@
      * scheduled program
      */
         .controller('ScheduleProgramInstructionsViewController',
-        ['$scope', 'scheduledProgram',
-            function ($scope, scheduledProgram) {
-                $scope.scheduledProgram = scheduledProgram;
+        ['$scope', '$controller', 'scheduledPrograms',
+            function ($scope, $controller, scheduledPrograms) {
+            
+                $controller('CommonPagination', {$scope: $scope});
+                $controller('CommonSort', {$scope: $scope});
+                
+                $scope.handleResponse(scheduledPrograms, 'scheduledPrograms');
+                $scope.patient = $scope.scheduledPrograms[0].entity.patient;
+                $scope.team = $scope.scheduledPrograms[0].entity.team;
             }
         ])
 

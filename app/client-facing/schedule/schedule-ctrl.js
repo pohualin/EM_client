@@ -58,16 +58,13 @@
                         $scope.whenSaving = true;
                         ScheduleService.scheduleBulk($scope.team)
                             .then(function (response) {
-                                // TODO PL: 
-                                // Only show instruction for the first scheduled program
-                                // this will need to be addressed in another ticket
                                 var scheduledProgramResource = response[0];
 
                                 $location.path(UriTemplate
-                                    .create('/teams/{teamId}/schedule/{scheduleId}/instructions')
+                                    .create('/teams/{teamId}/encounter/{encounterId}/instructions')
                                     .stringify({
                                         teamId: scheduledProgramResource.entity.team.id,
-                                        scheduleId: scheduledProgramResource.entity.id
+                                        encounterId: scheduledProgramResource.entity.encounter.id
                                     }));
 
                                 $alert({
