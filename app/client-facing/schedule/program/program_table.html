@@ -34,6 +34,11 @@
                                 </label>
                             </div>
                         </li>
+                        <li data-ng-if="showAll && links">
+                            <div data-ng-repeat="link in links | filter:{name:'Next'}">
+                                <span data-ng-if="currentPage > 2">modify search term to narrow results.&nbsp;</span><button class="btn-link" data-ng-click="showMoreResults(link.href)">see more results</button>
+                            </div>
+                        </li>
                     </ul>
                 </div>
                 <div class="table-no-results"  data-ng-hide="programs">
