@@ -29,7 +29,7 @@ angular.module('emmiManager')
  */
     .controller('ClientCommonPagination', ['$scope', function ($scope) {
 
-        $scope.pageSizes = [5, 10, 15, 25];
+        $scope.pageSizes = [5, 10, 15, 25, 50];
 
         $scope.isEmpty = function (obj) {
             if (!obj) {
@@ -39,9 +39,7 @@ angular.module('emmiManager')
         };
 
         $scope.handleResponse = function (responsePage, contentProperty) {
-
             if (responsePage && responsePage.content) {
-
                 // sort the rows the way they exist on the response page
                 for (var sort = 0, size = responsePage.content.length; sort < size; sort++) {
                     var content = responsePage.content[sort];
@@ -57,16 +55,20 @@ angular.module('emmiManager')
                 for (var i = 0, l = responsePage.linkList.length; i < l; i++) {
                     var aLink = responsePage.linkList[i];
                     if (aLink.rel.indexOf('self') === -1) {
-                        var linkValue = aLink.rel.substring(5);
-                        if (linkValue === 'next') {
-                            linkValue = '>';
-                        } else if (linkValue === 'prev') {
-                            linkValue = '<';
+                        var linkValue = aLink.rel.substring(5),
+                            linkClass = '';
+                        if (linkValue === 'next'){
+                            linkValue = 'Next';
+                            linkClass = 'next';
+                        } else if (linkValue === 'prev'){
+                            linkValue = 'Previous';
+                            linkClass = 'previous';
                         }
                         $scope.links.push({
                             order: i,
                             name: linkValue,
-                            href: aLink.href
+                            href: aLink.href,
+                            className: linkClass
                         });
                     }
                 }

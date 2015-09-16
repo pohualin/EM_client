@@ -16,16 +16,21 @@
                                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                                      data-title="Required" aria-label="Required"></div>
                                 <div class="error-circle fa-exclamation-circle" role="alert"
-                                    data-ng-show="emailRestrictConfigurationForm.emailEnding.$error.pattern && emailRestrictConfigurationFormSubmitted"
-                                    data-bs-tooltip data-placement="right" data-type="danger"
-                                    data-container="body" data-title="Please enter a valid email ending" aria-label="Please enter a valid email ending"></div>
-                                <input class="form-control" id="emailEnding"
+                                     data-ng-show="emailRestrictConfigurationForm.emailEnding.$error.pattern && emailRestrictConfigurationFormSubmitted"
+                                     data-bs-tooltip data-placement="right" data-type="danger"
+                                     data-container="body" data-title="Please enter a valid email ending" aria-label="Please enter a valid email ending"></div>
+                                <div class="error-circle fa-exclamation-circle" role="alert"
+                                     data-ng-show="emailRestrictConfigurationForm.emailEnding.$error.duplicateEmail && emailRestrictConfigurationFormSubmitted"
+                                     data-bs-tooltip data-placement="right" data-type="danger"
+                                     data-container="body" data-title="This email ending has already been added" aria-label="This email ending has already been added"></div>
+
+                                <input class="form-control text-lowercase" id="emailEnding"
                                        data-ng-model="emailRestrictConfiguration.entity.emailEnding"
                                        name="emailEnding"
                                        type="text"
                                        data-ng-pattern="/^[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/"
                                        placeholder="domain.com (subdomains are allowed)"
-                                       required data-auto-focus>
+                                       required data-auto-focus no-duplicate-email/>
                             </div>
                         </div>
                     </div>
@@ -37,7 +42,7 @@
                                 <input class="form-control" id="passwordLength"
                                        data-ng-model="emailRestrictConfiguration.entity.description"
                                        name="description"
-                                       type="text" >
+                                       type="text"/>
                             </div>
                         </div>
                     </div>
@@ -46,8 +51,7 @@
                     <input type="submit" id="submit" class="btn btn-success" value="Save"/>
                     <button type="button" class="btn btn-default"
                             data-ng-disabled="whenSaving"
-                            data-ng-click="add(emailRestrictConfigurationForm, true)"><i class="icon-plus"></i> Save &
-                        Add Another
+                            data-ng-click="add(emailRestrictConfigurationForm, true)"><i class="icon-plus"></i>Save & Add Another
                     </button>
                     <button type="button" class="btn btn-cancel"
                             data-ng-disabled="whenSaving"
