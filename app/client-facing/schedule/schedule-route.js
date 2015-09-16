@@ -90,7 +90,7 @@ angular.module('emmiManager')
             })
             .when('/teams/:teamId/encounter/:encounterId/instructions/en/print', {
                 templateUrl: 'client-facing/schedule/instructions/print_material.html',
-                controller: 'ScheduleProgramInstructionsViewController',
+                controller: 'PrintInstructionsController',
                 access: {
                     authorizedRoles: [USER_ROLES.all]
                 },
