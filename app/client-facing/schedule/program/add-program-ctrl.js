@@ -23,7 +23,9 @@ angular.module('emmiManager')
                 location: '',
                 viewByDate: ''
             };
-
+            
+            $scope.fiveYearsFromTodayString = moment().startOf('day').add(5, 'year').format('MM/DD/YYYY');
+            
             /**
              * Watch teamSchdulingConfiguration and set new values to scope
              */
