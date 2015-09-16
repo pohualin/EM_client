@@ -23,7 +23,7 @@ angular.module('emmiManager')
         $routeProvider
             .when('/clients/:clientId/program_content', {
                 templateUrl: 'admin-facing/partials/configurations/program-content/main.html',
-                controller: 'ClientProgramContentConfigurationController',
+                controller: 'MainContentConfigurationController',
                 access: {
                     authorizedRoles: USER_ROLES.all
                 },
