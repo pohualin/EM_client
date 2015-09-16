@@ -91,7 +91,16 @@
                                data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                                data-title="Please enter a date in the future" aria-label="Please enter a date in the future"></div>
                             <div class="error-circle fa-exclamation-circle" role="alert"
+                               data-ng-show="!selectedProgramForm.viewByDate.$error.required &&
+                                             selectedProgramForm.viewByDate.$error.max &&
+                                             addProgramFormSubmitted"
+                               data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                               data-title="Please enter a date within 5 years from today" aria-label="Please enter a date within 5 years from today"></div>
+                            <div class="error-circle fa-exclamation-circle" role="alert"
                                data-ng-show="(selectedProgramForm.viewByDate.$error.min &&
+                                             selectedProgramForm.viewByDate.$error.date &&
+                                             selectedProgramForm.viewByDate.$error.required ||
+                                             selectedProgramForm.viewByDate.$error.max &&
                                              selectedProgramForm.viewByDate.$error.date &&
                                              selectedProgramForm.viewByDate.$error.required ||
                                              selectedProgramForm.viewByDate.$error.date &&
@@ -101,7 +110,8 @@
                                data-title="Please select a valid date" aria-label="Please select a valid date"></div>
                             <div class="has-input-icon has-input-icon-calendar" data-ng-if="selectedProgram.useFirstProgram">
                                 <input id="programCard{{selectedProgram.program.entity.id}}ViewBy" class="form-control" placeholder="MM/DD/YYYY" type="text" name="viewByDate"
-                                    data-ng-model="selectedProgram.firstProgramResource.viewByDate"
+                                    data-ng-model="selectedProgram.firstProgramResource.viewByDate" data-bs-datepicker
+                                    data-min-date="today" data-max-date="{{fiveYearsFromTodayString}}" data-trigger="manual"
                                     data-ng-change="onViewByDateChangeAndUseFirstProgram(selectedProgram, $first)" required>
                                 <span class="input-icon" data-ng-model="selectedProgram.firstProgramResource.viewByDate" data-autoclose="true"
                                     data-dateType="iso" data-bs-datepicker data-min-date="today" data-max-date="{{fiveYearsFromTodayString}}"
@@ -109,7 +119,9 @@
                             </div>
                             <div class="has-input-icon has-input-icon-calendar" data-ng-if="!selectedProgram.useFirstProgram">
                                 <input id="programCard{{selectedProgram.program.entity.id}}ViewBy" class="form-control" placeholder="MM/DD/YYYY" type="text" name="viewByDate"
-                                    data-ng-model="selectedProgram.viewByDate" required>
+                                    data-ng-model="selectedProgram.viewByDate" data-bs-datepicker
+                                    data-min-date="today" data-max-date="{{fiveYearsFromTodayString}}" data-trigger="manual"
+                                    required>
                                 <span class="input-icon" data-ng-model="selectedProgram.viewByDate" data-autoclose="true"
                                     data-dateType="iso" data-bs-datepicker data-min-date="today"  data-max-date="{{fiveYearsFromTodayString}}"
                                     data-trigger="click" data-placement="top-left"><i class="icon-calendar"></i></span>
