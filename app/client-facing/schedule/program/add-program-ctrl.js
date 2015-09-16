@@ -6,11 +6,12 @@ angular.module('emmiManager')
         function ($scope, $q, $controller, AddProgramService, moment, $alert, $timeout, ScheduledProgramFactory) {
 
             // add common pagination and sorting functions
-            $controller('CommonPagination', {$scope: $scope});
-            $controller('CommonSort', {$scope: $scope});
+            $controller('ClientCommonPagination', {$scope: $scope});
+            $controller('ClientCommonSort', {$scope: $scope});
 
             // initial loading
             var contentProperty = 'programs';
+            $scope.resultsPerPage = 50;
             $scope.programSearch = {
                 specialty: '',
                 query: ''
@@ -73,9 +74,25 @@ angular.module('emmiManager')
              * @param show true means show all, false means show top 10 only
              */
             $scope.showAllResults = function (show) {
-                var search = !show ? performSearch() : performSearch($scope.programSearch.query, $scope.sortProperty, $scope.currentPageSize, $scope.programSearch.specialty);
+                var search = !show ? performSearch() : performSearch($scope.programSearch.query, $scope.sortProperty, $scope.resultsPerPage, $scope.programSearch.specialty);
                 search.finally(function () {
                     $scope.showAll = show;
+                });
+            };
+
+            /**
+             * When 'see more results' is clicked (very similar to fetchPage)
+             *
+             * @param href to use for the data call
+             */
+            $scope.showMoreResults = function (href) {
+                $scope.loading = true;
+                AddProgramService.fetchProgramPage(href).then(function (programPage) {
+                    var previousResults = $scope[contentProperty];
+                    $scope.handleResponse(programPage, contentProperty);
+                    $scope[contentProperty] = previousResults.concat($scope[contentProperty]);
+                    previousResults = null;
+                    $scope.setSelectedProgramsCheckbox();
                 });
             };
 
