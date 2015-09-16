@@ -88,7 +88,7 @@ angular.module('emmiManager')
             $scope.showMoreResults = function (href) {
                 $scope.loading = true;
                 AddProgramService.fetchProgramPage(href).then(function (programPage) {
-                    var previousResults = angular.copy($scope[contentProperty]);
+                    var previousResults = $scope[contentProperty];
                     $scope.handleResponse(programPage, contentProperty);
                     $scope[contentProperty] = previousResults.concat($scope[contentProperty]);
                     previousResults = null;
