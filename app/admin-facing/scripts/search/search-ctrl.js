@@ -60,12 +60,12 @@ angular.module('emmiManager')
 /**
  * Pagination helper functions
  */
-    .controller('CommonPagination', ['$scope', function($scope){
+    .controller('CommonPagination', ['$scope', function ($scope) {
 
-        $scope.pageSizes = [5, 10, 15, 25];
+        $scope.pageSizes = [5, 10, 15, 25, 50];
 
         $scope.isEmpty = function (obj) {
-            if (!obj){
+            if (!obj) {
                 return true;
             }
             return angular.equals({}, obj);
@@ -74,7 +74,7 @@ angular.module('emmiManager')
         $scope.handleResponse = function (responsePage, contentProperty) {
         	if (responsePage && responsePage.content) {
                 // sort the rows the way they exist on the response page
-                for (var sort = 0, size = responsePage.content.length; sort < size; sort++ ){
+                for (var sort = 0, size = responsePage.content.length; sort < size; sort++ ) {
                     var content = responsePage.content[sort];
                     content.sortIdx = sort;
                 }
@@ -118,13 +118,13 @@ angular.module('emmiManager')
                 }
                 // handle sort response object
                 if (responsePage.sort) {
-                	    $scope.sortProperty = {
+                    $scope.sortProperty = {
                         property: responsePage.sort[0].property,
                         ascending: responsePage.sort[0].direction === 'ASC'
                     };
                 }
             } else {
-            	$scope.total = 0;
+                $scope.total = 0;
                 $scope[contentProperty] = null;
             }
             $scope.searchPerformed = true;
