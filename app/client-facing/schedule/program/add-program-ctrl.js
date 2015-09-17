@@ -275,6 +275,7 @@ angular.module('emmiManager')
             $scope.search = function () {
                 $scope.programSearchPerformed = true;
                 $scope.showAllResults(true);
+                $scope.selectedProgramsHolder = [];
             };
 
             /**
