@@ -5,7 +5,7 @@
                	<select id="primaryContentList" name="primaryContentList" class="form-control"
                    	data-ng-options="primaryContentList.name for primaryContentList in primaryContentList track by primaryContentList.name"
                    	data-ng-model="selectedContentSubscription.entity.contentSubscription"
-                   	data-ng-change="onChangePrimaryList()">
+                   	data-ng-change="onChangeSelectedPrimaryList()">
                	<option value="" title="primaryContentList">Select...</option>
                	</select>
        		</div>
@@ -23,7 +23,7 @@
        		</div>
        		
        		<div class="col-md-4">
-           		<div data-ng-if="initialAddAnotherContentSubscription && $last">
+           		<div data-ng-if="initialAddAnotherContentSubscription && $last && latestPrimaryContentList.length > 0">
            		<button  type="button" class="btn btn-link btn-link-nopad btn-heading" data-ng-click="initialAddSubscription()">
         			<i class="icon-plus"></i> ADD ANOTHER SUBSCRIPTION
     			</button>
