@@ -13,6 +13,7 @@ angular.module('emmiManager')
             $scope.patientSelfRegConfig.entity.patientIdLabelType = {};
 
             $scope.continue = function (form) {
+                $scope.patientSelfRegFormSubmitted = true;
                 if (form.$valid) {
                     $scope.whenSaving = true;
                     if ($scope.patientSelfRegConfig.entity && $scope.patientSelfRegConfig.entity.id) {
@@ -33,6 +34,7 @@ angular.module('emmiManager')
                     });
                 })
                     .finally(function () {
+                        $scope.patientSelfRegFormSubmitted = false;
                         $scope.whenSaving = false;
                         $scope.$emit('event-resetPatientDetailsOutline');
                     });
@@ -47,6 +49,7 @@ angular.module('emmiManager')
                     });
                 })
                     .finally(function () {
+                        $scope.patientSelfRegFormSubmitted = false;
                         $scope.whenSaving = false;
                         $scope.$emit('event-resetPatientDetailsOutline');
                     });
@@ -115,6 +118,7 @@ angular.module('emmiManager')
 
             $scope.cancel = function () {
                 $scope.$broadcast('event-resetPatientSelfRegConfig');
+                $scope.patientSelfRegFormSubmitted = false;
             };
 
             $scope.updatePatientDetails = function () {
