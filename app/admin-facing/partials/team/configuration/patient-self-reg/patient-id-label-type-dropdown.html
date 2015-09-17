@@ -1,15 +1,17 @@
 <div data-ng-controller="PatientIdLabelDropDownController" data-ng-cloak>
     <form name="patientIdLabelForm" class="form" novalidate>
         <div class="form-group" style="padding-left:34px">
-            <div class="form-group" >
-                <label for="idLabelType">Label</label>&nbsp;&nbsp;
-                <select class="form-control input-sm" style="width:200px;" id="idLabelType" name="idLabelType"
-                        data-ng-model="patientSelfRegConfig.entity.patientIdLabelType"
-                        data-ng-options="idLabelType.typeKey | translate for idLabelType in idLabelTypes track by idLabelType.id"
-                        data-chosen data-disable-search="true" data-width="'200px'"
-                        data-ng-change="updatePatientIDLabelTypeTranslations(patientSelfRegConfig.entity.patientIdLabelType)">
-                    <option value=""></option>
-                </select>
+            <div class="row">
+                <div class="col-sm-3" style="padding-bottom:18px">
+                    <label class="control-label" for="idLabelType">LABEL</label>
+                    <select class="form-control input-sm" style="width:200px;" id="idLabelType" name="idLabelType"
+                            data-ng-model="patientSelfRegConfig.entity.patientIdLabelType"
+                            data-ng-options="idLabelType.typeKey | translate for idLabelType in idLabelTypes track by idLabelType.id"
+                            data-chosen data-disable-search="true" data-width="'200px'"
+                            data-ng-change="updatePatientIDLabelTypeTranslations(patientSelfRegConfig.entity.patientIdLabelType)">
+                        <option value=""></option>
+                    </select>
+                </div>
             </div>
             <div class="row"
                  data-ng-show="patientSelfRegConfig.entity.patientIdLabelType.typeKey === 'PATIENT_SELF_REG_LABEL_OTHER'">
