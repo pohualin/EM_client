@@ -96,18 +96,25 @@ angular.module('emmiManager')
         };
         
         $scope.onChangePrimaryList = function(){
-        	   if(angular.isDefined($scope.selselectedectedContentSubscription.entity.contentSubscription)){
-                	if($scope.ContentSubscription.entity.contentSubscription.name === 'None'){
+        	   if(angular.isDefined($scope.contentSubscriptionHolder.entity.contentSubscription)){
+                	if($scope.contentSubscriptionHolder.entity.contentSubscription.name === 'None'){
                     	$scope.faithBased = false;
                        	$scope.selectedContentSubscription.entity.faithBased = false;
                     	$scope.showButtons(false);
                     }
                 	else{
-                       $scope.addAnotherContentSubscription = true;
+                	   $scope.addAnotherContentSubscription = true;
                        $scope.faithBased = true;
                        $scope.showButtons(true);
                     }
                	}
+         };
+         
+         $scope.onChangeSelectedPrimaryList = function(){
+        	    $scope.addAnotherContentSubscription = true;
+        	    $scope.initialAddAnotherContentSubscription = true;
+                $scope.faithBased = true;
+                $scope.showButtons(true);
          };
                    
        /* 
@@ -117,11 +124,11 @@ angular.module('emmiManager')
        $scope.addAnotherSubscription = function(newContentSubscription){
     	   $scope.initialAddAnotherContentSubscription = false;
     	   $scope.showSelectList  = true;
-    	   $scope.selectedContentList.push(newContentSubscription);
-    	   $scope.latestPrimaryContentList = ContentSubscriptionConfigurationService.filterLatestPrimaryContentList($scope.latestPrimaryContentList, newContentSubscription, $scope.selectedContentList.length);
     	   $scope.addAnotherContentSubscription = false;
     	   $scope.showButtons(true);
-           $scope.contentSubscriptionHolder = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
+    	   $scope.selectedContentList.push(newContentSubscription);
+    	   $scope.latestPrimaryContentList = ContentSubscriptionConfigurationService.filterLatestPrimaryContentList($scope.latestPrimaryContentList, newContentSubscription, $scope.selectedContentList.length);
+    	   $scope.contentSubscriptionHolder = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
        };
        
        $scope.initialAddSubscription = function(){
