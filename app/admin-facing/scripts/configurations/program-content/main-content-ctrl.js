@@ -12,23 +12,19 @@ angular.module('emmiManager')
         $scope.primaryContentList = [];
         $scope.sourceContentList = [];
         $scope.latestPrimaryContentList = [];
-        $scope.showSelectList = false;
-                         
+                        
         // Variables for the html to show or hide certain section
-        $scope.faithBased = false;
-        
-        $scope.addAnotherContentSubscription = false;
+        $scope.faithBased = true;
         $scope.initialAddAnotherContentSubscription = false;
         $scope.contentSubscriptionExist = false;
         $scope.noneSelected = false;
+        $scope.showSelectList = false;
         
         $scope.emmiEngagePlus = {};
         $scope.noneContent = {name:'None', id:0};
         $scope.selectedSourceContent = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
         $scope.selectedContentSubscription = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
         $scope.selectedContentList = [];
-       
-        
                
         /**
          * Cancel any changes
@@ -36,18 +32,9 @@ angular.module('emmiManager')
         $scope.cancel = function (contentSubscriptionForm) {
             contentSubscriptionForm.$setPristine();
             $scope.contentSubscriptionFormSubmitted = false;
-                 };
-        
-        $scope.initialReset = function(){
-        	 $scope.faithBased = false;
-             $scope.addAnotherContentSubscription = false;
-             $scope.initialAddAnotherContentSubscription = false;
-             $scope.contentSubscriptionExist = false;
-             $scope.noneSelected = false;
         };
         
-     
-         /**
+        /**
           * Create the primaryContentSubscription and sourceContentSubscription
           * drop down list
           */
@@ -97,12 +84,9 @@ angular.module('emmiManager')
             angular.forEach($scope.selectedContentList, function (aContent){
             	$scope.latestPrimaryContentList = ContentSubscriptionConfigurationService.filterLatestPrimaryContentList($scope.latestPrimaryContentList, aContent, $scope.selectedContentList.length);
      	    });
-            console.log($scope.latestPrimaryContentList.length);
-            
+             
         };
-        
-              
-         
+
        $scope.getClientContentList = function(){
     	   $scope.selectedContentList = [];
     	   ContentSubscriptionConfigurationService.getClientContentSubscriptionConfiguration().then(function (response) {
@@ -115,6 +99,7 @@ angular.module('emmiManager')
                else{
                      $scope.selectedContentSubscription = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
                      $scope.contentSubscriptionExist = false;
+                     $scope.showSelectList  = true;
                 }
             }); 
        };

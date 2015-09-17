@@ -116,7 +116,7 @@ angular.module('emmiManager')
                  * Filter the primary content list based from the requirement
                  */    
                 filterLatestPrimaryContentList: function(latestContentList, newContentSubscription, selectedContentLength){
-             	   var newPrimaryList = [];
+                 var newPrimaryList = [];
              	 if(angular.isDefined(newContentSubscription.entity.contentSubscription !== 'null')){
              	   if(newContentSubscription.entity.contentSubscription.name !== 'None'){
              		  angular.forEach(latestContentList, function (aContent, index){
@@ -151,7 +151,7 @@ angular.module('emmiManager')
                  		   (newContentSubscription.entity.contentSubscription.id !== 128)){
              		 angular.forEach(latestContentList, function (aContent, index){
                  		   if(aContent.id === 128){
-         		   				latestContentList.splice(index,1);
+         		   				latestContentList.splice(index,2);
          		   			}
          		   			if(angular.equals(aContent.id, newContentSubscription.entity.contentSubscription.id)){
          		   			  latestContentList.splice(index,1);
