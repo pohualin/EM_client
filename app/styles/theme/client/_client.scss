@@ -129,6 +129,11 @@ h3, .h3 {
     @include button-size($padding-xs-vertical, $padding-xs-horizontal, $font-size-small, $line-height-small, $border-radius-base);
 }
 
+.btn[disabled] {
+    cursor: default;
+}
+
+
 // close button
 .close {
     font-size: 22px;
