@@ -19,7 +19,7 @@
                 </div> -->
                 <div class="program-list_wrapper" data-ng-show="programs">
                     <ul>
-                        <li data-ng-repeat="program in programs | orderBy:'program.sortIdx'" data-ng-class="{ 'added' : program.disabled }">
+                        <li data-ng-repeat="program in programs" data-ng-class="{ 'added' : program.disabled }">
                             <div class="checkbox">
                                 <input type="checkbox" id="program_{{program.entity.id}}"
                                     data-ng-disabled="program.disabled" data-ng-model="program.selected" data-ng-change="selectProgram(program,addProgramForm)"/>
@@ -32,6 +32,11 @@
                                     <span data-ng-if="program.entity.type.name === 'MESSAGE'" class="program-list_item-icon icon-telephone" aria-label="Message" title="Message"></span>
                                     <span class="program-list_item-text">{{program.entity.name}}</span>
                                 </label>
+                            </div>
+                        </li>
+                        <li data-ng-if="showAll && links">
+                            <div data-ng-repeat="link in links | filter:{name:'Next'}">
+                                <span data-ng-if="currentPage > 2">modify search term to narrow results.&nbsp;</span><button class="btn-link" data-ng-click="showMoreResults(link.href)">see more results</button>
                             </div>
                         </li>
                     </ul>

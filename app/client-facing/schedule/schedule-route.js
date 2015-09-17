@@ -59,20 +59,20 @@ angular.module('emmiManager')
                 },
                 resolve: requiredResources
             })
-            .when('/teams/:teamId/schedule/:scheduleId/instructions', {
+            .when('/teams/:teamId/encounter/:encounterId/instructions', {
                 templateUrl: 'client-facing/schedule/instructions/main.html',
                 controller: 'ScheduleProgramInstructionsViewController',
                 access: {
                     authorizedRoles: [USER_ROLES.all]
                 },
                 resolve: {
-                    'scheduledProgram': ['$q', '$route', 'AuthSharedService', 'ScheduleService',
+                    'scheduledPrograms': ['$q', '$route', 'AuthSharedService', 'ScheduleService',
                         function ($q, $route, AuthSharedService, ScheduleService) {
                             var deferred = $q.defer();
                             AuthSharedService.currentUser().then(function (loggedInUser) {
-                                ScheduleService.loadSchedule(loggedInUser.clientResource,
-                                    $route.current.params.teamId,
-                                    $route.current.params.scheduleId)
+                                ScheduleService.loadEncounter(loggedInUser.clientResource,
+                                    $route.current.params.teamId, 
+                                    $route.current.params.encounterId)
                                     .then(function (response) {
                                         if (response) {
                                             deferred.resolve(response);

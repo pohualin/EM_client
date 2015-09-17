@@ -1,0 +1,15 @@
+<div class="col-md-12" data-ng-cloak>
+    <div class="patient-info">
+        <h1 class="patient-info_title">
+            <span class="patient-info_name">{{ patient.firstName }} {{ patient.lastName }}</span>
+        </h1>
+        <div class="patient-info_entity">
+            <span class="patient-info_label">DOB</span>
+            <span class="patient-info_value">{{ patient.dateOfBirth | date : 'MM/dd/yyyy' }}</span>
+        </div>
+        <div class="patient-info_entity">
+            <span class="patient-info_label">Patient ID</span>
+            <span class="patient-info_value">{{ patient.id }}</span>
+        </div>
+    </div>
+</div>

@@ -54,30 +54,29 @@
                  * Saves schedule for valid patient and program on click of 'Finish Scheduling'
                  */
                 $scope.saveScheduledProgramForPatient = function () {
-                    if (ScheduledProgramFactory.allValid()) {
-                        $scope.whenSaving = true;
-                        ScheduleService.scheduleBulk($scope.team)
-                            .then(function (response) {
-                                // TODO PL: 
-                                // Only show instruction for the first scheduled program
-                                // this will need to be addressed in another ticket
-                                var scheduledProgramResource = response[0];
+                    ScheduledProgramFactory.allValid().then(function (allValid) {
+                        if (allValid) {
+                            $scope.whenSaving = true;
+                            ScheduleService.scheduleBulk($scope.team)
+                                .then(function (response) {
+                                    var scheduledProgramResource = response[0];
 
-                                $location.path(UriTemplate
-                                    .create('/teams/{teamId}/schedule/{scheduleId}/instructions')
-                                    .stringify({
-                                        teamId: scheduledProgramResource.entity.team.id,
-                                        scheduleId: scheduledProgramResource.entity.id
-                                    }));
+                                    $location.path(UriTemplate
+                                        .create('/teams/{teamId}/encounter/{encounterId}/instructions')
+                                        .stringify({
+                                            teamId: scheduledProgramResource.entity.team.id,
+                                            encounterId: scheduledProgramResource.entity.encounter.id
+                                        }));
 
-                                $alert({
-                                    content: 'Program has been scheduled successfully'
+                                    $alert({
+                                        content: 'Program has been scheduled successfully'
+                                    });
+                                }).finally(function () {
+                                    $scope.whenSaving = false;
+                                    ScheduledProgramFactory.selectedPrograms = null;
                                 });
-                            }).finally(function () {
-                                $scope.whenSaving = false;
-                                ScheduledProgramFactory.selectedPrograms = null;
-                            });
-                    }
+                        }
+                    });
                 };
                 
                 $scope.scheduledProgram = ScheduledProgramFactory;
