@@ -275,6 +275,7 @@ angular.module('emmiManager')
             $scope.search = function () {
                 $scope.programSearchPerformed = true;
                 $scope.showAllResults(true);
+                $scope.selectedProgramsHolder = [];
             };
 
             /**
@@ -340,6 +341,11 @@ angular.module('emmiManager')
              * Clear selectedProgramsHolder
              */
             $scope.addSelectedPrograms = function () {
+                // check useFirstProgram on first selectedProgram
+                if ($scope.selectedPrograms && $scope.selectedPrograms.length === 0) {
+                    $scope.useFirstProgram = true;
+                }
+                
                 $scope.selectedPrograms = $scope.selectedPrograms.concat($scope.selectedProgramsHolder);
                 angular.forEach($scope.selectedProgramsHolder, function (programInHolder) {
                     programInHolder.useFirstProgram = $scope.useFirstProgram;

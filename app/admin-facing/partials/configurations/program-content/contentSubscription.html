@@ -5,9 +5,10 @@
 	<div data-ng-include="'admin-facing/partials/configurations/program-content/add-content-subscription.html'"></div>
 </div>
 
-<div class="row" data-ng-if="latestPrimaryContentList.length > 1 && !initialAddAnotherContentSubscription">
+<div class="row" data-ng-if="latestPrimaryContentList.length > 0 && !initialAddAnotherContentSubscription">
+           
            <div class="col-md-4">
-           <div class="form-group" >
+           <div data-ng-if="showSelectList" >
                 <select id="latestPrimaryContentList" name="latestPrimaryContentList" class="form-control"
                     data-ng-options="latestPrimaryContentList.name for latestPrimaryContentList in latestPrimaryContentList track by latestPrimaryContentList.name"
                     data-ng-model="contentSubscriptionHolder.entity.contentSubscription"
@@ -35,25 +36,26 @@
            			</div>
            		</div>
            		<div class="col-md-4">
-           			<div data-ng-if="latestPrimaryContentList.length > 0">
+           			<div data-ng-if="latestPrimaryContentList.length > 0 && addAnotherContentSubscription">
            			<button  type="button" class="btn btn-link btn-link-nopad btn-heading" data-ng-click="addAnotherSubscription(contentSubscriptionHolder)">
         				<i class="icon-plus"></i> ADD ANOTHER SUBSCRIPTION
     				</button>
     				</div>
            		</div>
           </div>
+          
 </div>
 <div data-ng-if="!noneSelected">
 <div class="row" data-ng-if="faithBased">
      	<div class="col-md-6">
-     	<div class="form-group">
+     	
           <div class="checkbox">
                <input id="faithBased" type="checkbox"
                       data-ng-model="selectedContentSubscription.entity.faithBased"
                       data-ng-change="onChangeFaithBased(selectedContentSubscription.entity.faithBased)"/>
                 <label for="faithBased">Apply Faith-Based Filter for this Client</label>
           </div>
-    	</div>
+    	
      	</div>
 </div>
 <div class="row">
