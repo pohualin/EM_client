@@ -50,10 +50,21 @@ angular.module('emmiManager')
             if(notInList &&
                (angular.isDefined($scope.contentSubscriptionHolder))){
                	$scope.selectedContentList.push($scope.contentSubscriptionHolder);
-               	$scope.contentSubscriptionHolder = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
+               //	$scope.contentSubscriptionHolder = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
              }
+            angular.forEach($scope.selectedContentList, function (aContent){
+            if(aContent.entity.contentSubscription.id === '128'){
+                aContent.entity.contentSubscription.name = 'EmmiEngage';
+                if(angular.isDefined($scope.selectedSourceContent)){            
+                    	 $scope.selectedContentList.push($scope.selectedSourceContent);
+                  }
+            }
+            });
+            console.log($scope.selectedContentList);
             ContentSubscriptionConfigurationService.saveAll($scope.selectedContentList, $scope.selectedContentSubscription.entity.faithBased).then(function(response){
+            	console.log($scope.selectedContentList);
             	angular.copy(response, $scope.selectedContentList);
+            	console.log($scope.selectedContentList);
             	//$scope.separateSavedLists($scope.selectedContentList);
             	$scope.$emit('selectedContentList');
             	$alert({
@@ -82,6 +93,7 @@ angular.module('emmiManager')
         $scope.reset = function(){
         	$scope.initialAddAnotherContentSubscription = true;
         	$scope.contentSubscriptionExist = false;
+        	$scope.showSelectList  = false;
        	  	$scope.whenSaving = false;
        	   	$scope.showButtons(false);
         };
@@ -106,7 +118,9 @@ angular.module('emmiManager')
         * push the new content subscription to the selectedContentList
         */
        $scope.addAnotherSubscription = function(newContentSubscription){
+    	   console.log(' add another subscription');
     	   $scope.initialAddAnotherContentSubscription = false;
+    	   $scope.showSelectList  = true;
     	   $scope.selectedContentList.push(newContentSubscription);
     	   $scope.latestPrimaryContentList = ContentSubscriptionConfigurationService.filterLatestPrimaryContentList($scope.latestPrimaryContentList, newContentSubscription, $scope.selectedContentList.length);
     	   $scope.addAnotherContentSubscription = false;
@@ -115,8 +129,10 @@ angular.module('emmiManager')
        };
        
        $scope.initialAddSubscription = function(){
+    	   console.log('initial add');
     	   $scope.initialAddAnotherContentSubscription = false;
     	   $scope.addAnotherContentSubscription = false;
+    	   $scope.showSelectList  = true;
     	   $scope.contentSubscriptionHolder = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
        };
        

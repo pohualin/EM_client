@@ -5,9 +5,9 @@
 	<div data-ng-include="'admin-facing/partials/configurations/program-content/add-content-subscription.html'"></div>
 </div>
 
-<div class="row" data-ng-if="latestPrimaryContentList.length > 1 && !initialAddAnotherContentSubscription">
+<div class="row" data-ng-if="latestPrimaryContentList.length > 0 && !initialAddAnotherContentSubscription">
            <div class="col-md-4">
-           <div class="form-group" >
+           <div data-ng-if="showSelectList" >
                 <select id="latestPrimaryContentList" name="latestPrimaryContentList" class="form-control"
                     data-ng-options="latestPrimaryContentList.name for latestPrimaryContentList in latestPrimaryContentList track by latestPrimaryContentList.name"
                     data-ng-model="contentSubscriptionHolder.entity.contentSubscription"

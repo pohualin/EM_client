@@ -12,6 +12,7 @@ angular.module('emmiManager')
         $scope.primaryContentList = [];
         $scope.sourceContentList = [];
         $scope.latestPrimaryContentList = [];
+        $scope.showSelectList = false;
                          
         // Variables for the html to show or hide certain section
         $scope.faithBased = false;
@@ -64,7 +65,7 @@ angular.module('emmiManager')
                     $scope.emmiEngagePlus.name = 'EmmiEngage+';
                  }
             });
-            $scope.primaryContentList.splice(0, 0, $scope.emmiEngagePlus);
+            $scope.primaryContentList.splice(1, 0, $scope.emmiEngagePlus);
             $scope.primaryContentList.push($scope.noneContent);
             angular.copy($scope.primaryContentList, $scope.latestPrimaryContentList);
             
@@ -96,6 +97,8 @@ angular.module('emmiManager')
             angular.forEach($scope.selectedContentList, function (aContent){
             	$scope.latestPrimaryContentList = ContentSubscriptionConfigurationService.filterLatestPrimaryContentList($scope.latestPrimaryContentList, aContent, $scope.selectedContentList.length);
      	    });
+            console.log($scope.latestPrimaryContentList.length);
+            
         };
         
               

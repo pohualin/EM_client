@@ -23,7 +23,7 @@
        		</div>
        		
        		<div class="col-md-4">
-           		<div data-ng-if="initialAddAnotherContentSubscription && $last">
+           		<div data-ng-if="initialAddAnotherContentSubscription && $last && latestPrimaryContentList.length > 0">
            		<button  type="button" class="btn btn-link btn-link-nopad btn-heading" data-ng-click="initialAddSubscription()">
         			<i class="icon-plus"></i> ADD ANOTHER SUBSCRIPTION
     			</button>

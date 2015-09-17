@@ -93,6 +93,7 @@ angular.module('emmiManager')
                     			
                     			aNewContent.entity.faithBased = faithBased;
                     			self.update(aNewContent).then(function(response){
+                    				deferred.resolve(response);	
                     	    });
                     		}
                     		else if(angular.isDefined(aNewContent.entity.contentSubscription.id)){
@@ -158,7 +159,6 @@ angular.module('emmiManager')
          		   		});  
          	   
          	       } 
-             	   
              	   else{
              		   angular.forEach(latestContentList, function (aContent, index){
              			   if(angular.equals(aContent.id, newContentSubscription.entity.contentSubscription.id)){
