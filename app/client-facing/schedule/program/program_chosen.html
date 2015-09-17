@@ -115,7 +115,8 @@
                                     data-ng-change="onViewByDateChangeAndUseFirstProgram(selectedProgram, $first)" required>
                                 <span class="input-icon" data-ng-model="selectedProgram.firstProgramResource.viewByDate" data-autoclose="true"
                                     data-dateType="iso" data-bs-datepicker data-min-date="today" data-max-date="{{fiveYearsFromTodayString}}"
-                                    data-trigger="click" data-placement="top-left"><i class="icon-calendar"></i></span>
+                                    data-trigger="click" data-placement="top-left" data-ng-change="onViewByDateChangeAndUseFirstProgram(selectedProgram, $first)">
+                                    <i class="icon-calendar"></i></span>
                             </div>
                             <div class="has-input-icon has-input-icon-calendar" data-ng-if="!selectedProgram.useFirstProgram">
                                 <input id="programCard{{selectedProgram.program.entity.id}}ViewBy" class="form-control" placeholder="MM/DD/YYYY" type="text" name="viewByDate"
