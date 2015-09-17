@@ -8,8 +8,12 @@ var mainBowerFiles = require('main-bower-files');
 
 gulp.task('styles', function () {
     return gulp.src('app/styles/**/main.scss')
-        .pipe($.rubySass({ style: 'expanded' }))
+        .pipe($.rubySass({ style: 'expanded', sourcemap: true }))
         .pipe($.autoprefixer('last 1 version'))
+        .pipe($.sourcemaps.write({
+          includeContent: false,
+          sourceRoot: '/app'
+        }))
         .pipe(gulp.dest('.tmp/styles'))
         .pipe(gulp.dest('app/styles'))
         .pipe($.size({title: 'styles', showFiles:true}));
