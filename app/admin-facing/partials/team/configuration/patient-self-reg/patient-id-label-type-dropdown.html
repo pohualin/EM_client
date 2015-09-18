@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="row"
-                 data-ng-show="patientSelfRegConfig.entity.patientIdLabelType.typeKey === 'PATIENT_SELF_REG_LABEL_OTHER'">
+                 data-ng-if="patientSelfRegConfig.entity.patientIdLabelType.typeKey === 'PATIENT_SELF_REG_LABEL_OTHER'">
                 <div class="col-sm-6">
                     <div class="form-group"
                          data-ng-class="{ 'has-error' : patientSelfRegForm.patientIdLabelEnglish.$invalid && patientSelfRegFormSubmitted }">
