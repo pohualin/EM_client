@@ -8,8 +8,8 @@
      * scheduled program
      */
         .controller('ScheduleProgramInstructionsViewController',
-        ['$scope', '$controller', '$location', '$window', '$sce', '$timeout', 'scheduledPrograms',
-            function ($scope, $controller, $location, $window, $sce, $timeout, scheduledPrograms) {
+        ['$scope', '$controller', '$location', '$sce', 'scheduledPrograms',
+            function ($scope, $controller, $location, $sce, scheduledPrograms) {
             
                 $controller('CommonPagination', {$scope: $scope});
                 $controller('CommonSort', {$scope: $scope});
