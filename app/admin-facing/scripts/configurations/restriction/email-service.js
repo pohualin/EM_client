@@ -6,15 +6,29 @@ angular.module('emmiManager')
  */
     .service('EmailRestrictConfigurationsService', ['$filter', '$q', '$http', 'UriTemplate', 'CommonService', 'Client',
         function ($filter, $q, $http, UriTemplate, CommonService, Client) {
+
+            var data = {
+                emailRestrictConfigurations: []
+            };
+
             return {
+                setEmailRestrictConfigurations: function(emailRestrictConfigurations) {
+                    data.emailRestrictConfigurations = angular.copy(emailRestrictConfigurations);
+                },
+
+                getEmailRestrictConfigurations: function() {
+                    return angular.copy(data.emailRestrictConfigurations);
+                },
 
                 /**
                  * Call server to fetch next batch of EmailRestrictConfiguration
                  */
                 fetchPage: function (href) {
+                    var that = this;
                     return $http.get(UriTemplate.create(href).stringify())
                         .then(function (response) {
                             CommonService.convertPageContentLinks(response.data);
+                            that.setEmailRestrictConfigurations(response.data.content);
                             return response.data;
                         });
                 },
@@ -23,11 +37,13 @@ angular.module('emmiManager')
                  * Get EmailRestrictConfiguration by Client
                  */
                 getEmailRestrictConfiguration: function (sort) {
+                    var that = this;
                     return $http.get(UriTemplate.create(Client.getClient().link.emailRestrictConfigurations).stringify({
                         sort: sort && sort.property ? sort.property + ',' + (sort.ascending ? 'asc' : 'desc') : ''
                     }))
                         .then(function (response) {
                             CommonService.convertPageContentLinks(response.data);
+                            that.setEmailRestrictConfigurations(response.data.content);
                             return response.data;
                         });
                 },
@@ -40,7 +56,7 @@ angular.module('emmiManager')
                 },
 
                 /**
-                 * Remove single emailRestrictConfiguartion
+                 * Remove single emailRestrictConfiguration
                  * @param emailRestrictToRemove to remove
                  *
                  */
@@ -53,10 +69,12 @@ angular.module('emmiManager')
                  * Save EmailRestrictConfiguration
                  */
                 save: function (emailRestrictConfiguration) {
+                    var that = this;
                     return $http.post(UriTemplate.create(Client.getClient().link.emailRestrictConfigurations).stringify(),
                         emailRestrictConfiguration.entity)
                         .then(function (response) {
                             CommonService.convertPageContentLinks(response.data);
+                            that.setEmailRestrictConfigurations(response.data.content);
                             return response.data;
                         });
                 },
@@ -97,7 +115,6 @@ angular.module('emmiManager')
                         return responseArray;
                     });
                 }
-
             };
         }])
 ;

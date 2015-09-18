@@ -29,43 +29,55 @@ angular.module('emmiManager')
              */
             $scope.add = function (emailRestrictConfigurationForm, addAnother) {
                 $scope.emailRestrictConfigurationFormSubmitted = true;
+                $scope.emailRestrictConfiguration.entity.emailEnding = $scope.emailRestrictConfiguration.entity.emailEnding.toLowerCase();
+
                 if (emailRestrictConfigurationForm.$valid) {
                     $scope.whenSaving = true;
-                    EmailRestrictConfigurationsService.save($scope.emailRestrictConfiguration).then(function () {
-                        $scope.$emit('requestEmailList');
-                        $scope.emailRestrictConfiguration = EmailRestrictConfigurationsService.newEmailRestrictConfiguration();
-                        $scope.emailRestrictConfigurationFormSubmitted = false;
-                        if (!addAnother) {
-                            $scope.$hide();
-                        }
-                        EmailRestrictConfigurationsService.getEmailsThatDoNotFollowRestrictions().then(function (emailsThatDoNotFollowRestrictions) {
-                            $scope.setEmailsThatDoNotFollowRestrictions(emailsThatDoNotFollowRestrictions);
-                        });
-                    }).finally(function () {
-                        $scope.whenSaving = false;
-                    });
 
-                    $alert({
-                        content: '<b>' + $scope.client.name + '</b> has been updated successfully.'
+                    EmailRestrictConfigurationsService.save($scope.emailRestrictConfiguration).then(
+                        function success(response) {
+                            $alert({
+                                content: '<b>' + $scope.client.name + '</b> has been updated successfully.'
+                            });
+
+                            $scope.$emit('requestEmailList');
+                            $scope.emailRestrictConfiguration = EmailRestrictConfigurationsService.newEmailRestrictConfiguration();
+                            $scope.emailRestrictConfigurationFormSubmitted = false;
+
+                            if (!addAnother) {
+                                $scope.$hide();
+                            }
+
+                            EmailRestrictConfigurationsService.getEmailsThatDoNotFollowRestrictions().then(function (emailsThatDoNotFollowRestrictions) {
+                                $scope.setEmailsThatDoNotFollowRestrictions(emailsThatDoNotFollowRestrictions);
+                            });
+                        }, function error(response) {
+                            $alert({
+                                content: '<b>ERROR:</b> ' + $scope.client.name + ' has not been updated.',
+                                type: 'danger'
+                            });
+                        }
+                    ).finally(function () {
+                        $scope.whenSaving = false;
                     });
                 } else {
                     $scope.showErrorBanner();
                 }
             };
 
-        /**
-         * Create and show error banner
-         */
-        $scope.showErrorBanner = function () {
-            if (!$scope.addEmailRestrictErrorAlert) {
-                $scope.addEmailRestrictErrorAlert = $alert({
-                    content: 'Please correct the below information.',
-                    container: '#email-message-container',
-                    type: 'danger',
-                    placement: '',
-                    duration: false,
-                    dismissable: false
-                });
-            }
-        };
+            /**
+             * Create and show error banner
+             */
+            $scope.showErrorBanner = function () {
+                if (!$scope.addEmailRestrictErrorAlert) {
+                    $scope.addEmailRestrictErrorAlert = $alert({
+                        content: 'Please correct the below information.',
+                        container: '#email-message-container',
+                        type: 'danger',
+                        placement: '',
+                        duration: false,
+                        dismissable: false
+                    });
+                }
+            };
     }]);

@@ -1,28 +1,43 @@
 <div data-ng-controller="PatientIdLabelDropDownController" data-ng-cloak>
     <form name="patientIdLabelForm" class="form" novalidate>
         <div class="form-group" style="padding-left:34px">
-            <div class="form-group" >
-                <label for="idLabelType">Label</label>&nbsp;&nbsp;
-                <select class="form-control input-sm" style="width:200px;" id="idLabelType" name="idLabelType"
-                        data-ng-model="patientSelfRegConfig.entity.patientIdLabelType"
-                        data-ng-options="idLabelType.typeKey | translate for idLabelType in idLabelTypes track by idLabelType.id"
-                        data-chosen data-disable-search="true" data-width="'200px'"
-                        data-ng-change="updatePatientIDLabelTypeTranslations(patientSelfRegConfig.entity.patientIdLabelType)">
-                    <option value=""></option>
-                </select>
+            <div class="row">
+                <div class="col-sm-3" style="padding-bottom:18px">
+                    <label class="control-label" for="idLabelType">LABEL</label>
+                    <select class="form-control input-sm" style="width:200px;" id="idLabelType" name="idLabelType"
+                            data-ng-model="patientSelfRegConfig.entity.patientIdLabelType"
+                            data-ng-options="idLabelType.typeKey | translate for idLabelType in idLabelTypes track by idLabelType.id"
+                            data-chosen data-disable-search="true" data-width="'200px'"
+                            data-ng-change="updatePatientIDLabelTypeTranslations(patientSelfRegConfig.entity.patientIdLabelType)">
+                        <option value=""></option>
+                    </select>
+                </div>
             </div>
             <div class="row"
                  data-ng-show="patientSelfRegConfig.entity.patientIdLabelType.typeKey === 'PATIENT_SELF_REG_LABEL_OTHER'">
                 <div class="col-sm-6">
+                    <div class="form-group"
+                         data-ng-class="{ 'has-error' : patientSelfRegForm.patientIdLabelEnglish.$invalid && patientSelfRegFormSubmitted }">
+                    <div class="error-circle fa-exclamation-circle" role="alert"
+                         data-ng-show="patientSelfRegForm.patientIdLabelEnglish.$error.required && patientSelfRegFormSubmitted"
+                         data-bs-tooltip data-placement="right" data-type="danger"
+                         data-container="body" data-title="Required" aria-label="Required"></div>
                     <label class="control-label" for="patientIdLabelEnglish">CUSTOM PATIENT ID LABEL (ENGLISH)</label>
-                    <input class="form-control" name="patientIdLabelEnglish" type="text"
+                    <input class="form-control" name="patientIdLabelEnglish" type="text" required
                            data-ng-model="idLabelConfigEnglish.config.entity.value"
                            data-ng-disabled="!idLabelConfigEnglish.config.entity.idLabelType.isModifiable"
                            id="patientIdLabelEnglish" maxlength="100">
+                        </div>
                 </div>
                 <div class="col-sm-6">
+                    <div class="form-group"
+                         data-ng-class="{ 'has-error' : patientSelfRegForm.patientIdLabelSpanish.$invalid && patientSelfRegFormSubmitted }">
+                        <div class="error-circle fa-exclamation-circle" role="alert"
+                             data-ng-show="patientSelfRegForm.patientIdLabelSpanish.$error.required && patientSelfRegFormSubmitted"
+                             data-bs-tooltip data-placement="right" data-type="danger"
+                             data-container="body" data-title="Required" aria-label="Required"></div>
                     <label class="control-label" for="patientIdLabelSpanish">CUSTOM PATIENT ID LABEL (SPANISH)</label>
-                    <input class="form-control" name="patientIdLabelSpanish" type="text"
+                    <input class="form-control" name="patientIdLabelSpanish" type="text" required
                            data-ng-model="idLabelConfigSpanish.config.entity.value"
                            data-ng-disabled="!idLabelConfigEnglish.config.entity.idLabelType.isModifiable"
                            id="patientIdLabelSpanish" maxlength="100">

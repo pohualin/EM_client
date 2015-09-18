@@ -506,6 +506,10 @@ tr.nowrap td, th {
   font-style: normal;
 }
 
+.checkbox-separate {
+    padding: 1em 0em;
+}
+
 // various example component implementations
 @include example();
 @include example('.example2');

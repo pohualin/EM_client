@@ -4,7 +4,7 @@ angular.module('emmiManager')
 /**
  * Factory for maintaining patient and program and retrieve configuration for scheduling
  */
-    .factory('ScheduledProgramFactory',  ['$http', 'UriTemplate', function ($http, UriTemplate) {
+    .factory('ScheduledProgramFactory',  ['$http', '$q', 'UriTemplate', function ($http, $q, UriTemplate) {
         this.patient = {};
         this.scheduledProgram = null;
         this.selectedPrograms = null;
@@ -35,16 +35,18 @@ angular.module('emmiManager')
         */
        this.allValid = function () {
            var self = this;
+           var deferred = $q.defer();
            if (this.selectedPrograms) {
                this.selectedPrograms.forEach(function(program){
                    if (!self.valid(program)) {
-                       return false;
+                       deferred.resolve(false);
                    }
                });
-               return true;
+               deferred.resolve(true);
            } else {
-               return false;
+               deferred.resolve(false);
            }
+           return deferred.promise;
        };
        return this;
 
