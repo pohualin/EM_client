@@ -29,7 +29,7 @@
                     $scope.printingMaterial = $sce.trustAsResourceUrl(link);
                     // set link back to where we are now so current window doesn't change
                     $location.path(current);
-                }
+                };
                 
                 /**
                  * Fill iframe with Spanish instruction
@@ -41,7 +41,7 @@
                     $scope.printingMaterial = $sce.trustAsResourceUrl(link);
                     // set link back to where we are now so current window doesn't change
                     $location.path(current);
-                }
+                };
                 
                 /**
                  * event:printed is expected when print dialog in iframe is closed through either cancel or print
@@ -52,7 +52,7 @@
                     delete $scope.printingMaterial;
                     $scope.whenSaving = false;
                     $scope.$apply();
-                })
+                });
             }
         ])
 
