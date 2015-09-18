@@ -23,15 +23,9 @@
                 /**
                  * Retrieve team email configuration for scheduling
                  */
-                PatientEmailService.getTeamEmailConfiguration(team).then(function(emailConfigsResponse){
-                      angular.forEach(emailConfigsResponse, function (emailConfig){
-                		if(angular.equals(emailConfig.entity.type, 'COLLECT_EMAIL')){
-                			$scope.showEmail = emailConfig.entity.emailConfig;
-                		}
-                		else if(angular.equals(emailConfig.entity.type, 'REQUIRE_EMAIL')){
-                			$scope.isEmailRequired = emailConfig.entity.emailConfig;
-                   		}
-                	 });
+                PatientEmailService.getTeamEmailConfiguration(team).then(function(response){
+                    $scope.showEmail = response.entity.collectEmail;
+                    $scope.isEmailRequired = response.entity.requireEmail;
                 });
                
                 /**
