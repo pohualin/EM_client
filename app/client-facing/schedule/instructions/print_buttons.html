@@ -3,16 +3,17 @@
     <div class="col-md-12">
       <div class="col-md-6">
           <button class="btn btn-success" type="button"
-              data-ng-disabled="false"
+              data-ng-disabled="whenSaving"
               data-ng-click="printInEnglish()">PRINT IN ENGLISH
           </button>
       </div>
       <div class="col-md-6">
           <button class="btn btn-success" type="button"
-              data-ng-disabled="true"
-              data-ng-click="todo()">PRINT IN SPANISH
+              data-ng-disabled="whenSaving"
+              data-ng-click="printInSpanish()">PRINT IN SPANISH
           </button>
-      </div>   
+      </div> 
+      <iframe data-ng-hide="true" data-ng-if="printingMaterial" data-ng-src="{{printingMaterial}}" />  
     </div>
   </div>
 </div>

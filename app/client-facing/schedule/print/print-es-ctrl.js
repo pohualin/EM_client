@@ -4,12 +4,12 @@
     angular.module('emmiManager')
 
     /**
-     * This is the controller responsible for rendering the patient instructions for a
-     * scheduled program
+     * This is the controller responsible for rendering the Spanish version printing materials
+     * 
      */
-        .controller('PrintInstructionsController',
-        ['$scope', '$controller', '$window', '$timeout', '$location', 'scheduledPrograms',
-            function ($scope, $controller, $window, $timeout, $location, scheduledPrograms) {
+        .controller('PrintSpanishInstructionsController',
+        ['$scope', '$controller', '$window', '$timeout', 'scheduledPrograms',
+            function ($scope, $controller, $window, $timeout, scheduledPrograms) {
             
                 $controller('CommonPagination', {$scope: $scope});
                 $controller('CommonSort', {$scope: $scope});
@@ -17,10 +17,21 @@
                 $scope.handleResponse(scheduledPrograms, 'scheduledPrograms');
                 $scope.patient = $scope.scheduledPrograms[0].entity.patient;
                 $scope.team = $scope.scheduledPrograms[0].entity.team;
+                $scope.encounter = $scope.scheduledPrograms[0].entity.encounter;
+                $scope.providers = [];
                 
+                angular.forEach($scope.scheduledPrograms, function (scheduledProgram) {
+                    $scope.providers.push(scheduledProgram.entity.provider);
+                });
+                
+                // We need this to get parent scope because we're in an iframe
+                var parentScope = $window.parent.angular.element($window.frameElement).scope();
+                
+                // timeout wait until everything is loaded
+                // call $window.print() to bring up the print dialog
                 $timeout(function () {
                     $window.print();
-                    $location.path('/teams/' + $scope.team.id + '/encounter/117/instructions');
+                    parentScope.$emit('event:printed');
                 }, 1000);
             }
         ])

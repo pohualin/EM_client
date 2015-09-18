@@ -2,6 +2,7 @@
     
   <div class="row">
     <div class="col-xs-12">
+      <h1>ENGLISH VERSION</h1>
       <h2>Information About Your Health (Presence Health)</h2>
       <h3>{{patient.firstName}} {{patient.lastName}}, you have Emmi® programs to view!</h3>
       <p>
@@ -67,12 +68,26 @@
                   </tr>
               </tbody>
           </table>
+          
+          <div class="row" data-ng-if="providers.length > 0">
+            <div class="col-xs-12">
+              <h3>Providers: <span data-ng-repeat="provider in providers">{{provider.fullName}}<span data-ng-if="!$last">, </span></span></h3>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-xs-12">
+              <h2>Questions About Your Health?</h2>
+              <p>
+                If you have a question about your health call your healthcare provider directly.
+              </p>
+            </div>
+          </div>
       </div>
       <div class="col-xs-5">
-        <div class="col-xs-12" data-ng-cloak>
           <div class="row">
               <div class="col-xs-12">
-                  <h3>Viewing Instructions</h3>
+                  <h2>Viewing Instructions</h2>
               </div>
           </div>
           <div class="row">
@@ -93,7 +108,24 @@
                   Please view by {{scheduledPrograms[0].entity.viewByDate}}
               </div>
           </div>
-        </div>  
+          <div class="row">
+            <div class="col-xs-12">
+              <h2>Need Help Viewing?</h2>
+              <p>
+                Email
+                <br>
+                Support@EmmiSolutions.com
+                <br>
+                Call
+                <br>
+                866.294.3664
+                <br>
+                Visit
+                <br>
+                my-emmi.com/StartEmmi/help
+              </p>
+            </div>
+          </div>
       </div>
     </div>
   </div>

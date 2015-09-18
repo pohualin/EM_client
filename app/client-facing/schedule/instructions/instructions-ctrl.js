@@ -8,8 +8,8 @@
      * scheduled program
      */
         .controller('ScheduleProgramInstructionsViewController',
-        ['$scope', '$controller', '$location', 'scheduledPrograms',
-            function ($scope, $controller, $location, scheduledPrograms) {
+        ['$scope', '$controller', '$location', '$window', '$sce', '$timeout', 'scheduledPrograms',
+            function ($scope, $controller, $location, $window, $sce, $timeout, scheduledPrograms) {
             
                 $controller('CommonPagination', {$scope: $scope});
                 $controller('CommonSort', {$scope: $scope});
@@ -17,10 +17,42 @@
                 $scope.handleResponse(scheduledPrograms, 'scheduledPrograms');
                 $scope.patient = $scope.scheduledPrograms[0].entity.patient;
                 $scope.team = $scope.scheduledPrograms[0].entity.team;
+                $scope.encounter = $scope.scheduledPrograms[0].entity.encounter;
                 
+                /**
+                 * Fill iframe with English instruction
+                 */
                 $scope.printInEnglish = function () {
-                    $location.path('/teams/' + $scope.team.id + '/encounter/117/instructions/en/print');
+                    $scope.whenSaving = true;
+                    var current = $location.url();
+                    var link = $location.path('/teams/' + $scope.team.id + '/encounter/' +$scope.encounter.id+ '/instructions/en/print').absUrl();
+                    $scope.printingMaterial = $sce.trustAsResourceUrl(link);
+                    // set link back to where we are now so current window doesn't change
+                    $location.path(current);
                 }
+                
+                /**
+                 * Fill iframe with Spanish instruction
+                 */
+                $scope.printInSpanish = function () {
+                    $scope.whenSaving = true;
+                    var current = $location.url();
+                    var link = $location.path('/teams/' + $scope.team.id + '/encounter/' +$scope.encounter.id+ '/instructions/es/print').absUrl();
+                    $scope.printingMaterial = $sce.trustAsResourceUrl(link);
+                    // set link back to where we are now so current window doesn't change
+                    $location.path(current);
+                }
+                
+                /**
+                 * event:printed is expected when print dialog in iframe is closed through either cancel or print
+                 * 
+                 */
+                $scope.$on('event:printed', function () {
+                    // delete printingMaterial
+                    delete $scope.printingMaterial;
+                    $scope.whenSaving = false;
+                    $scope.$apply();
+                })
             }
         ])
 
