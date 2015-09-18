@@ -3,8 +3,8 @@
     <div class="col-md-12">
         <span
             data-ng-if="scheduledProgramsLoaded && encounters.length === 0">Patient has no scheduled programs.</span>
-            
-            
+
+
         <div class="panel-group"
              data-ng-model="encounter.activePanel"
              data-ng-repeat="encounter in encounters"
@@ -20,9 +20,9 @@
                     <div class="col-md-12">
                       <span class="icon-caret-right"></span>
                       <span class="panel-title-text">
-                          {{encounter.entity.scheduledPrograms.length}} 
+                          {{encounter.entity.scheduledPrograms.length}}
                           <span data-ng-if="encounter.entity.scheduledPrograms.length === 1"> program</span>
-                          <span data-ng-if="encounter.entity.scheduledPrograms.length !== 1"> programs</span> 
+                          <span data-ng-if="encounter.entity.scheduledPrograms.length !== 1"> programs</span>
                           <span style="color: #ECF5F8;">
                               <em>({{encounter.entity.names | characters:50}})</em>
                           </span>
@@ -35,7 +35,7 @@
                         <span class="panel-title-text">
                             {{encounter.entity.scheduledPrograms.length}}
                             <span data-ng-if="encounter.entity.scheduledPrograms.length === 1"> program</span>
-                            <span data-ng-if="encounter.entity.scheduledPrograms.length !== 1"> programs</span> 
+                            <span data-ng-if="encounter.entity.scheduledPrograms.length !== 1"> programs</span>
                         </span>
                     </div>
                     <div class="col-md-7" style="margin-top: 3px;">
@@ -53,7 +53,7 @@
                     <form name="scheduledProgramForm_{{scheduledProgram.entity.id}}"
                           data-unsaved-warning-form novalidate>
                         <div class="row" data-ng-click="toggleScheduledProgramPanel(scheduledProgram, scheduledProgramForm_{{scheduledProgram.entity.id}})" >
-                            <div class="col-md-12"> 
+                            <div class="col-md-12">
                                 <table class="table table-hover table-striped"
                                        border="0" cellpadding="0" cellspacing="0" style="margin-bottom: 0px">
                                     <tr data-ng-mouseover="showEnable = true" data-ng-mouseout="showEnable = false">
@@ -112,7 +112,7 @@
                         <div class="row" data-ng-show="scheduledProgram.showDetails">
                           <div class="col-md-12">
                           <div class="col-md-4">
-                            <div class="form-group" 
+                            <div class="form-group"
                                data-ng-class="{ 'has-error' : scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$invalid &&
                                               scheduledProgramForm_{{scheduledProgram.entity.id}}.programFormSubmitted  &&
                                               scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$dirty}">
@@ -203,12 +203,12 @@
                         </div>
                     </form>
                 </div>
-                
+
                 <div class="row" style="padding: 0; margin-top: 17px;">
                     <div class="col-md-12"
                          style="margin-bottom: -15px; padding-left: 33px; padding-right: 28px;">
                         <div class="form-group pull-left">
-                            <button type="button" class="btn btn-default"
+                            <button type="button" class="btn btn-primary"
                                     style="padding: 8px 15px;"
                                     id="resendInstructions_{{encounter.entity.id}}"
                                     data-ng-disabled="scheduledProgram.whenSaving"
@@ -267,6 +267,6 @@
               </div>
             </div>
           </div>
-        </div>    
+        </div>
     </div>
 </div>
