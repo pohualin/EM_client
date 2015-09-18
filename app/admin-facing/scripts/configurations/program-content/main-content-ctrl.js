@@ -19,12 +19,14 @@ angular.module('emmiManager')
         $scope.contentSubscriptionExist = false;
         $scope.noneSelected = false;
         $scope.showSelectList = false;
+        $scope.emmiEngagePlus = false;
         
         $scope.emmiEngagePlus = {};
         $scope.noneContent = {name:'None', id:0};
         $scope.selectedSourceContent = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
         $scope.selectedContentSubscription = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
         $scope.selectedContentList = [];
+        
                
         /**
          * Cancel any changes
@@ -67,15 +69,16 @@ angular.module('emmiManager')
             $scope.faithBased = true;
             angular.forEach(contentList, function (aContent){
                 if(aContent.entity.contentSubscription.primarySubscription){
-                	angular.copy(aContent, $scope.selectedContentSubscription);
-                    if(aContent.entity.contentSubscription.id === 128){
+                	if(aContent.entity.contentSubscription.id === 128){
                     	angular.forEach(contentList, function (sourceContent){
                             if(sourceContent.entity.contentSubscription.sourceSubscription){
                             	angular.copy(sourceContent, $scope.selectedSourceContent);
                             	aContent.entity.contentSubscription.name = 'EmmiEngage+';
+                            	emmiEngage = true;
                               }
                         });	
                     }
+                    angular.copy(aContent, $scope.selectedContentSubscription);
                     $scope.selectedContentList.push(aContent);
                     $scope.addNewContentSubscription = true;
                  }
@@ -84,8 +87,8 @@ angular.module('emmiManager')
             angular.forEach($scope.selectedContentList, function (aContent){
             	$scope.latestPrimaryContentList = ContentSubscriptionConfigurationService.filterLatestPrimaryContentList($scope.latestPrimaryContentList, aContent, $scope.selectedContentList.length);
      	    });
-             
-        };
+            $scope.emmiEngagePlus = emmiEngage;
+       };
 
        $scope.getClientContentList = function(){
     	   $scope.selectedContentList = [];
@@ -100,12 +103,13 @@ angular.module('emmiManager')
                      $scope.selectedContentSubscription = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
                      $scope.contentSubscriptionExist = false;
                      $scope.showSelectList  = true;
+                     $scope.emmiEngagePlus = false;
                 }
             }); 
        };
        
        $scope.$on('selectedContentList', function () {
-           $scope.$broadcast('refreshSelectedContentList');
+    	   $scope.$broadcast('refreshSelectedContentList');
        });
        
  

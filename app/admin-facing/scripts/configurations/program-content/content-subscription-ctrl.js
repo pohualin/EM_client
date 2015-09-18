@@ -11,7 +11,7 @@ angular.module('emmiManager')
     	$scope.showContentButton = false;
     	$scope.addAnotherContentSubscription = false;
         $scope.contentSubscriptionHolder = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
-                
+                       
         /**
          * Save content subscription configuration for the client
          */
@@ -54,11 +54,13 @@ angular.module('emmiManager')
                 $scope.contentSubscriptionHolder = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
              }
             angular.forEach($scope.selectedContentList, function (aContent){
-            if(aContent.entity.contentSubscription.id === 128){
-                aContent.entity.contentSubscription.name = 'EmmiEngage';
-                if(angular.isDefined($scope.selectedSourceContent)){   
+              if(aContent.entity.contentSubscription !== null){
+               if(aContent.entity.contentSubscription.id === 128){
+                  aContent.entity.contentSubscription.name = 'EmmiEngage';
+                  if(angular.isDefined($scope.selectedSourceContent)){ 
                 	 $scope.selectedContentList.push($scope.selectedSourceContent);
                   }
+               }
             }
             });
             ContentSubscriptionConfigurationService.saveAll($scope.selectedContentList, $scope.selectedContentSubscription.entity.faithBased).then(function(response){
@@ -74,7 +76,7 @@ angular.module('emmiManager')
            
        };
        $scope.$on('refreshSelectedContentList', function () {
-    	   $scope.getClientContentList();
+    	  $scope.getClientContentList();
        });
         
        /**

@@ -1,5 +1,19 @@
 <div data-ng-controller="ClientProgramContentConfigurationController">
 
+<div class="row">
+		<div class="col-md-4">
+         	 <label class="control-label" for="primaryContentList">CONTENT SUBSCRIPTION</label>
+        </div>
+        <div data-ng-if="!noneSelected">
+        <div class="col-md-4" >
+         	<div data-ng-if="contentSubscriptionHolder.entity.contentSubscription.name=='EmmiEngage+'
+         	                || emmiEngagePlus">
+         	<label class="control-label" for="selectedSourceContentList">SOURCE</label>
+            </div>
+        </div>
+        </div>
+</div>
+
 
 <div  data-ng-if="selectedContentList.length">
 	<div data-ng-include="'admin-facing/partials/configurations/program-content/add-content-subscription.html'"></div>
