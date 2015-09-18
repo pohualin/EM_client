@@ -34,7 +34,15 @@ angular.module('emmiManager')
         $scope.cancel = function (contentSubscriptionForm) {
             contentSubscriptionForm.$setPristine();
             $scope.contentSubscriptionFormSubmitted = false;
+            $scope.initialAddAnotherContentSubscription = true;
+        	$scope.contentSubscriptionExist = false;
+        	$scope.showSelectList  = false;
+       	  	$scope.whenSaving = false;
+       	   	$scope.showButtons(false);
         };
+        
+        
+         
         
         /**
           * Create the primaryContentSubscription and sourceContentSubscription

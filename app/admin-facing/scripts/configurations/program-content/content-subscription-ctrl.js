@@ -105,20 +105,30 @@ angular.module('emmiManager')
                     	$scope.showButtons(false);
                     }
                 	else{
-                	   $scope.addAnotherContentSubscription = true;
+                	   if($scope.latestPrimaryContentList.length > 1){
+                		   $scope.addAnotherContentSubscription = true;
+                	   }
                        $scope.faithBased = true;
                        $scope.showButtons(true);
                     }
                	}
          };
          
+         $scope.disableChoice = function(name){
+           	 console.log('herer');
+           	 //console.log(selectedName);
+           	 console.log(name);
+           	 return true;
+            };
+  
          $scope.onChangeSelectedPrimaryList = function(){
         	    $scope.addAnotherContentSubscription = true;
         	    $scope.initialAddAnotherContentSubscription = true;
                 $scope.faithBased = true;
                 $scope.showButtons(true);
          };
-                   
+         
+                  
        /* 
         * Added another content subscription for a client
         * push the new content subscription to the selectedContentList
