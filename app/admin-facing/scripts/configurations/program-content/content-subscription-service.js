@@ -117,7 +117,7 @@ angular.module('emmiManager')
                  */    
                 filterLatestPrimaryContentList: function(latestContentList, newContentSubscription, selectedContentLength){
                  var newPrimaryList = [];
-             	 if(angular.isDefined(newContentSubscription.entity.contentSubscription !== null)){
+             	 if(newContentSubscription.entity.contentSubscription !== null){
              	   if(newContentSubscription.entity.contentSubscription.name !== 'None'){
              		  angular.forEach(latestContentList, function (aContent, index){
             			   if(aContent.id === 0){
