@@ -22,7 +22,7 @@ angular.module('emmiManager')
             $scope.save = function (isValid, event, addAnother) {
                 $scope.userClientFormSubmitted = true;
 
-                if ($scope.userClientEdit.entity.email != null) {
+                if ($scope.userClientEdit.entity.email !== null) {
                     $scope.userClientEdit.entity.email = $scope.userClientEdit.entity.email.toLowerCase();
                 }
 
