@@ -1,0 +1,83 @@
+<div data-ng-controller="ClientProgramContentConfigurationController">
+
+
+<div  data-ng-if="selectedContentList.length">
+	<div data-ng-include="'admin-facing/partials/configurations/program-content/add-content-subscription.html'"></div>
+</div>
+
+<div class="row" data-ng-if="latestPrimaryContentList.length > 0 && !initialAddAnotherContentSubscription">
+           
+           <div class="col-md-4">
+           <div data-ng-if="showSelectList" >
+                <select id="latestPrimaryContentList" name="latestPrimaryContentList" class="form-control"
+                    data-ng-options="latestPrimaryContentList.name for latestPrimaryContentList in latestPrimaryContentList track by latestPrimaryContentList.name"
+                    data-ng-model="contentSubscriptionHolder.entity.contentSubscription"
+                    data-ng-change="onChangePrimaryList()">
+                <option value="" title="latestPrimaryContentList">Select...</option>
+                </select>
+           </div>
+           </div>
+           
+           <div data-ng-if="noneSelected">
+                <div class="col-md-4" >
+				<div data-ng-include="'admin-facing/partials/configurations/program-content/add-programs.html'"></div>
+				</div>
+		   </div>
+
+           <div data-ng-if="!noneSelected">
+           		<div class="col-md-4" >
+           			<div data-ng-if="contentSubscriptionHolder.entity.contentSubscription.name=='EmmiEngage+'">
+                		<select id="sourceContentList" name="sourceContentList" class="form-control"
+                    	data-ng-options="sourceContentList.name for sourceContentList in sourceContentList track by sourceContentList.id"
+                    	data-ng-model="selectedSourceContent.entity.contentSubscription"
+                    	data-ng-change="showButtons({{true}})">
+                		<option value="" title="sourceContentList"></option>
+                		</select>
+           			</div>
+           		</div>
+           		<div class="col-md-4">
+           			<div data-ng-if="latestPrimaryContentList.length > 0 && addAnotherContentSubscription">
+           			<button  type="button" class="btn btn-link btn-link-nopad btn-heading" data-ng-click="addAnotherSubscription(contentSubscriptionHolder)">
+        				<i class="icon-plus"></i> ADD ANOTHER SUBSCRIPTION
+    				</button>
+    				</div>
+           		</div>
+          </div>
+          
+</div>
+<div data-ng-if="!noneSelected">
+<div class="row" data-ng-if="faithBased">
+     	<div class="col-md-6">
+     	
+          <div class="checkbox">
+               <input id="faithBased" type="checkbox"
+                      data-ng-model="selectedContentSubscription.entity.faithBased"
+                      data-ng-change="onChangeFaithBased(selectedContentSubscription.entity.faithBased)"/>
+                <label for="faithBased">Apply Faith-Based Filter for this Client</label>
+          </div>
+    	
+     	</div>
+</div>
+<div class="row">
+     	<div class="col-md-6">
+           		<button type="button" disabled="disabled" class="btn btn-link btn-link-nopad btn-heading" data-ng-click="addAnotherSubscription()">
+        			 VIEW & EDIT PROGRAMS
+    			</button>
+     	</div>
+</div>
+<div data-ng-if="showContentButton">
+                <hr/>
+                        <span class="pull-right">
+                            <a class="btn btn-cancel" data-ng-click="cancel(contentSubscriptionForm)">cancel</a>
+                        </span>
+                        <span class="pull-right">
+                            <button class="btn btn-success" type="submit"
+                                    data-ng-disabled="whenSaving"
+                                    data-ng-click="save(contentSubscriptionForm.$valid)">Save
+                            </button>
+                        </span>
+                </div>
+</div>
+</div>
+    
+
