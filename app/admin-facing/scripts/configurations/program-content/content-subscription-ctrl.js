@@ -76,9 +76,10 @@ angular.module('emmiManager')
        };
               
        $scope.onChangePrimaryList = function(){
-        	   if((angular.isDefined($scope.contentSubscriptionHolder.entity.contentSubscription)) &&
+    	    if((angular.isDefined($scope.contentSubscriptionHolder.entity.contentSubscription)) &&
                   ($scope.contentSubscriptionHolder.entity.contentSubscription !== null)){
                 	if($scope.contentSubscriptionHolder.entity.contentSubscription.name === 'None'){
+                		$scope.noneSelectedForClient(true);
                 		$scope.resetFaithBased(false);
                        	$scope.selectedContentSubscription.entity.faithBased = false;
                     	$scope.showButtons(false);
@@ -87,6 +88,7 @@ angular.module('emmiManager')
                 	   if($scope.latestPrimaryContentList.length > 1){
                 		   $scope.addAnotherContentSubscription = true;
                 	   }
+                	   $scope.noneSelectedForClient(false);
                 	   $scope.resetFaithBased(true);
                        $scope.showButtons(true);
                     }

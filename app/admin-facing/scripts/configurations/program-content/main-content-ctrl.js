@@ -90,6 +90,13 @@ angular.module('emmiManager')
         	$scope.latestPrimaryContentList = 
         		ContentSubscriptionConfigurationService.filterLatestPrimaryContentList($scope.latestPrimaryContentList, aContent, $scope.selectedContentList.length);
         };
+
+        /*
+         *  set the noneSelected variable
+         */
+        $scope.noneSelectedForClient = function (newValue){
+        	$scope.noneSelected = newValue;
+        };
         
           
         /**
@@ -118,7 +125,7 @@ angular.module('emmiManager')
          
          
          $scope.initialAddSubscription = function(){
-      	   $scope.setInitialAddAnotherContentSubscription(false);
+           $scope.setInitialAddAnotherContentSubscription(false);
       	   $scope.resetShowSelectList(true);
       	   angular.forEach($scope.selectedContentList, function (newContentSubscription){
          	 $scope.updateLatestPrimaryContentList(newContentSubscription);
