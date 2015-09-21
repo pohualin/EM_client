@@ -139,6 +139,9 @@ tagsInput.directive('tagsInput', ['$timeout','$document','tagsInputConfig','focu
             angular.forEach(self.items, function (x, i) {
                 if (x[options.displayProperty]) {
                     var tagText = x[options.displayProperty].toLowerCase().replace(/[^a-z0-9]+/g, '');
+                    if (tagText === '' && x[options.displayProperty]) {
+                        tagText = x[options.displayProperty];
+                    }
                     if (!unique[tagText]) {
                         unique[tagText] = true;
                     } else {
