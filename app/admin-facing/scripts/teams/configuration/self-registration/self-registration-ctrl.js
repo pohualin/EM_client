@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('emmiManager')
-    .controller('SelfRegistrationController', ['$scope', 'Session', 'teamResource', 'SelfRegistrationService', '$alert', 'PatientSelfRegService', '$popover',
-        function ($scope, Session, teamResource, SelfRegistrationService, $alert, PatientSelfRegService, $popover) {
+    .controller('SelfRegistrationController', ['$scope', 'Session', 'teamResource', 'SelfRegistrationService', '$alert', 'PatientSelfRegService', '$popover', '$document',
+        function ($scope, Session, teamResource, SelfRegistrationService, $alert, PatientSelfRegService, $popover, $document) {
 
             $scope.team = teamResource;
             $scope.client = teamResource.entity.client;
@@ -59,7 +59,6 @@ angular.module('emmiManager')
                     .finally(function () {
                         $scope.whenSaving = false;
                         $scope.outlineSelfRegCard = false;
-
                     });
             };
 
@@ -94,22 +93,18 @@ angular.module('emmiManager')
              * @param selfRegForm
              * @param $event    the element for the popover
              */
-            $scope.errorHandler = function (response, status, selfRegForm, $event) {
+            $scope.errorHandler = function (response, status, selfRegForm) {
                 if (status === 406) {
                     selfRegForm.code.$setValidity('unique', false);
-                    if ($scope.uniquePopup) {
-                        $scope.uniquePopup.show();
-                    }
-                    else {
+                        var queryResult = $document[0].getElementById("code");
                         $scope.conflictingConfig = angular.copy(response.entity);
-                        $scope.uniquePopup = $popover(angular.element($event.currentTarget), {
+                        $scope.uniquePopup = $popover(angular.element(queryResult), {
                             placement: 'top-right',
                             scope: $scope,
                             trigger: 'manual',
                             show: true,
                             contentTemplate: 'admin-facing/partials/team/configuration/self-registration/unique_self_reg_code_popover.tpl.html'
                         });
-                    }
                 }
             };
 
@@ -125,6 +120,8 @@ angular.module('emmiManager')
                 if ($scope.uniquePopup) {
                     $scope.uniquePopup.hide();
                 }
+                delete $scope.conflictingConfig;
+
             };
 
             /**
@@ -135,6 +132,10 @@ angular.module('emmiManager')
                 form.$setPristine(true);
                 $scope.selfRegFormSubmitted = false;
                 $scope.selfRegConfig.code = $scope.originalSelfRegConfig.code ? angular.copy($scope.originalSelfRegConfig.code) : {'code': ''};
+                if ($scope.uniquePopup) {
+                    $scope.uniquePopup.hide();
+                }
+                delete $scope.conflictingConfig;
             };
 
             $scope.$on('event-updateCardOutline', function () {
