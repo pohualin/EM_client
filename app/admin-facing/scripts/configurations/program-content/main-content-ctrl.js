@@ -129,7 +129,7 @@ angular.module('emmiManager')
        };
        
        $scope.$on('selectedContentList', function () {
-    	   consolelog('broadcats');
+    	   consolelog('broadcats yyy');
     	   $scope.$broadcast('refreshSelectedContentList');
        });
        
