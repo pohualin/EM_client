@@ -14,7 +14,7 @@ angular.module('emmiManager')
         $scope.latestPrimaryContentList = [];
                         
         // Variables for the html to show or hide certain section
-        $scope.faithBased = true;
+        $scope.faithBased = false;
         $scope.initialAddAnotherContentSubscription = false;
         $scope.contentSubscriptionExist = false;
         $scope.noneSelected = false;
@@ -34,16 +34,14 @@ angular.module('emmiManager')
         $scope.cancel = function (contentSubscriptionForm) {
             contentSubscriptionForm.$setPristine();
             $scope.contentSubscriptionFormSubmitted = false;
+            $scope.initialAddAnotherContentSubscription = true;
+            $scope.$broadcast('event:update-initialAddAnotherContent');
+            $scope.selectedContentSubscription = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
             $scope.getClientContentList();
-            	
-            
-            	$scope.initialAddAnotherContentSubscription = true;
-            	$scope.contentSubscriptionExist = false;
-            	$scope.showSelectList  = false;
-       	  		$scope.whenSaving = false;
-       	  		$scope.showButtons(false);
-       	  		console.log('rerereerr');
-            
+           	$scope.contentSubscriptionExist = false;
+          	$scope.showSelectList  = false;
+   	  		$scope.whenSaving = false;
+   	  		$scope.showButtons(false);
         };
         
         
@@ -54,6 +52,12 @@ angular.module('emmiManager')
          	return ($scope.showContentButton = showButton);
          };
         
+         /**
+          * Show/hide cancel and save buttons
+          */
+         $scope.isInitialAddAnotherContentSubscription = function () {
+        	return $scope.initialAddAnotherContentSubscription;
+          };
         /**
           * Create the primaryContentSubscription and sourceContentSubscription
           * drop down list
@@ -83,7 +87,6 @@ angular.module('emmiManager')
          * that was selected from the database
          */
         $scope.separateSavedLists = function(contentList){
-        	console.log('separate list');
         	var emmiEngage = false;
             $scope.faithBased = true;
             angular.forEach(contentList, function (aContent){
@@ -110,26 +113,26 @@ angular.module('emmiManager')
        };
 
        $scope.getClientContentList = function(){
-    	   console.log('get conet e  ererr');
     	   $scope.selectedContentList = [];
     	   ContentSubscriptionConfigurationService.getClientContentSubscriptionConfiguration().then(function (response) {
                if(angular.isDefined(response.content)){
                    if(response.content.length > 0){
                 	  	$scope.contentSubscriptionExist = true;
-                   	    $scope.separateSavedLists(response.content);
+                	  	$scope.separateSavedLists(response.content);
                    }
                }
                else{
                      $scope.selectedContentSubscription = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
                      $scope.contentSubscriptionExist = false;
+                     $scope.faithBased = false;
                      $scope.showSelectList  = true;
                      $scope.emmiEngagePlus = false;
                 }
-            }); 
+            });
+           $scope.$broadcast('event:update-selectedContentList');
        };
        
        $scope.$on('selectedContentList', function () {
-    	   consolelog('broadcats yyy');
     	   $scope.$broadcast('refreshSelectedContentList');
        });
        

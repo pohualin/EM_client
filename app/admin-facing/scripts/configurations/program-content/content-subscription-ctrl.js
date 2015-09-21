@@ -75,13 +75,16 @@ angular.module('emmiManager')
            
        };
        $scope.$on('refreshSelectedContentList', function () {
-    	   console.log('refresh');
-    	  $scope.getClientContentList();
+    	   $scope.getClientContentList();
        });
-         
-         /**
+       
+       $scope.$on('event:update-initialAddAnotherContent', function () {
+    	   $scope.initialAddAnotherContentSubscription = $scope.isInitialAddAnotherContentSubscription();
+       });
+
+        /**
           * Reset some scope variables when it needs to
-          */
+         */
         $scope.reset = function(){
         	$scope.initialAddAnotherContentSubscription = true;
         	$scope.contentSubscriptionExist = false;
