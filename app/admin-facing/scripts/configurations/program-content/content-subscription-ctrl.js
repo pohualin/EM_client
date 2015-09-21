@@ -74,6 +74,13 @@ angular.module('emmiManager')
            
            
        };
+       
+       $scope.$on('event:remove-content-holder', function () {
+    	   $scope.addAnotherContentSubscription = false;
+    	   $scope.contentSubscriptionHolder = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
+    	   
+       });
+
               
        $scope.onChangePrimaryList = function(){
     	    if((angular.isDefined($scope.contentSubscriptionHolder.entity.contentSubscription)) &&

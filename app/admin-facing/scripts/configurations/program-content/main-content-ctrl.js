@@ -33,13 +33,14 @@ angular.module('emmiManager')
          */
         $scope.cancel = function (contentSubscriptionForm) {
         	contentSubscriptionForm.$setPristine();
+        	$scope.showSelectList  = false;
             $scope.contentSubscriptionFormSubmitted = false;
             $scope.initialAddAnotherContentSubscription = true;
             $scope.selectedContentSubscription = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
             $scope.getClientContentList();
+            $scope.$broadcast('event:remove-content-holder');
            	$scope.contentSubscriptionExist = false;
-          	$scope.showSelectList  = false;
-   	  		$scope.whenSaving = false;
+           	$scope.whenSaving = false;
    	  		$scope.showButtons(false);
         };
         
@@ -48,8 +49,7 @@ angular.module('emmiManager')
         */
        $scope.reset = function(){
        		$scope.initialAddAnotherContentSubscription = true;
-       	    $scope.$broadcast('event:update-initialAddAnotherContent');
-       		$scope.contentSubscriptionExist = false;
+       	  	$scope.contentSubscriptionExist = false;
        		$scope.showSelectList  = false;
       	  	$scope.whenSaving = false;
       	   	$scope.showButtons(false);
@@ -174,7 +174,7 @@ angular.module('emmiManager')
                    }
                }
                else{
-                     $scope.selectedContentSubscription = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
+            	     $scope.selectedContentSubscription = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
                      $scope.contentSubscriptionExist = false;
                      $scope.faithBased = false;
                      $scope.showSelectList  = true;
