@@ -23,12 +23,15 @@
            
            <div class="col-md-4">
            <div data-ng-if="showSelectList" >
-                <select id="latestPrimaryContentList" name="latestPrimaryContentList" class="form-control"
+              <div class="form-group">
+                <select class="form-control" id="latestPrimaryContentList" name="latestPrimaryContentList" class="form-control"
                     data-ng-options="latestPrimaryContentList.name for latestPrimaryContentList in latestPrimaryContentList track by latestPrimaryContentList.name"
                     data-ng-model="contentSubscriptionHolder.entity.contentSubscription"
-                    data-ng-change="onChangePrimaryList()">
+                    data-ng-change="onChangePrimaryList()"
+                    data-chosen data-disable-search="true" data-placeholder="Select...">   
                 <option value="" title="latestPrimaryContentList">Select...</option>
                 </select>
+             </div>
            </div>
            </div>
            
@@ -50,7 +53,7 @@
            			</div>
            		</div>
            		<div class="col-md-4">
-           			<div data-ng-if="latestPrimaryContentList.length > 0 && addAnotherContentSubscription">
+           			<div data-ng-if="latestPrimaryContentList.length > 1 && addAnotherContentSubscription">
            			<button  type="button" class="btn btn-link btn-link-nopad btn-heading" data-ng-click="addAnotherSubscription(contentSubscriptionHolder)">
         				<i class="icon-plus"></i> ADD ANOTHER SUBSCRIPTION
     				</button>
@@ -61,36 +64,49 @@
 </div>
 <div data-ng-if="!noneSelected">
 <div class="row" data-ng-if="faithBased">
-     	<div class="col-md-6">
+<p/>
+     	<div class="col-md-12">
      	
           <div class="checkbox">
                <input id="faithBased" type="checkbox"
                       data-ng-model="selectedContentSubscription.entity.faithBased"
                       data-ng-change="onChangeFaithBased(selectedContentSubscription.entity.faithBased)"/>
-                <label for="faithBased">Apply Faith-Based Filter for this Client</label>
+                <label for="faithBased">Apply faith-based filter for this client</label>
           </div>
     	
      	</div>
 </div>
+
+<div  data-ng-if="selectedContentList.length " >
 <div class="row">
-     	<div class="col-md-6">
-           		<button type="button" disabled="disabled" class="btn btn-link btn-link-nopad btn-heading" data-ng-click="addAnotherSubscription()">
+<p/>
+     	<div class="col-md-12">
+           		<button type="button" disabled="disabled" class="btn btn-link btn-link-nopad btn-heading" data-ng-click="viewAndEditSubscription()">
         			 VIEW & EDIT PROGRAMS
     			</button>
      	</div>
 </div>
-<div data-ng-if="showContentButton">
-                <hr/>
-                        <span class="pull-right">
-                            <a class="btn btn-cancel" data-ng-click="cancel(contentSubscriptionForm)">cancel</a>
-                        </span>
+</div>
+ <div class="row">
+            <div class="col-md-12">
+                <div class="form-actions">
+                    <div class="form-group">
+					<div data-ng-if="showContentButton">
+                	<hr/>
                         <span class="pull-right">
                             <button class="btn btn-success" type="submit"
                                     data-ng-disabled="whenSaving"
                                     data-ng-click="save(contentSubscriptionForm.$valid)">Save
                             </button>
                         </span>
+                        <span class="pull-right">
+                            <a class="btn btn-cancel" data-ng-click="cancel(contentSubscriptionForm)">cancel</a>
+                        </span>
+                	</div>
+                	</div>
                 </div>
+         </div>
+ </div>
 </div>
 </div>
     
