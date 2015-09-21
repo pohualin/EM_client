@@ -8,7 +8,6 @@ angular.module('emmiManager')
     .controller('ClientProgramContentConfigurationController', ['$alert', '$scope', '$controller', 'Client', 'ContentSubscriptionConfigurationService',
         function ($alert, $scope, $controller, Client, ContentSubscriptionConfigurationService) {
        
-    	$scope.showContentButton = false;
     	$scope.addAnotherContentSubscription = false;
         $scope.contentSubscriptionHolder = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
                        
@@ -76,15 +75,9 @@ angular.module('emmiManager')
            
        };
        $scope.$on('refreshSelectedContentList', function () {
+    	   console.log('refresh');
     	  $scope.getClientContentList();
        });
-        
-       /**
-         * Show/hide cancel and save buttons
-         */
-        $scope.showButtons = function (showButton) {
-         	return ($scope.showContentButton = showButton);
-         };
          
          /**
           * Reset some scope variables when it needs to
@@ -98,7 +91,8 @@ angular.module('emmiManager')
         };
         
         $scope.onChangePrimaryList = function(){
-        	   if(angular.isDefined($scope.contentSubscriptionHolder.entity.contentSubscription)){
+        	   if((angular.isDefined($scope.contentSubscriptionHolder.entity.contentSubscription)) &&
+                  ($scope.contentSubscriptionHolder.entity.contentSubscription !== null)){
                 	if($scope.contentSubscriptionHolder.entity.contentSubscription.name === 'None'){
                     	$scope.faithBased = false;
                        	$scope.selectedContentSubscription.entity.faithBased = false;
@@ -113,13 +107,6 @@ angular.module('emmiManager')
                     }
                	}
          };
-         
-         $scope.disableChoice = function(name){
-           	 console.log('herer');
-           	 //console.log(selectedName);
-           	 console.log(name);
-           	 return true;
-            };
   
          $scope.onChangeSelectedPrimaryList = function(){
         	    $scope.addAnotherContentSubscription = true;

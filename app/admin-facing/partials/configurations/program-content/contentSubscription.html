@@ -23,12 +23,15 @@
            
            <div class="col-md-4">
            <div data-ng-if="showSelectList" >
-                <select id="latestPrimaryContentList" name="latestPrimaryContentList" class="form-control"
+              <div class="form-group">
+                <select class="form-control" id="latestPrimaryContentList" name="latestPrimaryContentList" class="form-control"
                     data-ng-options="latestPrimaryContentList.name for latestPrimaryContentList in latestPrimaryContentList track by latestPrimaryContentList.name"
                     data-ng-model="contentSubscriptionHolder.entity.contentSubscription"
-                    data-ng-change="onChangePrimaryList()">
+                    data-ng-change="onChangePrimaryList()"
+                    data-chosen data-disable-search="true" data-placeholder="Select...">   
                 <option value="" title="latestPrimaryContentList">Select...</option>
                 </select>
+             </div>
            </div>
            </div>
            
@@ -61,26 +64,32 @@
 </div>
 <div data-ng-if="!noneSelected">
 <div class="row" data-ng-if="faithBased">
-     	<div class="col-md-6">
+<p/>
+     	<div class="col-md-12">
      	
           <div class="checkbox">
                <input id="faithBased" type="checkbox"
                       data-ng-model="selectedContentSubscription.entity.faithBased"
                       data-ng-change="onChangeFaithBased(selectedContentSubscription.entity.faithBased)"/>
-                <label for="faithBased">Apply Faith-Based Filter for this Client</label>
+                <label for="faithBased">Apply faith-based filter for this client</label>
           </div>
     	
      	</div>
 </div>
 <div class="row">
-     	<div class="col-md-6">
+<p/>
+     	<div class="col-md-12">
            		<button type="button" disabled="disabled" class="btn btn-link btn-link-nopad btn-heading" data-ng-click="addAnotherSubscription()">
         			 VIEW & EDIT PROGRAMS
     			</button>
      	</div>
 </div>
-<div data-ng-if="showContentButton">
-                <hr/>
+ <div class="row">
+            <div class="col-md-12">
+                <div class="form-actions">
+                    <div class="form-group">
+					<div data-ng-if="showContentButton">
+                	<hr/>
                         <span class="pull-right">
                             <a class="btn btn-cancel" data-ng-click="cancel(contentSubscriptionForm)">cancel</a>
                         </span>
@@ -90,7 +99,11 @@
                                     data-ng-click="save(contentSubscriptionForm.$valid)">Save
                             </button>
                         </span>
+                	</div>
+                	</div>
                 </div>
+         </div>
+ </div>
 </div>
 </div>
     

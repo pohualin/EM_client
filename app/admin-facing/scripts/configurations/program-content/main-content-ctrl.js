@@ -26,7 +26,7 @@ angular.module('emmiManager')
         $scope.selectedSourceContent = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
         $scope.selectedContentSubscription = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
         $scope.selectedContentList = [];
-        
+        $scope.showContentButton = false;     
                
         /**
          * Cancel any changes
@@ -34,15 +34,25 @@ angular.module('emmiManager')
         $scope.cancel = function (contentSubscriptionForm) {
             contentSubscriptionForm.$setPristine();
             $scope.contentSubscriptionFormSubmitted = false;
-            $scope.initialAddAnotherContentSubscription = true;
-        	$scope.contentSubscriptionExist = false;
-        	$scope.showSelectList  = false;
-       	  	$scope.whenSaving = false;
-       	   	$scope.showButtons(false);
+            $scope.getClientContentList();
+            	
+            
+            	$scope.initialAddAnotherContentSubscription = true;
+            	$scope.contentSubscriptionExist = false;
+            	$scope.showSelectList  = false;
+       	  		$scope.whenSaving = false;
+       	  		$scope.showButtons(false);
+       	  		console.log('rerereerr');
+            
         };
         
         
-         
+        /**
+         * Show/hide cancel and save buttons
+         */
+        $scope.showButtons = function (showButton) {
+         	return ($scope.showContentButton = showButton);
+         };
         
         /**
           * Create the primaryContentSubscription and sourceContentSubscription
@@ -73,6 +83,7 @@ angular.module('emmiManager')
          * that was selected from the database
          */
         $scope.separateSavedLists = function(contentList){
+        	console.log('separate list');
         	var emmiEngage = false;
             $scope.faithBased = true;
             angular.forEach(contentList, function (aContent){
@@ -99,6 +110,7 @@ angular.module('emmiManager')
        };
 
        $scope.getClientContentList = function(){
+    	   console.log('get conet e  ererr');
     	   $scope.selectedContentList = [];
     	   ContentSubscriptionConfigurationService.getClientContentSubscriptionConfiguration().then(function (response) {
                if(angular.isDefined(response.content)){
@@ -117,6 +129,7 @@ angular.module('emmiManager')
        };
        
        $scope.$on('selectedContentList', function () {
+    	   consolelog('broadcats');
     	   $scope.$broadcast('refreshSelectedContentList');
        });
        
