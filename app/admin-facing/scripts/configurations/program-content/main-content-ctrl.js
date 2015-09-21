@@ -35,8 +35,7 @@ angular.module('emmiManager')
             contentSubscriptionForm.$setPristine();
             $scope.contentSubscriptionFormSubmitted = false;
             $scope.initialAddAnotherContentSubscription = true;
-            $scope.$broadcast('event:update-initialAddAnotherContent');
-            $scope.selectedContentSubscription = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
+            //$scope.selectedContentSubscription = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
             $scope.getClientContentList();
            	$scope.contentSubscriptionExist = false;
           	$scope.showSelectList  = false;
@@ -44,6 +43,17 @@ angular.module('emmiManager')
    	  		$scope.showButtons(false);
         };
         
+        /**
+         * Reset some scope variables when it needs to
+        */
+       $scope.reset = function(){
+       		$scope.initialAddAnotherContentSubscription = true;
+       	    $scope.$broadcast('event:update-initialAddAnotherContent');
+       		$scope.contentSubscriptionExist = false;
+       		$scope.showSelectList  = false;
+      	  	$scope.whenSaving = false;
+      	   	$scope.showButtons(false);
+       };
         
         /**
          * Show/hide cancel and save buttons
@@ -52,12 +62,36 @@ angular.module('emmiManager')
          	return ($scope.showContentButton = showButton);
          };
         
-         /**
-          * Show/hide cancel and save buttons
-          */
-         $scope.isInitialAddAnotherContentSubscription = function () {
-        	return $scope.initialAddAnotherContentSubscription;
-          };
+        /**
+         * Reset initialAddAnotherContentSubscription
+         */
+        $scope.setInitialAddAnotherContentSubscription = function (newValue) {
+        	$scope.initialAddAnotherContentSubscription = newValue;
+        };
+        
+        /**
+         * Reset show select list or not
+         */
+        $scope.resetShowSelectList = function (newValue) {
+        	 $scope.showSelectList = newValue;
+        };
+        
+        /**
+         * show faith based check box or not
+         */
+        $scope.resetFaithBased = function (newValue) {
+        	 $scope.faithBased = newValue;
+        };
+        
+        /*
+         * update latest primary content list
+         */
+        $scope.updateLatestPrimaryContentList = function(aContent){
+        	$scope.latestPrimaryContentList = 
+        		ContentSubscriptionConfigurationService.filterLatestPrimaryContentList($scope.latestPrimaryContentList, aContent, $scope.selectedContentList.length);
+        };
+        
+          
         /**
           * Create the primaryContentSubscription and sourceContentSubscription
           * drop down list
@@ -81,6 +115,17 @@ angular.module('emmiManager')
             angular.copy($scope.primaryContentList, $scope.latestPrimaryContentList);
             
          };
+         
+         
+         $scope.initialAddSubscription = function(){
+      	   $scope.setInitialAddAnotherContentSubscription(false);
+      	   $scope.resetShowSelectList(true);
+      	   angular.forEach($scope.selectedContentList, function (newContentSubscription){
+         	 $scope.updateLatestPrimaryContentList(newContentSubscription);
+  	       });
+      	 
+         };
+      	  
         
         /*
          * Separate the content subscription list 
@@ -107,7 +152,7 @@ angular.module('emmiManager')
             });
             $scope.initialAddAnotherContentSubscription = true;
             angular.forEach($scope.selectedContentList, function (aContent){
-            	$scope.latestPrimaryContentList = ContentSubscriptionConfigurationService.filterLatestPrimaryContentList($scope.latestPrimaryContentList, aContent, $scope.selectedContentList.length);
+            	$scope.updateLatestPrimaryContentList(aContent);
      	    });
             $scope.emmiEngagePlus = emmiEngage;
        };
@@ -129,11 +174,10 @@ angular.module('emmiManager')
                      $scope.emmiEngagePlus = false;
                 }
             });
-           $scope.$broadcast('event:update-selectedContentList');
-       };
+        };
        
        $scope.$on('selectedContentList', function () {
-    	   $scope.$broadcast('refreshSelectedContentList');
+    	   $scope.getClientContentList();
        });
        
  

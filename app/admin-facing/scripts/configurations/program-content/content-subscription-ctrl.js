@@ -74,30 +74,12 @@ angular.module('emmiManager')
            
            
        };
-       $scope.$on('refreshSelectedContentList', function () {
-    	   $scope.getClientContentList();
-       });
-       
-       $scope.$on('event:update-initialAddAnotherContent', function () {
-    	   $scope.initialAddAnotherContentSubscription = $scope.isInitialAddAnotherContentSubscription();
-       });
-
-        /**
-          * Reset some scope variables when it needs to
-         */
-        $scope.reset = function(){
-        	$scope.initialAddAnotherContentSubscription = true;
-        	$scope.contentSubscriptionExist = false;
-        	$scope.showSelectList  = false;
-       	  	$scope.whenSaving = false;
-       	   	$scope.showButtons(false);
-        };
-        
-        $scope.onChangePrimaryList = function(){
+              
+       $scope.onChangePrimaryList = function(){
         	   if((angular.isDefined($scope.contentSubscriptionHolder.entity.contentSubscription)) &&
                   ($scope.contentSubscriptionHolder.entity.contentSubscription !== null)){
                 	if($scope.contentSubscriptionHolder.entity.contentSubscription.name === 'None'){
-                    	$scope.faithBased = false;
+                		$scope.resetFaithBased(false);
                        	$scope.selectedContentSubscription.entity.faithBased = false;
                     	$scope.showButtons(false);
                     }
@@ -105,7 +87,7 @@ angular.module('emmiManager')
                 	   if($scope.latestPrimaryContentList.length > 1){
                 		   $scope.addAnotherContentSubscription = true;
                 	   }
-                       $scope.faithBased = true;
+                	   $scope.resetFaithBased(true);
                        $scope.showButtons(true);
                     }
                	}
@@ -113,9 +95,13 @@ angular.module('emmiManager')
   
          $scope.onChangeSelectedPrimaryList = function(){
         	    $scope.addAnotherContentSubscription = true;
-        	    $scope.initialAddAnotherContentSubscription = true;
-                $scope.faithBased = true;
+        	    $scope.setInitialAddAnotherContentSubscription(true);
+        	    $scope.resetFaithBased(true);
                 $scope.showButtons(true);
+         };
+         
+         $scope.viewAndEditSubscription = function(){
+        	// EM-1521
          };
          
                   
@@ -124,21 +110,16 @@ angular.module('emmiManager')
         * push the new content subscription to the selectedContentList
         */
        $scope.addAnotherSubscription = function(newContentSubscription){
-    	   $scope.initialAddAnotherContentSubscription = false;
-    	   $scope.showSelectList  = true;
+    	   $scope.setInitialAddAnotherContentSubscription(false);
+    	   $scope.resetShowSelectList(true);
     	   $scope.addAnotherContentSubscription = false;
     	   $scope.showButtons(true);
     	   $scope.selectedContentList.push(newContentSubscription);
-    	   $scope.latestPrimaryContentList = ContentSubscriptionConfigurationService.filterLatestPrimaryContentList($scope.latestPrimaryContentList, newContentSubscription, $scope.selectedContentList.length);
+    	   $scope.updateLatestPrimaryContentList(newContentSubscription);
     	   $scope.contentSubscriptionHolder = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
        };
        
-       $scope.initialAddSubscription = function(){
-    	   $scope.initialAddAnotherContentSubscription = false;
-    	   $scope.addAnotherContentSubscription = false;
-    	   $scope.showSelectList  = true;
-    	   $scope.contentSubscriptionHolder = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
-       };
+    
        
        $scope.onChangeFaithBased = function(faithBased){
     	   angular.forEach($scope.selectedContentList, function (aContent){
