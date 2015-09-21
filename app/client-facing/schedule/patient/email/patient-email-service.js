@@ -14,7 +14,7 @@ angular.module('emmiManager')
                 getTeamEmailConfiguration: function (teamResource) {
                 	   return $http.get(UriTemplate.create(teamResource.link.patientTeamEmailConfig).stringify())
                         .then(function (response) {
-                           	return response.data.content;
+                           	return response.data;
                         });
                 }
    	       };
