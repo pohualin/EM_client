@@ -480,6 +480,11 @@ select.form-control {
         top: 4px;
         right: 10px;
     }
+    .btn-datepicker-date {
+        &:active {
+            box-shadow: none;
+        }
+    }
     .btn-datepicker-prev,
     .btn-datepicker-next {
         font-size: 19px;
