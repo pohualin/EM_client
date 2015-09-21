@@ -85,7 +85,9 @@ angular.module('emmiManager')
                     	$scope.showButtons(false);
                     }
                 	else{
+                		console.log('arereae');
                 	   if($scope.latestPrimaryContentList.length > 1){
+                		   console.log('rewrawerweararwe');
                 		   $scope.addAnotherContentSubscription = true;
                 	   }
                 	   $scope.noneSelectedForClient(false);

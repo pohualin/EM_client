@@ -32,10 +32,10 @@ angular.module('emmiManager')
          * Cancel any changes
          */
         $scope.cancel = function (contentSubscriptionForm) {
-            contentSubscriptionForm.$setPristine();
+        	contentSubscriptionForm.$setPristine();
             $scope.contentSubscriptionFormSubmitted = false;
             $scope.initialAddAnotherContentSubscription = true;
-            //$scope.selectedContentSubscription = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
+            $scope.selectedContentSubscription = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
             $scope.getClientContentList();
            	$scope.contentSubscriptionExist = false;
           	$scope.showSelectList  = false;
