@@ -69,6 +69,7 @@ angular.module('emmiManager')
                     content: '<b>' + $scope.client.name + '</b> has been updated successfully.'
                 });
                 }).finally(function () {
+                	$scope.whenSaving = false;
                 	$scope.reset();
                 });
            

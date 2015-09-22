@@ -26,21 +26,20 @@ angular.module('emmiManager')
         $scope.selectedSourceContent = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
         $scope.selectedContentSubscription = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
         $scope.selectedContentList = [];
-        $scope.showContentButton = false;     
+        $scope.showContentButton = false;
+     
                
         /**
          * Cancel any changes
          */
         $scope.cancel = function (contentSubscriptionForm) {
         	contentSubscriptionForm.$setPristine();
-        	$scope.showSelectList  = false;
             $scope.contentSubscriptionFormSubmitted = false;
             $scope.initialAddAnotherContentSubscription = true;
             $scope.selectedContentSubscription = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
             $scope.getClientContentList();
             $scope.$broadcast('event:remove-content-holder');
-           	$scope.contentSubscriptionExist = false;
-           	$scope.whenSaving = false;
+           	$scope.contentSubscriptionExist = false;       
    	  		$scope.showButtons(false);
         };
         
@@ -51,7 +50,6 @@ angular.module('emmiManager')
        		$scope.initialAddAnotherContentSubscription = true;
        	  	$scope.contentSubscriptionExist = false;
        		$scope.showSelectList  = false;
-      	  	$scope.whenSaving = false;
       	   	$scope.showButtons(false);
        };
         
