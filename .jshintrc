@@ -20,8 +20,6 @@
   "white": true,
   "globals": {
     "angular": false,
-    "_paq": false,
-      "$": false
-
+    "_paq": false
   }
 }
