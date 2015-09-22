@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('emmiManager')
-    .controller('SelfRegistrationController', ['$scope', 'Session', 'teamResource', 'SelfRegistrationService', '$alert', 'PatientSelfRegService', '$popover', '$document',
-        function ($scope, Session, teamResource, SelfRegistrationService, $alert, PatientSelfRegService, $popover, $document) {
+    .controller('SelfRegistrationController', ['$scope', 'Session', 'teamResource', 'SelfRegistrationService', '$alert', 'PatientSelfRegService', '$popover',
+        function ($scope, Session, teamResource, SelfRegistrationService, $alert, PatientSelfRegService, $popover) {
 
             $scope.team = teamResource;
             $scope.client = teamResource.entity.client;
@@ -96,9 +96,8 @@ angular.module('emmiManager')
             $scope.errorHandler = function (response, status, selfRegForm) {
                 if (status === 406) {
                     selfRegForm.code.$setValidity('unique', false);
-                        var queryResult = $document[0].getElementById("code");
                         $scope.conflictingConfig = angular.copy(response.entity);
-                        $scope.uniquePopup = $popover(angular.element(queryResult), {
+                        $scope.uniquePopup = $popover(angular.element($('#code')), {
                             placement: 'top-right',
                             scope: $scope,
                             trigger: 'manual',
