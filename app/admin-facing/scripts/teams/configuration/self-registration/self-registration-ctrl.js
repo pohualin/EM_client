@@ -97,7 +97,7 @@ angular.module('emmiManager')
                 if (status === 406) {
                     selfRegForm.code.$setValidity('unique', false);
                         $scope.conflictingConfig = angular.copy(response.entity);
-                        $scope.uniquePopup = $popover(angular.element("#code"), {
+                        $scope.uniquePopup = $popover(angular.element('#code'), {
                             placement: 'top-right',
                             scope: $scope,
                             trigger: 'manual',
