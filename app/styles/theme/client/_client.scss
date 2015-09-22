@@ -651,6 +651,10 @@ select.form-control {
 
 /* _____ NAVBAR _____ */
 
+.headroom--unpinned {
+    transform: translateY(-54px);
+}
+
 .navbar-brand {
     strong {
         color: $brand-primary;
