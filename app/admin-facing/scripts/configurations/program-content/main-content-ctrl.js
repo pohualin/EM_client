@@ -16,7 +16,6 @@ angular.module('emmiManager')
         // Variables for the html to show or hide certain section
         $scope.faithBased = false;
         $scope.initialAddAnotherContentSubscription = false;
-        $scope.contentSubscriptionExist = false;
         $scope.noneSelected = false;
         $scope.showSelectList = false;
         $scope.emmiEngagePlus = false;
@@ -26,36 +25,23 @@ angular.module('emmiManager')
         $scope.selectedSourceContent = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
         $scope.selectedContentSubscription = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
         $scope.selectedContentList = [];
-        $scope.showContentButton = false;     
+        $scope.showContentButton = false;
+     
                
         /**
          * Cancel any changes
          */
         $scope.cancel = function (contentSubscriptionForm) {
         	contentSubscriptionForm.$setPristine();
-        	$scope.showSelectList  = false;
             $scope.contentSubscriptionFormSubmitted = false;
             $scope.initialAddAnotherContentSubscription = true;
             $scope.selectedContentSubscription = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
             $scope.getClientContentList();
             $scope.$broadcast('event:remove-content-holder');
-           	$scope.contentSubscriptionExist = false;
-           	$scope.whenSaving = false;
-   	  		$scope.showButtons(false);
+           	$scope.showButtons(false);
         };
         
-        /**
-         * Reset some scope variables when it needs to
-        */
-       $scope.reset = function(){
-       		$scope.initialAddAnotherContentSubscription = true;
-       	  	$scope.contentSubscriptionExist = false;
-       		$scope.showSelectList  = false;
-      	  	$scope.whenSaving = false;
-      	   	$scope.showButtons(false);
-       };
-        
-        /**
+       /**
          * Show/hide cancel and save buttons
          */
         $scope.showButtons = function (showButton) {
@@ -97,7 +83,6 @@ angular.module('emmiManager')
         $scope.noneSelectedForClient = function (newValue){
         	$scope.noneSelected = newValue;
         };
-        
           
         /**
           * Create the primaryContentSubscription and sourceContentSubscription
@@ -132,8 +117,7 @@ angular.module('emmiManager')
   	       });
       	 
          };
-      	  
-        
+         
         /*
          * Separate the content subscription list 
          * that was selected from the database
@@ -157,8 +141,7 @@ angular.module('emmiManager')
                     $scope.addNewContentSubscription = true;
                  }
             });
-            $scope.initialAddAnotherContentSubscription = true;
-            angular.forEach($scope.selectedContentList, function (aContent){
+                angular.forEach($scope.selectedContentList, function (aContent){
             	$scope.updateLatestPrimaryContentList(aContent);
      	    });
             $scope.emmiEngagePlus = emmiEngage;
@@ -169,16 +152,18 @@ angular.module('emmiManager')
     	   ContentSubscriptionConfigurationService.getClientContentSubscriptionConfiguration().then(function (response) {
                if(angular.isDefined(response.content)){
                    if(response.content.length > 0){
-                	  	$scope.contentSubscriptionExist = true;
-                	  	$scope.separateSavedLists(response.content);
+                	   $scope.showSelectList  = false;
+                	   $scope.initialAddAnotherContentSubscription = true;
+                	   $scope.separateSavedLists(response.content);
                    }
                }
                else{
             	     $scope.selectedContentSubscription = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
-                     $scope.contentSubscriptionExist = false;
+            	     $scope.initialAddAnotherContentSubscription = false;
                      $scope.faithBased = false;
                      $scope.showSelectList  = true;
                      $scope.emmiEngagePlus = false;
+                     window.wen=$scope;
                 }
             });
         };
