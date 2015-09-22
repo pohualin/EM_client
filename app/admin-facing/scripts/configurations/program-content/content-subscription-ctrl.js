@@ -69,8 +69,8 @@ angular.module('emmiManager')
                     content: '<b>' + $scope.client.name + '</b> has been updated successfully.'
                 });
                 }).finally(function () {
-                	$scope.whenSaving = false;
-                	$scope.reset();
+                   	$scope.whenSaving = false;
+                	$scope.showButtons(false);
                 });
            
            
@@ -82,9 +82,8 @@ angular.module('emmiManager')
     	   
        });
 
-              
        $scope.onChangePrimaryList = function(){
-    	    if((angular.isDefined($scope.contentSubscriptionHolder.entity.contentSubscription)) &&
+    	   if((angular.isDefined($scope.contentSubscriptionHolder.entity.contentSubscription)) &&
                   ($scope.contentSubscriptionHolder.entity.contentSubscription !== null)){
                 	if($scope.contentSubscriptionHolder.entity.contentSubscription.name === 'None'){
                 		$scope.noneSelectedForClient(true);
@@ -128,9 +127,7 @@ angular.module('emmiManager')
     	   $scope.updateLatestPrimaryContentList(newContentSubscription);
     	   $scope.contentSubscriptionHolder = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
        };
-       
-    
-       
+
        $scope.onChangeFaithBased = function(faithBased){
     	   angular.forEach($scope.selectedContentList, function (aContent){
     		   aContent.entity.faithBased = faithBased;
