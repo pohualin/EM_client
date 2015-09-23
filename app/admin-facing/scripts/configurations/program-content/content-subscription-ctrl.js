@@ -10,7 +10,9 @@ angular.module('emmiManager')
        
     	$scope.addAnotherContentSubscription = false;
         $scope.contentSubscriptionHolder = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
-                       
+        $scope.sourceContentHolder = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
+        $scope.sourceContentToSave = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
+        
         /**
          * Save content subscription configuration for the client
          */
@@ -56,21 +58,23 @@ angular.module('emmiManager')
               if(aContent.entity.contentSubscription !== null){
                if(aContent.entity.contentSubscription.id === 128){
                   aContent.entity.contentSubscription.name = 'EmmiEngage';
-                  if(angular.isDefined($scope.selectedSourceContent)){ 
-                	 $scope.selectedContentList.push($scope.selectedSourceContent);
+                  if($scope.sourceContentToSave.entity.contentSubscription !== null){ 
+                	  console.log('rerererrerrrrre');
+                	  console.log($scope.sourceContentToSave);
+                	 $scope.selectedContentList.push($scope.sourceContentToSave);
                   }
                }
             }
             });
             ContentSubscriptionConfigurationService.saveAll($scope.selectedContentList, $scope.selectedContentSubscription.entity.faithBased).then(function(response){
-            	angular.copy(response, $scope.selectedContentList);
+            	//angular.copy(response, $scope.selectedContentList);
             	$scope.$emit('selectedContentList');
             	$alert({
                     content: '<b>' + $scope.client.name + '</b> has been updated successfully.'
                 });
                 }).finally(function () {
                    	$scope.whenSaving = false;
-                	$scope.showButtons(false);
+                	$scope.cancel();
                 });
            
            
@@ -82,7 +86,9 @@ angular.module('emmiManager')
     	   
        });
 
-       $scope.onChangePrimaryList = function(){
+       $scope.onChangePrimaryList = function(newSubscriptionHolder){
+    	   console.log('chnage primare');
+    	   console.log(newSubscriptionHolder);
     	   if((angular.isDefined($scope.contentSubscriptionHolder.entity.contentSubscription)) &&
                   ($scope.contentSubscriptionHolder.entity.contentSubscription !== null)){
                 	if($scope.contentSubscriptionHolder.entity.contentSubscription.name === 'None'){
@@ -94,6 +100,17 @@ angular.module('emmiManager')
                 	else{
                 	   if($scope.latestPrimaryContentList.length > 1){
                 		   $scope.addAnotherContentSubscription = true;
+                	   }
+                	   if(newSubscriptionHolder.entity.contentSubscription.name !== 'EmmiEngage+'){
+                		   $scope.sourceContentHolder = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();   	        
+                	   }
+                	   else{
+                		   console.log('emmiemnfdage+');
+                		   if($scope.sourceContentHolder.entity.contentSubscription !== null){
+                			   console.log($scope.sourceContentHolder);
+                			   angular.copy($scope.sourceContentHolder,$scope.sourceContentToSave);
+                			   console.log($scope.sourceContentToSave);
+                		   }
                 	   }
                 	   $scope.noneSelectedForClient(false);
                 	   $scope.resetFaithBased(true);
@@ -118,11 +135,18 @@ angular.module('emmiManager')
         * Added another content subscription for a client
         * push the new content subscription to the selectedContentList
         */
-       $scope.addAnotherSubscription = function(newContentSubscription){
+       $scope.addAnotherSubscription = function(newContentSubscription, newSourceContent){
+    	   console.log('change another');
+    	   console.log(newContentSubscription);
     	   $scope.setInitialAddAnotherContentSubscription(false);
     	   $scope.resetShowSelectList(true);
     	   $scope.addAnotherContentSubscription = false;
     	   $scope.showButtons(true);
+    	   if(newSourceContent.entity.contentSubscription !== null){
+    		   console.log('not nulllllll');
+    		   angular.copy(newSourceContent, $scope.sourceContentToSave);
+    	   }
+    	   console.log($scope.sourceContentToSave);
     	   $scope.selectedContentList.push(newContentSubscription);
     	   $scope.updateLatestPrimaryContentList(newContentSubscription);
     	   $scope.contentSubscriptionHolder = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();

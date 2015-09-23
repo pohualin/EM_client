@@ -7,7 +7,7 @@
         <div data-ng-if="!noneSelected">
         <div class="col-md-4" >
          	<div data-ng-if="contentSubscriptionHolder.entity.contentSubscription.name=='EmmiEngage+'
-         	                || emmiEngagePlus">
+         	                || isEmmiEngagePlus">
          	<label class="control-label" for="selectedSourceContentList">SOURCE</label>
             </div>
         </div>
@@ -27,7 +27,7 @@
                 <select class="form-control" id="latestPrimaryContentList" name="latestPrimaryContentList" class="form-control"
                     data-ng-options="latestPrimaryContentList.name for latestPrimaryContentList in latestPrimaryContentList track by latestPrimaryContentList.name"
                     data-ng-model="contentSubscriptionHolder.entity.contentSubscription"
-                    data-ng-change="onChangePrimaryList()"
+                    data-ng-change="onChangePrimaryList(contentSubscriptionHolder)"
                     data-chosen data-disable-search="true" data-placeholder="Select...">   
                 <option value="" title="latestPrimaryContentList">Select...</option>
                 </select>
@@ -46,7 +46,7 @@
            			<div data-ng-if="contentSubscriptionHolder.entity.contentSubscription.name=='EmmiEngage+'">
                 		<select id="sourceContentList" name="sourceContentList" class="form-control"
                     	data-ng-options="sourceContentList.name for sourceContentList in sourceContentList track by sourceContentList.id"
-                    	data-ng-model="selectedSourceContent.entity.contentSubscription"
+                    	data-ng-model="sourceContentHolder.entity.contentSubscription"
                     	data-ng-change="showButtons({{true}})">
                 		<option value="" title="sourceContentList"></option>
                 		</select>
@@ -54,7 +54,7 @@
            		</div>
            		<div class="col-md-4">
            			<div data-ng-if="latestPrimaryContentList.length > 1 && addAnotherContentSubscription">
-           			<button  type="button" class="btn btn-link btn-link-nopad btn-heading" data-ng-click="addAnotherSubscription(contentSubscriptionHolder)">
+           			<button  type="button" class="btn btn-link btn-link-nopad btn-heading" data-ng-click="addAnotherSubscription(contentSubscriptionHolder, sourceContentHolder)">
         				<i class="icon-plus"></i> ADD ANOTHER SUBSCRIPTION
     				</button>
     				</div>
