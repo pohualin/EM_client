@@ -79,7 +79,6 @@ angular.module('emmiManager')
              */
             function init() {
                 $scope.client = Client.getClient().entity;
-                $scope.page.setTitle('Client Configurations - ' + $scope.client.name + ' | ClientManager');
                 //need to have at this point if the client has roles in order to define the correct redirect for users links at the bottom page
                 ManageUserRolesService.loadClientRoles(clientResource).then(function (rolesResources) {
                     $scope.existingClientRoles = rolesResources;

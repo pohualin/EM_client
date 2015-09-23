@@ -28,6 +28,7 @@ angular.module('emmiManager')
                     authorizedRoles: USER_ROLES.all
                 },
                 reloadOnSearch: false,
+                title: 'Client Configurations - Security Settings | ClientManager',
                 activeMenu: MENU.setup,
                 activeSidebarMenu: 'restriction',
                 resolve: clientDetailRequiredResources

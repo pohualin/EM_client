@@ -18,7 +18,7 @@
             data-title="{{ tagGroup.isValidMessage }}" aria-label="{{ tagGroup.isValidMessage }}"></div>
         &nbsp;
     </div>
-    <button data-ng-hide="createMode || taggingMode || formField.$error.unique || formField.$error.blankTitle" class="btn btn-sm btn-primary btn-add-group" type="button" data-ng-click="enterCreateMode()" data-swap-text="Add New Group">Add Groups &amp; Tags</button>
+    <button data-ng-hide="createMode || taggingMode || formField.$error.unique || formField.$error.blankTitle" class="btn btn-sm btn-default btn-add-group" type="button" data-ng-click="enterCreateMode()" data-swap-text="Add New Group">Add Groups &amp; Tags</button>
     <div class="tag-group-create form-inline" data-ng-show="createMode">
         <div class="form-group">
             <input type="text" class="form-control input-sm" data-ng-model="newTagGroupTitle" data-focus-on="createMode" data-ng-enter="newTagGroup()" data-ng-blur="newTagGroup()">
