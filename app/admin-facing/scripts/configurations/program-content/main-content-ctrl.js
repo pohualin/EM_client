@@ -23,24 +23,24 @@ angular.module('emmiManager')
         $scope.emmiEngagePlus = {};
         $scope.noneContent = {name:'None', id:0};
         $scope.selectedSourceContent = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
+        $scope.originalSourceContent = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
         $scope.selectedContentSubscription = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
         $scope.selectedContentList = [];
         $scope.showContentButton = false;
-     
-               
+ 
+        
         /**
-         * Cancel any changes
+         * Cancel button clicked
          */
         $scope.cancel = function (contentSubscriptionForm) {
         	contentSubscriptionForm.$setPristine();
             $scope.contentSubscriptionFormSubmitted = false;
             $scope.initialAddAnotherContentSubscription = true;
-            $scope.selectedContentSubscription = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
             $scope.getClientContentList();
             $scope.$broadcast('event:remove-content-holder');
            	$scope.showButtons(false);
         };
-        
+  
        /**
          * Show/hide cancel and save buttons
          */
@@ -51,8 +51,10 @@ angular.module('emmiManager')
          /**
           * Reset selectedSourceContent
           */
-         $scope.selectedSourceContent = function () {
-        	 $scope.selectedSourceContent = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
+         $scope.resetSelectedSourceContent = function (sourceContentToSave ) {
+        	 $scope.selectedSourceContent = sourceContentToSave;
+        	 $scope.originalSourceContent = sourceContentToSave;
+        	 
           };
         
         
@@ -116,12 +118,11 @@ angular.module('emmiManager')
             
          };
          
-         
          $scope.initialAddSubscription = function(){
            $scope.setInitialAddAnotherContentSubscription(false);
       	   $scope.resetShowSelectList(true);
       	   angular.forEach($scope.selectedContentList, function (newContentSubscription){
-         	 $scope.updateLatestPrimaryContentList(newContentSubscription);
+      		  	 $scope.updateLatestPrimaryContentList(newContentSubscription);
   	       });
       	 
          };
@@ -139,6 +140,7 @@ angular.module('emmiManager')
                     	angular.forEach(contentList, function (sourceContent){
                             if(sourceContent.entity.contentSubscription.sourceSubscription){
                             	angular.copy(sourceContent, $scope.selectedSourceContent);
+                            	$scope.originalSourceContent = sourceContent;
                             	aContent.entity.contentSubscription.name = 'EmmiEngage+';
                             	emmiEngage = true;
                               }
@@ -156,32 +158,27 @@ angular.module('emmiManager')
 
        $scope.getClientContentList = function(){
     	   $scope.selectedContentList = [];
+    	   $scope.latestPrimaryContentList = [];
+    	   angular.copy($scope.primaryContentList, $scope.latestPrimaryContentList);
     	   ContentSubscriptionConfigurationService.getClientContentSubscriptionConfiguration().then(function (response) {
                if(angular.isDefined(response.content)){
-                   if(response.content.length > 0){
-                	   console.log('there is conenthererer');
+            	       if(response.content.length > 0){
                 	   $scope.showSelectList  = false;
                 	   $scope.initialAddAnotherContentSubscription = true;
                 	   $scope.separateSavedLists(response.content);
                    }
                }
                else{
-            	   console.log('there is no content');
             	     $scope.selectedContentSubscription = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
             	     $scope.initialAddAnotherContentSubscription = false;
                      $scope.faithBased = false;
                      $scope.showSelectList  = true;
                      $scope.isEmmiEngagePlus = false;
-                     window.wen=$scope;
-                }
+               }
             });
         };
        
        $scope.$on('selectedContentList', function () {
-    	   console.log('sledcerlisy');
-    	   MainContentService.getContentSubscriptionList().then(function(response){
-               $scope.createLists(response.content);
-           });
     	   $scope.getClientContentList();
        });
        

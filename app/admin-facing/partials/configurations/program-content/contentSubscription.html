@@ -7,7 +7,8 @@
         <div data-ng-if="!noneSelected">
         <div class="col-md-4" >
          	<div data-ng-if="contentSubscriptionHolder.entity.contentSubscription.name=='EmmiEngage+'
-         	                || isEmmiEngagePlus">
+         	                || isEmmiEngagePlus 
+         	                || selectedContentSubscription.entity.contentSubscription.name=='EmmiEngage+'">
          	<label class="control-label" for="selectedSourceContentList">SOURCE</label>
             </div>
         </div>
@@ -47,7 +48,7 @@
                 		<select id="sourceContentList" name="sourceContentList" class="form-control"
                     	data-ng-options="sourceContentList.name for sourceContentList in sourceContentList track by sourceContentList.id"
                     	data-ng-model="sourceContentHolder.entity.contentSubscription"
-                    	data-ng-change="showButtons({{true}})">
+                    	data-ng-change="onChangeSourceContent(sourceContentHolder)">
                 		<option value="" title="sourceContentList"></option>
                 		</select>
            			</div>
