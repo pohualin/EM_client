@@ -1,0 +1,203 @@
+@media print {
+	body {
+		margin-bottom: 0 !important;
+	}
+	#__bs_notify__ { display: none !important; }
+	.print-instructions {
+		page-break-inside: avoid;
+		position: relative;
+		height: 975px;
+		padding-bottom: 0;
+		h1 {
+			font-weight: bold;
+			font-size: 26pt;
+			color: #459ACB !important;
+			padding-bottom: 34.8px;
+			margin: 0;
+		}
+		h2,
+		h2 * {
+			font-weight: bold;
+			font-size: 15pt;
+			color: #135E82 !important;
+		}
+		h3,
+		h3 * {
+			font-size: 15pt;
+			font-weight: bold;
+			color: #459ACB !important;
+			margin: 0 0 24px;
+		}
+		p,
+		p * {
+			font-size: 12pt;
+			line-height: 15pt;
+			color: #515356 !important;
+		}
+		sup {
+			font-size: 50%;
+		}
+		.provider {
+			max-width: 142px;
+			text-align: right;
+			.placeholder {
+				line-height: 26pt;
+				font-size: 14px;
+				color: #999 !important;
+			}
+		}
+		.fixed-footer {
+			position: absolute;
+			width: 100%;
+			bottom: 0;
+			height: 75px;
+			img {
+				margin-bottom: 10.4px;
+			}
+			p {
+				font-size: 10pt;
+				color: #a7a9ac !important;
+			}
+		}
+	}
+	.layout-card {
+		padding: 0;
+		margin: 0;
+	}
+	.programs {
+		padding-top: 24px;
+	    // padding-right: 273px;
+	    // width: 333px;
+		ul {
+			list-style: none;
+			margin: 0 0 17.5px;
+			padding: 0;
+			li {
+				font-size: 12pt;
+				line-height: 16pt;
+				color: #515356 !important;
+				border-bottom: 1px solid #d1d3d4;
+				padding: 11.6px 0;
+				span.program-list_item-icon {
+					font-size: 20px;
+					color: #459ACB !important;
+					width: 10.6px;
+					display: block;
+					float: left;
+					margin-right: 10px;
+					&:before, &:after {
+						color: #459ACB !important;
+					}
+				}
+				span.program-name {
+					font-weight: bold;
+					padding-left: 20.6px;
+					display: block;
+				}
+			}
+		}
+		p.providers {
+			font-size: 12pt;
+			line-height: 16pt;
+			color: #515356 !important;
+			font-weight: bold;
+			margin-bottom: 36px;
+		}
+	}
+	.right {
+		min-width: 184.6px;		
+		padding-left: 23px;
+		background-color: #fff !important;
+		.instructions {
+			border-radius: 6px;
+			box-shadow: 0 1px 2px rgba(0,0,0,0.75) !important;
+			.instructions-header {
+				padding: 24px 12px 12px;
+				background: #125e82 !important;
+				border-top-left-radius: 6px;
+				border-top-right-radius: 6px;
+				h3 {
+					color: #fff !important;
+					font-weight: bold;
+					text-align: center;
+					font-size: 15pt;
+					margin: 0;
+				}
+			}
+			.instructions-body {
+				width: 100%;
+				background: #f0f7fb !important;
+				border: 2px solid #459ACB;
+				padding: 24px 15px 19.6px;
+				border-bottom-left-radius: 6px;
+				border-bottom-right-radius: 6px;
+				margin-bottom: 34.75px;
+				h4 {
+					margin: 0 0 12px;
+					font-size: 12pt;
+					font-weight: bold;
+					color: #515356 !important;
+					text-transform: none;
+				}
+				.steps {
+					.step {
+						padding: 0 0 12px;
+						&:last-child {
+							padding: 0 0 19.6px;
+						}
+						.number {
+							display: block;
+							float: left;
+							width: 20px;
+							height: 20px;
+							background: #515356 !important;
+							border-radius: 10px;
+							color: #fff !important;
+							font-size: 12.8px;
+							line-height: 20px;
+							text-align: center;
+							margin-right: 6.5px;
+						}
+						.step-body {
+							padding-top: 1px;
+							font-size: 12pt;
+							padding-left: 26.5px;
+							color: #515356 !important;
+							.href {
+								color: #459ACB !important;
+								font-weight: bold;
+							}
+							.access-code {
+								color: #515356 !important;
+								font-weight: bold;
+								font-size: 15pt;
+								display: block;
+								background: #fff !important;
+								text-align: center;
+								padding: 5px 0;
+								margin-top: 9px;
+							}
+						}
+					}
+				}
+				.view-by {
+					font-size: 12pt;
+					line-height: 16pt;
+					color: #515356 !important;
+					font-weight: bold;
+					img {
+						margin-right: 8.7px;
+					}
+				}
+			}
+		}
+		.help {
+			padding-left: 16.6px;
+			p {
+				font-size: 12pt;
+				line-height: 15pt;
+				padding-bottom: 15px;
+			}
+		}
+	}
+}

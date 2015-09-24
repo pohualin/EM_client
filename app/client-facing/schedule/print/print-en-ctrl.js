@@ -23,7 +23,14 @@
                 angular.forEach($scope.scheduledPrograms, function (scheduledProgram) {
                     $scope.providers.push(scheduledProgram.entity.provider);
                 });
-                
+
+                $scope.limit = 5;
+                if ($scope.scheduledPrograms.length === $scope.limit + 1) {
+                    $scope.limit++;
+                }
+
+                $scope.year = new Date().getFullYear();
+                                
                 // We need this to get parent scope because we're in an iframe
                 var parentScope = $window.parent.angular.element($window.frameElement).scope();
                 
