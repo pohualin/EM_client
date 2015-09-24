@@ -30,6 +30,7 @@ angular.module('emmiManager')
         .when('/clients/:clientId/teams/:teamId/configuration/email_reminders', {
            	templateUrl: 'admin-facing/partials/team/configuration/email/main.html',
             controller: 'ClientTeamEmailConfigurationCtrl',
+            title: 'Team Configurations - Email Notifications & Print Instructions | ClientManager',
             activeMenu: MENU.setup,
             access: {
                 authorizedRoles: USER_ROLES.all
@@ -42,6 +43,7 @@ angular.module('emmiManager')
         .when('/clients/:clientId/teams/:teamId/configuration/phone_reminders', {
             templateUrl: 'admin-facing/partials/team/configuration/phone/main.html',
             controller: 'ClientTeamPhoneConfigurationCtrl',
+            title: 'Team Configurations - Phone Reminders | ClientManager',
             activeMenu: MENU.setup,
             access: {
                 authorizedRoles: USER_ROLES.all
@@ -54,6 +56,7 @@ angular.module('emmiManager')
         .when('/clients/:clientId/teams/:teamId/configuration/scheduling', {
             templateUrl: 'admin-facing/partials/team/configuration/scheduling/main.html',
             controller: 'ClientTeamSchedulingConfigurationCtrl',
+            title: 'Team Configurations - Scheduling | ClientManager',
             activeMenu: MENU.setup,
             access: {
                 authorizedRoles: USER_ROLES.all
@@ -66,6 +69,7 @@ angular.module('emmiManager')
         .when('/clients/:clientId/teams/:teamId/configuration/self_registration', {
             templateUrl: 'admin-facing/partials/team/configuration/self-registration/main.html',
             controller: 'SelfRegistrationController',
+            title: 'Team Configurations - Self Registration | ClientManager',
             activeMenu: MENU.setup,
             access: {
                 authorizedRoles: USER_ROLES.all

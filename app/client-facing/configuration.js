@@ -22,6 +22,8 @@ angular.module('emmiManager', [
     'emmi-angular-multiselect',
     'truncate',
     'emmi.noDirtyCheck',
+    'headroom',
+    'ngTinyScrollbar',
     'emmi.momentStrap'
 ])
 

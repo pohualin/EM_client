@@ -28,6 +28,7 @@ angular.module('emmiManager')
                     authorizedRoles: USER_ROLES.all
                 },
                 reloadOnSearch: false,
+                title: 'Client Configurations - Program Content | ClientManager',
                 activeMenu: MENU.setup,
                 activeSidebarMenu: 'program_content',
                 resolve: clientDetailRequiredResources

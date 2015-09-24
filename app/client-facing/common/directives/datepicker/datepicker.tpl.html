@@ -21,7 +21,7 @@
   <tbody aria-label="use arrows to navigate, and press enter to select a day">
     <tr ng-repeat="(i, row) in rows" height="{{ 100 / rows.length }}%">
       <td class="text-center" ng-repeat="(j, el) in row">
-        <button tabindex="-1" type="button" class="btn btn-default" style="width: 100%" ng-class="{'btn-primary': el.selected, 'btn-today': el.isToday && !el.selected}" ng-click="$select(el.date)" ng-disabled="el.disabled" aria-selected="{{el.selected}}">
+        <button tabindex="-1" type="button" class="btn btn-default btn-datepicker-date" style="width: 100%" ng-class="{'btn-primary': el.selected, 'btn-today': el.isToday && !el.selected}" ng-click="$select(el.date)" ng-disabled="el.disabled" aria-selected="{{el.selected}}">
           <span ng-class="{'text-muted': el.muted}" ng-bind="el.label"></span>
         </button>
       </td>

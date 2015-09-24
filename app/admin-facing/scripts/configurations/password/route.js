@@ -28,6 +28,7 @@ angular.module('emmiManager')
                     authorizedRoles: USER_ROLES.all
                 },
                 reloadOnSearch: false,
+                title: 'Client Configurations - Password Policies | ClientManager',
                 activeMenu: MENU.setup,
                 activeSidebarMenu: 'password_policy',
                 resolve: clientDetailRequiredResources
