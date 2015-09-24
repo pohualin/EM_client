@@ -21,8 +21,11 @@
                 $scope.providers = [];
                 
                 angular.forEach($scope.scheduledPrograms, function (scheduledProgram) {
-                    $scope.providers.push(scheduledProgram.entity.provider);
+                    $scope.providers.push(scheduledProgram.entity.provider.fullName);
                 });
+
+                // Filter out redundant providers.
+                $scope.providers = $scope.providers.filter(function(item, i, ar){ return ar.indexOf(item) === i; });
 
                 // Limit the number of programs unless the number of programs is one more than the limit.
                 $scope.limit = 5;
