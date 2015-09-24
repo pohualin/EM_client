@@ -24,6 +24,7 @@
                     $scope.providers.push(scheduledProgram.entity.provider);
                 });
 
+                // Limit the number of programs unless the number of programs is one more than the limit.
                 $scope.limit = 5;
                 if ($scope.scheduledPrograms.length === $scope.limit + 1) {
                     $scope.limit++;
