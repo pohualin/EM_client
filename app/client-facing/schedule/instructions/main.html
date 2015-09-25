@@ -2,20 +2,24 @@
     <!-- Breadcrumb for transclusion -->
 </header>
 <div id="app-content" role="main" class="app-content container" data-ng-cloak>
-    
-  <div class="layout-card">
-    <div class="row">
-      <h2>Success: {{scheduledPrograms.length}} 
-        <span data-ng-if="scheduledPrograms.length === 1">program has</span>
-        <span data-ng-if="scheduledPrograms.length !== 1">programs have</span> 
-        been scheduled!
-      </h2>
+
+  <div class="row">
+    <div class="col-xs-12 clearfix">
+      <a href="#" class="pull-right btn btn-success">SCHEDULE NEW PROGRAM</a>
     </div>
+  </div>
+
+  <div class="layout-card confirmation-success">
+    <h2>Success: {{scheduledPrograms.length}} 
+      <span data-ng-if="scheduledPrograms.length === 1">program has</span>
+      <span data-ng-if="scheduledPrograms.length !== 1">programs have</span> 
+      been scheduled!
+    </h2>
   </div>
 
   <div class="row">
     <div class="col-md-12">
-      <h2>Scheduled Summary</h2>
+      <h2 class="confirmation-summary">Schedule Summary</h2>
     </div>
   </div>
   

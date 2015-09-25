@@ -262,6 +262,14 @@
         margin-left: 0;
     }
 
+   /* _____ TYPOGRAPHY _____ */
+
+    .truncate {
+        display: block;      
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 
     /* _____ LAYOUT _____ */
 
