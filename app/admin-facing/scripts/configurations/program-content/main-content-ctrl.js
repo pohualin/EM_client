@@ -56,7 +56,29 @@ angular.module('emmiManager')
         	 $scope.originalSourceContent = sourceContentToSave;
         	 
           };
-        
+          
+          /**
+           * Reset selectedSourceContent
+           */
+          $scope.resetSelectedContentSubscription  = function (sourceContent) {
+        	 $scope.selectedContentSubscription  = sourceContent;
+           };
+          
+          $scope.resetIsEmmiEngage = function (newValue){
+        	  $scope.isEmmiEngagePlus = newValue;
+          };
+          
+          $scope.filterAgain = function (index) {
+        	    return function (item) {
+        	 	if($scope.selectedContentSubscription.entity.contentSubscription !== null){
+        	    	if ($scope.selectedContentList[index].entity.contentSubscription.name === item.name){
+        	    		 return true;
+        	    		}
+        	    	 return false;
+        	   	}  	
+        	   return true;
+        	    };
+       	};
         
         /**
          * Reset initialAddAnotherContentSubscription
@@ -159,6 +181,7 @@ angular.module('emmiManager')
        $scope.getClientContentList = function(){
     	   $scope.selectedContentList = [];
     	   $scope.latestPrimaryContentList = [];
+    	   $scope.isEmmiEngagePlus = false;
     	   angular.copy($scope.primaryContentList, $scope.latestPrimaryContentList);
     	   ContentSubscriptionConfigurationService.getClientContentSubscriptionConfiguration().then(function (response) {
                if(angular.isDefined(response.content)){

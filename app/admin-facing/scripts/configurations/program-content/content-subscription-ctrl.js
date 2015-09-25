@@ -65,7 +65,6 @@ angular.module('emmiManager')
             	     aContent.entity.contentSubscription.name = 'EmmiEngage';
                      if(($scope.sourceContentToSave.entity.contentSubscription !== null) &&
                         (angular.isDefined($scope.sourceContentToSave.entity.contentSubscription.id))){
-                    	 console.log($scope.sourceContentToSave);
                     	 $scope.selectedContentList.push($scope.sourceContentToSave);
                      }
                      else if(($scope.originalSourceContent.entity.contentSubscription !== null)&&
@@ -74,8 +73,7 @@ angular.module('emmiManager')
                      }
                }
              }
-           });
-            
+           });  
             if(!EmmiEngageExist){
                	   if(($scope.originalSourceContent.entity.contentSubscription !== null)&&
               		   (angular.isDefined($scope.originalSourceContent.entity.id))){ 
@@ -83,7 +81,6 @@ angular.module('emmiManager')
                    	 $scope.selectedContentList.push($scope.originalSourceContent);
                      }
              }
-          
             ContentSubscriptionConfigurationService.saveAll($scope.selectedContentList, $scope.selectedContentSubscription.entity.faithBased).then(function(response){
             	$scope.$emit('selectedContentList');
             	$alert({
@@ -145,11 +142,19 @@ angular.module('emmiManager')
          };
    
   
-         $scope.onChangeSelectedPrimaryList = function(){
+         $scope.onChangeSelectedPrimaryList = function(newSourceSubscriptionHolder){       	 
         	    $scope.addAnotherContentSubscription = true;
         	    $scope.setInitialAddAnotherContentSubscription(true);
         	    $scope.resetFaithBased(true);
+        	    $scope.resetSelectedContentSubscription(newSourceSubscriptionHolder);
                 $scope.showButtons(true);
+                if((newSourceSubscriptionHolder.entity.contentSubscription !== null) &&
+                	(newSourceSubscriptionHolder.entity.contentSubscription.name === 'EmmiEngage+')){
+                	$scope.resetIsEmmiEngage(true);
+         	   }
+         	   else{
+         		   $scope.resetIsEmmiEngage(false);
+         	   }
          };
          
          $scope.viewAndEditSubscription = function(){
