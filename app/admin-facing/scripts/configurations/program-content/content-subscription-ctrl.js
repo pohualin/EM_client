@@ -65,7 +65,6 @@ angular.module('emmiManager')
             	     aContent.entity.contentSubscription.name = 'EmmiEngage';
                      if(($scope.sourceContentToSave.entity.contentSubscription !== null) &&
                         (angular.isDefined($scope.sourceContentToSave.entity.contentSubscription.id))){
-                    	 console.log($scope.sourceContentToSave);
                     	 $scope.selectedContentList.push($scope.sourceContentToSave);
                      }
                      else if(($scope.originalSourceContent.entity.contentSubscription !== null)&&
@@ -74,10 +73,8 @@ angular.module('emmiManager')
                      }
                }
              }
-           });
-            
+           });  
             if(!EmmiEngageExist){
-            	console.log('emmiengae eixst nottttttt');
                	   if(($scope.originalSourceContent.entity.contentSubscription !== null)&&
               		   (angular.isDefined($scope.originalSourceContent.entity.id))){ 
               		 $scope.originalSourceContent.entity.contentSubscription = null;
@@ -147,8 +144,6 @@ angular.module('emmiManager')
    
   
          $scope.onChangeSelectedPrimaryList = function(newSourceSubscriptionHolder){       	 
-                console.log('chane primary select');
-                console.log(newSourceSubscriptionHolder);
         	    $scope.addAnotherContentSubscription = true;
         	    $scope.setInitialAddAnotherContentSubscription(true);
         	    $scope.resetFaithBased(true);
@@ -156,11 +151,9 @@ angular.module('emmiManager')
                 $scope.showButtons(true);
                 if((newSourceSubscriptionHolder.entity.contentSubscription !== null) &&
                 	(newSourceSubscriptionHolder.entity.contentSubscription.name === 'EmmiEngage+')){
-                	console.log('n enage hrerer'); 
                 	$scope.resetIsEmmiEngage(true);
          	   }
          	   else{
-         		   console.log('not emmiengage');
          		   $scope.resetIsEmmiEngage(false);
          	   }
          };
