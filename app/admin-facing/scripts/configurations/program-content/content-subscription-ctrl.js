@@ -77,6 +77,7 @@ angular.module('emmiManager')
            });
             
             if(!EmmiEngageExist){
+            	console.log('emmiengae eixst nottttttt');
                	   if(($scope.originalSourceContent.entity.contentSubscription !== null)&&
               		   (angular.isDefined($scope.originalSourceContent.entity.id))){ 
               		 $scope.originalSourceContent.entity.contentSubscription = null;
@@ -145,11 +146,23 @@ angular.module('emmiManager')
          };
    
   
-         $scope.onChangeSelectedPrimaryList = function(){
+         $scope.onChangeSelectedPrimaryList = function(newSourceSubscriptionHolder){       	 
+                console.log('chane primary select');
+                console.log(newSourceSubscriptionHolder);
         	    $scope.addAnotherContentSubscription = true;
         	    $scope.setInitialAddAnotherContentSubscription(true);
         	    $scope.resetFaithBased(true);
+        	    $scope.resetSelectedContentSubscription(newSourceSubscriptionHolder);
                 $scope.showButtons(true);
+                if((newSourceSubscriptionHolder.entity.contentSubscription !== null) &&
+                	(newSourceSubscriptionHolder.entity.contentSubscription.name === 'EmmiEngage+')){
+                	console.log('n enage hrerer'); 
+                	$scope.resetIsEmmiEngage(true);
+         	   }
+         	   else{
+         		   console.log('not emmiengage');
+         		   $scope.resetIsEmmiEngage(false);
+         	   }
          };
          
          $scope.viewAndEditSubscription = function(){
