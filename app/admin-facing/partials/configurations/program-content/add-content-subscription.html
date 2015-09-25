@@ -3,10 +3,11 @@
      <div class="col-md-4">
       		<div class="form-group">
                	<select id="primaryContentList" name="primaryContentList" class="form-control"
-                   	data-ng-options="primaryContentList.name for primaryContentList in primaryContentList track by primaryContentList.name"
+                   	data-ng-options="primaryContent.name for primaryContent in primaryContentList | filter : {name:selectedContentSubscription.entity.contentSubscription.name} track by primaryContent.name"
                    	data-ng-model="selectedContentSubscription.entity.contentSubscription"
-                   	data-ng-change="onChangeSelectedPrimaryList()">
-               	<option value="" title="primaryContentList">Select...</option>
+                   	data-ng-change="onChangeSelectedPrimaryList()"
+                    data-chosen data-disable-search="true" data-placeholder="Select...">
+                      	<option value="" title="primaryContentList">Select...</option>
                	</select>
        		</div>
             </div>
@@ -16,7 +17,7 @@
           	   	   	<select id="selectedSourceContentList" name="selectedSourceContentList" class="form-control"
                    	data-ng-options="sourceContentList.name for sourceContentList in sourceContentList track by sourceContentList.id"
                    	data-ng-model="selectedSourceContent.entity.contentSubscription"
-                   	data-ng-change="showButtons({{true}})">
+                   	data-ng-change="onChangeSourceContent(selectedSourceContent)">
                	<option value="" title="selectedSourceContentList"></option>
                	</select>
            	</div>

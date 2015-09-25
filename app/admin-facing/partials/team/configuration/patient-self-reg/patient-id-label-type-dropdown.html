@@ -14,17 +14,30 @@
                 </div>
             </div>
             <div class="row"
-                 data-ng-show="patientSelfRegConfig.entity.patientIdLabelType.typeKey === 'PATIENT_SELF_REG_LABEL_OTHER'">
+                 data-ng-if="patientSelfRegConfig.entity.patientIdLabelType.typeKey === 'PATIENT_SELF_REG_LABEL_OTHER'">
                 <div class="col-sm-6">
+                    <div class="form-group"
+                         data-ng-class="{ 'has-error' : patientSelfRegForm.patientIdLabelEnglish.$invalid && patientSelfRegFormSubmitted }">
+                    <div class="error-circle fa-exclamation-circle" role="alert"
+                         data-ng-show="patientSelfRegForm.patientIdLabelEnglish.$error.required && patientSelfRegFormSubmitted"
+                         data-bs-tooltip data-placement="right" data-type="danger"
+                         data-container="body" data-title="Required" aria-label="Required"></div>
                     <label class="control-label" for="patientIdLabelEnglish">CUSTOM PATIENT ID LABEL (ENGLISH)</label>
-                    <input class="form-control" name="patientIdLabelEnglish" type="text"
+                    <input class="form-control" name="patientIdLabelEnglish" type="text" required
                            data-ng-model="idLabelConfigEnglish.config.entity.value"
                            data-ng-disabled="!idLabelConfigEnglish.config.entity.idLabelType.isModifiable"
                            id="patientIdLabelEnglish" maxlength="100">
+                        </div>
                 </div>
                 <div class="col-sm-6">
+                    <div class="form-group"
+                         data-ng-class="{ 'has-error' : patientSelfRegForm.patientIdLabelSpanish.$invalid && patientSelfRegFormSubmitted }">
+                        <div class="error-circle fa-exclamation-circle" role="alert"
+                             data-ng-show="patientSelfRegForm.patientIdLabelSpanish.$error.required && patientSelfRegFormSubmitted"
+                             data-bs-tooltip data-placement="right" data-type="danger"
+                             data-container="body" data-title="Required" aria-label="Required"></div>
                     <label class="control-label" for="patientIdLabelSpanish">CUSTOM PATIENT ID LABEL (SPANISH)</label>
-                    <input class="form-control" name="patientIdLabelSpanish" type="text"
+                    <input class="form-control" name="patientIdLabelSpanish" type="text" required
                            data-ng-model="idLabelConfigSpanish.config.entity.value"
                            data-ng-disabled="!idLabelConfigEnglish.config.entity.idLabelType.isModifiable"
                            id="patientIdLabelSpanish" maxlength="100">

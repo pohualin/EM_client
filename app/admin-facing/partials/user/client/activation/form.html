@@ -47,7 +47,7 @@
                      data-ng-switch="selectedUserClient.entity.passwordResetExpirationDateTime != null &&
                      selectedUserClient.entity.passwordResetToken != null">
                     <div class="form-actions">
-                        <button class="btn btn-default" type="button"
+                        <button class="btn btn-primary" type="button"
                                 data-ng-disabled="whenSaving"
                                 data-ng-click="passwordReset()">
                             <span>Send Password Reset Email</span>
@@ -71,7 +71,7 @@
                 <div data-ng-hide="selectedUserClient.entity.email"
                      data-ng-switch="selectedUserClient.entity.passwordResetExpirationDateTime != null">
                     <div class="form-actions">
-                        <button class="btn btn-default" type="button"
+                        <button class="btn btn-primary" type="button"
                                 data-ng-disabled="passwordNotification || whenSaving"
                                 data-ng-click="generatePassword($event)">
                             <span data-ng-if="selectedUserClient.entity.neverLoggedIn">Show User Credentials</span>

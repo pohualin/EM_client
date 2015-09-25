@@ -58,7 +58,7 @@
       </td>
       <td>{{clientProvider.provider.entity.specialty.name}}</td>
       <td>{{clientProvider.provider.entity.email}}</td>
-      <td class="col-has-multiselect" data-ng-if="allTeamLocations.length > 0" >
+      <td class="col-has-multiselect" data-ng-if="allTeamLocations.length > 0" style="white-space: nowrap">
         <div data-ng-show="allTeamLocations && clientProvider.provider.entity.checked && !clientProvider.provider.entity.disabled"
              data-ng-class="{'has-error': clientProvider.provider.entity.selectedTeamLocations < 1 && associateRequestSubmitted}">
           <div data-multi-select

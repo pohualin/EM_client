@@ -78,26 +78,28 @@ angular.module('emmiManager')
                  * @returns {*} a promise
                  */
                 saveAll: function (contentSubscriptionList, faithBased) {
-                    var self = this;
+                	var self = this;
                     var deferred = $q.defer();
                     var saveRequests = [];
                     angular.forEach(contentSubscriptionList, function (aNewContent){
                     	var deferred = $q.defer();
+                    	   
                     		if((angular.isDefined(aNewContent.entity.id)) &&
                     				(aNewContent.entity.contentSubscription === null)){
                        			self.deleteContent(aNewContent).then(function(response){
                     			deferred.resolve(response);
                				});
                     		}
-                    		else if(angular.isDefined(aNewContent.entity.id)){
+                    		else if((angular.isDefined(aNewContent.entity.id)) &&
+                    				(aNewContent.entity.contentSubscription !== null)){
                     			
                     			aNewContent.entity.faithBased = faithBased;
                     			self.update(aNewContent).then(function(response){
                     				deferred.resolve(response);	
                     	    });
                     		}
-                    		else if(angular.isDefined(aNewContent.entity.contentSubscription.id)){
-                    			
+                    		else if((aNewContent.entity.contentSubscription !== null) &&
+                    				(angular.isDefined(aNewContent.entity.contentSubscription.id))){
                     			aNewContent.entity.faithBased = faithBased;
                     			self.create(aNewContent).then(function(response){
                     				deferred.resolve(response);
@@ -117,57 +119,58 @@ angular.module('emmiManager')
                  */    
                 filterLatestPrimaryContentList: function(latestContentList, newContentSubscription, selectedContentLength){
                  var newPrimaryList = [];
-             	 if(angular.isDefined(newContentSubscription.entity.contentSubscription !== 'null')){
+                 var newLatestContentList = [];
+                 angular.copy(latestContentList, newLatestContentList);
+               	 if(newContentSubscription.entity.contentSubscription !== null){
              	   if(newContentSubscription.entity.contentSubscription.name !== 'None'){
-             		  angular.forEach(latestContentList, function (aContent, index){
-            			   if(aContent.id === 0){
-            				  latestContentList.splice(index,1);
-                			   
+             		  angular.forEach(newLatestContentList, function (aContent, index){
+             			 if(aContent.id === 0){
+            				 newLatestContentList.splice(index,1);
                 		   }
             		   });
              	   }
              	   if(newContentSubscription.entity.contentSubscription.id === 128){
-             		  angular.forEach(latestContentList, function (aContent){
-             			   if(aContent.id === 124){
+             		  angular.forEach(newLatestContentList, function (aContent){
+                 		   if(aContent.id === 124){
                     		   	  newPrimaryList.push(aContent);
          				   }
                     	   });
-              		   latestContentList = [];
-             		   angular.copy(newPrimaryList, latestContentList);
+              		   newLatestContentList = [];
+             		   angular.copy(newPrimaryList, newLatestContentList);
               	   }
              	  else if((newContentSubscription.entity.contentSubscription.id === 124) &&
             			   (selectedContentLength > 1)){
-            		 angular.forEach(latestContentList, function (aContent, index){
+             		  angular.forEach(newLatestContentList, function (aContent, index){
             			   if(aContent.id === 128){
-            				  latestContentList.splice(index,1);
+            				  newLatestContentList.splice(index,1);
                 			   
                 		   }
             			   if(angular.equals(aContent.id, newContentSubscription.entity.contentSubscription.id)){
-            				  latestContentList.splice(index,1);
+            				  newLatestContentList.splice(index,1);
             			   }
                 	   });  
                	   } 
              	   else if((newContentSubscription.entity.contentSubscription.id !== 124) &&
                  		   (newContentSubscription.entity.contentSubscription.id !== 128)){
-             		 angular.forEach(latestContentList, function (aContent, index){
-                 		   if(aContent.id === 128){
-         		   				latestContentList.splice(index,2);
-         		   			}
+             		   	   angular.forEach(newLatestContentList, function (aContent, index){
+             			   if(aContent.id === 128){
+                      		 newLatestContentList.splice(index,2);
+             			   }
          		   			if(angular.equals(aContent.id, newContentSubscription.entity.contentSubscription.id)){
-         		   			  latestContentList.splice(index,1);
+         		   			  newLatestContentList.splice(index,1);
          		   			}
          		   		});  
          	   
          	       } 
              	   else{
-             		   angular.forEach(latestContentList, function (aContent, index){
+             		   angular.forEach(newLatestContentList, function (aContent, index){
              			   if(angular.equals(aContent.id, newContentSubscription.entity.contentSubscription.id)){
-             			     latestContentList.splice(index,1);
+             			     newLatestContentList.splice(index,1);
              			   }
              		   });
              	   }
                }
-             	   return latestContentList;
+             	   return newLatestContentList;
                }
                 
             };

@@ -21,6 +21,11 @@ angular.module('emmiManager')
              */
             $scope.save = function (isValid, event, addAnother) {
                 $scope.userClientFormSubmitted = true;
+
+                if ($scope.userClientEdit.entity.email !== null) {
+                    $scope.userClientEdit.entity.email = $scope.userClientEdit.entity.email.toLowerCase();
+                }
+
                 if (isValid) {
                     $scope.whenSaving = true;
                     UsersClientService.createUserClient($scope.client, $scope.userClientEdit).then(
