@@ -39,7 +39,7 @@
               <span class="number">2</span>
               <div class="step-body">
                 Enter access code
-                <span class="access-code">{{scheduledPrograms[0].entity.accessCode}}</span>
+                <span class="access-code">{{ lastToExpireAccessCode }}</span>
               </div>
             </div>
 
@@ -52,7 +52,7 @@
 
           <div class="view-by clearfix">
             <img src="images/calendar.png" class="pull-left">
-            Please View By<br />{{scheduledPrograms[0].entity.viewByDate}}
+            Please View By<br />{{ firstToExpireDate }}
           </div>
 
         </div>

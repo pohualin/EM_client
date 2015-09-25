@@ -18,14 +18,25 @@
                 $scope.patient = $scope.scheduledPrograms[0].entity.patient;
                 $scope.team = $scope.scheduledPrograms[0].entity.team;
                 $scope.encounter = $scope.scheduledPrograms[0].entity.encounter;
-                $scope.providers = [];
 
+                // Create an array of provider names.
+                $scope.providers = [];
                 angular.forEach($scope.scheduledPrograms, function (scheduledProgram) {
                     $scope.providers.push(scheduledProgram.entity.provider.fullName);
                 });
 
                 // Filter out redundant providers.
                 $scope.providers = $scope.providers.filter(function(item, i, ar){ return ar.indexOf(item) === i; });
+
+                // Sort scheduled programs by expiration date.
+                var sortedPrograms = $scope.scheduledPrograms.sort(function(a, b) {
+                    var c = new Date(a.entity.viewByDate);
+                    var d = new Date(b.entity.viewByDate);
+                    return c - d;
+                });
+
+                $scope.firstToExpireDate = sortedPrograms[0].entity.viewByDate;
+                $scope.lastToExpireAccessCode = sortedPrograms[sortedPrograms.length - 1].entity.accessCode;
 
                 // Limit the number of programs unless the number of programs is one more than the limit.
                 $scope.limit = 5;
