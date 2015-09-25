@@ -690,3 +690,111 @@ select.form-control {
         }
     }
 }
+
+/* _____ SCHEDULE CONFIRMATION _____ */
+
+.confirmation-success {
+    padding: 25px;
+    margin-bottom: 35px;
+    margin-top: 26px;
+    h2 {
+        margin: 0;
+        color: #515356;
+    }
+}
+
+.confirmation-summary {
+    padding-left: 25px;
+    margin-bottom: 35px;
+    font-weight: bold;
+}
+
+.confirmation-table {
+    > thead > tr > th {
+        background: transparent;
+        border: none;
+        color: $brand-primary;
+        text-transform: capitalize;
+        font-size: 14px;
+    }
+    > tbody > tr:first-child > td {
+        border-top: none;
+    }
+    > tbody > tr > td {
+        span.program-list_item-icon {
+            color: $brand-primary;
+        }
+        span.truncate {
+            width: 300px;
+            @media screen and (min-width: 1200px) { width: 400px; }
+        }
+    }
+}
+
+.confirmation-instructions {
+    h3 {
+        margin-top: 17px;
+        font-weight: bold;
+        color: $brand-primary;
+    }
+    .dl-horizontal {
+        margin-bottom: 0;
+        dt {
+            color: $brand-primary;
+            margin-bottom: 15px;
+            @media (min-width: 768px) {
+                width: 50px;
+                text-align: left;
+            }
+        }
+        dd {
+            @media (min-width: 768px) {
+                margin-left: 60px;
+            }
+        }
+    }
+    .well {
+        border: none;
+        margin-bottom: 30px;
+        h3 {
+            margin-top: 0;
+        }
+        p {
+            font-size: 14px;
+        }
+        .inset {
+            padding-left: 15px;
+            a:link,
+            a:active,
+            a:hover,
+            a:visited {
+                font-weight: bold;
+                color: #f7a700;
+                text-decoration: none;
+            }
+            i {
+                font-size: 24px;
+            }
+            p {
+                line-height: 18px;
+            }
+            p:last-child {
+                margin-bottom: 0;
+            }
+        }
+        .access-code {
+            font-size: 18px;
+            font-weight: bold;
+        }
+    }
+    h4 {
+        text-transform: none;
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+    .btn-warning.btn-block {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}

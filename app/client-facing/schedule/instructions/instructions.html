@@ -1,49 +1,19 @@
-<div class="col-md-12" data-ng-cloak>
-    <div class="row">
-        <div class="col-md-12">
-            <h3>Program Instructions Will Be Delivered By</h3>
-        </div>
+<h3 ng-if="patient.phone || patient.email">Program Instructions Will Be Delivered By</h3>
+<dl class="dl-horizontal" ng-if="patient.phone || patient.email">
+    <dt ng-if="patient.phone">Phone</dt>
+    <dd ng-if="patient.phone">{{ patient.phone }}</dd>
+    <dt ng-if="patient.email">Email</dt>
+    <dd ng-if="patient.email">{{ patient.email }}</dd>
+</dl>
+<div class="well">
+    <h3>Patient Program Access</h3>
+    <p>Be sure to let {{patient.firstName}} know to expect these programs!</p>
+    <div class="inset">
+        <p><strong>1</strong> Go to <a href="http://StartEmmi.com" target="_blank">StartEmmi.com <i class='icon-forward'></i></a></p>
+        <p><strong>2</strong> Enter access code <span class="access-code">{{scheduledPrograms[0].entity.accessCode}}</span></p>
+        <p><strong>3</strong> Enter patient date of birth</p>
     </div>
-    <div class="form-group form-horizontal">
-        <div class="row">
-            <div class="col-md-2">
-                <h3>Phone</h3>
-            </div>
-            <div class="col-md-10">
-                {{patient.phone}}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-2">
-                <h3>Email</h3>
-            </div>
-            <div class="col-md-10">
-                {{patient.email}}
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <h3>Patient Program Access</h3>
-        </div>
-        <div class="col-md-12">
-            Be sure to let {{patient.firstName}} know to expect these programs!
-            <br/>
-            1. Go to StartEmmi.com
-            <br/>
-            2. Enter access code {{scheduledPrograms[0].entity.accessCode}}
-            <br/>
-            3. Enter patient date of birth
-        </div>
-    </div>
-    <br/>
-    <div class="row">
-        <div class="col-md-12">
-            Instructions and articles can be printed in English or Spanish
-        </div>
-    </div>
-    <div>
-        <div class="row" data-ng-include="'client-facing/schedule/instructions/print_buttons.html'" />
-    </div>
-    
+</div>
+    <h4>Instructions and articles can be printed in English or Spanish</h4>
+    <div class="row" data-ng-include="'client-facing/schedule/instructions/print_buttons.html'" />    
 </div>

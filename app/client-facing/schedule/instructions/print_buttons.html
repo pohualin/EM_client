@@ -1,19 +1,13 @@
-<div class="col-md-12" data-ng-cloak>
-  <div class="row">
-    <div class="col-md-12">
-      <div class="col-md-6">
-          <button class="btn btn-success" type="button"
-              data-ng-disabled="whenSaving"
-              data-ng-click="printInEnglish()">PRINT IN ENGLISH
-          </button>
-      </div>
-      <div class="col-md-6">
-          <button class="btn btn-success" type="button"
-              data-ng-disabled="whenSaving"
-              data-ng-click="printInSpanish()">PRINT IN SPANISH
-          </button>
-      </div> 
-      <iframe data-ng-hide="true" data-ng-if="printingMaterial" data-ng-src="{{printingMaterial}}" />  
-    </div>
-  </div>
+<div class="col-xs-6" data-ng-cloak>
+  <button class="btn btn-warning btn-block" type="button"
+          data-ng-disabled="whenSaving"
+          data-ng-click="printInEnglish()">PRINT IN ENGLISH
+  </button>
 </div>
+<div class="col-xs-6">
+  <button class="btn btn-warning btn-block" type="button"
+          data-ng-disabled="whenSaving"
+          data-ng-click="printInSpanish()">PRINT IN SPANISH
+  </button>
+</div> 
+<iframe data-ng-hide="true" data-ng-if="printingMaterial" data-ng-src="{{printingMaterial}}" />
