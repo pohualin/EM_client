@@ -81,7 +81,6 @@ angular.module('emmiManager')
                    	 $scope.selectedContentList.push($scope.originalSourceContent);
                      }
              }
-          
             ContentSubscriptionConfigurationService.saveAll($scope.selectedContentList, $scope.selectedContentSubscription.entity.faithBased).then(function(response){
             	$scope.$emit('selectedContentList');
             	$alert({
