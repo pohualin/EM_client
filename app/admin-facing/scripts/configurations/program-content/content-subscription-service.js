@@ -78,26 +78,28 @@ angular.module('emmiManager')
                  * @returns {*} a promise
                  */
                 saveAll: function (contentSubscriptionList, faithBased) {
-                    var self = this;
+                	var self = this;
                     var deferred = $q.defer();
                     var saveRequests = [];
                     angular.forEach(contentSubscriptionList, function (aNewContent){
                     	var deferred = $q.defer();
+                    	   
                     		if((angular.isDefined(aNewContent.entity.id)) &&
                     				(aNewContent.entity.contentSubscription === null)){
                        			self.deleteContent(aNewContent).then(function(response){
                     			deferred.resolve(response);
                				});
                     		}
-                    		else if(angular.isDefined(aNewContent.entity.id)){
+                    		else if((angular.isDefined(aNewContent.entity.id)) &&
+                    				(aNewContent.entity.contentSubscription !== null)){
                     			
                     			aNewContent.entity.faithBased = faithBased;
                     			self.update(aNewContent).then(function(response){
                     				deferred.resolve(response);	
                     	    });
                     		}
-                    		else if(angular.isDefined(aNewContent.entity.contentSubscription.id)){
-                    			
+                    		else if((aNewContent.entity.contentSubscription !== null) &&
+                    				(angular.isDefined(aNewContent.entity.contentSubscription.id))){
                     			aNewContent.entity.faithBased = faithBased;
                     			self.create(aNewContent).then(function(response){
                     				deferred.resolve(response);
