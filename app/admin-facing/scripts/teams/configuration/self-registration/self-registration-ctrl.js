@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('emmiManager')
-    .controller('SelfRegistrationController', ['$scope', 'Session', 'teamResource', 'SelfRegistrationService', '$alert', 'PatientSelfRegService', '$popover',
-        function ($scope, Session, teamResource, SelfRegistrationService, $alert, PatientSelfRegService, $popover) {
+    .controller('SelfRegistrationController', ['$scope', 'Session', 'teamResource', 'SelfRegistrationService', '$alert', 'PatientSelfRegService', '$popover', '$translate',
+        function ($scope, Session, teamResource, SelfRegistrationService, $alert, PatientSelfRegService, $popover, $translate) {
 
             $scope.team = teamResource;
             $scope.client = teamResource.entity.client;
@@ -96,14 +96,18 @@ angular.module('emmiManager')
             $scope.errorHandler = function (response, status, selfRegForm) {
                 if (status === 406) {
                     selfRegForm.code.$setValidity('unique', false);
-                        $scope.conflictingConfig = angular.copy(response.entity);
+                    $scope.conflictingConfig = angular.copy(response.entity);
+                    $translate('self_reg_code.already_in_use').then(function (title) {
                         $scope.uniquePopup = $popover(angular.element('#code'), {
+                            title: title,
                             placement: 'top-right',
                             scope: $scope,
                             trigger: 'manual',
                             show: true,
+                            container: 'body',
                             contentTemplate: 'admin-facing/partials/team/configuration/self-registration/unique_self_reg_code_popover.tpl.html'
                         });
+                    });
                 }
             };
 
