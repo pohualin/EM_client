@@ -44,7 +44,7 @@ angular.module('emmiManager')
                     authorizedRoles: '*'
                 }
             })
-            .when('/activate/:activationKey', {
+            .when('/activate/:activationKey', { // support for link without tracking code
                 templateUrl: 'client-facing/credentials/activation/activate.html',
                 controller: 'ActivateClientUserController',
                 title: 'Activate User',
@@ -56,7 +56,30 @@ angular.module('emmiManager')
                         var deferred = $q.defer();
                         var activationKey = $route.current.params.activationKey;
                         if (activationKey) {
-                            svc.validateActivationToken(activationKey).success(function () {
+                            svc.validateActivationToken(activationKey, null).success(function () {
+                                deferred.resolve(activationKey);
+                            });
+                        } else {
+                            deferred.reject();
+                        }
+                        return deferred.promise;
+                    }]
+                }
+            })
+            .when('/activate/:activationKey/:trackingToken', { // link + tracking code
+                templateUrl: 'client-facing/credentials/activation/activate.html',
+                controller: 'ActivateClientUserController',
+                title: 'Activate User',
+                access: {
+                    authorizedRoles: [USER_ROLES.all]
+                },
+                resolve: {
+                    activationCode: ['$route', '$q', 'ActivateClientUserService', function ($route, $q, svc) {
+                        var deferred = $q.defer();
+                        var activationKey = $route.current.params.activationKey,
+                            trackingToken = $route.current.params.trackingToken;
+                        if (activationKey) {
+                            svc.validateActivationToken(activationKey, trackingToken).success(function () {
                                 deferred.resolve(activationKey);
                             });
                         } else {
