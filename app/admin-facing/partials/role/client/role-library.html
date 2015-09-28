@@ -23,7 +23,7 @@
             </div>
         </div>
     </div>
-    <div class="popover-footer">
+    <div class="popover-footer" data-ng-if="tagGroupLibraries.$dirty">
         <button type="button" class="btn btn-default btn-xs btn-close"
                 data-ng-disabled="whenSaving"
                 data-ng-click="$hide()" aria-label="Close Library">
