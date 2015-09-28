@@ -1,6 +1,15 @@
 <div class="popover-text">
-    <span>This Code is already in use. Team: </span>
-    <a href="#/clients/{{conflictingConfig.team.client.id}}?team={{conflictingConfig.team.id}}">{{conflictingConfig.team.name}}</a>.
-    <span>Client: </span><a
-    href="#/clients/{{conflictingConfig.team.client.id}}">{{conflictingConfig.team.client.name}}</a>.
+    <table border="0" cellpadding="0" cellspacing="0" class="popover-table">
+        <tr>
+            <th><span>Team: </span></th>
+            <td><a href="#/clients/{{conflictingConfig.team.client.id}}?team={{conflictingConfig.team.id}}">{{conflictingConfig.team.name}}</a></td>
+        </tr>
+        <tr>
+            <th><span>Client: </span></th>
+            <td><a href="#/clients/{{conflictingConfig.team.client.id}}">{{conflictingConfig.team.client.name}}</a></td>
+
+        </tr>
+    </table>
 </div>
+
+
