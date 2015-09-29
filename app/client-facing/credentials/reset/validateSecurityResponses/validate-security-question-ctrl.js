@@ -52,7 +52,7 @@ angular.module('emmiManager')
                         function allGood() {
                             SecretQuestionService
                                 .setUserInputSecurityResponses([$scope.question1.entity, $scope.question2.entity]);
-                            $location.url('/reset_password/reset/' + resetToken).replace();
+                            $location.url('/reset_pw/reset/' + resetToken).replace();
                         },
                         function notAllGood() {
                             $scope.countFailed++;
