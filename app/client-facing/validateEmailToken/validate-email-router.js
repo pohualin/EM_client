@@ -4,7 +4,7 @@ angular.module('emmiManager')
     .config(function ($routeProvider, USER_ROLES) {
         // Routes
         $routeProvider
-            .when('/validateEmail/:validationKey', {
+            .when('/validateEmail/:validationKey/:trackingToken?', {
                 templateUrl: 'client-facing/auth/login.html',
                 controller: 'validateEmail',
                 title: 'Validate Email',
@@ -16,6 +16,15 @@ angular.module('emmiManager')
                         var deferred = $q.defer();
                         if ($route.current.params.validationKey) {
                             deferred.resolve($route.current.params.validationKey);
+                        } else {
+                            deferred.reject();
+                        }
+                        return deferred.promise;
+                    }],
+                    trackingToken: ['$route', '$q', function ($route, $q) {
+                        var deferred = $q.defer();
+                        if ($route.current.params.trackingToken) {
+                            deferred.resolve($route.current.params.trackingToken);
                         } else {
                             deferred.reject();
                         }

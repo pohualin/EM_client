@@ -2,13 +2,14 @@
 
 angular.module('emmiManager')
     .controller('validateEmail', ['$scope', 'ValidationService', '$alert', '$location', 'validationKey',
-        function ($scope, ValidationService, $alert, $location, validationKey) {
+        'trackingToken',
+        function ($scope, ValidationService, $alert, $location, validationKey, trackingToken) {
 
             /**
              * Validate email after a user clicks the link in their validation email
              */
             if (validationKey) {
-                ValidationService.validateEmailToken(validationKey).then(function () {
+                ValidationService.validateEmailToken(validationKey, trackingToken).then(function () {
                     //show confirmation banner
                     $alert({
                         content: 'Thanks! Your email address has been verified.'
