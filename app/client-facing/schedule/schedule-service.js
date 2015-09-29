@@ -51,9 +51,10 @@ angular.module('emmiManager')
                  * @param clientResource to get the team
                  * @param teamId
                  * @param encounterId
+                 * @param sortBy
                  * @return a promise
                  */
-                loadEncounter: function (clientResource, teamId, encounterId) {
+                loadEncounter: function (clientResource, teamId, encounterId, sortBy) {
                     var deferred = $q.defer();
                     $http.get(UriTemplate.create(clientResource.link.team).stringify({teamId: teamId}))
                         .success(function (teamResource) {
@@ -61,7 +62,8 @@ angular.module('emmiManager')
                                 .stringify({
                                     clientId: clientResource.entity.id,
                                     teamId: teamId,
-                                    encounter: encounterId
+                                    encounter: encounterId,
+                                    sort: sortBy
                                 }
                             )).then(function (response) {
                                 deferred.resolve(response.data);

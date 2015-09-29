@@ -188,8 +188,15 @@
 					line-height: 16pt;
 					color: #515356 !important;
 					font-weight: bold;
-					img {
+					.calendar {
+						font-size: 30px;
 						margin-right: 8.7px;
+						.icon-calendar {
+							margin-top: -5px;
+							&:before {
+								color: #515356 !important;
+							}
+						}
 					}
 				}
 			}

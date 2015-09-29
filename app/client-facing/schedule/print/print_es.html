@@ -39,7 +39,7 @@
               <span class="number">2</span>
               <div class="step-body">
                 Ingrese el c&oacute;digo de acceso
-                <span class="access-code">{{ lastToExpireAccessCode }}</span>
+                <span class="access-code">{{ scheduledPrograms[scheduledPrograms.length - 1].entity.accessCode }}</span>
               </div>
             </div>
 
@@ -51,8 +51,8 @@
           </div>
 
           <div class="view-by clearfix">
-            <img src="images/calendar.png" class="pull-left">
-            Por favor v&eacute;alo antes del<br />{{ firstToExpireDate }}
+            <span class="calendar pull-left"><i class='icon-calendar'></i></span>
+            Por favor v&eacute;alo antes del<br />{{ scheduledPrograms[0].entity.viewByDate }}
           </div>
 
         </div>

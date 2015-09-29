@@ -28,16 +28,6 @@
                 // Filter out redundant providers.
                 $scope.providers = $scope.providers.filter(function(item, i, ar){ return ar.indexOf(item) === i; });
 
-                // Sort scheduled programs by expiration date.
-                var sortedPrograms = $scope.scheduledPrograms.sort(function(a, b) {
-                    var c = new Date(a.entity.viewByDate);
-                    var d = new Date(b.entity.viewByDate);
-                    return c - d;
-                });
-
-                $scope.firstToExpireDate = sortedPrograms[0].entity.viewByDate;
-                $scope.lastToExpireAccessCode = sortedPrograms[sortedPrograms.length - 1].entity.accessCode;
-
                 // Limit the number of programs unless the number of programs is one more than the limit.
                 $scope.limit = 5;
                 if ($scope.scheduledPrograms.length === $scope.limit + 1) {
