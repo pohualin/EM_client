@@ -21,7 +21,7 @@ angular.module('emmiManager')
                         }
                         return deferred.promise;
                     }],
-                    trackingToken: ['$route', '$q', function ($route) {
+                    trackingToken: ['$route', function ($route) {
                         return $route.current.params.trackingToken;
                     }]
                 }
