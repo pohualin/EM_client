@@ -22,7 +22,8 @@
             <label class="sr-only control-label" for="query">Search by keyword or program name</label>
             <div class="input-group">
                 <input class="form-control" id="query" name="query" data-ng-model="programSearch.query" type="text"
-                       placeholder="Search by keyword or program name">
+                       placeholder="Search by keyword or program name" 
+                       data-ng-class="{'chosen-spinner-in-input' : searching && inputSearching}" />
                 <div class="input-group-btn">
                     <button class="btn btn-primary btn-search" data-ng-click="!searching ? search() : false"
                         data-ng-disabled="searching"><span class="icon-search"></span></button>

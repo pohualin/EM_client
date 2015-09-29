@@ -328,6 +328,12 @@ td {
     }
 }
 
+.chosen-spinner-in-input {
+    background-image: url("/images/chosen-spinner.gif");
+    background-repeat: no-repeat;
+    background-position: 95%;
+}
+
 .emmi-fade {
     opacity: 1;
     &.ng-enter {
