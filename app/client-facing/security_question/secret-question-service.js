@@ -69,12 +69,16 @@ angular.module('emmiManager')
                  * Calls the back end to get all questions for a user with reset password token
                  * @param resetToken password token
                  * @param userClientSecretQuestionResponse to be checked
+                 * @param trackingToken the tracking token
                  * @returns all questions and empty response
                  */
-                validateUserSecurityResponse: function (resetToken, userClientSecretQuestionResponse) {
+                validateUserSecurityResponse: function (resetToken, userClientSecretQuestionResponse,
+                                                        trackingToken) {
                     userClientSecretQuestionResponse = userClientSecretQuestionResponse || {};
-                    return $http.put(UriTemplate.create(API.validateSecurityResponse).stringify({token: resetToken}),
-                        userClientSecretQuestionResponse, {override403: true})
+                    return $http.put(UriTemplate.create(API.validateSecurityResponse).stringify({
+                        token: resetToken,
+                        trackingToken: trackingToken
+                    }), userClientSecretQuestionResponse, {override403: true})
                         .then(function (response) {
                             return response.data;
                         });
@@ -128,7 +132,7 @@ angular.module('emmiManager')
                 saveOrUpdateSecretQuestionResponse: function (userClientSecretQuestionResponse1,
                                                               userClientSecretQuestionResponse2) {
                     var saveCall;
-                    if (Session.secretQuestionsCreated){
+                    if (Session.secretQuestionsCreated) {
                         // save concurrently because we already have IDs
                         saveCall = $q.all([
                             $http.post(UriTemplate.create(Session.link.secretQuestionResponses)
@@ -139,7 +143,7 @@ angular.module('emmiManager')
                     } else {
                         // save staggered, so that the first response has the lower id
                         saveCall = $http.post(UriTemplate.create(Session.link.secretQuestionResponses)
-                            .stringify(), userClientSecretQuestionResponse1, {override500: true}).then(function (){
+                            .stringify(), userClientSecretQuestionResponse1, {override500: true}).then(function () {
                             return $http.post(UriTemplate.create(Session.link.secretQuestionResponses)
                                 .stringify(), userClientSecretQuestionResponse2, {override500: true});
                         });
@@ -178,9 +182,9 @@ angular.module('emmiManager')
                  * @param withoutThisQuestion to remove from the list
                  * @returns {Array}
                  */
-                trimChoices: function(allChoices, withoutThisQuestion){
+                trimChoices: function (allChoices, withoutThisQuestion) {
                     var trimmed = [];
-                    $filter('filter')(allChoices, function (aChoice){
+                    $filter('filter')(allChoices, function (aChoice) {
                         if (!angular.equals(aChoice, withoutThisQuestion)) {
                             trimmed.push(aChoice);
                         }

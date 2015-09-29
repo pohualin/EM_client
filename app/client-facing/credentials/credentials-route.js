@@ -44,29 +44,7 @@ angular.module('emmiManager')
                     authorizedRoles: '*'
                 }
             })
-            .when('/activate/:activationKey', { // support for link without tracking code
-                templateUrl: 'client-facing/credentials/activation/activate.html',
-                controller: 'ActivateClientUserController',
-                title: 'Activate User',
-                access: {
-                    authorizedRoles: [USER_ROLES.all]
-                },
-                resolve: {
-                    activationCode: ['$route', '$q', 'ActivateClientUserService', function ($route, $q, svc) {
-                        var deferred = $q.defer();
-                        var activationKey = $route.current.params.activationKey;
-                        if (activationKey) {
-                            svc.validateActivationToken(activationKey, null).success(function () {
-                                deferred.resolve(activationKey);
-                            });
-                        } else {
-                            deferred.reject();
-                        }
-                        return deferred.promise;
-                    }]
-                }
-            })
-            .when('/activate/:activationKey/:trackingToken', { // link + tracking code
+            .when('/activate/:activationKey/:trackingToken?', { // link + tracking code
                 templateUrl: 'client-facing/credentials/activation/activate.html',
                 controller: 'ActivateClientUserController',
                 title: 'Activate User',
@@ -89,7 +67,7 @@ angular.module('emmiManager')
                     }]
                 }
             })
-            .when('/reset_password/:resetToken', {
+            .when('/reset_password/:resetToken/:trackingToken?', {
                 templateUrl: 'client-facing/credentials/reset/validateSecurityResponses/validate-security-question.html',
                 controller: 'ValidateSecurityQuestionController',
                 title: 'Validate Security Questions',
@@ -100,13 +78,15 @@ angular.module('emmiManager')
                     resetToken: ['$route', '$q', 'SecretQuestionService', '$location', 'LoginErrorMessageFactory',
                         function ($route, $q, SecretQuestionService, $location, LoginErrorMessageFactory) {
                             var deferred = $q.defer(),
-                                resetToken = $route.current.params.resetToken;
+                                resetToken = $route.current.params.resetToken,
+                                trackingToken = $route.current.params.trackingToken;
                             if (resetToken) {
-                                SecretQuestionService.validateUserSecurityResponse(resetToken).then(
+                                SecretQuestionService.validateUserSecurityResponse(resetToken, null,
+                                    trackingToken).then(
                                     function ok(response) {
                                         if (angular.equals(response, 'true')) {
                                             // don't need to answer questions
-                                            $location.url('/reset_password/reset/' + resetToken).replace();
+                                            $location.url('/reset_pw/reset/' + resetToken).replace();
                                         } else {
                                             deferred.resolve(resetToken);
                                         }
@@ -130,7 +110,7 @@ angular.module('emmiManager')
                         }]
                 }
             })
-            .when('/reset_password/reset/:resetToken', {
+            .when('/reset_pw/reset/:resetToken', {
                 templateUrl: 'client-facing/credentials/reset/reset.html',
                 controller: 'ResetClientUserPasswordController',
                 title: 'Reset Password',
