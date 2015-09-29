@@ -21,14 +21,8 @@ angular.module('emmiManager')
                         }
                         return deferred.promise;
                     }],
-                    trackingToken: ['$route', '$q', function ($route, $q) {
-                        var deferred = $q.defer();
-                        if ($route.current.params.trackingToken) {
-                            deferred.resolve($route.current.params.trackingToken);
-                        } else {
-                            deferred.reject();
-                        }
-                        return deferred.promise;
+                    trackingToken: ['$route', '$q', function ($route) {
+                        return $route.current.params.trackingToken;
                     }]
                 }
             });
