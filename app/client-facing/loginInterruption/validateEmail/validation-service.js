@@ -32,8 +32,14 @@ angular.module('emmiManager')
                  */
                 saveEmail: function (user, password) {
                     var deferred = $q.defer();
-                    if (user.email !== null && user.login !== null && user.login.toUpperCase() === user.originalUserClientEmail.toUpperCase()) {
+                    if (user.email && user.login && user.originalUserClientEmail &&
+                        user.login.toUpperCase() === user.originalUserClientEmail.toUpperCase()) {
                         user.login = user.email;
+                    }
+                    if (user.notNowExpirationTime.slice(-1) === 'Z') {
+                        // in case the Z gets appended for display
+                        user.notNowExpirationTime = user.notNowExpirationTime.slice(0,
+                            user.notNowExpirationTime.length - 1);
                     }
                     $http.put(UriTemplate.create(user.link.userClientEmail).stringify({password: password}), user)
                         .success(function (data) {
@@ -62,12 +68,15 @@ angular.module('emmiManager')
                  * validate an email token
                  *
                  * @param emailValidationToken token to find user by
+                 * @param trackingToken for event tracking
                  * @returns the promise
                  *
                  */
-                validateEmailToken: function (emailValidationToken) {
+                validateEmailToken: function (emailValidationToken, trackingToken) {
                     var deferred = $q.defer();
-                    $http.put(UriTemplate.create(API.validateEmailToken).stringify(),
+                    $http.put(UriTemplate.create(API.validateEmailToken).stringify({
+                            trackingToken: trackingToken
+                        }),
                         {validationToken: emailValidationToken}, {override403: true})
                         .success(function(response) {
                             deferred.resolve(response);
