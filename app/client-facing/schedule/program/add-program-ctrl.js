@@ -274,6 +274,7 @@ angular.module('emmiManager')
              */
             $scope.search = function () {
                 $scope.programSearchPerformed = true;
+                $scope.inputSearching = true;
                 $scope.showAllResults(true);
                 $scope.selectedProgramsHolder = [];
             };
@@ -309,6 +310,7 @@ angular.module('emmiManager')
                     return programPage;
                 }).finally(function () {
                     $scope.searching = false;
+                    $scope.inputSearching = false;
                 });
             };
 
