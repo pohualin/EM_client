@@ -23,12 +23,18 @@
                     } else {
                         scheduledProgramResource.showDetails = true;
                     }
-                    
+
                     if (!scheduledProgramResource.original) {
                         scheduledProgramResource.original = angular.copy(scheduledProgramResource.entity);
                     }
+
+                    scheduledProgramResource.scheduledProgramNotes = {}
+                    scheduledProgramResource.scheduledProgramNotes.note = "This program has no notes or questions.";
+                    service.getPatientNotes(scheduledProgramResource).then(function(data) {
+                        scheduledProgramResource.scheduledProgramNotes = data;
+                    });
                 };
-                
+
                 /**
                  * Called when encounter panel is toggled, make a copy of the original encounter
                  * when the panel is opened so that we can cancel changes
@@ -107,7 +113,7 @@
                         });
                     }
                 };
-                
+
                 /**
                  * Saves changes made in an encounter
                  */
@@ -121,7 +127,7 @@
                             allValid = false;
                         }
                     });
-                    
+
                     if (allValid) {
                         var promises = [];
                         angular.forEach(encounterResource.updatedSchedulePrograms, function (toUpdate) {
@@ -133,7 +139,7 @@
                             });
                             promises.push(deferred.promise);
                         });
-                        
+
                         // Wait until all update requests being processed
                         $q.all(promises).then(function(){
                             $scope.cancelEncounterChanges(encounterResource);
@@ -149,7 +155,7 @@
                 $scope.showDetails = function (scheduledProgramResource) {
                     scheduledProgramResource.showDetails = true;
                 };
-                
+
                 $scope.hideDetails = function (scheduledProgramResource) {
                     scheduledProgramResource.showDetails = false;
                 };
@@ -164,7 +170,7 @@
                     form.$setPristine();
                     _paq.push(['trackEvent', 'Form Action', 'Patient Support Program History', 'Cancel']);
                 };
-                
+
                 $scope.cancelEncounterChanges = function (encounterResource) {
                     angular.forEach(encounterResource.dirtyForms, function (dirtyForm) {
                         $scope.cancel(dirtyForm);
