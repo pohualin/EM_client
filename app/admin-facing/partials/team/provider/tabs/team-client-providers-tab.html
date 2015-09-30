@@ -1,4 +1,5 @@
 <br/>
+<div class="row">
 <table class="table table-bordered table-striped table-hover table-condensed" border="0" cellpadding="0"
         cellspacing="0" data-ng-show="clientProviders" data-ng-controller="ClientProvidersTabController" >
   <thead>
@@ -57,7 +58,7 @@
         <em>{{clientProvider.provider.entity.active ? '' : "(inactive)"}}</em>
       </td>
       <td>{{clientProvider.provider.entity.specialty.name}}</td>
-      <td>{{clientProvider.provider.entity.email}}</td>
+      <td class="col-wrap">{{clientProvider.provider.entity.email}}</td>
       <td class="col-has-multiselect" data-ng-if="allTeamLocations.length > 0" style="white-space: nowrap">
         <div data-ng-show="allTeamLocations && clientProvider.provider.entity.checked && !clientProvider.provider.entity.disabled"
              data-ng-class="{'has-error': clientProvider.provider.entity.selectedTeamLocations < 1 && associateRequestSubmitted}">
@@ -94,3 +95,4 @@
     </tr>
   </tbody>
 </table>
+</div>
