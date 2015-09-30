@@ -225,6 +225,18 @@ angular.module('emmiManager')
                         }
                     });
             };
+            
+            /**
+             * Check and see if any selectable roles has been checked
+             */
+            $scope.disableLibraries = function () {
+                $scope.libraries.disabled = true;
+                $scope.libraries.forEach(function (library) {
+                   if (library.disabled === false && library.checked === true){
+                       $scope.libraries.disabled = false;
+                   }
+                });
+            };
 
             /**
              * a filter function to set the checked and disabled properties of a library group
@@ -261,6 +273,7 @@ angular.module('emmiManager')
 
             // start by loading the currently saved roles
             $scope.loadExisting();
+            $scope.disableLibraries();
         }
     ])
 ;
