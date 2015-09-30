@@ -18,6 +18,13 @@
                             });
                     },
 
+                    getPatientNotes: function(scheduledProgramResource) {
+                        return $http.get(UriTemplate.create(scheduledProgramResource.link.programNotes).stringify()).then(
+                            function ok(response) {
+                                return response.data;
+                            });
+                    },
+
                     /**
                      * Redirects to the proper user from the login
                      * @param encounterResource to create link from
