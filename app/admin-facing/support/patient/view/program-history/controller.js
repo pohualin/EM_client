@@ -26,6 +26,8 @@
                         scheduledProgramResource.original = angular.copy(scheduledProgramResource.entity);
                     }
 
+                    scheduledProgramResource.scheduledProgramNotes = {}
+                    scheduledProgramResource.scheduledProgramNotes.note = "This program has no notes or questions.";
                     service.getPatientNotes(scheduledProgramResource).then(function(data) {
                         scheduledProgramResource.scheduledProgramNotes = data;
                     });
