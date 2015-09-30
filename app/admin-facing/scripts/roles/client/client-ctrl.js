@@ -193,6 +193,18 @@ angular.module('emmiManager')
                     $scope.whenSaving = false;
                 });
             };
+            
+            /**
+             * Check and see if any selectable roles has been checked
+             */
+            $scope.disableLibraries = function () {
+                $scope.libraries.disabled = true;
+                $scope.libraries.forEach(function (library) {
+                   if (library.disabled === false && library.checked === true){
+                       $scope.libraries.disabled = false;
+                   }
+                });
+            };
 
             /**
              * called on click of the 'Add' button on the group library popup
@@ -290,6 +302,7 @@ angular.module('emmiManager')
 
             // start by loading the currently saved roles
             $scope.loadExisting();
+            $scope.disableLibraries();
         }
     ])
 ;
