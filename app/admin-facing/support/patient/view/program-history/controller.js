@@ -10,9 +10,9 @@
             'PatientSupportViewProgramHistoryService',
             'PatientSupportDataHolder', '$window',
             function ($scope, $alert, $q, moment, service, holder, $window) {
-            
+
                 $scope.fiveYearsFromTodayString = moment().startOf('day').add(5, 'year').format('MM/DD/YYYY');
-                
+
                 /**
                  * Called when program panel is toggled, make a copy of the original program
                  * when the panel is opened so that we can cancel changes
@@ -28,8 +28,8 @@
                         scheduledProgramResource.original = angular.copy(scheduledProgramResource.entity);
                     }
 
-                    scheduledProgramResource.scheduledProgramNotes = {}
-                    scheduledProgramResource.scheduledProgramNotes.note = "This program has no notes or questions.";
+                    scheduledProgramResource.scheduledProgramNotes = {};
+                    scheduledProgramResource.scheduledProgramNotes.note = 'This program has no notes or questions.';
                     service.getPatientNotes(scheduledProgramResource).then(function(data) {
                         scheduledProgramResource.scheduledProgramNotes = data;
                     });
