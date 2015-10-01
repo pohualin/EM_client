@@ -1,4 +1,7 @@
 @media print {
+	@page {
+    	margin: 0.5in; // Use centimeters or inches, not pixels
+  	}
 	*, *:before, *:after {
 		-webkit-print-color-adjust: exact;
 	}
