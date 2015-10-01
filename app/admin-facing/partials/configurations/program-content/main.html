@@ -22,7 +22,10 @@
                 <h1>
     				Available Program Content
 				</h1>
-				<div  data-ng-include="'admin-facing/partials/configurations/program-content/contentSubscription.html'"></div>
+				<div class="row" data-ng-show="programFormSubmitted">
+                        <div class="col-md-12" id="messages-container"></div>
+                </div>
+				<div  data-ng-include="'admin-facing/partials/configurations/program-content/content-subscription/contentSubscription.html'"></div>
                 
             </div><!-- .layout-card -->
         </div><!-- .main-content -->

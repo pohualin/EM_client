@@ -12,7 +12,7 @@ angular.module('emmiManager')
                  * Get ContentSubscriptionConfiguration by Client
                  */
                 getClientContentSubscriptionConfiguration: function () {
-                    return $http.get(UriTemplate.create(Client.getClient().link.clientContentSubscriptionConfigurations).stringify())
+                	return $http.get(UriTemplate.create(Client.getClient().link.clientContentSubscriptionConfigurations).stringify())
                         .then(function (response) {
                         	CommonService.convertPageContentLinks(response.data);
                             return response.data;

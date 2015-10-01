@@ -5,13 +5,14 @@ angular.module('emmiManager')
 /**
  * Controller for ClientProgramContentConfiguration page
  */
-    .controller('MainContentConfigurationController', ['$alert', '$scope', '$controller', 'clientResource', 'Client', 'MainContentService', 'ContentSubscriptionConfigurationService',
+    .controller('MainContentConfigurationController', ['$alert', '$scope', '$controller', 'clientResource', 'Client', 'MainContentService', 'ContentSubscriptionConfigurationService', 
         function ($alert, $scope, $controller, clientResource, Client, MainContentService, ContentSubscriptionConfigurationService) {
        
     	// Store the original content subscription list
         $scope.primaryContentList = [];
         $scope.sourceContentList = [];
         $scope.latestPrimaryContentList = [];
+        $scope.listOfClientPrograms = [];
                         
         // Variables for the html to show or hide certain section
         $scope.faithBased = false;
@@ -206,11 +207,23 @@ angular.module('emmiManager')
     	   $scope.getClientContentList();
        });
        
- 
-        /**
+       /**
+        * Listen on 'refreshClientProgramsPage' event
+        */
+       $scope.$on('refreshClientProgramsPage', function(){
+       	console.log('refresh page program +++++++++');
+           //$scope.clientPrograms = null;
+           //SelectAllProgramContentsFactory.setSelectAll(false);
+           //AddProgramsFactory.resetSelectedClientPrograms();
+       	$scope.$broadcast('refreshViewProgramsPage');
+       	//$scope.refreshViewProgramInclusionPage();
+       });
+       
+       /**
          * init method called when page is loading
          */
        function init() {
+    	   console.log('hrerere');
     	    $scope.client = Client.getClient().entity;
             $scope.page.setTitle('Client Configurations - ' + $scope.client.name + ' | ClientManager');
             MainContentService.getContentSubscriptionList().then(function(response){

@@ -17,7 +17,7 @@
 
 
 <div  data-ng-if="selectedContentList.length">
-	<div data-ng-include="'admin-facing/partials/configurations/program-content/add-content-subscription.html'"></div>
+	<div data-ng-include="'admin-facing/partials/configurations/program-content/content-subscription/add-content-subscription.html'"></div>
 </div>
 
 <div class="row" data-ng-if="latestPrimaryContentList.length > 0 && !initialAddAnotherContentSubscription">
@@ -38,7 +38,7 @@
            
            <div data-ng-if="noneSelected">
                 <div class="col-md-4" >
-				<div data-ng-include="'admin-facing/partials/configurations/program-content/add-programs.html'"></div>
+				<div data-ng-include="'admin-facing/partials/configurations/program-content/program-inclusion/add/add-programs.html'"></div>
 				</div>
 		   </div>
 
@@ -49,10 +49,10 @@
                     	data-ng-options="sourceContentList.name for sourceContentList in sourceContentList track by sourceContentList.id"
                     	data-ng-model="sourceContentHolder.entity.contentSubscription"
                     	data-ng-change="onChangeSourceContent(sourceContentHolder)"
-                    	data-chosen data-disable-search="true" data-placeholder="Select...">
+                		data-chosen data-disable-search="true" data-placeholder="Select...">
                 		<option value="" title="sourceContentList">Select...</option>
                 		</select>
-           			</div>
+                	</div>
            		</div>
            		<div class="col-md-4">
            			<div data-ng-if="latestPrimaryContentList.length > 1 && addAnotherContentSubscription">
@@ -64,6 +64,13 @@
           </div>
           
 </div>
+
+<div data-ng-if="noneSelected">
+         <div class="row" >
+	            <div data-ng-include="'admin-facing/partials/configurations/program-content/program-inclusion/view/view_program_inclusion.html'"></div>
+         </div>
+</div>
+
 <div data-ng-if="!noneSelected">
 <div class="row" data-ng-if="faithBased">
 <p/>
