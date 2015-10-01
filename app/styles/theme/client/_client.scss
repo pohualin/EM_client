@@ -483,6 +483,7 @@ select.form-control {
     .btn-datepicker-date {
         &:active {
             box-shadow: none;
+            background: $brand-success;
         }
     }
     .btn-datepicker-prev,
