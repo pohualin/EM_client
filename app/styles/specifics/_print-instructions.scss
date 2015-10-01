@@ -1,4 +1,7 @@
 @media print {
+	*, *:before, *:after {
+		-webkit-print-color-adjust: exact;
+	}
 	body {
 		margin-bottom: 0 !important;
 	}
@@ -8,7 +11,7 @@
 	.print-instructions {
 		page-break-inside: avoid;
 		position: relative;
-		height: 975px;
+		//height: 955px;
 		padding-bottom: 0;
 		h1 {
 			font-weight: bold;
@@ -49,10 +52,11 @@
 			}
 		}
 		.fixed-footer {
-			position: absolute;
+			// position: absolute;
 			width: 100%;
-			bottom: 0;
+			// bottom: 0;
 			height: 75px;
+			margin-top: 25px;
 			img {
 				margin-bottom: 10.4px;
 			}
