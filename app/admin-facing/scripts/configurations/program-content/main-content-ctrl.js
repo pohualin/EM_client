@@ -70,8 +70,9 @@ angular.module('emmiManager')
           
           $scope.filterAgain = function (index) {
         	    return function (item) {
-        	 	if($scope.selectedContentSubscription.entity.contentSubscription !== null){
-        	    	if ($scope.selectedContentList[index].entity.contentSubscription.name === item.name){
+        	 	if(($scope.selectedContentSubscription.entity.contentSubscription !== null) &&
+        	 		($scope.selectedContentList[index].entity.contentSubscription !== null)){
+        	    	 if ($scope.selectedContentList[index].entity.contentSubscription.name === item.name){
         	    		 return true;
         	    		}
         	    	 return false;

@@ -48,8 +48,9 @@
                 		<select id="sourceContentList" name="sourceContentList" class="form-control"
                     	data-ng-options="sourceContentList.name for sourceContentList in sourceContentList track by sourceContentList.id"
                     	data-ng-model="sourceContentHolder.entity.contentSubscription"
-                    	data-ng-change="onChangeSourceContent(sourceContentHolder)">
-                		<option value="" title="sourceContentList"></option>
+                    	data-ng-change="onChangeSourceContent(sourceContentHolder)"
+                    	data-chosen data-disable-search="true" data-placeholder="Select...">
+                		<option value="" title="sourceContentList">Select...</option>
                 		</select>
            			</div>
            		</div>

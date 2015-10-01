@@ -107,7 +107,7 @@ angular.module('emmiManager')
        };
 
        $scope.onChangePrimaryList = function(newSubscriptionHolder){
-    	    if((angular.isDefined($scope.contentSubscriptionHolder.entity.contentSubscription)) &&
+    	      if((angular.isDefined($scope.contentSubscriptionHolder.entity.contentSubscription)) &&
                   ($scope.contentSubscriptionHolder.entity.contentSubscription !== null)){
                 	if($scope.contentSubscriptionHolder.entity.contentSubscription.name === 'None'){
                 		$scope.noneSelectedForClient(true);
@@ -140,9 +140,7 @@ angular.module('emmiManager')
         	   $scope.resetSelectedSourceContent(newSourceContentHolder);
                $scope.showButtons(true);
          };
-   
-  
-         $scope.onChangeSelectedPrimaryList = function(newSourceSubscriptionHolder){       	 
+         $scope.onChangeSelectedPrimaryList = function(newSourceSubscriptionHolder){ 
         	    $scope.addAnotherContentSubscription = true;
         	    $scope.setInitialAddAnotherContentSubscription(true);
         	    $scope.resetFaithBased(true);
@@ -151,17 +149,21 @@ angular.module('emmiManager')
                 if((newSourceSubscriptionHolder.entity.contentSubscription !== null) &&
                 	(newSourceSubscriptionHolder.entity.contentSubscription.name === 'EmmiEngage+')){
                 	$scope.resetIsEmmiEngage(true);
-         	   }
-         	   else{
+         	    }
+                else if($scope.selectedContentList){
+                	angular.forEach($scope.selectedContentList, function (aContent){
+                		if(angular.isDefined(aContent.entity.contentSubscription !== null)){
+                			if(aContent.entity.contentSubscription.name === 'EmmiEngage+'){
+                			  $scope.resetIsEmmiEngage(true);
+                			}
+                		}
+             	    });
+                }
+         	    else{
          		   $scope.resetIsEmmiEngage(false);
-         	   }
+         	    }
          };
-         
-         $scope.viewAndEditSubscription = function(){
-        	// EM-1521
-         };
-         
-                  
+                   
        /* 
         * Added another content subscription for a client
         * push the new content subscription to the selectedContentList
