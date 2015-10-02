@@ -61,7 +61,18 @@ angular.module('emmiManager')
            * Reset selectedSourceContent
            */
           $scope.resetSelectedContentSubscription  = function (sourceContent) {
+        	 var wasEngagePlus = false;
+        	 console.log($scope.selectedContentSubscription);
+        	 console.log(sourceContent);
+        	 if(($scope.selectedContentSubscription.entity.contentSubscription !== null) &&
+                     ($scope.selectedContentSubscription.entity.contentSubscription.name === 'EmmiEngage+')){
+                 	console.log('was emmiengage');
+                 	wasEngagePlus = true;
+          	    }
         	 $scope.selectedContentSubscription  = sourceContent;
+        	 console.log($scope.selectedContentSubscription);
+        	 
+             return wasEngagePlus;        	 
            };
           
           $scope.resetIsEmmiEngage = function (newValue){
@@ -150,6 +161,18 @@ angular.module('emmiManager')
       	 
          };
          
+         $scope.checkIfEmmiEngagePlus = function(){
+        	 if($scope.selectedContentList){
+             	angular.forEach($scope.selectedContentList, function (aContent){
+             		if(aContent.entity.contentSubscription !== null){
+             			if(aContent.entity.contentSubscription.name === 'EmmiEngage+'){
+             			  $scope.resetIsEmmiEngage(true);
+             			}
+             		}
+          	    });
+             }
+         };
+         
         /*
          * Separate the content subscription list 
          * that was selected from the database
@@ -177,6 +200,7 @@ angular.module('emmiManager')
             	$scope.updateLatestPrimaryContentList(aContent);
      	    });
             $scope.isEmmiEngagePlus = emmiEngage;
+            $scope.loading = false;
        };
 
        $scope.getClientContentList = function(){
@@ -198,12 +222,22 @@ angular.module('emmiManager')
                      $scope.faithBased = false;
                      $scope.showSelectList  = true;
                      $scope.isEmmiEngagePlus = false;
-               }
+                     $scope.loading = false;
+                }
             });
         };
        
        $scope.$on('selectedContentList', function () {
     	   $scope.getClientContentList();
+       });
+       
+       $scope.$on('startLoading', function () {
+    	   $scope.loading = true;
+       });
+       
+       $scope.$on('finishLoading', function () {
+    	   console.log('loading finis');
+    	   //$scope.loading = false;
        });
        
  

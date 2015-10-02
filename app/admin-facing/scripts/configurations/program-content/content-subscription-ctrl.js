@@ -9,6 +9,7 @@ angular.module('emmiManager')
         function ($alert, $scope, $controller, Client, ContentSubscriptionConfigurationService) {
        
     	$scope.addAnotherContentSubscription = false;
+    	
         $scope.contentSubscriptionHolder = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
         $scope.sourceContentHolder = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
         $scope.sourceContentToSave = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
@@ -41,6 +42,7 @@ angular.module('emmiManager')
          */
         $scope.filterSaveListAndSave = function(){
         	var notInList = true;
+        	$scope.$emit('startLoading');
         	var EmmiEngageExist = false;
         	if((angular.isDefined($scope.contentSubscriptionHolder)) &&
                (angular.isDefined($scope.contentSubscriptionHolder.entity.contentSubscription))){
@@ -87,9 +89,10 @@ angular.module('emmiManager')
                     content: '<b>' + $scope.client.name + '</b> has been updated successfully.'
                 });
                 }).finally(function () {
-                   	$scope.whenSaving = false;
+                	$scope.whenSaving = false;
                    	$scope.showButtons(false);
                     $scope.resetContentHolders();
+                    $scope.$emit('finishLoading');
                 });
        
        };
@@ -103,10 +106,10 @@ angular.module('emmiManager')
     	   $scope.contentSubscriptionHolder = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
            $scope.sourceContentHolder = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
            $scope.sourceContentToSave = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
-   	   
        };
 
        $scope.onChangePrimaryList = function(newSubscriptionHolder){
+    	     console.log('primarere');
     	      if((angular.isDefined($scope.contentSubscriptionHolder.entity.contentSubscription)) &&
                   ($scope.contentSubscriptionHolder.entity.contentSubscription !== null)){
                 	if($scope.contentSubscriptionHolder.entity.contentSubscription.name === 'None'){
@@ -120,11 +123,18 @@ angular.module('emmiManager')
                 		   $scope.addAnotherContentSubscription = true;
                 	   }
                 	   if(newSubscriptionHolder.entity.contentSubscription.name !== 'EmmiEngage+'){
-                		   $scope.sourceContentHolder = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();   	        
+                		   $scope.checkIfEmmiEngagePlus();
+                		   console.log('are u at not emmiengage');
+                		   console.log( $scope.sourceContentHolder);
+                		   console.log($scope.sourceContentToSave);
+                		   $scope.sourceContentHolder = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();  	        
                 	   }
                 	   else{
                 		   if($scope.sourceContentHolder.entity.contentSubscription !== null){
+                			   console.log('are u at holder');
                 			   $scope.sourceContentToSave = $scope.sourceContentHolder;
+                			   $scope.sourceContentHolder = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
+                			   
                    		   }
                 	   }
                 	   $scope.noneSelectedForClient(false);
@@ -141,27 +151,35 @@ angular.module('emmiManager')
                $scope.showButtons(true);
          };
          $scope.onChangeSelectedPrimaryList = function(newSourceSubscriptionHolder){ 
+        	 console.log('are u here selected');
+        	 console.log();
+        	 console.log(newSourceSubscriptionHolder);
         	    $scope.addAnotherContentSubscription = true;
         	    $scope.setInitialAddAnotherContentSubscription(true);
         	    $scope.resetFaithBased(true);
-        	    $scope.resetSelectedContentSubscription(newSourceSubscriptionHolder);
-                $scope.showButtons(true);
+        	    var wasEngagePlus = $scope.resetSelectedContentSubscription(newSourceSubscriptionHolder);
+        	    if(newSourceSubscriptionHolder.entity.contentSubscription !== null){
+        	    	// $scope.selectedContentList.push(newSourceSubscriptionHolder);
+        	    }
+        	    $scope.showButtons(true);
                 if((newSourceSubscriptionHolder.entity.contentSubscription !== null) &&
-                	(newSourceSubscriptionHolder.entity.contentSubscription.name === 'EmmiEngage+')){
+                    (newSourceSubscriptionHolder.entity.contentSubscription.name === 'EmmiEngage+')){
                 	$scope.resetIsEmmiEngage(true);
          	    }
-                else if($scope.selectedContentList){
-                	angular.forEach($scope.selectedContentList, function (aContent){
-                		if(angular.isDefined(aContent.entity.contentSubscription !== null)){
-                			if(aContent.entity.contentSubscription.name === 'EmmiEngage+'){
-                			  $scope.resetIsEmmiEngage(true);
-                			}
-                		}
-             	    });
+                else if(wasEngagePlus){
+                	console.log('chagrererer');
+                	$scope.resetIsEmmiEngage(false);
+                }
+                else if($scope.selectedContentList.length > 1){
+                	console.log('greate than 1');
+                	$scope.checkIfEmmiEngagePlus();
                 }
          	    else{
+         	    	console.log('not chjereererer');
          		   $scope.resetIsEmmiEngage(false);
          	    }
+                console.log(newSourceSubscriptionHolder);
+                console.log($scope.selectedContentList);
          };
                    
        /* 
@@ -169,6 +187,7 @@ angular.module('emmiManager')
         * push the new content subscription to the selectedContentList
         */
        $scope.addAnotherSubscription = function(newContentSubscription, newSourceContent){
+    	   console.log('arere u hewewe');
     	   $scope.setInitialAddAnotherContentSubscription(false);
     	   $scope.resetShowSelectList(true);
     	   $scope.addAnotherContentSubscription = false;
@@ -180,6 +199,7 @@ angular.module('emmiManager')
     	   }
     	   $scope.selectedContentList.push(newContentSubscription);
     	   $scope.updateLatestPrimaryContentList(newContentSubscription);
+    	   $scope.checkIfEmmiEngagePlus();
     	   $scope.contentSubscriptionHolder = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
        };
 

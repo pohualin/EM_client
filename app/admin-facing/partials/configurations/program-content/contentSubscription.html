@@ -20,10 +20,11 @@
 	<div data-ng-include="'admin-facing/partials/configurations/program-content/add-content-subscription.html'"></div>
 </div>
 
+<div data-ng-if="!loading" >
 <div class="row" data-ng-if="latestPrimaryContentList.length > 0 && !initialAddAnotherContentSubscription">
            
            <div class="col-md-4">
-           <div data-ng-if="showSelectList" >
+           <div data-ng-if="showSelectList">
               <div class="form-group">
                 <select class="form-control" id="latestPrimaryContentList" name="latestPrimaryContentList" class="form-control"
                     data-ng-options="latestPrimaryContentList.name for latestPrimaryContentList in latestPrimaryContentList track by latestPrimaryContentList.name"
@@ -56,14 +57,19 @@
            		</div>
            		<div class="col-md-4">
            			<div data-ng-if="latestPrimaryContentList.length > 1 && addAnotherContentSubscription">
+           			<span class="enumerate-value"><em>
            			<button  type="button" class="btn btn-link btn-link-nopad btn-heading" data-ng-click="addAnotherSubscription(contentSubscriptionHolder, sourceContentHolder)">
         				<i class="icon-plus"></i> ADD ANOTHER SUBSCRIPTION
     				</button>
+    				</em>
+    				</span>
     				</div>
            		</div>
           </div>
           
 </div>
+</div>
+
 <div data-ng-if="!noneSelected">
 <div class="row" data-ng-if="faithBased">
 <p/>

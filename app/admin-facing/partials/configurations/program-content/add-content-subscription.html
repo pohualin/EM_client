@@ -1,16 +1,19 @@
-     <div data-ng-repeat="selectedContentSubscription in selectedContentList">
+ <div data-ng-repeat="selectedContentSubscription in selectedContentList">
+     
      <div class="row">
-     <div class="col-md-4">
+       <div data-ng-if="!loading" >  
+            <div class="col-md-4">
       		<div class="form-group">
                	<select id="primaryContentList" name="primaryContentList" class="form-control"
                    	data-ng-options="primaryContent.name for primaryContent in primaryContentList | filter : {name:selectedContentSubscription.entity.contentSubscription.name} | filter:filterAgain($index) track by primaryContent.name"
                    	data-ng-model="selectedContentSubscription.entity.contentSubscription"
                    	data-ng-change="onChangeSelectedPrimaryList(selectedContentSubscription)"
                     data-chosen data-disable-search="true" data-placeholder="Select...">
-                      	<option value="" title="primaryContentList">Select...</option>
+                      	<option id="contentName" value="" title="primaryContentList">Select...</option>
                	</select>
        		</div>
-            </div>
+       		</div>
+           
         	
         	<div class="col-md-4" >
           	<div data-ng-if="selectedContentSubscription.entity.contentSubscription.name=='EmmiEngage+'">
@@ -23,18 +26,23 @@
                	</select>
            	</div>
        		</div>
+      
        		
        		<div class="col-md-4">
            		<div data-ng-if="initialAddAnotherContentSubscription && $last && latestPrimaryContentList.length > 0">
+           		<span class="enumerate-value"><em>
            		<button  type="button" class="btn btn-link btn-link-nopad btn-heading" data-ng-click="initialAddSubscription()">
         			<i class="icon-plus"></i> ADD ANOTHER SUBSCRIPTION
     			</button>
+    			</em></span>
     			</div>
            </div>
+       </div>
        		
-       		</div>
+   </div>
+</div>
        		
-      	</div>
+     
 
     
 
