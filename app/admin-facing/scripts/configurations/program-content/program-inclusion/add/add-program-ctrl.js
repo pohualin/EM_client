@@ -67,8 +67,7 @@ angular.module('emmiManager')
         };
         
         $scope.setSelectedPrograms = function (programs) {
-        	console.log(programs);
-            angular.forEach(programs, function (program) {
+        	angular.forEach(programs, function (program) {
                 if (AddProgramsFactory.getSelectedPrograms()[program.entity.id]) {
                     program.entity.checked = true;
                 } else {
@@ -109,20 +108,15 @@ angular.module('emmiManager')
          * Save method to call when selectAll is false
          */
         $scope.save = function (addAnother) {
-        	console.log(addAnother);
-            $scope.programFormSubmitted = true;
+        	$scope.programFormSubmitted = true;
             var programsAcrossTabs = angular.extend({},  AddProgramsFactory.getSelectedClientPrograms(),  AddProgramsFactory.getSelectedPrograms());  
             var programToSave = ProgramContentInclusionService.createSaveRequest(programsAcrossTabs);
-            console.log(programToSave);
             ProgramContentInclusionService.saveAll(programToSave).then(function (clientProgramInclusion) {
             	 $scope.whenSaving = true;
             	 if (addAnother) {
-            		 console.log('at add another');
-                     //$scope.tabs.activeTab = 1;
-                     $scope.successAlert(programToSave, '#modal-messages-container');
+            		 $scope.successAlert(programToSave, '#modal-messages-container');
                  } else {
-                	 console.log('at not add another');
-                     $scope.successAlert(programToSave, '#messages-container');
+                	 $scope.successAlert(programToSave, '#messages-container');
                      $scope.hideAddProgramModal();
                      focus('programSearchFocus');
                  }
@@ -137,8 +131,7 @@ angular.module('emmiManager')
 		};
 		
 		$scope.$on('refreshProgramsSearchPage', function(){
-			console.log('refresh program');
-            $scope.programs = null;
+			$scope.programs = null;
             $scope.totalPossibleClientProgramsCount = 0;
             $scope.searchAll = {};
             $scope.programSearch = {
@@ -149,18 +142,7 @@ angular.module('emmiManager')
             AddProgramsFactory.resetSelectedPrograms();
         });
 		
-		  /**
-         * Listen on 'refreshClientProgramsPage' event
-         */
- /*       $scope.$on('refreshClientProgramsPage', function(){
-        	console.log('refresh page program');
-            $scope.clientPrograms = null;
-            SelectAllProgramContentsFactory.setSelectAll(false);
-            AddProgramsFactory.resetSelectedClientPrograms();
-            //$scope.setPossiblePrograms();
-        });
-	*/	
-		/**
+    	/**
          * Display success alert
          */
         $scope.successAlert = function (programToSave, container) {
@@ -203,17 +185,11 @@ angular.module('emmiManager')
          * @param query typed by the user in the search box
          */
         var performSearch = function (query, sort, size, specialty) {
-        	console.log('searching ======================');
-        	console.log(query);
-        	console.log(specialty);
-            $scope.searching = true;
+        	$scope.searching = true;
             return ProgramContentInclusionService.getProgramList(query, sort, size, specialty).then(function (programPage) {
                 $scope.handleResponse(programPage, contentProperty);
-             //   $scope.setSelectedProgramsCheckbox();
-                console.log(programPage);
-               $scope.totalPossibleClientProgramsCount = programPage.page.totalElements;
-                console.log(programPage);
-               return programPage;
+                $scope.totalPossibleClientProgramsCount = programPage.page.totalElements;
+                return programPage;
             }).finally(function () {
                 $scope.searching = false;
             });
@@ -242,9 +218,8 @@ angular.module('emmiManager')
             */
            $scope.$on('selectAllChecked', function () {
         	   angular.forEach($scope.programs, function(program){
-            	   console.log(program);
-                       program.entity.checked = true;
-                       $scope.onCheckboxChange(program);
+            	     program.entity.checked = true;
+                     $scope.onCheckboxChange(program);
                    
                });
            });
@@ -269,8 +244,7 @@ angular.module('emmiManager')
             * Delete Program from selectedClientPrograms when it's unchecked.
             */
            $scope.onCheckboxChange = function (programResource) {
-        	   console.log(programResource);
-               if(!SelectAllProgramContentsFactory.isSelectAll()) {
+        	  if(!SelectAllProgramContentsFactory.isSelectAll()) {
             	   if (!programResource.entity.checked) {
                 	    $scope.removeFromSelectedClientPrograms(programResource);
                    } else {
@@ -314,19 +288,14 @@ angular.module('emmiManager')
              * @param programResource to be selected
              */
            $scope.selectProgram = function (programResource) {
-        	   console.log(programResource);
-               if(!SelectAllProgramContentsFactory.isSelectAll()) {
-            	   console.log('at if not select all');
-                   if (!programResource.entity.checked) {
-                	   console.log('remove from select');
-                       $scope.removeFromSelectedClientPrograms(programResource);
+        	  if(!SelectAllProgramContentsFactory.isSelectAll()) {
+            	  if (!programResource.entity.checked) {
+                	   $scope.removeFromSelectedClientPrograms(programResource);
                    } else {
-                	   console.log('addt to select');
-                       $scope.addToSelectedClientPrograms(programResource);
+                	   $scope.addToSelectedClientPrograms(programResource);
                    }
                } else {
-            	   console.log('at elset  ++++++++++++++++++++  ');
-                   if (!programResource.entity.checked) {
+            	   if (!programResource.entity.checked) {
                        $scope.removeFromSelectedClientPrograms(programResource);
                        $scope.addToExclusionSet(programResource);
                    } else {
@@ -334,15 +303,7 @@ angular.module('emmiManager')
                        $scope.addToSelectedClientPrograms(programResource);
                    }
                }
-             /*   if (programResource.selected) {
-                                    
-                    $scope.selectedProgramsHolder.push(programResource);
-                } else {
-                    $scope.selectedProgramsHolder = $scope.selectedProgramsHolder.filter(function (element) {
-                        return element.program.entity.id !== programResource.entity.id;
-                    });
-                }*/
-            };
+          };
 
             /**
              * Remove a schedule program card

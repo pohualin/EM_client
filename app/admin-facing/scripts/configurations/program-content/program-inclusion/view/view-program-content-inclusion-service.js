@@ -12,9 +12,7 @@ angular.module('emmiManager')
                  * Get ClientProgramContentInclusion by Client
                  */
                 getClientProgramContentInclusion: function () {
-                	console.log(Client);
-                	
-                    return $http.get(UriTemplate.create(Client.getClient().link.clientProgramContentInclusion).stringify())
+                	return $http.get(UriTemplate.create(Client.getClient().link.clientProgramContentInclusion).stringify())
                         .then(function (response) {
                         	CommonService.convertPageContentLinks(response.data);
                             return response.data;

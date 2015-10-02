@@ -211,19 +211,13 @@ angular.module('emmiManager')
         * Listen on 'refreshClientProgramsPage' event
         */
        $scope.$on('refreshClientProgramsPage', function(){
-       	console.log('refresh page program +++++++++');
-           //$scope.clientPrograms = null;
-           //SelectAllProgramContentsFactory.setSelectAll(false);
-           //AddProgramsFactory.resetSelectedClientPrograms();
-       	$scope.$broadcast('refreshViewProgramsPage');
-       	//$scope.refreshViewProgramInclusionPage();
+           	$scope.$broadcast('refreshViewProgramsPage');
        });
        
        /**
          * init method called when page is loading
          */
        function init() {
-    	   console.log('hrerere');
     	    $scope.client = Client.getClient().entity;
             $scope.page.setTitle('Client Configurations - ' + $scope.client.name + ' | ClientManager');
             MainContentService.getContentSubscriptionList().then(function(response){

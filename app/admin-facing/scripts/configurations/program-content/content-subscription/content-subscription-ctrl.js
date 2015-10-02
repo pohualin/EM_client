@@ -65,7 +65,6 @@ angular.module('emmiManager')
             	     aContent.entity.contentSubscription.name = 'EmmiEngage';
                      if(($scope.sourceContentToSave.entity.contentSubscription !== null) &&
                         (angular.isDefined($scope.sourceContentToSave.entity.contentSubscription.id))){
-                    	 console.log($scope.sourceContentToSave);
                     	 $scope.selectedContentList.push($scope.sourceContentToSave);
                      }
                      else if(($scope.originalSourceContent.entity.contentSubscription !== null)&&

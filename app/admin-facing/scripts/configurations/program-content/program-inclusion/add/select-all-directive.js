@@ -12,8 +12,7 @@ angular.module('emmiManager')
                  * are all associated with the client.
                  */
                 scope.$on('allPossibleAlreadyAssociated', function(){
-                	console.log('at all possible checked');
-                    element.prop('checked', true);
+                	element.prop('checked', true);
                     element.prop('disabled', true);
                 });
                 
@@ -23,14 +22,11 @@ angular.module('emmiManager')
                  * Call SelectAllProgramContentsFactory.setSelectAll whenever it changed. Fire event depending on the new value.
                  */
                 scope.$watch('selectAllProgramContents', function(newVal, oldVal){
-                	console.log('select calll');
                 	SelectAllProgramContentsFactory.setSelectAll(scope.selectAllProgramContents);
                     if (scope.selectAllProgramContents){
-                    	console.log('select all checked');
-                        scope.$emit('selectAllChecked');
+                    	scope.$emit('selectAllChecked');
                     } else {
-                    	console.log('uncheckec alll');
-                        scope.$emit('selectAllUnchecked');
+                    	scope.$emit('selectAllUnchecked');
                     }
                 });
                 
@@ -42,8 +38,7 @@ angular.module('emmiManager')
                 scope.$watch(
                 		
                     function(){
-                    	console.log('watch ccscsdcdc');
-                        return SelectAllProgramContentsFactory.isAllPossibleChecked();
+                    	return SelectAllProgramContentsFactory.isAllPossibleChecked();
                     }, 
                     function(newValue, oldValue){
                     	

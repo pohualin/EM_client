@@ -22,20 +22,17 @@ angular.module('emmiManager')
         var contentProperty = 'programs';
         $scope.resultsPerPage = 10;
         $scope.listOfClientPrograms = [];
-               console.log('view controll');
         /**
          * Add program inclusion to a client
          */
         ViewProgramContentInclusionService.getClientProgramContentInclusion().then(function (clientProgramInclusion) {
-        		 console.log(clientProgramInclusion);
         		 $scope.listOfClientPrograms = clientProgramInclusion;
         		 $scope.handleResponse(clientProgramInclusion, 'listOfClientPrograms');
         		 $scope.$emit('refreshProgramsSearchPage');
        	});
     
         $scope.setSelectedPrograms = function (programs) {
-        	console.log(programs);
-            angular.forEach(programs, function (program) {
+        	angular.forEach(programs, function (program) {
                 if (AddProgramsFactory.getSelectedPrograms()[program.entity.id]) {
                     program.entity.checked = true;
                 } else {
@@ -50,7 +47,6 @@ angular.module('emmiManager')
 		 */
         $scope.fetchPage = function (href) {
             $scope.loading = true;
-            console.log('fetch page');
             ViewProgramContentInclusionService.fetchPageLink(href).then(function (page) {
                 $scope.handleResponse(page, 'listOfClientPrograms');
             }, function () {
@@ -65,7 +61,6 @@ angular.module('emmiManager')
          */
         $scope.removeProgram = function (program) {
             $scope.associateRequestSubmitted = true;
-            console.log(program);
             ViewProgramContentInclusionService.removeProgram(program).then(function (clientProgramInclusion) {
             	$scope.refreshViewProgramInclusionPage();
                 $alert({
@@ -105,8 +100,7 @@ angular.module('emmiManager')
          * Listen on 'refreshClientProgramsPage' event
          */
         $scope.$on('refreshViewProgramsPage', function(){
-        	console.log('refresh page program');
-            $scope.clientPrograms = null;
+        	$scope.clientPrograms = null;
             SelectAllProgramContentsFactory.setSelectAll(false);
             AddProgramsFactory.resetSelectedClientPrograms();
             $scope.refreshViewProgramInclusionPage();
