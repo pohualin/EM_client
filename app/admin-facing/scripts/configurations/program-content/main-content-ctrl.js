@@ -80,7 +80,10 @@ angular.module('emmiManager')
           };
           
           $scope.filterAgain = function (index) {
+        	  //console.log('at fileter again');
+        	  
         	    return function (item) {
+        	    //	 console.log(item);
         	 	if(($scope.selectedContentSubscription.entity.contentSubscription !== null) &&
         	 		($scope.selectedContentList[index].entity.contentSubscription !== null)){
         	    	 if ($scope.selectedContentList[index].entity.contentSubscription.name === item.name){
@@ -161,7 +164,8 @@ angular.module('emmiManager')
       	 
          };
          
-         $scope.checkIfEmmiEngagePlus = function(){
+         $scope.checkIfEmmiEngagePlus = function(newContent){
+        	console.log(newContent);
         	 if($scope.selectedContentList){
              	angular.forEach($scope.selectedContentList, function (aContent){
              		if(aContent.entity.contentSubscription !== null){
@@ -171,6 +175,12 @@ angular.module('emmiManager')
              		}
           	    });
              }
+        	 if((newContent.entity.contentSubscription !== null) &&
+        		 (angular.isDefined(newContent.entity.contentSubscription.name))){
+        	    if(newContent.entity.contentSubscription.name === 'EmmiEngage+'){
+    			  $scope.resetIsEmmiEngage(true);
+        	 }
+  			}
          };
          
         /*
@@ -237,7 +247,7 @@ angular.module('emmiManager')
        
        $scope.$on('finishLoading', function () {
     	   console.log('loading finis');
-    	   //$scope.loading = false;
+    	   $scope.loading = false;
        });
        
  

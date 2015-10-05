@@ -83,16 +83,17 @@ angular.module('emmiManager')
                     var saveRequests = [];
                     angular.forEach(contentSubscriptionList, function (aNewContent){
                     	var deferred = $q.defer();
-                    	   
+                    	   console.log(aNewContent);
                     		if((angular.isDefined(aNewContent.entity.id)) &&
                     				(aNewContent.entity.contentSubscription === null)){
+                    			console.log('delete +++');
                        			self.deleteContent(aNewContent).then(function(response){
                     			deferred.resolve(response);
                				});
                     		}
                     		else if((angular.isDefined(aNewContent.entity.id)) &&
                     				(aNewContent.entity.contentSubscription !== null)){
-                    			
+                    			console.log('update +++');
                     			aNewContent.entity.faithBased = faithBased;
                     			self.update(aNewContent).then(function(response){
                     				deferred.resolve(response);	
@@ -100,6 +101,7 @@ angular.module('emmiManager')
                     		}
                     		else if((aNewContent.entity.contentSubscription !== null) &&
                     				(angular.isDefined(aNewContent.entity.contentSubscription.id))){
+                    			console.log('create +++');
                     			aNewContent.entity.faithBased = faithBased;
                     			self.create(aNewContent).then(function(response){
                     				deferred.resolve(response);
