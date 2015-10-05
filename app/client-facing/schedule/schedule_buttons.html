@@ -1,4 +1,4 @@
     <button class="btn btn-success btn-block" type="button"
-            data-ng-disabled="!selectedPrograms.length || whenSaving"
+            data-ng-disabled="$parent.addProgramForm.$invalid || !selectedPrograms.length || whenSaving"
             data-ng-click="savePatientAndProgram()">Schedule Now
     </button>
