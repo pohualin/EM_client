@@ -5,11 +5,11 @@
             <div class="col-md-4">
       		<div class="form-group">
                	<select id="primaryContentList" name="primaryContentList" class="form-control"
-                   	data-ng-options="primaryContent.name for primaryContent in primaryContentList | filter : {name:selectedContentSubscription.entity.contentSubscription.name} | filter:filterAgain($index) track by primaryContent.name"
+                   	data-ng-options="primaryContent.name for primaryContent in primaryContentList | filter:filterAgain($index) track by primaryContent.name"
                    	data-ng-model="selectedContentSubscription.entity.contentSubscription"
                    	data-ng-change="onChangeSelectedPrimaryList(selectedContentSubscription, $index)"
                     data-chosen data-disable-search="true" data-placeholder="Select...">
-                      	<option id="contentName" value="" title="primaryContentList">Select...</option>
+                      	<option  value="" title="primaryContentList">Select...</option>
                	</select>
        		</div>
        		</div>
