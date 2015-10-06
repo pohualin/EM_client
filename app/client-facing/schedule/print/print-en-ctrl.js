@@ -18,12 +18,24 @@
                 $scope.patient = $scope.scheduledPrograms[0].entity.patient;
                 $scope.team = $scope.scheduledPrograms[0].entity.team;
                 $scope.encounter = $scope.scheduledPrograms[0].entity.encounter;
-                $scope.providers = [];
 
+                // Create an array of provider names.
+                $scope.providers = [];
                 angular.forEach($scope.scheduledPrograms, function (scheduledProgram) {
-                    $scope.providers.push(scheduledProgram.entity.provider);
+                    $scope.providers.push(scheduledProgram.entity.provider.fullName);
                 });
-                
+
+                // Filter out redundant providers.
+                $scope.providers = $scope.providers.filter(function(item, i, ar){ return ar.indexOf(item) === i; });
+
+                // Limit the number of programs unless the number of programs is one more than the limit.
+                $scope.limit = 5;
+                if ($scope.scheduledPrograms.length === $scope.limit + 1) {
+                    $scope.limit++;
+                }
+
+                $scope.year = new Date().getFullYear();
+                                
                 // We need this to get parent scope because we're in an iframe
                 var parentScope = $window.parent.angular.element($window.frameElement).scope();
                 

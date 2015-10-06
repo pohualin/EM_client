@@ -1,38 +1,45 @@
-<div data-ng-controller="ClientProgramContentConfigurationController">
 
+
+<form name="contentSubscriptionForm" class="form" data-ng-controller="ClientProgramContentConfigurationController" novalidate >
+
+	<div class="row" data-ng-show="contentSubscriptionForm.$invalid">
+              <div class="col-md-12" id="message-container"></div>
+    </div>
 <div class="row">
 		<div class="col-md-4">
          	 <label class="control-label" for="primaryContentList">CONTENT SUBSCRIPTION</label>
         </div>
-        <div data-ng-if="!noneSelected">
-        <div class="col-md-4" >
-         	<div data-ng-if="contentSubscriptionHolder.entity.contentSubscription.name=='EmmiEngage+'
-         	                || isEmmiEngagePlus 
-         	                || selectedContentSubscription.entity.contentSubscription.name=='EmmiEngage+'">
+        <div data-ng-if="!noneSelected && isEmmiEngagePlus" class="col-md-4" >
          	<label class="control-label" for="selectedSourceContentList">SOURCE</label>
-            </div>
-        </div>
+                 <div class="error-circle fa-exclamation-circle" role="alert"
+                 data-ng-show="(contentSubscriptionForm.sourceContentListHolder.$error.required ||
+                               contentSubscriptionForm.selectedSourceContentList.$error.required)
+                               && contentSubscriptionFormSubmitted"
+                 data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                 data-title="Required" aria-label="Required">
+                 </div>
         </div>
 </div>
 
 
-<div  data-ng-if="selectedContentList.length">
+<div  data-ng-if="selectedContentList.length > 0">
 	<div data-ng-include="'admin-facing/partials/configurations/program-content/add-content-subscription.html'"></div>
 </div>
 
+<div data-ng-if="!loading" >
 <div class="row" data-ng-if="latestPrimaryContentList.length > 0 && !initialAddAnotherContentSubscription">
-           
+         
+           <div data-ng-if="showSelectList">  
            <div class="col-md-4">
-           <div data-ng-if="showSelectList" >
-              <div class="form-group">
+           <div class="form-group">       
                 <select class="form-control" id="latestPrimaryContentList" name="latestPrimaryContentList" class="form-control"
                     data-ng-options="latestPrimaryContentList.name for latestPrimaryContentList in latestPrimaryContentList track by latestPrimaryContentList.name"
                     data-ng-model="contentSubscriptionHolder.entity.contentSubscription"
                     data-ng-change="onChangePrimaryList(contentSubscriptionHolder)"
                     data-chosen data-disable-search="true" data-placeholder="Select...">   
                 <option value="" title="latestPrimaryContentList">Select...</option>
-                </select>
-             </div>
+                </select>   
+            </div>         
            </div>
            </div>
            
@@ -43,26 +50,36 @@
 		   </div>
 
            <div data-ng-if="!noneSelected">
-           		<div class="col-md-4" >
+           		<div  class="col-md-4" >
+           	      <div class="form-group"> 
            			<div data-ng-if="contentSubscriptionHolder.entity.contentSubscription.name=='EmmiEngage+'">
-                		<select id="sourceContentList" name="sourceContentList" class="form-control"
+                		<select class="form-control" id="sourceContentListHolder" name="sourceContentListHolder" 
                     	data-ng-options="sourceContentList.name for sourceContentList in sourceContentList track by sourceContentList.id"
                     	data-ng-model="sourceContentHolder.entity.contentSubscription"
-                    	data-ng-change="onChangeSourceContent(sourceContentHolder)">
-                		<option value="" title="sourceContentList"></option>
+                    	data-ng-change="onChangeSourceContent(sourceContentHolder)"
+                    	required data-placeholder="Select...">
+                		<option value="" title="sourceContentList" class="form-control">Select...</option>
                 		</select>
+                		
+           			</div>
            			</div>
            		</div>
            		<div class="col-md-4">
            			<div data-ng-if="latestPrimaryContentList.length > 1 && addAnotherContentSubscription">
+           			<span class="enumerate-value"><em>
            			<button  type="button" class="btn btn-link btn-link-nopad btn-heading" data-ng-click="addAnotherSubscription(contentSubscriptionHolder, sourceContentHolder)">
         				<i class="icon-plus"></i> ADD ANOTHER SUBSCRIPTION
     				</button>
+    				</em>
+    				</span>
     				</div>
            		</div>
-          </div>
+         
+    </div>      
           
 </div>
+</div>
+
 <div data-ng-if="!noneSelected">
 <div class="row" data-ng-if="faithBased">
 <p/>
@@ -97,7 +114,7 @@
                         <span class="pull-right">
                             <button class="btn btn-success" type="submit"
                                     data-ng-disabled="whenSaving"
-                                    data-ng-click="save(contentSubscriptionForm.$valid)">Save
+                                    data-ng-click="save(contentSubscriptionForm)">Save
                             </button>
                         </span>
                         <span class="pull-right">
@@ -109,6 +126,7 @@
          </div>
  </div>
 </div>
-</div>
-    
+</form>
+
+
 

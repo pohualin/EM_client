@@ -193,6 +193,22 @@ angular.module('emmiManager')
                     $scope.whenSaving = false;
                 });
             };
+            
+            /**
+             * Check and see if any selectable roles has been checked
+             */
+            $scope.toggleAddButton = function () {
+                $scope.disableLibraries();
+                $scope.libraries.forEach(function (library) {
+                   if (library.disabled === false && library.checked === true){
+                       $scope.libraries.disabled = false;
+                   }
+                });
+            };
+            
+            $scope.disableLibraries = function () {
+                $scope.libraries.disabled = true;
+            };
 
             /**
              * called on click of the 'Add' button on the group library popup

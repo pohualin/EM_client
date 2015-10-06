@@ -25,7 +25,7 @@ angular.module('emmiManager')
                 createContentSubscriptionConfiguration: function () {
                     return {
                         entity: {
-                            contentSubscription: {},
+                            contentSubscription: '',
                             faithBased: false,
                          }
                     };
@@ -83,7 +83,6 @@ angular.module('emmiManager')
                     var saveRequests = [];
                     angular.forEach(contentSubscriptionList, function (aNewContent){
                     	var deferred = $q.defer();
-                    	   
                     		if((angular.isDefined(aNewContent.entity.id)) &&
                     				(aNewContent.entity.contentSubscription === null)){
                        			self.deleteContent(aNewContent).then(function(response){
@@ -92,7 +91,6 @@ angular.module('emmiManager')
                     		}
                     		else if((angular.isDefined(aNewContent.entity.id)) &&
                     				(aNewContent.entity.contentSubscription !== null)){
-                    			
                     			aNewContent.entity.faithBased = faithBased;
                     			self.update(aNewContent).then(function(response){
                     				deferred.resolve(response);	

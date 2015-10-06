@@ -18,7 +18,8 @@ angular.module('emmiManager')
                             AuthSharedService.currentUser().then(function (loggedInUser) {
                                 ScheduleService.loadEncounter(loggedInUser.clientResource,
                                     $route.current.params.teamId, 
-                                    $route.current.params.encounterId)
+                                    $route.current.params.encounterId,
+                                    'viewByDate')
                                     .then(function (response) {
                                         if (response) {
                                             deferred.resolve(response);
@@ -48,7 +49,8 @@ angular.module('emmiManager')
                             AuthSharedService.currentUser().then(function (loggedInUser) {
                                 ScheduleService.loadEncounter(loggedInUser.clientResource,
                                     $route.current.params.teamId, 
-                                    $route.current.params.encounterId)
+                                    $route.current.params.encounterId,
+                                    'viewByDate')
                                     .then(function (response) {
                                         if (response) {
                                             deferred.resolve(response);

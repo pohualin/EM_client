@@ -44,12 +44,14 @@ angular.module('emmiManager')
                  * Calls the backend activate link on the API
                  *
                  * @param activationToken the user's temporary auth
+                 * @param trackingToken the user's tracking token
                  * @returns the promise
                  */
-                validateActivationToken: function (activationToken) {
+                validateActivationToken: function (activationToken, trackingToken) {
                     return $http.get(UriTemplate.create(api.activate).stringify(), {
                         params: {
-                            activationToken: activationToken
+                            activationToken: activationToken,
+                            trackingToken: trackingToken
                         },
                         override403: true
                     })
@@ -58,7 +60,7 @@ angular.module('emmiManager')
                         })
                         .error(function (response) {
                             if (response.status === 403) {
-                                // not authorized for an not authenticated route
+                                // not authorized (e.g. invalid ip range)
                                 $location.path('/unauthorized').replace();
                             } else {
                                 $location.path('/login').replace();

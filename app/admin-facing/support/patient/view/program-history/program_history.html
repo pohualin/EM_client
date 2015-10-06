@@ -140,6 +140,17 @@
                                    data-container="body"
                                    data-title="Please enter a date in the future"
                                    aria-label="Please enter a date in the future"></div>
+
+                              <div class="error-circle fa-exclamation-circle" role="alert"
+                                   data-ng-show="!scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.required &&
+                                              scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.max &&
+                                              scheduledProgramForm_{{scheduledProgram.entity.id}}.programFormSubmitted &&
+                                              scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$dirty"
+                                   data-bs-tooltip data-placement="right" data-type="danger"
+                                   data-container="body"
+                                   data-title="Please enter a date within 5 years from today"
+                                   aria-label="Please enter a date within 5 years from today"></div>
+
                               <div class="error-circle fa-exclamation-circle" role="alert"
                                    data-ng-show="(scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.min &&
                                               scheduledProgramForm_{{scheduledProgram.entity.id}}.viewByDate.$error.date &&
@@ -164,6 +175,7 @@
                                              data-input-icon
                                              data-dateType="iso" data-bs-datepicker
                                              data-min-date="today"
+                                             data-max-date="{{fiveYearsFromTodayString}}"
                                              required
                                              data-ng-change="isUnchanged(encounter, scheduledProgram, scheduledProgramForm_{{scheduledProgram.entity.id}}, {{$index}})"
                                              style="padding: 8px 10px;height: 37px;"
@@ -200,6 +212,14 @@
                             </div>
                           </div>
                           </div>
+                            <div class="col-md-12">
+                                <div class="col-md-12 form-group">
+                                    <label class="text-muted">PATIENT NOTES</label>
+                                    <div class="entity-value">
+                                        {{scheduledProgram.scheduledProgramNotes.note}}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </form>
                 </div>

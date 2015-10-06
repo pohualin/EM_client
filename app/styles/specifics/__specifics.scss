@@ -3,6 +3,7 @@
 // import contextual entities
 @import 'sample';
 @import 'popovers';
+@import 'print-instructions';
 
 .form-group-nested {
     padding: 10px 0 0 20px;
@@ -326,6 +327,12 @@ td {
         font-size: 24px;
         margin: 14px 10px 0 0;
     }
+}
+
+.chosen-spinner-in-input {
+    background-image: url("/images/chosen-spinner.gif");
+    background-repeat: no-repeat;
+    background-position: 95%;
 }
 
 .emmi-fade {
