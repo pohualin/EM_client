@@ -43,7 +43,7 @@ angular.module('emmiManager')
                     $scope.emailConfigs.entity.collectEmail = false;
                     $scope.emailConfigs.entity.requireEmail = false;
                 }
-                $scope.showButton();
+                $scope.setShowButton();
             };
 
             /**

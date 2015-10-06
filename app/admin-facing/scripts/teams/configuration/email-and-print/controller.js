@@ -38,7 +38,7 @@ angular.module('emmiManager')
             $scope.showButton = false;
         };
         
-        $scope.showButton = function () {
+        $scope.setShowButton = function () {
             $scope.showButton = true;
         };
         
