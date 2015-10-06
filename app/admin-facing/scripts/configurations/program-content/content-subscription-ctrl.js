@@ -9,7 +9,7 @@ angular.module('emmiManager')
         function ($alert, $scope, $controller, Client, ContentSubscriptionConfigurationService) {
        
     	$scope.addAnotherContentSubscription = false;
-    	
+    		
         $scope.contentSubscriptionHolder = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
         $scope.sourceContentHolder = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
         $scope.sourceContentToSave = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
@@ -18,7 +18,7 @@ angular.module('emmiManager')
          * Save content subscription configuration for the client
          */
         $scope.save = function(form){
-            $scope.contentSubscriptionFormSubmitted = true;  
+        	$scope.resetSubscriptionForm(true);  
             if(form.$valid){
                 $scope.whenSaving = true;
                 $scope.filterSaveListAndSave();
@@ -99,6 +99,7 @@ angular.module('emmiManager')
                 	$scope.whenSaving = false;
                 	 $scope.$emit('finishLoading');
                    	$scope.showButtons(false);
+                    $scope.resetSubscriptionForm(false);
                     $scope.resetContentHolders();
                 });
        
@@ -163,14 +164,14 @@ angular.module('emmiManager')
         	   $scope.resetSelectedSourceContent(newSourceContentHolder);
                $scope.showButtons(true);
          };
-         $scope.onChangeSelectedPrimaryList = function(newSourceSubscriptionHolder, index){ 
+         $scope.onChangeSelectedPrimaryList = function(newSourceSubscriptionHolder){ 
         	   $scope.addAnotherContentSubscription = true;
         	   $scope.setInitialAddAnotherContentSubscription(true);
         	   $scope.resetFaithBased(true);
-        	   $scope.resetSelectedContentSubscription(newSourceSubscriptionHolder, index);
+        	   $scope.resetSelectedContentSubscription(newSourceSubscriptionHolder);
         	   $scope.showButtons(true);
                $scope.fetchLatestPrimaryContentList();
-         };
+        };
                    
        /* 
         * Added another content subscription for a client

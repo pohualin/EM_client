@@ -1,26 +1,23 @@
 
-<div data-ng-controller="ClientProgramContentConfigurationController">
-<form name="contentSubscriptionForm" class="form" novalidate >
+
+<form name="contentSubscriptionForm" class="form" data-ng-controller="ClientProgramContentConfigurationController" novalidate >
+
+	<div class="row" data-ng-show="contentSubscriptionForm.$invalid">
+              <div class="col-md-12" id="message-container"></div>
+    </div>
 <div class="row">
 		<div class="col-md-4">
          	 <label class="control-label" for="primaryContentList">CONTENT SUBSCRIPTION</label>
         </div>
-        <div data-ng-if="!noneSelected">
-        <div class="form-group col-md-4" >
-         	<div data-ng-if="isEmmiEngagePlus">
+        <div data-ng-if="!noneSelected && isEmmiEngagePlus" class="col-md-4" >
          	<label class="control-label" for="selectedSourceContentList">SOURCE</label>
-            </div>
-            <div class="error-circle fa-exclamation-circle" role="alert"
-                 data-ng-show="contentSubscriptionForm.sourceContentListHolder.$error.required && contentSubscriptionFormSubmitted"
+                 <div class="error-circle fa-exclamation-circle" role="alert"
+                 data-ng-show="(contentSubscriptionForm.sourceContentListHolder.$error.required ||
+                               contentSubscriptionForm.selectedSourceContentList.$error.required)
+                               && contentSubscriptionFormSubmitted"
                  data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                  data-title="Required" aria-label="Required">
                  </div>
-                 <div class="error-circle fa-exclamation-circle" role="alert"
-                 data-ng-show="contentSubscriptionForm.selectedSourceContentList.$error.required && contentSubscriptionFormSubmitted"
-                 data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                 data-title="Required" aria-label="Required">
-            </div>
-        </div>
         </div>
 </div>
 
@@ -32,15 +29,15 @@
 <div data-ng-if="!loading" >
 <div class="row" data-ng-if="latestPrimaryContentList.length > 0 && !initialAddAnotherContentSubscription">
          
-           <div class="col-md-4">
            <div data-ng-if="showSelectList">  
+           <div class="col-md-4">
            <div class="form-group">       
                 <select class="form-control" id="latestPrimaryContentList" name="latestPrimaryContentList" class="form-control"
                     data-ng-options="latestPrimaryContentList.name for latestPrimaryContentList in latestPrimaryContentList track by latestPrimaryContentList.name"
                     data-ng-model="contentSubscriptionHolder.entity.contentSubscription"
                     data-ng-change="onChangePrimaryList(contentSubscriptionHolder)"
                     data-chosen data-disable-search="true" data-placeholder="Select...">   
-                <option value="" title="latestPrimaryContentList" class="form-control">Select...</option>
+                <option value="" title="latestPrimaryContentList">Select...</option>
                 </select>   
             </div>         
            </div>
@@ -60,10 +57,10 @@
                     	data-ng-options="sourceContentList.name for sourceContentList in sourceContentList track by sourceContentList.id"
                     	data-ng-model="sourceContentHolder.entity.contentSubscription"
                     	data-ng-change="onChangeSourceContent(sourceContentHolder)"
-                    	required
-                    	data-chosen data-disable-search="true" data-placeholder="Select...">
+                    	required data-placeholder="Select...">
                 		<option value="" title="sourceContentList" class="form-control">Select...</option>
                 		</select>
+                		
            			</div>
            			</div>
            		</div>
@@ -130,6 +127,6 @@
  </div>
 </div>
 </form>
-</div>
+
 
 

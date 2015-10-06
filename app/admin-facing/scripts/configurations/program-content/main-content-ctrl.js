@@ -19,6 +19,8 @@ angular.module('emmiManager')
         $scope.noneSelected = false;
         $scope.showSelectList = false;
         $scope.isEmmiEngagePlus = false;
+        $scope.contentSubscriptionFormSubmitted = false;
+        
         
         $scope.emmiEngagePlus = {};
         $scope.noneContent = {name:'None', id:0};
@@ -53,6 +55,10 @@ angular.module('emmiManager')
          	return ($scope.showContentButton = showButton);
          };
          
+         $scope.resetSubscriptionForm = function(newValue) {
+        	 $scope.contentSubscriptionFormSubmitted = newValue;
+         };
+         
          /**
           * Reset selectedSourceContent
           */
@@ -65,14 +71,9 @@ angular.module('emmiManager')
           /**
            * Reset selectedSourceContent
            */
-          $scope.resetSelectedContentSubscription  = function (sourceContent, index) {
-        	 var wasEngagePlus = false;
-        	 if(($scope.selectedContentSubscription.entity.contentSubscription !== null) &&
-                     ($scope.selectedContentSubscription.entity.contentSubscription.name === 'EmmiEngage+')){
-                 	wasEngagePlus = true;
-          	    }
-           	 $scope.selectedContentList[index] = sourceContent;       	 
-           };
+          $scope.resetSelectedContentSubscription  = function (sourceContent) {
+           	 $scope.selectedContentSubscription  = sourceContent;
+          };
           
           $scope.resetIsEmmiEngage = function (newValue){
         	  $scope.isEmmiEngagePlus = newValue;
@@ -120,20 +121,18 @@ angular.module('emmiManager')
         		$scope.selectedContentSubscription.entity = $scope.selectedContentList[0].entity;
         		$scope.resetList();
         	
-         	   angular.copy($scope.primaryContentList, $scope.latestPrimaryContentList);
+         	    angular.copy($scope.primaryContentList, $scope.latestPrimaryContentList);
         		$scope.initialAddAnotherContentSubscription = false;
         		$scope.$broadcast('event:reset-add-another-content');		
                 $scope.showSelectList  = true;
            	}
             else{
             	var checkEngagePlus = false;
-	    	    angular.forEach($scope.selectedContentList, function (aContent){
+            	angular.forEach($scope.selectedContentList, function (aContent){
  	    		  if(aContent.entity.contentSubscription !== null){
            			if(aContent.entity.contentSubscription.id === 128){
-           				if(angular.isDefined($scope.selectedSourceContent.entity.id)){
-                        	$scope.originalSourceContent = $scope.selectedSourceContent;
-           					aContent.entity.contentSubscription.name = 'EmmiEngage+';
-           					checkEngagePlus = true;
+           				if(angular.isDefined($scope.selectedSourceContent.entity.contentSubscription)){
+                        	checkEngagePlus = true;
            				}
            			}
  	    		  }
