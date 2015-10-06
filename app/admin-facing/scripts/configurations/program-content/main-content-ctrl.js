@@ -41,6 +41,11 @@ angular.module('emmiManager')
            	$scope.showButtons(false);
         };
   
+        $scope.resetList = function(){
+        	$scope.selectedContentList = [];
+      	    $scope.latestPrimaryContentList = [];
+      	    $scope.isEmmiEngagePlus = false;
+        };
        /**
          * Show/hide cancel and save buttons
          */
@@ -113,15 +118,13 @@ angular.module('emmiManager')
         	if(($scope.selectedContentList.length === 1) &&
         	   ($scope.selectedContentList[0].entity.contentSubscription === null)){
         		$scope.selectedContentSubscription.entity = $scope.selectedContentList[0].entity;
-        		$scope.selectedContentList = [];
-         	   $scope.latestPrimaryContentList = [];
-         	   $scope.isEmmiEngagePlus = false;
+        		$scope.resetList();
+        	
          	   angular.copy($scope.primaryContentList, $scope.latestPrimaryContentList);
         		$scope.initialAddAnotherContentSubscription = false;
-        		$scope.$broadcast('event:reset-add-another-content')		
+        		$scope.$broadcast('event:reset-add-another-content');		
                 $scope.showSelectList  = true;
-                $scope.isEmmiEngagePlus = false;
-        	}
+           	}
             else{
             	var checkEngagePlus = false;
 	    	    angular.forEach($scope.selectedContentList, function (aContent){
@@ -236,9 +239,7 @@ angular.module('emmiManager')
        };
 
        $scope.getClientContentList = function(){
-    	   $scope.selectedContentList = [];
-    	   $scope.latestPrimaryContentList = [];
-    	   $scope.isEmmiEngagePlus = false;
+    	   $scope.resetList();
     	   angular.copy($scope.primaryContentList, $scope.latestPrimaryContentList);
     	   ContentSubscriptionConfigurationService.getClientContentSubscriptionConfiguration().then(function (response) {
                if(angular.isDefined(response.content)){

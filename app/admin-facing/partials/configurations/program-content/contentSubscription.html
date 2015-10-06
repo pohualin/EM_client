@@ -31,16 +31,18 @@
 
 <div data-ng-if="!loading" >
 <div class="row" data-ng-if="latestPrimaryContentList.length > 0 && !initialAddAnotherContentSubscription">
-       <div class="form-group">    
+         
            <div class="col-md-4">
-           <div data-ng-if="showSelectList">       
+           <div data-ng-if="showSelectList">  
+           <div class="form-group">       
                 <select class="form-control" id="latestPrimaryContentList" name="latestPrimaryContentList" class="form-control"
                     data-ng-options="latestPrimaryContentList.name for latestPrimaryContentList in latestPrimaryContentList track by latestPrimaryContentList.name"
                     data-ng-model="contentSubscriptionHolder.entity.contentSubscription"
                     data-ng-change="onChangePrimaryList(contentSubscriptionHolder)"
                     data-chosen data-disable-search="true" data-placeholder="Select...">   
-                <option value="" title="latestPrimaryContentList">Select...</option>
-                </select>            
+                <option value="" title="latestPrimaryContentList" class="form-control">Select...</option>
+                </select>   
+            </div>         
            </div>
            </div>
            
@@ -52,6 +54,7 @@
 
            <div data-ng-if="!noneSelected">
            		<div  class="col-md-4" >
+           	      <div class="form-group"> 
            			<div data-ng-if="contentSubscriptionHolder.entity.contentSubscription.name=='EmmiEngage+'">
                 		<select class="form-control" id="sourceContentListHolder" name="sourceContentListHolder" 
                     	data-ng-options="sourceContentList.name for sourceContentList in sourceContentList track by sourceContentList.id"
@@ -59,8 +62,9 @@
                     	data-ng-change="onChangeSourceContent(sourceContentHolder)"
                     	required
                     	data-chosen data-disable-search="true" data-placeholder="Select...">
-                		<option value="" title="sourceContentList">Select...</option>
+                		<option value="" title="sourceContentList" class="form-control">Select...</option>
                 		</select>
+           			</div>
            			</div>
            		</div>
            		<div class="col-md-4">
@@ -73,7 +77,7 @@
     				</span>
     				</div>
            		</div>
-          </div>
+         
     </div>      
           
 </div>
