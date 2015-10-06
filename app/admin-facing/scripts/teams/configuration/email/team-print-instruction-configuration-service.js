@@ -6,10 +6,11 @@ angular.module('emmiManager')
             return {
 
                 /**
-                 * Calls the back end to get all email configuration for a client-team
-                 *
-                 * @param teamResource
-                 * @returns all questions and responses for a client user
+                 * Calls back end to get print instruction
+                 * configuration for a team
+                 * 
+                 * @param team to use
+                 * @returns PrintInstructionConfiguration for the team
                  */
                 getTeamPrintInstructionConfiguration: function (team) {
                     return $http.get(UriTemplate.create(team.link.printInstructionConfiguration).stringify())
@@ -20,11 +21,13 @@ angular.module('emmiManager')
                 },
 
                 /**
-                 * Calls the back end to save or update a client-team email configuration.
-                 *
+                 * Calls back end to create
+                 * TeamPrintInstructionConfiguration for a team
+                 * 
                  * @param team The corresponding team
-                 * @param emailConfigs The email configuration settings
-                 * @returns Server status and updated email config entity
+                 * @param configuration The TeamPrintInstructionConfiguration settings
+                 * @returns Server status and created TeamPrintInstructionConfigurationResource
+                 * 
                  */
                 save: function(team, configuration) {
                     return $http.post(UriTemplate.create(team.link.printInstructionConfiguration).stringify(), configuration.entity)
@@ -34,6 +37,18 @@ angular.module('emmiManager')
                         });
                 },
                 
+
+                /**
+                 * Calls back end to update an
+                 * existing
+                 * TeamPrintInstructionConfiguration
+                 * for a team
+                 * 
+                 * @param team The corresponding team
+                 * @param configuration The TeamPrintInstructionConfiguration settings
+                 * @returns Server status and updated TeamPrintInstructionConfigurationResource
+                 * 
+                 */
                 update: function(configuration) {
                     return $http.put(UriTemplate.create(configuration.link.self).stringify(), configuration.entity)
                         .then(function (response) {
