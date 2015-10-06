@@ -6,7 +6,7 @@
     <div class="form-group">
         <div class="checkbox" data-ng-repeat="library in libraries | filter:disableLibrary()">
             <input type="checkbox" id="roleLibraryCb{{$index}}" value=""
-              data-ng-change="disableLibraries()" 
+              data-ng-change="toggleAddButton()" 
               data-ng-model="library.checked" data-ng-disabled="library.disabled">&nbsp;&nbsp;
             <label for="roleLibraryCb{{$index}}"></label>
             <span class="toggle-trigger" data-ng-class="{'text-muted': library.disabled}">
