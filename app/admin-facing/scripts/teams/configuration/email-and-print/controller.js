@@ -38,9 +38,9 @@ angular.module('emmiManager')
             $scope.showButton = false;
         };
         
-        $scope.$on('event:show-button', function () {
+        $scope.showButton = function () {
             $scope.showButton = true;
-        });
+        };
         
         /**
          * init method called when page is loading

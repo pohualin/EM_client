@@ -30,13 +30,6 @@ angular.module('emmiManager')
             });
             
             /**
-             * Fire an event to show save and cancel buttons
-             */
-            $scope.updateReminders = function () {
-                $scope.$emit('event:show-button');
-            };
-            
-            /**
              * Calls when radio button is selected
              */
             $scope.update = function() {
@@ -50,7 +43,7 @@ angular.module('emmiManager')
                     $scope.emailConfigs.entity.collectEmail = false;
                     $scope.emailConfigs.entity.requireEmail = false;
                 }
-                $scope.$emit('event:show-button');
+                $scope.showButton();
             };
 
             /**
