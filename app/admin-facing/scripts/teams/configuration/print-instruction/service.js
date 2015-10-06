@@ -55,6 +55,14 @@ angular.module('emmiManager')
                             CommonService.convertPageContentLinks(response.data);
                             return response.data;
                         });
+                },
+                
+                saveOrUpdate: function(team, configuration) {
+                    if (configuration.link.self) {
+                        return this.update(configuration);
+                    } else {
+                        return this.save(team, configuration);
+                    }
                 }
             };
         }
