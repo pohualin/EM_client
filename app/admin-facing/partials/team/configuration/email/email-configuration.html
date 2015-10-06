@@ -1,6 +1,9 @@
 <div class="col-md-12" data-ng-cloak>
-    <form name="clientTeamEmailConfigurationForm" class="form" novalidate>
+    <form name="emailNotificationsPrintInstructionsForm" class="form" novalidate>
         <h1>Email Notifications & Print Instructions</h1>
+        
+        <div data-ng-include="'admin-facing/partials/team/configuration/print-instruction/form.html'" />
+        
         <div class="form-group">
             <div class="radio" ng-repeat="emailOption in emailOptions | orderBy:'rank'">
                 <input type="radio" id="{{emailOption.id}}"
@@ -19,7 +22,7 @@
             </button>
             <button class="btn btn-success" type="button"
                 data-ng-disabled="whenSaving"
-                data-ng-click="saveOrUpdateEmailConfig(clientTeamEmailConfigurationForm.$valid)">
+                data-ng-click="saveOrUpdateEmailConfig(emailNotificationsPrintInstructionsForm.$valid)">
                 <span>Save</span>
             </button>
         </div>

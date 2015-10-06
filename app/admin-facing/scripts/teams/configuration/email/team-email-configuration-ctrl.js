@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  *   Manage Team Level configuration a client
  */
-    .controller('ClientTeamEmailConfigurationCtrl', ['$scope', '$alert', 'teamResource', 'ClientTeamEmailConfigurationService',
-        function ($scope, $alert, teamResource, ClientTeamEmailConfigurationService) {
+    .controller('ClientTeamEmailConfigurationCtrl', ['$scope', '$alert', 'teamResource', 'ClientTeamEmailConfigurationService', 'TeamPrintInstructionConfigurationService',
+        function ($scope, $alert, teamResource, ClientTeamEmailConfigurationService, TeamPrintInstructionConfigurationService) {
 
             /**
              * When the save button is clicked. Sends all updates
@@ -14,6 +14,7 @@ angular.module('emmiManager')
              * results
              */
             $scope.saveOrUpdateEmailConfig = function (valid) {
+                $scope.formSubmitted = true;
                 if (valid) {
                     $scope.whenSaving = true;
 
@@ -23,14 +24,24 @@ angular.module('emmiManager')
                             $scope.emailConfigs = angular.copy($scope.originalEmailConfigs);
                             $scope.updateRemindersVisibility();
 
+                            if ($scope.teamPrintInstructionConfiguration.link.self) {
+                                TeamPrintInstructionConfigurationService.update($scope.teamPrintInstructionConfiguration).then(function(response){
+                                    $scope.teamPrintInstructionConfiguration = response;
+                                });
+                            } else {
+                                TeamPrintInstructionConfigurationService.save($scope.team, $scope.teamPrintInstructionConfiguration).then(function(response){
+                                    $scope.teamPrintInstructionConfiguration = response;
+                                });
+                            }
+                            
                             $alert({
                                 content: '<strong>' + $scope.team.entity.name + '</strong> has been updated successfully.'
                             });
                         }).finally(function () {
                             $scope.whenSaving = false;
+                            $scope.showEmailButton = false;
+                            $scope.formSubmitted = false;
                     });
-
-                    $scope.showEmailButton = false;
                 }
             };
 
@@ -41,6 +52,7 @@ angular.module('emmiManager')
             $scope.cancel = function () {
                 $scope.emailConfigs = angular.copy($scope.originalEmailConfigs);
                 $scope.showEmailButton = false;
+                $scope.formSubmitted = false;
                 $scope.setEmailOption();
                 $scope.updateRemindersVisibility();
             };
@@ -104,6 +116,10 @@ angular.module('emmiManager')
 
                     $scope.setEmailOption();
                     $scope.updateRemindersVisibility();
+                });
+                
+                TeamPrintInstructionConfigurationService.getTeamPrintInstructionConfiguration($scope.team).then(function(response){
+                    $scope.teamPrintInstructionConfiguration = response;
                 });
             }
 

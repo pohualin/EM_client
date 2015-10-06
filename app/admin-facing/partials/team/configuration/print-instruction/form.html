@@ -1,0 +1,23 @@
+<div class="form-group form-horizontal" 
+  data-ng-class="{ 'has-error' : emailNotificationsPrintInstructionsForm.patientUrl.$invalid && formSubmitted}">
+  <div class="row">
+      <div class="col-md-3">
+          <label class="control-label control-label-enumerate text-align-left" for="patientUrl" data-ng-if="true">Patient URL</label>
+          <div class="error-circle fa-exclamation-circle" role="alert"
+               data-ng-show="emailNotificationsPrintInstructionsForm.patientUrl.$error.required && formSubmitted"
+               data-bs-tooltip data-placement="right" data-type="danger" data-container="body" 
+               data-title="Required" aria-label="Required"></div>
+          <div class="error-circle fa-exclamation-circle" role="alert"
+               data-ng-show="emailNotificationsPrintInstructionsForm.patientUrl.$error.pattern && formSubmitted"
+               data-bs-tooltip data-placement="right" data-type="danger" data-container="body" 
+               data-title="Please enter a valid patient URL" aria-label="Please enter a valid patient URL"></div>
+      </div>
+      <div class="col-md-4">
+          <input class="form-control" id="patientUrl"
+                 data-ng-model="teamPrintInstructionConfiguration.entity.patientUrl"
+                 name="patientUrl"
+                 data-ng-change = "updateReminders()"
+                 maxlength="255" required />
+      </div>
+  </div>
+</div>
