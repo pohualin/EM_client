@@ -38,7 +38,6 @@ angular.module('emmiManager')
                 $scope.initialCopy = response;
                 $scope.teamPrintInstructionConfiguration = angular.copy($scope.initialCopy);
             });
-            window.paul = $scope;
         }
 
         init();
