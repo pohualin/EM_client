@@ -62,17 +62,11 @@ angular.module('emmiManager')
            */
           $scope.resetSelectedContentSubscription  = function (sourceContent, index) {
         	 var wasEngagePlus = false;
-        	 console.log($scope.selectedContentSubscription);
-        	 console.log($scope.selectedContentList);
-        	 console.log(sourceContent);
         	 if(($scope.selectedContentSubscription.entity.contentSubscription !== null) &&
                      ($scope.selectedContentSubscription.entity.contentSubscription.name === 'EmmiEngage+')){
                  	wasEngagePlus = true;
           	    }
-           	 $scope.selectedContentList[index] = sourceContent;
-           	// $scope.selectedContentSubscription = sourceContent;
-           	 
-             return wasEngagePlus;        	 
+           	 $scope.selectedContentList[index] = sourceContent;       	 
            };
           
           $scope.resetIsEmmiEngage = function (newValue){
@@ -81,15 +75,10 @@ angular.module('emmiManager')
           
           $scope.filterAgain = function (index) {
         	    return function (item) {
-           //console.log(item);
-          // console.log($scope.selectedContentList);
-           //console.log(index);
            if($scope.selectedContentList.length > 0){
         	 	if(($scope.selectedContentSubscription.entity.contentSubscription !== null) &&
         	 		($scope.selectedContentList[index].entity.contentSubscription !== null)){
         	    	 if ($scope.selectedContentList[index].entity.contentSubscription.name === item.name){
-        	    		// console.log($scope.selectedContentSubscription);
-        	    		 //console.log(index);
         	    		 return true;
         	    		}
         	    	 return false;
@@ -121,38 +110,24 @@ angular.module('emmiManager')
         };
         
         $scope.fetchLatestPrimaryContentList = function(){
-            console.log($scope.selectedContentList.length);
-            console.log($scope.selectedContentList);
-            console.log($scope.selectedContentSubscription);
         	if(($scope.selectedContentList.length === 1) &&
         	   ($scope.selectedContentList[0].entity.contentSubscription === null)){
-        		console.log(' not thing needs to do');
-        		//$scope.getClientContentList();
         		$scope.selectedContentSubscription.entity = $scope.selectedContentList[0].entity;
-        		console.log($scope.selectedContentSubscription);
-        		//$scope.selectedContentSubscription.entity.faithBased = $scope.selectedContentList[0].entity.faithBased;
         		$scope.selectedContentList = [];
          	   $scope.latestPrimaryContentList = [];
          	   $scope.isEmmiEngagePlus = false;
          	   angular.copy($scope.primaryContentList, $scope.latestPrimaryContentList);
-        		//angular.copy($scope.primaryContentList, $scope.latestPrimaryContentList);
-        		
         		$scope.initialAddAnotherContentSubscription = false;
-        		$scope.$broadcast('event:reset-add-another-content');
-        		
+        		$scope.$broadcast('event:reset-add-another-content')		
                 $scope.showSelectList  = true;
                 $scope.isEmmiEngagePlus = false;
-                console.log($scope.selectedContentSubscription);
-        		// $scope.selectedContentList.push($scope.selectedContentSubscription);
         	}
             else{
             	var checkEngagePlus = false;
 	    	    angular.forEach($scope.selectedContentList, function (aContent){
- 	    		  console.log(aContent);
  	    		  if(aContent.entity.contentSubscription !== null){
            			if(aContent.entity.contentSubscription.id === 128){
            				if(angular.isDefined($scope.selectedSourceContent.entity.id)){
-           					//angular.copy(sourceContent, $scope.selectedSourceContent);
                         	$scope.originalSourceContent = $scope.selectedSourceContent;
            					aContent.entity.contentSubscription.name = 'EmmiEngage+';
            					checkEngagePlus = true;
@@ -160,21 +135,16 @@ angular.module('emmiManager')
            			}
  	    		  }
        	   	    });
-	    	    console.log($scope.selectedSourceContent);
 	    	    $scope.isEmmiEngagePlus = checkEngagePlus;
         	}
- 	    	console.log($scope.latestPrimaryContentList);
-
         };
         
         /*
          * update latest primary content list
          */
         $scope.updateLatestPrimaryContentList = function(aContent){
-        	console.log(aContent);
         	$scope.latestPrimaryContentList = 
         		ContentSubscriptionConfigurationService.filterLatestPrimaryContentList($scope.latestPrimaryContentList, aContent, $scope.selectedContentList.length);
-           console.log($scope.latestPrimaryContentList);
         };
 
         /*
@@ -209,7 +179,6 @@ angular.module('emmiManager')
          };
          
          $scope.initialAddSubscription = function(){
-        	 console.log('im initila add');
            $scope.setInitialAddAnotherContentSubscription(false);
       	   $scope.resetShowSelectList(true);
       	   angular.forEach($scope.selectedContentList, function (newContentSubscription){
@@ -220,15 +189,11 @@ angular.module('emmiManager')
          
          $scope.checkIfEmmiEngagePlus = function(newContent){
         	 $scope.isEmmiEngagePlus = false;
-        	console.log(newContent);
-        	//console.log(index);
-        	console.log($scope.selectedContentList);
         	 if($scope.selectedContentList){
              	angular.forEach($scope.selectedContentList, function (aContent){
              		if(aContent.entity.contentSubscription !== null){
              			if(aContent.entity.contentSubscription.name === 'EmmiEngage+'){
              			  $scope.resetIsEmmiEngage(true);
-             			  console.log('emmiEnage++');
              			}
              		}
           	    });
@@ -237,7 +202,6 @@ angular.module('emmiManager')
         		 (angular.isDefined(newContent.entity.contentSubscription.name))){
         	    if(newContent.entity.contentSubscription.name === 'EmmiEngage+'){
     			  $scope.resetIsEmmiEngage(true);
-    			  console.log('emmiEnage++ new Contetn');
         	 }
   			}
          };

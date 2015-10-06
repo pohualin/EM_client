@@ -1,13 +1,24 @@
-<div data-ng-controller="ClientProgramContentConfigurationController">
 
+<div data-ng-controller="ClientProgramContentConfigurationController">
+<form name="contentSubscriptionForm" class="form" novalidate >
 <div class="row">
 		<div class="col-md-4">
          	 <label class="control-label" for="primaryContentList">CONTENT SUBSCRIPTION</label>
         </div>
         <div data-ng-if="!noneSelected">
-        <div class="col-md-4" >
+        <div class="form-group col-md-4" >
          	<div data-ng-if="isEmmiEngagePlus">
          	<label class="control-label" for="selectedSourceContentList">SOURCE</label>
+            </div>
+            <div class="error-circle fa-exclamation-circle" role="alert"
+                 data-ng-show="contentSubscriptionForm.sourceContentListHolder.$error.required && contentSubscriptionFormSubmitted"
+                 data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                 data-title="Required" aria-label="Required">
+                 </div>
+                 <div class="error-circle fa-exclamation-circle" role="alert"
+                 data-ng-show="contentSubscriptionForm.selectedSourceContentList.$error.required && contentSubscriptionFormSubmitted"
+                 data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                 data-title="Required" aria-label="Required">
             </div>
         </div>
         </div>
@@ -20,18 +31,16 @@
 
 <div data-ng-if="!loading" >
 <div class="row" data-ng-if="latestPrimaryContentList.length > 0 && !initialAddAnotherContentSubscription">
-           
+       <div class="form-group">    
            <div class="col-md-4">
-           <div data-ng-if="showSelectList">
-              <div class="form-group">
+           <div data-ng-if="showSelectList">       
                 <select class="form-control" id="latestPrimaryContentList" name="latestPrimaryContentList" class="form-control"
                     data-ng-options="latestPrimaryContentList.name for latestPrimaryContentList in latestPrimaryContentList track by latestPrimaryContentList.name"
                     data-ng-model="contentSubscriptionHolder.entity.contentSubscription"
                     data-ng-change="onChangePrimaryList(contentSubscriptionHolder)"
                     data-chosen data-disable-search="true" data-placeholder="Select...">   
                 <option value="" title="latestPrimaryContentList">Select...</option>
-                </select>
-             </div>
+                </select>            
            </div>
            </div>
            
@@ -42,12 +51,13 @@
 		   </div>
 
            <div data-ng-if="!noneSelected">
-           		<div class="col-md-4" >
+           		<div  class="col-md-4" >
            			<div data-ng-if="contentSubscriptionHolder.entity.contentSubscription.name=='EmmiEngage+'">
-                		<select id="sourceContentList" name="sourceContentList" class="form-control"
+                		<select class="form-control" id="sourceContentListHolder" name="sourceContentListHolder" 
                     	data-ng-options="sourceContentList.name for sourceContentList in sourceContentList track by sourceContentList.id"
                     	data-ng-model="sourceContentHolder.entity.contentSubscription"
                     	data-ng-change="onChangeSourceContent(sourceContentHolder)"
+                    	required
                     	data-chosen data-disable-search="true" data-placeholder="Select...">
                 		<option value="" title="sourceContentList">Select...</option>
                 		</select>
@@ -64,6 +74,7 @@
     				</div>
            		</div>
           </div>
+    </div>      
           
 </div>
 </div>
@@ -102,7 +113,7 @@
                         <span class="pull-right">
                             <button class="btn btn-success" type="submit"
                                     data-ng-disabled="whenSaving"
-                                    data-ng-click="save(contentSubscriptionForm.$valid)">Save
+                                    data-ng-click="save(contentSubscriptionForm)">Save
                             </button>
                         </span>
                         <span class="pull-right">
@@ -114,6 +125,7 @@
          </div>
  </div>
 </div>
+</form>
 </div>
-    
+
 
