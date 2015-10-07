@@ -122,9 +122,10 @@ angular.module('emmiManager')
                	 if(newContentSubscription.entity.contentSubscription !== null){
              	   if(newContentSubscription.entity.contentSubscription.name !== 'None'){
              		  angular.forEach(newLatestContentList, function (aContent, index){
-             			 if(aContent.id === 0){
-            				 newLatestContentList.splice(index,1);
+             			   if(aContent.id === 0){
+             				newLatestContentList.splice(index,1);
                 		   }
+   			 
             		   });
              	   }
              	   if(newContentSubscription.entity.contentSubscription.id === 128){
@@ -140,7 +141,7 @@ angular.module('emmiManager')
             			   (selectedContentLength > 1)){
              		  angular.forEach(newLatestContentList, function (aContent, index){
             			   if(aContent.id === 128){
-            				  newLatestContentList.splice(index,1);
+            				  newLatestContentList.splice(index,1);  
                 			   
                 		   }
             			   if(angular.equals(aContent.id, newContentSubscription.entity.contentSubscription.id)){
@@ -150,15 +151,16 @@ angular.module('emmiManager')
                	   } 
              	   else if((newContentSubscription.entity.contentSubscription.id !== 124) &&
                  		   (newContentSubscription.entity.contentSubscription.id !== 128)){
-             		   	   angular.forEach(newLatestContentList, function (aContent, index){
-             			   if(aContent.id === 128){
-                      		 newLatestContentList.splice(index,2);
-             			   }
-         		   			if(angular.equals(aContent.id, newContentSubscription.entity.contentSubscription.id)){
-         		   			  newLatestContentList.splice(index,1);
-         		   			}
-         		   		});  
-         	   
+             		   	  angular.forEach(newLatestContentList, function (aContent, index){
+             		   		 if(aContent.id === 128){
+             		   		    newLatestContentList.splice(index,2);
+             		   		 }
+             			  }); 
+             		   	  angular.forEach(newLatestContentList, function (aContent, index){
+               			     if(angular.equals(aContent.id, newContentSubscription.entity.contentSubscription.id)){
+               				    newLatestContentList.splice(index,1);
+               			     }
+               		   });   
          	       } 
              	   else{
              		   angular.forEach(newLatestContentList, function (aContent, index){

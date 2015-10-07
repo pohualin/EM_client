@@ -12,6 +12,7 @@ angular.module('emmiManager')
         $scope.primaryContentList = [];
         $scope.sourceContentList = [];
         $scope.latestPrimaryContentList = [];
+        
                         
         // Variables for the html to show or hide certain section
         $scope.faithBased = false;
@@ -20,6 +21,7 @@ angular.module('emmiManager')
         $scope.showSelectList = false;
         $scope.isEmmiEngagePlus = false;
         $scope.contentSubscriptionFormSubmitted = false;
+        $scope.dbEmmiEngagePlus = false;
         
         
         $scope.emmiEngagePlus = {};
@@ -72,6 +74,9 @@ angular.module('emmiManager')
            * Reset selectedSourceContent
            */
           $scope.resetSelectedContentSubscription  = function (sourceContent) {
+        	  console.log(sourceContent);
+        	  console.log($scope.selectedContentList);
+        	  console.log($scope.selectedContentSubscription);
            	 $scope.selectedContentSubscription  = sourceContent;
           };
           
@@ -80,12 +85,12 @@ angular.module('emmiManager')
           };
           
           $scope.filterAgain = function (index) {
-        	    return function (item) {
-           if($scope.selectedContentList.length > 0){
+        	return function (item) {
+        	if($scope.selectedContentList.length > 0){
         	 	if(($scope.selectedContentSubscription.entity.contentSubscription !== null) &&
         	 		($scope.selectedContentList[index].entity.contentSubscription !== null)){
         	    	 if ($scope.selectedContentList[index].entity.contentSubscription.name === item.name){
-        	    		 return true;
+        	    			 return true;
         	    		}
         	    	 return false;
         	   	}  	
@@ -115,26 +120,47 @@ angular.module('emmiManager')
         	 $scope.faithBased = newValue;
         };
         
-        $scope.fetchLatestPrimaryContentList = function(){
-        	if(($scope.selectedContentList.length === 1) &&
+        $scope.fetchLatestPrimaryContentList = function(contentHolder){
+        	console.log(contentHolder);
+          	if(($scope.selectedContentList.length === 1) &&
         	   ($scope.selectedContentList[0].entity.contentSubscription === null)){
-        		$scope.selectedContentSubscription.entity = $scope.selectedContentList[0].entity;
-        		$scope.resetList();
-        	
-         	    angular.copy($scope.primaryContentList, $scope.latestPrimaryContentList);
-        		$scope.initialAddAnotherContentSubscription = false;
-        		$scope.$broadcast('event:reset-add-another-content');		
-                $scope.showSelectList  = true;
+        		if((contentHolder.entity.contentSubscription === null)||
+        				(contentHolder.entity.contentSubscription === '')){
+        			$scope.resetList();
+        			angular.copy($scope.primaryContentList, $scope.latestPrimaryContentList);
+        			$scope.initialAddAnotherContentSubscription = false;
+        			$scope.showSelectList  = true;
+        		}
+        		else{
+        			if(contentHolder.entity.contentSubscription.name !== 'EmmiEngage+'){
+        				 $scope.isEmmiEngagePlus = false;
+        			}
+        			$scope.selectedContentList = [];
+              	    angular.copy($scope.primaryContentList, $scope.latestPrimaryContentList);
+        			$scope.$broadcast('event:reset-add-another-content-true');
+        			$scope.showSelectList  = true;
+        		}
            	}
-            else{
-            	var checkEngagePlus = false;
+        	else{
+        	   	var checkEngagePlus = false;
             	angular.forEach($scope.selectedContentList, function (aContent){
+            		console.log(aContent);
  	    		  if(aContent.entity.contentSubscription !== null){
-           			if(aContent.entity.contentSubscription.id === 128){
-           				if(angular.isDefined($scope.selectedSourceContent.entity.contentSubscription)){
-                        	checkEngagePlus = true;
-           				}
-           			}
+ 	    			 if(aContent.entity.contentSubscription.id === 128){ 
+ 	    				if(aContent.entity.contentSubscription.name === 'EmmiEngage+'){
+ 	    					console.log('here for engage '); 
+ 	    					if(angular.isDefined($scope.selectedSourceContent.entity.contentSubscription)){
+ 	    						console.log('insider hteret loggg');
+ 	    						 checkEngagePlus = true;
+ 	    					 }
+ 	    				}
+ 	    				else if(($scope.dbEmmiEngagePlus) &&
+ 	    						(aContent.entity.contentSubscription.name === 'EmmiEngage')){
+ 	    					console.log('herer plus');
+ 	    					 checkEngagePlus = true;
+ 	    					//$scope.selectedContentSubscription.entity.contentSubscription.name = 'EmmiEngage+';
+ 	    				 }
+ 	    			 }
  	    		  }
        	   	    });
 	    	    $scope.isEmmiEngagePlus = checkEngagePlus;
@@ -145,7 +171,7 @@ angular.module('emmiManager')
          * update latest primary content list
          */
         $scope.updateLatestPrimaryContentList = function(aContent){
-        	$scope.latestPrimaryContentList = 
+           	$scope.latestPrimaryContentList = 
         		ContentSubscriptionConfigurationService.filterLatestPrimaryContentList($scope.latestPrimaryContentList, aContent, $scope.selectedContentList.length);
         };
 
@@ -235,7 +261,9 @@ angular.module('emmiManager')
             	$scope.updateLatestPrimaryContentList(aContent);
      	    });
             $scope.isEmmiEngagePlus = emmiEngage;
-       };
+            $scope.dbEmmiEngagePlus = emmiEngage;
+            $scope.loading = false;
+      };
 
        $scope.getClientContentList = function(){
     	   $scope.resetList();
@@ -254,6 +282,7 @@ angular.module('emmiManager')
                      $scope.faithBased = false;
                      $scope.showSelectList  = true;
                      $scope.isEmmiEngagePlus = false;
+                     $scope.loading = false;
                }
             });
         };
@@ -265,12 +294,7 @@ angular.module('emmiManager')
        $scope.$on('startLoading', function () {
     	   $scope.loading = true;
        });
-       
-       $scope.$on('finishLoading', function () {
-    	   $scope.loading = false;
-       });
-       
- 
+     
         /**
          * init method called when page is loading
          */
