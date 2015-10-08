@@ -5,6 +5,7 @@
 	<div class="row" data-ng-show="contentSubscriptionForm.$invalid">
               <div class="col-md-12" id="message-container"></div>
     </div>
+<div data-ng-if="!loading" >
 <div class="row">
 		<div class="col-md-4">
          	 <label class="control-label" for="primaryContentList">CONTENT SUBSCRIPTION</label>
@@ -26,7 +27,7 @@
 	<div data-ng-include="'admin-facing/partials/configurations/program-content/add-content-subscription.html'"></div>
 </div>
 
-<div data-ng-if="!loading" >
+
 <div class="row" data-ng-if="latestPrimaryContentList.length > 0 && !initialAddAnotherContentSubscription">
          
            <div data-ng-if="showSelectList">  
@@ -65,7 +66,7 @@
            			</div>
            		</div>
            		<div class="col-md-4">
-           			<div data-ng-if="latestPrimaryContentList.length > 1 && addAnotherContentSubscription">
+           			<div data-ng-if="latestPrimaryContentList.length > 0 && addAnotherContentSubscription">
            			<span class="enumerate-value"><em>
            			<button  type="button" class="btn btn-link btn-link-nopad btn-heading" data-ng-click="addAnotherSubscription(contentSubscriptionHolder, sourceContentHolder)">
         				<i class="icon-plus"></i> ADD ANOTHER SUBSCRIPTION
@@ -77,7 +78,7 @@
          
     </div>      
           
-</div>
+
 </div>
 
 <div data-ng-if="!noneSelected">
@@ -125,6 +126,7 @@
                 </div>
          </div>
  </div>
+</div>
 </div>
 </form>
 
