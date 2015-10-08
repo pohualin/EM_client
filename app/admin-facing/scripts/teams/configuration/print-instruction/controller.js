@@ -5,24 +5,25 @@ angular.module('emmiManager')
 /**
  * Controller to handle Team level print instructions configuration
  */
-.controller('TeamPrintInstructionConfigurationController', ['$scope', '$alert', 'TeamPrintInstructionConfigurationService',
-    function ($scope, $alert, TeamPrintInstructionConfigurationService) {
+.controller('TeamPrintInstructionConfigurationController', ['$scope', '$alert', 'TeamPrintInstructionConfigurationService', 'TeamEmailNotificationsAndPrintInstructionsControllerFactory',
+    function ($scope, $alert, TeamPrintInstructionConfigurationService, TeamEmailNotificationsAndPrintInstructionsControllerFactory) {
 
         /**
          * Save or update print instruction configuration
-         * Fire event to reset form
+         * Reset form
          */
         $scope.$on('event:save-or-update-print-instruction-configuration', function (event, args) {
             TeamPrintInstructionConfigurationService
-                .saveOrUpdate($scope.team, $scope.teamPrintInstructionConfiguration).then(function(response){
+                .saveOrUpdate(TeamEmailNotificationsAndPrintInstructionsControllerFactory.team, 
+                        $scope.teamPrintInstructionConfiguration).then(function(response){
                     $scope.initialCopy = response;
                     $scope.teamPrintInstructionConfiguration = angular.copy($scope.initialCopy);
                     
                     $alert({
-                        content: '<strong>' + $scope.team.entity.name + '</strong> has been updated successfully.'
+                        content: '<strong>' + TeamEmailNotificationsAndPrintInstructionsControllerFactory.team.entity.name + '</strong> has been updated successfully.'
                     });
                 }).finally(function () {
-                    $scope.resetFlags();
+                    TeamEmailNotificationsAndPrintInstructionsControllerFactory.reset();
                 });
         });
         
@@ -32,13 +33,25 @@ angular.module('emmiManager')
         $scope.$on('event:reset-print-instruction-configuration', function () {
             $scope.teamPrintInstructionConfiguration = angular.copy($scope.initialCopy);
         });
-    
+        
+        $scope.$watch(function () {
+            return TeamEmailNotificationsAndPrintInstructionsControllerFactory.formSubmitted;
+        }, function (newVal) {
+            $scope.formSubmitted = newVal;
+        });
+        
+        $scope.$watch(function () {
+            return TeamEmailNotificationsAndPrintInstructionsControllerFactory.whenSaving;
+        }, function (newVal) {
+            $scope.whenSaving = newVal;
+        });
+        
         function init() {
-            TeamPrintInstructionConfigurationService.getTeamPrintInstructionConfiguration($scope.team).then(function(response){
+            TeamPrintInstructionConfigurationService.getTeamPrintInstructionConfiguration(TeamEmailNotificationsAndPrintInstructionsControllerFactory.team).then(function(response){
                 $scope.initialCopy = response;
                 $scope.teamPrintInstructionConfiguration = angular.copy($scope.initialCopy);
             });
         }
-
+        
         init();
 }]);

@@ -5,8 +5,8 @@ angular.module('emmiManager')
 /**
  * Controller to handle Team level email notifications configuration
  */
-    .controller('ClientTeamEmailConfigurationCtrl', ['$scope', 'ClientTeamEmailConfigurationService',
-        function ($scope, ClientTeamEmailConfigurationService) {
+    .controller('ClientTeamEmailConfigurationCtrl', ['$scope', 'ClientTeamEmailConfigurationService', 'TeamEmailNotificationsAndPrintInstructionsControllerFactory',
+        function ($scope, ClientTeamEmailConfigurationService, TeamEmailNotificationsAndPrintInstructionsControllerFactory) {
 
             /**
              * Save or update email notification configuration.
@@ -14,7 +14,8 @@ angular.module('emmiManager')
              */
             $scope.$on('event:save-or-update-email-notification-configration', function () {
                 ClientTeamEmailConfigurationService
-                    .saveOrUpdateTeamEmailConfiguration($scope.team, $scope.emailConfigs).then(function (response) {
+                    .saveOrUpdateTeamEmailConfiguration(TeamEmailNotificationsAndPrintInstructionsControllerFactory.team, 
+                            $scope.emailConfigs).then(function (response) {
                         $scope.originalEmailConfigs = response;
                         $scope.emailConfigs = angular.copy($scope.originalEmailConfigs);
                         $scope.$broadcast('event:save-or-update-print-instruction-configuration');
@@ -43,7 +44,11 @@ angular.module('emmiManager')
                     $scope.emailConfigs.entity.collectEmail = false;
                     $scope.emailConfigs.entity.requireEmail = false;
                 }
-                $scope.setShowButton();
+                TeamEmailNotificationsAndPrintInstructionsControllerFactory.showButton = true;
+            };
+            
+            $scope.setShowButton = function () {
+                TeamEmailNotificationsAndPrintInstructionsControllerFactory.showButton = true;
             };
 
             /**
@@ -68,12 +73,13 @@ angular.module('emmiManager')
                     { id: 'dontCollectEmail', displayText: 'Don\'t collect email', rank: 2 }
                 ];
                 $scope.emailOptions.selected = $scope.emailOptions[0];
-   
-                ClientTeamEmailConfigurationService.getTeamEmailConfiguration($scope.team).then(function (response) {
-                    $scope.originalEmailConfigs = response;
-                    $scope.emailConfigs = angular.copy($scope.originalEmailConfigs);
-                    $scope.setEmailOption();
-                });
+                
+                ClientTeamEmailConfigurationService.getTeamEmailConfiguration(TeamEmailNotificationsAndPrintInstructionsControllerFactory.team)
+                    .then(function (response) {
+                        $scope.originalEmailConfigs = response;
+                        $scope.emailConfigs = angular.copy($scope.originalEmailConfigs);
+                        $scope.setEmailOption();
+                    });
             }
             
             init();
