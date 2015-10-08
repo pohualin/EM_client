@@ -160,9 +160,11 @@
                         };
 
                         $scope.cancel = function () {
+                            $scope.$parent.largeModal = false;
                             $scope.onCancel();
                         };
                         $scope.continue = function () {
+                            $scope.$parent.largeModal = true;
                             $scope.continuePressed = true;
                         };
 

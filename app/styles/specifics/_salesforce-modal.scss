@@ -1,0 +1,30 @@
+.modal.salesforce {
+    fieldset {
+        margin-top: 15px;
+    }
+    legend {
+        border-bottom: none;
+        border-top: 1px solid #ddd;
+        margin: 0;
+        padding: 30px 0;
+        color: $headings-color;
+        font-size: 18px;
+    }
+    .form-group {
+        margin-bottom: 15px !important;
+        &.form-BOOLEAN {
+            height: 72px;
+            line-height: 92px;
+        }
+    }
+    .account-and-type {
+        label {
+            font-size: 10px;
+            font-weight: bold;
+            color: #bbb;
+        }
+        p {
+            font-size: 16px;
+        }
+    }
+}

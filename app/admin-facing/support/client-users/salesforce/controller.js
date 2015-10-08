@@ -42,6 +42,8 @@
                     salesforceCaseModal.$promise.then(salesforceCaseModal.show);
                     _paq.push(['trackEvent', 'Form Action', 'Client User Salesforce', 'Start']);
                 };
+
+                $scope.largeModal = false;
             }])
     ;
 })(window.angular);
