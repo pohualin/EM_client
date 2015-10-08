@@ -7,7 +7,8 @@
 </dl>
 <div class="well">
     <h3>Patient Program Access</h3>
-    <p>Be sure to let {{patient.firstName}} know to expect these programs!</p>
+    <p ng-if="patient.phone || patient.email">Be sure to let {{patient.firstName}} know to expect these programs!</p>
+    <p ng-if="!patient.phone && !patient.email">Be sure to give {{patient.firstName}} the instructions below!</p>
     <div class="inset">
         <p><strong>1</strong> Go to <a href="http://StartEmmi.com" target="_blank">StartEmmi.com <i class='icon-forward'></i></a></p>
         <p><strong>2</strong> Enter access code <span class="access-code">{{scheduledPrograms[0].entity.accessCode}}</span></p>
@@ -15,5 +16,5 @@
     </div>
 </div>
     <h4>Instructions and articles can be printed in English or Spanish</h4>
-    <div class="row" data-ng-include="'client-facing/schedule/instructions/print_buttons.html'" />    
+    <div class="row" data-ng-include="'client-facing/schedule/instructions/print_buttons.html'" />
 </div>

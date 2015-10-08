@@ -43,7 +43,7 @@ angular.module('emmiManager')
         .when('/clients/:clientId/teams/:teamId/configuration/phone_reminders', {
             templateUrl: 'admin-facing/partials/team/configuration/phone/main.html',
             controller: 'ClientTeamPhoneConfigurationCtrl',
-            title: 'Team Configurations - Phone Reminders | ClientManager',
+            title: 'Team Configurations - IVR Notifications Setup | ClientManager',
             activeMenu: MENU.setup,
             access: {
                 authorizedRoles: USER_ROLES.all
