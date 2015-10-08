@@ -1,3 +1,4 @@
+/* global $ */
 (function (angular) {
     'use strict';
 
@@ -157,6 +158,10 @@
                                 duration: false,
                                 dismissable: false
                             });
+                            // Scroll to the top of the modal...
+                            $('.modal').animate({
+                                scrollTop: 0
+                            }, 1000);
                         };
 
                         $scope.cancel = function () {
