@@ -28,8 +28,8 @@ angular.module('emmiManager')
         // Routes
         $routeProvider
         .when('/clients/:clientId/teams/:teamId/configuration/email_reminders', {
-           	templateUrl: 'admin-facing/partials/team/configuration/email/main.html',
-            controller: 'ClientTeamEmailConfigurationCtrl',
+           	templateUrl: 'admin-facing/partials/team/configuration/email-and-print/main.html',
+            controller: 'TeamEmailNotificationsAndPrintInstructionsController',
             title: 'Team Configurations - Email Notifications & Print Instructions | ClientManager',
             activeMenu: MENU.setup,
             access: {
