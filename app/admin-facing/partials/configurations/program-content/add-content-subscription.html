@@ -6,7 +6,7 @@
                	<select id="primaryContentList" name="primaryContentList" class="form-control"
                    	data-ng-options="primaryContent.name for primaryContent in primaryContentList | filter:filterAgain($index) track by primaryContent.name"
                    	data-ng-model="selectedContentSubscription.entity.contentSubscription"
-                   	data-ng-change="onChangeSelectedPrimaryList(selectedContentSubscription, primaryContentList)"
+                   	data-ng-change="onChangeSelectedPrimaryList(selectedContentSubscription)"
                     data-chosen data-disable-search="true" data-placeholder="Select...">
                       	<option  value="" title="primaryContentList">Select...</option>
                	</select>

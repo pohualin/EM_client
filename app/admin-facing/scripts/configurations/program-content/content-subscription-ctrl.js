@@ -67,7 +67,7 @@ angular.module('emmiManager')
               }
            }
           
-            angular.forEach($scope.selectedContentList, function (aContent){
+           angular.forEach($scope.selectedContentList, function (aContent){
              if(aContent.entity.contentSubscription !== null){
                if((aContent.entity.contentSubscription.id === 128) &&
             	   (aContent.entity.contentSubscription.name === 'EmmiEngage+')){
@@ -125,7 +125,7 @@ angular.module('emmiManager')
        });
        
        $scope.onChangePrimaryList = function(newSubscriptionHolder){
-    	   console.log('you are hererere for primary');
+    	   
     	     if((angular.isDefined($scope.contentSubscriptionHolder.entity.contentSubscription)) &&
                   ($scope.contentSubscriptionHolder.entity.contentSubscription !== null)){
                 	if($scope.contentSubscriptionHolder.entity.contentSubscription.name === 'None'){
@@ -168,28 +168,17 @@ angular.module('emmiManager')
         	   $scope.resetSelectedSourceContent(newSourceContentHolder);
                $scope.showButtons(true);
          };
-         $scope.onChangeSelectedPrimaryList = function(newSourceSubscriptionHolder, list){ 
-        	 console.log($scope.contentSubscriptionHolder);
-        	 console.log(list);
-        	 console.log(newSourceSubscriptionHolder);
-        	 console.log('change selected primary');
+         $scope.onChangeSelectedPrimaryList = function(newSourceSubscriptionHolder){ 
         	   $scope.resetFaithBased(true);
-        	   $scope.resetSelectedContentSubscription(newSourceSubscriptionHolder);
         	   $scope.showButtons(true);
-        	   $scope.fetchLatestPrimaryContentList($scope.contentSubscriptionHolder);
-               if(!$scope.isEmmiEngagePlus){
-            	   $scope.checkIfEmmiEngagePlus($scope.contentSubscriptionHolder);
-               }
-        };
+        	   $scope.fetchLatestPrimaryContentList(newSourceSubscriptionHolder, $scope.contentSubscriptionHolder);
+         };
                    
        /* 
         * Added another content subscription for a client
         * push the new content subscription to the selectedContentList
         */
        $scope.addAnotherSubscription = function(newContentSubscription, newSourceContent){
-    	   console.log('add neew contet');
-    	   console.log(newContentSubscription);
-    	  
     	   $scope.setInitialAddAnotherContentSubscription(false);
     	   $scope.resetShowSelectList(true);
     	   $scope.addAnotherContentSubscription = false;
@@ -199,16 +188,12 @@ angular.module('emmiManager')
     		     $scope.sourceContentHolder = newSourceContent;
     		     $scope.resetSelectedSourceContent(newSourceContent);
     	   }
-    	   console.log( $scope.latestPrimaryContentList);
     	   $scope.selectedContentList.push(newContentSubscription);
     	   if($scope.selectedContentList.length < 2){
     		   $scope.resetSelectedContentSubscription(newContentSubscription);
     	   }
-    	   console.log($scope.selectedContentList);
     	   $scope.updateLatestPrimaryContentList(newContentSubscription);
     	   $scope.checkIfEmmiEngagePlus(newContentSubscription);
-    	   
-    	   console.log($scope.latestPrimaryContentList);
     	   $scope.contentSubscriptionHolder = ContentSubscriptionConfigurationService.createContentSubscriptionConfiguration();
        };
 
