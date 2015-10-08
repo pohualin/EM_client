@@ -1,13 +1,13 @@
 (function (angular) {
-    'use strict';
+'use strict';
 
 angular.module('emmiManager')
 
 /**
  * Parent Controller to manage Team level email notifications controller and print instructions configuration controller
  */
-.controller('TeamEmailNotificationsAndPrintInstructionsController', ['$scope', '$alert', 'teamResource',
-    function ($scope, $alert, teamResource) {
+.controller('TeamEmailNotificationsAndPrintInstructionsController', ['$scope', '$alert', 'teamResource', 'TeamEmailNotificationsAndPrintInstructionsControllerFactory',
+    function ($scope, $alert, teamResource, TeamEmailNotificationsAndPrintInstructionsControllerFactory) {
     
         /**
          * When the save button is clicked. Sends all updates
@@ -15,9 +15,9 @@ angular.module('emmiManager')
          * results
          */
         $scope.save = function (form) {
-            $scope.formSubmitted = true;
+            TeamEmailNotificationsAndPrintInstructionsControllerFactory.formSubmitted = true;
             if (form.$valid) {
-                $scope.whenSaving = true;
+                TeamEmailNotificationsAndPrintInstructionsControllerFactory.whenSaving = true;
                 $scope.$broadcast('event:save-or-update-email-notification-configration', form);
             }
         };
@@ -29,18 +29,14 @@ angular.module('emmiManager')
         $scope.cancel = function (form) {
             $scope.$broadcast('event:reset-email-notification-configuration');
             $scope.$broadcast('event:reset-print-instruction-configuration');
-            $scope.resetFlags();
+            TeamEmailNotificationsAndPrintInstructionsControllerFactory.reset();
         };
         
-        $scope.resetFlags = function () {
-            $scope.whenSaving = false;
-            $scope.formSubmitted = false;
-            $scope.showButton = false;
-        };
-        
-        $scope.setShowButton = function () {
-            $scope.showButton = true;
-        };
+        $scope.$watch(function () {
+                return TeamEmailNotificationsAndPrintInstructionsControllerFactory.showButton;
+            }, function(newVal) {
+                $scope.showButton = newVal;
+        });
         
         /**
          * init method called when page is loading
@@ -49,6 +45,8 @@ angular.module('emmiManager')
             $scope.showButton = false;
             $scope.client = teamResource.entity.client;
             $scope.team = teamResource;
+            TeamEmailNotificationsAndPrintInstructionsControllerFactory.reset();
+            TeamEmailNotificationsAndPrintInstructionsControllerFactory.team = teamResource;
         }
         
         init();
