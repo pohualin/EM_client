@@ -3,8 +3,7 @@
     <div id="case-form-messages-container" data-ng-show="caseForm.submitted && caseForm.$invalid"></div>
 
     <form name="caseForm" novalidate>
-        <fieldset data-ng-disabled="whenSaving">
-            <legend>New Case</legend>
+        <fieldset data-ng-disabled="whenSaving" data-ng-hide="continuePressed">
             <div class="form-group">
                 <label class="control-label" for="account">Account</label>
                 <select name="account" id="account" class="form-control"
@@ -33,206 +32,225 @@
                 </select>
             </div>
         </fieldset>
+        <div class="row account-and-type" data-ng-if="continuePressed">
+            <div class="col-xs-6">
+                <label>ACCOUNT</label>
+                <p>{{ account.name }}</p>
+            </div>
+            <div class="col-xs-6">
+                <label>RECORD TYPE OF NEW RECORD</label>
+                <p>{{ caseType.entity.name }}</p>
+            </div>
+        </div>
         <fieldset data-ng-repeat="(sectionIndex, section) in form.entity.sections"
                   data-ng-if="form.entity.sections && continuePressed"
                   data-ng-disabled="whenSaving">
             <legend>{{ section.name }}</legend>
-            <div class="form-group" data-ng-repeat="(fieldIndex, field) in section.fields"
-                 data-ng-class="{ 'has-error' : caseForm.{{field.name}}.$invalid  && caseForm.submitted }">
-                <div data-ng-switch="field.type">
-                    <div data-ng-switch-when="STRING">
-                        <label class="control-label" for="section{{sectionIndex}}_stringField{{fieldIndex}}">{{
-                            field.label }}</label>
+            <div class="row">
+                <div class="col-xs-4"
+                     data-ng-repeat="(fieldIndex, field) in section.fields"
+                     data-ng-class="{'col-xs-8': fieldIndex == 1 && $last }">
 
-                        <div class="error-circle fa-exclamation-circle" role="alert"
-                             data-ng-show="caseForm.{{field.name}}.$invalid && caseForm.submitted"
-                             data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                             data-title="Required" aria-label="Required"></div>
-                        <span data-ng-if="!field.required" class="field-note field-optional">optional</span>
-                        <input name="{{field.name}}" id="section{{sectionIndex}}_stringField{{fieldIndex}}"
-                               type="text"
-                               class="form-control" data-ng-model="field.value"
-                               data-ng-required="field.required"
-                               maxlength="{{field.maxLength ? field.maxLength : 255}}">
-                    </div>
-                    <div data-ng-switch-when="EMAIL">
-                        <label class="control-label" for="section{{sectionIndex}}_emailField{{fieldIndex}}">{{
-                            field.label }}</label>
-
-                        <div class="error-circle fa-exclamation-circle" role="alert"
-                             data-ng-show="caseForm.{{field.name}}.$error.required && caseForm.submitted"
-                             data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                             data-title="Required" aria-label="Required"></div>
-                        <div class="error-circle fa-exclamation-circle" role="alert"
-                             data-ng-show="caseForm.{{field.name}}.$error.email && caseForm.submitted"
-                             data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                             data-title="Please enter a valid email" aria-label="Please enter a valid email"></div>
-                        <span data-ng-if="!field.required" class="field-note field-optional">optional</span>
-                        <input name="{{field.name}}" id="section{{sectionIndex}}_emailField{{fieldIndex}}"
-                               type="email"
-                               class="form-control" data-ng-model="field.value"
-                               data-ng-required="field.required">
-                    </div>
-                    <div data-ng-switch-when="PHONE">
-                        <label class="control-label" for="section{{sectionIndex}}_phoneField{{fieldIndex}}">{{
-                            field.label }}</label>
-
-                        <div class="error-circle fa-exclamation-circle" role="alert"
-                             data-ng-show="caseForm.{{field.name}}.$error.required && caseForm.submitted"
-                             data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                             data-title="Required" aria-label="Required"></div>
-                        <div class="error-circle fa-exclamation-circle" role="alert"
-                             data-ng-show="caseForm.{{field.name}}.$error.pattern && caseForm.submitted"
-                             data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                             data-title="Please enter a valid phone number"
-                             aria-label="Please enter a valid phone number"></div>
-                        <span data-ng-if="!field.required" class="field-note field-optional">optional</span>
-
-                        <div class="has-input-icon has-input-icon-telephone">
-                            <input class="form-control" data-ng-model="field.value" name="{{field.name}}"
-                                   id="section{{sectionIndex}}_phoneField{{fieldIndex}}" type="tel"
-                                   data-ng-required="field.required" maxlength="12"
-                                   data-input-mask="999-999-9999" placeholder="XXX-XXX-XXXX"
-                                   data-ng-pattern="/[2-9][0-9][0-9]-[2-9][0-9][0-9]-[0-9][0-9][0-9][0-9]/"
-                                   data-input-icon>
-                            <span class="input-icon"><i class="icon-telephone"></i></span>
-                        </div>
-                    </div>
-                    <div data-ng-switch-when="DATE">
-                        <label class="control-label" for="section{{sectionIndex}}_dateField{{fieldIndex}}">{{
-                            field.label }}</label>
-
-                        <div class="error-circle fa-exclamation-circle" role="alert"
-                             data-ng-show="caseForm.{{field.name}}.$error.required && caseForm.submitted"
-                             data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                             data-title="Required" aria-label="Required"></div>
-                        <div class="error-circle fa-exclamation-circle" role="alert"
-                             data-ng-show="caseForm.{{field.name}}.$error.date &&
-                                  !metadataForm.clientContractStart.$error.max && caseForm.submitted"
-                             data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                             data-title="Dates must be in the format MM/DD/YYYY"
-                             aria-label="Dates must be in the format MM/DD/YYYY"></div>
-                        <span data-ng-if="!field.required" class="field-note field-optional">optional</span>
-
-                        <div class="has-input-icon has-input-icon-calendar">
-                            <input class="form-control" id="section{{sectionIndex}}_dateField{{fieldIndex}}"
-                                   placeholder="MM/DD/YYYY" type="text" name="{{field.name}}"
-                                   data-ng-model="field.value" data-autoclose="true" data-date-format="MM/dd/yyyy"
-                                   data-dateType="string" data-bs-datepicker data-ng-required="field.required"
-                                   data-input-icon>
-                            <span class="input-icon"><i class="icon-calendar"></i></span>
-                        </div>
-                    </div>
-                    <div data-ng-switch-when="TEXTAREA">
-                        <label class="control-label" for="section{{sectionIndex}}_textArea{{fieldIndex}}">{{
-                            field.label }}</label>
-
-                        <div class="error-circle fa-exclamation-circle" role="alert"
-                             data-ng-show="caseForm.{{field.name}}.$invalid && caseForm.submitted"
-                             data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                             data-title="Required" aria-label="Required"></div>
-                        <span data-ng-if="!field.required" class="field-note field-optional">optional</span>
-                        <textarea name="{{field.name}}" id="section{{sectionIndex}}_textArea{{fieldIndex}}"
-                                  class="form-control" rows="3" data-ng-model="field.value"
-                                  data-ng-required="field.required"></textarea>
-                    </div>
-                    <div data-ng-switch-when="BOOLEAN" class="checkbox">
-                        <input name="{{field.name}}" type="checkbox"
-                               id="section{{sectionIndex}}_salesforceCaseCb{{fieldIndex}}"
-                               data-ng-model="field.value">
-                        <label for="section{{sectionIndex}}_salesforceCaseCb{{fieldIndex}}">{{ field.label
-                            }}</label>
-                    </div>
-                    <div data-ng-switch-when="PICK_LIST">
-                        <label class="control-label" for="section{{sectionIndex}}_pickList{{fieldIndex}}">{{
-                            field.label }}</label>
-
-                        <div class="error-circle fa-exclamation-circle" role="alert"
-                             data-ng-show="caseForm.{{field.name}}.$invalid && caseForm.submitted"
-                             data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                             data-title="Required" aria-label="Required"></div>
-                        <span data-ng-if="!field.required" class="field-note field-optional">optional</span>
-                        <select name="{{field.name}}"
-                                id="section{{sectionIndex}}_pickList{{fieldIndex}}" class="form-control"
-                                data-ng-model="field.value"
-                                data-ng-options="option.value for option in field.options track by option.value"
-                                data-ng-required="field.required"
-                                data-pick-list-value
-                                data-ng-disabled="whenSaving"
-                                data-ng-change="onChange(field)"
-                                data-chosen data-disable-search="true" data-placeholder="Select...">
-                            <option value=""></option>
-                        </select>
-
-                        <div data-ng-if="field.chainedField">
-                            <div class="form-group form-group-nested"
-                                 data-ng-repeat="(nestedIndex, nestedField) in field.value.requiredWhenChosen"
-                                 data-ng-class="{ 'has-error' : caseForm.{{nestedField.name}}.$invalid  && caseForm.submitted }">
-                                <label class="control-label"
-                                       for="section{{sectionIndex}}_{{fieldIndex}}_pickList{{nestedIndex}}">{{
-                                    nestedField.label }}</label>
+                    <div class="form-group form-{{ field.type }}"
+                         data-ng-class="{ 'has-error' : caseForm.{{field.name}}.$invalid  && caseForm.submitted }"
+                         data-ng-if="field.name != 'AccountId'">
+                        <div data-ng-switch="field.type">
+                            <div data-ng-switch-when="STRING">
+                                <label class="control-label" for="section{{sectionIndex}}_stringField{{fieldIndex}}">{{
+                                    field.label }}</label>
 
                                 <div class="error-circle fa-exclamation-circle" role="alert"
-                                     data-ng-show="caseForm.{{nestedField.name}}.$invalid && caseForm.submitted"
+                                     data-ng-show="caseForm.{{field.name}}.$invalid && caseForm.submitted"
                                      data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                                      data-title="Required" aria-label="Required"></div>
-                                <select name="{{nestedField.name}}"
-                                        id="section{{sectionIndex}}_{{fieldIndex}}_pickList{{nestedIndex}}"
-                                        class="form-control"
-                                        data-ng-model="nestedField.value"
-                                        data-ng-disabled="whenSaving"
-                                        data-ng-options="option2.value for option2 in nestedField.options track by option2.value"
-                                        data-ng-required="nestedField.required"
+                                <span data-ng-if="!field.required" class="field-note field-optional">optional</span>
+                                <input name="{{field.name}}" id="section{{sectionIndex}}_stringField{{fieldIndex}}"
+                                       type="text"
+                                       class="form-control" data-ng-model="field.value"
+                                       data-ng-required="field.required"
+                                       maxlength="{{field.maxLength ? field.maxLength : 255}}">
+                            </div>
+                            <div data-ng-switch-when="EMAIL">
+                                <label class="control-label" for="section{{sectionIndex}}_emailField{{fieldIndex}}">{{
+                                    field.label }}</label>
+
+                                <div class="error-circle fa-exclamation-circle" role="alert"
+                                     data-ng-show="caseForm.{{field.name}}.$error.required && caseForm.submitted"
+                                     data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                                     data-title="Required" aria-label="Required"></div>
+                                <div class="error-circle fa-exclamation-circle" role="alert"
+                                     data-ng-show="caseForm.{{field.name}}.$error.email && caseForm.submitted"
+                                     data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                                     data-title="Please enter a valid email" aria-label="Please enter a valid email"></div>
+                                <span data-ng-if="!field.required" class="field-note field-optional">optional</span>
+                                <input name="{{field.name}}" id="section{{sectionIndex}}_emailField{{fieldIndex}}"
+                                       type="email"
+                                       class="form-control" data-ng-model="field.value"
+                                       data-ng-required="field.required">
+                            </div>
+                            <div data-ng-switch-when="PHONE">
+                                <label class="control-label" for="section{{sectionIndex}}_phoneField{{fieldIndex}}">{{
+                                    field.label }}</label>
+
+                                <div class="error-circle fa-exclamation-circle" role="alert"
+                                     data-ng-show="caseForm.{{field.name}}.$error.required && caseForm.submitted"
+                                     data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                                     data-title="Required" aria-label="Required"></div>
+                                <div class="error-circle fa-exclamation-circle" role="alert"
+                                     data-ng-show="caseForm.{{field.name}}.$error.pattern && caseForm.submitted"
+                                     data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                                     data-title="Please enter a valid phone number"
+                                     aria-label="Please enter a valid phone number"></div>
+                                <span data-ng-if="!field.required" class="field-note field-optional">optional</span>
+
+                                <div class="has-input-icon has-input-icon-telephone">
+                                    <input class="form-control" data-ng-model="field.value" name="{{field.name}}"
+                                           id="section{{sectionIndex}}_phoneField{{fieldIndex}}" type="tel"
+                                           data-ng-required="field.required" maxlength="12"
+                                           data-input-mask="999-999-9999" placeholder="XXX-XXX-XXXX"
+                                           data-ng-pattern="/[2-9][0-9][0-9]-[2-9][0-9][0-9]-[0-9][0-9][0-9][0-9]/"
+                                           data-input-icon>
+                                    <span class="input-icon"><i class="icon-telephone"></i></span>
+                                </div>
+                            </div>
+                            <div data-ng-switch-when="DATE">
+                                <label class="control-label" for="section{{sectionIndex}}_dateField{{fieldIndex}}">{{
+                                    field.label }}</label>
+
+                                <div class="error-circle fa-exclamation-circle" role="alert"
+                                     data-ng-show="caseForm.{{field.name}}.$error.required && caseForm.submitted"
+                                     data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                                     data-title="Required" aria-label="Required"></div>
+                                <div class="error-circle fa-exclamation-circle" role="alert"
+                                     data-ng-show="caseForm.{{field.name}}.$error.date &&
+                                          !metadataForm.clientContractStart.$error.max && caseForm.submitted"
+                                     data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                                     data-title="Dates must be in the format MM/DD/YYYY"
+                                     aria-label="Dates must be in the format MM/DD/YYYY"></div>
+                                <span data-ng-if="!field.required" class="field-note field-optional">optional</span>
+
+                                <div class="has-input-icon has-input-icon-calendar">
+                                    <input class="form-control" id="section{{sectionIndex}}_dateField{{fieldIndex}}"
+                                           placeholder="MM/DD/YYYY" type="text" name="{{field.name}}"
+                                           data-ng-model="field.value" data-autoclose="true" data-date-format="MM/dd/yyyy"
+                                           data-dateType="string" data-bs-datepicker data-ng-required="field.required"
+                                           data-input-icon>
+                                    <span class="input-icon"><i class="icon-calendar"></i></span>
+                                </div>
+                            </div>
+                            <div data-ng-switch-when="TEXTAREA">
+                                <label class="control-label" for="section{{sectionIndex}}_textArea{{fieldIndex}}">{{
+                                    field.label }}</label>
+
+                                <div class="error-circle fa-exclamation-circle" role="alert"
+                                     data-ng-show="caseForm.{{field.name}}.$invalid && caseForm.submitted"
+                                     data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                                     data-title="Required" aria-label="Required"></div>
+                                <span data-ng-if="!field.required" class="field-note field-optional">optional</span>
+                                <textarea name="{{field.name}}" id="section{{sectionIndex}}_textArea{{fieldIndex}}"
+                                          class="form-control" rows="3" data-ng-model="field.value"
+                                          data-ng-required="field.required"></textarea>
+                            </div>
+                            <div data-ng-switch-when="BOOLEAN" class="checkbox">
+                                <input name="{{field.name}}" type="checkbox"
+                                       id="section{{sectionIndex}}_salesforceCaseCb{{fieldIndex}}"
+                                       data-ng-model="field.value">
+                                <label for="section{{sectionIndex}}_salesforceCaseCb{{fieldIndex}}">{{ field.label
+                                    }}</label>
+                            </div>
+                            <div data-ng-switch-when="PICK_LIST">
+                                <label class="control-label" for="section{{sectionIndex}}_pickList{{fieldIndex}}">{{
+                                    field.label }}</label>
+
+                                <div class="error-circle fa-exclamation-circle" role="alert"
+                                     data-ng-show="caseForm.{{field.name}}.$invalid && caseForm.submitted"
+                                     data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                                     data-title="Required" aria-label="Required"></div>
+                                <span data-ng-if="!field.required" class="field-note field-optional">optional</span>
+                                <select name="{{field.name}}"
+                                        id="section{{sectionIndex}}_pickList{{fieldIndex}}" class="form-control"
+                                        data-ng-model="field.value"
+                                        data-ng-options="option.value for option in field.options track by option.value"
+                                        data-ng-required="field.required"
                                         data-pick-list-value
-                                        data-chosen data-disable-search-threshold="10" data-placeholder="Select...">
+                                        data-ng-disabled="whenSaving"
+                                        data-ng-change="onChange(field)"
+                                        data-chosen data-disable-search="true" data-placeholder="Select...">
                                     <option value=""></option>
                                 </select>
+
+                                <div data-ng-if="field.chainedField">
+                                    <div class="form-group form-group-nested"
+                                         data-ng-repeat="(nestedIndex, nestedField) in field.value.requiredWhenChosen"
+                                         data-ng-class="{ 'has-error' : caseForm.{{nestedField.name}}.$invalid  && caseForm.submitted }">
+                                        <label class="control-label"
+                                               for="section{{sectionIndex}}_{{fieldIndex}}_pickList{{nestedIndex}}">{{
+                                            nestedField.label }}</label>
+
+                                        <div class="error-circle fa-exclamation-circle" role="alert"
+                                             data-ng-show="caseForm.{{nestedField.name}}.$invalid && caseForm.submitted"
+                                             data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                                             data-title="Required" aria-label="Required"></div>
+                                        <select name="{{nestedField.name}}"
+                                                id="section{{sectionIndex}}_{{fieldIndex}}_pickList{{nestedIndex}}"
+                                                class="form-control"
+                                                data-ng-model="nestedField.value"
+                                                data-ng-disabled="whenSaving"
+                                                data-ng-options="option2.value for option2 in nestedField.options track by option2.value"
+                                                data-ng-required="nestedField.required"
+                                                data-pick-list-value
+                                                data-chosen data-disable-search-threshold="10" data-placeholder="Select...">
+                                            <option value=""></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div data-ng-switch-when="REFERENCE" data-ng-if="field.name != 'AccountId'" class="has-feedback">
+                                <label class="control-label" for="{{field.name}}">{{
+                                    field.label }}</label>
+
+                                <div class="error-circle fa-exclamation-circle" role="alert"
+                                     data-ng-show="caseForm.{{field.name}}.$invalid && caseForm.submitted"
+                                     data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
+                                     data-title="Required" aria-label="Required"></div>
+                                <span data-ng-if="!field.required" class="field-note field-optional">optional</span>
+
+                                <div class="typeahead" data-emmi-typeahead data-tab-does-not-select-active
+                                     data-items="field.searchResults.content"
+                                     data-term="field.searchQuery" data-search="referenceSearch(term,field)"
+                                     data-select="referenceSelect(item,field)"
+                                     data-placeholder="Start typing to search..."
+                                     data-on-empty-callback="referenceSelect({},field)"
+                                     data-ng-required="field.required"
+                                     data-search-result-container="section{{sectionIndex}}_sfSearchResultsContainer{{fieldIndex}}"
+                                     data-id="{{field.name}}"
+                                     data-min-length="3">
+                                    <ul class="menu typeahead-menu dropdown-menu bottom-left container-fluid"
+                                         id="section{{sectionIndex}}_sfSearchResultsContainer{{fieldIndex}}"
+                                         role="listbox" aria-expanded="false">
+                                        <li role="option"
+                                            data-emmi-typeahead-item="refitem"
+                                            data-ng-repeat="refitem in field.searchResults.content"
+                                            class="results">
+                                            <div class="col-md-12">{{refitem.name}}</div>
+                                        </li>
+                                        <li data-ng-show="!field.searchResults.complete" class="footer">
+                                            <div class="col-md-12">Refine search for more results.</div>
+                                        </li>
+                                        <li data-ng-if="!field.searchResults.content.length" class="no-results" role="option">
+                                            <div class="col-md-12">No results found</div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div data-ng-switch-default>
+                                <p class="text-danger">Sorry this form field ({{field.type}}) is not supported.</p>
                             </div>
                         </div>
                     </div>
-                    <div data-ng-switch-when="REFERENCE" data-ng-if="field.name != 'AccountId'" class="has-feedback">
-                        <label class="control-label" for="{{field.name}}">{{
-                            field.label }}</label>
 
-                        <div class="error-circle fa-exclamation-circle" role="alert"
-                             data-ng-show="caseForm.{{field.name}}.$invalid && caseForm.submitted"
-                             data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
-                             data-title="Required" aria-label="Required"></div>
-                        <span data-ng-if="!field.required" class="field-note field-optional">optional</span>
-
-                        <div class="typeahead" data-emmi-typeahead data-tab-does-not-select-active
-                             data-items="field.searchResults.content"
-                             data-term="field.searchQuery" data-search="referenceSearch(term,field)"
-                             data-select="referenceSelect(item,field)"
-                             data-placeholder="Start typing to search..."
-                             data-on-empty-callback="referenceSelect({},field)"
-                             data-ng-required="field.required"
-                             data-search-result-container="section{{sectionIndex}}_sfSearchResultsContainer{{fieldIndex}}"
-                             data-id="{{field.name}}"
-                             data-min-length="3">
-                            <ul class="menu typeahead-menu dropdown-menu bottom-left container-fluid"
-                                 id="section{{sectionIndex}}_sfSearchResultsContainer{{fieldIndex}}"
-                                 role="listbox" aria-expanded="false">
-                                <li role="option"
-                                    data-emmi-typeahead-item="refitem"
-                                    data-ng-repeat="refitem in field.searchResults.content"
-                                    class="results">
-                                    <div class="col-md-12">{{refitem.name}}</div>
-                                </li>
-                                <li data-ng-show="!field.searchResults.complete" class="footer">
-                                    <div class="col-md-12">Refine search for more results.</div>
-                                </li>
-                                <li data-ng-if="!field.searchResults.content.length" class="no-results" role="option">
-                                    <div class="col-md-12">No results found</div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div data-ng-switch-default>
-                        <p class="text-danger">Sorry this form field ({{field.type}}) is not supported.</p>
-                    </div>
-                </div>
-            </div>
+                </div> <!-- .col-sm-4 -->
+            </div> <!-- .row -->
 
         </fieldset>
 
