@@ -197,13 +197,17 @@ angular.module('emmiManager')
             /**
              * Check and see if any selectable roles has been checked
              */
-            $scope.disableLibraries = function () {
-                $scope.libraries.disabled = true;
+            $scope.toggleAddButton = function () {
+                $scope.disableLibraries();
                 $scope.libraries.forEach(function (library) {
                    if (library.disabled === false && library.checked === true){
                        $scope.libraries.disabled = false;
                    }
                 });
+            };
+            
+            $scope.disableLibraries = function () {
+                $scope.libraries.disabled = true;
             };
 
             /**
@@ -302,7 +306,6 @@ angular.module('emmiManager')
 
             // start by loading the currently saved roles
             $scope.loadExisting();
-            $scope.disableLibraries();
         }
     ])
 ;

@@ -1,3 +1,4 @@
+/* global $ */
 (function (angular) {
     'use strict';
 
@@ -86,7 +87,8 @@
                         defaultCaseDescription: '=',
                         defaultUserId: '=',
                         defaultWebName: '=',
-                        defaultEmail: '='
+                        defaultEmail: '=',
+                        toggleModalSize: '='
                     },
                     controller: function ($scope) {
 
@@ -157,12 +159,18 @@
                                 duration: false,
                                 dismissable: false
                             });
+                            // Scroll to the top of the modal...
+                            $('.modal').animate({
+                                scrollTop: 0
+                            }, 1000);
                         };
 
                         $scope.cancel = function () {
+                            $scope.toggleModalSize();
                             $scope.onCancel();
                         };
                         $scope.continue = function () {
+                            $scope.toggleModalSize();
                             $scope.continuePressed = true;
                         };
 
