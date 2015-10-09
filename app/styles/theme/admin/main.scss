@@ -5,34 +5,36 @@ $icon-font-path: "../../../bower_components/bootstrap-sass/assets/fonts/bootstra
 /*!
 ========== INIT
 */
-@import 'vendor/_normalize';
-@import 'components/ui-font/_ui-font-solid'; // Icons should be declared early on
-@import 'components/fontawesome/_fontawesome-custom'; // Icons should be declared early on
-@import 'theme/admin/_bootstrap-variables';
-@import 'vendor/_bootstrap-custom';
-@import 'vendor/_angular-strap';
+@import '../../vendor/normalize';
+@import '../../components/ui-font/_ui-font-solid';
+// Icons should be declared early on
+@import '../../components/fontawesome/_fontawesome-custom';
+// Icons should be declared early on
+@import '../../theme/admin/_bootstrap-variables';
+@import '../../vendor/_bootstrap-custom';
+@import '../../vendor/_angular-strap';
 
 
 /*!
 ========== BASE
 */
 // variables, fonts, mixins, helpers... common styles used across the entire site
-@import 'base/__base';
+@import '../../base/__base';
 // vendor overrides
-@import 'vendor/_overrides';
+@import '../../vendor/_overrides';
 
 
 /*!
 ========== COMPONENTS
 */
 // reusable/framework components
-@import 'components/__components';
+@import '../../components/__components';
 
 
 /*!
 ========== SPECIFICS
 */
 // more specific declarations, may be built on a per page basis
-@import 'specifics/__specifics';
-@import 'theme/admin/_admin';
+@import '../../specifics/__specifics';
+@import '../../theme/admin/_admin';
 
