@@ -87,7 +87,8 @@
                         defaultCaseDescription: '=',
                         defaultUserId: '=',
                         defaultWebName: '=',
-                        defaultEmail: '='
+                        defaultEmail: '=',
+                        toggleModalSize: '='
                     },
                     controller: function ($scope) {
 
@@ -165,11 +166,11 @@
                         };
 
                         $scope.cancel = function () {
-                            $scope.$parent.largeModal = false;
+                            $scope.toggleModalSize();
                             $scope.onCancel();
                         };
                         $scope.continue = function () {
-                            $scope.$parent.largeModal = true;
+                            $scope.toggleModalSize();
                             $scope.continuePressed = true;
                         };
 

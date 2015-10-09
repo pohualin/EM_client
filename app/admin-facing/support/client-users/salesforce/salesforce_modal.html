@@ -4,6 +4,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Salesforce Case</h4>
+                <p>{{ large }}</p>
             </div>
 
             <div data-salesforce-form
@@ -14,7 +15,8 @@
                  data-default-web-name="[caseForResource.entity.firstName, caseForResource.entity.lastName].join(' ')"
                  data-default-email="caseForResource.entity.email"
                  data-default-case-description="defaultCaseDescription"
-                 data-on-save-success="onSaveSuccess"></div>
+                 data-on-save-success="onSaveSuccess"
+                 data-toggle-modal-size="toggleModalSize"></div>
         </div>
     </div>
 </div>

@@ -44,6 +44,11 @@
                 };
 
                 $scope.largeModal = false;
+
+                $scope.toggleModalSize = function () {
+                    $scope.largeModal = !$scope.largeModal;
+                };
+
             }])
     ;
 })(window.angular);
