@@ -43,8 +43,11 @@
                     _paq.push(['trackEvent', 'Form Action', 'Client User Salesforce', 'Start']);
                 };
 
+
+                // BOOLEAN for controlling ngClass on modal container.
                 $scope.largeModal = false;
 
+                // Function to be passed to the salesforce-form directive.
                 $scope.toggleModalSize = function () {
                     $scope.largeModal = !$scope.largeModal;
                 };
