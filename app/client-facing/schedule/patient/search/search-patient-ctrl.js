@@ -1,14 +1,14 @@
 'use strict';
 
 angular.module('emmiManager')
-    .controller('SearchPatientController', ['$scope', '$controller', 'SearchPatientService', 'client', 'team', 'ScheduledProgramFactory',
-        function ($scope, $controller, SearchPatientService, client, team, ScheduledProgramFactory) {
-            
+    .controller('SearchPatientController', ['$scope', '$controller', '$location', 'SearchPatientService', 'client', 'team', 'ScheduledProgramFactory',
+        function ($scope, $controller, $location, SearchPatientService, client, team, ScheduledProgramFactory) {
+
             $controller('ClientCommonSearch', {$scope: $scope});
-            
+
             // Reset the variables from the ScheduledProgramFactory before searching for patients
             ScheduledProgramFactory.reset();
-            
+
             var contentProperty = 'patients';
             $scope.team = team;
             ScheduledProgramFactory.team = team;
@@ -36,6 +36,8 @@ angular.module('emmiManager')
             };
 
             $scope.performSearch = function (team, query, sort, size, page) {
+                // Set query parameter on URL
+                $location.search({'q': query});
                 SearchPatientService.search(team, query, sort, size, page).then(function (response) {
                     $scope.handleResponse(response, contentProperty);
                     $scope.searchPerformed = true;
@@ -44,6 +46,13 @@ angular.module('emmiManager')
                     }
                 });
             };
+
+            // Auto-search if query parameter is set.
+            if ($location.search().q) {
+                $scope.query = $location.search().q;
+                $scope.search();
+            }
+
         }
     ])
 ;

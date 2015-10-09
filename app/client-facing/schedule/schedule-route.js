@@ -48,7 +48,8 @@ angular.module('emmiManager')
                 access: {
                     authorizedRoles: [USER_ROLES.teamScheduler, USER_ROLES.admin]
                 },
-                resolve: requiredResources
+                resolve: requiredResources,
+                title: 'Select Programs to Schedule'
 
             })
             .when('/teams/:teamId/schedule/patients', {
@@ -57,7 +58,9 @@ angular.module('emmiManager')
                 access: {
                     authorizedRoles: [USER_ROLES.teamScheduler, USER_ROLES.admin]
                 },
-                resolve: requiredResources
+                resolve: requiredResources,
+                reloadOnSearch: false,
+                title: 'Search Patients'
             })
             .when('/teams/:teamId/encounter/:encounterId/instructions', {
                 templateUrl: 'client-facing/schedule/instructions/main.html',
@@ -71,7 +74,7 @@ angular.module('emmiManager')
                             var deferred = $q.defer();
                             AuthSharedService.currentUser().then(function (loggedInUser) {
                                 ScheduleService.loadEncounter(loggedInUser.clientResource,
-                                    $route.current.params.teamId, 
+                                    $route.current.params.teamId,
                                     $route.current.params.encounterId)
                                     .then(function (response) {
                                         if (response) {
