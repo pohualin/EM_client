@@ -97,7 +97,8 @@ angular.module('emmiManager')
                 access: {
                     authorizedRoles: [USER_ROLES.teamScheduler, USER_ROLES.admin]
                 },
-                resolve: requiredResources
+                resolve: requiredResources,
+                title: 'All Patients'
             })
             .when('/teams/:teamId/patient/:patientId', {
                 templateUrl: 'client-facing/schedule/patient/view/details.html',
@@ -105,7 +106,8 @@ angular.module('emmiManager')
                 access: {
                     authorizedRoles: [USER_ROLES.teamScheduler, USER_ROLES.admin]
                 },
-                resolve: requiredResources
+                resolve: requiredResources,
+                title: 'Encounter History'
             })
         ;
     })
