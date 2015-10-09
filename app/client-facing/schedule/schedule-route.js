@@ -59,7 +59,6 @@ angular.module('emmiManager')
                     authorizedRoles: [USER_ROLES.teamScheduler, USER_ROLES.admin]
                 },
                 resolve: requiredResources,
-                reloadOnSearch: false,
                 title: 'Search Patients'
             })
             .when('/teams/:teamId/encounter/:encounterId/instructions', {
@@ -89,7 +88,8 @@ angular.module('emmiManager')
                             return deferred.promise;
                         }
                     ]
-                }
+                },
+                title: 'Schedule Summary'
             })
             .when('/teams/:teamId/allPatients', {
                 templateUrl: 'client-facing/schedule/patient/view/list.html',

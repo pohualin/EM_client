@@ -7,7 +7,7 @@
      * Controller for Patient-Program Scheduling
      */
         .controller('ScheduleController', ['$scope', 'team', 'client', 'ScheduledProgramFactory',
-            '$alert', 'ScheduleService', '$location', 'UriTemplate', 'PatientEmailService', 'PatientPhoneService', 
+            '$alert', 'ScheduleService', '$location', 'UriTemplate', 'PatientEmailService', 'PatientPhoneService',
             function ($scope, team, client, ScheduledProgramFactory, $alert, ScheduleService, $location, UriTemplate, PatientEmailService, PatientPhoneService) {
                 $scope.team = team;
                 $scope.page.setTitle('Schedule Emmi Program - ' + team.entity.name);
@@ -15,11 +15,11 @@
                 $scope.patient = team.patient.entity;
                 ScheduledProgramFactory.team = team;
                 ScheduledProgramFactory.patient = team.patient.entity;
-                
+
                 ScheduleService.loadTeamSchedulingConfiguration(team).then(function (teamSchedulingConfiguration) {
                     ScheduledProgramFactory.teamSchedulingConfiguration = teamSchedulingConfiguration;
                 });
-                                
+
                 /**
                  * Retrieve team email configuration for scheduling
                  */
@@ -27,7 +27,7 @@
                     $scope.showEmail = response.entity.collectEmail;
                     $scope.isEmailRequired = response.entity.requireEmail;
                 });
-               
+
                 /**
                  * Retrieve team phone configuration for scheduling
                  */
@@ -35,8 +35,8 @@
                     	$scope.showPhone = (response.collectPhone) ? true : false;
                     	$scope.isPhoneRequired = (response.requirePhone) ? true : false;
                });
-               
-                
+
+
                 /**
                  * Broadcasts event so that Patient save and Program save are kicked off
                  */
@@ -72,9 +72,19 @@
                         }
                     });
                 };
-                
+
                 $scope.scheduledProgram = ScheduledProgramFactory;
             }
         ])
+        .directive('backButton', ['$window', function($window) {
+            return {
+                restrict: 'A',
+                link: function (scope, elem, attrs) {
+                    elem.bind('click', function () {
+                        $window.history.back();
+                    });
+                }
+            };
+        }])
     ;
 })(window.angular);
