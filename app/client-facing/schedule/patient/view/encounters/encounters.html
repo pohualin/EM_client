@@ -1,0 +1,81 @@
+<h2>Program History</h2>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel-group" data-ng-model="encounter.activePanel" data-ng-repeat="encounter in PatientScheduleDetailsController.encounters | orderBy:'-entity.encounterDateTime'" data-start-collapsed="true" data-bs-collapse>
+            <div class="panel panel-secondary" data-ng-class="{ 'panel-open': encounter.activePanel === 0 }">
+                <div class="panel-heading pointer" data-bs-collapse-toggle>
+                    <div class="row panel-title">
+                        <div class="row panel-title">
+                            <!-- Collapsed -->
+                            <div class="col-md-12" data-ng-hide="encounter.activePanel === 0">
+                                <div class="col-md-12">
+                                    <span class="icon-caret-right"></span>
+
+                                    <span class="panel-title-text">
+                                        {{encounter.entity.encounterDateTime | date:"MM/dd/yy" }}
+                                    </span>
+
+                                    <span class="panel-title-text"> - </span>
+
+                                    <span class="panel-title-text">
+                                        <span data-ng-if="encounter.entity.scheduledPrograms.length !== 1">{{encounter.entity.scheduledPrograms.length}} programs</span>
+
+                                        <span style="color: #ECF5F8;" data-ng-if="encounter.entity.scheduledPrograms.length === 1">
+                                            <em>({{encounter.entity.names | characters:50}})</em>
+                                        </span>
+                                    </span>
+
+                                    <span class="pull-right panel-title-text">
+                                        Resend Instructions
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Expanded -->
+                            <div class="col-md-12" data-ng-show="encounter.activePanel === 0">
+                                <div class="col-md-12">
+                                    <span class="icon-caret-right"></span>
+
+                                    <span class="panel-title-text">
+                                        {{encounter.entity.encounterDateTime | date:"MM/dd/yy" }}
+                                    </span>
+
+                                    <span class="panel-title-text"> - </span>
+
+                                    <span class="panel-title-text">
+                                        <span data-ng-if="encounter.entity.scheduledPrograms.length !== 1">{{encounter.entity.scheduledPrograms.length}} programs</span>
+
+                                        <!-- Only show name if only program -->
+                                        <span style="color: #ECF5F8;" data-ng-if="encounter.entity.scheduledPrograms.length === 1">
+                                            <em>({{encounter.entity.names | characters:50}})</em>
+                                        </span>
+                                    </span>
+
+                                    <span class="panel-title-text"> | </span>
+
+                                    <span class="panel-title-text">
+                                        Access Code: {{encounter.entity.accessCode}}
+                                    </span>
+
+                                    <span class="pull-right panel-title-text">
+                                        Resend Instructions
+                                    </span>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <span class="panel-title-text">Scheduled by: {{encounter.entity.createdBy.firstName}} {{encounter.entity.createdBy.lastName}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-collapse" data-bs-collapse-target>
+                    <div class="panel-body" style="margin: 0;padding:0">
+                        <div data-ng-controller="PatientScheduleProgramsController as ProgramController" data-ng-include="'client-facing/schedule/patient/view/programs/programs.html'"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

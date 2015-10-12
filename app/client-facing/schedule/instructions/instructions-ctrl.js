@@ -10,15 +10,15 @@
         .controller('ScheduleProgramInstructionsViewController',
         ['$scope', '$controller', '$location', '$sce', 'scheduledPrograms',
             function ($scope, $controller, $location, $sce, scheduledPrograms) {
-            
+
                 $controller('CommonPagination', {$scope: $scope});
                 $controller('CommonSort', {$scope: $scope});
-                
+
                 $scope.handleResponse(scheduledPrograms, 'scheduledPrograms');
                 $scope.patient = $scope.scheduledPrograms[0].entity.patient;
                 $scope.team = $scope.scheduledPrograms[0].entity.team;
                 $scope.encounter = $scope.scheduledPrograms[0].entity.encounter;
-                
+
                 /**
                  * Fill iframe with English instruction
                  */
@@ -30,7 +30,7 @@
                     // set link back to where we are now so current window doesn't change
                     $location.path(current);
                 };
-                
+
                 /**
                  * Fill iframe with Spanish instruction
                  */
@@ -42,10 +42,10 @@
                     // set link back to where we are now so current window doesn't change
                     $location.path(current);
                 };
-                
+
                 /**
                  * event:printed is expected when print dialog in iframe is closed through either cancel or print
-                 * 
+                 *
                  */
                 $scope.$on('event:printed', function () {
                     // delete printingMaterial
@@ -74,6 +74,7 @@
                 return date.format(format);
             };
         }])
+
     ;
 
 

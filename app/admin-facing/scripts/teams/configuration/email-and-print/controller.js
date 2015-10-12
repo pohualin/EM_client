@@ -6,9 +6,10 @@ angular.module('emmiManager')
 /**
  * Parent Controller to manage Team level email notifications controller and print instructions configuration controller
  */
-.controller('TeamEmailNotificationsAndPrintInstructionsController', ['$scope', '$alert', 'teamResource', 'TeamEmailNotificationsAndPrintInstructionsControllerFactory',
+    .controller('TeamEmailNotificationsAndPrintInstructionsController', ['$scope', '$alert', 'teamResource',
+        'TeamEmailNotificationsAndPrintInstructionsControllerFactory',
     function ($scope, $alert, teamResource, TeamEmailNotificationsAndPrintInstructionsControllerFactory) {
-    
+
         /**
          * When the save button is clicked. Sends all updates
          * to the back, then re-binds the form objects with the
@@ -18,7 +19,7 @@ angular.module('emmiManager')
             TeamEmailNotificationsAndPrintInstructionsControllerFactory.formSubmitted = true;
             if (form.$valid) {
                 TeamEmailNotificationsAndPrintInstructionsControllerFactory.whenSaving = true;
-                $scope.$broadcast('event:save-or-update-email-notification-configration', form);
+                $scope.$broadcast('event:save-or-update-email-notification-configuration', form);
             }
         };
 
@@ -26,18 +27,18 @@ angular.module('emmiManager')
          * Called when cancel is clicked.. takes the original
          * objects and copies them back into the bound objects.
          */
-        $scope.cancel = function (form) {
+        $scope.cancel = function () {
             $scope.$broadcast('event:reset-email-notification-configuration');
             $scope.$broadcast('event:reset-print-instruction-configuration');
-            TeamEmailNotificationsAndPrintInstructionsControllerFactory.reset();
+            TeamEmailNotificationsAndPrintInstructionsControllerFactory.reset(teamResource);
         };
-        
+
         $scope.$watch(function () {
                 return TeamEmailNotificationsAndPrintInstructionsControllerFactory.showButton;
             }, function(newVal) {
                 $scope.showButton = newVal;
         });
-        
+
         /**
          * init method called when page is loading
          */
@@ -45,10 +46,9 @@ angular.module('emmiManager')
             $scope.showButton = false;
             $scope.client = teamResource.entity.client;
             $scope.team = teamResource;
-            TeamEmailNotificationsAndPrintInstructionsControllerFactory.reset();
-            TeamEmailNotificationsAndPrintInstructionsControllerFactory.team = teamResource;
+            TeamEmailNotificationsAndPrintInstructionsControllerFactory.reset(teamResource);
         }
-        
+
         init();
     }]);
 })(window.angular);
