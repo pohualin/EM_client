@@ -5,8 +5,8 @@
 
   <div class="row">
     <div class="col-xs-12 clearfix">
-      <a href back-button class="pull-left btn-back"><i class='icon-caret-left'></i> {{ patient.firstName + ' ' + patient.lastName }}</a>
-      <a back-button class="pull-right btn btn-success">SCHEDULE NEW PROGRAM</a>
+      <a href="#/teams/{{ params.teamId }}/schedule/patient/{{ params.patientId }}" class="pull-left btn-back"><i class='icon-caret-left'></i> {{ patient.firstName + ' ' + patient.lastName }}</a>
+      <a href="#/teams/{{ params.teamId }}/schedule/patient/{{ params.patientId }}" class="pull-right btn btn-success">SCHEDULE NEW PROGRAM</a>
     </div>
   </div>
 

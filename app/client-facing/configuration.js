@@ -219,7 +219,14 @@ angular.module('emmiManager', [
                 path === '/viewSecurityQuestions';
         };
 
-        $rootScope.$on('$routeChangeStart', function (event, next) {
+        $rootScope.$on('$routeChangeStart', function (event, next, current) {
+
+            // If we have URL parameters, lets pass them on to the new route/location/page.
+            if (current && current.params) {
+                // .replace() ensures we don't add a new window.history entry.
+                $location.search(current.params).replace();
+            }
+
             $rootScope.isAuthorized = AuthSharedService.isAuthorized;
             $rootScope.userRoles = USER_ROLES;
             if (!$rootScope.isSystemRoute()) {
@@ -233,7 +240,9 @@ angular.module('emmiManager', [
         });
 
         $rootScope.$on('$routeChangeSuccess', function (e, current) {
+
             $rootScope.currentRouteQueryString = arrays.toQueryString(current.params);
+
             // hide all modals
             $rootScope.killAllModals();
             if ($rootScope.isSystemRoute() || $rootScope.shouldCloseAlertsRoute()) {

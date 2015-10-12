@@ -16,6 +16,9 @@
                 ScheduledProgramFactory.team = team;
                 ScheduledProgramFactory.patient = team.patient.entity;
 
+                // Pass URL paramters to the view for URL creation.
+                $scope.params = $location.search();
+
                 ScheduleService.loadTeamSchedulingConfiguration(team).then(function (teamSchedulingConfiguration) {
                     ScheduledProgramFactory.teamSchedulingConfiguration = teamSchedulingConfiguration;
                 });
@@ -76,15 +79,5 @@
                 $scope.scheduledProgram = ScheduledProgramFactory;
             }
         ])
-        .directive('backButton', ['$window', function($window) {
-            return {
-                restrict: 'A',
-                link: function (scope, elem, attrs) {
-                    elem.bind('click', function () {
-                        $window.history.back();
-                    });
-                }
-            };
-        }])
     ;
 })(window.angular);
