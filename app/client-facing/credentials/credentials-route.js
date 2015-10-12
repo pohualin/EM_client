@@ -13,6 +13,7 @@ angular.module('emmiManager')
                 access: {
                     authorizedRoles: [USER_ROLES.all]
                 },
+                reloadOnSearch: false,
                 resolve: {
                     credentials: ['$rootScope', '$q',
                         function ($rootScope, $q) {
@@ -40,6 +41,7 @@ angular.module('emmiManager')
                 templateUrl: 'client-facing/credentials/forgot/forgot.html',
                 controller: 'CredentialsForgottenController',
                 title: 'Password Reset',
+                reloadOnSearch: false,
                 access: {
                     authorizedRoles: '*'
                 }
@@ -51,6 +53,7 @@ angular.module('emmiManager')
                 access: {
                     authorizedRoles: [USER_ROLES.all]
                 },
+                reloadOnSearch: false,
                 resolve: {
                     activationCode: ['$route', '$q', 'ActivateClientUserService', function ($route, $q, svc) {
                         var deferred = $q.defer();
@@ -74,6 +77,7 @@ angular.module('emmiManager')
                 access: {
                     authorizedRoles: [USER_ROLES.all]
                 },
+                reloadOnSearch: false,
                 resolve: {
                     resetToken: ['$route', '$q', 'SecretQuestionService', '$location', 'LoginErrorMessageFactory',
                         function ($route, $q, SecretQuestionService, $location, LoginErrorMessageFactory) {
@@ -117,6 +121,7 @@ angular.module('emmiManager')
                 access: {
                     authorizedRoles: [USER_ROLES.all]
                 },
+                reloadOnSearch: false,
                 resolve: {
                     securityQuestions: ['$q', 'SecretQuestionService', function ($q, SecretQuestionService) {
                         return SecretQuestionService.getUserInputSecurityResponses();

@@ -48,6 +48,7 @@ angular.module('emmiManager')
                 access: {
                     authorizedRoles: [USER_ROLES.teamScheduler, USER_ROLES.admin]
                 },
+                reloadOnSearch: false,
                 resolve: requiredResources,
                 title: 'Select Programs to Schedule'
 
@@ -58,6 +59,7 @@ angular.module('emmiManager')
                 access: {
                     authorizedRoles: [USER_ROLES.teamScheduler, USER_ROLES.admin]
                 },
+                reloadOnSearch: false,
                 resolve: requiredResources,
                 title: 'Search Patients'
             })
@@ -67,6 +69,7 @@ angular.module('emmiManager')
                 access: {
                     authorizedRoles: [USER_ROLES.all]
                 },
+                reloadOnSearch: false,
                 resolve: {
                     'scheduledPrograms': ['$q', '$route', 'AuthSharedService', 'ScheduleService',
                         function ($q, $route, AuthSharedService, ScheduleService) {
@@ -97,6 +100,7 @@ angular.module('emmiManager')
                 access: {
                     authorizedRoles: [USER_ROLES.teamScheduler, USER_ROLES.admin]
                 },
+                reloadOnSearch: false,
                 resolve: requiredResources,
                 title: 'All Patients'
             })
@@ -106,6 +110,7 @@ angular.module('emmiManager')
                 access: {
                     authorizedRoles: [USER_ROLES.teamScheduler, USER_ROLES.admin]
                 },
+                reloadOnSearch: false,
                 resolve: requiredResources,
                 title: 'Encounter History'
             })

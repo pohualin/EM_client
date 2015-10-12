@@ -10,7 +10,8 @@ angular.module('emmiManager')
                 controller: 'ImpersonationController',
                 access: {
                     authorizedRoles: [USER_ROLES.all]
-                }
+                },
+                reloadOnSearch: false
             })
 
             .when('/impersonate/:clientId', {
@@ -18,7 +19,8 @@ angular.module('emmiManager')
                 controller: 'ImpersonationController',
                 access: {
                     authorizedRoles: [USER_ROLES.all]
-                }
+                },
+                reloadOnSearch: false
             });
     })
 ;

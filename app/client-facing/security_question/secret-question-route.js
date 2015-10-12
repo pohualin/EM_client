@@ -12,6 +12,7 @@ angular.module('emmiManager')
                 access: {
                     authorizedRoles: [USER_ROLES.all]
                 },
+                reloadOnSearch: false,
                 resolve: {
                     secretQuestionChoices: ['AuthSharedService', 'SecretQuestionService',
                         function (AuthSharedService, SecretQuestionService) {
@@ -33,6 +34,7 @@ angular.module('emmiManager')
                 access: {
                     authorizedRoles: [USER_ROLES.all]
                 },
+                reloadOnSearch: false,
                 resolve: {
                     securityQuestions: ['$q', 'AuthSharedService', 'SecretQuestionService',
                         function ($q, AuthSharedService, SecretQuestionService) {
