@@ -357,8 +357,7 @@ input[type="checkbox"]:disabled + label:before {
 }
 
 // Fix for text cut-off in Chrome in Windows (see EM-662)
-select#secretQuestion1,
-select#secretQuestion2 {
+.secretQuestion .form-control {
     height: auto;
 }
 

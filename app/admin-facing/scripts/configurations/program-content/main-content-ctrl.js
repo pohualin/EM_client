@@ -12,7 +12,8 @@ angular.module('emmiManager')
         $scope.primaryContentList = [];
         $scope.sourceContentList = [];
         $scope.latestPrimaryContentList = [];
-        
+        $scope.listOfClientPrograms = [];
+
                         
         // Variables for the html to show or hide certain section
         $scope.faithBased = false;
@@ -291,6 +292,13 @@ angular.module('emmiManager')
        
        $scope.$on('startLoading', function () {
     	   $scope.loading = true;
+       });
+       
+       /**
+        * Listen on 'refreshClientProgramsPage' event
+        */
+       $scope.$on('refreshClientProgramsPage', function(){
+           	$scope.$broadcast('refreshViewProgramsPage');
        });
      
         /**

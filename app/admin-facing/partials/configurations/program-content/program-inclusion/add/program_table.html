@@ -1,0 +1,79 @@
+
+ <div class="row table-search-filters">
+             <div class="col-md-12" data-ng-hide="totalPossibleClientProgramsCount === 0">
+                 <div class="pull-right table-results-count" aria-live="polite" aria-atomic="true" data-ng-hide="totalPossibleClientProgramsCount === 0">
+                     {{totalPossibleClientProgramsCount}}
+                     <span data-ng-show="totalPossibleClientProgramsCount != 1" data-translate="global.labels.total"> results</span>
+                     <span data-ng-show="totalPossibleClientProgramsCount === 1"
+                           data-translate="global.labels.totalSingular"> result</span>
+                 </div>
+              
+             </div>
+         </div>
+
+ <table class="table table-bordered table-striped table-hover table-condensed" border="0" cellpadding="0" cellspacing="0"
+           data-ng-show="programs" >
+        <thead>
+        <tr>
+            <th class="sort col-sm-1"></th>
+            <th class="sort col-sm-11" data-ng-click="sort('name')">Name <span
+                data-ng-show="sortProperty.property === 'name'"><span class="sort-icon"
+                                                                      data-ng-class="{'fa-angle-down': sortProperty.ascending, 'fa-angle-up': !sortProperty.ascending}"></span></span>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+      <td>
+        <div class="checkbox">
+            <input type="checkbox" id="selectAllProgramContents" 
+              data-ng-model="selectAllProgramContents"
+              data-select-all-program-contents />
+            <label for="selectAllProgramContents"></label>
+        </div>
+      </td>
+      <td colspan='5'>
+        All ({{totalPossibleClientProgramsCount}} 
+        <span data-ng-show="totalPossibleClientProgramsCount != 1"> programs)</span>
+                     <span data-ng-show="totalPossibleClientProgramsCount === 1"> program)</span>
+      </td>
+    </tr>
+        
+        <tr data-ng-repeat="program in programs | orderBy:'program.sortIdx'">
+            <td>
+                <input type="checkbox" id="program_{{program.entity.id}}"
+                       data-ng-disabled="program.disabled" data-ng-model="program.entity.checked" data-ng-change="onCheckboxChange(program)"/>
+                <label for="program_{{program.entity.id}}"></label>
+            </td>
+            <td><span data-ng-show="program.entity.type.name === 'MULTIMEDIA PROGRAM'" class="icon-film"
+                      aria-label="Multimedia" title="Multimedia"></span>
+                <span data-ng-show="program.entity.type.name === 'ARTICLE'" class="icon-text-doc"
+                      aria-label="Article" title="Article"></span>
+                <span data-ng-show="program.entity.type.name === 'IVR CALL'" class="icon-telephone"
+                      aria-label="Call" title="Call"></span>
+                <span data-ng-show="program.entity.type.name === 'TRANSITION PROGRAM'" class="icon-telephone"
+                      aria-label="Transition Program" title="Transition Program"></span>
+                <span data-ng-show="program.entity.type.name === 'NAVIGATE'" class="icon-telephone"
+                      aria-label="Navigate" title="Navigate"></span>
+                <span data-ng-show="program.entity.type.name === 'MESSAGE'" class="icon-telephone"
+                      aria-label="Message" title="Message"></span>
+                {{program.entity.name}}
+            </td>
+        </tr>
+          <tr class="pagination-row no-hover">
+      <td colspan="6" class="text-center" data-ng-show="links">
+        <ul class="pagination">
+          <li data-ng-repeat="link in links | orderBy:'order'" class="{{link.className}}" data-ng-class="{'active': link.name == currentPage}">
+             <a data-ng-click="fetchPageClientPrograms(link.href)">
+                 <i aria-label="Previous" class="fa-angle-left" data-ng-if="link.className === 'previous'"></i>
+                 {{link.name}}
+                 <i aria-label="Next" class="fa-angle-right" data-ng-if="link.className === 'next'"></i>
+             </a>
+          </li>
+        </ul>
+      </td>
+    </tr>
+   </tbody>
+</table>
+   
+ 
