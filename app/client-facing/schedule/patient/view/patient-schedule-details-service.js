@@ -3,7 +3,7 @@
 angular.module('emmiManager')
     .factory('PatientScheduleDetailsService', ['$http', 'UriTemplate', '$q',
         function ($http, UriTemplate, $q) {
-            var PatientScheduleDetailsService = {}
+            var PatientScheduleDetailsService = {};
             var _encounters = null;
 
             PatientScheduleDetailsService.getPatientScheduleDetails = function(team) {
@@ -27,7 +27,7 @@ angular.module('emmiManager')
                 });
 
                 return deferred.promise;
-            }
+            };
 
             PatientScheduleDetailsService.updateEncounters = function(teamResource) {
                 var deferred = $q.defer();
@@ -82,16 +82,16 @@ angular.module('emmiManager')
                 });
 
                 return deferred.promise;
-            }
+            };
 
             PatientScheduleDetailsService.setEncounters = function(encounters) {
                 _encounters = encounters;
                 return this;
-            }
+            };
 
             PatientScheduleDetailsService.getEncounters = function() {
                 return _encounters;
-            }
+            };
 
             return PatientScheduleDetailsService;
 
