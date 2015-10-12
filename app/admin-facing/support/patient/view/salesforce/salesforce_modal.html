@@ -1,5 +1,5 @@
-<div class="modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog container-fluid">
+<div class="modal salesforce" tabindex="-1" role="dialog">
+    <div class="modal-dialog container-fluid" ng-class="{'modal-dialog-large': largeModal}">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Salesforce Case</h4>
@@ -10,7 +10,8 @@
                  data-on-cancel="onCancel"
                  data-default-case-type="'PATIENT'"
                  data-default-case-description="defaultCaseDescription"
-                 data-on-save-success="onSaveSuccess"></div>
+                 data-on-save-success="onSaveSuccess"
+                 data-toggle-modal-size="toggleModalSize"></div>
         </div>
     </div>
 </div>

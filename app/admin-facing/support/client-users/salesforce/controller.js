@@ -20,6 +20,7 @@
 
                 var closeSalesForceModel = function (newId) {
                     salesforceCaseModal.$promise.then(salesforceCaseModal.hide);
+                    $scope.resetModalSize();
                     if (newId) {
                         $alert({
                             content: ['Salesforce case <strong>',
@@ -51,6 +52,11 @@
                 $scope.toggleModalSize = function () {
                     $scope.largeModal = !$scope.largeModal;
                 };
+
+                $scope.resetModalSize = function () {
+                    $scope.largeModal = false;
+                };
+
 
             }])
     ;
