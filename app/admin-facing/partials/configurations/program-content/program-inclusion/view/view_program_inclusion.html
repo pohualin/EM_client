@@ -1,0 +1,54 @@
+<div class="col-md-12" data-ng-controller="ViewProgramContentInclusionController">
+    <table class="table table-bordered table-striped table-hover table-condensed" border="0" cellpadding="0"
+           data-ng-if="listOfClientPrograms.length">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th></th>
+        </tr>
+        </thead>   
+        <tbody>
+        <tr data-ng-repeat="program in listOfClientPrograms">
+            <td><span data-ng-show="program.entity.program.type.name === 'MULTIMEDIA PROGRAM'" class="icon-film"
+                      aria-label="Multimedia" title="Multimedia"></span>
+                <span data-ng-show="program.entity.program.type.name === 'ARTICLE'" class="icon-text-doc"
+                      aria-label="Article" title="Article"></span>
+                <span data-ng-show="program.entity.program.type.name === 'IVR CALL'" class="icon-telephone"
+                      aria-label="Call" title="Call"></span>
+                <span data-ng-show="program.entity.program.type.name === 'TRANSITION PROGRAM'" class="icon-telephone"
+                      aria-label="Transition Program" title="Transition Program"></span>
+                <span data-ng-show="program.entity.program.type.name === 'NAVIGATE'" class="icon-telephone"
+                      aria-label="Navigate" title="Navigate"></span>
+                <span data-ng-show="program.entity.program.type.name === 'MESSAGE'" class="icon-telephone"
+                      aria-label="Message" title="Message"></span>
+                {{program.entity.program.name}}
+            </td>
+                
+           
+            <td class="col-edit text-center">
+                 <a href data-ng-click="removeProgram(program)" aria-label="Remove Program"><i class="icon-trashcan icon-size-xl"></i></a>
+            </td>
+        </tr>
+        <tr class="pagination-row no-hover">
+            <td colspan="5" class="text-center" data-ng-show="links">
+                <ul class="pagination">
+                    <li data-ng-repeat="link in links | orderBy:'order'" class="{{link.className}}"
+                        data-ng-class="{'active': link.name == currentPage}">
+                        <a data-ng-click="fetchPage(link.href)">
+                            <i aria-label="Previous" class="fa-angle-left" data-ng-if="link.className === 'previous'"></i>
+                            {{link.name}}
+                            <i aria-label="Next" class="fa-angle-right" data-ng-if="link.className === 'next'"></i>
+                        </a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        </tbody>
+        
+    </table>
+    <div class="table-no-results" data-ng-if="schedulingConfiguration.entity.useProvider && !loading && !listOfTeamProviders.length">
+        <span><em>There are no existing providers<span
+            data-ng-show="team.name">&nbsp;for {{team.name}}</span>.</em></span>
+    </div>
+    
+</div>

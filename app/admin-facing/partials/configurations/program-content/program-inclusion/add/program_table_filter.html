@@ -1,0 +1,38 @@
+<div class="row">
+    <div class="col-md-7">
+        <div class="form-group">
+        	 <label class="control-label" for="specialtyFilter">Search Programs:</label>
+            <label class="sr-only control-label" for="query">Search programs by name or keyword</label>
+           
+              <div class="input-group has-input-icon has-input-icon-search">
+                         <input class="form-control" id="query" name="query" data-ng-model="programSearch.query" 
+                                type="text" placeholder="Search programs by name or keyword" required data-auto-focus data-focus-on="programSearchFocus">
+                         <span class="input-icon"><i class="icon-search"></i></span>
+                         <span class="input-group-btn">
+                             <button class="btn btn-success" data-ng-click="!searching ? search() : false"
+                              data-ng-disabled="searching">Go</button>
+                         </span>
+                     </div>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <div class="form-group">
+      
+         	 <label class="control-label" for="specialtyFilter">Filter by specialty:</label>
+        
+            <label class="sr-only control-label" for="specialtyFilter">All Specialties</label>
+            <select id="specialtyFilter" name="specialtyFilter" class="form-control"
+                    data-ng-disabled="!specialties || specialties.length == 0 || searching"
+                    data-ng-model="programSearch.specialty" data-ng-change="onSpecialtyFilterChange()"
+                    data-ng-options="specialty.entity.name for specialty in specialties | orderBy:'entity.name' track by specialty.entity.id"
+                    data-disable-search-threshold="10" data-allow-single-deselect="true"
+                    data-no-results-text="'All Specialties'"
+                    data-placeholder="All Specialties"
+                    data-chosen>
+                <option></option>
+            </select>
+        </div>
+    </div>
+</div>
+
+
