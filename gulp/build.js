@@ -7,13 +7,10 @@ var maven = require('gulp-maven-deploy');
 var mainBowerFiles = require('main-bower-files');
 
 gulp.task('styles', function () {
-    return gulp.src('app/styles/**/main.scss')
-        .pipe($.rubySass({ style: 'expanded', sourcemap: true }))
+    return gulp.src(['app/styles/theme/admin/main.scss', 'app/styles/theme/client/main.scss'])
+        .pipe($.rubySass({style: 'compressed', sourcemap: true}))
         .pipe($.autoprefixer('last 1 version'))
-        .pipe($.sourcemaps.write({
-          includeContent: false,
-          sourceRoot: '/app'
-        }))
+        .pipe($.sourcemaps.write())
         .pipe(gulp.dest('.tmp/styles'))
         .pipe(gulp.dest('app/styles'))
         .pipe($.size({title: 'styles', showFiles:true}));

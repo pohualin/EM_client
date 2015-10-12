@@ -13,7 +13,7 @@ angular.module('emmiManager')
         $scope.sourceContentList = [];
         $scope.latestPrimaryContentList = [];
         $scope.listOfClientPrograms = [];
-        
+
                         
         // Variables for the html to show or hide certain section
         $scope.faithBased = false;

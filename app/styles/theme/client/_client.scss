@@ -356,6 +356,11 @@ input[type="checkbox"]:disabled + label:before {
     cursor: $cursor-disabled;
 }
 
+// Fix for text cut-off in Chrome in Windows (see EM-662)
+.secretQuestion .form-control {
+    height: auto;
+}
+
 // Chosen dropdown
 select.form-control {
     + .chosen-container {

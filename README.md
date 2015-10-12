@@ -66,9 +66,9 @@ To run the server on port 80, you'll need:
         ProxyPassReverse /api-docs http://localhost:8080/api-docs
                     
 - compile the main.scss file(s)
-    - `cd app/styles`
-    - run `sass theme/admin/main.scss:theme/admin/main.css` for the admin-facing application
-    - run `sass theme/client/main.scss:theme/client/main.css` for the client-facing application
+    - `cd client-angular`
+    - run `sass app/styles/theme/admin/main.scss:app/styles/theme/admin/main.css` for the admin-facing application
+    - run `sass app/styles/theme/client/main.scss:app/styles/theme/client/main.css` for the client-facing application
 
 
 File Structure

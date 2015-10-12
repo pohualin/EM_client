@@ -28,8 +28,8 @@ angular.module('emmiManager')
         // Routes
         $routeProvider
         .when('/clients/:clientId/teams/:teamId/configuration/email_reminders', {
-           	templateUrl: 'admin-facing/partials/team/configuration/email/main.html',
-            controller: 'ClientTeamEmailConfigurationCtrl',
+           	templateUrl: 'admin-facing/partials/team/configuration/email-and-print/main.html',
+            controller: 'TeamEmailNotificationsAndPrintInstructionsController',
             title: 'Team Configurations - Email Notifications & Print Instructions | ClientManager',
             activeMenu: MENU.setup,
             access: {
@@ -43,7 +43,7 @@ angular.module('emmiManager')
         .when('/clients/:clientId/teams/:teamId/configuration/phone_reminders', {
             templateUrl: 'admin-facing/partials/team/configuration/phone/main.html',
             controller: 'ClientTeamPhoneConfigurationCtrl',
-            title: 'Team Configurations - Phone Reminders | ClientManager',
+            title: 'Team Configurations - IVR Notifications Setup | ClientManager',
             activeMenu: MENU.setup,
             access: {
                 authorizedRoles: USER_ROLES.all
