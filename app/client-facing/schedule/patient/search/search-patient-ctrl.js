@@ -37,7 +37,7 @@ angular.module('emmiManager')
 
             $scope.performSearch = function (team, query, sort, size, page) {
 
-                $location.search({'q': query}).replace();
+                $location.search({'q': query});
 
                 SearchPatientService.search(team, query, sort, size, page).then(function (response) {
                     $scope.handleResponse(response, contentProperty);

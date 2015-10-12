@@ -59,7 +59,7 @@ angular.module('emmiManager')
                 access: {
                     authorizedRoles: [USER_ROLES.teamScheduler, USER_ROLES.admin]
                 },
-                reloadOnSearch: false,
+                reloadOnSearch: true,
                 resolve: requiredResources,
                 title: 'Search Patients'
             })

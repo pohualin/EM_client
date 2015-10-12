@@ -220,12 +220,6 @@ angular.module('emmiManager', [
         };
 
         $rootScope.$on('$routeChangeStart', function (event, next, current) {
-
-            // If we have URL parameters, lets pass them into to the new page's parameter object.
-            if (current && current.params) {
-                angular.extend(next.params, current.params);
-            }
-
             $rootScope.isAuthorized = AuthSharedService.isAuthorized;
             $rootScope.userRoles = USER_ROLES;
             if (!$rootScope.isSystemRoute()) {
