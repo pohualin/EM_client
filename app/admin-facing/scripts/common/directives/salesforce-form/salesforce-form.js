@@ -166,7 +166,6 @@
                         };
 
                         $scope.cancel = function () {
-                            $scope.toggleModalSize();
                             $scope.onCancel();
                         };
                         $scope.continue = function () {

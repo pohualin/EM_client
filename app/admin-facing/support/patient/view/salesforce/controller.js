@@ -31,6 +31,7 @@
                  */
                 var closeSalesForceModel = function (newId) {
                     salesforceCaseModal.$promise.then(salesforceCaseModal.hide);
+                    $scope.resetModalSize();
                     if (newId) {
                         $alert({
                             content: ['Salesforce case <strong>',
@@ -82,6 +83,19 @@
                     salesforceCaseModal.$promise.then(salesforceCaseModal.show);
                     _paq.push(['trackEvent', 'Form Action', 'Patient Salesforce', 'Start']);
                 };
+
+                // BOOLEAN for controlling ngClass on modal container.
+                $scope.largeModal = false;
+
+                // Function to be passed to the salesforce-form directive.
+                $scope.toggleModalSize = function () {
+                    $scope.largeModal = !$scope.largeModal;
+                };
+
+                $scope.resetModalSize = function () {
+                    $scope.largeModal = false;
+                };
+
             }
         ])
     ;
