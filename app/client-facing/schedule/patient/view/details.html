@@ -4,13 +4,12 @@
     <div class="row">
         <ol class="breadcrumb">
             <li><a href="#/support/patients?{{currentRouteQueryString}}">Search</a></li>
-            <li data-ng-if="_patient.id" class="active">{{_patient.firstName}} {{_patient.lastName}}</li>
         </ol>
     </div>
 
     <div class="row">
         <div class="col-md-12">
-            <h2>Schedule Details for {{team.patient.entity.firstName}} {{team.patient.entity.lastName}}:</h2>
+            <h2>Schedule Details for {{PatientScheduleDetailsController.team.patient.entity.firstName}} {{PatientScheduleDetailsController.team.patient.entity.lastName}}:</h2>
         </div>
     </div>
 
@@ -21,7 +20,7 @@
                     Name:
                 </div>
                 <div class="col-md-2">
-                    {{team.patient.entity.firstName}} {{team.patient.entity.lastName}}
+                    {{PatientScheduleDetailsController.team.patient.entity.firstName}} {{PatientScheduleDetailsController.team.patient.entity.lastName}}
                 </div>
             </div>
             <div class="row" >
@@ -29,7 +28,7 @@
                     Date of birth:
                 </div>
                 <div class="col-md-2">
-                    {{team.patient.entity.dateOfBirth |  date:"yyyy-dd-MM" }}
+                    {{PatientScheduleDetailsController.team.patient.entity.dateOfBirth |  date:"yyyy-dd-MM" }}
                 </div>
             </div>
         </div>
