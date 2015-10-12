@@ -1,0 +1,22 @@
+<div class="modal" tabindex="-1" role="dialog" aria-labelledby="modal-dialog-title" data-ng-controller="AddProgramContentInclusionController">
+    <div class="modal-dialog modal-dialog-large container-fluid">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modal-dialog-title">Add Programs</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row" data-ng-show="programFormSubmitted">
+                        <div class="col-md-10 col-md-offset-1" id="modal-messages-container"></div>
+                </div>
+                <div class="row" >
+                    <div class="col-md-12">
+                        <div data-ng-include="'admin-facing/partials/configurations/program-content/program-inclusion/add/program_chooser.html'" data-title="Search all programs" aria-label="Search all programs" ></div>
+                    </div>
+                </div>
+            </div>
+            <div data-ng-include="'admin-facing/partials/configurations/program-content/program-inclusion/add/search-footer-template.html'"></div>
+        </div>
+       
+    </div>
+</div>
+

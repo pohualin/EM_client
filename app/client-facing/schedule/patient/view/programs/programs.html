@@ -1,0 +1,122 @@
+<div data-ng-repeat="scheduledProgram in encounter.entity.scheduledPrograms">
+    <form name="scheduledProgramForm_{{scheduledProgram.entity.id}}">
+        <div class="row" data-ng-click="ProgramController.toggleScheduledProgramPanel(scheduledProgram, scheduledProgramForm_{{scheduledProgram.entity.id}})">
+            <div class="col-md-12">
+                <table class="table table-hover table-striped" border="0" cellpadding="0" cellspacing="0" style="margin-bottom: 0px">
+                    <tr>
+                        <td>
+                            <span class="icon-caret-right" data-ng-style="{'transform': scheduledProgram.showDetails ? 'rotate(90deg)' : 'none'}"></span>
+
+                            <span class="text-muted" style="margin-right: 3px;">
+                                <span
+                                    data-ng-show="scheduledProgram.entity.program.type.name === 'MULTIMEDIA PROGRAM'"
+                                    class="icon-film"
+                                    aria-label="Multimedia" title="Multimedia"></span>
+
+                                <span
+                                    data-ng-show="scheduledProgram.entity.program.type.name === 'ARTICLE'"
+                                    class="icon-text-doc"
+                                    aria-label="Article" title="Article"></span>
+
+                                <span
+                                    data-ng-show="scheduledProgram.entity.program.type.name === 'IVR CALL'"
+                                    class="icon-telephone"
+                                    aria-label="Call" title="Call"></span>
+
+                                <span
+                                    data-ng-show="scheduledProgram.entity.program.type.name === 'TRANSITION PROGRAM'"
+                                    class="icon-telephone"
+                                    aria-label="Transition Program"
+                                    title="Transition Program"></span>
+
+                                <span
+                                    data-ng-show="scheduledProgram.entity.program.type.name === 'NAVIGATE'"
+                                    class="icon-telephone"
+                                    aria-label="Navigate" title="Navigate"></span>
+
+                                <span
+                                    data-ng-show="scheduledProgram.entity.program.type.name === 'MESSAGE'"
+                                    class="icon-telephone"
+                                    aria-label="Message" title="Message"></span>
+                            </span>
+
+                            <span class="col-wrap" data-ng-class="{'text-muted': !scheduledProgram.entity.active}">
+                                {{scheduledProgram.entity.program.name}}
+                                <span data-ng-hide="scheduledProgram.entity.active"><em>(inactive)</em></span>
+                            </span>
+
+                            <button data-ng-show="showEnable" type="button"
+                                    class="pull-right btn btn-link btn-link-nopad"
+                                    style="text-transform: lowercase"
+                                    data-ng-disabled="scheduledProgram.whenSaving"
+                                    data-ng-click="toggleProgramActivation(encounter, scheduledProgram, scheduledProgramForm_{{scheduledProgram.entity.id}}, {{$index}})"
+                                    aria-label="Disable Scheduled Program">
+                                    <span style="margin-right: 23px;">
+                                        {{scheduledProgram.entity.active ? 'deactivate' : 'reactivate'}}
+                                    </span>
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="row" data-ng-show="scheduledProgram.showDetails">
+            <div class="col-md-12">
+                <div class="col-md-12">
+                    <label class="text-muted" style="padding: 10px 0 0 0;" for="accessCode_{{scheduledProgram.entity.accessCode}}">Access Code</label>
+
+                    <div class="entity-value">
+                        {{scheduledProgram.entity.accessCode}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="col-md-4">
+                    <label class="text-muted" style="padding: 10px 0 0 0;" for="viewByDate_{{scheduledProgram.entity.id}}">View-by Date</label>
+
+                    <div class="entity-value" style="line-height: 1.2;">
+                        {{scheduledProgram.entity.viewByDate}}
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="text-muted" style="padding: 10px 0 0 0;" for="location_{{scheduledProgram.entity.id}}">PROVIDER</label>
+
+                    <div class="entity-value" style="line-height: 1.2;">
+                        <a href="#/providers/{{scheduledProgram.entity.provider.id}}" target="_blank">
+                            {{scheduledProgram.entity.provider.fullName}}
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="text-muted" style="padding: 10px 0 0 0;" for="provider_{{scheduledProgram.entity.id}}">LOCATION</label>
+
+                    <div class="entity-value" style="line-height: 1.2;">
+                        <a href="#/locations/{{scheduledProgram.entity.location.id}}" target="_blank">
+                            {{scheduledProgram.entity.location.name}}
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="col-md-12">
+                    <label class="text-muted">Questions</label>
+
+                    <div class="entity-value">
+                        {{scheduledProgram.scheduledProgramNotes.note}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="col-md-12">
+                    <label class="text-muted">Program Activity</label>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

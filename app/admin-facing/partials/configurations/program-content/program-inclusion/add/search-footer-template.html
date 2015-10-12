@@ -1,0 +1,16 @@
+<div class="modal-footer">
+     <button type="button" class="btn btn-success"
+             data-ng-if="hasProgramsAdded()"
+             data-ng-disabled="whenSaving"
+             data-ng-click="save(false)">Save
+     </button>
+     <button type="button" class="btn btn-default"
+             data-ng-if="hasProgramsAdded()"
+             data-ng-disabled="whenSaving"
+             data-ng-click="save(true)">Save & Add Another
+     </button>
+     <button type="button" class="btn btn-cancel"
+            data-ng-click="hideAddProgramModal()">cancel
+     </button>
+</div>
+
