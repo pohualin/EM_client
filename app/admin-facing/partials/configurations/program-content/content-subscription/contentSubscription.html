@@ -81,6 +81,13 @@
 
 </div>
 
+<div data-ng-if="noneSelected">
+         <div class="row" >
+            <div data-ng-include="'admin-facing/partials/configurations/program-content/program-inclusion/view/view_program_inclusion.html'"></div>
+         </div>
+</div>
+
+
 <div data-ng-if="!noneSelected">
 <div class="row" data-ng-if="faithBased">
 <p/>
