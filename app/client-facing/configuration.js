@@ -219,7 +219,7 @@ angular.module('emmiManager', [
                 path === '/viewSecurityQuestions';
         };
 
-        $rootScope.$on('$routeChangeStart', function (event, next, current) {
+        $rootScope.$on('$routeChangeStart', function (event, next) {
             $rootScope.isAuthorized = AuthSharedService.isAuthorized;
             $rootScope.userRoles = USER_ROLES;
             if (!$rootScope.isSystemRoute()) {
