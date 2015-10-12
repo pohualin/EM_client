@@ -48,7 +48,9 @@ angular.module('emmiManager')
                 access: {
                     authorizedRoles: [USER_ROLES.teamScheduler, USER_ROLES.admin]
                 },
-                resolve: requiredResources
+                reloadOnSearch: false,
+                resolve: requiredResources,
+                title: 'Select Programs to Schedule'
 
             })
             .when('/teams/:teamId/schedule/patients', {
@@ -57,7 +59,9 @@ angular.module('emmiManager')
                 access: {
                     authorizedRoles: [USER_ROLES.teamScheduler, USER_ROLES.admin]
                 },
-                resolve: requiredResources
+                reloadOnSearch: true,
+                resolve: requiredResources,
+                title: 'Search Patients'
             })
             .when('/teams/:teamId/encounter/:encounterId/instructions', {
                 templateUrl: 'client-facing/schedule/instructions/main.html',
@@ -65,6 +69,7 @@ angular.module('emmiManager')
                 access: {
                     authorizedRoles: [USER_ROLES.all]
                 },
+                reloadOnSearch: false,
                 resolve: {
                     'scheduledPrograms': ['$q', '$route', 'AuthSharedService', 'ScheduleService',
                         function ($q, $route, AuthSharedService, ScheduleService) {
@@ -86,7 +91,8 @@ angular.module('emmiManager')
                             return deferred.promise;
                         }
                     ]
-                }
+                },
+                title: 'Schedule Summary'
             })
             .when('/teams/:teamId/allPatients', {
                 templateUrl: 'client-facing/schedule/patient/view/list.html',
@@ -94,7 +100,17 @@ angular.module('emmiManager')
                 access: {
                     authorizedRoles: [USER_ROLES.teamScheduler, USER_ROLES.admin]
                 },
-                resolve: requiredResources
+                resolve: requiredResources,
+                title: 'All Patients'
+            })
+            .when('/teams/:teamId/patient/:patientId', {
+                templateUrl: 'client-facing/schedule/patient/view/details.html',
+                controller: 'PatientScheduleDetailsController',
+                access: {
+                    authorizedRoles: [USER_ROLES.teamScheduler, USER_ROLES.admin]
+                },
+                resolve: requiredResources,
+                title: 'Encounter History'
             })
         ;
     })
