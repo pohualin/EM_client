@@ -13,7 +13,6 @@ angular.module('emmiManager')
                 access: {
                     authorizedRoles: [USER_ROLES.all]
                 },
-                reloadOnSearch: false,
                 resolve: {
                     'csrf': ['API', '$http', function(API, $http){
                         // call the webapi to get an XSRF-TOKEN

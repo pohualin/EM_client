@@ -11,7 +11,6 @@ angular.module('emmiManager')
                 access: {
                     authorizedRoles: [USER_ROLES.all]
                 },
-                reloadOnSearch: false,
                 resolve: {
                     account: ['AuthSharedService','$q', function (AuthSharedService,$q) {
                         var deferred = $q.defer();

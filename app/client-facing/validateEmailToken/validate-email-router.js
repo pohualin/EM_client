@@ -11,7 +11,6 @@ angular.module('emmiManager')
                 access: {
                     authorizedRoles: [USER_ROLES.all]
                 },
-                reloadOnSearch: false,
                 resolve: {
                     validationKey: ['$route', '$q', function ($route, $q) {
                         var deferred = $q.defer();
