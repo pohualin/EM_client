@@ -16,9 +16,6 @@
                 ScheduledProgramFactory.team = team;
                 ScheduledProgramFactory.patient = team.patient.entity;
 
-                // Pass URL paramters to the view for URL creation.
-                $scope.params = $location.search();
-
                 ScheduleService.loadTeamSchedulingConfiguration(team).then(function (teamSchedulingConfiguration) {
                     ScheduledProgramFactory.teamSchedulingConfiguration = teamSchedulingConfiguration;
                 });

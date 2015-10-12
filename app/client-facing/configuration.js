@@ -221,10 +221,9 @@ angular.module('emmiManager', [
 
         $rootScope.$on('$routeChangeStart', function (event, next, current) {
 
-            // If we have URL parameters, lets pass them on to the new route/location/page.
+            // If we have URL parameters, lets pass them into to the new page's parameter object.
             if (current && current.params) {
-                // .replace() ensures we don't add a new window.history entry.
-                $location.search(current.params).replace();
+                angular.extend(next.params, current.params);
             }
 
             $rootScope.isAuthorized = AuthSharedService.isAuthorized;
@@ -240,9 +239,7 @@ angular.module('emmiManager', [
         });
 
         $rootScope.$on('$routeChangeSuccess', function (e, current) {
-
             $rootScope.currentRouteQueryString = arrays.toQueryString(current.params);
-
             // hide all modals
             $rootScope.killAllModals();
             if ($rootScope.isSystemRoute() || $rootScope.shouldCloseAlertsRoute()) {

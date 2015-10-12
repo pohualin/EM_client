@@ -37,10 +37,7 @@ angular.module('emmiManager')
 
             $scope.performSearch = function (team, query, sort, size, page) {
 
-                // Append or replace the query parameter on URL
-                var existingParams = $location.search();
-                existingParams.q = query;
-                $location.search(existingParams);
+                $location.search({'q': query}).replace();
 
                 SearchPatientService.search(team, query, sort, size, page).then(function (response) {
                     $scope.handleResponse(response, contentProperty);

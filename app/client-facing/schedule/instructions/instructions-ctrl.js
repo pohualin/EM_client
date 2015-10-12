@@ -19,10 +19,6 @@
                 $scope.team = $scope.scheduledPrograms[0].entity.team;
                 $scope.encounter = $scope.scheduledPrograms[0].entity.encounter;
 
-                // Pass URL paramters to the view for URL creation.
-                $scope.params = $location.search();
-
-
                 /**
                  * Fill iframe with English instruction
                  */
