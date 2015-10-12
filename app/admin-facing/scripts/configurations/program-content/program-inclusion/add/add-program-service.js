@@ -11,11 +11,11 @@ angular.module('emmiManager')
                 return {'activeTab' : activeTab, 'data' : [
                     {
                         'title': 'Client Programs',
-                        'template': 'admin-facing/partials/configurations/program-content/program-inclusion/program_table_filter.html'
+                        'template': 'admin-facing/partials/configurations/program-content/program-inclusion/add/program_table_filter.html'
                     },
                     {
                         'title': 'Search all programs',
-                        'template': 'admin-facing/partials/configurations/program-content/program-inclusion/program_table.html'
+                        'template': 'admin-facing/partials/configurations/program-content/program-inclusion/add/program_table.html'
                     }]};
             }
         };
