@@ -1,15 +1,18 @@
 'use strict';
 
 angular.module('emmiManager')
-    .controller('PatientScheduleDetailsController', ['$scope', 'team', 'client', 'PatientScheduleDetailsService',
-        function($scope, team, client, PatientScheduleDetailsService){
+    .controller('PatientScheduleDetailsController', ['team', 'client', 'PatientScheduleDetailsService',
+        function(team, client, PatientScheduleDetailsService) {
+            var that = this;
 
-        $scope.team = team;
+            this.team = team;
+            this.client = client;
+            this.encounters = PatientScheduleDetailsService.getEncounters();
 
-        PatientScheduleDetailsService.getPatientScheduleDetails(team, team.patient).then(function(response){
-            $scope.scheduledProgs = response;
-        });
-
-    }
-    ])
-;
+            (function init() {
+                PatientScheduleDetailsService.updateEncounters(team).then(function() {
+                    that.encounters = PatientScheduleDetailsService.getEncounters();
+                });
+            })();
+        }
+]);

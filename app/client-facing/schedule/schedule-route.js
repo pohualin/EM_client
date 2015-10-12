@@ -71,7 +71,7 @@ angular.module('emmiManager')
                             var deferred = $q.defer();
                             AuthSharedService.currentUser().then(function (loggedInUser) {
                                 ScheduleService.loadEncounter(loggedInUser.clientResource,
-                                    $route.current.params.teamId, 
+                                    $route.current.params.teamId,
                                     $route.current.params.encounterId)
                                     .then(function (response) {
                                         if (response) {
@@ -91,14 +91,6 @@ angular.module('emmiManager')
             .when('/teams/:teamId/allPatients', {
                 templateUrl: 'client-facing/schedule/patient/view/list.html',
                 controller: 'ViewPatientController',
-                access: {
-                    authorizedRoles: [USER_ROLES.teamScheduler, USER_ROLES.admin]
-                },
-                resolve: requiredResources
-            })
-            .when('/teams/:teamId/patient/:patientId', {
-                templateUrl: 'client-facing/schedule/patient/view/details.html',
-                controller: 'PatientScheduleDetailsController',
                 access: {
                     authorizedRoles: [USER_ROLES.teamScheduler, USER_ROLES.admin]
                 },
