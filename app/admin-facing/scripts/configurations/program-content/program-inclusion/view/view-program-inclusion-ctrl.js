@@ -74,7 +74,7 @@ angular.module('emmiManager')
 		
 	      
        /**
-         * Return true if any provider is selected or SelectAllTeamProvidersFactory.isSelectAll() returns true
+         * Return true if any program is selected or SelectAllProgramContentsFactory.isSelectAll() returns true
          */
         $scope.hasProgramsDelete = function() {
             // Any programs is selected or select all is checked
@@ -82,7 +82,7 @@ angular.module('emmiManager')
         };
 
         /**
-         * Refresh team locations and team providers
+         * Refresh programs inclusion
          */
         $scope.refreshViewProgramInclusionPage = function () {
             $scope.loading = true;

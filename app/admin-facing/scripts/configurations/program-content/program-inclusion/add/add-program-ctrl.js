@@ -33,17 +33,14 @@ angular.module('emmiManager')
          * Add program inclusion to a client
          */
         $scope.addPrograms  = function (activeTab) {
-        	 // return ProgramContentInclusionService.getClientProgramContentInclusion().then(function (clientProgramInclusion) {
               var programContentTemplate = 'admin-facing/partials/configurations/program-content/program-inclusion/add/search-program-content-inclusion-tabs.html';
-   			  $scope.activeTab = activeTab ? activeTab : 0;
 		      $modal({
    			      scope: $scope,
                   template: programContentTemplate,
                   animation: 'none',
                   backdropAnimation: 'emmi-fade',
                   show: true,
-                  backdrop: 'static'});
-       	  // });
+                  backdrop: 'static'});   	  
         };
         
         ProgramContentInclusionService.getSpecialtiesList().then(function (specialties) {
@@ -115,19 +112,23 @@ angular.module('emmiManager')
             	 $scope.whenSaving = true;
             	 if (addAnother) {
             		 $scope.successAlert(programToSave, '#modal-messages-container');
+            		 $scope.hideAddProgramModal();
+            		 AddProgramsFactory.resetSelectedClientPrograms();
+                     AddProgramsFactory.resetSelectedPrograms();
+            		 $scope.addPrograms();
+            		 focus('programSearchFocus');
                  } else {
                 	 $scope.successAlert(programToSave, '#messages-container');
                      $scope.hideAddProgramModal();
-                     focus('programSearchFocus');
                  }
-                 //$scope.refreshLocationsAndProviders();
                  $scope.$emit('refreshClientProgramsPage');
                  $scope.$emit('refreshProgramsSearchPage');
+                
              }).finally(function () {
                  $scope.whenSaving = false;
                  $scope.programFormSubmitted = false;
              });
-      
+ 
 		};
 		
 		$scope.$on('refreshProgramsSearchPage', function(){
@@ -159,7 +160,7 @@ angular.module('emmiManager')
    
         
         /**
-         * Hide model when cancel button is hit. Also reset selectedClientProviders and selectedProviders
+         * Hide model when cancel button is hit. Also reset selectedClientPrograms and selectedPrograms
          */
         $scope.hideAddProgramModal = function () {
             $scope.$hide();
@@ -169,7 +170,7 @@ angular.module('emmiManager')
         
         
         /**
-         * Return true if any provider is selected or SelectAllTeamProvidersFactory.isSelectAll() returns true
+         * Return true if any program is selected or SelectAllProgramContentsFactory.isSelectAll() returns true
          */
         $scope.hasProgramsAdded = function() {
             // Any programs is selected or select all is checked
@@ -214,7 +215,7 @@ angular.module('emmiManager')
           
            /*
             * 
-            * Then check the check box on the provider and call onCheckboxChange
+            * Then check the check box on the program and call onCheckboxChange
             */
            $scope.$on('selectAllChecked', function () {
         	   angular.forEach($scope.programs, function(program){
@@ -227,7 +228,7 @@ angular.module('emmiManager')
            /**
             * Listen on 'selectAllUnchecked' event
             * 
-            * Reset selectedClientProviders
+            * Reset selectedClientPrograms
             * Reset exclusioSet
             * Uncheck all checked check boxes in the page
             */

@@ -14,7 +14,7 @@
     </ol>
 </header>
 <div id="app-content" role="main" class="app-content app-content-with-sidebar container" data-ng-cloak>
-	<form name="contentSubscriptionForm" novalidate data-unsaved-warning-form>
+	
     <div class="row">
         <div data-emmi-sidebar class="sidebar" data-ng-include="'admin-facing/partials/configurations/nav.html'"></div>
         <div class="main-content">
@@ -22,14 +22,12 @@
                 <h1>
     				Available Program Content
 				</h1>
-				<div class="row" data-ng-show="programFormSubmitted">
-                        <div class="col-md-12" id="messages-container"></div>
-                </div>
-				<div  data-ng-include="'admin-facing/partials/configurations/program-content/content-subscription/contentSubscription.html'"></div>
+				
+				<div  data-ng-include="'admin-facing/partials/configurations/program-content/contentSubscription.html'"></div>
                 
             </div><!-- .layout-card -->
         </div><!-- .main-content -->
     </div><!-- .row -->
-    </form>
+   
 </div><!-- .container -->
 <footer class="footer" data-ng-include="'admin-facing/partials/common/footer.tpl.html'"></footer>
