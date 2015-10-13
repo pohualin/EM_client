@@ -17,7 +17,7 @@
                         </button>
                     </div>
                 </div> -->
-                <div class="program-list_wrapper" data-ng-show="programs">
+                <div class="program-list_wrapper" data-ng-show="programs" data-scrollbar="{autoUpdate: true, alwaysVisible: true, axis : 'y'}">
                     <ul>
                         <li data-ng-repeat="program in programs" data-ng-class="{ 'added' : program.disabled }">
                             <div class="checkbox">

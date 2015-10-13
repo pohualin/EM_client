@@ -365,6 +365,7 @@ input[type="checkbox"]:disabled + label:before {
 select.form-control {
     + .chosen-container {
         .chosen-drop {
+            background: $gray-lighter;
             margin: 0;
             border: 0;
             box-shadow: 0px 2px 0px 0px rgba(0,0,0,0.50);
@@ -601,6 +602,22 @@ select.form-control {
         max-height: 430px;
         overflow: auto;
         margin: 0 0 26px;
+        .scroll-viewport {
+            height: 430px;
+            .scroll-overview {
+                width: 95%;
+            }
+        }
+        .scroll-thumb {
+            background: $brand-primary;
+            border-radius: 0;
+            margin: 2px;
+            width: 4px;
+        }
+        .scroll-bar {
+            background-color: #e8e8e8;
+            border-radius: 0;
+        }
     }
     ul {
         margin: 0;
