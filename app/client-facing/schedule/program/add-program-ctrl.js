@@ -23,9 +23,9 @@ angular.module('emmiManager')
                 location: '',
                 viewByDate: ''
             };
-            
+
             $scope.fiveYearsFromTodayString = moment().startOf('day').add(5, 'year').format('MM/DD/YYYY');
-            
+
             /**
              * Watch teamSchdulingConfiguration and set new values to scope
              */
@@ -347,7 +347,7 @@ angular.module('emmiManager')
                 if ($scope.selectedPrograms && $scope.selectedPrograms.length === 0) {
                     $scope.useFirstProgram = true;
                 }
-                
+
                 $scope.selectedPrograms = $scope.selectedPrograms.concat($scope.selectedProgramsHolder);
                 angular.forEach($scope.selectedProgramsHolder, function (programInHolder) {
                     programInHolder.useFirstProgram = $scope.useFirstProgram;

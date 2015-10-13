@@ -210,6 +210,10 @@
     .section-nav-account_client {
         display: block;
         font-weight: 300;
+        padding-bottom: 1px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
     }
 }
 
