@@ -821,3 +821,14 @@ select.form-control {
         padding-right: 0;
     }
 }
+
+/* _____ BACK BUTTON _____ */
+
+.btn-back {
+    font-size: 16px;
+    margin-left: -20px;
+    line-height: 40px;
+    &:hover {
+        text-decoration: none;
+    }
+}

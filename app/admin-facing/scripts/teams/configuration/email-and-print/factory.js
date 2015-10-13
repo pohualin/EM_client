@@ -1,25 +1,25 @@
 (function (angular) {
-'use strict';
+    'use strict';
 
-angular.module('emmiManager')
+    angular.module('emmiManager')
 
-/**
- * 
- */
-.factory('TeamEmailNotificationsAndPrintInstructionsControllerFactory',  [
-    function () {
-        this.team = null;
-        this.whenSaving = false;
-        this.formSubmitted = false;
-        this.showButton = false;
-        
-        this.reset = function (teamResource) {
-            this.team = null;
-            this.whenSaving = false;
-            this.formSubmitted = false;
-            this.showButton = false;
-        };
-        
-        return this;
-    }]);
+    /**
+     *
+     */
+        .factory('TeamEmailNotificationsAndPrintInstructionsControllerFactory', [
+            function () {
+                this.team = null;
+                this.whenSaving = false;
+                this.formSubmitted = false;
+                this.showButton = false;
+
+                this.reset = function (teamResource) {
+                    this.team = teamResource;
+                    this.whenSaving = false;
+                    this.formSubmitted = false;
+                    this.showButton = false;
+                };
+
+                return this;
+            }]);
 })(window.angular);

@@ -8,7 +8,7 @@ angular.module('emmiManager')
             .when('/editSecurityQuestions', {
                 templateUrl: 'client-facing/security_question/edit/secret-question-edit.html',
                 controller: 'SecretQuestionEditController',
-                title: 'Edit security Question',
+                title: 'Edit Security Questions',
                 access: {
                     authorizedRoles: [USER_ROLES.all]
                 },

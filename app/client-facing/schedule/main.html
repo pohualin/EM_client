@@ -8,6 +8,11 @@
 <div id="app-content" role="main" class="app-content container" data-ng-cloak>
     <div class="row">
         <div class="col-md-12">
+            <p><a href="#/teams/{{team.entity.id}}/schedule/patients?{{currentRouteQueryString}}" class="btn-back"><i class='icon-caret-left'></i> Patient Search</a></p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
             <div class="layout-card">
                 <div class="row" data-ng-include="'client-facing/schedule/patient/main.html'"></div>
             </div>

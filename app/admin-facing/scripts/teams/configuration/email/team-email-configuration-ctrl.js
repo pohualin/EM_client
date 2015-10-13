@@ -12,16 +12,16 @@ angular.module('emmiManager')
              * Save or update email notification configuration.
              * Fire an event to update print instruction configuration.
              */
-            $scope.$on('event:save-or-update-email-notification-configration', function () {
+            $scope.$on('event:save-or-update-email-notification-configuration', function () {
                 ClientTeamEmailConfigurationService
-                    .saveOrUpdateTeamEmailConfiguration(TeamEmailNotificationsAndPrintInstructionsControllerFactory.team, 
-                            $scope.emailConfigs).then(function (response) {
+                    .saveOrUpdateTeamEmailConfiguration(TeamEmailNotificationsAndPrintInstructionsControllerFactory.team,
+                    $scope.emailConfigs).then(function (response) {
                         $scope.originalEmailConfigs = response;
                         $scope.emailConfigs = angular.copy($scope.originalEmailConfigs);
                         $scope.$broadcast('event:save-or-update-print-instruction-configuration');
                     });
             });
-        
+
             /**
              * Reset email notification configuration to it's initial copy when cancel button is clicked
              */
@@ -29,11 +29,11 @@ angular.module('emmiManager')
                 $scope.emailConfigs = angular.copy($scope.originalEmailConfigs);
                 $scope.setEmailOption();
             });
-            
+
             /**
              * Calls when radio button is selected
              */
-            $scope.update = function() {
+            $scope.update = function () {
                 if ($scope.emailOptions.selected === $scope.emailOptions[0]) {
                     $scope.emailConfigs.entity.collectEmail = true;
                     $scope.emailConfigs.entity.requireEmail = false;
@@ -46,7 +46,7 @@ angular.module('emmiManager')
                 }
                 TeamEmailNotificationsAndPrintInstructionsControllerFactory.showButton = true;
             };
-            
+
             $scope.setShowButton = function () {
                 TeamEmailNotificationsAndPrintInstructionsControllerFactory.showButton = true;
             };
@@ -54,7 +54,7 @@ angular.module('emmiManager')
             /**
              * Select one of three options based on collectEmail and requireEmail
              */
-            $scope.setEmailOption = function() {
+            $scope.setEmailOption = function () {
                 if ($scope.emailConfigs.entity.collectEmail === true) {
                     if ($scope.emailConfigs.entity.requireEmail === true) {
                         $scope.emailOptions.selected = $scope.emailOptions[1];
@@ -65,22 +65,22 @@ angular.module('emmiManager')
                     $scope.emailOptions.selected = $scope.emailOptions[2];
                 }
             };
-            
+
             function init() {
                 $scope.emailOptions = [
-                    { id: 'emailExposed', displayText: 'Email exposed', rank: 0 },
-                    { id: 'emailExposedRequired', displayText: 'Email exposed and required', rank: 1 },
-                    { id: 'dontCollectEmail', displayText: 'Don\'t collect email', rank: 2 }
+                    {id: 'emailExposed', displayText: 'Email exposed', rank: 0},
+                    {id: 'emailExposedRequired', displayText: 'Email exposed and required', rank: 1},
+                    {id: 'dontCollectEmail', displayText: 'Don\'t collect email', rank: 2}
                 ];
                 $scope.emailOptions.selected = $scope.emailOptions[0];
-                
-                ClientTeamEmailConfigurationService.getTeamEmailConfiguration(TeamEmailNotificationsAndPrintInstructionsControllerFactory.team)
-                    .then(function (response) {
+
+                ClientTeamEmailConfigurationService.getTeamEmailConfiguration(
+                    TeamEmailNotificationsAndPrintInstructionsControllerFactory.team).then(function (response) {
                         $scope.originalEmailConfigs = response;
                         $scope.emailConfigs = angular.copy($scope.originalEmailConfigs);
                         $scope.setEmailOption();
                     });
             }
-            
+
             init();
-    }]);
+        }]);

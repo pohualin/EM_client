@@ -18,7 +18,8 @@ angular.module('emmiManager')
                 resolve: requiredResources
             })
             .when('/error', {
-                templateUrl: 'client-facing/main/err.html'
+                templateUrl: 'client-facing/main/err.html',
+                title: 'Error'
             })
             .when('/403', {
                 templateUrl: 'client-facing/main/403.html',
