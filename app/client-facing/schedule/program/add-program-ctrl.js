@@ -23,9 +23,9 @@ angular.module('emmiManager')
                 location: '',
                 viewByDate: ''
             };
-            
+
             $scope.fiveYearsFromTodayString = moment().startOf('day').add(5, 'year').format('MM/DD/YYYY');
-            
+
             /**
              * Watch teamSchdulingConfiguration and set new values to scope
              */
@@ -114,21 +114,6 @@ angular.module('emmiManager')
                     });
                 } else {
                     $scope.errorAlert.show();
-                }
-            };
-
-            /**
-             * Necessary to carry the view by date across versions of the form.
-             * This shouldn't be necessary but with out it the view by date is
-             * blanked out when the program is selected (or 'edited').
-             *
-             * @param form on which to find the view by date
-             */
-            var resetViewByDateField = function (form) {
-                if (form) {
-                    $timeout(function () {
-                        form.viewByDate.$setViewValue(form.viewByDate.$viewValue);
-                    });
                 }
             };
 
@@ -347,7 +332,7 @@ angular.module('emmiManager')
                 if ($scope.selectedPrograms && $scope.selectedPrograms.length === 0) {
                     $scope.useFirstProgram = true;
                 }
-                
+
                 $scope.selectedPrograms = $scope.selectedPrograms.concat($scope.selectedProgramsHolder);
                 angular.forEach($scope.selectedProgramsHolder, function (programInHolder) {
                     programInHolder.useFirstProgram = $scope.useFirstProgram;
