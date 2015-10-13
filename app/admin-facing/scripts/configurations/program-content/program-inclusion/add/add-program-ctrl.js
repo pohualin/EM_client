@@ -65,7 +65,7 @@ angular.module('emmiManager')
         
         $scope.setSelectedPrograms = function (programs) {
         	angular.forEach(programs, function (program) {
-                if (AddProgramsFactory.getSelectedPrograms()[program.entity.id]) {
+        		if (AddProgramsFactory.getSelectedPrograms()[program.entity.id]) {
                     program.entity.checked = true;
                 } else {
                     program.entity.checked = false;
@@ -77,10 +77,11 @@ angular.module('emmiManager')
          * Fetch next/previous page in Client Programs tab
          */
         $scope.fetchPageClientPrograms = function (href) {
-            $scope.loading = true;
+        	
+        	$scope.loading = true;
             ProgramContentInclusionService.fetchProgramPage(href).then(function (programPage) {
                 $scope.handleResponse(programPage, managedClientProgramList);
-                $scope.setSelectedPrograms($scope.clientPrograms);
+                $scope.setSelectedPrograms($scope.programs);
                 if(SelectAllProgramContentsFactory.isSelectAll()){
                     $scope.$emit('selectAllChecked');
                 }
@@ -210,7 +211,7 @@ angular.module('emmiManager')
          * Called when status changed
          */
         $scope.statusChange = function () {
-            $scope.loading = true;
+        	$scope.loading = true;
         };
           
            /*
@@ -234,6 +235,7 @@ angular.module('emmiManager')
             */
            $scope.$on('selectAllUnchecked', function () {
          	   AddProgramsFactory.resetSelectedClientPrograms();
+         	   AddProgramsFactory.resetSelectedPrograms();
         	   SelectAllProgramContentsFactory.resetSelectedPossibleProgramIds();
         	   SelectAllProgramContentsFactory.resetExclusionSet();
                $scope.setSelectedPrograms($scope.programs);
@@ -246,8 +248,8 @@ angular.module('emmiManager')
             */
            $scope.onCheckboxChange = function (programResource) {
         	  if(!SelectAllProgramContentsFactory.isSelectAll()) {
-            	   if (!programResource.entity.checked) {
-                	    $scope.removeFromSelectedClientPrograms(programResource);
+        		   if (!programResource.entity.checked) {
+            		    $scope.removeFromSelectedClientPrograms(programResource);
                    } else {
                 	    $scope.addToSelectedClientPrograms(programResource);
                    }
@@ -273,11 +275,13 @@ angular.module('emmiManager')
            
            $scope.addToSelectedClientPrograms = function(programResource) {
                AddProgramsFactory.getSelectedClientPrograms()[programResource.entity.id] = programResource.entity;
+               AddProgramsFactory.getSelectedPrograms()[programResource.entity.id] = programResource.entity;
                SelectAllProgramContentsFactory.getSelectedPossibleProgramIds()[programResource.entity.id] = programResource.entity.id;
            };
            
            $scope.removeFromSelectedClientPrograms = function(programResource) {
                delete AddProgramsFactory.getSelectedClientPrograms()[programResource.entity.id];
+               delete AddProgramsFactory.getSelectedPrograms()[programResource.entity.id];
                delete SelectAllProgramContentsFactory.getSelectedPossibleProgramIds()[programResource.entity.id];
            };
            
