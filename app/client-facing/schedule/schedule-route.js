@@ -50,7 +50,7 @@ angular.module('emmiManager')
                 },
                 reloadOnSearch: false,
                 resolve: requiredResources,
-                title: 'Select Programs to Schedule'
+                title: 'Schedule Emmi Programs'
 
             })
             .when('/teams/:teamId/schedule/patients', {
