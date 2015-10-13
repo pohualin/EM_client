@@ -10,7 +10,6 @@
             '$alert', 'ScheduleService', '$location', 'UriTemplate', 'PatientEmailService', 'PatientPhoneService',
             function ($scope, team, client, ScheduledProgramFactory, $alert, ScheduleService, $location, UriTemplate, PatientEmailService, PatientPhoneService) {
                 $scope.team = team;
-                $scope.page.setTitle('Schedule Emmi Program - ' + team.entity.name);
                 $scope.client = client;
                 $scope.patient = team.patient.entity;
                 ScheduledProgramFactory.team = team;

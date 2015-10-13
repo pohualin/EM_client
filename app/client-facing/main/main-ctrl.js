@@ -15,7 +15,7 @@ angular.module('emmiManager')
 
             if ($scope.authenticated) {
                 // user is logged in
-                $scope.page.setTitle(account.clientResource.entity.name + ' Home');
+                $scope.page.setTitle('Home');
 
                 // see if the password is going to expire soon
                 MainService.checkPasswordExpiration(account).then(function (response) {
