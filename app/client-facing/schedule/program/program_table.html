@@ -19,10 +19,10 @@
                 </div> -->
                 <div class="program-list_wrapper" data-ng-show="programs" data-scrollbar="{autoUpdate: true, alwaysVisible: true, axis : 'y'}">
                     <ul>
-                        <li data-ng-repeat="program in programs" data-ng-class="{ 'added' : program.disabled }">
+                        <li data-ng-repeat="program in programs" data-ng-class="{ 'added' : program.disabled }" data-ng-click="toggleSelectedProgram(program)">
                             <div class="checkbox">
                                 <input type="checkbox" id="program_{{program.entity.id}}"
-                                    data-ng-disabled="program.disabled" data-ng-model="program.selected" data-ng-change="selectProgram(program,addProgramForm)"/>
+                                    data-ng-disabled="program.disabled" data-ng-model="program.selected" data-ng-change="selectProgram(program, addProgramForm)"/>
                                 <label for="program_{{program.entity.id}}">
                                     <span data-ng-if="program.entity.type.name === 'MULTIMEDIA PROGRAM'" class="program-list_item-icon icon-film" aria-label="Multimedia" title="Multimedia"></span>
                                     <span data-ng-if="program.entity.type.name === 'ARTICLE'" class="program-list_item-icon icon-text-doc" aria-label="Article" title="Article"></span>
