@@ -16,7 +16,7 @@ gulp.task('client-styles', function () {
         }))
         .pipe(gulp.dest('.tmp/styles'))
         .pipe(gulp.dest('app/styles'))
-        .pipe($.size({title: 'styles', showFiles: true}));
+        .pipe($.size({title: 'client-styles', showFiles: true}));
 });
 
 gulp.task('admin-styles', function () {
@@ -29,7 +29,7 @@ gulp.task('admin-styles', function () {
         }))
         .pipe(gulp.dest('.tmp/styles'))
         .pipe(gulp.dest('app/styles'))
-        .pipe($.size({title: 'styles', showFiles:true}));
+        .pipe($.size({title: 'admin-styles', showFiles: true}));
 });
 
 gulp.task('admin-scripts', function () {
