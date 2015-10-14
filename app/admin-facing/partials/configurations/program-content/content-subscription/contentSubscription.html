@@ -1,9 +1,8 @@
 
 
 <form name="contentSubscriptionForm" class="form" data-ng-controller="ClientProgramContentConfigurationController" novalidate >
-
-	<div class="row" data-ng-show="contentSubscriptionForm.$invalid">
-              <div class="col-md-12" id="message-container"></div>
+    <div class="row" data-ng-show="contentSubscriptionForm.$invalid && contentSubscriptionFormSubmitted">
+              <div class="col-md-12" id="content-error-message-container"></div>
     </div>
 <div data-ng-if="!loading" >
 <div class="row">
