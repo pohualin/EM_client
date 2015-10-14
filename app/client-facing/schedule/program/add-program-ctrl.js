@@ -162,15 +162,9 @@ angular.module('emmiManager')
             };
 
             $scope.toggleSelectedProgram = function(programResource) {
-                if (!('disabled' in programResource) || ('disabled' in programResource && programResource.disabled === false)) {
-                    if ('selected' in programResource) {
-                        programResource.selected = !programResource.selected;
-                    } else {
-                        programResource.selected = true;
-                    }
+                programResource.selected = !programResource.selected;
 
-                    $scope.selectProgram(programResource);
-                }
+                $scope.selectProgram(programResource);
             };
 
             /**

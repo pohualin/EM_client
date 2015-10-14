@@ -19,7 +19,8 @@
                 </div> -->
                 <div class="program-list_wrapper" data-ng-show="programs" data-scrollbar="{autoUpdate: true, alwaysVisible: true, axis : 'y'}">
                     <ul>
-                        <li data-ng-repeat="program in programs" data-ng-class="{ 'added' : program.disabled }" data-ng-click="toggleSelectedProgram(program)">
+                        <li data-ng-repeat="program in programs" data-ng-class="{ 'added' : program.disabled }"
+                            data-ng-click="!program.disabled && toggleSelectedProgram(program)">
                             <div class="checkbox">
                                 <input type="checkbox" id="program_{{program.entity.id}}"
                                        data-ng-disabled="program.disabled"
