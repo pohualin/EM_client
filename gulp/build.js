@@ -6,11 +6,27 @@ var $ = require('gulp-load-plugins')();
 var maven = require('gulp-maven-deploy');
 var mainBowerFiles = require('main-bower-files');
 
-gulp.task('styles', function () {
-    return gulp.src(['app/styles/theme/admin/main.scss', 'app/styles/theme/client/main.scss'])
-        .pipe($.rubySass({style: 'compressed', sourcemap: true}))
+gulp.task('client-styles', function () {
+    return gulp.src(['app/styles/theme/client/main.scss'])
+        .pipe($.rubySass({style: 'expanded', sourcemap: true}))
         .pipe($.autoprefixer('last 1 version'))
-        .pipe($.sourcemaps.write())
+        .pipe($.sourcemaps.write({
+            includeContent: false,
+            sourceRoot: '/app'
+        }))
+        .pipe(gulp.dest('.tmp/styles'))
+        .pipe(gulp.dest('app/styles'))
+        .pipe($.size({title: 'styles', showFiles: true}));
+});
+
+gulp.task('admin-styles', function () {
+    return gulp.src(['app/styles/theme/admin/main.scss'])
+        .pipe($.rubySass({style: 'expanded', sourcemap: true}))
+        .pipe($.autoprefixer('last 1 version'))
+        .pipe($.sourcemaps.write({
+            includeContent: false,
+            sourceRoot: '/app'
+        }))
         .pipe(gulp.dest('.tmp/styles'))
         .pipe(gulp.dest('app/styles'))
         .pipe($.size({title: 'styles', showFiles:true}));
@@ -85,7 +101,9 @@ gulp.task('router-partials', function () {
         .pipe($.size({title: 'router-partials', showFiles: true}));
 });
 
-gulp.task('html', ['styles', 'admin-scripts', 'client-scripts', 'router-scripts', 'admin-partials', 'client-partials', 'router-partials', 'styleguide'],
+gulp.task('html', ['admin-styles', 'admin-scripts', 'admin-partials',
+        'client-styles', 'client-scripts', 'client-partials',
+        'router-scripts', 'router-partials', 'styleguide'],
     function () {
     var jsFilter = $.filter('**/*.js');
     var cssFilter = $.filter('**/*.css');
