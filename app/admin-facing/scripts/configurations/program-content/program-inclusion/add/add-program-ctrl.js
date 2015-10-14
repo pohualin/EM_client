@@ -112,14 +112,14 @@ angular.module('emmiManager')
             ProgramContentInclusionService.saveAll(programToSave).then(function (clientProgramInclusion) {
             	 $scope.whenSaving = true;
             	 if (addAnother) {
-            		 $scope.successAlert(programToSave, '#modal-messages-container');
             		 $scope.hideAddProgramModal();
             		 AddProgramsFactory.resetSelectedClientPrograms();
                      AddProgramsFactory.resetSelectedPrograms();
             		 $scope.addPrograms();
             		 focus('programSearchFocus');
+            		 $scope.successAlert(programToSave, '#modal-save-content-container');
                  } else {
-                	 $scope.successAlert(programToSave, '#messages-container');
+                	 $scope.successAlert(programToSave, '#save-message-container');
                      $scope.hideAddProgramModal();
                  }
                  $scope.$emit('refreshClientProgramsPage');
@@ -153,7 +153,7 @@ angular.module('emmiManager')
                 'The selected programs have been successfully added.';
             $alert({
                 content: message,
-                container: container
+               
             });
         };
         
@@ -258,7 +258,7 @@ angular.module('emmiManager')
                        $scope.removeFromSelectedClientPrograms(programResource);
                        $scope.addToExclusionSet(programResource);
                    } else {
-                       $scope.removeFromExclusionSet(programResource);
+                	   $scope.removeFromExclusionSet(programResource);
                        $scope.addToSelectedClientPrograms(programResource);
                    }
                }
@@ -266,11 +266,11 @@ angular.module('emmiManager')
            
            
            $scope.addToExclusionSet = function(programResource) {
-               SelectAllProgramContentsFactory.getExclusionSet()[programResource.entity.id] = programResource.entity;
+        	  SelectAllProgramContentsFactory.getExclusionSet()[programResource.entity.id] = programResource.entity;
            };
            
            $scope.removeFromExclusionSet = function(programResource) {
-               delete SelectAllProgramContentsFactory.getExclusionSet()[programResource.entity.id];
+        	   delete SelectAllProgramContentsFactory.getExclusionSet()[programResource.entity.id];
            };
            
            $scope.addToSelectedClientPrograms = function(programResource) {

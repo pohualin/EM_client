@@ -1,9 +1,8 @@
 
 
 <form name="contentSubscriptionForm" class="form" data-ng-controller="ClientProgramContentConfigurationController" novalidate >
-
-	<div class="row" data-ng-show="contentSubscriptionForm.$invalid">
-              <div class="col-md-12" id="message-container"></div>
+    <div class="row" data-ng-show="contentSubscriptionForm.$invalid && contentSubscriptionFormSubmitted">
+              <div class="col-md-12" id="content-error-message-container"></div>
     </div>
 <div data-ng-if="!loading" >
 <div class="row">
@@ -38,7 +37,7 @@
                     data-ng-model="contentSubscriptionHolder.entity.contentSubscription"
                     data-ng-change="onChangePrimaryList(contentSubscriptionHolder)"
                     data-chosen data-disable-search="true" data-placeholder="Select...">   
-                <option value="" title="latestPrimaryContentList">Select...</option>
+                <option value="">Select...</option>
                 </select>   
             </div>         
            </div>
@@ -59,7 +58,7 @@
                     	data-ng-model="sourceContentHolder.entity.contentSubscription"
                     	data-ng-change="onChangeSourceContent(sourceContentHolder)"
                     	required data-placeholder="Select...">
-                		<option value="" title="sourceContentList" class="form-control">Select...</option>
+                		<option value="">Select...</option>
                 		</select>
                 		
            			</div>
