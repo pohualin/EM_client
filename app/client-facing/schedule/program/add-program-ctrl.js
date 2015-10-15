@@ -161,6 +161,12 @@ angular.module('emmiManager')
                 }
             };
 
+            $scope.toggleSelectedProgram = function(programResource) {
+                programResource.selected = !programResource.selected;
+
+                $scope.selectProgram(programResource);
+            };
+
             /**
              * Remove a schedule program card
              */
