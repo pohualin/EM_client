@@ -32,8 +32,9 @@
                         </li>
                     </ul>
                 </div>
-                <div class="table-no-results"  data-ng-hide="programs">
-                    <span>No results found, please try again.</span>
+                <div class="program-list_no-results" data-ng-show="programSearchPerformed && programs.length === 0">
+                    <div class="title">No Results</div>
+                    <span class="body">Sorry, we didn't come up with any results for that search.</span>
                 </div>
                 <button class="btn btn-warning" type="button"
                       data-ng-disabled="!selectedProgramsHolder.length || whenSaving"
