@@ -55,7 +55,7 @@
                                data-bs-tooltip data-placement="right" data-type="danger" data-container="body"
                                data-title="Required" aria-label="Required"></div>
                             <div data-ng-if="selectedProgram.useFirstProgram">
-                              <select id="programCard{{selectedProgram.program.entity.id}}Location" name="location" class="form-control"
+                                <select id="programCard{{selectedProgram.program.entity.id}}Location" name="location" class="form-control"
                                     data-ng-class="{'loading' : selectedProgram.loadingProviderLocation}"
                                     data-ng-disabled="!locations || locations.length === 0 || selectedProgram.loadingProviderLocation"
                                     data-ng-model="selectedProgram.firstProgramResource.location" data-ng-change="onLocationChangeAndUseFirstProgram(selectedProgram, $first)"
@@ -69,7 +69,7 @@
                               </select>
                             </div>
                             <div data-ng-if="!selectedProgram.useFirstProgram">
-                              <select id="programCard{{selectedProgram.program.entity.id}}Location" name="location" class="form-control"
+                                <select id="programCard{{selectedProgram.program.entity.id}}Location" name="location" class="form-control"
                                     data-ng-class="{'loading' : selectedProgram.loadingProviderLocation}"
                                     data-ng-disabled="!locations || locations.length === 0 || selectedProgram.loadingProviderLocation"
                                     data-ng-model="selectedProgram.location" data-ng-change="onLocationChange(selectedProgram)"

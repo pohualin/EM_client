@@ -24,15 +24,23 @@ angular.module('emmiManager')
                 $scope.filterSaveListAndSave();
                 
             }else {
-                if (!$scope.formAlert) {
-                    $scope.formAlert = $alert({
-                        content: 'Please correct the below information.',
-                        container: '#message-container',
-                        type: 'danger',
-                        show: true,
-                        dismissable: false
-                    });
-                }
+            	$scope.showErrorBanner();
+            }
+        };
+        
+        /**
+         * Create and show error banner
+         */
+        $scope.showErrorBanner = function () {
+            if (!$scope.ErrorAlert) {
+                $scope.ErrorAlert = $alert({
+                    content: 'Please correct the below information.',
+                    container: '#content-error-message-container',
+                    type: 'danger',
+                    placement: '',
+                    duration: false,
+                    dismissable: false
+                });
             }
         };
         
@@ -125,7 +133,7 @@ angular.module('emmiManager')
        });
        
        $scope.onChangePrimaryList = function(newSubscriptionHolder){
-    	   
+    	   $scope.resetSubscriptionForm(false);
     	     if((angular.isDefined($scope.contentSubscriptionHolder.entity.contentSubscription)) &&
                   ($scope.contentSubscriptionHolder.entity.contentSubscription !== null)){
                 	if($scope.contentSubscriptionHolder.entity.contentSubscription.name === 'None'){
@@ -170,6 +178,7 @@ angular.module('emmiManager')
          };
          $scope.onChangeSelectedPrimaryList = function(newSourceSubscriptionHolder){ 
         	   $scope.resetFaithBased(true);
+        	   $scope.resetSubscriptionForm(false);
         	   $scope.showButtons(true);
         	   $scope.fetchLatestPrimaryContentList(newSourceSubscriptionHolder, $scope.contentSubscriptionHolder);
          };
