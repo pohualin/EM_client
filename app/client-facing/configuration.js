@@ -1,363 +1,398 @@
-'use strict';
+(function (angular) {
+    'use strict';
 
-angular.module('emmiManager', [
-    'http-auth-interceptor',
-    'ngCookies',
-    'ngTouch',
-    'ngSanitize',
-    'ngResource',
-    'ngRoute',
-    'ngAnimate',
-    'hateoas',
-    'emmiManager.api',
-    'pascalprecht.translate',
-    'tmh.dynamicLocale',
-    'emmi.navbar',
-    'emmi.typeahead',
-    'emmi.chosen',
-    'ngTagsInput',
-    'mgcrea.ngStrap',
-    'emmi.inputMask',
-    'angularMoment',
-    'emmi-angular-multiselect',
-    'truncate',
-    'emmi.noDirtyCheck',
-    'headroom',
-    'ngTinyScrollbar',
-    'emmi.momentStrap'
-])
+    angular.module('emmiManager', [
+        'http-auth-interceptor',
+        'ngCookies',
+        'ngTouch',
+        'ngSanitize',
+        'ngResource',
+        'ngRoute',
+        'ngAnimate',
+        'hateoas',
+        'emmiManager.api',
+        'pascalprecht.translate',
+        'tmh.dynamicLocale',
+        'emmi.navbar',
+        'emmi.typeahead',
+        'emmi.chosen',
+        'ngTagsInput',
+        'mgcrea.ngStrap',
+        'emmi.inputMask',
+        'angularMoment',
+        'emmi-angular-multiselect',
+        'truncate',
+        'emmi.noDirtyCheck',
+        'headroom',
+        'ngTinyScrollbar',
+        'emmi.momentStrap'
+    ])
 
-    .constant('USER_ROLES', {
-        all: '*',
-        admin: 'PERM_CLIENT_SUPER_USER',
-        teamScheduler: 'PERM_CLIENT_TEAM_SCHEDULE_PROGRAM',
-        user: 'PERM_USER'
-    })
+        .constant('USER_ROLES', {
+            all: '*',
+            admin: 'PERM_CLIENT_SUPER_USER',
+            teamScheduler: 'PERM_CLIENT_TEAM_SCHEDULE_PROGRAM',
+            user: 'PERM_USER'
+        })
 
-    .constant('URL_PARAMETERS', {
-        SELECTED_GROUP: 'g',
-        SELECTED_TAGS: 'st',
-        CLIENT: 'c',
-        TEAM: 't',
-        PROVIDER: 'p',
-        LOCATION: 'l',
-        USER: 'u',
-        QUERY: 'q',
-        PAGE: 'p',
-        STATUS: 'status',
-        SORT: 'sort',
-        DIRECTION: 'dir',
-        SIZE: 'size',
-        INACTIVE_TEAMS: 'i'
-    })
+        .constant('URL_PARAMETERS', {
+            SELECTED_GROUP: 'g',
+            SELECTED_TAGS: 'st',
+            CLIENT: 'c',
+            TEAM: 't',
+            PROVIDER: 'p',
+            LOCATION: 'l',
+            USER: 'u',
+            QUERY: 'q',
+            PAGE: 'p',
+            STATUS: 'status',
+            SORT: 'sort',
+            DIRECTION: 'dir',
+            SIZE: 'size',
+            INACTIVE_TEAMS: 'i'
+        })
 
-    .constant('PATTERN', {
-        EMAIL: /^[a-zA-Z0-9_.+-]{1,63}@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$/
-    })
+        .constant('PATTERN', {
+            EMAIL: /^[a-zA-Z0-9_.+-]{1,63}@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$/
+        })
 
-    .config(function ($httpProvider, $translateProvider, tmhDynamicLocaleProvider, HateoasInterceptorProvider, $datepickerProvider, $alertProvider, API) {
+    /**
+     * Allow for dynamic form field names and form names
+     */
+        .config(function ($provide) {
+            $provide.decorator('ngModelDirective', function ($delegate) {
+                var ngModel = $delegate[0], controller = ngModel.controller;
+                ngModel.controller = ['$scope', '$element', '$attrs', '$injector', function (scope, element, attrs, $injector) {
+                    var $interpolate = $injector.get('$interpolate');
+                    attrs.$set('name', $interpolate(attrs.name || '')(scope));
+                    $injector.invoke(controller, this, {
+                        '$scope': scope,
+                        '$element': element,
+                        '$attrs': attrs
+                    });
+                }];
+                return $delegate;
+            });
+            $provide.decorator('ngFormDirective', function ($delegate) {
+                var form = $delegate[0], controller = form.controller;
+                form.controller = ['$scope', '$element', '$attrs', '$injector', function (scope, element, attrs, $injector) {
+                    var $interpolate = $injector.get('$interpolate');
+                    attrs.$set('name', $interpolate(attrs.name || attrs.ngForm || '')(scope));
+                    $injector.invoke(controller, this, {
+                        '$scope': scope,
+                        '$element': element,
+                        '$attrs': attrs
+                    });
+                }];
+                return $delegate;
+            });
+        })
 
-        // Initialize angular-translate
-        $translateProvider.useUrlLoader(API.messages);
-        $translateProvider.preferredLanguage('en');
-        $translateProvider.useSanitizeValueStrategy(null);
-        $translateProvider.useCookieStorage();
+        .config(function ($httpProvider, $translateProvider, tmhDynamicLocaleProvider, HateoasInterceptorProvider, $datepickerProvider, $alertProvider, API) {
 
-        tmhDynamicLocaleProvider.localeLocationPattern('bower_components/angular-i18n/angular-locale_{{locale}}.js');
-        tmhDynamicLocaleProvider.useCookieStorage('NG_TRANSLATE_LANG_KEY');
+            // Initialize angular-translate
+            $translateProvider.useUrlLoader(API.messages);
+            $translateProvider.preferredLanguage('en');
+            $translateProvider.useSanitizeValueStrategy(null);
+            $translateProvider.useCookieStorage();
 
-        // make sure the server knows that an AJAX call is happening
-        $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+            tmhDynamicLocaleProvider.localeLocationPattern('bower_components/angular-i18n/angular-locale_{{locale}}.js');
+            tmhDynamicLocaleProvider.useCookieStorage('NG_TRANSLATE_LANG_KEY');
 
-        // configure default client level XSRF/CSRF protection
-        $httpProvider.defaults.xsrfHeaderName = 'X-XSRF-TOKEN-CLIENT';
-        $httpProvider.defaults.xsrfCookieName = 'XSRF-TOKEN-CLIENT';
+            // make sure the server knows that an AJAX call is happening
+            $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-        // enable HATEOAS link array --> object parsing on $get
-        HateoasInterceptorProvider.transformAllResponses();
+            // configure default client level XSRF/CSRF protection
+            $httpProvider.defaults.xsrfHeaderName = 'X-XSRF-TOKEN-CLIENT';
+            $httpProvider.defaults.xsrfCookieName = 'XSRF-TOKEN-CLIENT';
 
-        if (!$httpProvider.defaults.headers.get) {
-            $httpProvider.defaults.headers.get = {};
-        }
-        //disable IE ajax request caching
-        $httpProvider.defaults.headers.get['Cache-Control'] = 'no-cache';
-        $httpProvider.defaults.headers.get.Pragma = 'no-cache';
+            // enable HATEOAS link array --> object parsing on $get
+            HateoasInterceptorProvider.transformAllResponses();
 
-        // ensure dates are compatible with back-end
-        angular.extend($datepickerProvider.defaults, {
-            dateFormat: 'MM/dd/yyyy',
-            modelDateFormat: 'yyyy-MM-dd',
-            dateType: 'string',
-            iconLeft: 'fa-angle-up',
-            iconRight: 'fa-angle-down',
-            template: 'client-facing/common/directives/datepicker/datepicker.tpl.html'
-        });
-
-        // custom global angularstrap configurations
-        angular.extend($alertProvider.defaults, {
-            show: true,
-            title: '',
-            container: '#messages-container',
-            type: 'success',
-            // placement: 'top',
-            duration: 5,
-            dismissable: true,
-            animation: 'am-fade-and-slide-top',
-            template: 'client-facing/common/directives/alert/alert.tpl.html'
-        });
-
-    })
-
-    .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, PATTERN, arrays, $document,
-                   ConfigurationService, $modal, $timeout, moment, ErrorMessageTranslateService) {
-
-        var modals = [], alerts = [];
-
-        $rootScope.authenticated = false;
-
-        // auto track $modal windows
-        $rootScope.$on('modal.show', function (e, $modal) {
-            // if modal is not already in list
-            if (modals.indexOf($modal) === -1) {
-                modals.push($modal);
+            if (!$httpProvider.defaults.headers.get) {
+                $httpProvider.defaults.headers.get = {};
             }
-            if (modals.length >= 0) {
-                $document.find('body').addClass('modal-open');
-            }
-        });
+            //disable IE ajax request caching
+            $httpProvider.defaults.headers.get['Cache-Control'] = 'no-cache';
+            $httpProvider.defaults.headers.get.Pragma = 'no-cache';
 
-        // un-track $modal windows on hide
-        $rootScope.$on('modal.hide', function (e, $modal) {
-            var modalIndex = modals.indexOf($modal);
-            modals.splice(modalIndex, 1);
-            if (modals.length === 0) {
-                $document.find('body').removeClass('modal-open');
-            }
-        });
+            // ensure dates are compatible with back-end
+            angular.extend($datepickerProvider.defaults, {
+                dateFormat: 'MM/dd/yyyy',
+                modelDateFormat: 'yyyy-MM-dd',
+                dateType: 'string',
+                iconLeft: 'fa-angle-up',
+                iconRight: 'fa-angle-down',
+                template: 'client-facing/common/directives/datepicker/datepicker.tpl.html'
+            });
 
-        // auto track $alert windows
-        $rootScope.$on('alert.show', function (e, $alert) {
-            // if alert is not already in list
-            if (alerts.indexOf($alert) === -1) {
-                alerts.push($alert);
-            }
-        });
+            // custom global angularstrap configurations
+            angular.extend($alertProvider.defaults, {
+                show: true,
+                title: '',
+                container: '#messages-container',
+                type: 'success',
+                // placement: 'top',
+                duration: 5,
+                dismissable: true,
+                animation: 'am-fade-and-slide-top',
+                template: 'client-facing/common/directives/alert/alert.tpl.html'
+            });
 
-        // un-track $alert windows on hide
-        $rootScope.$on('alert.hide', function (e, $alert) {
-            var idx = modals.indexOf($alert);
-            alerts.splice(idx, 1);
-        });
+        })
+
+        .run(function ($rootScope, $location, $http, AuthSharedService, Session, USER_ROLES, PATTERN, arrays, $document,
+                       ConfigurationService, $modal, $timeout, moment, ErrorMessageTranslateService) {
+
+            var modals = [], alerts = [];
+
+            $rootScope.authenticated = false;
+
+            // auto track $modal windows
+            $rootScope.$on('modal.show', function (e, $modal) {
+                // if modal is not already in list
+                if (modals.indexOf($modal) === -1) {
+                    modals.push($modal);
+                }
+                if (modals.length >= 0) {
+                    $document.find('body').addClass('modal-open');
+                }
+            });
+
+            // un-track $modal windows on hide
+            $rootScope.$on('modal.hide', function (e, $modal) {
+                var modalIndex = modals.indexOf($modal);
+                modals.splice(modalIndex, 1);
+                if (modals.length === 0) {
+                    $document.find('body').removeClass('modal-open');
+                }
+            });
+
+            // auto track $alert windows
+            $rootScope.$on('alert.show', function (e, $alert) {
+                // if alert is not already in list
+                if (alerts.indexOf($alert) === -1) {
+                    alerts.push($alert);
+                }
+            });
+
+            // un-track $alert windows on hide
+            $rootScope.$on('alert.hide', function (e, $alert) {
+                var idx = modals.indexOf($alert);
+                alerts.splice(idx, 1);
+            });
 
 
-        /**
-         * Hide all $modal windows
-         */
-        $rootScope.killAllModals = function () {
-            if (modals.length) {
-                angular.forEach(modals, function ($modal) {
-                    $modal.$promise.then($modal.hide);
+            /**
+             * Hide all $modal windows
+             */
+            $rootScope.killAllModals = function () {
+                if (modals.length) {
+                    angular.forEach(modals, function ($modal) {
+                        $modal.$promise.then($modal.hide);
+                    });
+                    modals = [];
+                }
+            };
+
+            /**
+             * Hide all $alert windows
+             */
+            $rootScope.killAllAlerts = function () {
+                if (alerts.length) {
+                    angular.forEach(alerts, function ($alert) {
+                        $alert.$promise.then($alert.hide);
+                    });
+                    alerts = [];
+                }
+            };
+
+            $rootScope.page = {
+                setTitle: function (title) {
+                    if (title) {
+                        this.title = title + ' | Emmi Manager';
+                        // only call Piwik if we've gotten a page title; and after we've gotten the correct one (this funtion is called twice on some pages)
+                        _paq.push(['setDocumentTitle', title]); // overide document title as document.title reports the previous page
+                        _paq.push(['setCustomUrl', $location.path()]); // need to check and see if the hashes are tracking okay now with the setting from the Admin Panel changed
+                        _paq.push(['trackPageView']);
+                    } else {
+                        title = 'Emmi Manager';
+                        this.title = title;
+                    }
+                }
+            };
+
+            $rootScope.emailPattern = PATTERN.EMAIL;
+
+            /**
+             * Special routes that are system level.
+             * These routes are not authorized.
+             *
+             * @returns {boolean}
+             */
+            $rootScope.isSystemRoute = function () {
+                var path = $location.path();
+                return path === '/logout' ||
+                    path === '/login' ||
+                    path === '/error' ||
+                    path === '/403' ||
+                    path === '/500' ||
+                    path === '/unauthorized';
+            };
+
+            /**
+             * These are routes where alerts should be closed
+             * when navigating to them, these routes are authorized
+             *
+             * @returns {boolean}
+             */
+            $rootScope.shouldCloseAlertsRoute = function () {
+                var path = $location.path();
+                return path === '/editSecurityQuestions' ||
+                    path === '/viewSecurityQuestions';
+            };
+
+            $rootScope.$on('$routeChangeStart', function (event, next) {
+                $rootScope.isAuthorized = AuthSharedService.isAuthorized;
+                $rootScope.userRoles = USER_ROLES;
+                if (!$rootScope.isSystemRoute()) {
+                    // authorize all routes other than some known system routes
+                    AuthSharedService.valid((next.access) ? next.access.authorizedRoles : [USER_ROLES.all]);
+                }
+            });
+
+            $rootScope.$on('$routeChangeError', function () {
+                $location.path('/error').replace();
+            });
+
+            $rootScope.$on('$routeChangeSuccess', function (e, current) {
+                $rootScope.currentRouteQueryString = arrays.toQueryString(current.params);
+                // hide all modals
+                $rootScope.killAllModals();
+                if ($rootScope.isSystemRoute() || $rootScope.shouldCloseAlertsRoute()) {
+                    $rootScope.killAllAlerts();
+                }
+                var pageTitle = current && current.$$route && current.$$route.title;
+                $rootScope.page.setTitle(pageTitle);
+            });
+
+            // Call when the the client is confirmed
+            $rootScope.$on('event:auth-loginConfirmed', function () {
+                $rootScope.authenticated = true;
+                ConfigurationService.routeUser();
+            });
+
+            $rootScope.$on('event:auth-credentialsExpired', function (event, rejection) {
+                $rootScope.expiredCredentials = rejection.credentials;
+                $rootScope.expiredClient = rejection.client;
+                $location.path('/credentials/expired').replace();
+            });
+
+            $rootScope.$on('event:auth-totallyNotAuthorized', function () {
+                $location.path('/unauthorized').replace();
+            });
+
+            // Call when the 401 response is returned by the server
+            $rootScope.$on('event:auth-loginRequired', function (event, rejection) {
+                if ($rootScope.account && $rootScope.account.login) {
+                    $rootScope.username = $rootScope.account.login;
+                }
+                Session.destroy();
+                $rootScope.locationBeforeLogin = rejection.location;
+                $location.path('/login').replace();
+            });
+
+            // Call when the 403 response is returned by the server
+            $rootScope.$on('event:auth-notAuthorized', function () {
+                $timeout(function () {
+                    $location.path('/403').replace();
                 });
-                modals = [];
-            }
-        };
+            });
 
-        /**
-         * Hide all $alert windows
-         */
-        $rootScope.killAllAlerts = function () {
-            if (alerts.length) {
-                angular.forEach(alerts, function ($alert) {
-                    $alert.$promise.then($alert.hide);
-                });
-                alerts = [];
-            }
-        };
-
-        $rootScope.page = {
-            setTitle: function (title) {
-                if (title) {
-                    this.title = title + ' | Emmi Manager';
-                    // only call Piwik if we've gotten a page title; and after we've gotten the correct one (this funtion is called twice on some pages)
-                    _paq.push(['setDocumentTitle', title]); // overide document title as document.title reports the previous page
-                    _paq.push(['setCustomUrl', $location.path()]); // need to check and see if the hashes are tracking okay now with the setting from the Admin Panel changed
-                    _paq.push(['trackPageView']);
+            // Call when 409 response is returned by the server
+            $rootScope.$on('event:optimistic-lock-failure', function (event, rejection) {
+                console.log('409: ' + rejection.data.detail);
+                if (!$rootScope.optimisticLockModal) {
+                    $rootScope.optimisticLockModal = $modal({
+                        title: 'Object Already Modified',
+                        content: [
+                            'You have attempted to save an object that has already been modified by another user.',
+                            ' Please refresh the page to load the latest changes before attempting to save again.'
+                        ].join(' '),
+                        animation: 'none',
+                        backdropAnimation: 'emmi-fade',
+                        backdrop: 'static',
+                        show: true
+                    });
                 } else {
-                    title = 'Emmi Manager';
-                    this.title = title;
+                    $rootScope.optimisticLockModal.show();
                 }
-            }
-        };
+            });
 
-        $rootScope.emailPattern = PATTERN.EMAIL;
+            // when the xsrf token was not sent to the back-end
+            $rootScope.$on('event:auth-xsrf-token-missing', function () {
+                if (!$rootScope.xsrfMissingModal) {
+                    $rootScope.xsrfMissingModal = $modal({
+                        title: 'XSRF Security Token Missing',
+                        content: [
+                            'You may have cleared your browser cookies, which could have resulted in the ',
+                            'expiry of your current security token. A new security token has been issued.',
+                            'Please retry the operation.'
+                        ].join(' '),
+                        animation: 'none',
+                        backdropAnimation: 'emmi-fade',
+                        backdrop: 'static',
+                        show: true
+                    });
+                } else {
+                    $rootScope.xsrfMissingModal.show();
+                }
+            });
 
-        /**
-         * Special routes that are system level.
-         * These routes are not authorized.
-         *
-         * @returns {boolean}
-         */
-        $rootScope.isSystemRoute = function () {
-            var path = $location.path();
-            return path === '/logout' ||
-                path === '/login' ||
-                path === '/error' ||
-                path === '/403' ||
-                path === '/500' ||
-                path === '/unauthorized';
-        };
 
-        /**
-         * These are routes where alerts should be closed
-         * when navigating to them, these routes are authorized
-         *
-         * @returns {boolean}
-         */
-        $rootScope.shouldCloseAlertsRoute = function () {
-            var path = $location.path();
-            return path === '/editSecurityQuestions' ||
-                path === '/viewSecurityQuestions';
-        };
+            // Call when the 500 response is returned by the server
+            $rootScope.$on('event:server-error', function (event, rejection) {
+                $rootScope.error = rejection;
+                $location.path('/500').replace();
+            });
 
-        $rootScope.$on('$routeChangeStart', function (event, next) {
-            $rootScope.isAuthorized = AuthSharedService.isAuthorized;
-            $rootScope.userRoles = USER_ROLES;
-            if (!$rootScope.isSystemRoute()) {
-                // authorize all routes other than some known system routes
-                AuthSharedService.valid((next.access) ? next.access.authorizedRoles : [USER_ROLES.all]);
-            }
-        });
+            // Call when the user logs out
+            $rootScope.$on('event:auth-loginCancelled', function () {
+                $location.path('');
+            });
 
-        $rootScope.$on('$routeChangeError', function () {
-            $location.path('/error').replace();
-        });
+            $document.bind('keydown keypress', function (event) {
+                if (event.which === 8) {
+                    var d = event.srcElement || event.target;
+                    if (!(d.tagName.toUpperCase() === 'INPUT' &&
+                        (d.type.toUpperCase() === 'TEXT' ||
+                        d.type.toUpperCase() === 'PASSWORD' ||
+                        d.type.toUpperCase() === 'EMAIL')) &&
+                        d.tagName.toUpperCase() !== 'TEXTAREA') {
+                        event.preventDefault();
+                    }
+                }
+            });
 
-        $rootScope.$on('$routeChangeSuccess', function (e, current) {
-            $rootScope.currentRouteQueryString = arrays.toQueryString(current.params);
-            // hide all modals
-            $rootScope.killAllModals();
-            if ($rootScope.isSystemRoute() || $rootScope.shouldCloseAlertsRoute()) {
-                $rootScope.killAllAlerts();
-            }
-            var pageTitle = current && current.$$route && current.$$route.title;
-            $rootScope.page.setTitle(pageTitle);
-        });
-
-        // Call when the the client is confirmed
-        $rootScope.$on('event:auth-loginConfirmed', function () {
-            $rootScope.authenticated = true;
-            ConfigurationService.routeUser();
-        });
-
-        $rootScope.$on('event:auth-credentialsExpired', function (event, rejection) {
-            $rootScope.expiredCredentials = rejection.credentials;
-            $rootScope.expiredClient = rejection.client;
-            $location.path('/credentials/expired').replace();
-        });
-
-        $rootScope.$on('event:auth-totallyNotAuthorized', function () {
-            $location.path('/unauthorized').replace();
-        });
-
-        // Call when the 401 response is returned by the server
-        $rootScope.$on('event:auth-loginRequired', function (event, rejection) {
-            if ($rootScope.account && $rootScope.account.login) {
-                $rootScope.username = $rootScope.account.login;
-            }
-            Session.destroy();
-            $rootScope.locationBeforeLogin = rejection.location;
-            $location.path('/login').replace();
-        });
-
-        // Call when the 403 response is returned by the server
-        $rootScope.$on('event:auth-notAuthorized', function () {
-            $timeout(function () {
-                $location.path('/403').replace();
+            ErrorMessageTranslateService.getLockErrorMessages().then(function (ERROR_MESSAGE) {
+                moment.locale('en', {
+                    relativeTime: {
+                        future: ERROR_MESSAGE.LOCK_PART_1 + 'in %s' + ERROR_MESSAGE.LOCK_PART_2,
+                        past: ERROR_MESSAGE.LOCK_EXPIRED,
+                        s: 'a few seconds',
+                        m: 'a minute',
+                        mm: '%d minutes',
+                        h: 'an hour',
+                        hh: '%d hours',
+                        d: 'a day',
+                        dd: '%d days',
+                        M: 'a month',
+                        MM: '%d months',
+                        y: 'a year',
+                        yy: '%d years'
+                    }
+                });
             });
         });
 
-        // Call when 409 response is returned by the server
-        $rootScope.$on('event:optimistic-lock-failure', function (event, rejection) {
-            console.log('409: ' + rejection.data.detail);
-            if (!$rootScope.optimisticLockModal) {
-                $rootScope.optimisticLockModal = $modal({
-                    title: 'Object Already Modified',
-                    content: [
-                        'You have attempted to save an object that has already been modified by another user.',
-                        ' Please refresh the page to load the latest changes before attempting to save again.'
-                    ].join(' '),
-                    animation: 'none',
-                    backdropAnimation: 'emmi-fade',
-                    backdrop: 'static',
-                    show: true
-                });
-            } else {
-                $rootScope.optimisticLockModal.show();
-            }
-        });
-
-        // when the xsrf token was not sent to the back-end
-        $rootScope.$on('event:auth-xsrf-token-missing', function () {
-            if (!$rootScope.xsrfMissingModal) {
-                $rootScope.xsrfMissingModal = $modal({
-                    title: 'XSRF Security Token Missing',
-                    content: [
-                        'You may have cleared your browser cookies, which could have resulted in the ',
-                        'expiry of your current security token. A new security token has been issued.',
-                        'Please retry the operation.'
-                    ].join(' '),
-                    animation: 'none',
-                    backdropAnimation: 'emmi-fade',
-                    backdrop: 'static',
-                    show: true
-                });
-            } else {
-                $rootScope.xsrfMissingModal.show();
-            }
-        });
-
-
-        // Call when the 500 response is returned by the server
-        $rootScope.$on('event:server-error', function (event, rejection) {
-            $rootScope.error = rejection;
-            $location.path('/500').replace();
-        });
-
-        // Call when the user logs out
-        $rootScope.$on('event:auth-loginCancelled', function () {
-            $location.path('');
-        });
-
-        $document.bind('keydown keypress', function (event) {
-            if (event.which === 8) {
-                var d = event.srcElement || event.target;
-                if (!(d.tagName.toUpperCase() === 'INPUT' &&
-                    (d.type.toUpperCase() === 'TEXT' ||
-                    d.type.toUpperCase() === 'PASSWORD' ||
-                    d.type.toUpperCase() === 'EMAIL')) &&
-                    d.tagName.toUpperCase() !== 'TEXTAREA') {
-                    event.preventDefault();
-                }
-            }
-        });
-
-        ErrorMessageTranslateService.getLockErrorMessages().then(function (ERROR_MESSAGE) {
-            moment.locale('en', {
-                relativeTime: {
-                    future: ERROR_MESSAGE.LOCK_PART_1 + 'in %s' + ERROR_MESSAGE.LOCK_PART_2,
-                    past: ERROR_MESSAGE.LOCK_EXPIRED,
-                    s: 'a few seconds',
-                    m: 'a minute',
-                    mm: '%d minutes',
-                    h: 'an hour',
-                    hh: '%d hours',
-                    d: 'a day',
-                    dd: '%d days',
-                    M: 'a month',
-                    MM: '%d months',
-                    y: 'a year',
-                    yy: '%d years'
-                }
-            });
-        });
-    });
+})(window.angular);

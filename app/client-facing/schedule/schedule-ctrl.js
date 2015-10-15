@@ -12,15 +12,19 @@
                 $scope.team = team;
                 $scope.client = client;
                 $scope.patient = team.patient.entity;
+
+                // TODO: move required data should be loaded during the route
                 ScheduledProgramFactory.team = team;
                 ScheduledProgramFactory.patient = team.patient.entity;
 
+                // TODO: move required data should be loaded during the route
                 ScheduleService.loadTeamSchedulingConfiguration(team).then(function (teamSchedulingConfiguration) {
                     ScheduledProgramFactory.teamSchedulingConfiguration = teamSchedulingConfiguration;
                 });
 
                 /**
                  * Retrieve team email configuration for scheduling
+                 * TODO: move required data should be loaded during the route
                  */
                 PatientEmailService.getTeamEmailConfiguration(team).then(function(response){
                     $scope.showEmail = response.entity.collectEmail;
@@ -29,6 +33,7 @@
 
                 /**
                  * Retrieve team phone configuration for scheduling
+                 * TODO: move required data should be loaded during the route
                  */
                PatientPhoneService.getTeamPhoneConfiguration(team).then(function(response){
                     	$scope.showPhone = (response.collectPhone) ? true : false;
