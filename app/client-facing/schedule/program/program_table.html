@@ -5,24 +5,15 @@
                     <span data-ng-if="!programSearchPerformed">Frequently Scheduled</span>
                     <span data-ng-if="programSearchPerformed">Search Results</span>
                 </h3>
-                <!-- <div>
-                    <div data-ng-hide="showAll">
-                        <button class="btn-link" data-ng-click="showAllResults(true)">show all</button>
-                    </div>
-                    <div data-ng-show="showAll">
-                        <button class="btn-link">
-                            {{total}}
-                            <span data-ng-show="total != 1" data-translate="global.labels.total"> results</span>
-                            <span data-ng-show="total === 1" data-translate="global.labels.totalSingular"> result</span>
-                        </button>
-                    </div>
-                </div> -->
                 <div class="program-list_wrapper" data-ng-show="programs" data-scrollbar="{autoUpdate: true, alwaysVisible: true, axis : 'y'}">
                     <ul>
-                        <li data-ng-repeat="program in programs" data-ng-class="{ 'added' : program.disabled }">
+                        <li data-ng-repeat="program in programs" data-ng-class="{ 'added' : program.disabled }"
+                            data-ng-click="!program.disabled && toggleSelectedProgram(program)">
                             <div class="checkbox">
                                 <input type="checkbox" id="program_{{program.entity.id}}"
-                                    data-ng-disabled="program.disabled" data-ng-model="program.selected" data-ng-change="selectProgram(program,addProgramForm)"/>
+                                       data-ng-disabled="program.disabled"
+                                       data-ng-model="program.selected"
+                                       data-ng-change="selectProgram(program, addProgramForm)"/>
                                 <label for="program_{{program.entity.id}}">
                                     <span data-ng-if="program.entity.type.name === 'MULTIMEDIA PROGRAM'" class="program-list_item-icon icon-film" aria-label="Multimedia" title="Multimedia"></span>
                                     <span data-ng-if="program.entity.type.name === 'ARTICLE'" class="program-list_item-icon icon-text-doc" aria-label="Article" title="Article"></span>
