@@ -205,6 +205,15 @@
                 };
 
                 /**
+                 * Called when the row is clicked
+                 * @param programResource
+                 */
+                $scope.toggleSelectedProgram = function (programResource) {
+                    programResource.selected = !programResource.selected;
+                    $scope.selectProgram(programResource);
+                };
+
+                /**
                  * Remove a schedule program card
                  */
                 $scope.deselectProgram = function (programResource) {
