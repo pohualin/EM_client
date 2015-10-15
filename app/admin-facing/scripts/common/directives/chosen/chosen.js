@@ -224,13 +224,13 @@
                                     'role': 'listbox',
                                     'id': chosen.container.attr('id')+'_chosen-list'
                                 });
-                                element.on('chosen:showing_dropdown', function(evt) {
+                                element.on('chosen:showing_dropdown', function () {
                                     chosen.container.find('.chosen-results li').attr('role', 'option');
                                 });
                                 if (chosen['form_field'].id.length) {
                                     element.on('change', function(evt, options) {
                                         chosen.container.find('.chosen-results li').removeAttr('id');
-                                        if (options.selected && options.selected.length) {
+                                        if (options && options.selected && options.selected.length) {
                                             chosen.container.find('.chosen-results li[data-option-array-index="'+options.selected+'"]').attr('id', chosen.container.attr('id')+'_active-option');
                                         } else {
                                             chosen.container.find('.chosen-results li').first().attr('id', chosen.container.attr('id')+'_active-option');
