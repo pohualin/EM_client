@@ -62,7 +62,62 @@
                     $scope.programSearchPerformed = true;
                     $scope.inputSearching = true;
                     $scope.showAllResults(true);
+                };
+
+                /**
+                 * When a specialty has been chosen or un-chosen
+                 */
+                $scope.onSpecialtyFilterChange = function () {
+                    $scope.programSearchPerformed = true;
+                    $scope.showAllResults(true);
+                };
+
+                /**
+                 * When show all is clicked
+                 * @param show true means show all, false means show top 10 only
+                 */
+                $scope.showAllResults = function (show) {
                     $scope.selectedProgramsHolder = [];
+                    var search = !show ? performSearch() : performSearch($scope.programSearch.query,
+                        $scope.sortProperty, $scope.resultsPerPage, $scope.programSearch.specialty);
+                    search.finally(function () {
+                        $scope.showAll = show;
+                    });
+                };
+
+                /**
+                 * When 'see more results' is clicked (very similar to fetchPage)
+                 *
+                 * @param href to use for the data call
+                 */
+                $scope.showMoreResults = function (href) {
+                    $scope.loading = true;
+                    AddProgramService.fetchProgramPage(href).then(function (programPage) {
+                        var previousResults = $scope[contentProperty];
+                        $scope.handleResponse(programPage, contentProperty);
+                        $scope[contentProperty] = previousResults.concat($scope[contentProperty]);
+                        previousResults = null;
+                        $scope.setSelectedProgramsCheckbox();
+                    });
+                };
+
+                /**
+                 * When there is a problem with the form
+                 */
+                $scope.showError = function () {
+                    if (!$scope.errorAlert) {
+                        $scope.errorAlert = $alert({
+                            content: 'Please correct the below information.',
+                            container: '#add-program-alerts-container',
+                            type: 'danger',
+                            show: true,
+                            placement: '',
+                            duration: false,
+                            dismissable: false
+                        });
+                    } else {
+                        $scope.errorAlert.show();
+                    }
                 };
 
                 /**
@@ -125,52 +180,6 @@
                     });
                     $scope.handleUseInformationForAllPrograms();
                     $scope.selectedProgramsHolder = [];
-                };
-
-                /**
-                 * When show all is clicked
-                 * @param show true means show all, false means show top 10 only
-                 */
-                $scope.showAllResults = function (show) {
-                    var search = !show ? performSearch() : performSearch($scope.programSearch.query, $scope.sortProperty, $scope.resultsPerPage, $scope.programSearch.specialty);
-                    search.finally(function () {
-                        $scope.showAll = show;
-                    });
-                };
-
-                /**
-                 * When 'see more results' is clicked (very similar to fetchPage)
-                 *
-                 * @param href to use for the data call
-                 */
-                $scope.showMoreResults = function (href) {
-                    $scope.loading = true;
-                    AddProgramService.fetchProgramPage(href).then(function (programPage) {
-                        var previousResults = $scope[contentProperty];
-                        $scope.handleResponse(programPage, contentProperty);
-                        $scope[contentProperty] = previousResults.concat($scope[contentProperty]);
-                        previousResults = null;
-                        $scope.setSelectedProgramsCheckbox();
-                    });
-                };
-
-                /**
-                 * When there is a problem with the form
-                 */
-                $scope.showError = function () {
-                    if (!$scope.errorAlert) {
-                        $scope.errorAlert = $alert({
-                            content: 'Please correct the below information.',
-                            container: '#add-program-alerts-container',
-                            type: 'danger',
-                            show: true,
-                            placement: '',
-                            duration: false,
-                            dismissable: false
-                        });
-                    } else {
-                        $scope.errorAlert.show();
-                    }
                 };
 
                 /**
@@ -318,14 +327,6 @@
                         // save the scheduled program
                         ScheduledProgramFactory.selectedPrograms = $scope.selectedPrograms;
                     }
-                };
-
-                /**
-                 * When a specialty has been chosen or un-chosen
-                 */
-                $scope.onSpecialtyFilterChange = function () {
-                    $scope.programSearchPerformed = true;
-                    $scope.showAllResults(true);
                 };
 
                 /**
