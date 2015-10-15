@@ -42,6 +42,7 @@ angular.module('emmiManager')
                 SearchPatientService.search(team, query, sort, size, page).then(function (response) {
                     $scope.handleResponse(response, contentProperty);
                     $scope.searchPerformed = true;
+                    $scope.page.setTitle('Patient Search Results');
                     if (!response) {
                         $scope.removeStatusFilterAndTotal = true;
                     }
