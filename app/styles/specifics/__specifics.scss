@@ -55,6 +55,20 @@ label.empty {
     color: #999;
 }
 
+.program-list_no-results {
+    min-height: 456px;
+    .title {
+        font-weight: bold;
+    }
+    .body {
+        color: #999;
+    }
+}
+
+.program-list_title {
+    font-weight: bold;
+}
+
 // utility class to make sure long table column content wraps to another line instead of breaking the table
 .col-wrap {
     word-break: break-all;
@@ -515,7 +529,7 @@ tr.nowrap td, th {
 }
 
 .checkbox-separate {
-    padding: 1em 0em;
+    padding: 1em 0;
 }
 
 // various example component implementations
