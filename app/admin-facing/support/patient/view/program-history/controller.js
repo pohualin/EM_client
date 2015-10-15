@@ -29,7 +29,7 @@
                     }
 
                     scheduledProgramResource.scheduledProgramNotes = {};
-                    scheduledProgramResource.scheduledProgramNotes.note = 'This program has no notes or questions.';
+                    scheduledProgramResource.scheduledProgramNotes.note = '';
                     service.getPatientNotes(scheduledProgramResource).then(function(data) {
                         scheduledProgramResource.scheduledProgramNotes = data;
                     });
