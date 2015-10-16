@@ -21,7 +21,10 @@
                     getPatientNotes: function(scheduledProgramResource) {
                         return $http.get(UriTemplate.create(scheduledProgramResource.link.programNotes).stringify()).then(
                             function ok(response) {
+                                /* TODO: Check for scenario where response is ok but no notes exist. Will update once microservice is created. */
                                 return response.data;
+                            }, function error(response) {
+                                return 'This program has no notes or questions.';
                             });
                     },
 
