@@ -3,8 +3,8 @@
 
     angular.module('emmiManager')
         .controller('AddProgramController', ['$scope', '$q', '$controller', 'AddProgramService',
-            'moment', '$alert', '$timeout', 'ScheduledProgramFactory',
-            function ($scope, $q, $controller, AddProgramService, moment, $alert, $timeout, ScheduledProgramFactory) {
+            'moment', '$alert', '$timeout', 'ScheduledProgramFactory', 'focus',
+            function ($scope, $q, $controller, AddProgramService, moment, $alert, $timeout, ScheduledProgramFactory, focus) {
 
                 // add common pagination and sorting functions
                 $controller('ClientCommonPagination', {$scope: $scope});
@@ -61,7 +61,22 @@
                 $scope.search = function () {
                     $scope.programSearchPerformed = true;
                     $scope.inputSearching = true;
-                    $scope.showAllResults(true);
+                    $scope.showAllResults(true).then(function () {
+                        $scope.inputSearched = true; // when someone searches from the keyword input
+                        focus('keyword');
+                    });
+                };
+
+                /**
+                 * Clears the query string and re-searches
+                 */
+                $scope.clearSearch = function () {
+                    $scope.programSearchPerformed = true;
+                    $scope.programSearch.query = '';
+                    $scope.showAllResults(true).then(function () {
+                        $scope.inputSearched = false;
+                        focus('keyword');
+                    });
                 };
 
                 /**
@@ -77,10 +92,10 @@
                  * @param show true means show all, false means show top 10 only
                  */
                 $scope.showAllResults = function (show) {
-                    $scope.selectedProgramsHolder = [];
+                    $scope.selectedProgramsHolder = []; // clear selected programs on all searches
                     var search = !show ? performSearch() : performSearch($scope.programSearch.query,
                         $scope.sortProperty, $scope.resultsPerPage, $scope.programSearch.specialty);
-                    search.finally(function () {
+                    return search.finally(function () {
                         $scope.showAll = show;
                     });
                 };

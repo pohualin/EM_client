@@ -20,13 +20,23 @@
     <div class="col-md-7">
         <div class="form-group">
             <label class="sr-only control-label" for="query">Search by keyword or program name</label>
-            <div class="input-group">
+
+            <div class="input-group clearable-input-group">
                 <input class="form-control" id="query" name="query" data-ng-model="programSearch.query" type="text"
-                       placeholder="Search by keyword or program name" 
-                       data-ng-class="{'chosen-spinner-in-input' : searching && inputSearching}" />
+                       placeholder="Search by keyword or program name"
+                       data-ng-class="{'chosen-spinner-in-input' : searching && inputSearching}"
+                       data-focus-on="keyword"
+                    />
+
+                <div class="input-group-btn" data-ng-if="inputSearched && !searching && programSearch.query">
+                    <button class="btn-search-clear" type="button" data-ng-click="clearSearch()">
+                        <span class="icon-delete-circle"></span>
+                    </button>
+                </div>
                 <div class="input-group-btn">
                     <button class="btn btn-primary btn-search" data-ng-click="!searching ? search() : false"
-                        data-ng-disabled="searching"><span class="icon-search"></span></button>
+                            data-ng-disabled="searching"><span class="icon-search"></span>
+                    </button>
                 </div>
             </div>
         </div>
